@@ -3509,8 +3509,8 @@ namespace parallel
       Assert(this->n_levels() == 1,
              ExcMessage("The triangulation is refined!"));
 
-      typedef std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>
-                                          FaceVector;
+      using FaceVector =
+        std::vector<dealii::GridTools::PeriodicFacePair<cell_iterator>>;
       typename FaceVector::const_iterator it, periodic_end;
       it           = periodicity_vector.begin();
       periodic_end = periodicity_vector.end();

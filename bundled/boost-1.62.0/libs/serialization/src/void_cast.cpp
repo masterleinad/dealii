@@ -67,7 +67,7 @@ struct void_caster_compare {
 };
 
 typedef std::set<const void_caster *, void_caster_compare> set_type;
-typedef boost::serialization::singleton<set_type> void_caster_registry;
+using void_caster_registry = boost::serialization::singleton<set_type>;
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)

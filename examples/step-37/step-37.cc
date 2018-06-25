@@ -246,7 +246,7 @@ namespace Step37
         Base<dim, LinearAlgebra::distributed::Vector<number>>
   {
   public:
-    typedef number value_type;
+    using value_type = number;
 
     LaplaceOperator();
 

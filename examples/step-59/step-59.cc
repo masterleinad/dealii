@@ -175,7 +175,7 @@ namespace Step59
   class LaplaceOperator : public Subscriptor
   {
   public:
-    typedef number value_type;
+    using value_type = number;
 
     LaplaceOperator() = default;
 
@@ -235,7 +235,7 @@ namespace Step59
   class PreconditionBlockJacobi
   {
   public:
-    typedef number value_type;
+    using value_type = number;
 
     void clear()
     {

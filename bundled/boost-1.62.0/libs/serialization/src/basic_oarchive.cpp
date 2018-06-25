@@ -87,7 +87,7 @@ class basic_oarchive_impl {
         aobject() : address(NULL){}
     };
     // keyed on class_id, address
-    typedef std::set<aobject> object_set_type;
+    using object_set_type = std::set<aobject>;
     object_set_type object_set;
 
     //////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ class basic_oarchive_impl {
         }
     };
     // keyed on type_info
-    typedef std::set<cobject_type> cobject_info_set_type;
+    using cobject_info_set_type = std::set<cobject_type>;
     cobject_info_set_type cobject_info_set;
 
     // list of objects initially stored as pointers - used to detect errors

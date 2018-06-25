@@ -42,7 +42,7 @@ namespace std {
 namespace boost {
 namespace archive {
 
-typedef basic_xml_grammar<wchar_t> xml_wgrammar;
+using xml_wgrammar = basic_xml_grammar<wchar_t>;
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // specific definitions for wchar_t based XML

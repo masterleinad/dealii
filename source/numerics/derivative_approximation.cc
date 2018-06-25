@@ -676,32 +676,32 @@ namespace DerivativeApproximation
     {
     public:
       /**
-       * typedef to select the DerivativeDescription corresponding to the
+       * alias to select the DerivativeDescription corresponding to the
        * <tt>order</tt>th derivative. In this general template we set an unvalid
-       * typedef to void, the real typedefs have to be specialized.
+       * typedef to void, the real alias have to be specialized.
        */
-      typedef void DerivDescr;
+      using DerivDescr = void;
     };
 
     template <int dim>
     class DerivativeSelector<1, dim>
     {
     public:
-      typedef Gradient<dim> DerivDescr;
+      using DerivDescr = Gradient<dim>;
     };
 
     template <int dim>
     class DerivativeSelector<2, dim>
     {
     public:
-      typedef SecondDerivative<dim> DerivDescr;
+      using DerivDescr = SecondDerivative<dim>;
     };
 
     template <int dim>
     class DerivativeSelector<3, dim>
     {
     public:
-      typedef ThirdDerivative<dim> DerivDescr;
+      using DerivDescr = ThirdDerivative<dim>;
     };
   } // namespace internal
 } // namespace DerivativeApproximation

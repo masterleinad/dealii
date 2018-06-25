@@ -77,7 +77,7 @@ class basic_iarchive_impl {
             class_id(-2) 
         {}
     };
-    typedef std::vector<aobject> object_id_vector_type;
+    using object_id_vector_type = std::vector<aobject>;
     object_id_vector_type object_id_vector;
 
     //////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ class basic_iarchive_impl {
             return *m_bis < *(rhs.m_bis);
         }
     };
-    typedef std::set<cobject_type> cobject_info_set_type;
+    using cobject_info_set_type = std::set<cobject_type>;
     cobject_info_set_type cobject_info_set;
 
     //////////////////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ class basic_iarchive_impl {
             initialized(rhs.initialized)
         {}
     };
-    typedef std::vector<cobject_id> cobject_id_vector_type;
+    using cobject_id_vector_type = std::vector<cobject_id>;
     cobject_id_vector_type cobject_id_vector;
 
     //////////////////////////////////////////////////////////////////////

@@ -191,8 +191,8 @@ namespace Step12
     // then work on intermediate objects for which first, we here define
     // typedefs to the info objects handed to the local integration functions
     // in order to make our life easier below.
-    typedef MeshWorker::DoFInfo<dim>         DoFInfo;
-    typedef MeshWorker::IntegrationInfo<dim> CellInfo;
+    using DoFInfo  = MeshWorker::DoFInfo<dim>;
+    using CellInfo = MeshWorker::IntegrationInfo<dim>;
 
     // The following three functions are then the ones that get called inside
     // the generic loop over all cells and faces. They are the ones doing the

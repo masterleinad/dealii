@@ -44,9 +44,9 @@ namespace detail {
 // open or close attempt; in the second case, error_ is always false.
 class mapped_file_impl {
 public:
-    typedef mapped_file_source::size_type   size_type;
-    typedef mapped_file_source::param_type  param_type;
-    typedef mapped_file_source::mapmode     mapmode;
+    using size_type = mapped_file_source::size_type;
+    using param_type = mapped_file_source::param_type;
+    using mapmode = mapped_file_source::mapmode;
     BOOST_STATIC_CONSTANT(
         size_type, max_length =  mapped_file_source::max_length);
     mapped_file_impl();

@@ -76,9 +76,9 @@ namespace DoFRenumbering
                              property<vertex_color_t,
                                       default_color_type,
                                       property<vertex_degree_t, int>>>
-                                                      Graph;
-      typedef graph_traits<Graph>::vertex_descriptor  Vertex;
-      typedef graph_traits<Graph>::vertices_size_type size_type;
+        Graph;
+      using Vertex    = graph_traits<Graph>::vertex_descriptor;
+      using size_type = graph_traits<Graph>::vertices_size_type;
 
       typedef std::pair<size_type, size_type> Pair;
     } // namespace boosttypes
@@ -310,7 +310,7 @@ namespace DoFRenumbering
         }
 
 
-      typedef std::vector<int> Vector;
+      using Vector = std::vector<int>;
 
 
       Vector inverse_perm(n, 0);

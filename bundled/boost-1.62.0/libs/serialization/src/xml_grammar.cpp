@@ -43,7 +43,7 @@ namespace std {
 namespace boost {
 namespace archive {
 
-typedef basic_xml_grammar<char> xml_grammar;
+using xml_grammar = basic_xml_grammar<char>;
 
 /////////1/////////2/////////3/////////4/////////5/////////6/////////7/////////8
 // specific definitions for char based XML
