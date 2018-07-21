@@ -27,7 +27,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_q_dg0.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
@@ -84,8 +84,8 @@ testit()
     std::shared_ptr<FiniteElement<dim>>(new FE_RaviartThomas<dim>(0)));
   fes.push_back(
     std::shared_ptr<FiniteElement<dim>>(new FE_RaviartThomas<dim>(1)));
-  fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Nedelec<dim>(0)));
-  fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Nedelec<dim>(1)));
+  fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_NedelecSZ<dim>(0)));
+  fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_NedelecSZ<dim>(1)));
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Q<dim>(3)));
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_DGQ<dim>(2)));
   fes.push_back(std::shared_ptr<FiniteElement<dim>>(new FE_Q_DG0<dim>(2)));

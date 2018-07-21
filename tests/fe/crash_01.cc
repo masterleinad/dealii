@@ -57,7 +57,7 @@ boundary_component=0 '\000', constraints=..., mapping=...) at
 
 #include <deal.II/base/function.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 
@@ -96,9 +96,9 @@ main()
   initlog();
   deallog << std::setprecision(7);
 
-  FE_Nedelec<3> fe1(0); // works
+  FE_NedelecSZ<3> fe1(0); // works
   test<3>(fe1);
-  FESystem<3> fe2(FE_Nedelec<3>(0), 2); // crash
+  FESystem<3> fe2(FE_NedelecSZ<3>(0), 2); // crash
   test<3>(fe2);
 
   return 0;

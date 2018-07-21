@@ -18,7 +18,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -69,7 +69,7 @@ test_renumbering()
   FE_Q<dim>             q3(3);
   FE_DGQ<dim>           dg1(1);
   FE_RaviartThomas<dim> rt1(1);
-  FE_Nedelec<dim>       n1(1);
+  FE_NedelecSZ<dim>     n1(1);
   test_renumbering(q1);
   test_renumbering(q3);
   test_renumbering(dg1);

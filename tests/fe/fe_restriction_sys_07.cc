@@ -26,7 +26,7 @@ main()
 
   CHECK_SYS2(FE_DGQArbitraryNodes<2>(QIterated<1>(QTrapez<1>(), 3)),
              1,
-             FE_Nedelec<2>(0),
+             FE_NedelecSZ<2>(0),
              2,
              2);
 }

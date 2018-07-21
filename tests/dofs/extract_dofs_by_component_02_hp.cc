@@ -25,7 +25,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -55,7 +55,7 @@ check()
   hp::FECollection<dim> element;
   for (unsigned int i = 0; i < 2; ++i)
     element.push_back(
-      FESystem<dim>(FE_Q<dim>(1 + i), 1, FE_Nedelec<dim>(0), 1));
+      FESystem<dim>(FE_Q<dim>(1 + i), 1, FE_NedelecSZ<dim>(0), 1));
   hp::DoFHandler<dim> dof(tr);
   dof.begin_active()->set_active_fe_index(1);
   dof.distribute_dofs(element);

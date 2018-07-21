@@ -22,7 +22,7 @@
 
 #include <deal.II/dofs/dof_handler.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 
@@ -136,7 +136,7 @@ test_hyper_cube()
 
   for (unsigned int degree = 2; degree < 5; ++degree)
     {
-      FE_Nedelec<dim> fe(degree);
+      FE_NedelecSZ<dim> fe(degree);
       test(tr, fe, degree);
     }
 }

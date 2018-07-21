@@ -20,7 +20,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -132,7 +132,7 @@ test()
   // In each dimension, the first four outputs should be zero: the
   // tangential jump of Nedelec elements is zero and for
   // Raviart-Thomas, the tangential and the full jump are the same.
-  FE_Nedelec<dim> n1(2);
+  FE_NedelecSZ<dim> n1(2);
   test_boundary(n1);
   test_face(n1);
 

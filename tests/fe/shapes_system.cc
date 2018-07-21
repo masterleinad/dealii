@@ -16,7 +16,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/mapping_q1.h>
@@ -61,10 +61,10 @@ plot_FE_System_shape_functions()
   if (dim != 1)
     {
       FESystem<dim> p3(
-        FE_Nedelec<dim>(1),
+        FE_NedelecSZ<dim>(1),
         1,
         FESystem<dim>(
-          FE_Q<dim>(1), 1, FE_DGP<dim>(3), 3, FE_Nedelec<dim>(1), 2),
+          FE_Q<dim>(1), 1, FE_DGP<dim>(3), 3, FE_NedelecSZ<dim>(1), 2),
         2,
         FE_DGQ<dim>(0),
         2);
@@ -77,7 +77,7 @@ plot_FE_System_shape_functions()
           FESystem<dim> p4(
             p3,
             1,
-            FESystem<dim>(FE_Q<dim>(1), 1, p3, 3, FE_Nedelec<dim>(1), 2),
+            FESystem<dim>(FE_Q<dim>(1), 1, p3, 3, FE_NedelecSZ<dim>(1), 2),
             1,
             p3,
             1);

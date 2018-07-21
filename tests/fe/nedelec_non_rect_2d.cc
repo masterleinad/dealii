@@ -41,7 +41,7 @@
 #include <deal.II/dofs/dof_renumbering.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_q.h>
 #include <deal.II/fe/mapping_q1.h>
@@ -151,7 +151,7 @@ namespace polytest
 
     Triangulation<dim>        tria;
     DoFHandler<dim>           dof_handler;
-    FE_Nedelec<dim>           fe;
+    FE_NedelecSZ<dim>         fe;
     AffineConstraints<double> constraints;
     SparsityPattern           sparsity_pattern;
     SparseMatrix<double>      system_matrix;

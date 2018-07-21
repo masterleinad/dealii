@@ -17,7 +17,7 @@
 
 #include <deal.II/dofs/dof_handler.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/tria.h>
@@ -81,12 +81,12 @@ main()
   deallog << std::setprecision(2);
   deallog.attach(logfile);
 
-  FE_Nedelec<2> fe_2(1);
+  FE_NedelecSZ<2> fe_2(1);
 
   deallog << "dim=2:" << std::endl;
   test_boundary_values(fe_2);
 
-  FE_Nedelec<3> fe_3(1);
+  FE_NedelecSZ<3> fe_3(1);
 
   deallog << "dim=3:" << std::endl;
   test_boundary_values(fe_3);

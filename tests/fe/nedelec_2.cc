@@ -19,7 +19,7 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_cartesian.h>
 
@@ -87,8 +87,8 @@ plot(const Triangulation<dim> &tr, const unsigned int p)
   deallog << dim << "d, " << tr.n_active_cells() << " CELLS" << std::endl;
 
   // Create the finite element space
-  FE_Nedelec<dim> fe_ned(p);
-  DoFHandler<dim> dof(tr);
+  FE_NedelecSZ<dim> fe_ned(p);
+  DoFHandler<dim>   dof(tr);
   dof.distribute_dofs(fe_ned);
   AffineConstraints<double> cm;
   DoFTools::make_hanging_node_constraints(dof, cm);

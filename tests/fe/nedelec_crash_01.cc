@@ -20,7 +20,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 
 #include "../test_grids.h"
 #include "../tests.h"
@@ -36,10 +36,10 @@ main()
   // generate a version of the
   // Nedelec element but force it to
   // use the old-style constraints
-  struct MyFE : FE_Nedelec<3>
+  struct MyFE : FE_NedelecSZ<3>
   {
     MyFE()
-      : FE_Nedelec<3>(0){};
+      : FE_NedelecSZ<3>(0){};
     virtual bool
     hp_constraints_are_implemented() const
     {

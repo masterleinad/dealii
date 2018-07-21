@@ -25,7 +25,7 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -51,7 +51,7 @@ check()
   tr.begin_active()->set_refine_flag();
   tr.execute_coarsening_and_refinement();
 
-  FESystem<dim>   element(FE_Q<dim>(2), 1, FE_Nedelec<dim>(0), 1);
+  FESystem<dim>   element(FE_Q<dim>(2), 1, FE_NedelecSZ<dim>(0), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
   dof.distribute_mg_dofs(element);

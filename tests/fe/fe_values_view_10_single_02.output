@@ -1,5 +1,5 @@
 
-DEAL::FE=FE_Nedelec<2>(1)
+DEAL::FE=FE_NedelecSZ<2>(1)
 DEAL::component=0
 DEAL::0 -17.8 -17.8 7.58
 DEAL::0 -17.8 -17.8 221.
@@ -10,7 +10,7 @@ DEAL::20.3 -161. -161. 187.
 DEAL::20.3 206. 206. 371.
 DEAL::480. -907. -907. 920.
 DEAL::480. 1.41e+03 1.41e+03 2.07e+03
-DEAL::FE=FE_Nedelec<3>(1)
+DEAL::FE=FE_NedelecSZ<3>(1)
 DEAL::component=0
 DEAL::0 -1.26e+03 -714. -1.26e+03 -32.6 -13.2 -714. -13.2 -32.6
 DEAL::0 -1.26e+03 -714. -1.26e+03 2.57e+03 1.10e+03 -714. 1.10e+03 2.02e+03

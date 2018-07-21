@@ -22,7 +22,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -66,13 +66,13 @@ check()
   check_el(FE_DGP<dim>(2));
 
   if (dim > 1)
-    check_el(FE_Nedelec<dim>(0));
+    check_el(FE_NedelecSZ<dim>(0));
 
   check_el(FESystem<dim>(FE_Q<dim>(1), 2));
   check_el(FESystem<dim>(FE_Q<dim>(1), 1, FE_Q<dim>(1), 1));
 
   if (dim > 1)
-    check_el(FESystem<dim>(FE_Nedelec<dim>(0), 2));
+    check_el(FESystem<dim>(FE_NedelecSZ<dim>(0), 2));
 }
 
 

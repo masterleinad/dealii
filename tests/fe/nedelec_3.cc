@@ -19,7 +19,7 @@
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -51,8 +51,8 @@ check(const unsigned int p)
   // work on a once-refined grid
   tr.refine_global(1);
 
-  FE_Nedelec<dim> fe_ned(p);
-  DoFHandler<dim> dof(tr);
+  FE_NedelecSZ<dim> fe_ned(p);
+  DoFHandler<dim>   dof(tr);
   dof.distribute_dofs(fe_ned);
 
   // generate a function on the

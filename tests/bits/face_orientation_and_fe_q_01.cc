@@ -38,7 +38,7 @@ char logname[] = "output";
 #include <deal.II/fe/fe_dgp_monomial.h>
 #include <deal.II/fe/fe_dgp_nonparametric.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_q_hierarchical.h>
 #include <deal.II/fe/fe_raviart_thomas.h>

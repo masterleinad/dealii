@@ -16,7 +16,7 @@
 // Check projection property of VectorTools::interpolate for
 // Hdiv and Hcurl conforming spaces on something nontrivial.
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 
 #include "../tests.h"

@@ -16,7 +16,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_abf.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -263,7 +263,7 @@ main()
   deallog << "2d\nRectangular grid:\n";
 
   const Point<dim> *vertices = &vertices_rectangular[0];
-  test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
+  test<dim>(FE_NedelecSZ<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);
   test<dim>(FE_ABF<dim>(order), n_cycles, true, vertices);
@@ -271,7 +271,7 @@ main()
   deallog << "\nAffine grid:\n";
 
   vertices = &vertices_affine[0];
-  test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
+  test<dim>(FE_NedelecSZ<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);
   test<dim>(FE_ABF<dim>(order), n_cycles, true, vertices);
@@ -279,7 +279,7 @@ main()
   deallog << "\nNon-affine grid:\n";
 
   vertices = &vertices_nonaffine[0];
-  test<dim>(FE_Nedelec<dim>(order), n_cycles, true, vertices);
+  test<dim>(FE_NedelecSZ<dim>(order), n_cycles, true, vertices);
   test<dim>(FE_RaviartThomas<dim>(order), n_cycles, true, vertices);
   test<dim>(FESystem<dim>(FE_Q<dim>(order), dim), n_cycles, true, vertices);
   test<dim>(FE_ABF<dim>(order), n_cycles, true, vertices);

@@ -21,7 +21,7 @@
 // side.
 
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -57,8 +57,8 @@ test(unsigned p1, unsigned p2)
   triangulation.execute_coarsening_and_refinement();
 
   hp::FECollection<dim> fe;
-  fe.push_back(FE_Nedelec<dim>(p1));
-  fe.push_back(FE_Nedelec<dim>(p2));
+  fe.push_back(FE_NedelecSZ<dim>(p1));
+  fe.push_back(FE_NedelecSZ<dim>(p2));
 
   deallog << "Testing " << fe[0].get_name() << " vs. " << fe[1].get_name()
           << std::endl;

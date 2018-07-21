@@ -49,10 +49,10 @@ DEAL::Generated :
 DEAL::FE_RaviartThomasNodal<3>(1)
 DEAL::Read FE_Nedelec(1)
 DEAL::Generated :
-DEAL::FE_Nedelec<2>(1)
+DEAL::FE_NedelecSZ<2>(1)
 DEAL::Read FE_Nedelec(1)
 DEAL::Generated :
-DEAL::FE_Nedelec<3>(1)
+DEAL::FE_NedelecSZ<3>(1)
 DEAL::Read FE_DGPNonparametric(1)
 DEAL::Generated :
 DEAL::FE_DGPNonparametric<1>(1)
@@ -142,10 +142,10 @@ DEAL::Generated :
 DEAL::FE_RaviartThomasNodal<3>(2)
 DEAL::Read FE_Nedelec(2)
 DEAL::Generated :
-DEAL::FE_Nedelec<2>(2)
+DEAL::FE_NedelecSZ<2>(2)
 DEAL::Read FE_Nedelec(2)
 DEAL::Generated :
-DEAL::FE_Nedelec<3>(2)
+DEAL::FE_NedelecSZ<3>(2)
 DEAL::Read FE_DGPNonparametric(2)
 DEAL::Generated :
 DEAL::FE_DGPNonparametric<1>(2)

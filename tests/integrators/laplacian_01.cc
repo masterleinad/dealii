@@ -18,7 +18,7 @@
 // Output matrices and assert consistency of residuals
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 
 #include <deal.II/integrators/laplace.h>
 
@@ -340,7 +340,7 @@ test(Triangulation<dim> &tr)
   FE_DGQ<dim> q2(2);
   test_fe(tr, q2);
 
-  FE_Nedelec<dim> n1(1);
+  FE_NedelecSZ<dim> n1(1);
   test_fe(tr, n1);
 }
 

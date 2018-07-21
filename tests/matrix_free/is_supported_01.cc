@@ -24,7 +24,7 @@
 #include <deal.II/fe/fe_dgp_nonparametric.h>
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_face.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_p1nc.h>
 #include <deal.II/fe/fe_q.h>
@@ -72,7 +72,7 @@ main()
   print<2, 2>(FE_FaceP<2>(1));
   print<2, 2>(FE_FaceQ<2>(1));
   print<2, 2>(FE_P1NC());
-  print<2, 2>(FE_Nedelec<2>(1));
+  print<2, 2>(FE_NedelecSZ<2>(1));
   print<2, 2>(FE_Nothing<2>());
   print<1, 2>(FE_Q<1, 2>(1));
   print<2, 2>(FE_Q<2>(1));

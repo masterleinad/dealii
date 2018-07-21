@@ -1,5 +1,5 @@
 
-DEAL::FE=FESystem<2>[FE_Nedelec<2>(1)^2]
+DEAL::FE=FESystem<2>[FE_NedelecSZ<2>(1)^2]
 DEAL::  curls[q]= 0.00
 DEAL::  grads[q]= 19.6 1.00 1.00 -10.1
 DEAL::  curls[q]= 26.0
@@ -8,7 +8,7 @@ DEAL::  curls[q]= -30.0
 DEAL::  grads[q]= 27.6 -1.00 -31.0 -10.1
 DEAL::  curls[q]= 4.00
 DEAL::  grads[q]= 27.6 43.0 47.0 -2.14
-DEAL::FE=FESystem<3>[FE_Nedelec<3>(1)^2]
+DEAL::FE=FESystem<3>[FE_NedelecSZ<3>(1)^2]
 DEAL::  curls[q]= 0.00 0.00 1.42e-14
 DEAL::  grads[q]= -75.8 0.711 0.711 0.711 -86.9 0.711 0.711 0.711 34.6
 DEAL::  curls[q]= 0.00 -54.0 106.

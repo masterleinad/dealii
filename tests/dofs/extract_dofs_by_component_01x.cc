@@ -30,7 +30,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -53,7 +53,7 @@ check()
 
   // use a simpler finite element
   // than in the _01x test
-  FESystem<dim>   element(FE_DGQ<dim>(0), 1, FE_Nedelec<dim>(0), 1);
+  FESystem<dim>   element(FE_DGQ<dim>(0), 1, FE_NedelecSZ<dim>(0), 1);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 

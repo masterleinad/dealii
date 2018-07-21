@@ -29,7 +29,7 @@
 
 #include <deal.II/dofs/dof_accessor.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -104,7 +104,7 @@ template <int dim>
 inline void
 plot_shape_functions(const unsigned int degree)
 {
-  FE_Nedelec<dim>    element(degree);
+  FE_NedelecSZ<dim>  element(degree);
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, 0., 1.);
 

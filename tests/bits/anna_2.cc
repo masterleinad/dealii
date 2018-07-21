@@ -34,7 +34,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_base.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -70,7 +70,7 @@ private:
 
 template <int dim>
 SystemTest<dim>::SystemTest()
-  : fe(FE_Nedelec<dim>(0), 2, FE_Q<dim>(1), 1)
+  : fe(FE_NedelecSZ<dim>(0), 2, FE_Q<dim>(1), 1)
   , dof_handler(triangulation)
 {}
 

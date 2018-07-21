@@ -27,7 +27,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
@@ -215,7 +215,7 @@ test(const unsigned int p)
   deallog << "dim=" << dim << ", n_cells=" << triangulation.n_active_cells()
           << std::endl;
 
-  FESystem<dim>   fe(FE_Nedelec<dim>(p), 1, FE_Q<dim>(1), 1);
+  FESystem<dim>   fe(FE_NedelecSZ<dim>(p), 1, FE_Q<dim>(1), 1);
   DoFHandler<dim> dof_handler(triangulation);
   dof_handler.distribute_dofs(fe);
 

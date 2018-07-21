@@ -15,7 +15,7 @@ DEAL::FE_DGQArbitraryNodes<2>(QGauss(2)) supported by MatrixFree: true
 DEAL::FE_FaceP<2>(1) supported by MatrixFree: false
 DEAL::FE_FaceQ<2>(1) supported by MatrixFree: false
 DEAL::FE_P1NC supported by MatrixFree: false
-DEAL::FE_Nedelec<2>(1) supported by MatrixFree: false
+DEAL::FE_NedelecSZ<2>(1) supported by MatrixFree: false
 DEAL::FE_Nothing<2>() supported by MatrixFree: false
 DEAL::FE_Q<1,2>(1) supported by MatrixFree: false
 DEAL::FE_Q<2>(1) supported by MatrixFree: true

@@ -27,5 +27,5 @@ test()
   if (dim > 1)
     // only p=1 implemented at present
     for (unsigned int p = 1; p < 2; ++p)
-      test_with_wrong_face_orientation(FE_Nedelec<dim>(p - 1), p, 1);
+      test_with_wrong_face_orientation(FE_NedelecSZ<dim>(p - 1), p, 1);
 }

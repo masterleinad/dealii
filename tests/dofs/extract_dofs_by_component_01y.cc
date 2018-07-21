@@ -34,7 +34,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -54,7 +54,7 @@ check()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr, -1, 1);
 
-  FESystem<dim>   element(FE_Nedelec<dim>(0), 2);
+  FESystem<dim>   element(FE_NedelecSZ<dim>(0), 2);
   DoFHandler<dim> dof(tr);
   dof.distribute_dofs(element);
 

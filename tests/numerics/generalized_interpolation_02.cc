@@ -16,7 +16,7 @@
 // Check that VectorTools::interpolate correctly recovers a
 // constant vector field for H1, Hdiv and Hcurl conforming elements.
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -50,10 +50,10 @@ main()
   // distorted mesh.
   test<3>(FE_RaviartThomas<3>(1), ConstantFunction<3>(1.0, 3), 2, true, true);
 
-  test<2>(FE_Nedelec<2>(0), ConstantFunction<2>(1.0, 2), 1, false, true);
-  test<2>(FE_Nedelec<2>(1), ConstantFunction<2>(1.0, 2), 2, false, true);
-  test<2>(FE_Nedelec<2>(2), ConstantFunction<2>(1.0, 2), 3, false, true);
-  test<2>(FE_Nedelec<2>(0), ConstantFunction<2>(1.0, 2), 1, true, true);
-  test<2>(FE_Nedelec<2>(1), ConstantFunction<2>(1.0, 2), 2, true, true);
-  test<2>(FE_Nedelec<2>(2), ConstantFunction<2>(1.0, 2), 3, true, true);
+  test<2>(FE_NedelecSZ<2>(0), ConstantFunction<2>(1.0, 2), 1, false, true);
+  test<2>(FE_NedelecSZ<2>(1), ConstantFunction<2>(1.0, 2), 2, false, true);
+  test<2>(FE_NedelecSZ<2>(2), ConstantFunction<2>(1.0, 2), 3, false, true);
+  test<2>(FE_NedelecSZ<2>(0), ConstantFunction<2>(1.0, 2), 1, true, true);
+  test<2>(FE_NedelecSZ<2>(1), ConstantFunction<2>(1.0, 2), 2, true, true);
+  test<2>(FE_NedelecSZ<2>(2), ConstantFunction<2>(1.0, 2), 3, true, true);
 }

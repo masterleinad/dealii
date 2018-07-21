@@ -22,7 +22,7 @@
 
 #include <deal.II/dofs/dof_handler.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_system.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -84,12 +84,12 @@ test(unsigned order)
   AffineConstraints<double> constraints_fe, constraints_fes;
 
   {
-    FE_Nedelec<3> fe(order);
+    FE_NedelecSZ<3> fe(order);
     test_boundary_values(fe, constraints_fe);
   }
 
   {
-    FESystem<3> fe(FE_Nedelec<3>(order), 1);
+    FESystem<3> fe(FE_NedelecSZ<3>(order), 1);
     test_boundary_values(fe, constraints_fes);
   }
 

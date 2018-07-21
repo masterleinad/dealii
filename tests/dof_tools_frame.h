@@ -22,7 +22,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -102,7 +102,7 @@ check_grid(const Triangulation<dim> &tr)
   FE_DGP<dim> dgp2(2);
   check(tr, dgp2);
 
-  FE_Nedelec<dim> nedelec1(1);
+  FE_NedelecSZ<dim> nedelec1(1);
   check(tr, nedelec1);
 
   FE_RaviartThomas<dim> rt0(0);

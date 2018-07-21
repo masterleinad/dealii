@@ -16,7 +16,7 @@
 // Check projection property of VectorTools::interpolate for a complex,
 // staggered system of Hdiv / Hcurl / L2 conforming spaces.
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -35,7 +35,7 @@ main()
                    2,
                    FE_Q<dim>(1),
                    1,
-                   FESystem<dim>(FE_Nedelec<dim>(2), 2),
+                   FESystem<dim>(FE_NedelecSZ<dim>(2), 2),
                    1,
                    FESystem<dim>(FE_Q<dim>(1), dim),
                    1);

@@ -1120,70 +1120,70 @@ DEAL::(Empty matrix)
 DEAL::FE_DGP<3>(3)  vs.  FE_DGP<3>(3)
 DEAL::(Empty matrix)
 DEAL::Checking Nedelec0 against Nedelec0 in 2d:
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
 DEAL::Checking Nedelec0 against Nedelec0 in 2d:
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
-DEAL::FE_Nedelec<2>(0)  vs.  FE_Nedelec<2>(0)
+DEAL::FE_NedelecSZ<2>(0)  vs.  FE_NedelecSZ<2>(0)
 DEAL::1.0000000 1.0000000
 DEAL::1.0000000
 DEAL::1.0000000 1.0000000 
 DEAL::Checking Nedelec0 against Nedelec0 in 3d:
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
 DEAL::Checking Nedelec0 against Nedelec0 in 3d:
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 
-DEAL::FE_Nedelec<3>(0)  vs.  FE_Nedelec<3>(0)
+DEAL::FE_NedelecSZ<3>(0)  vs.  FE_NedelecSZ<3>(0)
 DEAL::1.0000000 1.0000000
 DEAL::2.0000000
 DEAL::1.0000000 0 1.0000000 0 1.0000000 0 1.0000000 0 

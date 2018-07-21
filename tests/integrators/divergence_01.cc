@@ -18,7 +18,7 @@
 // Output matrices and assert consistency of residuals
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -229,7 +229,7 @@ void
 test(Triangulation<dim> &tr)
 {
   FE_DGQ<dim>           q1(1);
-  FE_Nedelec<dim>       n1(1);
+  FE_NedelecSZ<dim>     n1(1);
   FE_RaviartThomas<dim> r1(1);
   FESystem<dim>         s1(q1, dim);
 

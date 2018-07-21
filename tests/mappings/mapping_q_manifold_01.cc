@@ -21,7 +21,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/mapping_q.h>
@@ -244,7 +244,7 @@ main()
       test<dim>(FE_Q<dim>(QGaussLobatto<1>(p + 1)));
 
       // test<dim>(FE_RaviartThomas<dim> (p));
-      // test<dim>(FE_Nedelec<dim> (p));
+      // test<dim>(FE_NedelecSZ<dim> (p));
       // test<dim>(FESystem<dim> (FE_Q<dim>(p), dim));
     }
 }

@@ -1,5 +1,5 @@
 
-DEAL::FE=FE_Nedelec<2>(1)
+DEAL::FE=FE_NedelecSZ<2>(1)
 DEAL::Cell nodes:
 DEAL::0: ( -0.70710678 -0.70710678 )
 DEAL::1: ( 0.0000000 -1.0000000 )
@@ -140,7 +140,7 @@ DEAL::2: ( 0.50000000 0.50000000 )
 DEAL::3: ( 0.29289322 0.29289322 )
 DEAL::OK: cell bulk and boundary integrals match...
 
-DEAL::FE=FE_Nedelec<3>(1)
+DEAL::FE=FE_NedelecSZ<3>(1)
 DEAL::Cell nodes:
 DEAL::0: ( -0.21132487 -0.21132487 -0.21132487 )
 DEAL::1: ( 0.0000000 -0.21132487 -0.21132487 )

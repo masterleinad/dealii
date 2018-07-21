@@ -48,7 +48,7 @@ author: Anna Schneebeli, February 2003
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
@@ -136,7 +136,7 @@ BoundaryFunction<dim>::vector_value(const Point<dim> &,
 // second component: Q1_Element
 template <int dim>
 ImposeBC<dim>::ImposeBC()
-  : fe(FE_Nedelec<dim>(0), 1, FE_Q<dim>(1), 1)
+  : fe(FE_NedelecSZ<dim>(0), 1, FE_Q<dim>(1), 1)
   , dof_handler(triangulation)
 {}
 

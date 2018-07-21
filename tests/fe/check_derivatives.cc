@@ -24,7 +24,7 @@
 #include <deal.II/fe/fe_dgp_monomial.h>
 #include <deal.II/fe/fe_dgp_nonparametric.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_q_hierarchical.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
@@ -108,8 +108,8 @@ check1<FE_Nedelec>(const unsigned int min_degree, const unsigned int max_degree)
 {
   for (unsigned int degree = min_degree; degree <= max_degree; ++degree)
     {
-      test<2>(FE_Nedelec<2>(degree), QGauss<2>(degree + 1));
-      test<3>(FE_Nedelec<3>(degree), QGauss<3>(degree + 1));
+      test<2>(FE_NedelecSZ<2>(degree), QGauss<2>(degree + 1));
+      test<3>(FE_NedelecSZ<3>(degree), QGauss<3>(degree + 1));
     }
 }
 

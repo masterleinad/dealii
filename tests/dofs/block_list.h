@@ -21,7 +21,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 
@@ -75,8 +75,8 @@ test_global_refinement(
   //  FE_Q<dim> fe3(1);
   FE_RaviartThomas<dim> fe4(0);
   FE_RaviartThomas<dim> fe5(1);
-  FE_Nedelec<dim>       fe6(0);
-  FE_Nedelec<dim>       fe7(1);
+  FE_NedelecSZ<dim>     fe6(0);
+  FE_NedelecSZ<dim>     fe7(1);
 
   deallog.push("Square");
   test_block_list(trc, fe1);
@@ -116,7 +116,7 @@ test_global_refinement_parallel(
   FE_DGQ<dim>           fe2(1);
   FE_Q<dim>             fe3(1);
   FE_RaviartThomas<dim> fe4(0);
-  FE_Nedelec<dim>       fe6(0);
+  FE_NedelecSZ<dim>     fe6(0);
 
   deallog.push("L");
   test_block_list(trl, fe1);

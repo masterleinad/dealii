@@ -30,7 +30,7 @@ char logname[] = "output";
 #include <deal.II/dofs/dof_accessor.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_refinement.h>
@@ -73,8 +73,8 @@ test()
   triangulation.execute_coarsening_and_refinement();
 
   hp::FECollection<dim> fe;
-  fe.push_back(FE_Nedelec<dim>(1));
-  fe.push_back(FE_Nedelec<dim>(2));
+  fe.push_back(FE_NedelecSZ<dim>(1));
+  fe.push_back(FE_NedelecSZ<dim>(2));
 
   hp::DoFHandler<dim> dof_handler(triangulation);
 

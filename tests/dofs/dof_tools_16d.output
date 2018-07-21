@@ -4653,7 +4653,7 @@ DEAL::5
 DEAL::7
 DEAL::37
 DEAL::100
-DEAL::Checking FE_DGQ<2>(3)1FE_Nedelec<2>(0)2 in 2d:
+DEAL::Checking FE_DGQ<2>(3)1FE_NedelecSZ<2>(0)2 in 2d:
 DEAL::0 
 DEAL::0 
 DEAL::
@@ -4854,7 +4854,7 @@ DEAL::1
 DEAL::2
 DEAL::4
 DEAL::2
-DEAL::Checking FE_Nedelec<2>(0)1FESystem<2>(FE_DGQ<2>(1),2)1FESystem<2>(FE_Q<2>(2),1, FE_Nedelec<2>(0),2)2 in 2d:
+DEAL::Checking FE_NedelecSZ<2>(0)1FESystem<2>(FE_DGQ<2>(1),2)1FESystem<2>(FE_Q<2>(2),1, FE_NedelecSZ<2>(0),2)2 in 2d:
 DEAL::0 1 
 DEAL::0 1 
 DEAL::0 1 

@@ -22,7 +22,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -251,9 +251,9 @@ run2d(unsigned int degree)
   deallog.push(prefix.str());
   deallog << "Setup" << std::endl;
 
-  FE_Q<2>       h1(degree + 1);
-  FE_Nedelec<2> hdiv(degree);
-  FE_DGQ<2>     l2(degree);
+  FE_Q<2>         h1(degree + 1);
+  FE_NedelecSZ<2> hdiv(degree);
+  FE_DGQ<2>       l2(degree);
 
   FESystem<2> fe(h1, 1, hdiv, 1, l2, 1);
 
@@ -293,7 +293,7 @@ run3d(unsigned int degree)
   FE_Q<3> h1(degree + 1);
   if (debugging)
     deallog << "H1" << std::endl;
-  FE_Nedelec<3> hcurl(degree);
+  FE_NedelecSZ<3> hcurl(degree);
   if (debugging)
     deallog << "Hcurl" << std::endl;
   FE_RaviartThomas<3> hdiv(degree);

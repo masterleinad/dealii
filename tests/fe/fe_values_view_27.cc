@@ -23,7 +23,7 @@
 
 #include <deal.II/dofs/dof_handler.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_q1.h>
@@ -101,7 +101,7 @@ test_hyper_cube()
   Triangulation<dim> tr;
   GridGenerator::hyper_cube(tr);
 
-  FESystem<dim> fe(FE_Nedelec<dim>(1), 2);
+  FESystem<dim> fe(FE_NedelecSZ<dim>(1), 2);
   test(tr, fe);
 }
 

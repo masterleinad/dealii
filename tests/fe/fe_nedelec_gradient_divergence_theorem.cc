@@ -24,7 +24,7 @@
 #include <deal.II/dofs/dof_handler.h>
 
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
 #include <deal.II/fe/fe_system.h>
@@ -164,7 +164,7 @@ test_hyper_ball(const double tolerance)
 
   tr.refine_global(1);
 
-  FE_Nedelec<dim> fe(2);
+  FE_NedelecSZ<dim> fe(2);
   test(tr, fe, tolerance);
 }
 

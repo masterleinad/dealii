@@ -1,7 +1,7 @@
 
 DEAL::2d
 Rectangular grid:
-dim: 2	FE_Nedelec<2>(1)
+dim: 2	FE_NedelecSZ<2>(1)
 DEAL::DoFs		||u-u_h||	curl(u_h)	div(u_h)
 DEAL::144		0.1271972	0.0000000	0
 DEAL::544		0.0323854	0.0000000	0
@@ -27,7 +27,7 @@ DEAL::3136		0.0081098	0.0000000	0
 DEAL::12416		0.0020308	0.0000000	0
 DEAL::
 Affine grid:
-dim: 2	FE_Nedelec<2>(1)
+dim: 2	FE_NedelecSZ<2>(1)
 DEAL::DoFs		||u-u_h||	curl(u_h)	div(u_h)
 DEAL::144		0.1268987	-0.0106046	0
 DEAL::544		0.0320135	-0.0018292	0
@@ -53,7 +53,7 @@ DEAL::3136		0.0091760	0.0000056	0.0000408
 DEAL::12416		0.0022982	0.0000007	0.0000050
 DEAL::
 Non-affine grid:
-dim: 2	FE_Nedelec<2>(1)
+dim: 2	FE_NedelecSZ<2>(1)
 DEAL::DoFs		||u-u_h||	curl(u_h)	div(u_h)
 DEAL::144		0.1534343	0.0208723	0
 DEAL::544		0.0378460	0.0054624	0

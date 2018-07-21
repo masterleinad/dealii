@@ -1,6 +1,6 @@
 
-DEAL::FE_Nedelec<2>(2): bdry norm 0
-DEAL::FE_Nedelec<2>(2): face norm 0
+DEAL::FE_NedelecSZ<2>(2): bdry norm 0
+DEAL::FE_NedelecSZ<2>(2): face norm 0
 DEAL::FE_RaviartThomas<2>(2): bdry norm 0
 DEAL::FE_RaviartThomas<2>(2): face norm 0
 DEAL::FE_RaviartThomas<2>(2): bdry norm 1143.78
@@ -10,8 +10,8 @@ DEAL::FESystem<2>[FE_DGQ<2>(1)^2]: bdry norm 52.2707
 DEAL::FESystem<2>[FE_DGQ<2>(1)^2]: face norm 4.28174
 DEAL::FESystem<2>[FE_DGQ<2>(1)^2]: face norm 4.28174
 DEAL::
-DEAL::FE_Nedelec<3>(2): bdry norm 0
-DEAL::FE_Nedelec<3>(2): face norm 0
+DEAL::FE_NedelecSZ<3>(2): bdry norm 0
+DEAL::FE_NedelecSZ<3>(2): face norm 0
 DEAL::FE_RaviartThomas<3>(2): bdry norm 0
 DEAL::FE_RaviartThomas<3>(2): face norm 0
 DEAL::FE_RaviartThomas<3>(2): bdry norm 5869.16

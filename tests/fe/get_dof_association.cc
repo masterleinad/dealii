@@ -16,7 +16,7 @@
 // test FiniteElement::get_dof_association() with a couple of elements
 
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 
 #include <iostream>
@@ -62,9 +62,9 @@ main()
   test(FE_Q<2>(2));
   test(FE_Q<3>(2));
 
-  test(FE_Nedelec<2>(0));
-  test(FE_Nedelec<3>(0));
+  test(FE_NedelecSZ<2>(0));
+  test(FE_NedelecSZ<3>(0));
 
-  test(FE_Nedelec<2>(1));
-  test(FE_Nedelec<3>(1));
+  test(FE_NedelecSZ<2>(1));
+  test(FE_NedelecSZ<3>(1));
 }

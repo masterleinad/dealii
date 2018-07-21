@@ -20,7 +20,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
@@ -180,8 +180,8 @@ test()
     //           new FE_DGP<dim>(3),
 
     // a non-primitive FE
-    (dim != 1 ? new FE_Nedelec<dim>(0) : nullptr),
-    (dim != 1 ? new FE_Nedelec<dim>(1) : nullptr),
+    (dim != 1 ? new FE_NedelecSZ<dim>(0) : nullptr),
+    (dim != 1 ? new FE_NedelecSZ<dim>(1) : nullptr),
 
     // some composed elements
     // of increasing
@@ -222,17 +222,17 @@ test()
     // with scalar and Nedelec
     // elements, to make things
     // really difficult
-    (dim != 1 ? new FESystem<dim>(FE_Nedelec<dim>(0), 2) : nullptr),
-    (dim != 1 ? new FESystem<dim>(FE_Nedelec<dim>(0), 2, FE_Q<dim>(2), 2) :
+    (dim != 1 ? new FESystem<dim>(FE_NedelecSZ<dim>(0), 2) : nullptr),
+    (dim != 1 ? new FESystem<dim>(FE_NedelecSZ<dim>(0), 2, FE_Q<dim>(2), 2) :
                 nullptr),
-    (dim != 1 ?
-       new FESystem<dim>(FE_Nedelec<dim>(0),
-                         2,
-                         FE_DGQ<dim>(2),
-                         2,
-                         FESystem<dim>(FE_Nedelec<dim>(0), 2, FE_Q<dim>(2), 2),
-                         2) :
-       nullptr),
+    (dim != 1 ? new FESystem<dim>(
+                  FE_NedelecSZ<dim>(0),
+                  2,
+                  FE_DGQ<dim>(2),
+                  2,
+                  FESystem<dim>(FE_NedelecSZ<dim>(0), 2, FE_Q<dim>(2), 2),
+                  2) :
+                nullptr),
   };
 
   for (unsigned int i = 0; i < sizeof(fe_list) / sizeof(fe_list[0]); ++i)

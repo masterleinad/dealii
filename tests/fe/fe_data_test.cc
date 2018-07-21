@@ -25,7 +25,7 @@
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
 #include <deal.II/fe/fe_face.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_q_hierarchical.h>
 #include <deal.II/fe/fe_raviart_thomas.h>
@@ -79,10 +79,10 @@ test_2d_3d(std::vector<FiniteElement<dim> *> &fe_datas)
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 
   // Hcurl elements
-  FE_Nedelec<dim> *ned0 = new FE_Nedelec<dim>(0);
+  FE_NedelecSZ<dim> *ned0 = new FE_NedelecSZ<dim>(0);
   fe_datas.push_back(ned0);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
-  FE_Nedelec<dim> *ned1 = new FE_Nedelec<dim>(1);
+  FE_NedelecSZ<dim> *ned1 = new FE_NedelecSZ<dim>(1);
   fe_datas.push_back(ned1);
   deallog << (*fe_datas.rbegin())->get_name() << std::endl;
 }

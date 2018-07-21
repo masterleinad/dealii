@@ -24,8 +24,8 @@ main()
 {
   initlog();
 
-  CHECK_ALL(Nedelec, 0, 2);
-  CHECK_ALL(Nedelec, 0, 3);
-  CHECK_ALL(Nedelec, 1, 2);
-  CHECK_ALL(Nedelec, 1, 3);
+  CHECK_ALL(NedelecSZ, 0, 2);
+  CHECK_ALL(NedelecSZ, 0, 3);
+  CHECK_ALL(NedelecSZ, 1, 2);
+  CHECK_ALL(NedelecSZ, 1, 3);
 }

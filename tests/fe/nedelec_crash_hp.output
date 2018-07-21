@@ -1,12 +1,12 @@
 
-DEAL::Testing FE_Nedelec<2>(1) vs. FE_Nedelec<2>(1)
+DEAL::Testing FE_NedelecSZ<2>(1) vs. FE_NedelecSZ<2>(1)
     12 2:  0.5000000
     12 3:  -0.4330127
     13 3:  0.2500000
     34 2:  0.5000000
     34 3:  0.4330127
     35 3:  0.2500000
-DEAL::Testing FE_Nedelec<2>(1) vs. FE_Nedelec<2>(2)
+DEAL::Testing FE_NedelecSZ<2>(1) vs. FE_NedelecSZ<2>(2)
     12 2:  0.5000000
     12 3:  -0.4330127
     13 3:  0.2500000
@@ -15,7 +15,7 @@ DEAL::Testing FE_Nedelec<2>(1) vs. FE_Nedelec<2>(2)
     57 3:  0.4330127
     58 3:  0.2500000
     59 = 0
-DEAL::Testing FE_Nedelec<2>(2) vs. FE_Nedelec<2>(1)
+DEAL::Testing FE_NedelecSZ<2>(2) vs. FE_NedelecSZ<2>(1)
     5 = 0
     24 3:  0.5000000
     24 4:  -0.4330127
@@ -23,7 +23,7 @@ DEAL::Testing FE_Nedelec<2>(2) vs. FE_Nedelec<2>(1)
     46 3:  0.5000000
     46 4:  0.4330127
     47 4:  0.2500000
-DEAL::Testing FE_Nedelec<2>(2) vs. FE_Nedelec<2>(2)
+DEAL::Testing FE_NedelecSZ<2>(2) vs. FE_NedelecSZ<2>(2)
     24 3:  0.5000000
     24 4:  -0.4330127
     25 4:  0.2500000
@@ -34,7 +34,7 @@ DEAL::Testing FE_Nedelec<2>(2) vs. FE_Nedelec<2>(2)
     70 4:  0.2500000
     70 5:  0.4841229
     71 5:  0.1250000
-DEAL::Testing FE_Nedelec<3>(1) vs. FE_Nedelec<3>(1)
+DEAL::Testing FE_NedelecSZ<3>(1) vs. FE_NedelecSZ<3>(1)
     54 2:  0.5000000
     54 3:  -0.4330127
     55 3:  0.2500000
@@ -119,7 +119,7 @@ DEAL::Testing FE_Nedelec<3>(1) vs. FE_Nedelec<3>(1)
     310 30:  0.1250000
     310 31:  0.1082532
     311 31:  0.06250000
-DEAL::Testing FE_Nedelec<3>(1) vs. FE_Nedelec<3>(2)
+DEAL::Testing FE_NedelecSZ<3>(1) vs. FE_NedelecSZ<3>(2)
     54 2:  0.5000000
     54 3:  -0.4330127
     55 3:  0.2500000
@@ -248,7 +248,7 @@ DEAL::Testing FE_Nedelec<3>(1) vs. FE_Nedelec<3>(2)
     780 = 0
     781 = 0
     782 = 0
-DEAL::Testing FE_Nedelec<3>(2) vs. FE_Nedelec<3>(1)
+DEAL::Testing FE_NedelecSZ<3>(2) vs. FE_NedelecSZ<3>(1)
     5 = 0
     17 = 0
     29 = 0
@@ -345,7 +345,7 @@ DEAL::Testing FE_Nedelec<3>(2) vs. FE_Nedelec<3>(1)
     400 54:  0.1250000
     400 55:  0.1082532
     401 55:  0.06250000
-DEAL::Testing FE_Nedelec<3>(2) vs. FE_Nedelec<3>(2)
+DEAL::Testing FE_NedelecSZ<3>(2) vs. FE_NedelecSZ<3>(2)
     144 3:  0.5000000
     144 4:  -0.4330127
     145 4:  0.2500000

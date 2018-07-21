@@ -14,13 +14,13 @@
 // ---------------------------------------------------------------------
 
 
-// Test FE_Nedelec<3> for meshes with faces with non-standard orientation.
+// Test FE_NedelecSZ<3> for meshes with faces with non-standard orientation.
 
 #include <deal.II/base/quadrature_lib.h>
 
 #include <deal.II/dofs/dof_handler.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -102,11 +102,11 @@ void create_triangulation(Triangulation<3> &triangulation)
 }
 
 void
-evaluate(const FE_Nedelec<3> & fe,
-         const DoFHandler<3> & dof_handler_ref,
-         const Vector<double> &u_ref,
-         const DoFHandler<3> & dof_handler,
-         const Vector<double> &u)
+evaluate(const FE_NedelecSZ<3> &fe,
+         const DoFHandler<3> &  dof_handler_ref,
+         const Vector<double> & u_ref,
+         const DoFHandler<3> &  dof_handler,
+         const Vector<double> & u)
 {
   const FEValuesExtractors::Vector component(0);
   const QGauss<3>                  quadrature(2);
@@ -171,8 +171,8 @@ main()
 
   create_reference_triangulation(tria_ref);
 
-  FE_Nedelec<3> fe(0);
-  DoFHandler<3> dof_handler_ref(tria_ref);
+  FE_NedelecSZ<3> fe(0);
+  DoFHandler<3>   dof_handler_ref(tria_ref);
 
   dof_handler_ref.distribute_dofs(fe);
 

@@ -42,7 +42,7 @@
 #include <deal.II/dofs/dof_handler.h>
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_values.h>
 
 #include <deal.II/grid/grid_generator.h>
@@ -94,7 +94,7 @@ private:
                             process_solution(const unsigned int cycle);
   Triangulation<dim>        triangulation;
   DoFHandler<dim>           dof_handler;
-  FE_Nedelec<dim>           fe;
+  FE_NedelecSZ<dim>         fe;
   AffineConstraints<double> constraints;
   SparsityPattern           sparsity_pattern;
   SparseMatrix<double>      system_matrix;

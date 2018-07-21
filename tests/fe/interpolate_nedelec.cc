@@ -16,18 +16,18 @@
 
 #include <deal.II/base/quadrature_lib.h>
 
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 
 #include "interpolate_common.h"
 
 
-// FE_Nedelec<dim>::interpolate(...)
+// FE_NedelecSZ<dim>::interpolate(...)
 
 template <int dim>
 void
 check1(const Function<dim> &f, const unsigned int degree)
 {
-  FE_Nedelec<dim> fe(degree);
+  FE_NedelecSZ<dim> fe(degree);
   deallog << fe.get_name() << ' ';
   deallog << fe.get_generalized_support_points().size() << ' ';
 

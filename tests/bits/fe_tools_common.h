@@ -24,7 +24,7 @@
 
 #include <deal.II/fe/fe_dgp.h>
 #include <deal.II/fe/fe_dgq.h>
-#include <deal.II/fe/fe_nedelec.h>
+#include <deal.II/fe/fe_nedelec_sz.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_tools.h>
@@ -277,12 +277,12 @@ main()
 
                                              // systems with Nedelec elements
             CHECK_SYS2 (FE_DGQ<2>(3), 1,
-                        FE_Nedelec<2>(0), 2,
+                        FE_NedelecSZ<2>(0), 2,
                         2);
-            CHECK_SYS3(FE_Nedelec<2>(0), 1,
+            CHECK_SYS3(FE_NedelecSZ<2>(0), 1,
                        FESystem<2>(FE_DGQ<2>(3),3), 1,
                        FESystem<2>(FE_Q<2>(2),3,
-                                   FE_Nedelec<2>(0),2),2,
+                                   FE_NedelecSZ<2>(0),2),2,
                        2);
       */
       return 0;
