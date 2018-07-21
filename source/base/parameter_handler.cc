@@ -1081,9 +1081,9 @@ ParameterHandler::recursively_print_parameters(
                         p->second.get<std::string>("documentation"),
                         78 - overall_indent_level * 2 - 2);
 
-                    for (unsigned int i = 0; i < doc_lines.size(); ++i)
+                    for (const auto &doc_line : doc_lines)
                       out << std::setw(overall_indent_level * 2) << ""
-                          << "# " << doc_lines[i] << '\n';
+                          << "# " << doc_line << '\n';
                   }
 
 
@@ -1568,9 +1568,9 @@ ParameterHandler::print_parameters_section(
                         p->second.get<std::string>("documentation"),
                         78 - overall_indent_level * 2 - 2);
 
-                    for (unsigned int i = 0; i < doc_lines.size(); ++i)
+                    for (const auto &doc_line : doc_lines)
                       out << std::setw(overall_indent_level * 2) << ""
-                          << "# " << doc_lines[i] << std::endl;
+                          << "# " << doc_line << std::endl;
                   }
 
 

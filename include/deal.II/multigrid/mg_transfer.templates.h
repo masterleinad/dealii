@@ -211,12 +211,8 @@ namespace internal
   {
     // we should have i->second == i->first, therefore we can use the same
     // function for both copying to mg as well as copying from mg
-    for (std::vector<std::pair<types::global_dof_index,
-                               types::global_dof_index>>::const_iterator i =
-           copy_indices.begin();
-         i != copy_indices.end();
-         ++i)
-      dst(i->first) = src(i->first);
+    for (const auto &copy_index : copy_indices)
+      dst(copy_index.first) = src(copy_index.first);
     dst.compress(VectorOperation::insert);
   }
 

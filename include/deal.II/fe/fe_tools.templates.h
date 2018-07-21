@@ -642,8 +642,8 @@ namespace FETools
         {
           // The base element establishing a component does not make sense in
           // this case. Set up to something meaningless:
-          for (unsigned int i = 0; i < component_to_base_table.size(); i++)
-            component_to_base_table[i] =
+          for (auto &base_element : component_to_base_table)
+            base_element =
               std::make_pair(std::make_pair(numbers::invalid_unsigned_int,
                                             numbers::invalid_unsigned_int),
                              numbers::invalid_unsigned_int);

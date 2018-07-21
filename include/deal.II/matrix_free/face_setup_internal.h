@@ -174,10 +174,10 @@ namespace internal
 #  ifdef DEBUG
       // safety check
       if (use_active_cells)
-        for (unsigned int i = 0; i < cell_levels.size(); ++i)
+        for (auto &cell_level : cell_levels)
           {
             typename dealii::Triangulation<dim>::cell_iterator dcell(
-              &triangulation, cell_levels[i].first, cell_levels[i].second);
+              &triangulation, cell_level.first, cell_level.second);
             Assert(dcell->active(), ExcInternalError());
           }
 #  endif
@@ -697,11 +697,8 @@ namespace internal
 
       // step 2: append the ghost cells at the end of the locally owned
       // cells
-      for (std::set<std::pair<unsigned int, unsigned int>>::iterator it =
-             ghost_cells.begin();
-           it != ghost_cells.end();
-           ++it)
-        cell_levels.push_back(*it);
+      for (const auto &ghost_cell : ghost_cells)
+        cell_levels.push_back(ghost_cell);
 
       // step 3: clean up the cells close to the boundary
       std::sort(cells_close_to_boundary.begin(), cells_close_to_boundary.end());
@@ -1084,13 +1081,13 @@ namespace internal
           // to the face type
           for (unsigned int face = face_start; face < face_end; ++face)
             {
-              for (unsigned int type = 0; type < faces_type.size(); ++type)
+              for (auto &type : faces_type)
                 {
                   // Compare current face with first face of type type
-                  if (compare_faces_for_vectorization(
-                        faces_in[face], faces_in[faces_type[type][0]]))
+                  if (compare_faces_for_vectorization(faces_in[face],
+                                                      faces_in[type[0]]))
                     {
-                      faces_type[type].push_back(face);
+                      type.push_back(face);
                       goto face_found;
                     }
                 }
@@ -1103,17 +1100,13 @@ namespace internal
           std::set<FaceToCellTopology<vectorization_width>,
                    FaceComparator<vectorization_width>>
             new_faces;
-          for (unsigned int type = 0; type < faces_type.size(); ++type)
+          for (auto &type : faces_type)
             {
-              macro_face.interior_face_no =
-                faces_in[faces_type[type][0]].interior_face_no;
-              macro_face.exterior_face_no =
-                faces_in[faces_type[type][0]].exterior_face_no;
-              macro_face.subface_index =
-                faces_in[faces_type[type][0]].subface_index;
-              macro_face.face_orientation =
-                faces_in[faces_type[type][0]].face_orientation;
-              unsigned int               no_faces = faces_type[type].size();
+              macro_face.interior_face_no = faces_in[type[0]].interior_face_no;
+              macro_face.exterior_face_no = faces_in[type[0]].exterior_face_no;
+              macro_face.subface_index    = faces_in[type[0]].subface_index;
+              macro_face.face_orientation = faces_in[type[0]].face_orientation;
+              unsigned int               no_faces = type.size();
               std::vector<unsigned char> touched(no_faces, 0);
 
               // do two passes through the data. The first is to identify
@@ -1122,8 +1115,7 @@ namespace internal
               // all the rest
               unsigned int n_vectorized = 0;
               for (unsigned int f = 0; f < no_faces; ++f)
-                if (faces_in[faces_type[type][f]].cells_interior[0] %
-                      vectorization_width ==
+                if (faces_in[type[f]].cells_interior[0] % vectorization_width ==
                     0)
                   {
                     bool is_contiguous = true;
@@ -1131,23 +1123,19 @@ namespace internal
                       is_contiguous = false;
                     else
                       for (unsigned int v = 1; v < vectorization_width; ++v)
-                        if (faces_in[faces_type[type][f + v]]
-                              .cells_interior[0] !=
-                            faces_in[faces_type[type][f]].cells_interior[0] + v)
+                        if (faces_in[type[f + v]].cells_interior[0] !=
+                            faces_in[type[f]].cells_interior[0] + v)
                           is_contiguous = false;
                     if (is_contiguous)
                       {
                         AssertIndexRange(f,
-                                         faces_type[type].size() -
-                                           vectorization_width + 1);
+                                         type.size() - vectorization_width + 1);
                         for (unsigned int v = 0; v < vectorization_width; ++v)
                           {
                             macro_face.cells_interior[v] =
-                              faces_in[faces_type[type][f + v]]
-                                .cells_interior[0];
+                              faces_in[type[f + v]].cells_interior[0];
                             macro_face.cells_exterior[v] =
-                              faces_in[faces_type[type][f + v]]
-                                .cells_exterior[0];
+                              faces_in[type[f + v]].cells_exterior[0];
                             touched[f + v] = 1;
                           }
                         new_faces.insert(macro_face);
@@ -1165,9 +1153,9 @@ namespace internal
               for (auto f : untouched)
                 {
                   macro_face.cells_interior[v] =
-                    faces_in[faces_type[type][f]].cells_interior[0];
+                    faces_in[type[f]].cells_interior[0];
                   macro_face.cells_exterior[v] =
-                    faces_in[faces_type[type][f]].cells_exterior[0];
+                    faces_in[type[f]].cells_exterior[0];
                   ++v;
                   if (v == vectorization_width)
                     {
@@ -1196,8 +1184,7 @@ namespace internal
                       // postpone to the next partition
                       std::vector<unsigned int> untreated(v);
                       for (unsigned int f = 0; f < v; ++f)
-                        untreated[f] =
-                          faces_type[type][*(untouched.end() - 1 - f)];
+                        untreated[f] = type[*(untouched.end() - 1 - f)];
                       new_faces_type.push_back(untreated);
                     }
                 }

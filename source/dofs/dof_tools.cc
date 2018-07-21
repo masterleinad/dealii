@@ -1123,12 +1123,9 @@ namespace DoFTools
           dof_indices.resize(cell->get_fe().dofs_per_cell);
           cell->get_dof_indices(dof_indices);
 
-          for (std::vector<types::global_dof_index>::iterator it =
-                 dof_indices.begin();
-               it != dof_indices.end();
-               ++it)
-            if (!dof_set.is_element(*it))
-              global_dof_indices.insert(*it);
+          for (unsigned int &dof_index : dof_indices)
+            if (!dof_set.is_element(dof_index))
+              global_dof_indices.insert(dof_index);
         }
 
     dof_set.add_indices(global_dof_indices.begin(), global_dof_indices.end());
@@ -1165,9 +1162,9 @@ namespace DoFTools
         {
           dof_indices.resize(cell->get_fe().dofs_per_cell);
           cell->get_dof_indices(dof_indices);
-          for (unsigned int i = 0; i < dof_indices.size(); ++i)
-            if (!dof_set.is_element(dof_indices[i]))
-              dofs_on_ghosts.push_back(dof_indices[i]);
+          for (unsigned int dof_index : dof_indices)
+            if (!dof_set.is_element(dof_index))
+              dofs_on_ghosts.push_back(dof_index);
         }
 
     // sort, compress out duplicates, fill into index set
@@ -1213,9 +1210,9 @@ namespace DoFTools
 
         dof_indices.resize(cell->get_fe().dofs_per_cell);
         cell->get_mg_dof_indices(dof_indices);
-        for (unsigned int i = 0; i < dof_indices.size(); ++i)
-          if (!dof_set.is_element(dof_indices[i]))
-            dofs_on_ghosts.push_back(dof_indices[i]);
+        for (unsigned int dof_index : dof_indices)
+          if (!dof_set.is_element(dof_index))
+            dofs_on_ghosts.push_back(dof_index);
       }
 
     // sort, compress out duplicates, fill into index set
@@ -1500,11 +1497,8 @@ namespace DoFTools
             local_dof_indices.resize(cell->get_fe().dofs_per_cell);
             cell->get_dof_indices(local_dof_indices);
 
-            for (std::vector<types::global_dof_index>::iterator it =
-                   local_dof_indices.begin();
-                 it != local_dof_indices.end();
-                 ++it)
-              subdomain_halo_global_dof_indices.insert(*it);
+            for (unsigned int &local_dof_index : local_dof_indices)
+              subdomain_halo_global_dof_indices.insert(local_dof_index);
           }
 
         dof_set[subdomain_id].add_indices(
@@ -2499,8 +2493,8 @@ namespace DoFTools
           }
         else
           {
-            for (types::global_dof_index j = 0; j < indices.size(); ++j)
-              block_list.add(0, indices[j]);
+            for (unsigned int index : indices)
+              block_list.add(0, index);
           }
       }
   }
@@ -2734,8 +2728,8 @@ namespace DoFTools
               }
             else
               {
-                for (unsigned int j = 0; j < indices.size(); ++j)
-                  block_list.add(block, indices[j]);
+                for (unsigned int index : indices)
+                  block_list.add(block, index);
               }
           }
       }

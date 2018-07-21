@@ -1038,8 +1038,8 @@ MatrixFree<dim, Number>::initialize_indices(
                             .dofs_per_cell);
                         cell->neighbor_or_periodic_neighbor(f)
                           ->get_mg_dof_indices(dof_indices);
-                        for (unsigned int i = 0; i < dof_indices.size(); ++i)
-                          dof_info[no].ghost_dofs.push_back(dof_indices[i]);
+                        for (unsigned int &dof_index : dof_indices)
+                          dof_info[no].ghost_dofs.push_back(dof_index);
                       }
           }
         dof_info[no].assign_ghosts(cells_with_ghosts);
@@ -1302,12 +1302,12 @@ MatrixFree<dim, Number>::initialize_indices(
   constraint_pool_data.reserve(length);
   constraint_pool_row_index.reserve(constraint_values.constraints.size() + 1);
   constraint_pool_row_index.resize(1, 0);
-  for (unsigned int i = 0; i < constraints.size(); ++i)
+  for (auto &constraint : constraints)
     {
-      Assert(constraints[i] != nullptr, ExcInternalError());
+      Assert(constraint != nullptr, ExcInternalError());
       constraint_pool_data.insert(constraint_pool_data.end(),
-                                  constraints[i]->begin(),
-                                  constraints[i]->end());
+                                  constraint->begin(),
+                                  constraint->end());
       constraint_pool_row_index.push_back(constraint_pool_data.size());
     }
 

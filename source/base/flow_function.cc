@@ -281,9 +281,9 @@ namespace Functions
     for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for (unsigned int d = 0; d < values.size(); ++d)
-      for (unsigned int k = 0; k < values[d].size(); ++k)
-        values[d][k] = 0.;
+    for (auto &value : values)
+      for (unsigned int k = 0; k < value.size(); ++k)
+        value[k] = 0.;
   }
 
   //----------------------------------------------------------------------//
@@ -656,9 +656,9 @@ namespace Functions
     for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for (unsigned int d = 0; d < values.size(); ++d)
-      for (unsigned int k = 0; k < values[d].size(); ++k)
-        values[d][k] = 0.;
+    for (auto &value : values)
+      for (unsigned int k = 0; k < value.size(); ++k)
+        value[k] = 0.;
   }
 
 
@@ -769,9 +769,9 @@ namespace Functions
       }
     else
       {
-        for (unsigned int d = 0; d < values.size(); ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] = 0.;
+        for (auto &value : values)
+          for (unsigned int k = 0; k < value.size(); ++k)
+            value[k] = 0.;
       }
   }
 

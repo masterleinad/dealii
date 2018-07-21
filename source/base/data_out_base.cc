@@ -510,12 +510,11 @@ namespace DataOutBase
   {
     node_data.resize(existing_points.size() * node_dim);
 
-    for (Map3DPoint::const_iterator it = existing_points.begin();
-         it != existing_points.end();
-         ++it)
+    for (const auto &existing_point : existing_points)
       {
         for (unsigned int d = 0; d < node_dim; ++d)
-          node_data[node_dim * it->second + d] = it->first(d);
+          node_data[node_dim * existing_point.second + d] =
+            existing_point.first(d);
       }
   }
 
@@ -527,12 +526,10 @@ namespace DataOutBase
   {
     cell_data.resize(filtered_cells.size());
 
-    for (std::map<unsigned int, unsigned int>::const_iterator it =
-           filtered_cells.begin();
-         it != filtered_cells.end();
-         ++it)
+    for (const auto &filtered_cell : filtered_cells)
       {
-        cell_data[it->first] = it->second + local_node_offset;
+        cell_data[filtered_cell.first] =
+          filtered_cell.second + local_node_offset;
       }
   }
 
@@ -3250,8 +3247,8 @@ namespace DataOutBase
           out << '<' << flags.space_dimension_labels.at(spacedim_n) << "> ";
         }
 
-      for (unsigned int i = 0; i < data_names.size(); ++i)
-        out << '<' << data_names[i] << "> ";
+      for (const auto &data_name : data_names)
+        out << '<' << data_name << "> ";
       out << '\n';
     }
 
@@ -4051,15 +4048,13 @@ namespace DataOutBase
     double y_min = cells.begin()->vertices[0](1);
     double y_max = y_min;
 
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (const auto &cell : cells)
       for (unsigned int vertex = 0; vertex < 4; ++vertex)
         {
-          x_min = std::min(x_min, cell->vertices[vertex](0));
-          x_max = std::max(x_max, cell->vertices[vertex](0));
-          y_min = std::min(y_min, cell->vertices[vertex](1));
-          y_max = std::max(y_max, cell->vertices[vertex](1));
+          x_min = std::min(x_min, cell.vertices[vertex](0));
+          x_max = std::max(x_max, cell.vertices[vertex](0));
+          y_min = std::min(y_min, cell.vertices[vertex](1));
+          y_max = std::max(y_max, cell.vertices[vertex](1));
         }
 
     // scale in x-direction such that in the output 0 <= x <= 300. don't scale
@@ -4114,16 +4109,14 @@ namespace DataOutBase
 
     // now we've got all the information we need. write the cells. note: due to
     // the ordering, we traverse the list of cells back-to-front
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (const auto &cell : cells)
       {
         if (flags.draw_cells)
           {
             if (flags.shade_cells)
               {
                 const EpsFlags::RgbValues rgb_values =
-                  (*flags.color_function)(cell->color_value,
+                  (*flags.color_function)(cell.color_value,
                                           min_color_value,
                                           max_color_value);
 
@@ -4137,18 +4130,18 @@ namespace DataOutBase
             else
               out << "1 sg ";
 
-            out << (cell->vertices[0] - offset) * scale << " m "
-                << (cell->vertices[1] - offset) * scale << " l "
-                << (cell->vertices[3] - offset) * scale << " l "
-                << (cell->vertices[2] - offset) * scale << " lf" << '\n';
+            out << (cell.vertices[0] - offset) * scale << " m "
+                << (cell.vertices[1] - offset) * scale << " l "
+                << (cell.vertices[3] - offset) * scale << " l "
+                << (cell.vertices[2] - offset) * scale << " lf" << '\n';
           }
 
         if (flags.draw_mesh)
           out << "0 sg " // draw lines in black
-              << (cell->vertices[0] - offset) * scale << " m "
-              << (cell->vertices[1] - offset) * scale << " l "
-              << (cell->vertices[3] - offset) * scale << " l "
-              << (cell->vertices[2] - offset) * scale << " lx" << '\n';
+              << (cell.vertices[0] - offset) * scale << " m "
+              << (cell.vertices[1] - offset) * scale << " l "
+              << (cell.vertices[3] - offset) * scale << " l "
+              << (cell.vertices[2] - offset) * scale << " lx" << '\n';
       }
     out << "showpage" << '\n';
 
@@ -5111,30 +5104,26 @@ namespace DataOutBase
     // when writing, first write out all vector data, then handle the scalar
     // data sets that have been left over
     std::vector<bool> data_set_written(n_data_sets, false);
-    for (unsigned int n_th_vector = 0;
-         n_th_vector < nonscalar_data_ranges.size();
-         ++n_th_vector)
+    for (const auto &nonscalar_data_range : nonscalar_data_ranges)
       {
-        AssertThrow(
-          std::get<1>(nonscalar_data_ranges[n_th_vector]) >=
-            std::get<0>(nonscalar_data_ranges[n_th_vector]),
-          ExcLowerRange(std::get<1>(nonscalar_data_ranges[n_th_vector]),
-                        std::get<0>(nonscalar_data_ranges[n_th_vector])));
-        AssertThrow(
-          std::get<1>(nonscalar_data_ranges[n_th_vector]) < n_data_sets,
-          ExcIndexRange(std::get<1>(nonscalar_data_ranges[n_th_vector]),
-                        0,
-                        n_data_sets));
-        AssertThrow(std::get<1>(nonscalar_data_ranges[n_th_vector]) + 1 -
-                        std::get<0>(nonscalar_data_ranges[n_th_vector]) <=
+        AssertThrow(std::get<1>(nonscalar_data_range) >=
+                      std::get<0>(nonscalar_data_range),
+                    ExcLowerRange(std::get<1>(nonscalar_data_range),
+                                  std::get<0>(nonscalar_data_range)));
+        AssertThrow(std::get<1>(nonscalar_data_range) < n_data_sets,
+                    ExcIndexRange(std::get<1>(nonscalar_data_range),
+                                  0,
+                                  n_data_sets));
+        AssertThrow(std::get<1>(nonscalar_data_range) + 1 -
+                        std::get<0>(nonscalar_data_range) <=
                       3,
                     ExcMessage(
                       "Can't declare a vector with more than 3 components "
                       "in VTK"));
 
         // mark these components as already written:
-        for (unsigned int i = std::get<0>(nonscalar_data_ranges[n_th_vector]);
-             i <= std::get<1>(nonscalar_data_ranges[n_th_vector]);
+        for (unsigned int i = std::get<0>(nonscalar_data_range);
+             i <= std::get<1>(nonscalar_data_range);
              ++i)
           data_set_written[i] = true;
 
@@ -5142,16 +5131,15 @@ namespace DataOutBase
         // underscores unless a vector name has been specified
         out << "VECTORS ";
 
-        if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
-          out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
+        if (std::get<2>(nonscalar_data_range) != "")
+          out << std::get<2>(nonscalar_data_range);
         else
           {
-            for (unsigned int i =
-                   std::get<0>(nonscalar_data_ranges[n_th_vector]);
-                 i < std::get<1>(nonscalar_data_ranges[n_th_vector]);
+            for (unsigned int i = std::get<0>(nonscalar_data_range);
+                 i < std::get<1>(nonscalar_data_range);
                  ++i)
               out << data_names[i] << "__";
-            out << data_names[std::get<1>(nonscalar_data_ranges[n_th_vector])];
+            out << data_names[std::get<1>(nonscalar_data_range)];
           }
 
         out << " double" << '\n';
@@ -5159,35 +5147,26 @@ namespace DataOutBase
         // now write data. pad all vectors to have three components
         for (unsigned int n = 0; n < n_nodes; ++n)
           {
-            switch (std::get<1>(nonscalar_data_ranges[n_th_vector]) -
-                    std::get<0>(nonscalar_data_ranges[n_th_vector]))
+            switch (std::get<1>(nonscalar_data_range) -
+                    std::get<0>(nonscalar_data_range))
               {
                 case 0:
-                  out << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]), n)
+                  out << data_vectors(std::get<0>(nonscalar_data_range), n)
                       << " 0 0" << '\n';
                   break;
 
                 case 1:
-                  out << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]), n)
+                  out << data_vectors(std::get<0>(nonscalar_data_range), n)
                       << ' '
-                      << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]) + 1,
-                           n)
+                      << data_vectors(std::get<0>(nonscalar_data_range) + 1, n)
                       << " 0" << '\n';
                   break;
                 case 2:
-                  out << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]), n)
+                  out << data_vectors(std::get<0>(nonscalar_data_range), n)
                       << ' '
-                      << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]) + 1,
-                           n)
+                      << data_vectors(std::get<0>(nonscalar_data_range) + 1, n)
                       << ' '
-                      << data_vectors(
-                           std::get<0>(nonscalar_data_ranges[n_th_vector]) + 2,
-                           n)
+                      << data_vectors(std::get<0>(nonscalar_data_range) + 2, n)
                       << '\n';
                   break;
 
@@ -5375,14 +5354,11 @@ namespace DataOutBase
             << "</Cells>\n"
             << "  <PointData Scalars=\"scalars\">\n";
         std::vector<bool> data_set_written(data_names.size(), false);
-        for (unsigned int n_th_vector = 0;
-             n_th_vector < nonscalar_data_ranges.size();
-             ++n_th_vector)
+        for (const auto &nonscalar_data_range : nonscalar_data_ranges)
           {
             // mark these components as already written:
-            for (unsigned int i =
-                   std::get<0>(nonscalar_data_ranges[n_th_vector]);
-                 i <= std::get<1>(nonscalar_data_ranges[n_th_vector]);
+            for (unsigned int i = std::get<0>(nonscalar_data_range);
+                 i <= std::get<1>(nonscalar_data_range);
                  ++i)
               data_set_written[i] = true;
 
@@ -5390,17 +5366,15 @@ namespace DataOutBase
             // underscores unless a vector name has been specified
             out << "    <DataArray type=\"Float32\" Name=\"";
 
-            if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
-              out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
+            if (std::get<2>(nonscalar_data_range) != "")
+              out << std::get<2>(nonscalar_data_range);
             else
               {
-                for (unsigned int i =
-                       std::get<0>(nonscalar_data_ranges[n_th_vector]);
-                     i < std::get<1>(nonscalar_data_ranges[n_th_vector]);
+                for (unsigned int i = std::get<0>(nonscalar_data_range);
+                     i < std::get<1>(nonscalar_data_range);
                      ++i)
                   out << data_names[i] << "__";
-                out << data_names[std::get<1>(
-                  nonscalar_data_ranges[n_th_vector])];
+                out << data_names[std::get<1>(nonscalar_data_range)];
               }
 
             out << "\" NumberOfComponents=\"3\"></DataArray>\n";
@@ -5781,30 +5755,26 @@ namespace DataOutBase
 
     // We need to output in the same order as the write_vtu function does:
     std::vector<bool> data_set_written(n_data_sets, false);
-    for (unsigned int n_th_vector = 0;
-         n_th_vector < nonscalar_data_ranges.size();
-         ++n_th_vector)
+    for (const auto &nonscalar_data_range : nonscalar_data_ranges)
       {
-        AssertThrow(
-          std::get<1>(nonscalar_data_ranges[n_th_vector]) >=
-            std::get<0>(nonscalar_data_ranges[n_th_vector]),
-          ExcLowerRange(std::get<1>(nonscalar_data_ranges[n_th_vector]),
-                        std::get<0>(nonscalar_data_ranges[n_th_vector])));
-        AssertThrow(
-          std::get<1>(nonscalar_data_ranges[n_th_vector]) < n_data_sets,
-          ExcIndexRange(std::get<1>(nonscalar_data_ranges[n_th_vector]),
-                        0,
-                        n_data_sets));
-        AssertThrow(std::get<1>(nonscalar_data_ranges[n_th_vector]) + 1 -
-                        std::get<0>(nonscalar_data_ranges[n_th_vector]) <=
+        AssertThrow(std::get<1>(nonscalar_data_range) >=
+                      std::get<0>(nonscalar_data_range),
+                    ExcLowerRange(std::get<1>(nonscalar_data_range),
+                                  std::get<0>(nonscalar_data_range)));
+        AssertThrow(std::get<1>(nonscalar_data_range) < n_data_sets,
+                    ExcIndexRange(std::get<1>(nonscalar_data_range),
+                                  0,
+                                  n_data_sets));
+        AssertThrow(std::get<1>(nonscalar_data_range) + 1 -
+                        std::get<0>(nonscalar_data_range) <=
                       3,
                     ExcMessage(
                       "Can't declare a vector with more than 3 components "
                       "in VTK"));
 
         // mark these components as already written:
-        for (unsigned int i = std::get<0>(nonscalar_data_ranges[n_th_vector]);
-             i <= std::get<1>(nonscalar_data_ranges[n_th_vector]);
+        for (unsigned int i = std::get<0>(nonscalar_data_range);
+             i <= std::get<1>(nonscalar_data_range);
              ++i)
           data_set_written[i] = true;
 
@@ -5812,16 +5782,15 @@ namespace DataOutBase
         // underscores unless a vector name has been specified
         out << "    <PDataArray type=\"Float32\" Name=\"";
 
-        if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
-          out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
+        if (std::get<2>(nonscalar_data_range) != "")
+          out << std::get<2>(nonscalar_data_range);
         else
           {
-            for (unsigned int i =
-                   std::get<0>(nonscalar_data_ranges[n_th_vector]);
-                 i < std::get<1>(nonscalar_data_ranges[n_th_vector]);
+            for (unsigned int i = std::get<0>(nonscalar_data_range);
+                 i < std::get<1>(nonscalar_data_range);
                  ++i)
               out << data_names[i] << "__";
-            out << data_names[std::get<1>(nonscalar_data_ranges[n_th_vector])];
+            out << data_names[std::get<1>(nonscalar_data_range)];
           }
 
         out << "\" NumberOfComponents=\"3\" format=\"ascii\"/>\n";
@@ -5840,8 +5809,8 @@ namespace DataOutBase
     out << "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n";
     out << "    </PPoints>\n";
 
-    for (unsigned int i = 0; i < piece_names.size(); ++i)
-      out << "    <Piece Source=\"" << piece_names[i] << "\"/>\n";
+    for (const auto &piece_name : piece_names)
+      out << "    <Piece Source=\"" << piece_name << "\"/>\n";
 
     out << "  </PUnstructuredGrid>\n";
     out << "</VTKFile>\n";
@@ -5896,8 +5865,8 @@ namespace DataOutBase
                      const std::vector<std::string> &piece_names)
   {
     out << "!NBLOCKS " << piece_names.size() << '\n';
-    for (unsigned int i = 0; i < piece_names.size(); ++i)
-      out << piece_names[i] << '\n';
+    for (const auto &piece_name : piece_names)
+      out << piece_name << '\n';
 
     out << std::flush;
   }
@@ -6574,9 +6543,7 @@ namespace DataOutBase
     unsigned int triangle_counter = 0;
 
     // write the cells in the correct order
-    for (typename std::multiset<SvgCell>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (const auto &cell : cells)
       {
         Point<3> points3d_triangle[3];
 
@@ -6586,24 +6553,24 @@ namespace DataOutBase
             switch (triangle_index)
               {
                 case 0:
-                  points3d_triangle[0] = cell->vertices[0],
-                  points3d_triangle[1] = cell->vertices[1],
-                  points3d_triangle[2] = cell->center;
+                  points3d_triangle[0] = cell.vertices[0],
+                  points3d_triangle[1] = cell.vertices[1],
+                  points3d_triangle[2] = cell.center;
                   break;
                 case 1:
-                  points3d_triangle[0] = cell->vertices[1],
-                  points3d_triangle[1] = cell->vertices[3],
-                  points3d_triangle[2] = cell->center;
+                  points3d_triangle[0] = cell.vertices[1],
+                  points3d_triangle[1] = cell.vertices[3],
+                  points3d_triangle[2] = cell.center;
                   break;
                 case 2:
-                  points3d_triangle[0] = cell->vertices[3],
-                  points3d_triangle[1] = cell->vertices[2],
-                  points3d_triangle[2] = cell->center;
+                  points3d_triangle[0] = cell.vertices[3],
+                  points3d_triangle[1] = cell.vertices[2],
+                  points3d_triangle[2] = cell.center;
                   break;
                 case 3:
-                  points3d_triangle[0] = cell->vertices[2],
-                  points3d_triangle[1] = cell->vertices[0],
-                  points3d_triangle[2] = cell->center;
+                  points3d_triangle[0] = cell.vertices[2],
+                  points3d_triangle[1] = cell.vertices[0],
+                  points3d_triangle[2] = cell.center;
                   break;
                 default:
                   break;
@@ -6759,34 +6726,34 @@ namespace DataOutBase
 
             // draw current triangle
             double x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-            double x3 = cell->projected_center[0];
-            double y3 = cell->projected_center[1];
+            double x3 = cell.projected_center[0];
+            double y3 = cell.projected_center[1];
 
             switch (triangle_index)
               {
                 case 0:
-                  x1 = cell->projected_vertices[0][0],
-                  y1 = cell->projected_vertices[0][1],
-                  x2 = cell->projected_vertices[1][0],
-                  y2 = cell->projected_vertices[1][1];
+                  x1 = cell.projected_vertices[0][0],
+                  y1 = cell.projected_vertices[0][1],
+                  x2 = cell.projected_vertices[1][0],
+                  y2 = cell.projected_vertices[1][1];
                   break;
                 case 1:
-                  x1 = cell->projected_vertices[1][0],
-                  y1 = cell->projected_vertices[1][1],
-                  x2 = cell->projected_vertices[3][0],
-                  y2 = cell->projected_vertices[3][1];
+                  x1 = cell.projected_vertices[1][0],
+                  y1 = cell.projected_vertices[1][1],
+                  x2 = cell.projected_vertices[3][0],
+                  y2 = cell.projected_vertices[3][1];
                   break;
                 case 2:
-                  x1 = cell->projected_vertices[3][0],
-                  y1 = cell->projected_vertices[3][1],
-                  x2 = cell->projected_vertices[2][0],
-                  y2 = cell->projected_vertices[2][1];
+                  x1 = cell.projected_vertices[3][0],
+                  y1 = cell.projected_vertices[3][1],
+                  x2 = cell.projected_vertices[2][0],
+                  y2 = cell.projected_vertices[2][1];
                   break;
                 case 3:
-                  x1 = cell->projected_vertices[2][0],
-                  y1 = cell->projected_vertices[2][1],
-                  x2 = cell->projected_vertices[0][0],
-                  y2 = cell->projected_vertices[0][1];
+                  x1 = cell.projected_vertices[2][0],
+                  y1 = cell.projected_vertices[2][1],
+                  x2 = cell.projected_vertices[0][0],
+                  y2 = cell.projected_vertices[0][1];
                   break;
                 default:
                   break;
@@ -7078,18 +7045,18 @@ namespace DataOutBase
         << '\n';
 
     out << data_names.size() << '\n';
-    for (unsigned int i = 0; i < data_names.size(); ++i)
-      out << data_names[i] << '\n';
+    for (const auto &data_name : data_names)
+      out << data_name << '\n';
 
     out << patches.size() << '\n';
     for (unsigned int i = 0; i < patches.size(); ++i)
       out << patches[i] << '\n';
 
     out << nonscalar_data_ranges.size() << '\n';
-    for (unsigned int i = 0; i < nonscalar_data_ranges.size(); ++i)
-      out << std::get<0>(nonscalar_data_ranges[i]) << ' '
-          << std::get<1>(nonscalar_data_ranges[i]) << '\n'
-          << std::get<2>(nonscalar_data_ranges[i]) << '\n';
+    for (const auto &nonscalar_data_range : nonscalar_data_ranges)
+      out << std::get<0>(nonscalar_data_range) << ' '
+          << std::get<1>(nonscalar_data_range) << '\n'
+          << std::get<2>(nonscalar_data_range) << '\n';
 
     out << '\n';
     // make sure everything now gets to disk
@@ -8378,10 +8345,9 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
     const unsigned int             n_data_sets = data_names.size();
     std::vector<bool>              data_set_written(n_data_sets, false);
 
-    for (unsigned int n_th_vector = 0; n_th_vector < ranges.size();
-         ++n_th_vector)
+    for (const auto &range : ranges)
       {
-        const std::string &name = std::get<2>(ranges[n_th_vector]);
+        const std::string &name = std::get<2>(range);
         if (name != "")
           {
             Assert(all_names.find(name) == all_names.end(),
@@ -8390,8 +8356,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
                      "but '" +
                      name + "' is used more than once."));
             all_names.insert(name);
-            for (unsigned int i = std::get<0>(ranges[n_th_vector]);
-                 i <= std::get<1>(ranges[n_th_vector]);
+            for (unsigned int i = std::get<0>(range); i <= std::get<1>(range);
                  ++i)
               data_set_written[i] = true;
           }
@@ -8758,20 +8723,18 @@ XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
       ss << indent(indent_level + 1) << "</Topology>\n";
     }
 
-  for (std::map<std::string, unsigned int>::const_iterator it =
-         attribute_dims.begin();
-       it != attribute_dims.end();
-       ++it)
+  for (const auto &attribute_dim : attribute_dims)
     {
-      ss << indent(indent_level + 1) << "<Attribute Name=\"" << it->first
-         << "\" AttributeType=\"" << (it->second > 1 ? "Vector" : "Scalar")
+      ss << indent(indent_level + 1) << "<Attribute Name=\""
+         << attribute_dim.first << "\" AttributeType=\""
+         << (attribute_dim.second > 1 ? "Vector" : "Scalar")
          << "\" Center=\"Node\">\n";
       // Vectors must have 3 elements even for 2D models
       ss << indent(indent_level + 2) << "<DataItem Dimensions=\"" << num_nodes
-         << " " << (it->second > 1 ? 3 : 1)
+         << " " << (attribute_dim.second > 1 ? 3 : 1)
          << "\" NumberType=\"Float\" Precision=\"8\" Format=\"HDF\">\n";
-      ss << indent(indent_level + 3) << h5_sol_filename << ":/" << it->first
-         << "\n";
+      ss << indent(indent_level + 3) << h5_sol_filename << ":/"
+         << attribute_dim.first << "\n";
       ss << indent(indent_level + 2) << "</DataItem>\n";
       ss << indent(indent_level + 1) << "</Attribute>\n";
     }

@@ -168,9 +168,9 @@ std::string read_whole_file (std::istream &in)
       whole_file += '\n';
     }
   // substitute tabs by spaces, multiple spaces by single ones
-  for (unsigned int i=0; i<whole_file.size(); ++i)
-    if (whole_file[i] == '\t')
-      whole_file[i] = ' ';
+  for (char & character : whole_file)
+    if (character == '\t')
+      character = ' ';
   while (whole_file.find("  ") != std::string::npos)
     whole_file.replace (whole_file.find("  "), 2, " ");
 
@@ -221,10 +221,9 @@ std::list<std::string>
 delete_empty_entries (const std::list<std::string> &list)
 {
   std::list<std::string> return_list;
-  for (std::list<std::string>::const_iterator i = list.begin();
-       i != list.end(); ++i)
-    if (*i != "")
-      return_list.push_back (*i);
+  for (const auto & entry : list)
+    if (entry != "")
+      return_list.push_back (entry);
 
   return return_list;
 }
@@ -476,24 +475,21 @@ void process_instantiations ()
       std::list<std::pair<std::string, std::string> >
       substitutions;
 
-      for (std::list<std::string>::const_iterator
-           s = substitutions_list.begin();
-           s != substitutions_list.end(); ++s)
+      for (const auto & substitution : substitutions_list)
         {
           const std::list<std::string>
-          names_and_type = split_string_list (*s, ':');
+          names_and_type = split_string_list (substitution, ':');
           if (names_and_type.size() != 2)
             {
-              std::cerr << "Invalid instantiation header: '"<< *s << "'" << std::endl;
+              std::cerr << "Invalid instantiation header: '"<< substitution << "'" << std::endl;
               std::exit (1);
             }
 
           const std::list<std::string>
           names = split_string_list (names_and_type.front(), ',');
 
-          for (std::list<std::string>::const_iterator
-               x = names.begin(); x != names.end(); ++x)
-            substitutions.emplace_back (*x, names_and_type.back());
+          for (const auto & name : names)
+            substitutions.emplace_back (name, names_and_type.back());
         }
 
       // now read the part in {...}

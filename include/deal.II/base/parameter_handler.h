@@ -2030,8 +2030,8 @@ ParameterHandler::save(Archive &ar, const unsigned int) const
 
   std::vector<std::string> descriptions;
 
-  for (unsigned int j = 0; j < patterns.size(); ++j)
-    descriptions.push_back(patterns[j]->description());
+  for (const auto &pattern : patterns)
+    descriptions.push_back(pattern->description());
 
   ar &descriptions;
 }
@@ -2051,8 +2051,8 @@ ParameterHandler::load(Archive &ar, const unsigned int)
   ar &                     descriptions;
 
   patterns.clear();
-  for (unsigned int j = 0; j < descriptions.size(); ++j)
-    patterns.push_back(Patterns::pattern_factory(descriptions[j]));
+  for (const auto &description : descriptions)
+    patterns.push_back(Patterns::pattern_factory(description));
 }
 
 

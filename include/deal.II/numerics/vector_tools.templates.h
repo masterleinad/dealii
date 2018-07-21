@@ -931,8 +931,8 @@ namespace VectorTools
 
           std::map<types::boundary_id, const Function<spacedim, number> *>
             boundary_functions;
-          for (unsigned int i = 0; i < used_boundary_ids.size(); ++i)
-            boundary_functions[used_boundary_ids[i]] = &function;
+          for (unsigned int used_boundary_id : used_boundary_ids)
+            boundary_functions[used_boundary_id] = &function;
           project_boundary_values(
             mapping, dof, boundary_functions, q_boundary, boundary_values);
         }

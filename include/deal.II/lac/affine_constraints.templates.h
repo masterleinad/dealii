@@ -218,9 +218,8 @@ template <typename number>
 void
 AffineConstraints<number>::add_lines(const std::set<size_type> &lines)
 {
-  for (std::set<size_type>::const_iterator i = lines.begin(); i != lines.end();
-       ++i)
-    add_line(*i);
+  for (unsigned int line : lines)
+    add_line(line);
 }
 
 
@@ -4136,14 +4135,14 @@ AffineConstraints<number>::add_entries_local_to_global(
   // those to the sparsity pattern
   if (keep_constrained_entries == true)
     {
-      for (size_type i = 0; i < row_indices.size(); i++)
-        if (is_constrained(row_indices[i]))
-          for (size_type j = 0; j < col_indices.size(); j++)
-            sparsity_pattern.add(row_indices[i], col_indices[j]);
-      for (size_type i = 0; i < col_indices.size(); i++)
-        if (is_constrained(col_indices[i]))
-          for (size_type j = 0; j < row_indices.size(); j++)
-            sparsity_pattern.add(row_indices[j], col_indices[i]);
+      for (unsigned int row_index : row_indices)
+        if (is_constrained(row_index))
+          for (unsigned int col_index : col_indices)
+            sparsity_pattern.add(row_index, col_index);
+      for (unsigned int col_index : col_indices)
+        if (is_constrained(col_index))
+          for (unsigned int row_index : row_indices)
+            sparsity_pattern.add(row_index, col_index);
     }
 
   // if the dof mask is not active, all we have to do is to add some indices

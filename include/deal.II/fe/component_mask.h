@@ -320,8 +320,8 @@ ComponentMask::n_selected_components(const unsigned int n) const
     {
       AssertDimension(real_n, component_mask.size());
       unsigned int c = 0;
-      for (unsigned int i = 0; i < component_mask.size(); ++i)
-        if (component_mask[i] == true)
+      for (bool mask_entry : component_mask)
+        if (mask_entry == true)
           ++c;
       return c;
     }

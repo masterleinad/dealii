@@ -290,8 +290,8 @@ BlockMask::n_selected_blocks(const unsigned int n) const
     {
       AssertDimension(real_n, block_mask.size());
       unsigned int c = 0;
-      for (unsigned int i = 0; i < block_mask.size(); ++i)
-        if (block_mask[i] == true)
+      for (bool mask_entry : block_mask)
+        if (mask_entry == true)
           ++c;
       return c;
     }
