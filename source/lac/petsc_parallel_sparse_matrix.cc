@@ -297,9 +297,9 @@ namespace PETScWrappers
       // MatCreateMPIAIJ throws an
       // error. In this case use a
       // PETScWrappers::SparseMatrix
-      for (size_type i = 0; i < row_lengths.size(); ++i)
-        Assert(row_lengths[i] <= local_columns,
-               ExcIndexRange(row_lengths[i], 1, local_columns + 1));
+      for (unsigned int row_length : row_lengths)
+        Assert(row_length <= local_columns,
+               ExcIndexRange(row_length, 1, local_columns + 1));
 
       // use the call sequence indicating a
       // maximal number of elements for each

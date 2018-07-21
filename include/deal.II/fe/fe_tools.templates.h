@@ -1401,9 +1401,9 @@ namespace FETools
         comp_start[i].resize(element.element_multiplicity(i));
         const unsigned int increment = element.base_element(i).dofs_per_cell;
 
-        for (unsigned int j = 0; j < comp_start[i].size(); ++j)
+        for (unsigned int &j : comp_start[i])
           {
-            comp_start[i][j] = k;
+            j = k;
             k += increment;
           }
       }

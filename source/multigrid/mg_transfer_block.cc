@@ -236,13 +236,13 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim> &,
   // for later use.
   mg_block_start = sizes;
   // Compute start indices from sizes
-  for (unsigned int l = 0; l < mg_block_start.size(); ++l)
+  for (auto &l : mg_block_start)
     {
       types::global_dof_index k = 0;
-      for (unsigned int i = 0; i < mg_block_start[l].size(); ++i)
+      for (unsigned int i = 0; i < l.size(); ++i)
         {
-          const types::global_dof_index t = mg_block_start[l][i];
-          mg_block_start[l][i]            = k;
+          const types::global_dof_index t = l[i];
+          l[i]                            = k;
           k += t;
         }
     }
@@ -252,10 +252,10 @@ MGTransferBlockBase::build_matrices(const DoFHandler<dim, spacedim> &,
     static_cast<const DoFHandler<dim, spacedim> &>(mg_dof), block_start);
 
   types::global_dof_index k = 0;
-  for (unsigned int i = 0; i < block_start.size(); ++i)
+  for (unsigned int &i : block_start)
     {
-      const types::global_dof_index t = block_start[i];
-      block_start[i]                  = k;
+      const types::global_dof_index t = i;
+      i                               = k;
       k += t;
     }
   // Build index vectors for

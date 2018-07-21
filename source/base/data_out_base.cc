@@ -5844,9 +5844,9 @@ namespace DataOutBase
     std::streamsize ss = out.precision();
     out.precision(12);
 
-    for (unsigned int i = 0; i < times_and_names.size(); ++i)
-      out << "    <DataSet timestep=\"" << times_and_names[i].first
-          << "\" group=\"\" part=\"0\" file=\"" << times_and_names[i].second
+    for (const auto &times_and_name : times_and_names)
+      out << "    <DataSet timestep=\"" << times_and_name.first
+          << "\" group=\"\" part=\"0\" file=\"" << times_and_name.second
           << "\"/>\n";
 
     out << "  </Collection>\n";

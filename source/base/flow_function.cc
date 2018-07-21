@@ -437,14 +437,14 @@ namespace Functions
       {
         vector_values(points, values);
         for (unsigned int d = 0; d < dim; ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] *= -reaction;
+          for (double &k : values[d])
+            k *= -reaction;
       }
     else
       {
         for (unsigned int d = 0; d < dim; ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] = 0.;
+          for (double &k : values[d])
+            k = 0.;
       }
 
 

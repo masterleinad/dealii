@@ -1201,8 +1201,8 @@ namespace internal
 
 #  ifdef DEBUG
       // final safety checks
-      for (unsigned int i = 0; i < faces_type.size(); ++i)
-        AssertDimension(faces_type[i].size(), 0U);
+      for (auto &i : faces_type)
+        AssertDimension(i.size(), 0U);
 
       AssertDimension(faces_out.size(), face_partition_data.back());
       unsigned int nfaces = 0;
@@ -1215,9 +1215,8 @@ namespace internal
       AssertDimension(nfaces, faces_in.size());
 
       std::vector<std::pair<unsigned int, unsigned int>> in_faces, out_faces;
-      for (unsigned int i = 0; i < faces_in.size(); ++i)
-        in_faces.emplace_back(faces_in[i].cells_interior[0],
-                              faces_in[i].cells_exterior[0]);
+      for (auto i : faces_in)
+        in_faces.emplace_back(i.cells_interior[0], i.cells_exterior[0]);
       for (unsigned int i = face_partition_data[0];
            i < face_partition_data.back();
            ++i)

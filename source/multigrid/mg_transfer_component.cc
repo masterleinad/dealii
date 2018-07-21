@@ -113,8 +113,8 @@ namespace
       {
         selected.resize(target_component.size());
         std::fill_n(selected.begin(), ncomp, false);
-        for (unsigned int i = 0; i < target_component.size(); ++i)
-          selected[target_component[i]] = true;
+        for (unsigned int i : target_component)
+          selected[i] = true;
       }
 
     Assert(selected.size() == target_component.size(),
@@ -329,13 +329,13 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
   // for later use.
   mg_component_start = sizes;
   // Compute start indices from sizes
-  for (unsigned int l = 0; l < mg_component_start.size(); ++l)
+  for (auto &l : mg_component_start)
     {
       types::global_dof_index k = 0;
-      for (unsigned int i = 0; i < mg_component_start[l].size(); ++i)
+      for (unsigned int i = 0; i < l.size(); ++i)
         {
-          const types::global_dof_index t = mg_component_start[l][i];
-          mg_component_start[l][i]        = k;
+          const types::global_dof_index t = l[i];
+          l[i]                            = k;
           k += t;
         }
     }
@@ -345,10 +345,10 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
   DoFTools::count_dofs_per_block(mg_dof, component_start, target_component);
 
   types::global_dof_index k = 0;
-  for (unsigned int i = 0; i < component_start.size(); ++i)
+  for (unsigned int &i : component_start)
     {
-      const types::global_dof_index t = component_start[i];
-      component_start[i]              = k;
+      const types::global_dof_index t = i;
+      i                               = k;
       k += t;
     }
 

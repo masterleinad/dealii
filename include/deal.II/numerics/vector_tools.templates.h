@@ -7723,14 +7723,14 @@ namespace VectorTools
             // find components to which this index is constrained to
             Assert(constrained != nullptr, ExcInternalError());
             Assert(constrained->size() < dim, ExcInternalError());
-            for (unsigned int c = 0; c < constrained->size(); ++c)
+            for (const auto &c : *constrained)
               {
                 int index = -1;
                 for (unsigned int d = 0; d < dim; ++d)
-                  if ((*constrained)[c].first == (*it)[d])
+                  if (c.first == (*it)[d])
                     index = d;
                 Assert(index != -1, ExcInternalError());
-                normal[index] = (*constrained)[c].second;
+                normal[index] = c.second;
               }
             Vector<double> boundary_value = dof_vector_to_b_values[*it];
             for (unsigned int d = 0; d < dim; ++d)

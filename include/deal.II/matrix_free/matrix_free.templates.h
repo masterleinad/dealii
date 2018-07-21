@@ -1138,9 +1138,8 @@ MatrixFree<dim, Number>::initialize_indices(
               counter = 0;
               for (unsigned int j = 0; j < dof_info[0].max_fe_index; j++)
                 {
-                  for (unsigned int jj = 0; jj < renumbering_fe_index[j].size();
-                       jj++)
-                    renumbering[counter++] = renumbering_fe_index[j][jj];
+                  for (unsigned int jj : renumbering_fe_index[j])
+                    renumbering[counter++] = jj;
                   irregular_cells[renumbering_fe_index[j].size() /
                                     vectorization_length +
                                   n_macro_cells_before] =
@@ -1164,9 +1163,8 @@ MatrixFree<dim, Number>::initialize_indices(
               counter = start_nonboundary * vectorization_length;
               for (unsigned int j = 0; j < dof_info[0].max_fe_index; j++)
                 {
-                  for (unsigned int jj = 0; jj < renumbering_fe_index[j].size();
-                       jj++)
-                    renumbering[counter++] = renumbering_fe_index[j][jj];
+                  for (unsigned int jj : renumbering_fe_index[j])
+                    renumbering[counter++] = jj;
                   irregular_cells[renumbering_fe_index[j].size() /
                                     vectorization_length +
                                   n_macro_cells_before] =
@@ -1337,8 +1335,8 @@ MatrixFree<dim, Number>::initialize_indices(
             task_info.face_partition_data.size())
         hard_vectorization_boundary[task_info.partition_row_index[2]] = true;
       else
-        for (unsigned int i = 0; i < hard_vectorization_boundary.size(); ++i)
-          hard_vectorization_boundary[i] = true;
+        for (auto &&i : hard_vectorization_boundary)
+          i = true;
 
       internal::MatrixFreeFunctions::collect_faces_vectorization(
         face_setup.inner_faces,

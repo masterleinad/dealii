@@ -883,14 +883,13 @@ namespace DoFTools
         // achieve this by extending halo_dofs with DoFs to which
         // halo_dofs are constrained.
         std::set<types::global_dof_index> extra_halo;
-        for (std::set<types::global_dof_index>::iterator it =
-               dofs_with_support_on_halo_cells.begin();
-             it != dofs_with_support_on_halo_cells.end();
-             ++it)
+        for (unsigned int dofs_with_support_on_halo_cell :
+             dofs_with_support_on_halo_cells)
           // if halo DoF is constrained, add all DoFs to which it's constrained
           // because after resolving constraints, the support of the DoFs that
           // constrain the current DoF will extend to the halo cells.
-          if (const auto *line_ptr = cm.get_constraint_entries(*it))
+          if (const auto *line_ptr =
+                cm.get_constraint_entries(dofs_with_support_on_halo_cell))
             {
               const unsigned int line_size = line_ptr->size();
               for (unsigned int j = 0; j < line_size; ++j)
@@ -1306,16 +1305,10 @@ namespace DoFTools
                   locally_owned_dofs.index_within_set(dof_indices[i]);
                 const unsigned int comp = dofs_by_component[loc_index];
                 if (component_mask[comp])
-                  for (unsigned int j = 0;
-                       j < constant_mode_to_component_translation[comp].size();
-                       ++j)
-                    constant_modes
-                      [constant_mode_to_component_translation[comp][j].first]
-                      [component_numbering[loc_index]] =
-                        element_constant_modes[cell->active_fe_index()](
-                          constant_mode_to_component_translation[comp][j]
-                            .second,
-                          i);
+                  for (auto &j : constant_mode_to_component_translation[comp])
+                    constant_modes[j.first][component_numbering[loc_index]] =
+                      element_constant_modes[cell->active_fe_index()](j.second,
+                                                                      i);
               }
         }
   }

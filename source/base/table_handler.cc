@@ -181,14 +181,12 @@ TableHandler::Column::invalidate_cache()
 {
   max_length = 0;
 
-  for (std::vector<dealii::internal::TableEntry>::iterator it = entries.begin();
-       it != entries.end();
-       ++it)
+  for (auto &entrie : entries)
     {
-      it->cache_string(this->scientific, this->precision);
-      max_length =
-        std::max(max_length,
-                 static_cast<unsigned int>(it->get_cached_string().length()));
+      entrie.cache_string(this->scientific, this->precision);
+      max_length = std::max(max_length,
+                            static_cast<unsigned int>(
+                              entrie.get_cached_string().length()));
     }
 }
 
@@ -263,10 +261,10 @@ TableHandler::add_column_to_supercolumn(const std::string &key,
       supercolumns.insert(new_column);
       // replace key in column_order
       // by superkey
-      for (unsigned int j = 0; j < column_order.size(); ++j)
-        if (column_order[j] == key)
+      for (auto &j : column_order)
+        if (j == key)
           {
-            column_order[j] = superkey;
+            j = superkey;
             break;
           }
     }
@@ -302,9 +300,9 @@ TableHandler::add_column_to_supercolumn(const std::string &key,
 void
 TableHandler::set_column_order(const std::vector<std::string> &new_order)
 {
-  for (unsigned int j = 0; j < new_order.size(); ++j)
-    Assert(supercolumns.count(new_order[j]) || columns.count(new_order[j]),
-           ExcColumnOrSuperColumnNotExistent(new_order[j]));
+  for (const auto &j : new_order)
+    Assert(supercolumns.count(j) || columns.count(j),
+           ExcColumnOrSuperColumnNotExistent(j));
 
   column_order = new_order;
 }

@@ -739,7 +739,7 @@ namespace internal
                         DoFIdentities &identities =
                           *vertex_dof_identities[first_fe_index]
                                                 [other_fe_index];
-                        for (unsigned int i = 0; i < identities.size(); ++i)
+                        for (auto &identitie : identities)
                           {
                             const types::global_dof_index lower_dof_index =
                               dealii::internal::DoFAccessorImplementation::
@@ -747,14 +747,14 @@ namespace internal
                                   dof_handler,
                                   vertex_index,
                                   first_fe_index,
-                                  identities[i].first);
+                                  identitie.first);
                             const types::global_dof_index higher_dof_index =
                               dealii::internal::DoFAccessorImplementation::
                                 Implementation::get_vertex_dof_index(
                                   dof_handler,
                                   vertex_index,
                                   other_fe_index,
-                                  identities[i].second);
+                                  identitie.second);
 
                             Assert((dof_identities.find(higher_dof_index) ==
                                     dof_identities.end()) ||
@@ -1006,16 +1006,15 @@ namespace internal
                                 DoFIdentities &identities =
                                   *line_dof_identities[most_dominating_fe_index]
                                                       [other_fe_index];
-                                for (unsigned int i = 0; i < identities.size();
-                                     ++i)
+                                for (auto &identitie : identities)
                                   {
                                     const types::global_dof_index
                                       master_dof_index = line->dof_index(
-                                        identities[i].first,
+                                        identitie.first,
                                         most_dominating_fe_index);
                                     const types::global_dof_index
                                       slave_dof_index =
-                                        line->dof_index(identities[i].second,
+                                        line->dof_index(identitie.second,
                                                         other_fe_index);
 
                                     Assert((dof_identities.find(
@@ -1167,13 +1166,13 @@ namespace internal
                             DoFIdentities &identities =
                               *quad_dof_identities[most_dominating_fe_index]
                                                   [other_fe_index];
-                            for (unsigned int i = 0; i < identities.size(); ++i)
+                            for (auto &identitie : identities)
                               {
                                 const types::global_dof_index master_dof_index =
-                                  quad->dof_index(identities[i].first,
+                                  quad->dof_index(identitie.first,
                                                   most_dominating_fe_index);
                                 const types::global_dof_index slave_dof_index =
-                                  quad->dof_index(identities[i].second,
+                                  quad->dof_index(identitie.second,
                                                   other_fe_index);
 
                                 Assert((dof_identities.find(master_dof_index) ==

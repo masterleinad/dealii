@@ -74,8 +74,8 @@ namespace Step37
   // that are likely (say, between 1 and 6) and selecting the appropriate
   // kernel at run time. Here, we simply choose second order $Q_2$ elements
   // and choose dimension 3 as standard.
-  const unsigned int degree_finite_element = 2;
-  const unsigned int dimension             = 3;
+  constexpr unsigned int degree_finite_element = 2;
+  constexpr unsigned int dimension             = 3;
 
 
   // @sect3{Equation data}
@@ -96,7 +96,7 @@ namespace Step37
     {}
 
     virtual double value(const Point<dim> & p,
-                         const unsigned int component = 0) const override;
+                         const unsigned int component = 0) const final;
 
     template <typename number>
     number value(const Point<dim, number> &p,
@@ -104,7 +104,7 @@ namespace Step37
 
     virtual void value_list(const std::vector<Point<dim>> &points,
                             std::vector<double> &          values,
-                            const unsigned int component = 0) const override;
+                            const unsigned int component = 0) const final;
   };
 
 
@@ -415,7 +415,7 @@ namespace Step37
   // $v_\mathrm{cell}$ as mentioned in the introduction need to be added into
   // the result vector (and constraints are applied). This is done with a call
   // to @p distribute_local_to_global, the same name as the corresponding
-  // function in the ConstraintMatrix (only that we now store the local vector
+  // function in the AffineConstraints (only that we now store the local vector
   // in the FEEvaluation object, as are the indices between local and global
   // degrees of freedom).  </ol>
   template <int dim, int fe_degree, typename number>
@@ -476,7 +476,7 @@ namespace Step37
   // Note that after the cell loop, the constrained degrees of freedom need to
   // be touched once more for sensible vmult() operators: Since the assembly
   // loop automatically resolves constraints (just as the
-  // ConstraintMatrix::distribute_local_to_global call does), it does not
+  // AffineConstraints::distribute_local_to_global call does), it does not
   // compute any contribution for constrained degrees of freedom, leaving the
   // respective entries zero. This would represent a matrix that had empty
   // rows and columns for constrained degrees of freedom. However, iterative
@@ -552,7 +552,7 @@ namespace Step37
   // <tt>unsigned int</tt> in place of the source vector to confirm with the
   // cell_loop interface. After the loop, we need to set the vector entries
   // subject to Dirichlet boundary conditions to one (either those on the
-  // boundary described by the ConstraintMatrix object inside MatrixFree or
+  // boundary described by the AffineConstraints object inside MatrixFree or
   // the indices at the interface between different grid levels in adaptive
   // multigrid). This is done through the function
   // MatrixFreeOperators::Base::set_constrained_entries_to_one() and matches
@@ -718,7 +718,7 @@ namespace Step37
     FE_Q<dim>       fe;
     DoFHandler<dim> dof_handler;
 
-    ConstraintMatrix constraints;
+    AffineConstraints<double> constraints;
     using SystemMatrixType =
       LaplaceOperator<dim, degree_finite_element, double>;
     SystemMatrixType system_matrix;
@@ -885,7 +885,7 @@ namespace Step37
         DoFTools::extract_locally_relevant_level_dofs(dof_handler,
                                                       level,
                                                       relevant_dofs);
-        ConstraintMatrix level_constraints;
+        AffineConstraints<float> level_constraints;
         level_constraints.reinit(relevant_dofs);
         level_constraints.add_lines(
           mg_constrained_dofs.get_boundary_indices(level));

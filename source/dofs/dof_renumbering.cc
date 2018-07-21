@@ -727,11 +727,9 @@ namespace DoFRenumbering
            ExcDimensionMismatch(component_order.size(),
                                 fe_collection.n_components()));
 
-    for (unsigned int i = 0; i < component_order.size(); ++i)
-      Assert(component_order[i] < fe_collection.n_components(),
-             ExcIndexRange(component_order[i],
-                           0,
-                           fe_collection.n_components()));
+    for (unsigned int &i : component_order)
+      Assert(i < fe_collection.n_components(),
+             ExcIndexRange(i, 0, fe_collection.n_components()));
 
     // vector to hold the dof indices on
     // the cell we visit at a time

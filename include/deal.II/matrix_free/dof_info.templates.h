@@ -1269,13 +1269,13 @@ namespace internal
         }
 
       AssertIndexRange(counter, local_size + 1);
-      for (std::size_t i = 0; i < renumbering.size(); ++i)
-        if (renumbering[i] == numbers::invalid_dof_index)
-          renumbering[i] = counter++;
+      for (unsigned int &i : renumbering)
+        if (i == numbers::invalid_dof_index)
+          i = counter++;
 
       // transform indices to global index space
-      for (std::size_t i = 0; i < renumbering.size(); ++i)
-        renumbering[i] = vector_partitioner->local_to_global(renumbering[i]);
+      for (unsigned int &i : renumbering)
+        i = vector_partitioner->local_to_global(i);
 
       AssertDimension(counter, renumbering.size());
     }

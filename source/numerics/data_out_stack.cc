@@ -112,23 +112,21 @@ DataOutStack<dim, spacedim, DoFHandlerType>::declare_data_vector(
 
   // also make sure that no name is
   // used twice
-  for (std::vector<std::string>::const_iterator name = names.begin();
-       name != names.end();
-       ++name)
+  for (const auto &name : names)
     {
       for (typename std::vector<DataVector>::const_iterator data_set =
              dof_data.begin();
            data_set != dof_data.end();
            ++data_set)
         for (unsigned int i = 0; i < data_set->names.size(); ++i)
-          Assert(*name != data_set->names[i], ExcNameAlreadyUsed(*name));
+          Assert(name != data_set->names[i], ExcNameAlreadyUsed(name));
 
       for (typename std::vector<DataVector>::const_iterator data_set =
              cell_data.begin();
            data_set != cell_data.end();
            ++data_set)
         for (unsigned int i = 0; i < data_set->names.size(); ++i)
-          Assert(*name != data_set->names[i], ExcNameAlreadyUsed(*name));
+          Assert(name != data_set->names[i], ExcNameAlreadyUsed(name));
     };
 
   switch (vector_type)
@@ -198,15 +196,15 @@ DataOutStack<dim, spacedim, DoFHandlerType>::add_data_vector(
             (names.size() == dof_handler->get_fe(0).n_components())),
          Exceptions::DataOutImplementation::ExcInvalidNumberOfNames(
            names.size(), dof_handler->get_fe(0).n_components()));
-  for (unsigned int i = 0; i < names.size(); ++i)
-    Assert(names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                      "0123456789_<>()") == std::string::npos,
+  for (const auto &name : names)
+    Assert(name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                  "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                  "0123456789_<>()") == std::string::npos,
            Exceptions::DataOutImplementation::ExcInvalidCharacter(
-             names[i],
-             names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                        "0123456789_<>()")));
+             name,
+             name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    "0123456789_<>()")));
 
   if (vec.size() == dof_handler->n_dofs())
     {

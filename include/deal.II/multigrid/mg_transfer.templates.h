@@ -496,19 +496,15 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
       LinearAlgebra::distributed::Vector<Number> &dst_level = dst[level];
 
       // first copy local unknowns
-      for (dof_pair_iterator i = this_copy_indices[level].begin();
-           i != this_copy_indices[level].end();
-           ++i)
-        dst_level.local_element(i->second) =
-          this_ghosted_global_vector.local_element(i->first);
+      for (const auto &i : this_copy_indices[level])
+        dst_level.local_element(i.second) =
+          this_ghosted_global_vector.local_element(i.first);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = this_copy_indices_level_mine[level].begin();
-           i != this_copy_indices_level_mine[level].end();
-           ++i)
-        dst_level.local_element(i->second) =
-          this_ghosted_global_vector.local_element(i->first);
+      for (const auto &i : this_copy_indices_level_mine[level])
+        dst_level.local_element(i.second) =
+          this_ghosted_global_vector.local_element(i.first);
 
       dst_level.compress(VectorOperation::insert);
     }

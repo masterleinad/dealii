@@ -1759,12 +1759,9 @@ namespace MatrixCreator
               // maximum diagonal entry.
               types::global_dof_index max_element =
                 static_cast<types::global_dof_index>(0);
-              for (std::vector<types::global_dof_index>::const_iterator i =
-                     dof_to_boundary_mapping.begin();
-                   i != dof_to_boundary_mapping.end();
-                   ++i)
-                if ((*i != numbers::invalid_dof_index) && (*i > max_element))
-                  max_element = *i;
+              for (unsigned int i : dof_to_boundary_mapping)
+                if ((i != numbers::invalid_dof_index) && (i > max_element))
+                  max_element = i;
               Assert(max_element == matrix.n() - 1, ExcInternalError());
 
               double max_diag_entry = 0;
