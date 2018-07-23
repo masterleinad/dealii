@@ -2904,14 +2904,16 @@ namespace GridTools
                  ++vertex_n)
               vertices[vertex_n] = object->vertex(vertex_n);
 
+            constexpr auto n_vertices_per_cell = GeometryInfo<structdim>::vertices_per_cell;
+
             auto get_point_from_weights =
-              [&](const Tensor<1, GeometryInfo<structdim>::vertices_per_cell> &weights)
+              [&](const Tensor<1, n_vertices_per_cell> &weights)
               -> Point<spacedim>
             {
               return object->get_manifold().get_new_point
               (make_array_view(vertices.begin(), vertices.end()),
               make_array_view(&weights[0],
-              &weights[GeometryInfo<structdim>::vertices_per_cell - 1] + 1));
+              &weights[n_vertices_per_cell - 1] + 1));
             };
 
             // pick the initial weights as (normalized) inverse distances from
