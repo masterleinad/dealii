@@ -51,7 +51,7 @@ namespace Particles
     /**
      * Define a default (invalid) value for handles.
      */
-    static constexpr Handle invalid_handle;
+    static constexpr Handle invalid_handle = nullptr;
 
     /**
      * Constructor. Stores the number of properties per reserved slot.

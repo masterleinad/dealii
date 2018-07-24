@@ -1663,6 +1663,10 @@ namespace
     static constexpr double Kb[GeometryInfo<1>::vertices_per_cell] = {1.000000,
                                                                       0.000000};
   };
+  constexpr double TransformR2UAffine<1>::KA[GeometryInfo<1>::vertices_per_cell]
+                                            [1];
+  constexpr double
+    TransformR2UAffine<1>::Kb[GeometryInfo<1>::vertices_per_cell];
 
   template <>
   struct TransformR2UAffine<2>
@@ -1688,6 +1692,10 @@ namespace
     static constexpr double Kb[GeometryInfo<2>::vertices_per_cell] =
       {0.750000, 0.250000, 0.250000, -0.250000};
   };
+  constexpr double TransformR2UAffine<2>::KA[GeometryInfo<2>::vertices_per_cell]
+                                            [2];
+  constexpr double
+    TransformR2UAffine<2>::Kb[GeometryInfo<2>::vertices_per_cell];
 
   template <>
   struct TransformR2UAffine<3>
@@ -1714,6 +1722,10 @@ namespace
       0.000000,
       -0.250000};
   };
+  constexpr double TransformR2UAffine<3>::KA[GeometryInfo<3>::vertices_per_cell]
+                                            [3];
+  constexpr double
+    TransformR2UAffine<3>::Kb[GeometryInfo<3>::vertices_per_cell];
 } // namespace
 
 

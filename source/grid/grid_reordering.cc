@@ -123,15 +123,15 @@ namespace
      * serve as (arbitrarily chosen) starting points for the
      * dim sets of parallel edges within each cell.
      */
-    static constexpr unsigned int starter_edges[dim];
+    static const unsigned int starter_edges[dim];
 
     /**
      * Number and indices of all of those edges parallel to each of the
      * edges in a cell.
      */
     static constexpr unsigned int n_other_parallel_edges = (1 << (dim - 1)) - 1;
-    static constexpr unsigned int
-      parallel_edges[GeometryInfo<dim>::lines_per_cell][n_other_parallel_edges];
+    static const unsigned int parallel_edges[GeometryInfo<dim>::lines_per_cell]
+                                            [n_other_parallel_edges];
   };
 
   template <>

@@ -63,7 +63,7 @@ namespace
     // not
     for (unsigned int i = 0; i < s.size(); ++i)
       {
-        static constexpr std::string allowed_characters(
+        static const std::string allowed_characters(
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
         if ((!mangle_whole_string) &&

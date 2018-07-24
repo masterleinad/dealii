@@ -542,7 +542,7 @@ namespace Differentiation
         /**
          * Extract the floating point value.
          */
-        static constexpr NumberType &
+        static const NumberType &
         value(const NumberType &x)
         {
           return x;
@@ -774,35 +774,35 @@ namespace Differentiation
        * A flag to indicate whether the number is of
        * the taped variety or not
        */
-      static constexpr bool is_taped;
+      static const bool is_taped;
 
 
       /**
        * A flag to indicate whether the number is of
        * the tapeless variety or not
        */
-      static constexpr bool is_tapeless;
+      static const bool is_tapeless;
 
 
       /**
        * A flag to indicate whether the number represents
        * a real value
        */
-      static constexpr bool is_real_valued;
+      static const bool is_real_valued;
 
 
       /**
        * A flag to indicate whether the number represents
        * a complex value
        */
-      static constexpr bool is_complex_valued;
+      static const bool is_complex_valued;
 
 
       /**
        * The number of directional derivatives that can be
        * taken with this auto-differentiable number
        */
-      static constexpr unsigned int n_supported_derivative_levels;
+      static const unsigned int n_supported_derivative_levels;
 
 #  else
 

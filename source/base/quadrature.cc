@@ -1349,7 +1349,7 @@ QProjector<3>::DataSetDescriptor::subface(
   // first, define an invalid number
   static constexpr unsigned int e = numbers::invalid_unsigned_int;
 
-  static constexpr RefinementCase<dim - 1>
+  static const RefinementCase<dim - 1>
     equivalent_refine_case[internal::SubfaceCase<dim>::case_isotropic + 1]
                           [GeometryInfo<3>::max_children_per_face] = {
                             // case_none. there should be only
@@ -1435,7 +1435,7 @@ QProjector<3>::DataSetDescriptor::subface(
   // If face-orientation or face_rotation are
   // non-standard, cut_x and cut_y have to be
   // exchanged.
-  static constexpr RefinementCase<dim - 1> ref_case_permutation[4] = {
+  static const RefinementCase<dim - 1> ref_case_permutation[4] = {
     RefinementCase<dim - 1>::no_refinement,
     RefinementCase<dim - 1>::cut_y,
     RefinementCase<dim - 1>::cut_x,

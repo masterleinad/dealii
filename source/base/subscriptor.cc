@@ -24,7 +24,7 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-static constexpr char *unknown_subscriber = "unknown subscriber";
+static constexpr const char *unknown_subscriber = "unknown subscriber";
 
 
 Subscriptor::Subscriptor()

@@ -712,7 +712,7 @@ namespace internal
   template <int rank, int dim, typename T>
   struct NumberType<Tensor<rank, dim, T>>
   {
-    static constexpr Tensor<rank, dim, T> &
+    static const Tensor<rank, dim, T> &
     value(const Tensor<rank, dim, T> &t)
     {
       return t;
@@ -730,7 +730,7 @@ namespace internal
   template <int rank, int dim, typename T>
   struct NumberType<Tensor<rank, dim, VectorizedArray<T>>>
   {
-    static constexpr Tensor<rank, dim, VectorizedArray<T>> &
+    static const Tensor<rank, dim, VectorizedArray<T>> &
     value(const Tensor<rank, dim, VectorizedArray<T>> &t)
     {
       return t;
