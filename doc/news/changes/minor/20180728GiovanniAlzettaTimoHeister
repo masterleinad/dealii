@@ -1,0 +1,4 @@
+Corrected potential bug: when VectorTools::interpolate is invoked on a distributed
+vector, it now checks for conditions on ghost elements.
+<br>
+(Giovanni Alzetta, Timo Heister, 2018/07/24)
