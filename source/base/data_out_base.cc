@@ -105,7 +105,7 @@ namespace
     inline char
     base64_encode_value(char value_in)
     {
-      static const char *encoding =
+      static constexpr char *encoding =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
       if (value_in > 63)
         return '=';

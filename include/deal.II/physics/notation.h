@@ -715,7 +715,7 @@ namespace Physics
                                    Tensor<2, 2>::n_independent_components));
             }
 
-          static const unsigned int indices[4][2] = {{0, 0},
+          static constexpr unsigned int indices[4][2] = {{0, 0},
                                                      {1, 1},
                                                      {0, 1},
                                                      {1, 0}};
@@ -745,7 +745,7 @@ namespace Physics
                                    Tensor<2, 3>::n_independent_components));
             }
 
-          static const unsigned int indices[9][2] = {{0, 0},
+          static constexpr unsigned int indices[9][2] = {{0, 0},
                                                      {1, 1},
                                                      {2, 2},
                                                      {1, 2},

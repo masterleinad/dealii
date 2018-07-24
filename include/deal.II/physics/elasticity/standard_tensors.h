@@ -67,7 +67,7 @@ namespace Physics
        * unit_symmetric_tensor(). If one is to interpret the tensor as a
        * matrix, then this simply corresponds to the identity matrix.
        */
-      static const SymmetricTensor<2, dim> I;
+      static constexpr SymmetricTensor<2, dim> I;
 
       /**
        * The fourth-order referential/spatial unit symmetric tensor
@@ -95,7 +95,7 @@ namespace Physics
        * the fourth-order identity tensor, but rather as a symmetrization
        * operator.
        */
-      static const SymmetricTensor<4, dim> S;
+      static constexpr SymmetricTensor<4, dim> S;
 
       /**
        * The fourth-order referential/spatial tensor $\mathbf{I} \otimes
@@ -107,7 +107,7 @@ namespace Physics
        *  \textrm{trace}\{ \bullet \} \mathbf{I} \, .
        * @f]
        */
-      static const SymmetricTensor<4, dim> IxI;
+      static constexpr SymmetricTensor<4, dim> IxI;
 
       //@}
 
@@ -151,7 +151,7 @@ namespace Physics
        * @dealiiWriggersA{47,3.129}
        * @dealiiHolzapfelA{232,6.105}
        */
-      static const SymmetricTensor<4, dim> dev_P;
+      static constexpr SymmetricTensor<4, dim> dev_P;
 
       /**
        * Return the fourth-order referential deviatoric tensor, as constructed

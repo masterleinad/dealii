@@ -923,7 +923,7 @@ namespace Functions
      * Value used in the constructor of this and derived classes to denote
      * that no component is selected.
      */
-    static const unsigned int no_component = numbers::invalid_unsigned_int;
+    static constexpr unsigned int no_component = numbers::invalid_unsigned_int;
 
     /**
      * Constructor. Arguments are the center of the ball and its radius.

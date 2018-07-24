@@ -139,19 +139,19 @@ struct constraint_and_return_value;
  *   template <typename>
  *   struct int_or_double
  *   {
- *     static const bool value = false;
+ *     static constexpr bool value = false;
  *   };
  *
  *   template <>
  *   struct int_or_double<int>
  *   {
- *     static const bool value = true;
+ *     static constexpr bool value = true;
  *   };
  *
  *   template <>
  *   struct int_or_double<double>
  *   {
- *     static const bool value = true;
+ *     static constexpr bool value = true;
  *   };
  * @endcode
  * we can write a template

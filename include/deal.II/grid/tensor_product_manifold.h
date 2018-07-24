@@ -75,12 +75,12 @@ public:
    * The chart dimension is the sum of the chart dimensions of the manifolds
    * @p A and @p B.
    */
-  static const unsigned int chartdim = chartdim_A + chartdim_B;
+  static constexpr unsigned int chartdim = chartdim_A + chartdim_B;
   /**
    * The space dimension is the sum of the space dimensions of the manifolds
    * @p A and @p B.
    */
-  static const unsigned int spacedim = spacedim_A + spacedim_B;
+  static constexpr unsigned int spacedim = spacedim_A + spacedim_B;
 
   /**
    * Constructor.

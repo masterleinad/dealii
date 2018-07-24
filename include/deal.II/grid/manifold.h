@@ -1187,7 +1187,7 @@ namespace Manifolds
   {
     const auto points_and_weights =
       get_default_points_and_weights(iterator, with_interpolation);
-    static const int spacedim = MeshIteratorType::AccessorType::space_dimension;
+    static constexpr int spacedim = MeshIteratorType::AccessorType::space_dimension;
     return Quadrature<spacedim>(
       std::vector<Point<spacedim>>(points_and_weights.first.begin(),
                                    points_and_weights.first.end()),

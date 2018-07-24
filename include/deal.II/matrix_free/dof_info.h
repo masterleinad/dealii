@@ -75,7 +75,7 @@ namespace internal
        * Size of the chunk is set to 64 kByte which generally fits to current
        * caches.
        */
-      static const unsigned int chunk_size_zero_vector = 8192;
+      static constexpr unsigned int chunk_size_zero_vector = 8192;
 
       /**
        * Default empty constructor.

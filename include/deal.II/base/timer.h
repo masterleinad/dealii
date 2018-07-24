@@ -62,7 +62,7 @@ struct CPUClock
   /**
    * Boolean indicating that the clock monotonically increases.
    */
-  static const bool is_steady = true;
+  static constexpr bool is_steady = true;
 
   /**
    * Return the amount of CPU time that the current process has

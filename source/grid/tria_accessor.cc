@@ -100,7 +100,7 @@ namespace
 
     const bool first_child_has_children = face->child(0)->has_children();
 
-    static const unsigned int e = numbers::invalid_unsigned_int;
+    static constexpr unsigned int e = numbers::invalid_unsigned_int;
 
     // array containing the translation of the
     // numbers,
@@ -108,7 +108,7 @@ namespace
     // first index: subface_no
     // second index: subsubface_no
     // third index: does the first subface have children? -> no and yes
-    static const unsigned int translated_subface_no[2][2][2] = {
+    static constexpr unsigned int translated_subface_no[2][2][2] = {
       {{e, 0},   // first  subface, first  subsubface,
                  // first_child_has_children==no and yes
        {e, 1}},  // first  subface, second subsubface,
@@ -1646,35 +1646,34 @@ namespace
    */
   template <int dim>
   struct TransformR2UAffine
-  {
-    static const double KA[GeometryInfo<dim>::vertices_per_cell][dim];
-    static const double Kb[GeometryInfo<dim>::vertices_per_cell];
-  };
+  {};
 
-
+ template <>
+   struct TransformR2UAffine<1>
+{
   /*
     Octave code:
     M=[0 1; 1 1];
     K1 = transpose(M) * inverse (M*transpose(M));
     printf ("{%f, %f},\n", K1' );
   */
-  template <>
-  const double TransformR2UAffine<1>::KA[GeometryInfo<1>::vertices_per_cell]
+  static constexpr double KA[GeometryInfo<1>::vertices_per_cell]
                                         [1] = {{-1.000000}, {1.000000}};
 
-  template <>
-  const double TransformR2UAffine<1>::Kb[GeometryInfo<1>::vertices_per_cell] =
+  static constexpr double Kb[GeometryInfo<1>::vertices_per_cell] =
     {1.000000, 0.000000};
+};
 
-
+ template <>
+   struct TransformR2UAffine<2>
+{
   /*
     Octave code:
     M=[0 1 0 1;0 0 1 1;1 1 1 1];
     K2 = transpose(M) * inverse (M*transpose(M));
     printf ("{%f, %f, %f},\n", K2' );
   */
-  template <>
-  const double TransformR2UAffine<2>::KA[GeometryInfo<2>::vertices_per_cell]
+  static constexpr double KA[GeometryInfo<2>::vertices_per_cell]
                                         [2] = {{-0.500000, -0.500000},
                                                {0.500000, -0.500000},
                                                {-0.500000, 0.500000},
@@ -1686,13 +1685,14 @@ namespace
     K3 = transpose(M) * inverse (M*transpose(M))
     printf ("{%f, %f, %f, %f},\n", K3' );
   */
-  template <>
-  const double TransformR2UAffine<2>::Kb[GeometryInfo<2>::vertices_per_cell] =
+  static constexpr double Kb[GeometryInfo<2>::vertices_per_cell] =
     {0.750000, 0.250000, 0.250000, -0.250000};
+};
 
-
-  template <>
-  const double TransformR2UAffine<3>::KA[GeometryInfo<3>::vertices_per_cell]
+ template <>
+   struct TransformR2UAffine<3>
+{
+  static constexpr double KA[GeometryInfo<3>::vertices_per_cell]
                                         [3] = {
                                           {-0.250000, -0.250000, -0.250000},
                                           {0.250000, -0.250000, -0.250000},
@@ -1705,9 +1705,7 @@ namespace
 
   };
 
-
-  template <>
-  const double TransformR2UAffine<3>::Kb[GeometryInfo<3>::vertices_per_cell] = {
+  static constexpr double Kb[GeometryInfo<3>::vertices_per_cell] = {
     0.500000,
     0.250000,
     0.250000,
@@ -1716,6 +1714,7 @@ namespace
     0.000000,
     0.000000,
     -0.250000};
+};
 } // namespace
 
 
@@ -1806,7 +1805,7 @@ CellAccessor<2>::point_inside(const Point<2> &p) const
 
   // we want the faces in counter
   // clockwise orientation
-  static const int direction[4] = {-1, 1, 1, -1};
+  static constexpr int direction[4] = {-1, 1, 1, -1};
   for (unsigned int f = 0; f < 4; ++f)
     {
       // vector from the first vertex

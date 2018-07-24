@@ -542,7 +542,7 @@ namespace TrilinosWrappers
        * It is safe to elide additions of zeros to individual elements of this
        * matrix.
        */
-      static const bool zero_addition_can_be_elided = true;
+      static constexpr bool zero_addition_can_be_elided = true;
     };
 
     /**

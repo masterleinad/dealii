@@ -217,13 +217,13 @@ public:
    * A static variable that allows users of this class to discover the value
    * of the second template argument.
    */
-  static const unsigned int dimension = DoFHandlerType::dimension;
+  static constexpr unsigned int dimension = DoFHandlerType::dimension;
 
   /**
    * A static variable that allows users of this class to discover the value
    * of the third template argument.
    */
-  static const unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static constexpr unsigned int space_dimension = DoFHandlerType::space_dimension;
 
   /**
    * Declare an alias to the base class to make accessing some of the
@@ -769,13 +769,13 @@ public:
    * A static variable that allows users of this class to discover the value
    * of the second template argument.
    */
-  static const unsigned int dimension = 1;
+  static constexpr unsigned int dimension = 1;
 
   /**
    * A static variable that allows users of this class to discover the value
    * of the third template argument.
    */
-  static const unsigned int space_dimension = spacedim;
+  static constexpr unsigned int space_dimension = spacedim;
 
   /**
    * Declare an alias to the base class to make accessing some of the
@@ -1323,12 +1323,12 @@ public:
   /**
    * Extract dimension from DoFHandlerType.
    */
-  static const unsigned int dim = DoFHandlerType::dimension;
+  static constexpr unsigned int dim = DoFHandlerType::dimension;
 
   /**
    * Extract space dimension from DoFHandlerType.
    */
-  static const unsigned int spacedim = DoFHandlerType::space_dimension;
+  static constexpr unsigned int spacedim = DoFHandlerType::space_dimension;
 
 
   /**

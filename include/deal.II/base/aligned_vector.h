@@ -362,7 +362,7 @@ namespace internal
   template <typename T>
   class AlignedVectorCopy : private parallel::ParallelForInteger
   {
-    static const std::size_t minimum_parallel_grain_size =
+    static constexpr std::size_t minimum_parallel_grain_size =
       160000 / sizeof(T) + 1;
 
   public:
@@ -429,7 +429,7 @@ namespace internal
   template <typename T>
   class AlignedVectorMove : private parallel::ParallelForInteger
   {
-    static const std::size_t minimum_parallel_grain_size =
+    static constexpr std::size_t minimum_parallel_grain_size =
       160000 / sizeof(T) + 1;
 
   public:
@@ -507,7 +507,7 @@ namespace internal
   template <typename T, bool initialize_memory>
   class AlignedVectorSet : private parallel::ParallelForInteger
   {
-    static const std::size_t minimum_parallel_grain_size =
+    static constexpr std::size_t minimum_parallel_grain_size =
       160000 / sizeof(T) + 1;
 
   public:
@@ -607,7 +607,7 @@ namespace internal
   template <typename T, bool initialize_memory>
   class AlignedVectorDefaultInitialize : private parallel::ParallelForInteger
   {
-    static const std::size_t minimum_parallel_grain_size =
+    static constexpr std::size_t minimum_parallel_grain_size =
       160000 / sizeof(T) + 1;
 
   public:

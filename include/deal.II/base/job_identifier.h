@@ -47,7 +47,7 @@ public:
    * avoid linking the library version. Unfortunately, this mechanism does not
    * work with shared libraries.
    */
-  static const char *
+  static constexpr char *
   program_id();
 
   /**

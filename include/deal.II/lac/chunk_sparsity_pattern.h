@@ -271,7 +271,7 @@ public:
    * perform some optimizations, but the actual value of the variable may
    * change over time.
    */
-  static const size_type invalid_entry = SparsityPattern::invalid_entry;
+  static constexpr size_type invalid_entry = SparsityPattern::invalid_entry;
 
   /**
    * Initialize the matrix empty, that is with no memory allocated. This is

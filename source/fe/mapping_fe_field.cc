@@ -507,7 +507,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::compute_face_data(
             {
               // ensure a counterclockwise
               // orientation of tangentials
-              static const int tangential_orientation[4] = {-1, 1, 1, -1};
+              static constexpr int tangential_orientation[4] = {-1, 1, 1, -1};
               for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell;
                    ++i)
                 {

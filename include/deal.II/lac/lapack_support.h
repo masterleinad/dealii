@@ -152,35 +152,35 @@ namespace LAPACKSupport
   /**
    * Character constant.
    */
-  static const char A = 'A';
+  static constexpr char A = 'A';
   /**
    * Character constant.
    */
-  static const char N = 'N';
+  static constexpr char N = 'N';
   /**
    * Character constant.
    */
-  static const char T = 'T';
+  static constexpr char T = 'T';
   /**
    * Character constant.
    */
-  static const char U = 'U';
+  static constexpr char U = 'U';
   /**
    * Character constant.
    */
-  static const char L = 'L';
+  static constexpr char L = 'L';
   /**
    * Character constant.
    */
-  static const char V = 'V';
+  static constexpr char V = 'V';
   /**
    * Integer constant.
    */
-  static const types::blas_int zero = 0;
+  static constexpr types::blas_int zero = 0;
   /**
    * Integer constant.
    */
-  static const types::blas_int one = 1;
+  static constexpr types::blas_int one = 1;
 
   /**
    * A LAPACK function returned an error code.

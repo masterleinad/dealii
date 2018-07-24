@@ -150,7 +150,7 @@ DataPostprocessorTensor<dim>::get_names() const
 {
   static_assert(dim <= 3,
                 "The following variable needs to be expanded for dim>3");
-  static const char suffixes[] = {'x', 'y', 'z'};
+  static constexpr char suffixes[] = {'x', 'y', 'z'};
 
   std::vector<std::string> names;
   for (unsigned int d = 0; d < dim; ++d)

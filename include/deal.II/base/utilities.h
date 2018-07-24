@@ -329,7 +329,7 @@ namespace Utilities
   template <int a, int N>
   struct DEAL_II_DEPRECATED fixed_int_power
   {
-    static const int value = a * fixed_int_power<a, N - 1>::value;
+    static constexpr int value = a * fixed_int_power<a, N - 1>::value;
   };
 
   /**
@@ -342,7 +342,7 @@ namespace Utilities
   template <int a>
   struct DEAL_II_DEPRECATED fixed_int_power<a, 0>
   {
-    static const int value = 1;
+    static constexpr int value = 1;
   };
 
   /**

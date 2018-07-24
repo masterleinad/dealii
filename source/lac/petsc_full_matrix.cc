@@ -60,7 +60,7 @@ namespace PETScWrappers
   const MPI_Comm &
   FullMatrix::get_mpi_communicator() const
   {
-    static const MPI_Comm communicator = MPI_COMM_SELF;
+    static constexpr MPI_Comm communicator = MPI_COMM_SELF;
     return communicator;
   }
 } // namespace PETScWrappers

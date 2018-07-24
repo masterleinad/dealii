@@ -753,20 +753,20 @@ namespace Polynomials
       {
         case 1:
           {
-            static const double x1[4] = {1.0, -1.0, 0.0, 1.0};
+            static constexpr double x1[4] = {1.0, -1.0, 0.0, 1.0};
             x                         = &x1[0];
             break;
           }
         case 2:
           {
-            static const double x2[9] = {
+            static constexpr double x2[9] = {
               1.0, -3.0, 2.0, 0.0, 4.0, -4.0, 0.0, -1.0, 2.0};
             x = &x2[0];
             break;
           }
         case 3:
           {
-            static const double x3[16] = {1.0,
+            static constexpr double x3[16] = {1.0,
                                           -11.0 / 2.0,
                                           9.0,
                                           -9.0 / 2.0,

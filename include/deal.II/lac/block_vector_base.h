@@ -95,7 +95,7 @@ public:
    * argument to this class is a block vector (in fact whether the type is
    * derived from BlockVectorBase<T>).
    */
-  static const bool value =
+  static constexpr bool value =
     (sizeof(check_for_block_vector((VectorType *)nullptr)) == sizeof(yes_type));
 };
 

@@ -792,7 +792,7 @@ namespace
     // first index:  dimension (minus 2)
     // second index: local face index
     // third index:  face_orientation (false and true)
-    static const unsigned int left_right_offset[2][6][2] = {
+    static constexpr unsigned int left_right_offset[2][6][2] = {
       // quadrilateral
       {{0, 1},  // face 0, face_orientation = false and true
        {1, 0},  // face 1, face_orientation = false and true
@@ -971,14 +971,14 @@ namespace
     // orientation:
     // see Documentation of GeometryInfo for details
 
-    static const int lookup_table_2d[2][2] =
+    static constexpr int lookup_table_2d[2][2] =
       //               flip:
       {
         {0, 1}, // false
         {1, 0}  // true
       };
 
-    static const int lookup_table_3d[2][2][2][4] =
+    static constexpr int lookup_table_3d[2][2][2][4] =
       //                           orientation flip  rotation
       {{{
           {0, 2, 1, 3}, // false       false false
@@ -3198,7 +3198,7 @@ namespace internal
             // mapping from counterclock to
             // lexicographic ordering of
             // quad lines
-            static const unsigned int lex2cclock[4] = {3, 1, 0, 2};
+            static constexpr unsigned int lex2cclock[4] = {3, 1, 0, 2};
             // copy lines from
             // lexicographic to
             // counterclock ordering, as

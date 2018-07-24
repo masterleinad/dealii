@@ -138,7 +138,7 @@ public:
     /**
      * Non-existent column number.
      */
-    static const size_type invalid = numbers::invalid_size_type;
+    static constexpr size_type invalid = numbers::invalid_size_type;
   };
 
   /**
@@ -167,7 +167,7 @@ public:
     /**
      * Value for non-existing diagonal.
      */
-    static const unsigned short invalid_diagonal =
+    static constexpr unsigned short invalid_diagonal =
       static_cast<unsigned short>(-1);
   };
 

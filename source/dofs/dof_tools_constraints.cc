@@ -434,14 +434,14 @@ namespace DoFTools
       template <typename>
       struct DoFHandlerSupportsDifferentFEs
       {
-        static const bool value = true;
+        static constexpr bool value = true;
       };
 
 
       template <int dim, int spacedim>
       struct DoFHandlerSupportsDifferentFEs<dealii::DoFHandler<dim, spacedim>>
       {
-        static const bool value = false;
+        static constexpr bool value = false;
       };
 
 
@@ -1808,8 +1808,8 @@ namespace DoFTools
       const bool                                   face_flip,
       const bool                                   face_rotation)
     {
-      static const int dim      = FaceIterator::AccessorType::dimension;
-      static const int spacedim = FaceIterator::AccessorType::space_dimension;
+      static constexpr int dim      = FaceIterator::AccessorType::dimension;
+      static constexpr int spacedim = FaceIterator::AccessorType::space_dimension;
 
       // we should be in the case where face_1 is active, i.e. has no children:
       Assert(!face_1->has_children(), ExcInternalError());
@@ -2318,8 +2318,8 @@ namespace DoFTools
     const FullMatrix<double> &                   matrix,
     const std::vector<unsigned int> &            first_vector_components)
   {
-    static const int dim      = FaceIterator::AccessorType::dimension;
-    static const int spacedim = FaceIterator::AccessorType::space_dimension;
+    static constexpr int dim      = FaceIterator::AccessorType::dimension;
+    static constexpr int spacedim = FaceIterator::AccessorType::space_dimension;
 
     Assert((dim != 1) || (face_orientation == true && face_flip == false &&
                           face_rotation == false),
@@ -2387,13 +2387,13 @@ namespace DoFTools
     // A lookup table on how to go through the child faces depending on the
     // orientation:
 
-    static const int lookup_table_2d[2][2] = {
+    static constexpr int lookup_table_2d[2][2] = {
       //          flip:
       {0, 1}, //  false
       {1, 0}, //  true
     };
 
-    static const int lookup_table_3d[2][2][2][4] = {
+    static constexpr int lookup_table_3d[2][2][2][4] = {
       //                    orientation flip  rotation
       {
         {
@@ -2589,7 +2589,7 @@ namespace DoFTools
                                dealii::AffineConstraints<double> &constraints,
                                const ComponentMask &component_mask)
   {
-    static const int space_dim = DoFHandlerType::space_dimension;
+    static constexpr int space_dim = DoFHandlerType::space_dimension;
     (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
@@ -2621,8 +2621,8 @@ namespace DoFTools
                                AffineConstraints<double> &constraints,
                                const ComponentMask &      component_mask)
   {
-    static const int dim       = DoFHandlerType::dimension;
-    static const int space_dim = DoFHandlerType::space_dimension;
+    static constexpr int dim       = DoFHandlerType::dimension;
+    static constexpr int space_dim = DoFHandlerType::space_dimension;
     (void)dim;
     (void)space_dim;
 

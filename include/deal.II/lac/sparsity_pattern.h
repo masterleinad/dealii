@@ -408,7 +408,7 @@ public:
    * perform some optimizations, but the actual value of the variable may
    * change over time.
    */
-  static const size_type invalid_entry = numbers::invalid_size_type;
+  static constexpr size_type invalid_entry = numbers::invalid_size_type;
 
   /**
    * @name Construction and setup Constructors, destructor; functions

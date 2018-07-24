@@ -91,8 +91,8 @@ namespace internal
   template <typename DoFHandlerType, typename number>
   struct ParallelData
   {
-    static const unsigned int dim      = DoFHandlerType::dimension;
-    static const unsigned int spacedim = DoFHandlerType::space_dimension;
+    static constexpr unsigned int dim      = DoFHandlerType::dimension;
+    static constexpr unsigned int spacedim = DoFHandlerType::space_dimension;
 
     /**
      * The finite element to be used.

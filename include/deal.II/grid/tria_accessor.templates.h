@@ -614,7 +614,7 @@ namespace internal
         // quad to take it, b) which line
         // therein it is if the face is
         // oriented correctly
-        static const unsigned int lookup_table[12][2] = {
+        static constexpr unsigned int lookup_table[12][2] = {
           {4, 0}, // take first four lines from bottom face
           {4, 1},
           {4, 2},
@@ -836,7 +836,7 @@ namespace internal
         // quad to take it, b) which line
         // therein it is if the face is
         // oriented correctly
-        static const unsigned int lookup_table[12][2] = {
+        static constexpr unsigned int lookup_table[12][2] = {
           {4, 0}, // take first four lines from bottom face
           {4, 1},
           {4, 2},
@@ -885,7 +885,7 @@ namespace internal
         // forth index: face_rotation: 0: standard,
         // 1: face rotated by 90 degrees
 
-        static const bool bool_table[2][2][2][2] = {
+        static constexpr bool bool_table[2][2][2][2] = {
           {{{true, false},  // lines 0/1, face_orientation=false,
                             // face_flip=false, face_rotation=false and true
             {false, true}}, // lines 0/1, face_orientation=false,
@@ -1089,7 +1089,7 @@ namespace internal
         // second index: vertex index to be switched
         // (or not)
 
-        static const unsigned int switch_table[2][2] = {{1, 0}, {0, 1}};
+        static constexpr unsigned int switch_table[2][2] = {{1, 0}, {0, 1}};
 
         return accessor.line(corner % 2)
           ->vertex_index(

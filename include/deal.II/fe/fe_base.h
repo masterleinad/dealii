@@ -232,7 +232,7 @@ public:
    * The dimension of the finite element, which is the template parameter
    * <tt>dim</tt>
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Number of degrees of freedom on a vertex.

@@ -123,14 +123,14 @@ namespace
      * serve as (arbitrarily chosen) starting points for the
      * dim sets of parallel edges within each cell.
      */
-    static const unsigned int starter_edges[dim];
+    static constexpr unsigned int starter_edges[dim];
 
     /**
      * Number and indices of all of those edges parallel to each of the
      * edges in a cell.
      */
-    static const unsigned int n_other_parallel_edges = (1 << (dim - 1)) - 1;
-    static const unsigned int parallel_edges[GeometryInfo<dim>::lines_per_cell]
+    static constexpr unsigned int n_other_parallel_edges = (1 << (dim - 1)) - 1;
+    static constexpr unsigned int parallel_edges[GeometryInfo<dim>::lines_per_cell]
                                             [n_other_parallel_edges];
   };
 
@@ -910,7 +910,7 @@ namespace
             // these 3 cover all 3 equivalence classes! consequently, we can
             // select an arbitrary one among the permutations -- for
             // example the following ones:
-            static const unsigned int cube_permutations[8][8] = {
+            static constexpr unsigned int cube_permutations[8][8] = {
               {0, 1, 2, 3, 4, 5, 6, 7},
               {1, 5, 3, 7, 0, 4, 2, 6},
               {2, 6, 0, 4, 3, 7, 1, 5},

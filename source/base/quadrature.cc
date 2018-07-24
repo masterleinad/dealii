@@ -1173,7 +1173,7 @@ QProjector<dim>::DataSetDescriptor::face(const unsigned int face_no,
           // a face in standard orientation. therefore
           // we use the offsets 4,5,6,7,0,1,2,3 here to
           // stick to that (implicit) convention
-          static const unsigned int offset[2][2][2] = {
+          static constexpr unsigned int offset[2][2][2] = {
             {{4 * GeometryInfo<dim>::faces_per_cell,
               5 * GeometryInfo<dim>::
                     faces_per_cell}, // face_orientation=false; face_flip=false;
@@ -1303,7 +1303,7 @@ QProjector<3>::DataSetDescriptor::subface(
   // a face in standard orientation. therefore
   // we use the offsets 4,5,6,7,0,1,2,3 here to
   // stick to that (implicit) convention
-  static const unsigned int orientation_offset[2][2][2] = {
+  static constexpr unsigned int orientation_offset[2][2][2] = {
     {// face_orientation=false; face_flip=false; face_rotation=false and true
      {4 * GeometryInfo<dim>::faces_per_cell * total_subfaces_per_face,
       5 * GeometryInfo<dim>::faces_per_cell * total_subfaces_per_face},
@@ -1332,7 +1332,7 @@ QProjector<3>::DataSetDescriptor::subface(
   // refinement. therefore we use the offsets
   // 6,4,0 here to stick to that (implicit)
   // convention
-  static const unsigned int ref_case_offset[3] = {
+  static constexpr unsigned int ref_case_offset[3] = {
     6, // cut_x
     4, // cut_y
     0  // cut_xy
@@ -1347,9 +1347,9 @@ QProjector<3>::DataSetDescriptor::subface(
   // ones.
 
   // first, define an invalid number
-  static const unsigned int e = numbers::invalid_unsigned_int;
+  static constexpr unsigned int e = numbers::invalid_unsigned_int;
 
-  static const RefinementCase<dim - 1>
+  static constexpr RefinementCase<dim - 1>
     equivalent_refine_case[internal::SubfaceCase<dim>::case_isotropic + 1]
                           [GeometryInfo<3>::max_children_per_face] = {
                             // case_none. there should be only
@@ -1408,7 +1408,7 @@ QProjector<3>::DataSetDescriptor::subface(
                              RefinementCase<dim - 1>::cut_xy,
                              RefinementCase<dim - 1>::cut_xy}};
 
-  static const unsigned int
+  static constexpr unsigned int
     equivalent_subface_number[internal::SubfaceCase<dim>::case_isotropic + 1]
                              [GeometryInfo<3>::max_children_per_face] = {
                                // case_none, see above
@@ -1435,7 +1435,7 @@ QProjector<3>::DataSetDescriptor::subface(
   // If face-orientation or face_rotation are
   // non-standard, cut_x and cut_y have to be
   // exchanged.
-  static const RefinementCase<dim - 1> ref_case_permutation[4] = {
+  static constexpr RefinementCase<dim - 1> ref_case_permutation[4] = {
     RefinementCase<dim - 1>::no_refinement,
     RefinementCase<dim - 1>::cut_y,
     RefinementCase<dim - 1>::cut_x,

@@ -533,7 +533,7 @@ private:
   /**
    * Separator between sections.
    */
-  static const char sep = '/';
+  static constexpr char sep = '/';
 
 protected:
   /** The subsection name for this class. */

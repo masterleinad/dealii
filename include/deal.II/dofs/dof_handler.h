@@ -308,12 +308,12 @@ public:
   /**
    * Make the dimension available in function templates.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Make the space dimension available in function templates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static constexpr unsigned int space_dimension = spacedim;
 
   /**
    * When the arrays holding the DoF indices are set up, but before they are
@@ -327,7 +327,7 @@ public:
    * @deprecated Use numbers::invalid_dof_index instead.
    */
   DEAL_II_DEPRECATED
-  static const types::global_dof_index invalid_dof_index =
+  static constexpr types::global_dof_index invalid_dof_index =
     numbers::invalid_dof_index;
 
   /**
@@ -339,7 +339,7 @@ public:
    * finite element indices may be used on different cells, and the default
    * index there corresponds to an invalid value.
    */
-  static const unsigned int default_fe_index = 0;
+  static constexpr unsigned int default_fe_index = 0;
 
   /**
    * Standard constructor, not initializing any data. After constructing an

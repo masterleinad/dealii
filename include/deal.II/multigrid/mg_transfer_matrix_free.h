@@ -444,7 +444,7 @@ public:
    * This class can both be used with a single DoFHandler
    * or a separate DoFHandler for each block.
    */
-  static const bool supports_dof_handler_vector = true;
+  static constexpr bool supports_dof_handler_vector = true;
 
 private:
   /**

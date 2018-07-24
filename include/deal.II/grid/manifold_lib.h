@@ -657,8 +657,8 @@ template <int dim>
 class TorusManifold : public ChartManifold<dim, 3, 3>
 {
 public:
-  static const int chartdim = 3;
-  static const int spacedim = 3;
+  static constexpr int chartdim = 3;
+  static constexpr int spacedim = 3;
 
   /**
    * Constructor. Specify the radius of the centerline @p R and the radius

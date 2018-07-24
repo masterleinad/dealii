@@ -44,7 +44,7 @@ public:
   /**
    * Dimension we are working in.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Constructor, checking that the basis is implemented in this dimension.

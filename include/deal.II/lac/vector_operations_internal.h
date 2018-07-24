@@ -739,7 +739,7 @@ namespace internal
     template <typename Number, typename Number2>
     struct Dot
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         std::is_same<Number, Number2>::value &&
         (VectorizedArray<Number>::n_array_elements > 1);
 
@@ -781,7 +781,7 @@ namespace internal
     template <typename Number, typename RealType>
     struct Norm2
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         VectorizedArray<Number>::n_array_elements > 1;
 
       Norm2(const Number *X)
@@ -808,7 +808,7 @@ namespace internal
     template <typename Number, typename RealType>
     struct Norm1
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         VectorizedArray<Number>::n_array_elements > 1;
 
       Norm1(const Number *X)
@@ -835,7 +835,7 @@ namespace internal
     template <typename Number, typename RealType>
     struct NormP
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         VectorizedArray<Number>::n_array_elements > 1;
 
       NormP(const Number *X, RealType p)
@@ -864,7 +864,7 @@ namespace internal
     template <typename Number>
     struct MeanValue
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         VectorizedArray<Number>::n_array_elements > 1;
 
       MeanValue(const Number *X)
@@ -891,7 +891,7 @@ namespace internal
     template <typename Number>
     struct AddAndDot
     {
-      static const bool vectorizes =
+      static constexpr bool vectorizes =
         VectorizedArray<Number>::n_array_elements > 1;
 
       AddAndDot(Number *X, const Number *V, const Number *W, Number a)
@@ -1257,7 +1257,7 @@ namespace internal
     template <typename Operation, typename ResultType>
     struct TBBReduceFunctor
     {
-      static const unsigned int threshold_array_allocate = 512;
+      static constexpr unsigned int threshold_array_allocate = 512;
 
       TBBReduceFunctor(const Operation &op,
                        const size_type  start,

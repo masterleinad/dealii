@@ -95,13 +95,13 @@ namespace Differentiation
        * @code
        *
        *   // State whether the auto-differentiable number uses taping or not.
-       *   static const bool             is_taped;
+       *   static constexpr bool             is_taped;
        *   // The real-type for the auto-differentiable number
        *   using real_type = <ADNumberType>;
        *   // The type of number returned when taking the first derivative of the @p real_type.
        *   using derivative_type = <Scalar/ADNumberType>;
        *   // The number of derivative levels computable from the @p real_type.
-       *   static const unsigned int     n_supported_derivative_levels;
+       *   static constexpr unsigned int     n_supported_derivative_levels;
        *
        * @endcode
        *
@@ -542,7 +542,7 @@ namespace Differentiation
         /**
          * Extract the floating point value.
          */
-        static const NumberType &
+        static constexpr NumberType &
         value(const NumberType &x)
         {
           return x;
@@ -774,35 +774,35 @@ namespace Differentiation
        * A flag to indicate whether the number is of
        * the taped variety or not
        */
-      static const bool is_taped;
+      static constexpr bool is_taped;
 
 
       /**
        * A flag to indicate whether the number is of
        * the tapeless variety or not
        */
-      static const bool is_tapeless;
+      static constexpr bool is_tapeless;
 
 
       /**
        * A flag to indicate whether the number represents
        * a real value
        */
-      static const bool is_real_valued;
+      static constexpr bool is_real_valued;
 
 
       /**
        * A flag to indicate whether the number represents
        * a complex value
        */
-      static const bool is_complex_valued;
+      static constexpr bool is_complex_valued;
 
 
       /**
        * The number of directional derivatives that can be
        * taken with this auto-differentiable number
        */
-      static const unsigned int n_supported_derivative_levels;
+      static constexpr unsigned int n_supported_derivative_levels;
 
 #  else
 

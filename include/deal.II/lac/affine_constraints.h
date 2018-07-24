@@ -1945,7 +1945,7 @@ public:
    * argument to this class is a block matrix (in fact whether the type is
    * derived from BlockMatrixBase<T>).
    */
-  static const bool value =
+  static constexpr bool value =
     (sizeof(check_for_block_matrix((MatrixType *)nullptr)) == sizeof(yes_type));
 };
 

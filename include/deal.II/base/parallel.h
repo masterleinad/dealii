@@ -53,7 +53,7 @@ namespace parallel
     template <typename Number>
     struct EnableOpenMPSimdFor
     {
-      static const bool value = true;
+      static constexpr bool value = true;
     };
 
 #ifdef __INTEL_COMPILER
@@ -64,7 +64,7 @@ namespace parallel
     template <>
     struct EnableOpenMPSimdFor<long double>
     {
-      static const bool value = false;
+      static constexpr bool value = false;
     };
 #endif
 

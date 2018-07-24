@@ -49,7 +49,7 @@ namespace internal
     using Sparsity = ::dealii::SparsityPattern;
     using Matrix   = ::dealii::SparseMatrix<typename VectorType::value_type>;
 
-    static const bool requires_distributed_sparsity_pattern = false;
+    static constexpr bool requires_distributed_sparsity_pattern = false;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
@@ -72,7 +72,7 @@ namespace internal
     using Sparsity = ::dealii::TrilinosWrappers::SparsityPattern;
     using Matrix   = ::dealii::TrilinosWrappers::SparseMatrix;
 
-    static const bool requires_distributed_sparsity_pattern = false;
+    static constexpr bool requires_distributed_sparsity_pattern = false;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
@@ -105,7 +105,7 @@ namespace internal
     using Sparsity = ::dealii::TrilinosWrappers::SparsityPattern;
     using Matrix   = ::dealii::TrilinosWrappers::SparseMatrix;
 
-    static const bool requires_distributed_sparsity_pattern = false;
+    static constexpr bool requires_distributed_sparsity_pattern = false;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
@@ -138,7 +138,7 @@ namespace internal
     using Sparsity = ::dealii::TrilinosWrappers::SparsityPattern;
     using Matrix   = ::dealii::TrilinosWrappers::SparseMatrix;
 
-    static const bool requires_distributed_sparsity_pattern = false;
+    static constexpr bool requires_distributed_sparsity_pattern = false;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
@@ -173,7 +173,7 @@ namespace internal
     using Sparsity = ::dealii::SparsityPattern;
     using Matrix   = ::dealii::SparseMatrix<Number>;
 
-    static const bool requires_distributed_sparsity_pattern = false;
+    static constexpr bool requires_distributed_sparsity_pattern = false;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void
@@ -200,7 +200,7 @@ namespace internal
     using Sparsity = ::dealii::DynamicSparsityPattern;
     using Matrix   = ::dealii::PETScWrappers::MPI::SparseMatrix;
 
-    static const bool requires_distributed_sparsity_pattern = true;
+    static constexpr bool requires_distributed_sparsity_pattern = true;
 
     template <typename SparsityPatternType, typename DoFHandlerType>
     static void

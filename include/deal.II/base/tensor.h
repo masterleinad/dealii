@@ -102,17 +102,17 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = 0;
+  static constexpr unsigned int rank = 0;
 
   /**
    * Number of independent components of a tensor of rank 0.
    */
-  static const unsigned int n_independent_components = 1;
+  static constexpr unsigned int n_independent_components = 1;
 
   /**
    * Declare a type that has holds real-valued numbers with the same precision
@@ -405,18 +405,18 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = rank_;
+  static constexpr unsigned int rank = rank_;
 
   /**
    * Number of independent components of a tensor of current rank. This is dim
    * times the number of independent components of each sub-tensor.
    */
-  static const unsigned int n_independent_components =
+  static constexpr unsigned int n_independent_components =
     Tensor<rank_ - 1, dim>::n_independent_components * dim;
 
   /**
@@ -712,7 +712,7 @@ namespace internal
   template <int rank, int dim, typename T>
   struct NumberType<Tensor<rank, dim, T>>
   {
-    static const Tensor<rank, dim, T> &
+    static constexpr Tensor<rank, dim, T> &
     value(const Tensor<rank, dim, T> &t)
     {
       return t;
@@ -730,7 +730,7 @@ namespace internal
   template <int rank, int dim, typename T>
   struct NumberType<Tensor<rank, dim, VectorizedArray<T>>>
   {
-    static const Tensor<rank, dim, VectorizedArray<T>> &
+    static constexpr Tensor<rank, dim, VectorizedArray<T>> &
     value(const Tensor<rank, dim, VectorizedArray<T>> &t)
     {
       return t;

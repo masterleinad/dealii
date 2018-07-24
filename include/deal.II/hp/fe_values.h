@@ -240,9 +240,9 @@ namespace hp
                      FEValuesBase<dim, dim, dealii::FEValues<dim, spacedim>>
   {
   public:
-    static const unsigned int dimension = dim;
+    static constexpr unsigned int dimension = dim;
 
-    static const unsigned int space_dimension = spacedim;
+    static constexpr unsigned int space_dimension = spacedim;
 
     /**
      * Constructor. Initialize this object with the given parameters.

@@ -170,7 +170,7 @@ namespace numbers
    * an invalid unsigned integer value, such as an invalid array index, an
    * invalid array size, and the like.
    */
-  static const unsigned int invalid_unsigned_int =
+  static constexpr unsigned int invalid_unsigned_int =
     static_cast<unsigned int>(-1);
 
   /**

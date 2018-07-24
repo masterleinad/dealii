@@ -123,13 +123,13 @@ public:
    * An abbreviation for the dimension of the DoFHandler object we work with.
    * Faces are then <code>dimension-1</code> dimensional objects.
    */
-  static const unsigned int dimension = DoFHandlerType::dimension;
+  static constexpr unsigned int dimension = DoFHandlerType::dimension;
 
   /**
    * An abbreviation for the spatial dimension within which the triangulation
    * and DoFHandler are embedded in.
    */
-  static const unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static constexpr unsigned int space_dimension = DoFHandlerType::space_dimension;
 
   /**
    * Alias to the iterator type of the dof handler class under

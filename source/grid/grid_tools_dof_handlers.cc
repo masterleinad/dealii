@@ -2040,7 +2040,7 @@ namespace GridTools
       &                       offset,
     const FullMatrix<double> &matrix)
   {
-    static const int space_dim = CellIterator::AccessorType::space_dimension;
+    static constexpr int space_dim = CellIterator::AccessorType::space_dimension;
     (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));
@@ -2100,8 +2100,8 @@ namespace GridTools
     const Tensor<1, MeshType::space_dimension> &offset,
     const FullMatrix<double> &                  matrix)
   {
-    static const int dim       = MeshType::dimension;
-    static const int space_dim = MeshType::space_dimension;
+    static constexpr int dim       = MeshType::dimension;
+    static constexpr int space_dim = MeshType::space_dimension;
     (void)dim;
     (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
@@ -2183,8 +2183,8 @@ namespace GridTools
     const Tensor<1, MeshType::space_dimension> &offset,
     const FullMatrix<double> &                  matrix)
   {
-    static const int dim       = MeshType::dimension;
-    static const int space_dim = MeshType::space_dimension;
+    static constexpr int dim       = MeshType::dimension;
+    static constexpr int space_dim = MeshType::space_dimension;
     (void)dim;
     (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
@@ -2321,10 +2321,10 @@ namespace GridTools
       // property somewhat sloppy as "face_flip"
       // (always: face_orientation = true, face_rotation = false)
 
-      static const MATCH_T m_tff = {{0, 1}};
+      static constexpr MATCH_T m_tff = {{0, 1}};
       if (matching == m_tff)
         return 1; // [true ,false,false]
-      static const MATCH_T m_ttf = {{1, 0}};
+      static constexpr MATCH_T m_ttf = {{1, 0}};
       if (matching == m_ttf)
         return 3; // [true ,true ,false]
       Assert(false, ExcInternalError());
@@ -2347,28 +2347,28 @@ namespace GridTools
       // as well as the actual implementation in source/grid/tria.cc
       // for more details...
 
-      static const MATCH_T m_tff = {{0, 1, 2, 3}};
+      static constexpr MATCH_T m_tff = {{0, 1, 2, 3}};
       if (matching == m_tff)
         return 1; // [true ,false,false]
-      static const MATCH_T m_tft = {{1, 3, 0, 2}};
+      static constexpr MATCH_T m_tft = {{1, 3, 0, 2}};
       if (matching == m_tft)
         return 5; // [true ,false,true ]
-      static const MATCH_T m_ttf = {{3, 2, 1, 0}};
+      static constexpr MATCH_T m_ttf = {{3, 2, 1, 0}};
       if (matching == m_ttf)
         return 3; // [true ,true ,false]
-      static const MATCH_T m_ttt = {{2, 0, 3, 1}};
+      static constexpr MATCH_T m_ttt = {{2, 0, 3, 1}};
       if (matching == m_ttt)
         return 7; // [true ,true ,true ]
-      static const MATCH_T m_fff = {{0, 2, 1, 3}};
+      static constexpr MATCH_T m_fff = {{0, 2, 1, 3}};
       if (matching == m_fff)
         return 0; // [false,false,false]
-      static const MATCH_T m_fft = {{2, 3, 0, 1}};
+      static constexpr MATCH_T m_fft = {{2, 3, 0, 1}};
       if (matching == m_fft)
         return 4; // [false,false,true ]
-      static const MATCH_T m_ftf = {{3, 1, 2, 0}};
+      static constexpr MATCH_T m_ftf = {{3, 1, 2, 0}};
       if (matching == m_ftf)
         return 2; // [false,true ,false]
-      static const MATCH_T m_ftt = {{1, 0, 3, 2}};
+      static constexpr MATCH_T m_ftt = {{1, 0, 3, 2}};
       if (matching == m_ftt)
         return 6; // [false,true ,true ]
       Assert(false, ExcInternalError());
@@ -2392,7 +2392,7 @@ namespace GridTools
     Assert(matrix.m() == matrix.n(),
            ExcMessage("The supplied matrix must be a square matrix"));
 
-    static const int dim = FaceIterator::AccessorType::dimension;
+    static constexpr int dim = FaceIterator::AccessorType::dimension;
 
     // Do a full matching of the face vertices:
 

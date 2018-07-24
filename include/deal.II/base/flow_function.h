@@ -281,7 +281,7 @@ namespace Functions
     const double omega;
     /// The exponent of the radius, computed as the solution to
     /// $\sin(\lambda\omega)+\lambda \sin(\omega)=0$
-    static const double lambda;
+    static constexpr double lambda;
     /// Cosine of lambda times omega
     const double coslo;
     /// Auxiliary variable 1+lambda

@@ -243,7 +243,7 @@ namespace DataOutBase
     /**
      * Make the <tt>spacedim</tt> template parameter available.
      */
-    static const unsigned int space_dim = spacedim;
+    static constexpr unsigned int space_dim = spacedim;
 
     /**
      * Corner points of a patch.  Interior points are computed by a multilinear
@@ -348,7 +348,7 @@ namespace DataOutBase
     /**
      * Value to be used if this patch has no neighbor on one side.
      */
-    static const unsigned int no_neighbor = numbers::invalid_unsigned_int;
+    static constexpr unsigned int no_neighbor = numbers::invalid_unsigned_int;
 
     /**
      * @addtogroup Exceptions
@@ -393,7 +393,7 @@ namespace DataOutBase
     /**
      * Make the <tt>spacedim</tt> template parameter available.
      */
-    static const unsigned int space_dim = spacedim;
+    static constexpr unsigned int space_dim = spacedim;
 
     /**
      * Corner points of a patch.  For the current class of zero-dimensional
@@ -494,7 +494,7 @@ namespace DataOutBase
     /**
      * Value to be used if this patch has no neighbor on one side.
      */
-    static const unsigned int no_neighbor = numbers::invalid_unsigned_int;
+    static constexpr unsigned int no_neighbor = numbers::invalid_unsigned_int;
 
     /**
      * @addtogroup Exceptions

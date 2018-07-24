@@ -165,7 +165,7 @@ namespace Differentiation
         using value_type      = typename ad_type::value_type;
         using derivative_type = typename ad_type::value_type;
 
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           1 + SacadoNumberInfo<derivative_type>::n_supported_derivative_levels;
       };
 
@@ -185,7 +185,7 @@ namespace Differentiation
         using value_type      = typename ad_type::ADVari::value_type;
         using derivative_type = typename ad_type::ADVari::value_type;
 
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           1 + SacadoNumberInfo<derivative_type>::n_supported_derivative_levels;
       };
 
@@ -202,7 +202,7 @@ namespace Differentiation
         typename std::enable_if<
           std::is_arithmetic<typename std::decay<Number>::type>::value>::type>
       {
-        static const unsigned int n_supported_derivative_levels = 0;
+        static constexpr unsigned int n_supported_derivative_levels = 0;
       };
 
 
@@ -217,11 +217,11 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static constexpr bool is_taped = false;
         using real_type            = Sacado::Fad::DFad<ScalarType>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 
@@ -237,11 +237,11 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static constexpr bool is_taped = false;
         using real_type = Sacado::Fad::DFad<Sacado::Fad::DFad<ScalarType>>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 
@@ -257,11 +257,11 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static constexpr bool is_taped = false;
         using real_type            = Sacado::Rad::ADvar<ScalarType>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 
@@ -277,11 +277,11 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static const bool is_taped = false;
+        static constexpr bool is_taped = false;
         using real_type = Sacado::Rad::ADvar<Sacado::Fad::DFad<ScalarType>>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
-        static const unsigned int n_supported_derivative_levels =
+        static constexpr unsigned int n_supported_derivative_levels =
           SacadoNumberInfo<real_type>::n_supported_derivative_levels;
       };
 

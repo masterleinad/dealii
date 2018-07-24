@@ -782,7 +782,7 @@ FlatManifold<3>::get_normals_at_vertices(
 {
   const unsigned int vertices_per_face = GeometryInfo<3>::vertices_per_face;
 
-  static const unsigned int neighboring_vertices[4][2] = {{1, 2},
+  static constexpr unsigned int neighboring_vertices[4][2] = {{1, 2},
                                                           {3, 0},
                                                           {0, 3},
                                                           {2, 1}};

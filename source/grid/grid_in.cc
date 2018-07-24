@@ -1227,7 +1227,7 @@ GridIn<3>::read_xda(std::istream &in)
   Assert(tria != nullptr, ExcNoTriangulationSelected());
   AssertThrow(in, ExcIO());
 
-  static const unsigned int xda_to_dealII_map[] = {0, 1, 5, 4, 3, 2, 6, 7};
+  static constexpr unsigned int xda_to_dealII_map[] = {0, 1, 5, 4, 3, 2, 6, 7};
 
   std::string line;
   // skip comments at start of file

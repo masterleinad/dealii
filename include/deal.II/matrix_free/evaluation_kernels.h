@@ -40,45 +40,45 @@ namespace internal
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_general, is_long>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static constexpr EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, false>
   {
-    static const EvaluatorVariant variant = evaluate_symmetric;
+    static constexpr EvaluatorVariant variant = evaluate_symmetric;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric, true>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static constexpr EvaluatorVariant variant = evaluate_evenodd;
   };
 
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::truncated_tensor, is_long>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static constexpr EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0,
                            false>
   {
-    static const EvaluatorVariant variant = evaluate_general;
+    static constexpr EvaluatorVariant variant = evaluate_general;
   };
 
   template <>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_plus_dg0, true>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static constexpr EvaluatorVariant variant = evaluate_evenodd;
   };
 
   template <bool is_long>
   struct EvaluatorSelector<MatrixFreeFunctions::tensor_symmetric_collocation,
                            is_long>
   {
-    static const EvaluatorVariant variant = evaluate_evenodd;
+    static constexpr EvaluatorVariant variant = evaluate_evenodd;
   };
 
 

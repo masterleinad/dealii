@@ -1458,7 +1458,7 @@ GridOut::write_xfig(const Triangulation<2> &tria,
           out << std::endl;
         }
       // Now write boundary edges
-      static const unsigned int face_reorder[4] = {2, 1, 3, 0};
+      static constexpr unsigned int face_reorder[4] = {2, 1, 3, 0};
       if (xfig_flags.draw_boundary)
         for (unsigned int f = 0; f < nf; ++f)
           {

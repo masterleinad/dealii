@@ -211,7 +211,7 @@ namespace internal
        * Number of independent components of a symmetric tensor of rank 2. We
        * store only the upper right half of it.
        */
-      static const unsigned int n_independent_components =
+      static constexpr unsigned int n_independent_components =
         (dim * dim + dim) / 2;
 
       /**
@@ -233,12 +233,12 @@ namespace internal
        * Since rank-4 tensors are mappings between such objects, we need this
        * information.
        */
-      static const unsigned int n_rank2_components = (dim * dim + dim) / 2;
+      static constexpr unsigned int n_rank2_components = (dim * dim + dim) / 2;
 
       /**
        * Number of independent components of a symmetric tensor of rank 4.
        */
-      static const unsigned int n_independent_components =
+      static constexpr unsigned int n_independent_components =
         (n_rank2_components *
          StorageType<2, dim, Number>::n_independent_components);
 
@@ -566,12 +566,12 @@ public:
    * of an inlined function; the compiler may therefore produce more efficient
    * code and you may use this value to declare other data types.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Publish the rank of this tensor to the outside world.
    */
-  static const unsigned int rank = rank_;
+  static constexpr unsigned int rank = rank_;
 
   /**
    * An integer denoting the number of independent components that fully
@@ -2354,13 +2354,13 @@ namespace internal
 
           case 2:
             {
-              static const unsigned int table[2][2] = {{0, 2}, {2, 1}};
+              static constexpr unsigned int table[2][2] = {{0, 2}, {2, 1}};
               return table[indices[0]][indices[1]];
             }
 
           case 3:
             {
-              static const unsigned int table[3][3] = {{0, 3, 4},
+              static constexpr unsigned int table[3][3] = {{0, 3, 4},
                                                        {3, 1, 5},
                                                        {4, 5, 2}};
               return table[indices[0]][indices[1]];
@@ -2368,7 +2368,7 @@ namespace internal
 
           case 4:
             {
-              static const unsigned int table[4][4] = {{0, 4, 5, 6},
+              static constexpr unsigned int table[4][4] = {{0, 4, 5, 6},
                                                        {4, 1, 7, 8},
                                                        {5, 7, 2, 9},
                                                        {6, 8, 9, 3}};

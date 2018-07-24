@@ -230,12 +230,12 @@ namespace hp
     /**
      * Make the dimension available in function templates.
      */
-    static const unsigned int dimension = dim;
+    static constexpr unsigned int dimension = dim;
 
     /**
      * Make the space dimension available in function templates.
      */
-    static const unsigned int space_dimension = spacedim;
+    static constexpr unsigned int space_dimension = spacedim;
 
     /**
      * When the arrays holding the DoF indices are set up, but before they are
@@ -249,7 +249,7 @@ namespace hp
      * @deprecated Use numbers::invalid_dof_index instead.
      */
     DEAL_II_DEPRECATED
-    static const types::global_dof_index invalid_dof_index =
+    static constexpr types::global_dof_index invalid_dof_index =
       numbers::invalid_dof_index;
 
     /**
@@ -262,7 +262,7 @@ namespace hp
      * used on different cells. The default index consequently corresponds to
      * an invalid value.
      */
-    static const unsigned int default_fe_index = numbers::invalid_unsigned_int;
+    static constexpr unsigned int default_fe_index = numbers::invalid_unsigned_int;
 
 
     /**

@@ -2013,12 +2013,12 @@ public:
   /**
    * Dimension in which this object operates.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Dimension of the space in which this object operates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static constexpr unsigned int space_dimension = spacedim;
 
   /**
    * Number of quadrature points.
@@ -3439,7 +3439,7 @@ public:
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim</code>.
    */
-  static const unsigned int integral_dimension = dim;
+  static constexpr unsigned int integral_dimension = dim;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element
@@ -3558,7 +3558,7 @@ public:
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static constexpr unsigned int integral_dimension = dim - 1;
 
   /**
    * Constructor. Call the constructor of the base class and set up the arrays
@@ -3655,15 +3655,15 @@ public:
    * Dimension in which this object operates.
    */
 
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
-  static const unsigned int space_dimension = spacedim;
+  static constexpr unsigned int space_dimension = spacedim;
 
   /**
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static constexpr unsigned int integral_dimension = dim - 1;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element
@@ -3769,18 +3769,18 @@ public:
   /**
    * Dimension in which this object operates.
    */
-  static const unsigned int dimension = dim;
+  static constexpr unsigned int dimension = dim;
 
   /**
    * Dimension of the space in which this object operates.
    */
-  static const unsigned int space_dimension = spacedim;
+  static constexpr unsigned int space_dimension = spacedim;
 
   /**
    * Dimension of the object over which we integrate. For the present class,
    * this is equal to <code>dim-1</code>.
    */
-  static const unsigned int integral_dimension = dim - 1;
+  static constexpr unsigned int integral_dimension = dim - 1;
 
   /**
    * Constructor. Gets cell independent data from mapping and finite element

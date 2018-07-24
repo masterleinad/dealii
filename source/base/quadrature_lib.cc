@@ -174,8 +174,8 @@ template <>
 QTrapez<1>::QTrapez()
   : Quadrature<1>(2)
 {
-  static const double xpts[] = {0.0, 1.0};
-  static const double wts[]  = {0.5, 0.5};
+  static constexpr double xpts[] = {0.0, 1.0};
+  static constexpr double wts[]  = {0.5, 0.5};
 
   for (unsigned int i = 0; i < this->size(); ++i)
     {
@@ -190,8 +190,8 @@ template <>
 QSimpson<1>::QSimpson()
   : Quadrature<1>(3)
 {
-  static const double xpts[] = {0.0, 0.5, 1.0};
-  static const double wts[]  = {1. / 6., 2. / 3., 1. / 6.};
+  static constexpr double xpts[] = {0.0, 0.5, 1.0};
+  static constexpr double wts[]  = {1. / 6., 2. / 3., 1. / 6.};
 
   for (unsigned int i = 0; i < this->size(); ++i)
     {
@@ -206,8 +206,8 @@ template <>
 QMilne<1>::QMilne()
   : Quadrature<1>(5)
 {
-  static const double xpts[] = {0.0, .25, .5, .75, 1.0};
-  static const double wts[]  = {
+  static constexpr double xpts[] = {0.0, .25, .5, .75, 1.0};
+  static constexpr double wts[]  = {
     7. / 90., 32. / 90., 12. / 90., 32. / 90., 7. / 90.};
 
   for (unsigned int i = 0; i < this->size(); ++i)
@@ -223,9 +223,9 @@ template <>
 QWeddle<1>::QWeddle()
   : Quadrature<1>(7)
 {
-  static const double xpts[] = {
+  static constexpr double xpts[] = {
     0.0, 1. / 6., 1. / 3., .5, 2. / 3., 5. / 6., 1.0};
-  static const double wts[] = {41. / 840.,
+  static constexpr double wts[] = {41. / 840.,
                                216. / 840.,
                                27. / 840.,
                                272. / 840.,

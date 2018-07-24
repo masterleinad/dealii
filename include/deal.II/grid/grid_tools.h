@@ -3179,7 +3179,7 @@ namespace GridTools
     {
       // clang has trouble figuring out structdim here, so define it
       // again:
-      static const std::size_t n_vertices_per_cell =
+      static constexpr std::size_t n_vertices_per_cell =
         Tensor<1, GeometryInfo<structdim>::vertices_per_cell>::
           n_independent_components;
       std::array<double, n_vertices_per_cell> copied_weights;

@@ -90,7 +90,7 @@ public:
    * This value is only an alias to the respective value of the
    * SparsityPattern class.
    */
-  static const size_type invalid_entry = SparsityPattern::invalid_entry;
+  static constexpr size_type invalid_entry = SparsityPattern::invalid_entry;
 
   /**
    * Initialize the matrix empty, that is with no memory allocated. This is

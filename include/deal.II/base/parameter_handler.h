@@ -1523,7 +1523,7 @@ private:
    * The separator used when accessing elements of a path into the parameter
    * tree.
    */
-  static const char path_separator = '.';
+  static constexpr char path_separator = '.';
 
   /**
    * Path of presently selected subsections; empty list means top level
