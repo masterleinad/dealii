@@ -265,6 +265,41 @@ namespace VectorTools
     }
 
 
+    template <typename VectorType>
+    typename std::enable_if<dealii::is_serial_vector<VectorType>::value ==
+                          true>::type
+            check_ghost(VectorType &vt) {}
+
+    template <typename VectorType>
+    typename std::enable_if<dealii::is_serial_vector<VectorType>::value == false
+            and std::is_base_of<BlockVectorBase<typename VectorType>,VectorType>::value == false >::type
+    check_ghost(VectorType &vt)
+    {
+        // If the vector is distributed, the following checks
+        // try to prevent problems on ghost cells
+        Assert(!vt.has_ghost_elements(),
+               ExcMessage("Vector has no write access on ghost cells"));
+
+        // Cheking for overlapping values on ghost cells:
+        // this test is not 100% accurate, but should catch most of the
+        // problems
+        const auto n_global_elements =
+          Utilities::MPI::sum(vt.local_size() + vt.n_ghost_entries(),
+                              vt.get_mpi_communicator());
+
+        Assert((n_global_elements - vt.size()) != 0,
+               ExcMessage(
+                 "Error: some values on ghost cells are overlapping"));
+    }
+
+    template <typename VectorType>
+    void check_ghost(BlockVectorBase<VectorType> &vt)
+    {
+        for(unsigned int i=0; i< vt.n_blocks(); ++i)
+            check_ghost(vt.block(i));
+    }
+
+
     // Internal implementation of interpolate that takes a generic functor
     // function such that function(cell) is of type
     // Function<spacedim, typename VectorType::value_type>*
@@ -297,27 +332,7 @@ namespace VectorTools
              ComponentMask::ExcNoComponentSelected());
 
 #ifdef DEAL_II_WITH_MPI
-      if (const auto vt =
-            dynamic_cast<const LinearAlgebra::distributed::Vector<double> *>(
-              &vec))
-        {
-          // If the vector is distributed, the following checks
-          // try to prevent problems on ghost cells
-          Assert(!vt->has_ghost_elements(),
-                 ExcMessage("Vector has no write access on ghost cells"));
-
-          // Cheking for overlapping values on ghost cells:
-          // this test is not 100% accurate, but should catch most of the
-          // problems
-          const auto n_global_elements =
-            Utilities::MPI::sum(vt->local_size() + vt->n_ghost_entries(),
-                                vt->get_mpi_communicator());
-
-          Assert((n_global_elements - vt->size()) != 0,
-                 ExcMessage(
-                   "Error: some values on ghost cells are overlapping"));
-        }
-
+      internal::check_ghost(vec);
 #endif
 
       //
@@ -550,7 +565,6 @@ namespace VectorTools
         }
       vec.compress(VectorOperation::insert);
     }
-
   } // namespace internal
 
 
