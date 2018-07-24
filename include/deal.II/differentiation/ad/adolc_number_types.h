@@ -121,8 +121,8 @@ namespace Differentiation
           std::is_floating_point<ScalarType>::value>::type>
       {
         static constexpr bool is_taped = true;
-        using real_type            = adouble;
-        using derivative_type      = double;
+        using real_type                = adouble;
+        using derivative_type          = double;
         static constexpr unsigned int n_supported_derivative_levels =
           std::numeric_limits<unsigned int>::max();
       };
@@ -139,9 +139,9 @@ namespace Differentiation
         typename std::enable_if<
           std::is_floating_point<ScalarType>::value>::type>
       {
-        static constexpr bool is_taped                              = false;
-        using real_type                                         = adtl::adouble;
-        using derivative_type                                   = double;
+        static constexpr bool is_taped = false;
+        using real_type                = adtl::adouble;
+        using derivative_type          = double;
         static constexpr unsigned int n_supported_derivative_levels = 1;
       };
 

@@ -2040,7 +2040,8 @@ namespace GridTools
       &                       offset,
     const FullMatrix<double> &matrix)
   {
-    static constexpr int space_dim = CellIterator::AccessorType::space_dimension;
+    static constexpr int space_dim =
+      CellIterator::AccessorType::space_dimension;
     (void)space_dim;
     Assert(0 <= direction && direction < space_dim,
            ExcIndexRange(direction, 0, space_dim));

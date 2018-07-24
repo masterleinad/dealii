@@ -223,7 +223,8 @@ public:
    * A static variable that allows users of this class to discover the value
    * of the third template argument.
    */
-  static constexpr unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static constexpr unsigned int space_dimension =
+    DoFHandlerType::space_dimension;
 
   /**
    * Declare an alias to the base class to make accessing some of the

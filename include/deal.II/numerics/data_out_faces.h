@@ -129,7 +129,8 @@ public:
    * An abbreviation for the spatial dimension within which the triangulation
    * and DoFHandler are embedded in.
    */
-  static constexpr unsigned int space_dimension = DoFHandlerType::space_dimension;
+  static constexpr unsigned int space_dimension =
+    DoFHandlerType::space_dimension;
 
   /**
    * Alias to the iterator type of the dof handler class under

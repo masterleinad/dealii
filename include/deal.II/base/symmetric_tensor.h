@@ -2361,17 +2361,17 @@ namespace internal
           case 3:
             {
               static constexpr unsigned int table[3][3] = {{0, 3, 4},
-                                                       {3, 1, 5},
-                                                       {4, 5, 2}};
+                                                           {3, 1, 5},
+                                                           {4, 5, 2}};
               return table[indices[0]][indices[1]];
             }
 
           case 4:
             {
               static constexpr unsigned int table[4][4] = {{0, 4, 5, 6},
-                                                       {4, 1, 7, 8},
-                                                       {5, 7, 2, 9},
-                                                       {6, 8, 9, 3}};
+                                                           {4, 1, 7, 8},
+                                                           {5, 7, 2, 9},
+                                                           {6, 8, 9, 3}};
               return table[indices[0]][indices[1]];
             }
 

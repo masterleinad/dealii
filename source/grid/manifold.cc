@@ -783,9 +783,9 @@ FlatManifold<3>::get_normals_at_vertices(
   const unsigned int vertices_per_face = GeometryInfo<3>::vertices_per_face;
 
   static constexpr unsigned int neighboring_vertices[4][2] = {{1, 2},
-                                                          {3, 0},
-                                                          {0, 3},
-                                                          {2, 1}};
+                                                              {3, 0},
+                                                              {0, 3},
+                                                              {2, 1}};
   for (unsigned int vertex = 0; vertex < vertices_per_face; ++vertex)
     {
       // first define the two tangent vectors at the vertex by using the

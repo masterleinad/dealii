@@ -258,7 +258,8 @@ private:
   /**
    * Value to indicate that a given face or subface number is invalid.
    */
-  static constexpr unsigned int invalid_face_number = numbers::invalid_unsigned_int;
+  static constexpr unsigned int invalid_face_number =
+    numbers::invalid_unsigned_int;
 };
 
 /*@}*/

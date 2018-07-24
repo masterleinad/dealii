@@ -832,7 +832,10 @@ MappingQGeneric<dim, spacedim>::InternalData::initialize_face(
               case 2:
                 {
                   // ensure a counterclockwise orientation of tangentials
-                  static constexpr int tangential_orientation[4] = {-1, 1, 1, -1};
+                  static constexpr int tangential_orientation[4] = {-1,
+                                                                    1,
+                                                                    1,
+                                                                    -1};
                   for (unsigned int i = 0;
                        i < GeometryInfo<dim>::faces_per_cell;
                        ++i)

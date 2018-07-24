@@ -130,8 +130,8 @@ namespace
      * edges in a cell.
      */
     static constexpr unsigned int n_other_parallel_edges = (1 << (dim - 1)) - 1;
-    static constexpr unsigned int parallel_edges[GeometryInfo<dim>::lines_per_cell]
-                                            [n_other_parallel_edges];
+    static constexpr unsigned int
+      parallel_edges[GeometryInfo<dim>::lines_per_cell][n_other_parallel_edges];
   };
 
   template <>

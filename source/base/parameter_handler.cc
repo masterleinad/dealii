@@ -73,21 +73,21 @@ namespace
           {
             u.push_back('_');
             static constexpr char hex[16] = {'0',
-                                         '1',
-                                         '2',
-                                         '3',
-                                         '4',
-                                         '5',
-                                         '6',
-                                         '7',
-                                         '8',
-                                         '9',
-                                         'a',
-                                         'b',
-                                         'c',
-                                         'd',
-                                         'e',
-                                         'f'};
+                                             '1',
+                                             '2',
+                                             '3',
+                                             '4',
+                                             '5',
+                                             '6',
+                                             '7',
+                                             '8',
+                                             '9',
+                                             'a',
+                                             'b',
+                                             'c',
+                                             'd',
+                                             'e',
+                                             'f'};
             u.push_back(hex[static_cast<unsigned char>(s[i]) / 16]);
             u.push_back(hex[static_cast<unsigned char>(s[i]) % 16]);
           }

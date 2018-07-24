@@ -218,7 +218,7 @@ namespace Differentiation
           std::is_floating_point<ScalarType>::value>::type>
       {
         static constexpr bool is_taped = false;
-        using real_type            = Sacado::Fad::DFad<ScalarType>;
+        using real_type                = Sacado::Fad::DFad<ScalarType>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
         static constexpr unsigned int n_supported_derivative_levels =
@@ -258,7 +258,7 @@ namespace Differentiation
           std::is_floating_point<ScalarType>::value>::type>
       {
         static constexpr bool is_taped = false;
-        using real_type            = Sacado::Rad::ADvar<ScalarType>;
+        using real_type                = Sacado::Rad::ADvar<ScalarType>;
         using derivative_type =
           typename SacadoNumberInfo<real_type>::derivative_type;
         static constexpr unsigned int n_supported_derivative_levels =

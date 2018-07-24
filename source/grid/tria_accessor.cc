@@ -1648,73 +1648,72 @@ namespace
   struct TransformR2UAffine
   {};
 
- template <>
-   struct TransformR2UAffine<1>
-{
-  /*
-    Octave code:
-    M=[0 1; 1 1];
-    K1 = transpose(M) * inverse (M*transpose(M));
-    printf ("{%f, %f},\n", K1' );
-  */
-  static constexpr double KA[GeometryInfo<1>::vertices_per_cell]
-                                        [1] = {{-1.000000}, {1.000000}};
+  template <>
+  struct TransformR2UAffine<1>
+  {
+    /*
+      Octave code:
+      M=[0 1; 1 1];
+      K1 = transpose(M) * inverse (M*transpose(M));
+      printf ("{%f, %f},\n", K1' );
+    */
+    static constexpr double KA[GeometryInfo<1>::vertices_per_cell][1] =
+      {{-1.000000}, {1.000000}};
 
-  static constexpr double Kb[GeometryInfo<1>::vertices_per_cell] =
-    {1.000000, 0.000000};
-};
-
- template <>
-   struct TransformR2UAffine<2>
-{
-  /*
-    Octave code:
-    M=[0 1 0 1;0 0 1 1;1 1 1 1];
-    K2 = transpose(M) * inverse (M*transpose(M));
-    printf ("{%f, %f, %f},\n", K2' );
-  */
-  static constexpr double KA[GeometryInfo<2>::vertices_per_cell]
-                                        [2] = {{-0.500000, -0.500000},
-                                               {0.500000, -0.500000},
-                                               {-0.500000, 0.500000},
-                                               {0.500000, 0.500000}};
-
-  /*
-    Octave code:
-    M=[0 1 0 1 0 1 0 1;0 0 1 1 0 0 1 1; 0 0 0 0 1 1 1 1; 1 1 1 1 1 1 1 1];
-    K3 = transpose(M) * inverse (M*transpose(M))
-    printf ("{%f, %f, %f, %f},\n", K3' );
-  */
-  static constexpr double Kb[GeometryInfo<2>::vertices_per_cell] =
-    {0.750000, 0.250000, 0.250000, -0.250000};
-};
-
- template <>
-   struct TransformR2UAffine<3>
-{
-  static constexpr double KA[GeometryInfo<3>::vertices_per_cell]
-                                        [3] = {
-                                          {-0.250000, -0.250000, -0.250000},
-                                          {0.250000, -0.250000, -0.250000},
-                                          {-0.250000, 0.250000, -0.250000},
-                                          {0.250000, 0.250000, -0.250000},
-                                          {-0.250000, -0.250000, 0.250000},
-                                          {0.250000, -0.250000, 0.250000},
-                                          {-0.250000, 0.250000, 0.250000},
-                                          {0.250000, 0.250000, 0.250000}
-
+    static constexpr double Kb[GeometryInfo<1>::vertices_per_cell] = {1.000000,
+                                                                      0.000000};
   };
 
-  static constexpr double Kb[GeometryInfo<3>::vertices_per_cell] = {
-    0.500000,
-    0.250000,
-    0.250000,
-    0.000000,
-    0.250000,
-    0.000000,
-    0.000000,
-    -0.250000};
-};
+  template <>
+  struct TransformR2UAffine<2>
+  {
+    /*
+      Octave code:
+      M=[0 1 0 1;0 0 1 1;1 1 1 1];
+      K2 = transpose(M) * inverse (M*transpose(M));
+      printf ("{%f, %f, %f},\n", K2' );
+    */
+    static constexpr double KA[GeometryInfo<2>::vertices_per_cell][2] = {
+      {-0.500000, -0.500000},
+      {0.500000, -0.500000},
+      {-0.500000, 0.500000},
+      {0.500000, 0.500000}};
+
+    /*
+      Octave code:
+      M=[0 1 0 1 0 1 0 1;0 0 1 1 0 0 1 1; 0 0 0 0 1 1 1 1; 1 1 1 1 1 1 1 1];
+      K3 = transpose(M) * inverse (M*transpose(M))
+      printf ("{%f, %f, %f, %f},\n", K3' );
+    */
+    static constexpr double Kb[GeometryInfo<2>::vertices_per_cell] =
+      {0.750000, 0.250000, 0.250000, -0.250000};
+  };
+
+  template <>
+  struct TransformR2UAffine<3>
+  {
+    static constexpr double KA[GeometryInfo<3>::vertices_per_cell][3] = {
+      {-0.250000, -0.250000, -0.250000},
+      {0.250000, -0.250000, -0.250000},
+      {-0.250000, 0.250000, -0.250000},
+      {0.250000, 0.250000, -0.250000},
+      {-0.250000, -0.250000, 0.250000},
+      {0.250000, -0.250000, 0.250000},
+      {-0.250000, 0.250000, 0.250000},
+      {0.250000, 0.250000, 0.250000}
+
+    };
+
+    static constexpr double Kb[GeometryInfo<3>::vertices_per_cell] = {
+      0.500000,
+      0.250000,
+      0.250000,
+      0.000000,
+      0.250000,
+      0.000000,
+      0.000000,
+      -0.250000};
+  };
 } // namespace
 
 

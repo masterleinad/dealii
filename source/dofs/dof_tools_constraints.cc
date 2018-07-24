@@ -1808,8 +1808,9 @@ namespace DoFTools
       const bool                                   face_flip,
       const bool                                   face_rotation)
     {
-      static constexpr int dim      = FaceIterator::AccessorType::dimension;
-      static constexpr int spacedim = FaceIterator::AccessorType::space_dimension;
+      static constexpr int dim = FaceIterator::AccessorType::dimension;
+      static constexpr int spacedim =
+        FaceIterator::AccessorType::space_dimension;
 
       // we should be in the case where face_1 is active, i.e. has no children:
       Assert(!face_1->has_children(), ExcInternalError());

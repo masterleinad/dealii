@@ -716,9 +716,9 @@ namespace Physics
             }
 
           static constexpr unsigned int indices[4][2] = {{0, 0},
-                                                     {1, 1},
-                                                     {0, 1},
-                                                     {1, 0}};
+                                                         {1, 1},
+                                                         {0, 1},
+                                                         {1, 0}};
           return std::make_pair(indices[component_n][0],
                                 indices[component_n][1]);
         }
@@ -746,14 +746,14 @@ namespace Physics
             }
 
           static constexpr unsigned int indices[9][2] = {{0, 0},
-                                                     {1, 1},
-                                                     {2, 2},
-                                                     {1, 2},
-                                                     {0, 2},
-                                                     {0, 1},
-                                                     {1, 0},
-                                                     {2, 0},
-                                                     {2, 1}};
+                                                         {1, 1},
+                                                         {2, 2},
+                                                         {1, 2},
+                                                         {0, 2},
+                                                         {0, 1},
+                                                         {1, 0},
+                                                         {2, 0},
+                                                         {2, 1}};
           return std::make_pair(indices[component_n][0],
                                 indices[component_n][1]);
         }

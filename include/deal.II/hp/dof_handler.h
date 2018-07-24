@@ -262,7 +262,8 @@ namespace hp
      * used on different cells. The default index consequently corresponds to
      * an invalid value.
      */
-    static constexpr unsigned int default_fe_index = numbers::invalid_unsigned_int;
+    static constexpr unsigned int default_fe_index =
+      numbers::invalid_unsigned_int;
 
 
     /**
