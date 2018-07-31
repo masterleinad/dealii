@@ -208,6 +208,16 @@ public:
 
 private:
   /**
+   * Evaluate a degree of freedom for a shape function. This is needed for
+   * computing the constraint matrices. The degree of freedom here is typically
+   * located on a subface.
+   */
+  double
+  evaluate_dof_for_shape_function(const unsigned int dof,
+                                  const Point<dim> & p,
+                                  const unsigned int shape_function) const;
+
+  /**
    * Create the @p dofs_per_object vector that is needed within the constructor
    * to be passed to the constructor of @p FiniteElementData.
    */

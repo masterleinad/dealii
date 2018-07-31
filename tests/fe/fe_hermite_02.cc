@@ -87,9 +87,9 @@ private:
 };
 
 template <int dim>
-PlotFE<dim>::PlotFE(const unsigned int degree) :
-  fe(degree),
-  dof_handler(triangulation)
+PlotFE<dim>::PlotFE(const unsigned int degree)
+  : fe(degree)
+  , dof_handler(triangulation)
 {}
 
 template <int dim>
@@ -183,10 +183,10 @@ PlotFE<dim>::check_continuity()
               if (auto &global_gradient =
                     global_dof_gradients.at(global_dof).at(ldi[local_dof]))
                 {
-                  AssertThrow(
-                    (global_gradient.value() - dof_gradients[local_dof])
-                        .norm() < 1.e-10,
-                    ExcInternalError());
+                  AssertThrow((global_gradient.value() -
+                               dof_gradients[local_dof])
+                                  .norm() < 1.e-10,
+                              ExcInternalError());
                 }
               else
                 {
@@ -242,8 +242,10 @@ PlotFE<dim>::output_results() const
           1, DataComponentInterpretation::component_is_scalar);
       std::vector<std::string> dof_names(1,
                                          "dof_" + Utilities::int_to_string(i));
-      data_out.add_data_vector(
-        dof_handler, dof_vectors[i], dof_names, data_component_interpretation);
+      data_out.add_data_vector(dof_handler,
+                               dof_vectors[i],
+                               dof_names,
+                               data_component_interpretation);
     }
   data_out.build_patches(20);
 

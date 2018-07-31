@@ -59,8 +59,8 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 MappingHermiteHelper<dim, spacedim>::MappingHermiteHelper(
-  const Triangulation<dim, spacedim> &triangulation) :
-  dof_handler(std::make_shared<DoFHandler<dim, spacedim>>(triangulation))
+  const Triangulation<dim, spacedim> &triangulation)
+  : dof_handler(std::make_shared<DoFHandler<dim, spacedim>>(triangulation))
 {
   reinit();
 }
@@ -162,14 +162,14 @@ MappingHermiteHelper<dim, spacedim>::get_hermite_vector() const
 
 template <int dim, int spacedim>
 MappingHermite<dim, spacedim>::MappingHermite(
-  const Triangulation<dim, spacedim> &triangulation) :
-  MappingHermiteHelper<dim, spacedim>(triangulation),
-  MappingFEField<dim,
-                 spacedim,
-                 LinearAlgebra::distributed::Vector<double>,
-                 dealii::DoFHandler<dim, spacedim>>(
-    MappingHermiteHelper<dim, spacedim>::get_dof_handler(),
-    MappingHermiteHelper<dim, spacedim>::get_hermite_vector())
+  const Triangulation<dim, spacedim> &triangulation)
+  : MappingHermiteHelper<dim, spacedim>(triangulation)
+  , MappingFEField<dim,
+                   spacedim,
+                   LinearAlgebra::distributed::Vector<double>,
+                   dealii::DoFHandler<dim, spacedim>>(
+      MappingHermiteHelper<dim, spacedim>::get_dof_handler(),
+      MappingHermiteHelper<dim, spacedim>::get_hermite_vector())
 {}
 
 template <int dim, int spacedim>

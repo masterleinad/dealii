@@ -513,12 +513,12 @@ namespace DoFTools
               // satisfied by unification of the corresponding global dof
               // indices
               for (unsigned int i = 0; i < n_master_dofs; ++i)
-                if (face_constraints(row, i) == 1.0)
-                  if (master_dofs[i] == slave_dofs[row])
-                    {
-                      constraint_already_satisfied = true;
-                      break;
-                    }
+                // if (face_constraints(row, i) == 1.0)
+                if (master_dofs[i] == slave_dofs[row])
+                  {
+                    constraint_already_satisfied = true;
+                    break;
+                  }
 
               if (constraint_already_satisfied == false)
                 {

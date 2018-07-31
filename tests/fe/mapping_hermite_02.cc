@@ -89,9 +89,9 @@ private:
 };
 
 template <int dim>
-PlotFE<dim>::PlotFE(const unsigned int degree) :
-  fe(degree),
-  dof_handler(triangulation)
+PlotFE<dim>::PlotFE(const unsigned int degree)
+  : fe(degree)
+  , dof_handler(triangulation)
 {}
 
 template <int dim>
@@ -100,7 +100,15 @@ PlotFE<dim>::make_grid()
 {
   GridGenerator::hyper_cube(triangulation, 0., 1.);
   triangulation.refine_global(2);
-  GridTools::distort_random(.1, triangulation);
+  /*GridTools::transform(
+    [](const Point<dim> &p) -> Point<dim> {
+      Point<dim> p_new;
+      for (unsigned int i = 0; i < dim; ++i)
+        p_new(i) = std::atanh(p(i));
+      return p_new;
+    },
+    triangulation);*/
+  GridTools::distort_random(.4, triangulation);
   mapping_hermite = std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
 }
 
@@ -148,8 +156,9 @@ PlotFE<dim>::check_continuity()
   std::vector<types::global_dof_index> ldi(dpc);
 
   std::map<types::global_dof_index, Point<dim>> support_points;
-  DoFTools::map_dofs_to_support_points(
-    *mapping_hermite, dof_handler, support_points);
+  DoFTools::map_dofs_to_support_points(*mapping_hermite,
+                                       dof_handler,
+                                       support_points);
 
   for (const auto &cell : dof_handler.active_cell_iterators())
     {
@@ -183,10 +192,10 @@ PlotFE<dim>::check_continuity()
               if (auto &global_gradient =
                     global_dof_gradients.at(global_dof).at(ldi[local_dof]))
                 {
-                  AssertThrow(
-                    (global_gradient.value() - dof_gradients[local_dof])
-                        .norm() < 1.e-10,
-                    ExcInternalError());
+                  AssertThrow((global_gradient.value() -
+                               dof_gradients[local_dof])
+                                  .norm() < 1.e-10,
+                              ExcInternalError());
                 }
               else
                 {
@@ -243,11 +252,14 @@ PlotFE<dim>::output_results() const
           1, DataComponentInterpretation::component_is_scalar);
       std::vector<std::string> dof_names(1,
                                          "dof_" + Utilities::int_to_string(i));
-      data_out.add_data_vector(
-        dof_handler, dof_vectors[i], dof_names, data_component_interpretation);
+      data_out.add_data_vector(dof_handler,
+                               dof_vectors[i],
+                               dof_names,
+                               data_component_interpretation);
     }
-  data_out.build_patches(
-    mapping_fe_field, 20, DataOut<dim>::curved_inner_cells);
+  data_out.build_patches(mapping_fe_field,
+                         20,
+                         DataOut<dim>::curved_inner_cells);
 
   std::ofstream filename("solution.vtk");
   data_out.write_vtk(filename);

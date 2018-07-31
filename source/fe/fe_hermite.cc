@@ -30,15 +30,15 @@
 DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
-FE_Hermite<dim, spacedim>::FE_Hermite(const unsigned int degree) :
-  FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
-    this->get_polynomials(degree),
-    FiniteElementData<dim>(this->get_dpo_vector(degree),
-                           1,
-                           degree,
-                           FiniteElementData<dim>::L2),
-    std::vector<bool>(1, false),
-    std::vector<ComponentMask>(1, std::vector<bool>(1, true)))
+FE_Hermite<dim, spacedim>::FE_Hermite(const unsigned int degree)
+  : FE_Poly<TensorProductPolynomials<dim>, dim, spacedim>(
+      this->get_polynomials(degree),
+      FiniteElementData<dim>(this->get_dpo_vector(degree),
+                             1,
+                             degree,
+                             FiniteElementData<dim>::L2),
+      std::vector<bool>(1, false),
+      std::vector<ComponentMask>(1, std::vector<bool>(1, true)))
 {
   std::vector<Point<1>> points_1d;
   points_1d.reserve(degree - 1);
@@ -61,8 +61,9 @@ FE_Hermite<dim, spacedim>::initialize_unit_support_points(
   actual_support_points.push_back(points.front());
   actual_support_points.push_back(points.back());
   actual_support_points.push_back(points.back());
-  actual_support_points.insert(
-    actual_support_points.end(), ++points.begin(), --points.end());
+  actual_support_points.insert(actual_support_points.end(),
+                               ++points.begin(),
+                               --points.end());
 
   // We can compute the support points by computing the tensor
   // product of the 1d set of points. We could do this by hand, but it's
@@ -97,8 +98,9 @@ FE_Hermite<dim, spacedim>::initialize_unit_face_support_points(
   actual_support_points.push_back(points.front());
   actual_support_points.push_back(points.back());
   actual_support_points.push_back(points.back());
-  actual_support_points.insert(
-    actual_support_points.end(), ++points.begin(), --points.end());
+  actual_support_points.insert(actual_support_points.end(),
+                               ++points.begin(),
+                               --points.end());
 
   // find renumbering of faces and assign from values of quadrature
   std::vector<unsigned int> dpo(dim, 0);
@@ -117,10 +119,10 @@ FE_Hermite<dim, spacedim>::initialize_unit_face_support_points(
   // The only thing we have to do is reorder the points from tensor
   // product order to the order in which we enumerate DoFs on cells
   this->unit_face_support_points.resize(support_quadrature.size() * 2);
-  for (unsigned int k = 0; k < support_quadrature.size(); ++k)
+  for (unsigned int k = 0; k < support_quadrature.size() * 2; ++k)
     {
-      this->unit_face_support_points[face_index_map[k / 2] + k % 2] =
-        support_quadrature.point(k / 2);
+      this->unit_face_support_points[k] =
+        support_quadrature.point(face_index_map[k / 2]);
     }
 }
 
@@ -169,18 +171,130 @@ FE_Hermite<dim, spacedim>::get_face_interpolation_matrix(
   FullMatrix<double> &                interpolation_matrix) const
 {
   Assert(dim > 1, ExcImpossibleInDim(1));
-  get_subface_interpolation_matrix(
-    source_fe, numbers::invalid_unsigned_int, interpolation_matrix);
+  get_subface_interpolation_matrix(source_fe,
+                                   numbers::invalid_unsigned_int,
+                                   interpolation_matrix);
 }
+
+
+
+template <int dim, int spacedim>
+double
+FE_Hermite<dim, spacedim>::evaluate_dof_for_shape_function(
+  const unsigned int dof,
+  const Point<dim> & p,
+  const unsigned int shape_function) const
+{
+  (void)dof;
+  double scale = .5;
+  if (dim == 2 && this->degree == 3)
+    {
+      switch (dof % 4)
+        {
+          case 0:
+            return this->shape_value(shape_function, p);
+          case 1:
+            return this->shape_grad(shape_function, p)[0] * scale;
+          case 2:
+            return this->shape_grad(shape_function, p)[1] * scale;
+            break;
+          case 3:
+            return this->shape_grad_grad(shape_function, p)[0][1] * scale *
+                   scale;
+          default:
+            Assert(false, ExcInternalError());
+        }
+      return this->shape_value(shape_function, p);
+    }
+  Assert(false, ExcNotImplemented());
+  return 0.;
+}
+
+
 
 template <int dim, int spacedim>
 void
 FE_Hermite<dim, spacedim>::get_subface_interpolation_matrix(
-  const FiniteElement<dim, spacedim> & /*x_source_fe*/,
-  const unsigned int /*subface*/,
-  FullMatrix<double> & /*interpolation_matrix*/) const
+  const FiniteElement<dim, spacedim> &x_source_fe,
+  const unsigned int                  subface,
+  FullMatrix<double> &                interpolation_matrix) const
 {
-  Assert(false, ExcNotImplemented());
+  (void)x_source_fe;
+  (void)subface;
+  (void)interpolation_matrix;
+  Assert(interpolation_matrix.m() == x_source_fe.dofs_per_face,
+         ExcDimensionMismatch(interpolation_matrix.m(),
+                              x_source_fe.dofs_per_face));
+  // see if source is a FE_Hermite element
+  if (const auto source_fe = dynamic_cast<const FE_Hermite<2> *>(&x_source_fe))
+    {
+      Assert(source_fe->degree == 3, ExcNotImplemented());
+      Assert(interpolation_matrix.n() == this->dofs_per_face,
+             ExcDimensionMismatch(interpolation_matrix.n(),
+                                  this->dofs_per_face));
+      Assert(this->degree == 3, ExcNotImplemented());
+
+      // generate a point on this cell and evaluate the shape functions there
+      const Quadrature<dim - 1> quad_face_support(
+        source_fe->get_unit_face_support_points());
+
+      // Rule of thumb for FP accuracy, that can be expected for a given
+      // polynomial degree. This value is used to cut off values close to
+      // zero.
+      double eps = 2e-13 * this->degree * (dim - 1);
+
+      // compute the the first entries of interpolation matrix by simply taking
+      // the value at the support points.
+      // TODO: Verify that all faces are the same with respect to
+      // these support points. Furthermore, check if something has to
+      // be done for the face orientation flag in 3D.
+      const Quadrature<dim> subface_quadrature =
+        subface == numbers::invalid_unsigned_int ?
+          QProjector<dim>::project_to_face(quad_face_support, 0) :
+          QProjector<dim>::project_to_subface(quad_face_support, 0, subface);
+      for (unsigned int i = 0; i < source_fe->dofs_per_face; ++i)
+        {
+          const Point<dim> &p = subface_quadrature.point(i);
+
+          for (unsigned int j = 0; j < this->dofs_per_face; ++j)
+            {
+              double matrix_entry =
+                evaluate_dof_for_shape_function(this->face_to_cell_index(i, 0),
+                                                p,
+                                                this->face_to_cell_index(j, 0));
+
+              // Correct the interpolated value. I.e. if it is close to 1 or
+              // 0, make it exactly 1 or 0. Unfortunately, this is required to
+              // avoid problems with higher order elements.
+              if (std::fabs(matrix_entry - 1.0) < eps)
+                matrix_entry = 1.0;
+              if (std::fabs(matrix_entry) < eps)
+                matrix_entry = 0.0;
+              interpolation_matrix(i, j) = matrix_entry;
+            }
+        }
+
+      // make sure that the row sum of each of the matrices is 1 at this
+      // point. this must be so since the shape functions sum up to 1
+      /*for (unsigned int j = 0; j < source_fe->dofs_per_face; ++j)
+        {
+          double sum = 0.;
+
+          for (unsigned int i = 0; i < this->dofs_per_face; ++i)
+            sum += interpolation_matrix(j, i);
+
+          Assert(std::fabs(sum - 1) < eps, ExcInternalError());
+        }*/
+    }
+  else if (dynamic_cast<const FE_Nothing<dim> *>(&x_source_fe) != nullptr)
+    {
+      // nothing to do here, the FE_Nothing has no degrees of freedom anyway
+    }
+  else
+    AssertThrow(
+      false,
+      (typename FiniteElement<dim,
+                              spacedim>::ExcInterpolationNotImplemented()));
 }
 
 template <int dim, int spacedim>

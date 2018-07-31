@@ -69,24 +69,26 @@ test()
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(dummy, "dummy");
-    data_out.build_patches(
-      mapping_fe_field, 2, DataOut<dim>::curved_inner_cells);
+    data_out.build_patches(mapping_fe_field,
+                           20,
+                           DataOut<dim>::curved_inner_cells);
 
-    /*    std::ofstream filename ("solution-mapped.vtk");
-        data_out.write_vtk (filename);*/
+    std::ofstream filename("solution-mapped" + Utilities::int_to_string(dim) +
+                           ".vtk");
+    data_out.write_vtk(filename);
     data_out.write_vtk(deallog.get_file_stream());
   }
-  /*  {
-      DataOut<dim> data_out;
-      data_out.attach_dof_handler (mapping_fe_field.get_dof_handler());
-      Vector<float> dummy (triangulation.n_active_cells());
-      data_out.add_data_vector (dummy, "dummy");
-      data_out.build_patches ();
+  {
+    DataOut<dim> data_out;
+    data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
+    Vector<float> dummy(triangulation.n_active_cells());
+    data_out.add_data_vector(dummy, "dummy");
+    data_out.build_patches(20);
 
-      std::ofstream filename ("solution.vtk");
+    std::ofstream filename("solution" + Utilities::int_to_string(dim) + ".vtk");
 
-      data_out.write_vtk (filename);
-    }*/
+    data_out.write_vtk(filename);
+  }
 }
 
 int

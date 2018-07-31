@@ -93,7 +93,8 @@ template <int dim>
 class LinearFunction : public Function<dim>
 {
 public:
-  LinearFunction(const unsigned int n_) : n(n_)
+  LinearFunction(const unsigned int n_)
+    : n(n_)
   {}
 
   double
@@ -147,8 +148,9 @@ test()
             fe_value +=
               fe.shape_value(i, q_gauss.point(q)) * interpolated_values[i];
           deallog << "(" << q << "," << fe_value << ") " << std::endl;
-          AssertThrow(std::abs(fe_value - linear_shape_function(
-                                            q_gauss.point(q), i)) < 1.e-10,
+          AssertThrow(std::abs(fe_value -
+                               linear_shape_function(q_gauss.point(q), i)) <
+                        1.e-10,
                       ExcInternalError());
         }
       deallog.pop();
