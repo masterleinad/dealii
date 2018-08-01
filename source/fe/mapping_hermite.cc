@@ -84,6 +84,8 @@ MappingHermiteHelper<dim, spacedim>::reinit()
     hermite_vector = 0.;
     n_values       = 0.;
 
+    const unsigned int dofs_per_vertex = dim * Utilities::pow(2, dim);
+
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
     for (const auto &cell : dof_handler->active_cell_iterators())
@@ -98,16 +100,16 @@ MappingHermiteHelper<dim, spacedim>::reinit()
             std::vector<Vector<double>>(dofs_per_cell / dim,
                                         Vector<double>(1)));
           std::vector<Point<spacedim>> vertex_values(
-            GeometryInfo<dim>::vertices_per_cell * fe.dofs_per_vertex);
+            GeometryInfo<dim>::vertices_per_cell * dofs_per_vertex);
           for (unsigned int vertex = 0;
                vertex < GeometryInfo<dim>::vertices_per_cell;
                ++vertex)
-            for (unsigned int vertex_dof = 0; vertex_dof < fe.dofs_per_vertex;
+            for (unsigned int vertex_dof = 0; vertex_dof < dofs_per_vertex;
                  ++vertex_dof)
-              vertex_values[vertex * fe.dofs_per_vertex + vertex_dof] =
+              vertex_values[vertex * dofs_per_vertex + vertex_dof] =
                 cell->vertex(vertex);
 
-          Assert(vertex_values.size() == dofs_per_cell, ExcNotImplemented());
+          AssertDimension(vertex_values.size(), dofs_per_cell);
 
           for (unsigned int i = 0; i < vertex_values.size(); ++i)
             {

@@ -99,7 +99,7 @@ void
 PlotFE<dim>::make_grid()
 {
   GridGenerator::hyper_cube(triangulation, 0., 1.);
-  triangulation.refine_global(2);
+  // triangulation.refine_global(2);
   /*GridTools::transform(
     [](const Point<dim> &p) -> Point<dim> {
       Point<dim> p_new;
@@ -108,7 +108,7 @@ PlotFE<dim>::make_grid()
       return p_new;
     },
     triangulation);*/
-  GridTools::distort_random(.4, triangulation);
+  //  GridTools::distort_random(.4, triangulation);
   mapping_hermite = std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
 }
 
@@ -141,7 +141,7 @@ PlotFE<dim>::check_continuity()
 {
   Quadrature<dim> quadrature(dof_handler.get_fe().get_unit_support_points());
 
-  FEValues<dim>      fe_values(*mapping_hermite,
+  FEValues<dim>      fe_values(/**mapping_hermite,*/
                           dof_handler.get_fe(),
                           quadrature,
                           update_quadrature_points | update_values |
@@ -257,9 +257,10 @@ PlotFE<dim>::output_results() const
                                dof_names,
                                data_component_interpretation);
     }
-  data_out.build_patches(mapping_fe_field,
-                         20,
-                         DataOut<dim>::curved_inner_cells);
+  data_out.build_patches();
+  /*  data_out.build_patches(mapping_fe_field,
+                           20,
+                           DataOut<dim>::curved_inner_cells);*/
 
   std::ofstream filename("solution.vtk");
   data_out.write_vtk(filename);
@@ -271,8 +272,8 @@ PlotFE<dim>::run()
 {
   make_grid();
   setup_system();
-  check_continuity();
-  // output_results();
+  // check_continuity();
+  output_results();
 }
 
 int
@@ -286,7 +287,7 @@ main()
     plot_fe.run();
     deallog.pop();
   }
-  {
+  /*{
     deallog.push("2 4");
     PlotFE<2> plot_fe(4);
     plot_fe.run();
@@ -303,7 +304,7 @@ main()
     PlotFE<3> plot_fe(4);
     plot_fe.run();
     deallog.pop();
-  }
+  }*/
 
   deallog << "OK" << std::endl;
 
