@@ -20,7 +20,11 @@
 #include <deal.II/base/multithread_info.h>
 #include <deal.II/base/parallel.h>
 #include <deal.II/base/thread_management.h>
+#include <deal.II/base/types.h>
 #include <deal.II/base/vectorization.h>
+
+#include <deal.II/lac/cuda_kernels.h>
+#include <deal.II/lac/cuda_kernels.templates.h>
 
 #include <cstdio>
 #include <cstring>
@@ -307,7 +311,7 @@ namespace internal
     template <typename Number>
     struct Vectorization_add_av
     {
-      Vectorization_add_av(Number *val, Number *v_val, Number factor)
+      Vectorization_add_av(Number *val, const Number *v_val, Number factor)
         : val(val)
         , v_val(v_val)
         , factor(factor)
@@ -329,15 +333,18 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
-      Number  factor;
+      Number *      val;
+      const Number *v_val;
+      Number        factor;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xav
     {
-      Vectorization_sadd_xav(Number *val, Number *v_val, Number a, Number x)
+      Vectorization_sadd_xav(Number *      val,
+                             const Number *v_val,
+                             Number        a,
+                             Number        x)
         : val(val)
         , v_val(v_val)
         , a(a)
@@ -360,16 +367,16 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
-      Number  a;
-      Number  x;
+      Number *      val;
+      const Number *v_val;
+      Number        a;
+      Number        x;
     };
 
     template <typename Number>
     struct Vectorization_subtract_v
     {
-      Vectorization_subtract_v(Number *val, Number *v_val)
+      Vectorization_subtract_v(Number *val, const Number *v_val)
         : val(val)
         , v_val(v_val)
       {}
@@ -390,8 +397,8 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
+      Number *      val;
+      const Number *v_val;
     };
 
     template <typename Number>
@@ -425,7 +432,7 @@ namespace internal
     template <typename Number>
     struct Vectorization_add_v
     {
-      Vectorization_add_v(Number *val, Number *v_val)
+      Vectorization_add_v(Number *val, const Number *v_val)
         : val(val)
         , v_val(v_val)
       {}
@@ -446,18 +453,18 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
+      Number *      val;
+      const Number *v_val;
     };
 
     template <typename Number>
     struct Vectorization_add_avpbw
     {
-      Vectorization_add_avpbw(Number *val,
-                              Number *v_val,
-                              Number *w_val,
-                              Number  a,
-                              Number  b)
+      Vectorization_add_avpbw(Number *      val,
+                              const Number *v_val,
+                              const Number *w_val,
+                              Number        a,
+                              Number        b)
         : val(val)
         , v_val(v_val)
         , w_val(w_val)
@@ -481,17 +488,17 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
-      Number *w_val;
-      Number  a;
-      Number  b;
+      Number *      val;
+      const Number *v_val;
+      const Number *w_val;
+      Number        a;
+      Number        b;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xv
     {
-      Vectorization_sadd_xv(Number *val, Number *v_val, Number x)
+      Vectorization_sadd_xv(Number *val, const Number *v_val, Number x)
         : val(val)
         , v_val(v_val)
         , x(x)
@@ -513,20 +520,20 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
-      Number  x;
+      Number *      val;
+      const Number *v_val;
+      Number        x;
     };
 
     template <typename Number>
     struct Vectorization_sadd_xavbw
     {
-      Vectorization_sadd_xavbw(Number *val,
-                               Number *v_val,
-                               Number *w_val,
-                               Number  x,
-                               Number  a,
-                               Number  b)
+      Vectorization_sadd_xavbw(Number *      val,
+                               const Number *v_val,
+                               const Number *w_val,
+                               Number        x,
+                               Number        a,
+                               Number        b)
         : val(val)
         , v_val(v_val)
         , w_val(w_val)
@@ -551,18 +558,18 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
-      Number *w_val;
-      Number  x;
-      Number  a;
-      Number  b;
+      Number *      val;
+      const Number *v_val;
+      const Number *w_val;
+      Number        x;
+      Number        a;
+      Number        b;
     };
 
     template <typename Number>
     struct Vectorization_scale
     {
-      Vectorization_scale(Number *val, Number *v_val)
+      Vectorization_scale(Number *val, const Number *v_val)
         : val(val)
         , v_val(v_val)
       {}
@@ -583,14 +590,14 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *v_val;
+      Number *      val;
+      const Number *v_val;
     };
 
     template <typename Number>
     struct Vectorization_equ_au
     {
-      Vectorization_equ_au(Number *val, Number *u_val, Number a)
+      Vectorization_equ_au(Number *val, const Number *u_val, Number a)
         : val(val)
         , u_val(u_val)
         , a(a)
@@ -612,19 +619,19 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *u_val;
-      Number  a;
+      Number *      val;
+      const Number *u_val;
+      Number        a;
     };
 
     template <typename Number>
     struct Vectorization_equ_aubv
     {
-      Vectorization_equ_aubv(Number *val,
-                             Number *u_val,
-                             Number *v_val,
-                             Number  a,
-                             Number  b)
+      Vectorization_equ_aubv(Number *      val,
+                             const Number *u_val,
+                             const Number *v_val,
+                             Number        a,
+                             Number        b)
         : val(val)
         , u_val(u_val)
         , v_val(v_val)
@@ -648,11 +655,11 @@ namespace internal
           }
       }
 
-      Number *val;
-      Number *u_val;
-      Number *v_val;
-      Number  a;
-      Number  b;
+      Number *      val;
+      const Number *u_val;
+      const Number *v_val;
+      Number        a;
+      Number        b;
     };
 
     template <typename Number>
@@ -1385,6 +1392,1043 @@ namespace internal
       (void)partitioner;
 #endif
     }
+
+
+    template <typename Number, typename Number2, typename MemorySpace>
+    struct functions
+    {
+      static inline void
+      memory_space_assert()
+      {
+        static_assert(std::is_same<MemorySpace, Host>::value ||
+                        std::is_same<MemorySpace, CUDA>::value,
+                      "MemorySpace should be Host or CUDA");
+      }
+
+      static void
+      copy(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+           /*thread_loop_partitioner*/,
+           const size_type /*size*/,
+           const Number2 * /*c_values*/,
+           Number * /*values*/,
+           const Number2 * /*c_values_dev*/,
+           Number * /*values_dev*/)
+      {
+        memory_space_assert();
+
+        static_assert(
+          std::is_same<MemorySpace, CUDA>::value &&
+            std::is_same<Number, Number2>::value,
+          "For the CUDA MemorySpace Number and Number2 should be the same type");
+      }
+
+      static void
+      set(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+          /*thread_loop_partitioner*/,
+          const size_type /*size*/,
+          const Number /*s*/,
+          Number * /*values*/,
+          Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      add_vector(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                 /*thread_loop_partitioner*/,
+                 const size_type /*size*/,
+                 const Number * /*v_values*/,
+                 Number * /*values*/,
+                 const Number * /*v_values_dev*/,
+                 Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      subtract_vector(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+        /*thread_loop_partitioner*/,
+        const size_type /*size*/,
+        const Number * /*v_values*/,
+        Number * /*values*/,
+        const Number * /*v_values_dev*/,
+        Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      add_factor(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                 /*thread_loop_partitioner*/,
+                 const size_type /*size*/,
+                 Number /*a*/,
+                 Number * /*values*/,
+                 Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      add_av(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+             /*thread_loop_partitioner*/,
+             const size_type /*size*/,
+             const Number /*a*/,
+             const Number * /*v_values*/,
+             Number * /*values*/,
+             const Number * /*v_values_dev*/,
+             Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      add_avpbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                /*thread_loop_partitioner*/,
+                const size_type /*size*/,
+                const Number /*a*/,
+                const Number /*b*/,
+                const Number * /*v_values*/,
+                const Number * /*w_values*/,
+                Number * /*values*/,
+                const Number * /*v_values_dev*/,
+                const Number * /*w_values_dev*/,
+                Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      sadd_xv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+              /*thread_loop_partitioner*/,
+              const size_type /*size*/,
+              const Number /*x*/,
+              const Number * /*v_values*/,
+              Number * /*values*/,
+              const Number * /*v_values_dev*/,
+              Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      sadd_xav(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+               /*thread_loop_partitioner*/,
+               const size_type /*size*/,
+               const Number /*x*/,
+               const Number /*a*/,
+               const Number * /*v_values*/,
+               Number * /*values*/,
+               const Number * /*v_values_dev*/,
+               Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      sadd_xavbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                 /*thread_loop_partitioner*/,
+                 const size_type /*size*/,
+                 const Number /*x*/,
+                 const Number /*a*/,
+                 const Number /*b*/,
+                 const Number * /*v_values*/,
+                 const Number * /*w_values*/,
+                 Number * /*values*/,
+                 const Number * /*v_values_dev*/,
+                 const Number * /*w_values_dev*/,
+                 Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      multiply_factor(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+        /*thread_loop_partitioner*/,
+        const size_type /*size*/,
+        const Number /*factor*/,
+        Number * /*values*/,
+        Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      scale(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+            /*thread_loop_partitioner*/,
+            const size_type /*size*/,
+            const Number * /*v_values*/,
+            Number * /*values*/,
+            const Number * /*v_values_dev*/,
+            Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      equ_au(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+             /*thread_loop_partitioner*/,
+             const size_type /*size*/,
+             const Number /*a*/,
+             const Number * /*v_values*/,
+             Number * /*values*/,
+             const Number * /*v_values_dev*/,
+             Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static void
+      equ_aubv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+               /*thread_loop_partitioner*/,
+               const size_type /*size*/,
+               const Number /*a*/,
+               const Number /*b*/,
+               const Number * /*v_values*/,
+               const Number * /*w_values*/,
+               Number * /*values*/,
+               const Number * /*v_values_dev*/,
+               const Number * /*w_values_dev*/,
+               Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static Number
+      dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+          /*thread_loop_partitioner*/,
+          const size_type /*size*/,
+          const Number2 * /*v_values*/,
+          Number * /*values*/,
+          const Number2 * /*v_values_dev*/,
+          Number * /*values_dev*/)
+      {
+        memory_space_assert();
+
+        return Number();
+      }
+
+      template <typename real_type>
+      static void
+      norm_2(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+             /*thread_loop_partitioner*/,
+             const size_type /*size*/,
+             real_type & /*sum*/,
+             Number * /*values*/,
+             Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static Number
+      mean_value(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                 /*thread_loop_partitioner*/,
+                 const size_type /*size*/,
+                 Number * /*values*/,
+                 Number *const /*values_dev*/)
+      {
+        memory_space_assert();
+
+        return Number();
+      }
+
+      template <typename real_type>
+      static void
+      norm_1(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+             /*thread_loop_partitioner*/,
+             const size_type /*size*/,
+             real_type & /*sum*/,
+             Number * /*values*/,
+             Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      template <typename real_type>
+      static void
+      norm_p(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+             /*thread_loop_partitioner*/,
+             const size_type /*size*/,
+             real_type & /*sum*/,
+             real_type /*p*/,
+             Number * /*values*/,
+             Number * /*values_dev*/)
+      {
+        memory_space_assert();
+      }
+
+      static Number
+      add_and_dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                  /*thread_loop_partitioner*/,
+                  const size_type /*size*/,
+                  const Number /*a*/,
+                  const Number * /*v_values*/,
+                  const Number * /*w_values*/,
+                  Number * /*values*/,
+                  const Number * /*v_values_dev*/,
+                  const Number * /*w_values_dev*/,
+                  Number * /*values_dev*/)
+      {
+        memory_space_assert();
+
+        return Number();
+      }
+    };
+
+
+
+    template <typename Number, typename Number2>
+    struct functions<Number, Number2, Host>
+    {
+      static void
+      copy(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                           thread_loop_partitioner,
+           const size_type size,
+           const Number2 * c_values,
+           Number *        values,
+           const Number2 *,
+           Number *)
+      {
+        Vector_copy<Number, Number2> copier(c_values, values);
+        parallel_for(copier, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      set(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                          thread_loop_partitioner,
+          const size_type size,
+          const Number    s,
+          Number *        values,
+          Number *)
+      {
+        Vector_set<Number> setter(s, values);
+        parallel_for(setter, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      add_vector(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                 thread_loop_partitioner,
+                 const size_type size,
+                 const Number *  v_values,
+                 Number *        values,
+                 const Number *,
+                 Number *)
+      {
+        Vectorization_add_v<Number> vector_add(values, v_values);
+        parallel_for(vector_add, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      subtract_vector(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                        thread_loop_partitioner,
+        const size_type size,
+        const Number *  v_values,
+        Number *        values,
+        const Number *,
+        Number *)
+      {
+        Vectorization_subtract_v<Number> vector_subtract(values, v_values);
+        parallel_for(vector_subtract, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      add_factor(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                 thread_loop_partitioner,
+                 const size_type size,
+                 Number          a,
+                 Number *        values,
+                 Number *)
+      {
+        Vectorization_add_factor<Number> vector_add(values, a);
+        parallel_for(vector_add, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      add_av(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             const Number    a,
+             const Number *  v_values,
+             Number *        values,
+             const Number *,
+             Number *)
+      {
+        Vectorization_add_av<Number> vector_add(values, v_values, a);
+        parallel_for(vector_add, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      add_avpbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                thread_loop_partitioner,
+                const size_type size,
+                const Number    a,
+                const Number    b,
+                const Number *  v_values,
+                const Number *  w_values,
+                Number *        values,
+                const Number *,
+                const Number *,
+                Number *)
+      {
+        Vectorization_add_avpbw<Number> vector_add(
+          values, v_values, w_values, a, b);
+        parallel_for(vector_add, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      sadd_xv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                              thread_loop_partitioner,
+              const size_type size,
+              const Number    x,
+              const Number *  v_values,
+              Number *        values,
+              const Number *,
+              Number *)
+      {
+        Vectorization_sadd_xv<Number> vector_sadd(values, v_values, x);
+        parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      sadd_xav(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                               thread_loop_partitioner,
+               const size_type size,
+               const Number    x,
+               const Number    a,
+               const Number *  v_values,
+               Number *        values,
+               const Number *,
+               Number *)
+      {
+        Vectorization_sadd_xav<Number> vector_sadd(values, v_values, a, x);
+        parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      sadd_xavbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                 thread_loop_partitioner,
+                 const size_type size,
+                 const Number    x,
+                 const Number    a,
+                 const Number    b,
+                 const Number *  v_values,
+                 const Number *  w_values,
+                 Number *        values,
+                 const Number *,
+                 const Number *,
+                 Number *)
+      {
+        Vectorization_sadd_xavbw<Number> vector_sadd(
+          values, v_values, w_values, x, a, b);
+        parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      multiply_factor(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                        thread_loop_partitioner,
+        const size_type size,
+        const Number    factor,
+        Number *        values,
+        Number *)
+      {
+        Vectorization_multiply_factor<Number> vector_multiply(values, factor);
+        parallel_for(vector_multiply, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      scale(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                            thread_loop_partitioner,
+            const size_type size,
+            const Number *  v_values,
+            Number *        values,
+            const Number *,
+            Number *)
+      {
+        Vectorization_scale<Number> vector_scale(values, v_values);
+        parallel_for(vector_scale, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      equ_au(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             const Number    a,
+             const Number *  v_values,
+             Number *        values,
+             const Number *,
+             Number *)
+      {
+        Vectorization_equ_au<Number> vector_equ(values, v_values, a);
+        parallel_for(vector_equ, 0, size, thread_loop_partitioner);
+      }
+
+      static void
+      equ_aubv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                               thread_loop_partitioner,
+               const size_type size,
+               const Number    a,
+               const Number    b,
+               const Number *  v_values,
+               const Number *  w_values,
+               Number *        values,
+               const Number *,
+               const Number *,
+               Number *)
+      {
+        Vectorization_equ_aubv<Number> vector_equ(
+          values, v_values, w_values, a, b);
+        parallel_for(vector_equ, 0, size, thread_loop_partitioner);
+      }
+
+      static Number
+      dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                          thread_loop_partitioner,
+          const size_type size,
+          const Number2 * v_values,
+          Number *        values,
+          const Number2 *,
+          Number *)
+      {
+        Number                                                   sum;
+        dealii::internal::VectorOperations::Dot<Number, Number2> dot(values,
+                                                                     v_values);
+        dealii::internal::VectorOperations::parallel_reduce(
+          dot, 0, size, sum, thread_loop_partitioner);
+        AssertIsFinite(sum);
+
+        return sum;
+      }
+
+      template <typename real_type>
+      static void
+      norm_2(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             real_type &     sum,
+             Number *        values,
+             Number *)
+      {
+        Norm2<Number, real_type> norm2(values);
+        parallel_reduce(norm2, 0, size, sum, thread_loop_partitioner);
+      }
+
+      static Number
+      mean_value(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                 thread_loop_partitioner,
+                 const size_type size,
+                 Number *        values,
+                 Number *const)
+      {
+        Number            sum;
+        MeanValue<Number> mean(values);
+        parallel_reduce(mean, 0, size, sum, thread_loop_partitioner);
+
+        return sum;
+      }
+
+      template <typename real_type>
+      static void
+      norm_1(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             real_type &     sum,
+             Number *        values,
+             Number *)
+      {
+        Norm1<Number, real_type> norm1(values);
+        parallel_reduce(norm1, 0, size, sum, thread_loop_partitioner);
+      }
+
+      template <typename real_type>
+      static void
+      norm_p(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             real_type &     sum,
+             real_type       p,
+             Number *        values,
+             Number *)
+      {
+        NormP<Number, real_type> normp(values, p);
+        parallel_reduce(normp, 0, size, sum, thread_loop_partitioner);
+      }
+
+      static Number
+      add_and_dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                                  thread_loop_partitioner,
+                  const size_type size,
+                  const Number    a,
+                  const Number *  v_values,
+                  const Number *  w_values,
+                  Number *        values,
+                  const Number *,
+                  const Number *,
+                  Number *)
+      {
+        Number            sum;
+        AddAndDot<Number> adder(values, v_values, w_values, a);
+        parallel_reduce(adder, 0, size, sum, thread_loop_partitioner);
+
+        return sum;
+      }
+    };
+
+
+
+#if defined(DEAL_II_WITH_CUDA) && defined(__CUDACC__)
+    template <typename Number>
+    struct functions<Number, Number, CUDA>
+    {
+      static const int block_size =
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::block_size;
+      static const int chunk_size =
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::chunk_size;
+
+      static void
+      copy(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+           const size_type size,
+           const Number *,
+           Number *,
+           const Number *c_values_dev,
+           Number *      values_dev)
+      {
+        cudaError_t cuda_error_code = cudaMemcpy(values_dev,
+                                                 c_values_dev,
+                                                 size * sizeof(Number),
+                                                 cudaMemcpyDeviceToDevice);
+        AssertCuda(cuda_error_code);
+      }
+
+      static void
+      set(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+          const size_type size,
+          const Number    s,
+          Number *,
+          Number *values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::set<Number>
+          <<<n_blocks, block_size>>>(values_dev, s, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      add_vector(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                 const size_type size,
+                 const Number *,
+                 Number *,
+                 const Number *v_values_dev,
+                 Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
+          <<<n_blocks, block_size>>>(values_dev, 1., v_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      subtract_vector(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+        const size_type size,
+        const Number *,
+        Number *,
+        const Number *v_values_dev,
+        Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
+          <<<n_blocks, block_size>>>(values_dev, -1., v_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      add_factor(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                 const size_type size,
+                 Number          a,
+                 Number *,
+                 Number *values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_add<Number>
+          <<<n_blocks, block_size>>>(values_dev, a, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      add_av(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+             const size_type size,
+             const Number    a,
+             const Number *,
+             Number *,
+             const Number *v_values_dev,
+             Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
+          <<<n_blocks, block_size>>>(values_dev, a, v_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      add_avpbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                const size_type size,
+                const Number    a,
+                const Number    b,
+                const Number *,
+                const Number *,
+                Number *,
+                const Number *v_values_dev,
+                const Number *w_values_dev,
+                Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aVbW<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            values_dev, a, v_values_dev, b, w_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      sadd_xv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+              const size_type size,
+              const Number    x,
+              const Number *,
+              Number *,
+              const Number *v_values_dev,
+              Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            x, values_dev, 1., v_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      sadd_xav(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+               const size_type size,
+               const Number    x,
+               const Number    a,
+               const Number *,
+               Number *,
+               const Number *v_values_dev,
+               Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            x, values_dev, a, v_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      sadd_xavbw(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                 const size_type size,
+                 const Number    x,
+                 const Number    a,
+                 const Number    b,
+                 const Number *,
+                 const Number *,
+                 Number *,
+                 const Number *v_values_dev,
+                 const Number *w_values_dev,
+                 Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            x, values_dev, a, v_values_dev, b, w_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      multiply_factor(
+        std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+        const size_type size,
+        const Number    factor,
+        Number *,
+        Number *values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_scale<Number>
+          <<<n_blocks, block_size>>>(values_dev, factor, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      scale(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+            const size_type size,
+            const Number *,
+            Number *,
+            const Number *v_values_dev,
+            Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::scale<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(values_dev,
+                                                    v_values_dev,
+                                                    size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      equ_au(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+             const size_type size,
+             const Number    a,
+             const Number *,
+             Number *,
+             const Number *v_values_dev,
+             Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(values_dev,
+                                                    a,
+                                                    v_values_dev,
+                                                    size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static void
+      equ_aubv(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+               const size_type size,
+               const Number    a,
+               const Number    b,
+               const Number *,
+               const Number *,
+               Number *,
+               const Number *v_values_dev,
+               const Number *w_values_dev,
+               Number *      values_dev)
+      {
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            values_dev, a, v_values_dev, b, w_values_dev, size);
+
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+      }
+
+      static Number
+      dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+          const size_type size,
+          const Number *,
+          Number *,
+          const Number *v_values_dev,
+          Number *      values_dev)
+      {
+        Number *    result_device;
+        cudaError_t error_code =
+          cudaMalloc(&result_device, size * sizeof(Number));
+        AssertCuda(error_code);
+        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::double_vector_reduction<
+          Number,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::DotProduct<Number>>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+                                                    values_dev,
+                                                    v_values_dev,
+                                                    static_cast<unsigned int>(
+                                                      size));
+
+        // Copy the result back to the host
+        Number result;
+        error_code = cudaMemcpy(&result,
+                                result_device,
+                                sizeof(Number),
+                                cudaMemcpyDeviceToHost);
+        AssertCuda(error_code);
+        // Free the memory on the device
+        error_code = cudaFree(result_device);
+        AssertCuda(error_code);
+
+        AssertIsFinite(result);
+
+        return result;
+      }
+
+      template <typename real_type>
+      static void
+      norm_2(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>
+                             thread_loop_partitioner,
+             const size_type size,
+             real_type &     sum,
+             Number *        values,
+             Number *        values_dev)
+      {
+        sum = dot(thread_loop_partitioner,
+                  size,
+                  values,
+                  values,
+                  values_dev,
+                  values_dev);
+      }
+
+      static Number
+      mean_value(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                 const size_type size,
+                 Number *,
+                 Number *const values_dev)
+      {
+        Number *    result_device;
+        cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+        AssertCuda(error_code);
+        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
+          Number,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::ElemSum<Number>>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+                                                    values_dev,
+                                                    size);
+
+        // Copy the result back to the host
+        Number result;
+        error_code = cudaMemcpy(&result,
+                                result_device,
+                                sizeof(Number),
+                                cudaMemcpyDeviceToHost);
+        AssertCuda(error_code);
+        // Free the memory on the device
+        error_code = cudaFree(result_device);
+        AssertCuda(error_code);
+
+        return result;
+      }
+
+      template <typename real_type>
+      static void
+      norm_1(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+             const size_type size,
+             real_type &     sum,
+             Number *,
+             Number *values_dev)
+      {
+        Number *    result_device;
+        cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+        AssertCuda(error_code);
+        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
+          Number,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::L1Norm<Number>>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+                                                    values_dev,
+                                                    size);
+
+        // Copy the result back to the host
+        error_code = cudaMemcpy(&sum,
+                                result_device,
+                                sizeof(Number),
+                                cudaMemcpyDeviceToHost);
+        AssertCuda(error_code);
+        // Free the memory on the device
+        error_code = cudaFree(result_device);
+        AssertCuda(error_code);
+      }
+
+      template <typename real_type>
+      static void
+      norm_p(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+             const size_type,
+             real_type &,
+             real_type,
+             Number *,
+             Number *)
+      {
+        Assert(false, ExcNotImplemented());
+      }
+
+      static Number
+      add_and_dot(std::shared_ptr<::dealii::parallel::internal::TBBPartitioner>,
+                  const size_type size,
+                  const Number    a,
+                  const Number *,
+                  const Number *,
+                  Number *,
+                  const Number *v_values_dev,
+                  const Number *w_values_dev,
+                  Number *      values_dev)
+      {
+        Number *    res_d;
+        cudaError_t error_code = cudaMalloc(&res_d, sizeof(Number));
+        AssertCuda(error_code);
+        error_code = cudaMemset(res_d, 0., sizeof(Number));
+        AssertCuda(error_code);
+
+        const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_and_dot<Number>
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+            res_d, values_dev, v_values_dev, w_values_dev, a, size);
+
+        Number res;
+        error_code =
+          cudaMemcpy(&res, res_d, sizeof(Number), cudaMemcpyDeviceToHost);
+        AssertCuda(error_code);
+        error_code = cudaFree(res_d);
+
+        return res;
+      }
+    };
+#endif
   } // namespace VectorOperations
 } // namespace internal
 

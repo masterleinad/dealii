@@ -277,6 +277,18 @@ namespace numbers
 } // namespace numbers
 
 
+/**
+ * Structure describing Host memory space.
+ */
+struct Host
+{};
+
+/**
+ * Structure describing CUDA memory space.
+ */
+struct CUDA
+{};
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif
