@@ -40,12 +40,12 @@ FE_Hermite<dim, spacedim>::FE_Hermite(const unsigned int degree)
       std::vector<bool>(1, false),
       std::vector<ComponentMask>(1, std::vector<bool>(1, true)))
 {
-  /*std::vector<Point<1>> points_1d;
+  std::vector<Point<1>> points_1d;
   points_1d.reserve(degree - 1);
   for (unsigned int i = 0; i < degree - 1; ++i)
     points_1d.push_back(Point<1>(i * 1. / (degree - 2)));
   initialize_unit_support_points(points_1d);
-  initialize_unit_face_support_points(points_1d);*/
+  initialize_unit_face_support_points(points_1d);
 }
 
 template <int dim, int spacedim>
@@ -617,6 +617,18 @@ FE_Hermite<dim, spacedim>::clone() const
 
 template <int dim, int spacedim>
 std::vector<unsigned int>
+FE_Hermite<dim, spacedim>::get_continuous_dpo_vector(const unsigned int deg)
+{
+  AssertThrow(deg > 0, ExcMessage("FE_Hermite needs to be of degree > 2."));
+  std::vector<unsigned int> dpo(dim + 1, 0);
+  for (unsigned int i = 0; i < dpo.size(); ++i)
+    dpo[i] = Utilities::pow(2, dim - i) * Utilities::pow(deg - 3, i);
+
+  return dpo;
+}
+
+template <int dim, int spacedim>
+std::vector<unsigned int>
 FE_Hermite<dim, spacedim>::get_dpo_vector(const unsigned int deg)
 {
   AssertThrow(deg > 0, ExcMessage("FE_Hermite needs to be of degree > 2."));
@@ -633,10 +645,11 @@ FE_Hermite<dim, spacedim>::get_polynomials(const unsigned int degree)
 {
   TensorProductPolynomials<dim> tpp(
     PolynomialsHermite<double>::generate_complete_basis(degree));
-  /*const std::vector<unsigned int> renumbering =
+
+  const std::vector<unsigned int> renumbering =
     FETools::general_lexicographic_to_hierarchic<dim>(
-      this->get_dpo_vector(degree));
-  tpp.set_numbering(renumbering);*/
+      get_continuous_dpo_vector(degree));
+  tpp.set_numbering(renumbering);
 
   return tpp;
 }

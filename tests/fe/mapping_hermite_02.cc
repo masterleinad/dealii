@@ -74,10 +74,10 @@ private:
   void
   output_results() const;
 
-  Triangulation<dim>                   triangulation;
-  std::unique_ptr<MappingHermite<dim>> mapping_hermite;
-  FE_Hermite<dim>                      fe;
-  DoFHandler<dim>                      dof_handler;
+  Triangulation<dim> triangulation;
+  // std::unique_ptr<MappingHermite<dim>> mapping_hermite;
+  FE_Hermite<dim> fe;
+  DoFHandler<dim> dof_handler;
 
   std::vector<Vector<double>>                       dof_vectors;
   std::vector<std::vector<boost::optional<double>>> global_dof_values;
@@ -99,7 +99,7 @@ void
 PlotFE<dim>::make_grid()
 {
   GridGenerator::hyper_cube(triangulation, 0., 1.);
-  // triangulation.refine_global(2);
+  triangulation.refine_global(1);
   /*GridTools::transform(
     [](const Point<dim> &p) -> Point<dim> {
       Point<dim> p_new;
@@ -109,7 +109,8 @@ PlotFE<dim>::make_grid()
     },
     triangulation);*/
   //  GridTools::distort_random(.4, triangulation);
-  mapping_hermite = std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
+  //  mapping_hermite =
+  //  std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
 }
 
 template <int dim>
@@ -156,9 +157,8 @@ PlotFE<dim>::check_continuity()
   std::vector<types::global_dof_index> ldi(dpc);
 
   std::map<types::global_dof_index, Point<dim>> support_points;
-  DoFTools::map_dofs_to_support_points(*mapping_hermite,
-                                       dof_handler,
-                                       support_points);
+  MappingQ1<dim>                                mapping;
+  DoFTools::map_dofs_to_support_points(mapping, dof_handler, support_points);
 
   for (const auto &cell : dof_handler.active_cell_iterators())
     {

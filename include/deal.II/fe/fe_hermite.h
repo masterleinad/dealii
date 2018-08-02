@@ -224,6 +224,9 @@ private:
   static std::vector<unsigned int>
   get_dpo_vector(const unsigned int degree);
 
+  static std::vector<unsigned int>
+  get_continuous_dpo_vector(const unsigned int degree);
+
   /**
    * Return the polynomial space used with a suitable renumbering.
    */
