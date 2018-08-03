@@ -76,8 +76,9 @@ private:
 
   Triangulation<dim> triangulation;
   // std::unique_ptr<MappingHermite<dim>> mapping_hermite;
-  FE_Hermite<dim> fe;
-  DoFHandler<dim> dof_handler;
+  FE_Hermite<dim>           fe;
+  DoFHandler<dim>           dof_handler;
+  AffineConstraints<double> constraints;
 
   std::vector<Vector<double>>                       dof_vectors;
   std::vector<std::vector<boost::optional<double>>> global_dof_values;
@@ -100,6 +101,8 @@ PlotFE<dim>::make_grid()
 {
   GridGenerator::hyper_cube(triangulation, 0., 1.);
   triangulation.refine_global(1);
+  triangulation.begin_active()->set_refine_flag();
+  triangulation.execute_coarsening_and_refinement();
   /*GridTools::transform(
     [](const Point<dim> &p) -> Point<dim> {
       Point<dim> p_new;
@@ -111,6 +114,166 @@ PlotFE<dim>::make_grid()
   //  GridTools::distort_random(.4, triangulation);
   //  mapping_hermite =
   //  std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
+}
+
+
+template <int dim>
+void
+make_continuity_constraints(const DoFHandler<dim> &    dof_handler,
+                            AffineConstraints<double> &constraints)
+{
+  const FiniteElement<dim> &fe            = dof_handler.get_fe();
+  const unsigned int        dofs_per_cell = fe.dofs_per_cell;
+
+  const Quadrature<dim> support(fe.get_unit_support_points());
+
+  FEValues<dim> fe_values_own(fe,
+                              support,
+                              update_quadrature_points | update_values |
+                                update_gradients | update_hessians);
+  FEValues<dim> fe_values_neighbor(fe,
+                                   support,
+                                   update_quadrature_points | update_values |
+                                     update_gradients | update_hessians);
+
+  std::vector<types::global_dof_index> dof_indices_own(dofs_per_cell);
+  std::vector<types::global_dof_index> dof_indices_neighbor(dofs_per_cell);
+
+  std::vector<Point<dim>> points_own;
+  std::vector<Point<dim>> points_neighbor;
+
+  for (const auto &cell : dof_handler.active_cell_iterators())
+    {
+      std::cout << "Cell center: " << cell->center() << std::endl;
+      cell->get_dof_indices(dof_indices_own);
+      fe_values_own.reinit(cell);
+      points_own = fe_values_own.get_quadrature_points();
+
+      const auto own_index = cell->index();
+
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
+        if (!cell->at_boundary(face_no) && cell->neighbor(face_no)->active())
+          {
+            std::cout << "Neighbor center: " << cell->center() << std::endl;
+            const auto neighbor_cell  = cell->neighbor(face_no);
+            const auto neighbor_index = neighbor_cell->index();
+            neighbor_cell->get_dof_indices(dof_indices_neighbor);
+            if (neighbor_index > own_index)
+              {
+                const auto neighbor_face_no =
+                  cell->neighbor_of_neighbor(face_no);
+                fe_values_neighbor.reinit(neighbor_cell);
+                points_neighbor = fe_values_neighbor.get_quadrature_points();
+
+                for (unsigned int i = 0; i < dofs_per_cell;
+                     i += Utilities::pow(2, dim))
+                  {
+                    for (unsigned int j = 0; j < dofs_per_cell;
+                         j += Utilities::pow(2, dim))
+                      {
+                        if ((points_own[i] - points_neighbor[j]).norm_square() <
+                            1.e-12)
+                          {
+                            const auto dof_indices_own_start =
+                              dof_indices_own[i];
+                            const auto dof_indices_neighbor_start =
+                              dof_indices_neighbor[j];
+                            {
+                              /*for (unsigned int k = 0; k < Utilities::pow(2,
+                                dim);
+                                   ++k)
+                                {
+                                  if (!constraints.is_constrained(
+                                        dof_indices_neighbor_start + k))
+                                    {
+                                      constraints.add_line(
+                                        dof_indices_neighbor_start + k);
+                                      constraints.add_entry(
+                                        dof_indices_neighbor_start + k,
+                                        dof_indices_own_start + k,
+                                        1.);
+                                    }
+                                }*/
+                              if (!constraints.is_constrained(
+                                    dof_indices_neighbor_start))
+                                {
+                                  constraints.add_line(
+                                    dof_indices_neighbor_start);
+                                  constraints.add_entry(
+                                    dof_indices_neighbor_start,
+                                    dof_indices_own_start,
+                                    fe_values_own.shape_value(i, i) /
+                                      fe_values_neighbor.shape_value(j, j));
+                                }
+
+                              FullMatrix<double> own_gradient_evaluations(dim,
+                                                                          dim);
+                              own_gradient_evaluations[0][0] =
+                                fe_values_own.shape_grad(i + 1, i + 1)[0];
+                              own_gradient_evaluations[1][0] =
+                                fe_values_own.shape_grad(i + 1, i + 1)[1];
+                              own_gradient_evaluations[0][1] =
+                                fe_values_own.shape_grad(i + 2, i + 2)[0];
+                              own_gradient_evaluations[1][1] =
+                                fe_values_own.shape_grad(i + 2, i + 2)[1];
+                              own_gradient_evaluations.print(std::cout);
+
+                              FullMatrix<double> neighbor_gradient_evaluations(
+                                dim, dim);
+                              neighbor_gradient_evaluations[0][0] =
+                                fe_values_neighbor.shape_grad(i + 1, i + 1)[0];
+                              neighbor_gradient_evaluations[1][0] =
+                                fe_values_neighbor.shape_grad(i + 1, i + 1)[1];
+                              neighbor_gradient_evaluations[0][1] =
+                                fe_values_neighbor.shape_grad(i + 2, i + 2)[0];
+                              neighbor_gradient_evaluations[1][1] =
+                                fe_values_neighbor.shape_grad(i + 2, i + 2)[1];
+                              neighbor_gradient_evaluations.print(std::cout);
+
+                              FullMatrix<double>
+                                inverse_neighbor_gradient_evaluations(dim, dim);
+                              inverse_neighbor_gradient_evaluations.invert(
+                                neighbor_gradient_evaluations);
+
+                              FullMatrix<double> constraint_matrix(dim, dim);
+                              inverse_neighbor_gradient_evaluations.mmult(
+                                constraint_matrix, own_gradient_evaluations);
+
+                              for (unsigned int k = 0; k < dim; ++k)
+                                if (!constraints.is_constrained(
+                                      dof_indices_neighbor_start + k + 1))
+                                  {
+                                    constraints.add_line(
+                                      dof_indices_neighbor_start + k + 1);
+                                    for (unsigned int l = 0; l < dim; ++l)
+                                      constraints.add_entry(
+                                        dof_indices_neighbor_start + k + 1,
+                                        dof_indices_own_start + l + 1,
+                                        constraint_matrix[k][l]);
+                                  }
+
+                              if (!constraints.is_constrained(
+                                    dof_indices_neighbor_start + 3))
+                                {
+                                  constraints.add_line(
+                                    dof_indices_neighbor_start + 3);
+                                  constraints.add_entry(
+                                    dof_indices_neighbor_start + 3,
+                                    dof_indices_own_start + 3,
+                                    fe_values_own.shape_hessian(i + 3,
+                                                                i + 3)[0][1] /
+                                      fe_values_neighbor.shape_hessian(
+                                        j + 3, j + 3)[0][1]);
+                                }
+                            }
+                          }
+                      }
+                  }
+              }
+          }
+    }
 }
 
 template <int dim>
@@ -129,11 +292,19 @@ PlotFE<dim>::setup_system()
   global_dof_third_derivatives.resize(
     n_dofs, std::vector<boost::optional<Tensor<3, dim>>>(n_dofs));
 
+  constraints.clear();
+  make_continuity_constraints(dof_handler, constraints);
+  constraints.close();
+  constraints.print(std::cout);
+
   for (auto &vector : dof_vectors)
     vector.reinit(dof_handler.n_dofs());
 
   for (unsigned int i = 0; i < dof_vectors.size(); ++i)
-    dof_vectors[i](i) = 1.;
+    {
+      dof_vectors[i](i) = 1.;
+      constraints.distribute(dof_vectors[i]);
+    }
 }
 
 template <int dim>
@@ -246,18 +417,20 @@ PlotFE<dim>::output_results() const
   DataOut<dim>        data_out;
 
   for (unsigned int i = 0; i < dof_vectors.size(); ++i)
-    {
-      std::vector<DataComponentInterpretation::DataComponentInterpretation>
-        data_component_interpretation(
-          1, DataComponentInterpretation::component_is_scalar);
-      std::vector<std::string> dof_names(1,
-                                         "dof_" + Utilities::int_to_string(i));
-      data_out.add_data_vector(dof_handler,
-                               dof_vectors[i],
-                               dof_names,
-                               data_component_interpretation);
-    }
-  data_out.build_patches();
+    if (!constraints.is_constrained(i))
+      {
+        std::vector<DataComponentInterpretation::DataComponentInterpretation>
+          data_component_interpretation(
+            1, DataComponentInterpretation::component_is_scalar);
+        std::vector<std::string> dof_names(1,
+                                           "dof_" +
+                                             Utilities::int_to_string(i, 4));
+        data_out.add_data_vector(dof_handler,
+                                 dof_vectors[i],
+                                 dof_names,
+                                 data_component_interpretation);
+      }
+  data_out.build_patches(10);
   /*  data_out.build_patches(mapping_fe_field,
                            20,
                            DataOut<dim>::curved_inner_cells);*/
@@ -292,8 +465,8 @@ main()
     PlotFE<2> plot_fe(4);
     plot_fe.run();
     deallog.pop();
-  }
-  {
+  }*/
+  /*{
     deallog.push("3 3");
     PlotFE<3> plot_fe(3);
     plot_fe.run();
