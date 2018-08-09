@@ -307,181 +307,160 @@ FE_Hermite<dim, spacedim>::
   AssertDimension(support_point_values.size(), nodal_values.size());
   AssertDimension(nodal_values.size(), this->dofs_per_cell);
 
+  const unsigned int dofs_per_vertex = Utilities::pow(2, dim);
+
   // The easy part: values at vertice 0,4,8,12
   for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
     {
-      nodal_values[i * this->dofs_per_vertex] =
-        support_point_values[i * this->dofs_per_vertex](0);
+      nodal_values[i * dofs_per_vertex] =
+        support_point_values[i * dofs_per_vertex](0);
+      std::cout << i * dofs_per_vertex << ": "
+                << support_point_values[i * dofs_per_vertex](0) << std::endl;
     }
   if (dim == 2)
     {
       // First order derivatives at vertices 1,2,5,6,9,10,13,14
-      nodal_values[1] = nodal_values[this->dofs_per_vertex] - nodal_values[0];
-      nodal_values[2] =
-        nodal_values[2 * this->dofs_per_vertex] - nodal_values[0];
-      nodal_values[this->dofs_per_vertex + 1] = nodal_values[1];
-      nodal_values[this->dofs_per_vertex + 2] =
-        nodal_values[3 * this->dofs_per_vertex] -
-        nodal_values[this->dofs_per_vertex];
-      nodal_values[2 * this->dofs_per_vertex + 1] =
-        nodal_values[3 * this->dofs_per_vertex] -
-        nodal_values[2 * this->dofs_per_vertex];
-      nodal_values[2 * this->dofs_per_vertex + 2] = nodal_values[2];
-      nodal_values[3 * this->dofs_per_vertex + 1] =
-        nodal_values[2 * this->dofs_per_vertex + 1];
-      nodal_values[3 * this->dofs_per_vertex + 2] =
-        nodal_values[this->dofs_per_vertex + 2];
+      nodal_values[1] = nodal_values[dofs_per_vertex] - nodal_values[0];
+      nodal_values[2] = nodal_values[2 * dofs_per_vertex] - nodal_values[0];
+      nodal_values[dofs_per_vertex + 1] = nodal_values[1];
+      nodal_values[dofs_per_vertex + 2] =
+        nodal_values[3 * dofs_per_vertex] - nodal_values[dofs_per_vertex];
+      nodal_values[2 * dofs_per_vertex + 1] =
+        nodal_values[3 * dofs_per_vertex] - nodal_values[2 * dofs_per_vertex];
+      nodal_values[2 * dofs_per_vertex + 2] = nodal_values[2];
+      nodal_values[3 * dofs_per_vertex + 1] =
+        nodal_values[2 * dofs_per_vertex + 1];
+      nodal_values[3 * dofs_per_vertex + 2] = nodal_values[dofs_per_vertex + 2];
 
       // Second order derivatives at vertices 3,7,11,15
       nodal_values[dim + 1] =
-        nodal_values[2 * this->dofs_per_vertex + 1] - nodal_values[1];
-      nodal_values[this->dofs_per_vertex + dim + 1] =
-        nodal_values[3 * this->dofs_per_vertex + 1] -
-        nodal_values[this->dofs_per_vertex + 1];
-      nodal_values[2 * this->dofs_per_vertex + dim + 1] = nodal_values[dim + 1];
-      nodal_values[3 * this->dofs_per_vertex + dim + 1] =
-        nodal_values[2 * this->dofs_per_vertex + dim + 1];
+        nodal_values[2 * dofs_per_vertex + 1] - nodal_values[1];
+      nodal_values[dofs_per_vertex + dim + 1] =
+        nodal_values[3 * dofs_per_vertex + 1] -
+        nodal_values[dofs_per_vertex + 1];
+      nodal_values[2 * dofs_per_vertex + dim + 1] = nodal_values[dim + 1];
+      nodal_values[3 * dofs_per_vertex + dim + 1] =
+        nodal_values[2 * dofs_per_vertex + dim + 1];
     }
   else if (dim == 3)
     {
       // First order derivatives at vertices 1,2,4
-      nodal_values[1] = nodal_values[this->dofs_per_vertex] - nodal_values[0];
-      nodal_values[this->dofs_per_vertex + 1] = nodal_values[1];
-      nodal_values[2 * this->dofs_per_vertex + 1] =
-        nodal_values[3 * this->dofs_per_vertex] -
-        nodal_values[2 * this->dofs_per_vertex];
-      nodal_values[3 * this->dofs_per_vertex + 1] =
-        nodal_values[2 * this->dofs_per_vertex + 1];
-      nodal_values[4 * this->dofs_per_vertex + 1] =
-        nodal_values[5 * this->dofs_per_vertex] -
-        nodal_values[4 * this->dofs_per_vertex];
-      nodal_values[5 * this->dofs_per_vertex + 1] =
-        nodal_values[4 * this->dofs_per_vertex + 1];
-      nodal_values[6 * this->dofs_per_vertex + 1] =
-        nodal_values[7 * this->dofs_per_vertex] -
-        nodal_values[6 * this->dofs_per_vertex];
-      nodal_values[7 * this->dofs_per_vertex + 1] =
-        nodal_values[6 * this->dofs_per_vertex + 1];
+      nodal_values[1] = nodal_values[dofs_per_vertex] - nodal_values[0];
+      nodal_values[dofs_per_vertex + 1] = nodal_values[1];
+      nodal_values[2 * dofs_per_vertex + 1] =
+        nodal_values[3 * dofs_per_vertex] - nodal_values[2 * dofs_per_vertex];
+      nodal_values[3 * dofs_per_vertex + 1] =
+        nodal_values[2 * dofs_per_vertex + 1];
+      nodal_values[4 * dofs_per_vertex + 1] =
+        nodal_values[5 * dofs_per_vertex] - nodal_values[4 * dofs_per_vertex];
+      nodal_values[5 * dofs_per_vertex + 1] =
+        nodal_values[4 * dofs_per_vertex + 1];
+      nodal_values[6 * dofs_per_vertex + 1] =
+        nodal_values[7 * dofs_per_vertex] - nodal_values[6 * dofs_per_vertex];
+      nodal_values[7 * dofs_per_vertex + 1] =
+        nodal_values[6 * dofs_per_vertex + 1];
 
-      nodal_values[2] =
-        nodal_values[2 * this->dofs_per_vertex] - nodal_values[0];
-      nodal_values[this->dofs_per_vertex + 2] =
-        nodal_values[3 * this->dofs_per_vertex] -
-        nodal_values[this->dofs_per_vertex];
-      nodal_values[2 * this->dofs_per_vertex + 2] = nodal_values[2];
-      nodal_values[3 * this->dofs_per_vertex + 2] =
-        nodal_values[this->dofs_per_vertex + 2];
-      nodal_values[4 * this->dofs_per_vertex + 2] =
-        nodal_values[6 * this->dofs_per_vertex] -
-        nodal_values[4 * this->dofs_per_vertex];
-      nodal_values[5 * this->dofs_per_vertex + 2] =
-        nodal_values[7 * this->dofs_per_vertex] -
-        nodal_values[5 * this->dofs_per_vertex];
-      nodal_values[6 * this->dofs_per_vertex + 2] =
-        nodal_values[4 * this->dofs_per_vertex + 2];
-      nodal_values[7 * this->dofs_per_vertex + 2] =
-        nodal_values[5 * this->dofs_per_vertex + 2];
+      nodal_values[2] = nodal_values[2 * dofs_per_vertex] - nodal_values[0];
+      nodal_values[dofs_per_vertex + 2] =
+        nodal_values[3 * dofs_per_vertex] - nodal_values[dofs_per_vertex];
+      nodal_values[2 * dofs_per_vertex + 2] = nodal_values[2];
+      nodal_values[3 * dofs_per_vertex + 2] = nodal_values[dofs_per_vertex + 2];
+      nodal_values[4 * dofs_per_vertex + 2] =
+        nodal_values[6 * dofs_per_vertex] - nodal_values[4 * dofs_per_vertex];
+      nodal_values[5 * dofs_per_vertex + 2] =
+        nodal_values[7 * dofs_per_vertex] - nodal_values[5 * dofs_per_vertex];
+      nodal_values[6 * dofs_per_vertex + 2] =
+        nodal_values[4 * dofs_per_vertex + 2];
+      nodal_values[7 * dofs_per_vertex + 2] =
+        nodal_values[5 * dofs_per_vertex + 2];
 
-      nodal_values[4] =
-        nodal_values[4 * this->dofs_per_vertex] - nodal_values[0];
-      nodal_values[this->dofs_per_vertex + 4] =
-        nodal_values[5 * this->dofs_per_vertex] -
-        nodal_values[this->dofs_per_vertex];
-      nodal_values[2 * this->dofs_per_vertex + 4] =
-        nodal_values[6 * this->dofs_per_vertex] -
-        nodal_values[2 * this->dofs_per_vertex];
-      nodal_values[3 * this->dofs_per_vertex + 4] =
-        nodal_values[7 * this->dofs_per_vertex] -
-        nodal_values[3 * this->dofs_per_vertex];
-      nodal_values[4 * this->dofs_per_vertex + 4] = nodal_values[4];
-      nodal_values[5 * this->dofs_per_vertex + 4] =
-        nodal_values[this->dofs_per_vertex + 4];
-      nodal_values[6 * this->dofs_per_vertex + 4] =
-        nodal_values[2 * this->dofs_per_vertex + 4];
-      nodal_values[7 * this->dofs_per_vertex + 4] =
-        nodal_values[3 * this->dofs_per_vertex + 4];
+      nodal_values[4] = nodal_values[4 * dofs_per_vertex] - nodal_values[0];
+      nodal_values[dofs_per_vertex + 4] =
+        nodal_values[5 * dofs_per_vertex] - nodal_values[dofs_per_vertex];
+      nodal_values[2 * dofs_per_vertex + 4] =
+        nodal_values[6 * dofs_per_vertex] - nodal_values[2 * dofs_per_vertex];
+      nodal_values[3 * dofs_per_vertex + 4] =
+        nodal_values[7 * dofs_per_vertex] - nodal_values[3 * dofs_per_vertex];
+      nodal_values[4 * dofs_per_vertex + 4] = nodal_values[4];
+      nodal_values[5 * dofs_per_vertex + 4] = nodal_values[dofs_per_vertex + 4];
+      nodal_values[6 * dofs_per_vertex + 4] =
+        nodal_values[2 * dofs_per_vertex + 4];
+      nodal_values[7 * dofs_per_vertex + 4] =
+        nodal_values[3 * dofs_per_vertex + 4];
 
       // Second order derivatives at vertices 3,5,6
       // xy; y-derivative of the x-derivative
-      nodal_values[3] =
-        nodal_values[2 * this->dofs_per_vertex + 1] - nodal_values[1];
-      nodal_values[this->dofs_per_vertex + 3] =
-        nodal_values[3 * this->dofs_per_vertex + 1] -
-        nodal_values[this->dofs_per_vertex + 1];
-      nodal_values[2 * this->dofs_per_vertex + 3] = nodal_values[3];
-      nodal_values[3 * this->dofs_per_vertex + 3] =
-        nodal_values[this->dofs_per_vertex + 3];
-      nodal_values[4 * this->dofs_per_vertex + 3] =
-        nodal_values[6 * this->dofs_per_vertex + 1] -
-        nodal_values[4 * this->dofs_per_vertex + 1];
-      nodal_values[5 * this->dofs_per_vertex + 3] =
-        nodal_values[7 * this->dofs_per_vertex + 1] -
-        nodal_values[5 * this->dofs_per_vertex + 1];
-      nodal_values[6 * this->dofs_per_vertex + 3] =
-        nodal_values[4 * this->dofs_per_vertex + 3];
-      nodal_values[7 * this->dofs_per_vertex + 3] =
-        nodal_values[5 * this->dofs_per_vertex + 3];
+      nodal_values[3] = nodal_values[2 * dofs_per_vertex + 1] - nodal_values[1];
+      nodal_values[dofs_per_vertex + 3] =
+        nodal_values[3 * dofs_per_vertex + 1] -
+        nodal_values[dofs_per_vertex + 1];
+      nodal_values[2 * dofs_per_vertex + 3] = nodal_values[3];
+      nodal_values[3 * dofs_per_vertex + 3] = nodal_values[dofs_per_vertex + 3];
+      nodal_values[4 * dofs_per_vertex + 3] =
+        nodal_values[6 * dofs_per_vertex + 1] -
+        nodal_values[4 * dofs_per_vertex + 1];
+      nodal_values[5 * dofs_per_vertex + 3] =
+        nodal_values[7 * dofs_per_vertex + 1] -
+        nodal_values[5 * dofs_per_vertex + 1];
+      nodal_values[6 * dofs_per_vertex + 3] =
+        nodal_values[4 * dofs_per_vertex + 3];
+      nodal_values[7 * dofs_per_vertex + 3] =
+        nodal_values[5 * dofs_per_vertex + 3];
 
       // xz; z-derivative of the x-derivative
-      nodal_values[5] =
-        nodal_values[4 * this->dofs_per_vertex + 1] - nodal_values[1];
-      nodal_values[this->dofs_per_vertex + 5] =
-        nodal_values[5 * this->dofs_per_vertex + 1] -
-        nodal_values[this->dofs_per_vertex + 1];
-      nodal_values[2 * this->dofs_per_vertex + 5] =
-        nodal_values[6 * this->dofs_per_vertex + 1] -
-        nodal_values[2 * this->dofs_per_vertex + 1];
-      nodal_values[3 * this->dofs_per_vertex + 5] =
-        nodal_values[7 * this->dofs_per_vertex + 1] -
-        nodal_values[3 * this->dofs_per_vertex + 1];
-      nodal_values[4 * this->dofs_per_vertex + 5] = nodal_values[5];
-      nodal_values[5 * this->dofs_per_vertex + 5] =
-        nodal_values[this->dofs_per_vertex + 5];
-      nodal_values[6 * this->dofs_per_vertex + 5] =
-        nodal_values[2 * this->dofs_per_vertex + 5];
-      nodal_values[7 * this->dofs_per_vertex + 5] =
-        nodal_values[3 * this->dofs_per_vertex + 5];
+      nodal_values[5] = nodal_values[4 * dofs_per_vertex + 1] - nodal_values[1];
+      nodal_values[dofs_per_vertex + 5] =
+        nodal_values[5 * dofs_per_vertex + 1] -
+        nodal_values[dofs_per_vertex + 1];
+      nodal_values[2 * dofs_per_vertex + 5] =
+        nodal_values[6 * dofs_per_vertex + 1] -
+        nodal_values[2 * dofs_per_vertex + 1];
+      nodal_values[3 * dofs_per_vertex + 5] =
+        nodal_values[7 * dofs_per_vertex + 1] -
+        nodal_values[3 * dofs_per_vertex + 1];
+      nodal_values[4 * dofs_per_vertex + 5] = nodal_values[5];
+      nodal_values[5 * dofs_per_vertex + 5] = nodal_values[dofs_per_vertex + 5];
+      nodal_values[6 * dofs_per_vertex + 5] =
+        nodal_values[2 * dofs_per_vertex + 5];
+      nodal_values[7 * dofs_per_vertex + 5] =
+        nodal_values[3 * dofs_per_vertex + 5];
 
       // yz; z-derivative of the y-derivative
-      nodal_values[6] =
-        nodal_values[4 * this->dofs_per_vertex + 2] - nodal_values[2];
-      nodal_values[this->dofs_per_vertex + 6] =
-        nodal_values[5 * this->dofs_per_vertex + 2] -
-        nodal_values[this->dofs_per_vertex + 2];
-      nodal_values[2 * this->dofs_per_vertex + 6] =
-        nodal_values[6 * this->dofs_per_vertex + 2] -
-        nodal_values[2 * this->dofs_per_vertex + 2];
-      nodal_values[3 * this->dofs_per_vertex + 6] =
-        nodal_values[7 * this->dofs_per_vertex + 2] -
-        nodal_values[3 * this->dofs_per_vertex + 2];
-      nodal_values[4 * this->dofs_per_vertex + 6] = nodal_values[6];
-      nodal_values[5 * this->dofs_per_vertex + 6] =
-        nodal_values[this->dofs_per_vertex + 6];
-      nodal_values[6 * this->dofs_per_vertex + 6] =
-        nodal_values[2 * this->dofs_per_vertex + 6];
-      nodal_values[7 * this->dofs_per_vertex + 6] =
-        nodal_values[3 * this->dofs_per_vertex + 6];
+      nodal_values[6] = nodal_values[4 * dofs_per_vertex + 2] - nodal_values[2];
+      nodal_values[dofs_per_vertex + 6] =
+        nodal_values[5 * dofs_per_vertex + 2] -
+        nodal_values[dofs_per_vertex + 2];
+      nodal_values[2 * dofs_per_vertex + 6] =
+        nodal_values[6 * dofs_per_vertex + 2] -
+        nodal_values[2 * dofs_per_vertex + 2];
+      nodal_values[3 * dofs_per_vertex + 6] =
+        nodal_values[7 * dofs_per_vertex + 2] -
+        nodal_values[3 * dofs_per_vertex + 2];
+      nodal_values[4 * dofs_per_vertex + 6] = nodal_values[6];
+      nodal_values[5 * dofs_per_vertex + 6] = nodal_values[dofs_per_vertex + 6];
+      nodal_values[6 * dofs_per_vertex + 6] =
+        nodal_values[2 * dofs_per_vertex + 6];
+      nodal_values[7 * dofs_per_vertex + 6] =
+        nodal_values[3 * dofs_per_vertex + 6];
 
       // Third order derivative at vertices 7,15,23,31,39,47,55,63
       // z-derivative of the xy-derivative
-      nodal_values[7] =
-        nodal_values[4 * this->dofs_per_vertex + 3] - nodal_values[3];
-      nodal_values[this->dofs_per_vertex + 7] =
-        nodal_values[5 * this->dofs_per_vertex + 3] -
-        nodal_values[this->dofs_per_vertex + 3];
-      nodal_values[2 * this->dofs_per_vertex + 7] =
-        nodal_values[6 * this->dofs_per_vertex + 3] -
-        nodal_values[2 * this->dofs_per_vertex + 3];
-      nodal_values[3 * this->dofs_per_vertex + 7] =
-        nodal_values[7 * this->dofs_per_vertex + 3] -
-        nodal_values[3 * this->dofs_per_vertex + 3];
-      nodal_values[4 * this->dofs_per_vertex + 7] = nodal_values[7];
-      nodal_values[5 * this->dofs_per_vertex + 7] =
-        nodal_values[this->dofs_per_vertex + 7];
-      nodal_values[6 * this->dofs_per_vertex + 7] =
-        nodal_values[2 * this->dofs_per_vertex + 7];
-      nodal_values[7 * this->dofs_per_vertex + 7] =
-        nodal_values[3 * this->dofs_per_vertex + 7];
+      nodal_values[7] = nodal_values[4 * dofs_per_vertex + 3] - nodal_values[3];
+      nodal_values[dofs_per_vertex + 7] =
+        nodal_values[5 * dofs_per_vertex + 3] -
+        nodal_values[dofs_per_vertex + 3];
+      nodal_values[2 * dofs_per_vertex + 7] =
+        nodal_values[6 * dofs_per_vertex + 3] -
+        nodal_values[2 * dofs_per_vertex + 3];
+      nodal_values[3 * dofs_per_vertex + 7] =
+        nodal_values[7 * dofs_per_vertex + 3] -
+        nodal_values[3 * dofs_per_vertex + 3];
+      nodal_values[4 * dofs_per_vertex + 7] = nodal_values[7];
+      nodal_values[5 * dofs_per_vertex + 7] = nodal_values[dofs_per_vertex + 7];
+      nodal_values[6 * dofs_per_vertex + 7] =
+        nodal_values[2 * dofs_per_vertex + 7];
+      nodal_values[7 * dofs_per_vertex + 7] =
+        nodal_values[3 * dofs_per_vertex + 7];
     }
 
   Assert(this->degree == 3, ExcNotImplemented());

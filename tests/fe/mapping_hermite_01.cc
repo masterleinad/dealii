@@ -59,7 +59,7 @@ test()
 {
   Triangulation<dim> triangulation;
   GridGenerator::hyper_cube(triangulation, 0., 1.);
-  triangulation.refine_global(2);
+  triangulation.refine_global(1);
   GridTools::distort_random(.4, triangulation);
 
   MappingHermite<dim> mapping_fe_field(triangulation);
@@ -97,7 +97,7 @@ main()
   initlog();
   {
     test<2>();
-    test<3>();
+    // test<3>();
   }
 
   return 0;

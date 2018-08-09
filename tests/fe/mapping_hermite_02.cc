@@ -19,6 +19,7 @@
 
 #include <deal.II/base/function.h>
 #include <deal.II/base/logstream.h>
+#include <deal.II/base/qprojector.h>
 #include <deal.II/base/quadrature_lib.h>
 
 #include <deal.II/dofs/dof_accessor.h>
@@ -26,6 +27,7 @@
 #include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/fe/fe_hermite.h>
+#include <deal.II/fe/fe_hermite_continuous.h>
 #include <deal.II/fe/fe_system.h>
 #include <deal.II/fe/fe_values.h>
 #include <deal.II/fe/mapping_hermite.h>
@@ -111,9 +113,182 @@ PlotFE<dim>::make_grid()
       return p_new;
     },
     triangulation);*/
-  //  GridTools::distort_random(.4, triangulation);
+  GridTools::distort_random(.4, triangulation);
   //  mapping_hermite =
   //  std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
+}
+
+template <int dim, int spacedim>
+double
+evaluate_dof_for_shape_function(
+  const FEFaceValuesBase<dim, spacedim> &fe_values,
+  const unsigned int                     shape_function,
+  const unsigned int                     p,
+  const unsigned int                     dof)
+{
+  if (dim == 2)
+    {
+      switch (dof % 4)
+        {
+          case 0:
+            return fe_values.shape_value(shape_function, p);
+          case 1:
+            return fe_values.shape_grad(shape_function, p)[0];
+          case 2:
+            return fe_values.shape_grad(shape_function, p)[1];
+            break;
+          case 3:
+            return fe_values.shape_hessian(shape_function, p)[0][1];
+          default:
+            Assert(false, ExcInternalError());
+        }
+      return fe_values.shape_value(shape_function, p);
+    }
+  Assert(false, ExcNotImplemented());
+  return 0.;
+}
+
+
+
+template <int dim>
+void
+make_hanging_node_constraints(const DoFHandler<dim> &    dof_handler,
+                              AffineConstraints<double> &constraints)
+{
+  FE_HermiteContinuous<dim> fe_continuous(dof_handler.get_fe().degree);
+  DoFHandler<dim>           dof_handler_continuous;
+  dof_handler_continuous.initialize(dof_handler.get_triangulation(),
+                                    fe_continuous);
+  Assert(fe_continuous.degree == 3, ExcNotImplemented());
+
+  // generate a point on this cell and evaluate the shape functions there
+  const Quadrature<dim - 1> quad_face_support(
+    fe_continuous.get_unit_face_support_points());
+
+  std::vector<types::global_dof_index> dof_indices_own(
+    fe_continuous.dofs_per_cell);
+  std::vector<types::global_dof_index> dof_indices_neighbor(
+    fe_continuous.dofs_per_cell);
+
+  FESubfaceValues<dim> fe_values_own(fe_continuous,
+                                     quad_face_support,
+                                     update_quadrature_points | update_values |
+                                       update_gradients | update_hessians);
+  FEFaceValues<dim>    fe_values_neighbor(fe_continuous,
+                                       quad_face_support,
+                                       update_quadrature_points |
+                                         update_values | update_gradients |
+                                         update_hessians);
+
+  // Rule of thumb for FP accuracy, that can be expected for a given
+  // polynomial degree. This value is used to cut off values close to
+  // zero.
+  double eps = 2e-13 * fe_continuous.degree * (dim - 1);
+
+  auto cell_dg = dof_handler.begin_active();
+  auto cell_cg = dof_handler_continuous.begin_active();
+  for (; cell_dg != dof_handler.end(); ++cell_dg, ++cell_cg)
+    {
+      cell_dg->get_dof_indices(dof_indices_own);
+      std::cout << "Coarse cell: " << cell_dg->center() << std::endl;
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
+        {
+          if (cell_cg->face(face_no)->has_children())
+            {
+              for (unsigned int subface_no = 0;
+                   subface_no < cell_cg->face(face_no)->n_children();
+                   ++subface_no)
+                {
+                  fe_values_own.reinit(cell_cg, face_no, subface_no);
+                  std::cout
+                    << "own reinited on: "
+                    << cell_cg->face(face_no)->child(subface_no)->center()
+                    << std::endl;
+
+                  const auto subface_cell =
+                    cell_cg->neighbor_child_on_subface(face_no, subface_no);
+                  std::cout << "Fine cell: " << subface_cell->center()
+                            << std::endl;
+                  fe_values_neighbor.reinit(
+                    subface_cell, cell_cg->neighbor_of_neighbor(face_no));
+                  std::cout << "neighbor reinited on: "
+                            << subface_cell
+                                 ->face(cell_cg->neighbor_of_neighbor(face_no))
+                                 ->center()
+                            << std::endl;
+                  for (unsigned int dof = 0; dof < fe_continuous.dofs_per_cell;
+                       ++dof)
+                    for (unsigned int q = 0; q < fe_continuous.dofs_per_face;
+                         ++q)
+                      std::cout
+                        << "dof values(" << dof << ", " << q
+                        << "): " << fe_values_neighbor.shape_value(dof, q)
+                        << " " << fe_values_neighbor.shape_grad(dof, q)
+                        << std::endl;
+
+                  const auto subface_cell_dg =
+                    cell_dg->neighbor_child_on_subface(face_no, subface_no);
+                  subface_cell_dg->get_dof_indices(dof_indices_neighbor);
+                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face; ++i)
+                    {
+                      Assert((fe_values_own.quadrature_point(i) -
+                              fe_values_neighbor.quadrature_point(i))
+                                 .norm() < 1.e-6,
+                             ExcInternalError());
+                      const auto neighbor_cell_index =
+                        fe_continuous.face_to_cell_index(
+                          i, cell_cg->neighbor_of_neighbor(face_no));
+
+                      double constrained_value =
+                        evaluate_dof_for_shape_function(fe_values_neighbor,
+                                                        neighbor_cell_index,
+                                                        i,
+                                                        i);
+                      std::cout
+                        << "neighbor cell index: " << neighbor_cell_index
+                        << std::endl;
+                      std::cout << "constrained value: " << constrained_value
+                                << " " << i
+                                << fe_values_neighbor.quadrature_point(i)
+                                << std::endl;
+
+                      if (!constraints.is_constrained(
+                            dof_indices_neighbor[neighbor_cell_index]))
+                        {
+                          constraints.add_line(
+                            dof_indices_neighbor[neighbor_cell_index]);
+                          for (unsigned int j = 0;
+                               j < fe_continuous.dofs_per_face;
+                               ++j)
+                            {
+                              const auto own_cell_index =
+                                fe_continuous.face_to_cell_index(j, face_no);
+                              double constraining_value =
+                                evaluate_dof_for_shape_function(fe_values_own,
+                                                                own_cell_index,
+                                                                i,
+                                                                i);
+
+                              std::cout
+                                << "constraining value: " << constraining_value
+                                << " " << j << " "
+                                << fe_values_own.quadrature_point(j)
+                                << std::endl;
+
+                              if (constrained_value > 0)
+                                constraints.add_entry(
+                                  dof_indices_neighbor[neighbor_cell_index],
+                                  dof_indices_own[own_cell_index],
+                                  constraining_value / constrained_value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -235,13 +410,13 @@ make_continuity_constraints(const DoFHandler<dim> &    dof_handler,
                       FullMatrix<double> neighbor_gradient_evaluations(dim,
                                                                        dim);
                       neighbor_gradient_evaluations[0][0] =
-                        fe_values_neighbor.shape_grad(i + 1, i + 1)[0];
+                        fe_values_neighbor.shape_grad(j + 1, j + 1)[0];
                       neighbor_gradient_evaluations[1][0] =
-                        fe_values_neighbor.shape_grad(i + 1, i + 1)[1];
+                        fe_values_neighbor.shape_grad(j + 1, j + 1)[1];
                       neighbor_gradient_evaluations[0][1] =
-                        fe_values_neighbor.shape_grad(i + 2, i + 2)[0];
+                        fe_values_neighbor.shape_grad(j + 2, j + 2)[0];
                       neighbor_gradient_evaluations[1][1] =
-                        fe_values_neighbor.shape_grad(i + 2, i + 2)[1];
+                        fe_values_neighbor.shape_grad(j + 2, j + 2)[1];
                       neighbor_gradient_evaluations.print(std::cout);
 
                       FullMatrix<double> inverse_neighbor_gradient_evaluations(
@@ -301,7 +476,10 @@ PlotFE<dim>::setup_system()
     n_dofs, std::vector<boost::optional<Tensor<3, dim>>>(n_dofs));
 
   constraints.clear();
+  std::cout << "continuity constrainnts" << std::endl;
   make_continuity_constraints(dof_handler, constraints);
+  std::cout << "hanging node constraints" << std::endl;
+  make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
   constraints.print(std::cout);
 
@@ -438,7 +616,7 @@ PlotFE<dim>::output_results() const
                                  dof_names,
                                  data_component_interpretation);
       }
-  data_out.build_patches(10);
+  data_out.build_patches(20);
   /*  data_out.build_patches(mapping_fe_field,
                            20,
                            DataOut<dim>::curved_inner_cells);*/
@@ -453,7 +631,7 @@ PlotFE<dim>::run()
 {
   make_grid();
   setup_system();
-  // check_continuity();
+  check_continuity();
   output_results();
 }
 

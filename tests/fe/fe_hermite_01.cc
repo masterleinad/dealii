@@ -16,7 +16,7 @@
  *
  * Test that FE_Hermite::convert_generalized_support_point_values_to_dof_values
  * works correctly, i.e. linear tensor product polynomials are approximated
- * exatly.
+ * exactly.
  */
 
 #include <deal.II/dofs/dof_handler.h>

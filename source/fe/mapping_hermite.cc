@@ -84,7 +84,9 @@ MappingHermiteHelper<dim, spacedim>::reinit()
     hermite_vector = 0.;
     n_values       = 0.;
 
-    const unsigned int dofs_per_vertex = dim * Utilities::pow(2, dim);
+    const unsigned int component_dofs_per_vertex = Utilities::pow(2, dim);
+    std::cout << "component dofs per vertex: " << component_dofs_per_vertex
+              << std::endl;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
@@ -100,14 +102,18 @@ MappingHermiteHelper<dim, spacedim>::reinit()
             std::vector<Vector<double>>(dofs_per_cell / dim,
                                         Vector<double>(1)));
           std::vector<Point<spacedim>> vertex_values(
-            GeometryInfo<dim>::vertices_per_cell * dofs_per_vertex);
-          for (unsigned int vertex = 0;
-               vertex < GeometryInfo<dim>::vertices_per_cell;
-               ++vertex)
-            for (unsigned int vertex_dof = 0; vertex_dof < dofs_per_vertex;
-                 ++vertex_dof)
-              vertex_values[vertex * dofs_per_vertex + vertex_dof] =
-                cell->vertex(vertex);
+            GeometryInfo<dim>::vertices_per_cell * dim *
+            component_dofs_per_vertex);
+          for (unsigned int component = 0; component < dim; ++component)
+            for (unsigned int vertex = 0;
+                 vertex < GeometryInfo<dim>::vertices_per_cell;
+                 ++vertex)
+              for (unsigned int vertex_dof = 0;
+                   vertex_dof < component_dofs_per_vertex;
+                   ++vertex_dof)
+                vertex_values[component * dofs_per_cell / dim +
+                              vertex * component_dofs_per_vertex + vertex_dof] =
+                  cell->vertex(vertex);
 
           AssertDimension(vertex_values.size(), dofs_per_cell);
 
@@ -119,6 +125,8 @@ MappingHermiteHelper<dim, spacedim>::reinit()
                 fe.system_to_component_index(i).second;
               values_to_interpolate[component][within_base](0) =
                 vertex_values[i](component);
+              std::cout << "(" << component << ", " << within_base
+                        << "): " << vertex_values[i] << std::endl;
             }
 
           std::vector<std::vector<double>> interpolated_values(
@@ -138,6 +146,8 @@ MappingHermiteHelper<dim, spacedim>::reinit()
               hermite_vector(local_dof_indices[i]) +=
                 interpolated_values[component][within_base];
               ++n_values(local_dof_indices[i]);
+              std::cout << i << ": " << hermite_vector(local_dof_indices[i])
+                        << std::endl;
             }
         }
 
