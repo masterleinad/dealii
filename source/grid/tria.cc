@@ -1279,6 +1279,36 @@ namespace internal
      * Exception
      * @ingroup Exceptions
      */
+    DeclException4(
+      ExcBoundaryQuadCantBeInterior,
+      int,
+      int,
+      int,
+      int,
+      << "The input data for creating a triangulation contained "
+      << "information about a quad with indices " << arg1 << ", " << arg2
+      << ", " << arg3 << ", and " << arg4
+      << " that is described to have boundary indicator "
+      << "numbers::inter_face_boundary_id. However, this is a boundary quad "
+      << "not located in the interior.  You must assign a valid boundary "
+      << "indicator different from numbers::internal_face_boundary_id to it."
+      << std::endl
+      << std::endl
+      << "If this happened at a place where you call "
+      << "Triangulation::create_triangulation() yourself, you need "
+      << "to check the SubCellData object you pass to this function."
+      << std::endl
+      << std::endl
+      << "If this happened in a place where you are reading a mesh "
+      << "from a file, then you need to investigate why such a quad "
+      << "ended up in the input file. A typical case is that the mesh "
+      << "generator simply assigns 'geometry indicators' to quads in the "
+      << "interior that are not supposed to be interpreted as "
+      << "'boundary indicators'.");
+    /**
+     * Exception
+     * @ingroup Exceptions
+     */
     DeclException2(
       ExcMultiplySetLineInfoOfLine,
       int,
