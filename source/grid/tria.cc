@@ -3173,8 +3173,9 @@ namespace internal
                               ExcLineInexistant(line_vertices.first,
                                                 line_vertices.second));
               }
-            // Only exterior lines can be given a boundary indicator
-            if (line->at_boundary())
+
+            // ignore all boundaries with invalid_subdomain_id
+            if (subcell_line.boundary_id != numbers::invalid_boundary_id)
               {
                 // make sure that we don't attempt to reset the boundary
                 // indicator to a different than the previously set value
