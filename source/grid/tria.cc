@@ -2277,18 +2277,6 @@ namespace internal
                                                       line_vertices.second,
                                                       "manifold ids"));
             line->set_manifold_id(subcell_line.manifold_id);
-
-            // assert that only exterior lines are given a boundary
-            // indicator
-            if (subcell_line.boundary_id != numbers::internal_face_boundary_id)
-              {
-                AssertThrow(
-                  line->boundary_id() != numbers::internal_face_boundary_id,
-                  ExcInteriorLineCantBeBoundary(line->vertex_index(0),
-                                                line->vertex_index(1),
-                                                subcell_line.boundary_id));
-                line->set_boundary_id_internal(subcell_line.boundary_id);
-              }
           }
 
 
