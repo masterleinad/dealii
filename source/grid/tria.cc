@@ -3353,8 +3353,30 @@ namespace internal
                                                           line[3]->index(),
                                                           "boundary ids"));
 
-                quad->set_boundary_id_internal(subcell_quad.boundary_id);
+                // assert that only exterior quads are given a boundary
+                // indicator and that interior quads are given
+                // numbers::internal_face_boundary_id
+                if (subcell_quad.boundary_id !=
+                    numbers::internal_face_boundary_id)
+                  {
+                    AssertThrow(
+                      quad->boundary_id() != numbers::internal_face_boundary_id,
+                      ExcInteriorQuadCantBeBoundary(line[0]->index(),
+                                                    line[1]->index(),
+                                                    line[2]->index(),
+                                                    line[3]->index(),
+                                                    subcell_quad.boundary_id));
+                    quad->set_boundary_id_internal(subcell_quad.boundary_id);
+                  }
+                else
+                  AssertThrow(quad->boundary_id() ==
+                                numbers::internal_face_boundary_id,
+                              ExcBoundaryQuadCantBeInterior(line[0]->index(),
+                                                            line[1]->index(),
+                                                            line[2]->index(),
+                                                            line[3]->index()));
               }
+
             // Set manifold id if given
             if (quad->manifold_id() != numbers::flat_manifold_id)
               AssertThrow(quad->manifold_id() == subcell_quad.manifold_id,
