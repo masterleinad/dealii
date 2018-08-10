@@ -2239,12 +2239,35 @@ namespace internal
                                                 line_vertices.second));
               }
 
-            // assert that we only set boundary info once
-            AssertThrow(!(line->boundary_id() != 0 &&
-                          line->boundary_id() !=
-                            numbers::internal_face_boundary_id),
-                        ExcMultiplySetLineInfoOfLine(line_vertices.first,
-                                                     line_vertices.second));
+            // ignore all boundaries with invalid_subdomain_id
+            if (subcell_line.boundary_id != numbers::invalid_boundary_id)
+              {
+                // assert that we only set boundary info once
+                AssertThrow(line->boundary_id() == 0 ||
+                              line->boundary_id() ==
+                                numbers::internal_face_boundary_id,
+                            ExcMultiplySetLineInfoOfLine(line_vertices.first,
+                                                         line_vertices.second));
+
+                // assert that only exterior lines are given a boundary
+                // indicator and that interior lines are given
+                // numbers::internal_face_boundary_id
+                if (subcell_line.boundary_id !=
+                    numbers::internal_face_boundary_id)
+                  {
+                    AssertThrow(
+                      line->boundary_id() != numbers::internal_face_boundary_id,
+                      ExcInteriorLineCantBeBoundary(line->vertex_index(0),
+                                                    line->vertex_index(1),
+                                                    subcell_line.boundary_id));
+                    line->set_boundary_id_internal(subcell_line.boundary_id);
+                  }
+                else
+                  AssertThrow(
+                    line->boundary_id() == numbers::internal_face_boundary_id,
+                    ExcBoundaryLineCantBeInterior(line->vertex_index(0),
+                                                  line->vertex_index(1)));
+              }
 
             // assert that the manifold id is not yet set or consistent
             // with the previous id
