@@ -221,7 +221,7 @@ namespace numbers
    * @ref GlossBoundaryIndicator "Glossary entry on boundary indicators"
    */
   const types::boundary_id internal_face_boundary_id =
-    static_cast<types::boundary_id>(-1);
+    static_cast<types::boundary_id>(-2);
 
   /**
    * Invalid manifold_id which we need in several places as a default value.
