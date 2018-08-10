@@ -3340,9 +3340,8 @@ namespace internal
             else
               quad = needed_quads[quad_compare_1].first;
 
-            // check whether this face is
-            // really an exterior one
-            if (quad->at_boundary())
+            // ignore all boundaries with invalid_subdomain_id
+            if (subcell_quad.boundary_id != numbers::invalid_boundary_id)
               {
                 // and make sure that we don't attempt to reset the boundary
                 // indicator to a different than the previously set value
