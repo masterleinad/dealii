@@ -42,7 +42,7 @@ check(double r1, double r2, unsigned int n)
   // create a hyper shell. before a bug fix in early 2015, the coloring would
   // only set the boundary indicators of the faces, not of the edges in
   // 3d. the test was written in a way that it tests with this bug present, so
-  // undo the big fix here
+  // undo the bug fix here
   GridGenerator::hyper_shell(tria, center, r1, r2, n, true);
   tria.reset_manifold(0);
   tria.set_all_manifold_ids(numbers::flat_manifold_id);

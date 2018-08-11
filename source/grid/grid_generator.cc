@@ -4225,7 +4225,7 @@ namespace GridGenerator
 
                           boundary_line.manifold_id = line->manifold_id();
                           boundary_line.boundary_id =
-                            numbers::internal_face_boundary_id; // default
+                            numbers::invalid_boundary_id; // ignore
 
                           subcell_data.boundary_lines.push_back(
                             boundary_line); // trivially-copyable
@@ -4277,7 +4277,7 @@ namespace GridGenerator
 
                           boundary_quad.manifold_id = face->manifold_id();
                           boundary_quad.boundary_id =
-                            numbers::internal_face_boundary_id; // default
+                            numbers::invalid_boundary_id; // ignore
 
                           subcell_data.boundary_quads.push_back(
                             boundary_quad); // trivially-copyable
@@ -4297,7 +4297,7 @@ namespace GridGenerator
                             boundary_line.manifold_id =
                               cell->line(l)->manifold_id();
                             boundary_line.boundary_id =
-                              numbers::internal_face_boundary_id; // default
+                              numbers::invalid_boundary_id; // ignore
 
                             subcell_data.boundary_lines.push_back(
                               boundary_line); // trivially_copyable

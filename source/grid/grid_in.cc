@@ -802,7 +802,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
           if (apply_all_indicators_to_manifolds)
             {
               subcelldata.boundary_lines.back().boundary_id =
-                numbers::internal_face_boundary_id;
+                numbers::invalid_boundary_id;
               subcelldata.boundary_lines.back().manifold_id =
                 static_cast<types::manifold_id>(material_id);
             }
@@ -862,7 +862,7 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
           if (apply_all_indicators_to_manifolds)
             {
               subcelldata.boundary_quads.back().boundary_id =
-                numbers::internal_face_boundary_id;
+                numbers::invalid_boundary_id;
               subcelldata.boundary_quads.back().manifold_id =
                 static_cast<types::manifold_id>(material_id);
             }
