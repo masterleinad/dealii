@@ -19,10 +19,16 @@
 #include <deal.II/base/quadrature_lib.h>
 #include <deal.II/base/std_cxx14/memory.h>
 
+#include <deal.II/dofs/dof_handler.h>
+
 #include <deal.II/fe/fe_hermite.h>
+#include <deal.II/fe/fe_hermite_continuous.h>
 #include <deal.II/fe/fe_nothing.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_tools.h>
+#include <deal.II/fe/fe_values.h>
+
+#include <deal.II/lac/affine_constraints.h>
 
 #include <sstream>
 #include <vector>
@@ -181,30 +187,30 @@ FE_Hermite<dim, spacedim>::get_face_interpolation_matrix(
 template <int dim, int spacedim>
 double
 FE_Hermite<dim, spacedim>::evaluate_dof_for_shape_function(
-  const unsigned int dof,
-  const Point<dim> & p,
-  const unsigned int shape_function) const
+  const FiniteElement<dim, spacedim> &fe,
+  const unsigned int                  dof,
+  const Point<dim> &                  p,
+  const unsigned int                  shape_function)
 {
   (void)dof;
-  double scale = .5;
-  if (dim == 2 && this->degree == 3)
+  double scale = 1.;
+  if (dim == 2 && fe.degree == 3)
     {
       switch (dof % 4)
         {
           case 0:
-            return this->shape_value(shape_function, p);
+            return fe.shape_value(shape_function, p);
           case 1:
-            return this->shape_grad(shape_function, p)[0] * scale;
+            return fe.shape_grad(shape_function, p)[0] * scale;
           case 2:
-            return this->shape_grad(shape_function, p)[1] * scale;
+            return fe.shape_grad(shape_function, p)[1] * scale;
             break;
           case 3:
-            return this->shape_grad_grad(shape_function, p)[0][1] * scale *
-                   scale;
+            return fe.shape_grad_grad(shape_function, p)[0][1] * scale * scale;
           default:
             Assert(false, ExcInternalError());
         }
-      return this->shape_value(shape_function, p);
+      return fe.shape_value(shape_function, p);
     }
   Assert(false, ExcNotImplemented());
   return 0.;
@@ -254,14 +260,13 @@ FE_Hermite<dim, spacedim>::get_subface_interpolation_matrix(
           QProjector<dim>::project_to_subface(quad_face_support, 0, subface);
       for (unsigned int i = 0; i < source_fe->dofs_per_face; ++i)
         {
-          const Point<dim> &p = subface_quadrature.point(i);
+          // const Point<dim> &p = subface_quadrature.point(i);
 
           for (unsigned int j = 0; j < this->dofs_per_face; ++j)
             {
-              double matrix_entry =
-                evaluate_dof_for_shape_function(this->face_to_cell_index(i, 0),
-                                                p,
-                                                this->face_to_cell_index(j, 0));
+              double matrix_entry = 0;
+              /*                evaluate_dof_for_shape_function(this->face_to_cell_index(i,
+                 0), p, this->face_to_cell_index(j, 0));*/
 
               // Correct the interpolated value. I.e. if it is close to 1 or
               // 0, make it exactly 1 or 0. Unfortunately, this is required to
@@ -632,6 +637,371 @@ FE_Hermite<dim, spacedim>::get_polynomials(const unsigned int degree)
 
   return tpp;
 }
+
+/*template <int dim, int spacedim>
+double
+FE_Hermite<dim, spacedim>::evaluate_dof_for_shape_function(
+  const FEFaceValuesBase<dim, spacedim> &fe_values,
+  const unsigned int                     shape_function,
+  const unsigned int                     p,
+  const unsigned int                     dof)
+{
+  if (dim == 2)
+    {
+      switch (dof % 4)
+        {
+          case 0:
+            return fe_values.shape_value(shape_function, p);
+          case 1:
+            return fe_values.shape_grad(shape_function, p)[0];
+          case 2:
+            return fe_values.shape_grad(shape_function, p)[1];
+            break;
+          case 3:
+            return fe_values.shape_hessian(shape_function, p)[0][1];
+          default:
+            Assert(false, ExcInternalError());
+        }
+      return fe_values.shape_value(shape_function, p);
+    }
+  Assert(false, ExcNotImplemented());
+  return 0.;
+}*/
+
+template <int dim, int spacedim>
+void
+FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
+  const DoFHandler<dim, spacedim> &dof_handler,
+  AffineConstraints<double> &      constraints)
+{
+  FE_HermiteContinuous<dim, spacedim> fe_continuous(
+    dof_handler.get_fe().degree);
+  DoFHandler<dim, spacedim> dof_handler_continuous;
+  dof_handler_continuous.initialize(dof_handler.get_triangulation(),
+                                    fe_continuous);
+  Assert(fe_continuous.degree == 3, ExcNotImplemented());
+
+  // generate a point on this cell and evaluate the shape functions there
+  const Quadrature<dim - 1> quad_face_support(
+    fe_continuous.get_unit_face_support_points());
+
+  std::vector<types::global_dof_index> dof_indices_own(
+    dof_handler.get_fe().dofs_per_cell);
+  std::vector<types::global_dof_index> dof_indices_neighbor(
+    dof_handler.get_fe().dofs_per_cell);
+
+  /*  FESubfaceValues<dim, spacedim> fe_values_own(fe_continuous,
+                                                 quad_face_support,
+                                                 update_quadrature_points |
+                                                   update_values |
+                                                   update_gradients |
+                                                   update_hessians);
+    FEFaceValues<dim, spacedim>    fe_values_neighbor(fe_continuous,
+                                                   quad_face_support,
+                                                   update_quadrature_points |
+                                                     update_values |
+                                                     update_gradients |
+                                                     update_hessians);*/
+
+  // Rule of thumb for FP accuracy, that can be expected for a given
+  // polynomial degree. This value is used to cut off values close to
+  // zero.
+  double eps = 2e-13 * fe_continuous.degree * (dim - 1);
+
+  auto cell_dg = dof_handler.begin_active();
+  auto cell_cg = dof_handler_continuous.begin_active();
+  for (; cell_dg != dof_handler.end(); ++cell_dg, ++cell_cg)
+    {
+      cell_dg->get_dof_indices(dof_indices_own);
+      std::cout << "Coarse cell: " << cell_dg->center() << std::endl;
+      for (unsigned int face_no = 0;
+           face_no < GeometryInfo<dim>::faces_per_cell;
+           ++face_no)
+        {
+          if (cell_cg->face(face_no)->has_children())
+            {
+              for (unsigned int subface_no = 0;
+                   subface_no < cell_cg->face(face_no)->n_children();
+                   ++subface_no)
+                {
+                  const Quadrature<dim> own_subface_quadrature =
+                    QProjector<dim>::project_to_subface(quad_face_support,
+                                                        face_no,
+                                                        subface_no);
+                  std::cout
+                    << "own reinited on: "
+                    << cell_cg->face(face_no)->child(subface_no)->center()
+                    << std::endl;
+
+                  const auto subface_cell =
+                    cell_cg->neighbor_child_on_subface(face_no, subface_no);
+                  std::cout << "Fine cell: " << subface_cell->center()
+                            << std::endl;
+                  const Quadrature<dim> neighbor_face_quadrature =
+                    QProjector<dim>::project_to_face(
+                      quad_face_support,
+                      cell_cg->neighbor_of_neighbor(face_no));
+                  std::cout << "neighbor reinited on: "
+                            << subface_cell
+                                 ->face(cell_cg->neighbor_of_neighbor(face_no))
+                                 ->center()
+                            << std::endl;
+
+                  const auto subface_cell_dg =
+                    cell_dg->neighbor_child_on_subface(face_no, subface_no);
+                  subface_cell_dg->get_dof_indices(dof_indices_neighbor);
+                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face; ++i)
+                    {
+                      const auto neighbor_cell_index =
+                        fe_continuous.face_to_cell_index(
+                          i, cell_cg->neighbor_of_neighbor(face_no));
+
+                      std::cout
+                        << "neighbor cell index: " << neighbor_cell_index
+                        << std::endl;
+
+                      if (!constraints.is_constrained(
+                            dof_indices_neighbor[neighbor_cell_index]))
+                        {
+                          for (unsigned int i = 0;
+                               i < dof_handler.get_fe().n_components();
+                               ++i)
+                            constraints.add_line(
+                              dof_indices_neighbor[neighbor_cell_index +
+                                                   i * fe_continuous
+                                                         .dofs_per_cell]);
+                          for (unsigned int j = 0;
+                               j < fe_continuous.dofs_per_face;
+                               ++j)
+                            {
+                              const auto own_cell_index =
+                                fe_continuous.face_to_cell_index(j, face_no);
+                              double constraining_value =
+                                evaluate_dof_for_shape_function(
+                                  dof_handler.get_fe(),
+                                  neighbor_cell_index,
+                                  own_subface_quadrature.point(i),
+                                  own_cell_index);
+
+                              std::cout
+                                << "constraining value: " << constraining_value
+                                << " " << j << " " << std::endl;
+
+                              if (std::abs(constraining_value) > eps)
+                                {
+                                  std::cout
+                                    << i << "="
+                                    << dof_indices_neighbor[neighbor_cell_index]
+                                    << ": " << j << "="
+                                    << dof_indices_own[own_cell_index]
+                                    << std::endl;
+                                  for (unsigned int i = 0;
+                                       i < dof_handler.get_fe().n_components();
+                                       ++i)
+
+                                    constraints.add_entry(
+                                      dof_indices_neighbor
+                                        [neighbor_cell_index +
+                                         i * fe_continuous.dofs_per_cell],
+                                      dof_indices_own[own_cell_index +
+                                                      i * fe_continuous
+                                                            .dofs_per_cell],
+                                      constraining_value);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+template <int dim, int spacedim>
+void
+FE_Hermite<dim, spacedim>::make_continuity_constraints(
+  const DoFHandler<dim, spacedim> &dof_handler,
+  AffineConstraints<double> &      constraints)
+{
+  const FiniteElement<dim, spacedim> &fe            = dof_handler.get_fe();
+  const unsigned int                  dofs_per_cell = fe.dofs_per_cell;
+
+  const Quadrature<dim> support(fe.get_unit_support_points());
+
+  FEValues<dim, spacedim> fe_values_own(fe,
+                                        support,
+                                        update_quadrature_points |
+                                          update_values | update_gradients |
+                                          update_hessians);
+  FEValues<dim, spacedim> fe_values_neighbor(fe,
+                                             support,
+                                             update_quadrature_points |
+                                               update_values |
+                                               update_gradients |
+                                               update_hessians);
+
+  std::vector<types::global_dof_index> dof_indices_own(dofs_per_cell);
+  std::vector<types::global_dof_index> dof_indices_neighbor(dofs_per_cell);
+
+  std::vector<Point<spacedim>> points_own;
+  std::vector<Point<spacedim>> points_neighbor;
+
+  std::vector<
+    std::set<typename DoFHandler<dim, spacedim>::active_cell_iterator>>
+    vertex_to_cell_map(dof_handler.get_triangulation().n_vertices());
+  {
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+        vertex_to_cell_map[cell->vertex_index(i)].insert(cell);
+
+    // Take care of hanging nodes
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        for (unsigned int i = 0; i < GeometryInfo<dim>::faces_per_cell; ++i)
+          if ((cell->at_boundary(i) == false) && (cell->neighbor(i)->active()))
+            {
+              const auto &adjacent_cell = cell->neighbor(i);
+              for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_face;
+                   ++j)
+                vertex_to_cell_map[cell->face(i)->vertex_index(j)].insert(
+                  adjacent_cell);
+            }
+
+        // in 3d also loop over the edges
+        if (dim == 3)
+          {
+            for (unsigned int i = 0; i < GeometryInfo<dim>::lines_per_cell; ++i)
+              if (cell->line(i)->has_children())
+                // the only place where this vertex could have been
+                // hiding is on the mid-edge point of the edge we
+                // are looking at
+                vertex_to_cell_map[cell->line(i)->child(0)->vertex_index(1)]
+                  .insert(cell);
+          }
+      }
+  }
+
+  for (const auto &cells : vertex_to_cell_map)
+    for (auto cell_it = cells.begin(); cell_it != cells.end(); ++cell_it)
+      {
+        const auto &cell = *cell_it;
+        std::cout << "Cell center: " << cell->center() << std::endl;
+        cell->get_dof_indices(dof_indices_own);
+        fe_values_own.reinit(cell);
+        points_own = fe_values_own.get_quadrature_points();
+
+        auto neighbor_cell_it = cell_it;
+        ++neighbor_cell_it;
+        for (; neighbor_cell_it != cells.end(); ++neighbor_cell_it)
+          {
+            const auto &neighbor_cell = *neighbor_cell_it;
+            std::cout << "Neighbor center: " << neighbor_cell->center()
+                      << std::endl;
+            neighbor_cell->get_dof_indices(dof_indices_neighbor);
+            {
+              fe_values_neighbor.reinit(neighbor_cell);
+              points_neighbor = fe_values_neighbor.get_quadrature_points();
+
+              for (unsigned int i = 0; i < dofs_per_cell;
+                   i += Utilities::pow(2, dim))
+                {
+                  const unsigned int component_i =
+                    fe.system_to_component_index(i).first;
+                  for (unsigned int j = 0; j < dofs_per_cell;
+                       j += Utilities::pow(2, dim))
+                    {
+                      const unsigned int component_j =
+                        fe.system_to_component_index(j).first;
+                      if ((points_own[i] - points_neighbor[j]).norm_square() <
+                            1.e-12 &&
+                          component_i == component_j)
+                        {
+                          const auto dof_indices_own_start = dof_indices_own[i];
+                          const auto dof_indices_neighbor_start =
+                            dof_indices_neighbor[j];
+                          if (!constraints.is_constrained(
+                                dof_indices_neighbor_start))
+                            {
+                              constraints.add_line(dof_indices_neighbor_start);
+                              constraints.add_entry(
+                                dof_indices_neighbor_start,
+                                dof_indices_own_start,
+                                1./*fe_values_own.shape_value(i, i) /
+                                  fe_values_neighbor.shape_value(j, j)*/);
+                            }
+
+                          FullMatrix<double> own_gradient_evaluations(dim, dim);
+                          own_gradient_evaluations[0][0] =
+                            fe_values_own.shape_grad(i + 1, i + 1)[0];
+                          own_gradient_evaluations[1][0] =
+                            fe_values_own.shape_grad(i + 1, i + 1)[1];
+                          own_gradient_evaluations[0][1] =
+                            fe_values_own.shape_grad(i + 2, i + 2)[0];
+                          own_gradient_evaluations[1][1] =
+                            fe_values_own.shape_grad(i + 2, i + 2)[1];
+                          own_gradient_evaluations.print(std::cout);
+
+                          FullMatrix<double> neighbor_gradient_evaluations(dim,
+                                                                           dim);
+                          neighbor_gradient_evaluations[0][0] =
+                            fe_values_neighbor.shape_grad(j + 1, j + 1)[0];
+                          neighbor_gradient_evaluations[1][0] =
+                            fe_values_neighbor.shape_grad(j + 1, j + 1)[1];
+                          neighbor_gradient_evaluations[0][1] =
+                            fe_values_neighbor.shape_grad(j + 2, j + 2)[0];
+                          neighbor_gradient_evaluations[1][1] =
+                            fe_values_neighbor.shape_grad(j + 2, j + 2)[1];
+                          neighbor_gradient_evaluations.print(std::cout);
+
+                          FullMatrix<double>
+                            inverse_neighbor_gradient_evaluations(dim, dim);
+                          inverse_neighbor_gradient_evaluations.invert(
+                            neighbor_gradient_evaluations);
+
+                          FullMatrix<double> constraint_matrix(dim, dim);
+                          inverse_neighbor_gradient_evaluations.mmult(
+                            constraint_matrix, own_gradient_evaluations);
+
+                          for (unsigned int k = 0; k < dim; ++k)
+                            if (!constraints.is_constrained(
+                                  dof_indices_neighbor_start + k + 1))
+                              {
+                                constraints.add_line(
+                                  dof_indices_neighbor_start + k + 1);
+                                for (unsigned int l = 0; l < dim; ++l)
+                                  if (k == l)
+                                    constraints.add_entry(
+                                      dof_indices_neighbor_start + k + 1,
+                                      dof_indices_own_start + l + 1,
+                                      cell->level() /
+                                        neighbor_cell
+                                          ->level() /*constraint_matrix[k][l]*/);
+                              }
+
+                          if (!constraints.is_constrained(
+                                dof_indices_neighbor_start + 3))
+                            {
+                              constraints.add_line(dof_indices_neighbor_start +
+                                                   3);
+                              constraints.add_entry(
+                                dof_indices_neighbor_start + 3,
+                                dof_indices_own_start + 3,
+                                std::pow(cell->level()/neighbor_cell->level(),2.) /*
+                                fe_values_own.shape_hessian(i + 3,
+                                                            i + 3)[0][1] /
+                                  fe_values_neighbor.shape_hessian(j + 3,
+                                                                   j +
+                                                                     3)[0][1]*/);
+                            }
+                        }
+                    }
+                }
+            }
+          }
+      }
+}
+
 
 // explicit instantiations
 #include "fe_hermite.inst"

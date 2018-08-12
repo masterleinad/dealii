@@ -21,8 +21,15 @@
 #include <deal.II/base/tensor_product_polynomials.h>
 
 #include <deal.II/fe/fe_q_base.h>
+#include <deal.II/fe/fe_values.h>
 
 DEAL_II_NAMESPACE_OPEN
+
+template <int dim, int spacedim>
+class DoFHandler;
+
+template <typename Number>
+class AffineConstraints;
 
 /*!@addtogroup fe */
 /*@{*/
@@ -206,16 +213,31 @@ public:
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 
+  static void
+  make_hanging_node_constraints(const DoFHandler<dim, spacedim> &dof_handler,
+                                AffineConstraints<double> &      constrants);
+  static void
+  make_continuity_constraints(const DoFHandler<dim, spacedim> &dof_handler,
+                              AffineConstraints<double> &      constrants);
+
 private:
   /**
    * Evaluate a degree of freedom for a shape function. This is needed for
    * computing the constraint matrices. The degree of freedom here is typically
    * located on a subface.
    */
-  double
-  evaluate_dof_for_shape_function(const unsigned int dof,
-                                  const Point<dim> & p,
-                                  const unsigned int shape_function) const;
+  /*static double
+  evaluate_dof_for_shape_function(
+    const FEFaceValuesBase<dim, spacedim> &fe_values,
+    const unsigned int                     shape_function,
+    const unsigned int                     p,
+    const unsigned int                     dof);*/
+
+  double static evaluate_dof_for_shape_function(
+    const FiniteElement<dim, spacedim> &fe,
+    const unsigned int                  dof,
+    const Point<dim> &                  p,
+    const unsigned int                  shape_function);
 
   /**
    * Create the @p dofs_per_object vector that is needed within the constructor

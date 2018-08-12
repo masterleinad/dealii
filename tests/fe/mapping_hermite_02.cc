@@ -103,8 +103,8 @@ PlotFE<dim>::make_grid()
 {
   GridGenerator::hyper_cube(triangulation, 0., 1.);
   triangulation.refine_global(1);
-  triangulation.begin_active()->set_refine_flag();
-  triangulation.execute_coarsening_and_refinement();
+  // triangulation.begin_active()->set_refine_flag();
+  // triangulation.execute_coarsening_and_refinement();
   /*GridTools::transform(
     [](const Point<dim> &p) -> Point<dim> {
       Point<dim> p_new;
@@ -479,7 +479,7 @@ PlotFE<dim>::setup_system()
   std::cout << "continuity constrainnts" << std::endl;
   make_continuity_constraints(dof_handler, constraints);
   std::cout << "hanging node constraints" << std::endl;
-  make_hanging_node_constraints(dof_handler, constraints);
+  // make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
   constraints.print(std::cout);
 

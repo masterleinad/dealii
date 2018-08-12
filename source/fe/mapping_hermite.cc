@@ -155,6 +155,18 @@ MappingHermiteHelper<dim, spacedim>::reinit()
       {
         hermite_vector(i) /= n_values(i);
       }
+    AffineConstraints<double> constraints;
+    constraints.clear();
+    FE_Hermite<dim, spacedim>::make_continuity_constraints(*dof_handler,
+                                                           constraints);
+    std::cout << "Hanging node constraints" << std::endl;
+    /*    FE_Hermite<dim, spacedim>::make_hanging_node_constraints(*dof_handler,
+                                                                 constraints);*/
+    constraints.close();
+
+    constraints.print(std::cout);
+
+    constraints.distribute(hermite_vector);
   }
 }
 
