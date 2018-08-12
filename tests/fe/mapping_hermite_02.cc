@@ -101,10 +101,15 @@ template <int dim>
 void
 PlotFE<dim>::make_grid()
 {
-  GridGenerator::hyper_cube(triangulation, 0., 1.);
+  std::vector<unsigned int> repetitions(2, 1);
+  Point<dim>                p0;
+  Point<dim>                p1;
+  p1[0] = 1;
+  p1[1] = 1;
+  GridGenerator::subdivided_hyper_rectangle(triangulation, repetitions, p0, p1);
   triangulation.refine_global(1);
-  // triangulation.begin_active()->set_refine_flag();
-  // triangulation.execute_coarsening_and_refinement();
+  triangulation.begin_active()->set_refine_flag();
+  triangulation.execute_coarsening_and_refinement();
   /*GridTools::transform(
     [](const Point<dim> &p) -> Point<dim> {
       Point<dim> p_new;
@@ -231,57 +236,96 @@ make_hanging_node_constraints(const DoFHandler<dim> &    dof_handler,
                   const auto subface_cell_dg =
                     cell_dg->neighbor_child_on_subface(face_no, subface_no);
                   subface_cell_dg->get_dof_indices(dof_indices_neighbor);
-                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face; ++i)
+                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face;
+                       i += fe_continuous.dofs_per_vertex)
                     {
-                      Assert((fe_values_own.quadrature_point(i) -
-                              fe_values_neighbor.quadrature_point(i))
-                                 .norm() < 1.e-6,
-                             ExcInternalError());
-                      const auto neighbor_cell_index =
+                      for (unsigned int c = 0;
+                           c < fe_continuous.dofs_per_vertex;
+                           ++c)
+                        Assert((fe_values_own.quadrature_point(i + c) -
+                                fe_values_neighbor.quadrature_point(i + c))
+                                   .norm() < 1.e-6,
+                               ExcInternalError());
+                      const auto first_neighbor_cell_index =
                         fe_continuous.face_to_cell_index(
                           i, cell_cg->neighbor_of_neighbor(face_no));
-
-                      double constrained_value =
-                        evaluate_dof_for_shape_function(fe_values_neighbor,
-                                                        neighbor_cell_index,
-                                                        i,
-                                                        i);
-                      std::cout
-                        << "neighbor cell index: " << neighbor_cell_index
-                        << std::endl;
-                      std::cout << "constrained value: " << constrained_value
-                                << " " << i
-                                << fe_values_neighbor.quadrature_point(i)
-                                << std::endl;
-
                       if (!constraints.is_constrained(
-                            dof_indices_neighbor[neighbor_cell_index]))
+                            dof_indices_neighbor[first_neighbor_cell_index]))
                         {
-                          constraints.add_line(
-                            dof_indices_neighbor[neighbor_cell_index]);
+                          for (unsigned int c = 0;
+                               c < fe_continuous.dofs_per_vertex;
+                               ++c)
+                            constraints.add_line(
+                              dof_indices_neighbor[first_neighbor_cell_index +
+                                                   c]);
+
+                          double constrained_value =
+                            fe_values_neighbor.shape_value(
+                              first_neighbor_cell_index, i);
+                          FullMatrix<double> inverted_constrained_gradients(
+                            dim, dim);
+                          {
+                            FullMatrix<double> constrained_gradients(dim, dim);
+                            constrained_gradients[0][0] =
+                              fe_values_neighbor.shape_grad(
+                                first_neighbor_cell_index + 1, i + 1)[0];
+                            constrained_gradients[1][0] =
+                              fe_values_neighbor.shape_grad(
+                                first_neighbor_cell_index + 1, i + 1)[1];
+                            constrained_gradients[0][1] =
+                              fe_values_neighbor.shape_grad(
+                                first_neighbor_cell_index + 2, i + 2)[0];
+                            constrained_gradients[1][1] =
+                              fe_values_neighbor.shape_grad(
+                                first_neighbor_cell_index + 2, i + 2)[1];
+                            inverted_constrained_gradients.invert(
+                              constrained_gradients);
+                          }
+
+                          double constrained_2nd_derivative =
+                            fe_values_neighbor.shape_hessian(
+                              first_neighbor_cell_index + 3, i + 3)[0][1];
+
                           for (unsigned int j = 0;
                                j < fe_continuous.dofs_per_face;
                                ++j)
                             {
                               const auto own_cell_index =
                                 fe_continuous.face_to_cell_index(j, face_no);
+
                               double constraining_value =
-                                evaluate_dof_for_shape_function(fe_values_own,
-                                                                own_cell_index,
-                                                                i,
-                                                                i);
+                                fe_values_own.shape_value(own_cell_index, i);
+                              constraints.add_entry(
+                                dof_indices_neighbor[first_neighbor_cell_index],
+                                dof_indices_own[own_cell_index],
+                                constraining_value / constrained_value);
 
-                              std::cout
-                                << "constraining value: " << constraining_value
-                                << " " << j << " "
-                                << fe_values_own.quadrature_point(j)
-                                << std::endl;
-
-                              if (constrained_value > 0)
+                              FullMatrix<double> constraining_gradients(dim, 1);
+                              constraining_gradients[0][0] =
+                                fe_values_own.shape_grad(own_cell_index,
+                                                         i + 1)[0];
+                              constraining_gradients[1][0] =
+                                fe_values_own.shape_grad(own_cell_index,
+                                                         i + 1)[1];
+                              FullMatrix<double> constraint_matrix(dim, 1);
+                              inverted_constrained_gradients.mmult(
+                                constraint_matrix, constraining_gradients);
+                              for (unsigned int c1 = 0; c1 < dim; ++c1)
                                 constraints.add_entry(
-                                  dof_indices_neighbor[neighbor_cell_index],
+                                  dof_indices_neighbor
+                                    [first_neighbor_cell_index + c1 + 1],
                                   dof_indices_own[own_cell_index],
-                                  constraining_value / constrained_value);
+                                  constraint_matrix[c1][0]);
+
+                              double constraining_2nd_derivative =
+                                fe_values_own.shape_hessian(own_cell_index,
+                                                            i + 3)[0][1];
+                              constraints.add_entry(
+                                dof_indices_neighbor[first_neighbor_cell_index +
+                                                     3],
+                                dof_indices_own[own_cell_index],
+                                constraining_2nd_derivative /
+                                  constrained_2nd_derivative);
                             }
                         }
                     }
@@ -479,7 +523,7 @@ PlotFE<dim>::setup_system()
   std::cout << "continuity constrainnts" << std::endl;
   make_continuity_constraints(dof_handler, constraints);
   std::cout << "hanging node constraints" << std::endl;
-  // make_hanging_node_constraints(dof_handler, constraints);
+  make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
   constraints.print(std::cout);
 
@@ -517,90 +561,99 @@ PlotFE<dim>::check_continuity()
   MappingQ1<dim>                                mapping;
   DoFTools::map_dofs_to_support_points(mapping, dof_handler, support_points);
 
-  for (const auto &cell : dof_handler.active_cell_iterators())
-    {
-      fe_values.reinit(cell);
-      cell->get_dof_indices(ldi);
-      std::cout << "Cell center: " << cell->center() << std::endl;
-      for (const auto &global_dof : ldi)
+  for (unsigned int dof_to_check = 0; dof_to_check < dof_handler.n_dofs();
+       ++dof_to_check)
+    if (!constraints.is_constrained(dof_to_check))
+      for (const auto &cell : dof_handler.active_cell_iterators())
         {
-          fe_values.get_function_values(dof_vectors[global_dof], dof_values);
-          fe_values.get_function_gradients(dof_vectors[global_dof],
-                                           dof_gradients);
-          // fe_values.get_function_hessians(dof_vectors[global_dof],
-          // dof_hessians);
-          // fe_values.get_function_third_derivatives(dof_vectors[global_dof],
-          // dof_third_derivatives);
+          fe_values.reinit(cell);
+          cell->get_dof_indices(ldi);
+          {
+            fe_values.get_function_values(dof_vectors[dof_to_check],
+                                          dof_values);
+            fe_values.get_function_gradients(dof_vectors[dof_to_check],
+                                             dof_gradients);
+            // fe_values.get_function_hessians(dof_vectors[global_dof],
+            // dof_hessians);
+            // fe_values.get_function_third_derivatives(dof_vectors[global_dof],
+            // dof_third_derivatives);
 
-          for (unsigned int local_dof = 0; local_dof < dpc; ++local_dof)
-            {
-              if (auto &global_value =
-                    global_dof_values.at(global_dof).at(ldi[local_dof]))
+            for (unsigned int local_dof = 0; local_dof < dpc; ++local_dof)
+              {
                 {
-                  AssertThrow(std::abs(global_value.value() -
-                                       dof_values[local_dof]) < 1.e-10,
-                              ExcInternalError());
+                  std::cout << " global dof " << dof_to_check << " value at "
+                            << fe_values.quadrature_point(local_dof) << " is "
+                            << dof_values[local_dof] << std::endl;
+                  std::cout << " global dof " << dof_to_check << " gradient at "
+                            << fe_values.quadrature_point(local_dof) << " is "
+                            << dof_gradients[local_dof] << std::endl;
                 }
-              else
-                {
-                  global_value = dof_values[local_dof];
-                }
+                /*if (auto &global_value =
+                      global_dof_values.at(global_dof).at(ldi[local_dof]))
+                  {
+                    AssertThrow(std::abs(global_value.value() -
+                                         dof_values[local_dof]) < 1.e-10,
+                                ExcInternalError());
+                  }
+                else
+                  {
+                    global_value = dof_values[local_dof];
+                  }
 
-              if (auto &global_gradient =
-                    global_dof_gradients.at(global_dof).at(ldi[local_dof]))
-                {
-                  AssertThrow((global_gradient.value() -
-                               dof_gradients[local_dof])
-                                  .norm() < 1.e-10,
-                              ExcInternalError());
-                }
-              else
-                {
-                  global_gradient = dof_gradients[local_dof];
-                }
+                if (auto &global_gradient =
+                      global_dof_gradients.at(global_dof).at(ldi[local_dof]))
+                  {
+                    AssertThrow((global_gradient.value() -
+                                 dof_gradients[local_dof])
+                                    .norm() < 1.e-10,
+                                ExcInternalError());
+                  }
+                else
+                  {
+                    global_gradient = dof_gradients[local_dof];
+                  }
 
-              if (auto &global_hessian =
-                    global_dof_hessians[global_dof][ldi[local_dof]])
-                {
-                  for (unsigned int i = 0; i < dim; ++i)
-                    for (unsigned int j = i + 1; j < dim; ++j)
-                      AssertThrow(std::abs(global_hessian.value()[i][j] -
-                                           dof_hessians[local_dof][i][j]) <
-                                    1.e-10,
-                                  ExcInternalError());
-                }
-              else
-                {
-                  global_hessian = dof_hessians[local_dof];
-                }
+                if (auto &global_hessian =
+                      global_dof_hessians[global_dof][ldi[local_dof]])
+                  {
+                    for (unsigned int i = 0; i < dim; ++i)
+                      for (unsigned int j = i + 1; j < dim; ++j)
+                        AssertThrow(std::abs(global_hessian.value()[i][j] -
+                                             dof_hessians[local_dof][i][j]) <
+                                      1.e-10,
+                                    ExcInternalError());
+                  }
+                else
+                  {
+                    global_hessian = dof_hessians[local_dof];
+                  }
 
-              if (auto &global_third_derivatives =
-                    global_dof_third_derivatives[global_dof][ldi[local_dof]])
-                {
-                  for (unsigned int i = 0; i < dim; ++i)
-                    for (unsigned int j = i + 1; j < dim; ++j)
-                      for (unsigned int k = j + 1; k < dim; ++k)
-                        AssertThrow(
-                          std::abs(global_third_derivatives.value()[i][j][k] -
-                                   dof_third_derivatives[local_dof][i][j][k]) <
-                            1.e-10,
-                          ExcInternalError());
-                }
-              else
-                {
-                  global_third_derivatives = dof_third_derivatives[local_dof];
-                }
-            }
+                if (auto &global_third_derivatives =
+                      global_dof_third_derivatives[global_dof][ldi[local_dof]])
+                  {
+                    for (unsigned int i = 0; i < dim; ++i)
+                      for (unsigned int j = i + 1; j < dim; ++j)
+                        for (unsigned int k = j + 1; k < dim; ++k)
+                          AssertThrow(
+                            std::abs(global_third_derivatives.value()[i][j][k] -
+                                     dof_third_derivatives[local_dof][i][j][k])
+                < 1.e-10, ExcInternalError());
+                  }
+                else
+                  {
+                    global_third_derivatives = dof_third_derivatives[local_dof];
+                  }*/
+              }
+          }
         }
-    }
 }
 
 template <int dim>
 void
 PlotFE<dim>::output_results() const
 {
-  MappingHermite<dim> mapping_fe_field(triangulation);
-  DataOut<dim>        data_out;
+  // MappingHermite<dim> mapping_fe_field(triangulation);
+  DataOut<dim> data_out;
 
   for (unsigned int i = 0; i < dof_vectors.size(); ++i)
     if (!constraints.is_constrained(i))
@@ -616,7 +669,7 @@ PlotFE<dim>::output_results() const
                                  dof_names,
                                  data_component_interpretation);
       }
-  data_out.build_patches(20);
+  data_out.build_patches(30);
   /*  data_out.build_patches(mapping_fe_field,
                            20,
                            DataOut<dim>::curved_inner_cells);*/
@@ -631,7 +684,7 @@ PlotFE<dim>::run()
 {
   make_grid();
   setup_system();
-  check_continuity();
+  // check_continuity();
   output_results();
 }
 
