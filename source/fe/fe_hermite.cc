@@ -829,9 +829,9 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                               constrained_gradients);
                           }
 
-                          /*double constrained_2nd_derivative =
+                          double constrained_2nd_derivative =
                             fe_values_neighbor.shape_hessian(
-                              first_neighbor_cell_index + 3, i + 3)[0][1];*/
+                              first_neighbor_cell_index + 3, i + 3)[0][1];
 
                           for (unsigned int j = 0;
                                j < fe_continuous.dofs_per_face;
@@ -887,13 +887,13 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                                     dof_indices_neighbor
                                       [first_neighbor_cell_index +
                                        c * fe_continuous.dofs_per_cell +
-                                       std::pow(2, c1) + 1],
+                                       std::pow(2, c1)],
                                     dof_indices_own[own_cell_index +
                                                     c * fe_continuous
                                                           .dofs_per_cell],
                                     constraint_matrix[c1][0]);
 
-                              /*double constraining_2nd_derivative =
+                              double constraining_2nd_derivative =
                                 fe_values_own.shape_hessian(own_cell_index,
                                                             i + 3)[0][1];
                               for (unsigned int c = 0;
@@ -907,7 +907,7 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                                                   c * fe_continuous
                                                         .dofs_per_cell],
                                   constraining_2nd_derivative /
-                                    constrained_2nd_derivative);*/
+                                    constrained_2nd_derivative);
                             }
                         }
                     }
