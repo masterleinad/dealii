@@ -59,6 +59,29 @@
 using namespace dealii;
 
 template <int dim>
+struct PointComparator;
+
+template <>
+struct PointComparator<2>
+{
+  bool
+  operator()(const Point<2> &a, const Point<2> &b) const
+  {
+    return std::tie(a[0], a[1]) < std::tie(b[0], b[1]);
+  }
+};
+
+template <>
+struct PointComparator<3>
+{
+  bool
+  operator()(const Point<3> &a, const Point<3> &b) const
+  {
+    return std::tie(a[0], a[1], a[2]) < std::tie(b[0], b[1], b[2]);
+  }
+};
+
+template <int dim>
 class PlotFE
 {
 public:
@@ -82,13 +105,11 @@ private:
   DoFHandler<dim>           dof_handler;
   AffineConstraints<double> constraints;
 
-  std::vector<Vector<double>>                       dof_vectors;
-  std::vector<std::vector<boost::optional<double>>> global_dof_values;
-  std::vector<std::vector<boost::optional<Tensor<1, dim>>>>
-                                                            global_dof_gradients;
-  std::vector<std::vector<boost::optional<Tensor<2, dim>>>> global_dof_hessians;
-  std::vector<std::vector<boost::optional<Tensor<3, dim>>>>
-    global_dof_third_derivatives;
+  std::vector<Vector<double>> dof_vectors;
+  std::map<Point<dim>, boost::optional<double>, PointComparator<dim>>
+    global_dof_values;
+  std::map<Point<dim>, boost::optional<Tensor<1, dim>>, PointComparator<dim>>
+    global_dof_gradients;
 };
 
 template <int dim>
@@ -101,13 +122,16 @@ template <int dim>
 void
 PlotFE<dim>::make_grid()
 {
-  std::vector<unsigned int> repetitions(2, 1);
+  std::vector<unsigned int> repetitions(dim, 1);
   Point<dim>                p0;
   Point<dim>                p1;
-  p1[0] = 1;
-  p1[1] = 1;
+  for (unsigned int c = 0; c < dim; ++c)
+    p1[c] = 1;
+
   GridGenerator::subdivided_hyper_rectangle(triangulation, repetitions, p0, p1);
   triangulation.refine_global(1);
+  triangulation.begin_active()->set_refine_flag();
+  triangulation.execute_coarsening_and_refinement();
   triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
   /*GridTools::transform(
@@ -118,39 +142,9 @@ PlotFE<dim>::make_grid()
       return p_new;
     },
     triangulation);*/
-  GridTools::distort_random(.4, triangulation);
+  // GridTools::distort_random(.4, triangulation);
   //  mapping_hermite =
   //  std_cxx14::make_unique<MappingHermite<dim>>(triangulation);
-}
-
-template <int dim, int spacedim>
-double
-evaluate_dof_for_shape_function(
-  const FEFaceValuesBase<dim, spacedim> &fe_values,
-  const unsigned int                     shape_function,
-  const unsigned int                     p,
-  const unsigned int                     dof)
-{
-  if (dim == 2)
-    {
-      switch (dof % 4)
-        {
-          case 0:
-            return fe_values.shape_value(shape_function, p);
-          case 1:
-            return fe_values.shape_grad(shape_function, p)[0];
-          case 2:
-            return fe_values.shape_grad(shape_function, p)[1];
-            break;
-          case 3:
-            return fe_values.shape_hessian(shape_function, p)[0][1];
-          default:
-            Assert(false, ExcInternalError());
-        }
-      return fe_values.shape_value(shape_function, p);
-    }
-  Assert(false, ExcNotImplemented());
-  return 0.;
 }
 
 
@@ -510,20 +504,12 @@ PlotFE<dim>::setup_system()
   dof_handler.distribute_dofs(fe);
   types::global_dof_index n_dofs = dof_handler.n_dofs();
   dof_vectors.resize(n_dofs);
-  global_dof_values.resize(n_dofs,
-                           std::vector<boost::optional<double>>(n_dofs));
-  global_dof_gradients.resize(
-    n_dofs, std::vector<boost::optional<Tensor<1, dim>>>(n_dofs));
-  global_dof_hessians.resize(
-    n_dofs, std::vector<boost::optional<Tensor<2, dim>>>(n_dofs));
-  global_dof_third_derivatives.resize(
-    n_dofs, std::vector<boost::optional<Tensor<3, dim>>>(n_dofs));
 
   constraints.clear();
   std::cout << "continuity constrainnts" << std::endl;
-  make_continuity_constraints(dof_handler, constraints);
+  FE_Hermite<dim>::make_continuity_constraints(dof_handler, constraints);
   std::cout << "hanging node constraints" << std::endl;
-  make_hanging_node_constraints(dof_handler, constraints);
+  FE_Hermite<dim>::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
   constraints.print(std::cout);
 
@@ -564,88 +550,67 @@ PlotFE<dim>::check_continuity()
   for (unsigned int dof_to_check = 0; dof_to_check < dof_handler.n_dofs();
        ++dof_to_check)
     if (!constraints.is_constrained(dof_to_check))
-      for (const auto &cell : dof_handler.active_cell_iterators())
-        {
-          fe_values.reinit(cell);
-          cell->get_dof_indices(ldi);
+      {
+        global_dof_values.clear();
+        global_dof_gradients.clear();
+        for (const auto &cell : dof_handler.active_cell_iterators())
           {
-            fe_values.get_function_values(dof_vectors[dof_to_check],
-                                          dof_values);
-            fe_values.get_function_gradients(dof_vectors[dof_to_check],
-                                             dof_gradients);
-            // fe_values.get_function_hessians(dof_vectors[global_dof],
-            // dof_hessians);
-            // fe_values.get_function_third_derivatives(dof_vectors[global_dof],
-            // dof_third_derivatives);
+            fe_values.reinit(cell);
+            cell->get_dof_indices(ldi);
+            {
+              fe_values.get_function_values(dof_vectors[dof_to_check],
+                                            dof_values);
+              fe_values.get_function_gradients(dof_vectors[dof_to_check],
+                                               dof_gradients);
+              // fe_values.get_function_hessians(dof_vectors[global_dof],
+              // dof_hessians);
+              // fe_values.get_function_third_derivatives(dof_vectors[global_dof],
+              // dof_third_derivatives);
 
-            for (unsigned int local_dof = 0; local_dof < dpc; ++local_dof)
-              {
+              for (unsigned int local_dof = 0; local_dof < dpc; ++local_dof)
                 {
-                  std::cout << " global dof " << dof_to_check << " value at "
-                            << fe_values.quadrature_point(local_dof) << " is "
-                            << dof_values[local_dof] << std::endl;
-                  std::cout << " global dof " << dof_to_check << " gradient at "
-                            << fe_values.quadrature_point(local_dof) << " is "
-                            << dof_gradients[local_dof] << std::endl;
-                }
-                /*if (auto &global_value =
-                      global_dof_values.at(global_dof).at(ldi[local_dof]))
-                  {
-                    AssertThrow(std::abs(global_value.value() -
-                                         dof_values[local_dof]) < 1.e-10,
-                                ExcInternalError());
-                  }
-                else
-                  {
-                    global_value = dof_values[local_dof];
-                  }
-
-                if (auto &global_gradient =
-                      global_dof_gradients.at(global_dof).at(ldi[local_dof]))
-                  {
-                    AssertThrow((global_gradient.value() -
-                                 dof_gradients[local_dof])
-                                    .norm() < 1.e-10,
-                                ExcInternalError());
-                  }
-                else
-                  {
-                    global_gradient = dof_gradients[local_dof];
-                  }
-
-                if (auto &global_hessian =
-                      global_dof_hessians[global_dof][ldi[local_dof]])
-                  {
-                    for (unsigned int i = 0; i < dim; ++i)
-                      for (unsigned int j = i + 1; j < dim; ++j)
-                        AssertThrow(std::abs(global_hessian.value()[i][j] -
-                                             dof_hessians[local_dof][i][j]) <
-                                      1.e-10,
-                                    ExcInternalError());
-                  }
-                else
-                  {
-                    global_hessian = dof_hessians[local_dof];
-                  }
-
-                if (auto &global_third_derivatives =
-                      global_dof_third_derivatives[global_dof][ldi[local_dof]])
-                  {
-                    for (unsigned int i = 0; i < dim; ++i)
-                      for (unsigned int j = i + 1; j < dim; ++j)
-                        for (unsigned int k = j + 1; k < dim; ++k)
-                          AssertThrow(
-                            std::abs(global_third_derivatives.value()[i][j][k] -
-                                     dof_third_derivatives[local_dof][i][j][k])
-                < 1.e-10, ExcInternalError());
-                  }
-                else
-                  {
-                    global_third_derivatives = dof_third_derivatives[local_dof];
+                  /*{
+                    std::cout << " global dof " << dof_to_check << " value at "
+                              << fe_values.quadrature_point(local_dof) << " is "
+                              << dof_values[local_dof] << std::endl;
+                    std::cout << " global dof " << dof_to_check
+                              << " gradient at "
+                              << fe_values.quadrature_point(local_dof) << " is "
+                              << dof_gradients[local_dof] << std::endl;
                   }*/
-              }
+                  if (auto &global_value =
+                        global_dof_values[fe_values.quadrature_point(
+                          local_dof)])
+                    {
+                      AssertThrow(std::abs(global_value.value() -
+                                           dof_values[local_dof]) < 1.e-10,
+                                  ExcInternalError());
+                    }
+                  else
+                    {
+                      global_value = dof_values[local_dof];
+                    }
+
+                  if (auto &global_gradient =
+                        global_dof_gradients[fe_values.quadrature_point(
+                          local_dof)])
+                    {
+                      AssertThrow((global_gradient.value() -
+                                   dof_gradients[local_dof])
+                                      .norm() < 1.e-10,
+                                  ExcInternalError());
+                    }
+                  else
+                    {
+                      global_gradient = dof_gradients[local_dof];
+                    }
+                }
+            }
           }
-        }
+        AssertDimension(global_dof_values.size(), triangulation.n_vertices());
+        AssertDimension(global_dof_gradients.size(),
+                        triangulation.n_vertices());
+      }
 }
 
 template <int dim>
@@ -684,8 +649,8 @@ PlotFE<dim>::run()
 {
   make_grid();
   setup_system();
-  // check_continuity();
   output_results();
+  check_continuity();
 }
 
 int
@@ -693,25 +658,25 @@ main()
 {
   initlog();
   MultithreadInfo::set_thread_limit(1);
-  {
+  /*{
     deallog.push("2 3");
     PlotFE<2> plot_fe(3);
     plot_fe.run();
     deallog.pop();
-  }
+  }*/
   /*{
     deallog.push("2 4");
     PlotFE<2> plot_fe(4);
     plot_fe.run();
     deallog.pop();
   }*/
-  /*{
+  {
     deallog.push("3 3");
     PlotFE<3> plot_fe(3);
     plot_fe.run();
     deallog.pop();
   }
-  {
+  /*{
     deallog.push("3 4");
     PlotFE<3> plot_fe(4);
     plot_fe.run();

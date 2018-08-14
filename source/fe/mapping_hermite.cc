@@ -159,9 +159,13 @@ MappingHermiteHelper<dim, spacedim>::reinit()
     constraints.clear();
     FE_Hermite<dim, spacedim>::make_continuity_constraints(*dof_handler,
                                                            constraints);
+    std::ofstream print_continuity("continuity");
+    constraints.print(print_continuity);
     std::cout << "Hanging node constraints" << std::endl;
-    /*    FE_Hermite<dim, spacedim>::make_hanging_node_constraints(*dof_handler,
-                                                                 constraints);*/
+    FE_Hermite<dim, spacedim>::make_hanging_node_constraints(*dof_handler,
+                                                             constraints);
+    std::ofstream print_combined("combined");
+    constraints.print(print_combined);
     constraints.close();
 
     constraints.print(std::cout);

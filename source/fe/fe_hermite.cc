@@ -690,23 +690,23 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
   std::vector<types::global_dof_index> dof_indices_neighbor(
     dof_handler.get_fe().dofs_per_cell);
 
-  /*  FESubfaceValues<dim, spacedim> fe_values_own(fe_continuous,
+  FESubfaceValues<dim, spacedim> fe_values_own(fe_continuous,
+                                               quad_face_support,
+                                               update_quadrature_points |
+                                                 update_values |
+                                                 update_gradients |
+                                                 update_hessians);
+  FEFaceValues<dim, spacedim>    fe_values_neighbor(fe_continuous,
                                                  quad_face_support,
                                                  update_quadrature_points |
                                                    update_values |
                                                    update_gradients |
                                                    update_hessians);
-    FEFaceValues<dim, spacedim>    fe_values_neighbor(fe_continuous,
-                                                   quad_face_support,
-                                                   update_quadrature_points |
-                                                     update_values |
-                                                     update_gradients |
-                                                     update_hessians);*/
 
   // Rule of thumb for FP accuracy, that can be expected for a given
   // polynomial degree. This value is used to cut off values close to
   // zero.
-  double eps = 2e-13 * fe_continuous.degree * (dim - 1);
+  // double eps = 2e-13 * fe_continuous.degree * (dim - 1);
 
   auto cell_dg = dof_handler.begin_active();
   auto cell_cg = dof_handler_continuous.begin_active();
@@ -724,10 +724,7 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                    subface_no < cell_cg->face(face_no)->n_children();
                    ++subface_no)
                 {
-                  const Quadrature<dim> own_subface_quadrature =
-                    QProjector<dim>::project_to_subface(quad_face_support,
-                                                        face_no,
-                                                        subface_no);
+                  fe_values_own.reinit(cell_cg, face_no, subface_no);
                   std::cout
                     << "own reinited on: "
                     << cell_cg->face(face_no)->child(subface_no)->center()
@@ -737,10 +734,8 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                     cell_cg->neighbor_child_on_subface(face_no, subface_no);
                   std::cout << "Fine cell: " << subface_cell->center()
                             << std::endl;
-                  const Quadrature<dim> neighbor_face_quadrature =
-                    QProjector<dim>::project_to_face(
-                      quad_face_support,
-                      cell_cg->neighbor_of_neighbor(face_no));
+                  fe_values_neighbor.reinit(
+                    subface_cell, cell_cg->neighbor_of_neighbor(face_no));
                   std::cout << "neighbor reinited on: "
                             << subface_cell
                                  ->face(cell_cg->neighbor_of_neighbor(face_no))
@@ -750,64 +745,169 @@ FE_Hermite<dim, spacedim>::make_hanging_node_constraints(
                   const auto subface_cell_dg =
                     cell_dg->neighbor_child_on_subface(face_no, subface_no);
                   subface_cell_dg->get_dof_indices(dof_indices_neighbor);
-                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face; ++i)
+                  for (unsigned int i = 0; i < fe_continuous.dofs_per_face;
+                       i += fe_continuous.dofs_per_vertex)
                     {
-                      const auto neighbor_cell_index =
+                      for (unsigned int c = 0;
+                           c < fe_continuous.dofs_per_vertex;
+                           ++c)
+                        Assert((fe_values_own.quadrature_point(i + c) -
+                                fe_values_neighbor.quadrature_point(i + c))
+                                   .norm() < 1.e-6,
+                               ExcInternalError());
+                      const auto first_neighbor_cell_index =
                         fe_continuous.face_to_cell_index(
                           i, cell_cg->neighbor_of_neighbor(face_no));
 
-                      std::cout
-                        << "neighbor cell index: " << neighbor_cell_index
-                        << std::endl;
-
                       if (!constraints.is_constrained(
-                            dof_indices_neighbor[neighbor_cell_index]))
+                            dof_indices_neighbor[first_neighbor_cell_index]))
                         {
                           for (unsigned int i = 0;
                                i < dof_handler.get_fe().n_components();
                                ++i)
-                            constraints.add_line(
-                              dof_indices_neighbor[neighbor_cell_index +
-                                                   i * fe_continuous
-                                                         .dofs_per_cell]);
+                            for (unsigned int c = 0;
+                                 c < fe_continuous.dofs_per_vertex;
+                                 ++c)
+                              constraints.add_line(
+                                dof_indices_neighbor
+                                  [first_neighbor_cell_index + c +
+                                   i * fe_continuous.dofs_per_cell]);
+
+                          double constrained_value =
+                            fe_values_neighbor.shape_value(
+                              first_neighbor_cell_index, i);
+                          FullMatrix<double> inverted_constrained_gradients(
+                            dim, dim);
+                          {
+                            FullMatrix<double> constrained_gradients(dim, dim);
+                            if (dim == 2)
+                              {
+                                constrained_gradients[0][0] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 1, i + 1)[0];
+                                constrained_gradients[1][0] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 1, i + 1)[1];
+                                constrained_gradients[0][1] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 2, i + 2)[0];
+                                constrained_gradients[1][1] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 2, i + 2)[1];
+                              }
+                            else
+                              {
+                                constrained_gradients[0][0] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 1, i + 1)[0];
+                                constrained_gradients[1][0] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 1, i + 1)[1];
+                                constrained_gradients[2][0] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 1, i + 1)[2];
+                                constrained_gradients[0][1] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 2, i + 2)[0];
+                                constrained_gradients[1][1] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 2, i + 2)[1];
+                                constrained_gradients[2][1] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 2, i + 2)[2];
+                                constrained_gradients[0][2] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 4, i + 4)[0];
+                                constrained_gradients[1][2] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 4, i + 4)[1];
+                                constrained_gradients[2][2] =
+                                  fe_values_neighbor.shape_grad(
+                                    first_neighbor_cell_index + 4, i + 4)[2];
+                              }
+                            inverted_constrained_gradients.invert(
+                              constrained_gradients);
+                          }
+
+                          /*double constrained_2nd_derivative =
+                            fe_values_neighbor.shape_hessian(
+                              first_neighbor_cell_index + 3, i + 3)[0][1];*/
+
                           for (unsigned int j = 0;
                                j < fe_continuous.dofs_per_face;
                                ++j)
                             {
                               const auto own_cell_index =
                                 fe_continuous.face_to_cell_index(j, face_no);
+
                               double constraining_value =
-                                evaluate_dof_for_shape_function(
-                                  dof_handler.get_fe(),
-                                  neighbor_cell_index,
-                                  own_subface_quadrature.point(i),
-                                  own_cell_index);
+                                fe_values_own.shape_value(own_cell_index, i);
+                              for (unsigned int c = 0;
+                                   c < dof_handler.get_fe().n_components();
+                                   ++c)
+                                constraints.add_entry(
+                                  dof_indices_neighbor
+                                    [first_neighbor_cell_index +
+                                     c * fe_continuous.dofs_per_cell],
+                                  dof_indices_own[own_cell_index +
+                                                  c * fe_continuous
+                                                        .dofs_per_cell],
+                                  constraining_value / constrained_value);
 
-                              std::cout
-                                << "constraining value: " << constraining_value
-                                << " " << j << " " << std::endl;
-
-                              if (std::abs(constraining_value) > eps)
+                              FullMatrix<double> constraining_gradients(dim, 1);
+                              if (dim == 2)
                                 {
-                                  std::cout
-                                    << i << "="
-                                    << dof_indices_neighbor[neighbor_cell_index]
-                                    << ": " << j << "="
-                                    << dof_indices_own[own_cell_index]
-                                    << std::endl;
-                                  for (unsigned int i = 0;
-                                       i < dof_handler.get_fe().n_components();
-                                       ++i)
-
-                                    constraints.add_entry(
-                                      dof_indices_neighbor
-                                        [neighbor_cell_index +
-                                         i * fe_continuous.dofs_per_cell],
-                                      dof_indices_own[own_cell_index +
-                                                      i * fe_continuous
-                                                            .dofs_per_cell],
-                                      constraining_value);
+                                  constraining_gradients[0][0] =
+                                    fe_values_own.shape_grad(own_cell_index,
+                                                             i)[0];
+                                  constraining_gradients[1][0] =
+                                    fe_values_own.shape_grad(own_cell_index,
+                                                             i)[1];
                                 }
+                              else
+                                {
+                                  constraining_gradients[0][0] =
+                                    fe_values_own.shape_grad(own_cell_index,
+                                                             i)[0];
+                                  constraining_gradients[1][0] =
+                                    fe_values_own.shape_grad(own_cell_index,
+                                                             i)[1];
+                                  constraining_gradients[2][0] =
+                                    fe_values_own.shape_grad(own_cell_index,
+                                                             i)[2];
+                                }
+                              FullMatrix<double> constraint_matrix(dim, 1);
+                              inverted_constrained_gradients.mmult(
+                                constraint_matrix, constraining_gradients);
+                              for (unsigned int c1 = 0; c1 < dim; ++c1)
+                                for (unsigned int c = 0;
+                                     c < dof_handler.get_fe().n_components();
+                                     ++c)
+                                  constraints.add_entry(
+                                    dof_indices_neighbor
+                                      [first_neighbor_cell_index +
+                                       c * fe_continuous.dofs_per_cell +
+                                       std::pow(2, c1) + 1],
+                                    dof_indices_own[own_cell_index +
+                                                    c * fe_continuous
+                                                          .dofs_per_cell],
+                                    constraint_matrix[c1][0]);
+
+                              /*double constraining_2nd_derivative =
+                                fe_values_own.shape_hessian(own_cell_index,
+                                                            i + 3)[0][1];
+                              for (unsigned int c = 0;
+                                   c < dof_handler.get_fe().n_components();
+                                   ++c)
+                                constraints.add_entry(
+                                  dof_indices_neighbor
+                                    [first_neighbor_cell_index +
+                                     c * fe_continuous.dofs_per_cell + 3],
+                                  dof_indices_own[own_cell_index +
+                                                  c * fe_continuous
+                                                        .dofs_per_cell],
+                                  constraining_2nd_derivative /
+                                    constrained_2nd_derivative);*/
                             }
                         }
                     }
@@ -930,70 +1030,92 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
                                 1./*fe_values_own.shape_value(i, i) /
                                   fe_values_neighbor.shape_value(j, j)*/);
                             }
-
-                          FullMatrix<double> own_gradient_evaluations(dim, dim);
-                          own_gradient_evaluations[0][0] =
-                            fe_values_own.shape_grad(i + 1, i + 1)[0];
-                          own_gradient_evaluations[1][0] =
-                            fe_values_own.shape_grad(i + 1, i + 1)[1];
-                          own_gradient_evaluations[0][1] =
-                            fe_values_own.shape_grad(i + 2, i + 2)[0];
-                          own_gradient_evaluations[1][1] =
-                            fe_values_own.shape_grad(i + 2, i + 2)[1];
-                          own_gradient_evaluations.print(std::cout);
-
-                          FullMatrix<double> neighbor_gradient_evaluations(dim,
-                                                                           dim);
-                          neighbor_gradient_evaluations[0][0] =
-                            fe_values_neighbor.shape_grad(j + 1, j + 1)[0];
-                          neighbor_gradient_evaluations[1][0] =
-                            fe_values_neighbor.shape_grad(j + 1, j + 1)[1];
-                          neighbor_gradient_evaluations[0][1] =
-                            fe_values_neighbor.shape_grad(j + 2, j + 2)[0];
-                          neighbor_gradient_evaluations[1][1] =
-                            fe_values_neighbor.shape_grad(j + 2, j + 2)[1];
-                          neighbor_gradient_evaluations.print(std::cout);
-
-                          FullMatrix<double>
-                            inverse_neighbor_gradient_evaluations(dim, dim);
-                          inverse_neighbor_gradient_evaluations.invert(
-                            neighbor_gradient_evaluations);
-
-                          FullMatrix<double> constraint_matrix(dim, dim);
-                          inverse_neighbor_gradient_evaluations.mmult(
-                            constraint_matrix, own_gradient_evaluations);
-
-                          for (unsigned int k = 0; k < dim; ++k)
-                            if (!constraints.is_constrained(
-                                  dof_indices_neighbor_start + k + 1))
-                              {
-                                constraints.add_line(
-                                  dof_indices_neighbor_start + k + 1);
-                                for (unsigned int l = 0; l < dim; ++l)
-                                  if (k == l)
-                                    constraints.add_entry(
-                                      dof_indices_neighbor_start + k + 1,
-                                      dof_indices_own_start + l + 1,
-                                      cell->level() /
-                                        neighbor_cell
-                                          ->level() /*constraint_matrix[k][l]*/);
-                              }
-
-                          if (!constraints.is_constrained(
-                                dof_indices_neighbor_start + 3))
+                          if (dim == 2)
                             {
-                              constraints.add_line(dof_indices_neighbor_start +
-                                                   3);
-                              constraints.add_entry(
+                              FullMatrix<double> own_gradient_evaluations(dim,
+                                                                          dim);
+                              own_gradient_evaluations[0][0] =
+                                fe_values_own.shape_grad(i + 1, i + 1)[0];
+                              own_gradient_evaluations[1][0] =
+                                fe_values_own.shape_grad(i + 1, i + 1)[1];
+                              own_gradient_evaluations[0][1] =
+                                fe_values_own.shape_grad(i + 2, i + 2)[0];
+                              own_gradient_evaluations[1][1] =
+                                fe_values_own.shape_grad(i + 2, i + 2)[1];
+                              own_gradient_evaluations.print(std::cout);
+
+                              FullMatrix<double> neighbor_gradient_evaluations(
+                                dim, dim);
+                              neighbor_gradient_evaluations[0][0] =
+                                fe_values_neighbor.shape_grad(j + 1, j + 1)[0];
+                              neighbor_gradient_evaluations[1][0] =
+                                fe_values_neighbor.shape_grad(j + 1, j + 1)[1];
+                              neighbor_gradient_evaluations[0][1] =
+                                fe_values_neighbor.shape_grad(j + 2, j + 2)[0];
+                              neighbor_gradient_evaluations[1][1] =
+                                fe_values_neighbor.shape_grad(j + 2, j + 2)[1];
+                              neighbor_gradient_evaluations.print(std::cout);
+
+                              FullMatrix<double>
+                                inverse_neighbor_gradient_evaluations(dim, dim);
+                              inverse_neighbor_gradient_evaluations.invert(
+                                neighbor_gradient_evaluations);
+
+                              FullMatrix<double> constraint_matrix(dim, dim);
+                              inverse_neighbor_gradient_evaluations.mmult(
+                                constraint_matrix, own_gradient_evaluations);
+
+                              const double factor = std::pow(
+                                2., cell->level() - neighbor_cell->level());
+
+                              for (unsigned int k = 0; k < dim; ++k)
+                                if (!constraints.is_constrained(
+                                      dof_indices_neighbor_start + k + 1))
+                                  {
+                                    constraints.add_line(
+                                      dof_indices_neighbor_start + k + 1);
+                                    for (unsigned int l = 0; l < dim; ++l)
+                                      if (k == l)
+                                        constraints.add_entry(
+                                          dof_indices_neighbor_start + k + 1,
+                                          dof_indices_own_start + l + 1,
+                                          factor /*constraint_matrix[k][l]*/);
+                                  }
+
+                              if (!constraints.is_constrained(
+                                    dof_indices_neighbor_start + 3))
+                                {
+                                  constraints.add_line(
+                                    dof_indices_neighbor_start + 3);
+                                  constraints.add_entry(
                                 dof_indices_neighbor_start + 3,
                                 dof_indices_own_start + 3,
-                                std::pow(cell->level()/neighbor_cell->level(),2.) /*
-                                fe_values_own.shape_hessian(i + 3,
+                                factor*factor/*fe_values_own.shape_hessian(i + 3,
                                                             i + 3)[0][1] /
                                   fe_values_neighbor.shape_hessian(j + 3,
                                                                    j +
                                                                      3)[0][1]*/);
+                                }
                             }
+                          else if (dim == 3)
+                            {
+                              const double factor = std::pow(
+                                2., cell->level() - neighbor_cell->level());
+
+                              for (unsigned int k : {1, 2, 4})
+                                if (!constraints.is_constrained(
+                                      dof_indices_neighbor_start + k))
+                                  {
+                                    constraints.add_line(
+                                      dof_indices_neighbor_start + k);
+                                    constraints.add_entry(
+                                      dof_indices_neighbor_start + k,
+                                      dof_indices_own_start + k,
+                                      factor);
+                                  }
+                            }
+                          else
+                            AssertThrow(false, ExcNotImplemented());
                         }
                     }
                 }

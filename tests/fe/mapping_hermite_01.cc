@@ -62,27 +62,28 @@ test()
   Point<dim>         p1;
   p1(0) = 2.;
   p1(1) = 1.;
-  std::vector<unsigned int> subdivisions(2, 1);
+  // p1(2) = 1.;
+  std::vector<unsigned int> subdivisions(dim, 1);
   subdivisions[0] = 2;
-  /*GridGenerator::subdivided_hyper_rectangle(triangulation,
+  GridGenerator::subdivided_hyper_rectangle(triangulation,
                                             subdivisions,
                                             p0,
-                                            p1);*/
-  GridGenerator::hyper_cube(triangulation, 0., 1.);
-  triangulation.refine_global(1);
+                                            p1);
+  //  GridGenerator::hyper_cube(triangulation, 0., 1.);
+  // triangulation.refine_global(1);
   triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
-  GridTools::distort_random(.4, triangulation);
+  GridTools::distort_random(.3, triangulation, false);
 
   MappingHermite<dim> mapping_fe_field(triangulation);
   {
     DataOut<dim> data_out;
 
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
-    Vector<float> dummy(triangulation.n_active_cells());
-    data_out.add_data_vector(dummy, "dummy");
+    // Vector<float> dummy(triangulation.n_active_cells());
+    data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           20,
+                           40,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped" + Utilities::int_to_string(dim) +
@@ -93,8 +94,8 @@ test()
   {
     DataOut<dim> data_out;
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
-    Vector<float> dummy(triangulation.n_active_cells());
-    data_out.add_data_vector(dummy, "dummy");
+    // Vector<float> dummy(triangulation.n_active_cells());
+    data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(20);
 
     std::ofstream filename("solution" + Utilities::int_to_string(dim) + ".vtk");
