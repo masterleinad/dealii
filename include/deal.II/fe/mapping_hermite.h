@@ -41,16 +41,20 @@ template <int dim, int spacedim>
 class MappingHermiteHelper
 {
 public:
-  MappingHermiteHelper(const Triangulation<dim, spacedim> &triangulation);
+  MappingHermiteHelper(const Triangulation<dim, spacedim> &triangulation,
+                       const bool                          orthogonalize);
 
   void
-  reinit();
+  reinit(const bool ortogonalize);
 
   const LinearAlgebra::distributed::Vector<double> &
   get_hermite_vector() const;
 
   const DoFHandler<dim, spacedim> &
   get_dof_handler() const;
+
+  void
+  orthogonalize_gradients();
 
 private:
   std::shared_ptr<DoFHandler<dim, spacedim>> dof_handler;
@@ -106,10 +110,11 @@ public:
   /**
    * Constructor.
    */
-  MappingHermite(const Triangulation<dim, spacedim> &triangulation);
+  MappingHermite(const Triangulation<dim, spacedim> &triangulation,
+                 const bool                          orthogonalize);
 
   void
-  reinit();
+  reinit(const bool orthogonalize);
 
   /**
    * Return a pointer to a copy of the present object. The caller of this copy

@@ -59,15 +59,16 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim, int spacedim>
 MappingHermiteHelper<dim, spacedim>::MappingHermiteHelper(
-  const Triangulation<dim, spacedim> &triangulation)
+  const Triangulation<dim, spacedim> &triangulation,
+  const bool                          orthogonalize)
   : dof_handler(std::make_shared<DoFHandler<dim, spacedim>>(triangulation))
 {
-  reinit();
+  reinit(orthogonalize);
 }
 
 template <int dim, int spacedim>
 void
-MappingHermiteHelper<dim, spacedim>::reinit()
+MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
 {
   if (dof_handler->has_active_dofs())
     dof_handler->distribute_dofs(dof_handler->get_fe());
@@ -155,6 +156,10 @@ MappingHermiteHelper<dim, spacedim>::reinit()
       {
         hermite_vector(i) /= n_values(i);
       }
+
+    if (orthogonalize)
+      orthogonalize_gradients();
+
     AffineConstraints<double> constraints;
     constraints.clear();
     FE_Hermite<dim, spacedim>::make_continuity_constraints(*dof_handler,
@@ -174,6 +179,71 @@ MappingHermiteHelper<dim, spacedim>::reinit()
   }
 }
 
+
+
+template <int dim, int spacedim>
+void
+MappingHermiteHelper<dim, spacedim>::orthogonalize_gradients()
+{
+  const unsigned int dofs_per_component =
+    dof_handler->get_fe().dofs_per_cell / dim;
+  const unsigned int dofs_per_vertex = 1 << dim;
+
+  std::vector<types::global_dof_index> ldi(dofs_per_component * dim);
+
+  for (const auto &cell : dof_handler->active_cell_iterators())
+    {
+      cell->get_dof_indices(ldi);
+
+      Tensor<1, dim> unit_tensor_x;
+      unit_tensor_x[0] = 1.;
+
+      // get angle with respect to x-axis
+      for (unsigned int i = 0; i < dofs_per_component; i += dofs_per_vertex)
+        {
+          Tensor<1, 3> gradient_1;
+          gradient_1[0] = hermite_vector(ldi[i + (1 << 0)]);
+          gradient_1[1] =
+            hermite_vector(ldi[i + dofs_per_component + (1 << 0)]);
+
+          Tensor<1, 3> gradient_2;
+          gradient_2[0] = hermite_vector(ldi[i + (1 << 1)]);
+          gradient_2[1] =
+            hermite_vector(ldi[i + dofs_per_component + (1 << 1)]);
+
+          const double dot   = gradient_1 * gradient_2;
+          const double det   = cross_product_3d(gradient_1, gradient_2)[2];
+          const double angle = std::atan2(det, dot);
+          const double correction_angle = .5 * angle - .25 * numbers::PI;
+
+          Tensor<1, dim> new_gradient_1;
+          new_gradient_1[0] = std::cos(correction_angle) * gradient_1[0] -
+                              std::sin(correction_angle) * gradient_1[1];
+          new_gradient_1[1] = std::sin(correction_angle) * gradient_1[0] +
+                              std::cos(correction_angle) * gradient_1[1];
+
+          Tensor<1, dim> new_gradient_2;
+          new_gradient_2[0] = std::cos(-correction_angle) * gradient_2[0] -
+                              std::sin(-correction_angle) * gradient_2[1];
+          new_gradient_2[1] =
+            hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
+              std::sin(-correction_angle) * gradient_2[0] +
+              std::cos(-correction_angle) * gradient_2[1];
+
+          Assert(std::abs(new_gradient_1 * new_gradient_2) < 1.e-6,
+                 ExcInternalError());
+          hermite_vector(ldi[i + (1 << 0)]) = new_gradient_1[0];
+          hermite_vector(ldi[i + dofs_per_component + (1 << 0)]) =
+            new_gradient_1[1];
+          hermite_vector(ldi[i + (1 << 1)]) = new_gradient_2[0];
+          hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
+            new_gradient_2[1];
+        }
+    }
+}
+
+
+
 template <int dim, int spacedim>
 const DoFHandler<dim, spacedim> &
 MappingHermiteHelper<dim, spacedim>::get_dof_handler() const
@@ -190,8 +260,9 @@ MappingHermiteHelper<dim, spacedim>::get_hermite_vector() const
 
 template <int dim, int spacedim>
 MappingHermite<dim, spacedim>::MappingHermite(
-  const Triangulation<dim, spacedim> &triangulation)
-  : MappingHermiteHelper<dim, spacedim>(triangulation)
+  const Triangulation<dim, spacedim> &triangulation,
+  const bool                          orthogonalize)
+  : MappingHermiteHelper<dim, spacedim>(triangulation, orthogonalize)
   , MappingFEField<dim,
                    spacedim,
                    LinearAlgebra::distributed::Vector<double>,
@@ -202,9 +273,9 @@ MappingHermite<dim, spacedim>::MappingHermite(
 
 template <int dim, int spacedim>
 void
-MappingHermite<dim, spacedim>::reinit()
+MappingHermite<dim, spacedim>::reinit(const bool orthogonalize)
 {
-  MappingHermiteHelper<dim, spacedim>::reinit();
+  MappingHermiteHelper<dim, spacedim>::reinit(orthogonalize);
 }
 
 template <int dim, int spacedim>

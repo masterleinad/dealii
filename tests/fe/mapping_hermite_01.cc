@@ -75,7 +75,7 @@ test()
   triangulation.execute_coarsening_and_refinement();
   GridTools::distort_random(.4, triangulation, false);
 
-  MappingHermite<dim> mapping_fe_field(triangulation);
+  MappingHermite<dim> mapping_fe_field(triangulation, false);
   {
     DataOut<dim> data_out;
 
@@ -102,6 +102,24 @@ test()
 
     data_out.write_vtk(filename);
   }
+  {
+    DataOut<dim> data_out;
+    mapping_fe_field.get_hermite_vector().print(std::cout);
+    mapping_fe_field.reinit(true);
+    //    mapping_fe_field.orthogonalize_gradients();
+
+    data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
+    // Vector<float> dummy(triangulation.n_active_cells());
+    data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
+    data_out.build_patches(mapping_fe_field,
+                           40,
+                           DataOut<dim>::curved_inner_cells);
+
+    std::ofstream filename("solution-mapped-orthogonal" +
+                           Utilities::int_to_string(dim) + ".vtk");
+    data_out.write_vtk(filename);
+    data_out.write_vtk(deallog.get_file_stream());
+  }
 }
 
 int
@@ -109,8 +127,8 @@ main()
 {
   initlog();
   {
-    // test<2>();
-    test<3>();
+    test<2>();
+    // test<3>();
   }
 
   return 0;
