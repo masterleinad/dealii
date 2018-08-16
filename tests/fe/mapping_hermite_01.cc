@@ -83,7 +83,7 @@ test()
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           40,
+                           20,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped" + Utilities::int_to_string(dim) +
@@ -106,13 +106,13 @@ test()
     DataOut<dim> data_out;
     mapping_fe_field.get_hermite_vector().print(std::cout);
     mapping_fe_field.reinit(true);
-    //    mapping_fe_field.orthogonalize_gradients();
+    // mapping_fe_field.orthogonalize_gradients();
 
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           40,
+                           20,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped-orthogonal" +

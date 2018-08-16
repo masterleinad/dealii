@@ -51,6 +51,8 @@
 
 #include <deal.II/numerics/vector_tools.h>
 
+#include <deal.II/physics/transformations.h>
+
 #include <fstream>
 #include <memory>
 #include <numeric>
@@ -195,49 +197,113 @@ MappingHermiteHelper<dim, spacedim>::orthogonalize_gradients()
     {
       cell->get_dof_indices(ldi);
 
-      Tensor<1, dim> unit_tensor_x;
-      unit_tensor_x[0] = 1.;
-
       // get angle with respect to x-axis
       for (unsigned int i = 0; i < dofs_per_component; i += dofs_per_vertex)
         {
-          Tensor<1, 3> gradient_1;
-          gradient_1[0] = hermite_vector(ldi[i + (1 << 0)]);
-          gradient_1[1] =
-            hermite_vector(ldi[i + dofs_per_component + (1 << 0)]);
+          if (dim == 2)
+            {
+              Tensor<1, 3> gradient_1;
+              gradient_1[0] = hermite_vector(ldi[i + (1 << 0)]);
+              gradient_1[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 0)]);
 
-          Tensor<1, 3> gradient_2;
-          gradient_2[0] = hermite_vector(ldi[i + (1 << 1)]);
-          gradient_2[1] =
-            hermite_vector(ldi[i + dofs_per_component + (1 << 1)]);
+              Tensor<1, 3> gradient_2;
+              gradient_2[0] = hermite_vector(ldi[i + (1 << 1)]);
+              gradient_2[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 1)]);
 
-          const double dot   = gradient_1 * gradient_2;
-          const double det   = cross_product_3d(gradient_1, gradient_2)[2];
-          const double angle = std::atan2(det, dot);
-          const double correction_angle = .5 * angle - .25 * numbers::PI;
+              const double dot   = gradient_1 * gradient_2;
+              const double det   = cross_product_3d(gradient_1, gradient_2)[2];
+              const double angle = std::atan2(det, dot);
+              const double correction_angle = .5 * angle - .25 * numbers::PI;
 
-          Tensor<1, dim> new_gradient_1;
-          new_gradient_1[0] = std::cos(correction_angle) * gradient_1[0] -
-                              std::sin(correction_angle) * gradient_1[1];
-          new_gradient_1[1] = std::sin(correction_angle) * gradient_1[0] +
-                              std::cos(correction_angle) * gradient_1[1];
+              Tensor<1, dim> new_gradient_1;
+              new_gradient_1[0] = std::cos(correction_angle) * gradient_1[0] -
+                                  std::sin(correction_angle) * gradient_1[1];
+              new_gradient_1[1] = std::sin(correction_angle) * gradient_1[0] +
+                                  std::cos(correction_angle) * gradient_1[1];
 
-          Tensor<1, dim> new_gradient_2;
-          new_gradient_2[0] = std::cos(-correction_angle) * gradient_2[0] -
-                              std::sin(-correction_angle) * gradient_2[1];
-          new_gradient_2[1] =
-            hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
-              std::sin(-correction_angle) * gradient_2[0] +
-              std::cos(-correction_angle) * gradient_2[1];
+              Tensor<1, dim> new_gradient_2;
+              new_gradient_2[0] = std::cos(-correction_angle) * gradient_2[0] -
+                                  std::sin(-correction_angle) * gradient_2[1];
+              new_gradient_2[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
+                  std::sin(-correction_angle) * gradient_2[0] +
+                  std::cos(-correction_angle) * gradient_2[1];
 
-          Assert(std::abs(new_gradient_1 * new_gradient_2) < 1.e-6,
-                 ExcInternalError());
-          hermite_vector(ldi[i + (1 << 0)]) = new_gradient_1[0];
-          hermite_vector(ldi[i + dofs_per_component + (1 << 0)]) =
-            new_gradient_1[1];
-          hermite_vector(ldi[i + (1 << 1)]) = new_gradient_2[0];
-          hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
-            new_gradient_2[1];
+              Assert(std::abs(new_gradient_1 * new_gradient_2) < 1.e-6,
+                     ExcInternalError());
+              hermite_vector(ldi[i + (1 << 0)]) = new_gradient_1[0];
+              hermite_vector(ldi[i + dofs_per_component + (1 << 0)]) =
+                new_gradient_1[1];
+              hermite_vector(ldi[i + (1 << 1)]) = new_gradient_2[0];
+              hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
+                new_gradient_2[1];
+            }
+          else // dim==3
+            {
+              Tensor<1, 3> gradient_1;
+              gradient_1[0] = hermite_vector(ldi[i + (1 << 0)]);
+              gradient_1[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 0)]);
+              gradient_1[1] =
+                hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 0)]);
+
+              Tensor<1, 3> gradient_2;
+              gradient_2[0] = hermite_vector(ldi[i + (1 << 1)]);
+              gradient_2[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 1)]);
+              gradient_2[2] =
+                hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 1)]);
+
+              Tensor<1, 3> gradient_3;
+              gradient_3[0] = hermite_vector(ldi[i + (1 << 2)]);
+              gradient_3[1] =
+                hermite_vector(ldi[i + dofs_per_component + (1 << 2)]);
+              gradient_3[2] =
+                hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 2)]);
+
+              const double dot = gradient_1 * gradient_2;
+              auto normal = Point<3>(cross_product_3d(gradient_1, gradient_2));
+              normal /= normal.norm();
+              const double angle =
+                std::acos(dot / (gradient_1.norm() * gradient_2.norm()));
+              const double correction_angle = .5 * angle - .25 * numbers::PI;
+
+              const auto rotation_1 =
+                Physics::Transformations::Rotations::rotation_matrix_3d(
+                  normal, correction_angle);
+              const auto rotation_2 =
+                Physics::Transformations::Rotations::rotation_matrix_3d(
+                  normal, -correction_angle);
+
+              Tensor<1, 3> new_gradient_1 = rotation_1 * gradient_1;
+              Tensor<1, 3> new_gradient_2 = rotation_2 * gradient_2;
+              Tensor<1, 3> new_gradient_3 = (normal * gradient_3) * normal;
+
+              Assert(std::abs(new_gradient_1 * new_gradient_2) < 1.e-6,
+                     ExcInternalError());
+              Assert(std::abs(new_gradient_1 * new_gradient_3) < 1.e-6,
+                     ExcInternalError());
+              Assert(std::abs(new_gradient_2 * new_gradient_3) < 1.e-6,
+                     ExcInternalError());
+
+              hermite_vector(ldi[i + (1 << 0)]) = new_gradient_1[0];
+              hermite_vector(ldi[i + dofs_per_component + (1 << 0)]) =
+                new_gradient_1[1];
+              hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 0)]) =
+                new_gradient_1[2];
+              hermite_vector(ldi[i + (1 << 1)]) = new_gradient_2[0];
+              hermite_vector(ldi[i + dofs_per_component + (1 << 1)]) =
+                new_gradient_2[1];
+              hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 1)]) =
+                new_gradient_2[2];
+              hermite_vector(ldi[i + (1 << 2)]) = new_gradient_3[0];
+              hermite_vector(ldi[i + dofs_per_component + (1 << 2)]) =
+                new_gradient_3[1];
+              hermite_vector(ldi[i + 2 * dofs_per_component + (1 << 2)]) =
+                new_gradient_3[2];
+            }
         }
     }
 }
