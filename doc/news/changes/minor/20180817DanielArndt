@@ -1,0 +1,3 @@
+New: There is CUDAWrappes::Vector::norm_sqr() for computing the squared l2-norm.
+<br>
+(Daniel Arndt, 2018/08/17)
