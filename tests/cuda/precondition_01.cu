@@ -1596,7 +1596,7 @@ test(Utilities::CUDA::Handle &cuda_handle)
   A_dev.print_formatted(std::cout);
   prec_double.vmult(sol_dev, rhs_dev);
   // A_dev.print_formatted(std::cout);
-  //cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
+  cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
 
   // Check the result
   rw_vector.import(sol_dev, VectorOperation::insert);
