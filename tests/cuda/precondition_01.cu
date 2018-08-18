@@ -850,43 +850,112 @@ namespace dealii
 {
   namespace CUDAWrappers
   {
+   /**
+    * This class implements an incomplete Cholesky factorization (IC)
+    * preconditioner for @em symmetric CUDAWrappers::SparseMatrix matrices.
+    * 
+    * The implementation closely follows the one documented in the cuSPARSE
+    * documentation (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csric02).
+    *
+    * @note Instantiations for this template are provided for <tt>@<float@> and
+    * @<double@></tt>.
+    *
+    * @ingroup Preconditioners CUDAWrappers
+    * @author Daniel Arndt
+    * @date 2018
+    */
     template <typename Number>
     class PreconditionIC
     {
     public:
+      /**
+       * Declare the type for container size.
+       */
       using size_type = int;
 
+      /**
+       * Standardized data struct to pipe additional flags to the preconditioner.
+       */
       struct AdditionalData
       {
-        AdditionalData(bool use_level_analysis = true);
+        /**
+* Constructor. cuSPARSE allows to compute and use level information. According to the documentation
+* it is this might improve performance. It is suggested to try both options.
+*/
+  AdditionalData(bool use_level_analysis = true);
 
+/**
+* Flag that determines if level informations are used when creating and applying the preconditioner.
+* See the documentation for cusparseSolvePolicy_t at https://docs.nvidia.com/cuda/cusparse/index.html#cusparsesolvepolicy_t
+* for more information.
+*/
         bool use_level_analysis;
       };
 
+       /**
+      * Constructor.
+      */
       PreconditionIC(const Utilities::CUDA::Handle &handle);
 
+      /**
+       * The copy constructor is deleted.
+       */
       PreconditionIC(const PreconditionIC<Number> &) = delete;
 
+/** 
+* The copy assignment operator is deleted.
+*/
       PreconditionIC &
       operator=(const PreconditionIC<Number> &) = delete;
 
+/**
+* Destructor. Free all resources that were initialized in this class.
+*/
       ~PreconditionIC();
 
+/**
+* Initialize this object. In particular, the given matrix is copied to be modified in-place.
+* For the underlying sparsity pattern pointers are stored. Specifically, this means
+* that the current object can only be used reliably as long as @p matrix is valid
+* and has not been changed since calling this function.
+*
+* The @p additional_data determines if level information are used.
+*/
       void
       initialize(const SparseMatrix<Number> &matrix,
                  const AdditionalData &additional_data = AdditionalData());
 
+ /**
+      * Apply the preconditioner.
+      */
       void
       vmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
             const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
+/**
+* Apply the preconditioner. Since the preconditioner is symmetric, this is the same as vmult().
+*/
       void
       Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
              const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
+/**
+*  Return the dimension of the codomain (or range) space. Note that the
+    * matrix is of dimension $m \times m$.
+    *
+    * @note This function should only be called if the preconditioner has been
+    * initialized.
+*/
       size_type
       m() const;
 
+ /**
+ *  Return the dimension of the codomain (or range) space. Note that the
+     * matrix is of dimension $m \times m$.
+     *
+     * @note This function should only be called if the preconditioner has been
+     * initialized.
+ */
       size_type
       n() const;
 
@@ -1525,14 +1594,14 @@ test(Utilities::CUDA::Handle &cuda_handle)
   // A_dev.print_formatted(std::cout);
   prec_double.initialize(A_dev);
   A_dev.print_formatted(std::cout);
-  // prec_double.vmult(sol_dev, rhs_dev);
+  prec_double.vmult(sol_dev, rhs_dev);
   // A_dev.print_formatted(std::cout);
-  cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
+  //cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
 
   // Check the result
   rw_vector.import(sol_dev, VectorOperation::insert);
   for (unsigned int i = 0; i < size; ++i)
-    std::cout << rw_vector[i] << " " << sol_host[i] << std::endl;
+    deallog << rw_vector[i] << " " << sol_host[i] << std::endl;
 }
 
 int
