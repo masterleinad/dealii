@@ -271,6 +271,8 @@ namespace CUDAWrappers
     other.column_index_dev = nullptr;
     other.row_ptr_dev      = nullptr;
     other.descr            = nullptr;
+
+    return *this;
   }
 
 

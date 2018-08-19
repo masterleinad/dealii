@@ -107,7 +107,7 @@ namespace CUDAWrappers
      * Move assignment operator.
      */
     SparseMatrix &
-    operator=(const CUDAWrappers::SparseMatrix<Number> &) = default;
+    operator=(CUDAWrappers::SparseMatrix<Number> &&);
 
     /**
      * Copy assignment is deleted.
