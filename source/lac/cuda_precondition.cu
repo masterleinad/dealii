@@ -1140,24 +1140,6 @@ namespace CUDAWrappers
 
 
 
-  template <typename Number>
-  PreconditionIC<Number>::size_type
-  PreconditionIC<Number>::m() const
-  {
-    return n_rows;
-  }
-
-
-
-  template <typename Number>
-  PreconditionIC<Number>::size_type
-  PreconditionIC<Number>::n() const
-  {
-    return n_rows;
-  }
-
-
-
   // explicit instantiations
   template class PreconditionIC<float>;
   template class PreconditionIC<double>;

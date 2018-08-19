@@ -247,6 +247,27 @@ namespace CUDAWrappers
      */
     int n_nonzero_elements;
   };
+
+  /*--------------------------- inline functions ----------------------------*/
+
+#  ifndef DOXYGEN
+  template <typename Number>
+  inline PreconditionIC<Number>::size_type
+  PreconditionIC<Number>::m() const
+  {
+    return n_rows;
+  }
+
+
+
+  template <typename Number>
+  inline PreconditionIC<Number>::size_type
+  PreconditionIC<Number>::n() const
+  {
+    return n_rows;
+  }
+#  endif // DOXYGEN
+
 } // namespace CUDAWrappers
 
 DEAL_II_NAMESPACE_CLOSE
