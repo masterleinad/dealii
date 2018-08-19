@@ -1222,7 +1222,7 @@ namespace dealii
      *
      * The implementation closely follows the one documented in the cuSPARSE
      * documentation
-     * (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csric02).
+     * (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csrilu02).
      *
      * @note Instantiations for this template are provided for <tt>@<float@> and
      * @<double@></tt>.
@@ -1232,7 +1232,7 @@ namespace dealii
      * @date 2018
      */
     template <typename Number>
-    class PreconditionIC
+    class PreconditionILU
     {
     public:
       /**
@@ -1266,23 +1266,23 @@ namespace dealii
       /**
        * Constructor.
        */
-      PreconditionIC(const Utilities::CUDA::Handle &handle);
+      PreconditionILU(const Utilities::CUDA::Handle &handle);
 
       /**
        * The copy constructor is deleted.
        */
-      PreconditionIC(const PreconditionIC<Number> &) = delete;
+      PreconditionILU(const PreconditionILU<Number> &) = delete;
 
       /**
        * The copy assignment operator is deleted.
        */
-      PreconditionIC &
-      operator=(const PreconditionIC<Number> &) = delete;
+      PreconditionILU &
+      operator=(const PreconditionILU<Number> &) = delete;
 
       /**
        * Destructor. Free all resources that were initialized in this class.
        */
-      ~PreconditionIC();
+      ~PreconditionILU();
 
       /**
        * Initialize this object. In particular, the given matrix is copied to be
@@ -1339,7 +1339,7 @@ namespace dealii
       cusparseHandle_t cusparse_handle;
 
       /**
-       * cuSPARSE description of the sparse matrix $M=LL^T$.
+       * cuSPARSE description of the sparse matrix $M=LU$.
        */
       cusparseMatDescr_t descr_M;
 
@@ -1349,9 +1349,14 @@ namespace dealii
       cusparseMatDescr_t descr_L;
 
       /**
+       * cuSPARSE description of the upper triangular matrix $U$.
+       */
+      cusparseMatDescr_t descr_U;
+
+      /**
        * Solve and analysis structure for $M=LL^T$.
        */
-      csric02Info_t info_M;
+      csrilu02Info_t info_M;
 
       /**
        * Solve and analysis structure for the lower triangular matrix $L$.
@@ -1359,9 +1364,9 @@ namespace dealii
       csrsv2Info_t info_L;
 
       /**
-       * Solve and analysis structure for the upper triangular matrix $L^T$.
+       * Solve and analysis structure for the upper triangular matrix $U$.
        */
-      csrsv2Info_t info_Lt;
+      csrsv2Info_t info_U;
 
       /**
        * Pointer to the values (on the device) of the computed preconditioning
@@ -1404,7 +1409,7 @@ namespace dealii
        * triangular matrix $L^T$. This value can be modified through an
        * AdditionalData object.
        */
-      cusparseSolvePolicy_t policy_Lt;
+      cusparseSolvePolicy_t policy_U;
 
       /**
        * Determine if level information should be generated for $M=LL^T$. This
@@ -1426,7 +1431,7 @@ namespace dealii
     };
 
     template <typename Number>
-    PreconditionIC<Number>::AdditionalData::AdditionalData(
+    PreconditionILU<Number>::AdditionalData::AdditionalData(
       bool use_level_analysis_)
       : use_level_analysis(use_level_analysis_)
     {}
@@ -1434,7 +1439,7 @@ namespace dealii
 
 
     template <typename Number>
-    PreconditionIC<Number>::PreconditionIC(
+    PreconditionILU<Number>::PreconditionILU(
       const Utilities::CUDA::Handle &handle)
       : cusparse_handle(handle.cusparse_handle)
       , P_val_dev(nullptr, delete_device_vector<Number>)
@@ -1443,7 +1448,7 @@ namespace dealii
       , tmp_dev(nullptr, delete_device_vector<Number>)
       , buffer_dev(nullptr, delete_device_vector<void>)
       , policy_L(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
-      , policy_Lt(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
+      , policy_U(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
       , policy_M(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
       , n_rows(0)
       , n_nonzero_elements(0)
@@ -1453,7 +1458,10 @@ namespace dealii
       // - matrix M is base-0
       // - matrix L is base-0
       // - matrix L is lower triangular
-      // - matrix L has non-unit diagonal
+      // - matrix L has unit diagonal
+      // - matrix U is base-0
+      // - matrix U is upper triangular
+      // - matrix U has non-unit diagonal
       status = cusparseCreateMatDescr(&descr_M);
       AssertCusparse(status);
       status = cusparseSetMatIndexBase(descr_M, CUSPARSE_INDEX_BASE_ZERO);
@@ -1469,21 +1477,32 @@ namespace dealii
       AssertCusparse(status);
       status = cusparseSetMatFillMode(descr_L, CUSPARSE_FILL_MODE_LOWER);
       AssertCusparse(status);
-      status = cusparseSetMatDiagType(descr_L, CUSPARSE_DIAG_TYPE_NON_UNIT);
+      status = cusparseSetMatDiagType(descr_L, CUSPARSE_DIAG_TYPE_UNIT);
+      AssertCusparse(status);
+
+      status = cusparseCreateMatDescr(&descr_U);
+      AssertCusparse(status);
+      status = cusparseSetMatIndexBase(descr_U, CUSPARSE_INDEX_BASE_ZERO);
+      AssertCusparse(status);
+      status = cusparseSetMatType(descr_U, CUSPARSE_MATRIX_TYPE_GENERAL);
+      AssertCusparse(status);
+      status = cusparseSetMatFillMode(descr_U, CUSPARSE_FILL_MODE_UPPER);
+      AssertCusparse(status);
+      status = cusparseSetMatDiagType(descr_U, CUSPARSE_DIAG_TYPE_NON_UNIT);
       AssertCusparse(status);
 
       // step 2: create a empty info structure
-      // we need one info for csric02 and two info's for csrsv2
-      status = cusparseCreateCsric02Info(&info_M);
+      // we need one info for csrilu02 and two info's for csrsv2
+      status = cusparseCreateCsrilu02Info(&info_M);
       AssertCusparse(status);
       status = cusparseCreateCsrsv2Info(&info_L);
       AssertCusparse(status);
-      status = cusparseCreateCsrsv2Info(&info_Lt);
+      status = cusparseCreateCsrsv2Info(&info_U);
       AssertCusparse(status);
     }
 
     template <typename Number>
-    PreconditionIC<Number>::~PreconditionIC()
+    PreconditionILU<Number>::~PreconditionILU()
     {
       // step 8: free resources
       cusparseStatus_t status = cusparseDestroyMatDescr(descr_M);
@@ -1492,13 +1511,16 @@ namespace dealii
       status = cusparseDestroyMatDescr(descr_L);
       AssertNothrowCusparse(status);
 
-      status = cusparseDestroyCsric02Info(info_M);
+      status = cusparseDestroyMatDescr(descr_U);
+      AssertNothrowCusparse(status);
+
+      status = cusparseDestroyCsrilu02Info(info_M);
       AssertNothrowCusparse(status);
 
       status = cusparseDestroyCsrsv2Info(info_L);
       AssertNothrowCusparse(status);
 
-      status = cusparseDestroyCsrsv2Info(info_Lt);
+      status = cusparseDestroyCsrsv2Info(info_U);
       AssertNothrowCusparse(status);
     }
 
@@ -1506,20 +1528,20 @@ namespace dealii
 
     template <typename Number>
     void
-    PreconditionIC<Number>::initialize(const SparseMatrix<Number> &A,
-                                       const AdditionalData &additional_data)
+    PreconditionILU<Number>::initialize(const SparseMatrix<Number> &A,
+                                        const AdditionalData &additional_data)
     {
       if (additional_data.use_level_analysis)
         {
-          policy_L  = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
-          policy_Lt = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
-          policy_M  = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
+          policy_L = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
+          policy_U = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
+          policy_M = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
         }
       else
         {
-          policy_L  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
-          policy_Lt = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
-          policy_M  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
+          policy_L = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
+          policy_U = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
+          policy_M = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
         }
 
 
@@ -1543,18 +1565,18 @@ namespace dealii
       // initializa an internal buffer we need later on
       tmp_dev.reset(allocate_device_vector<Number>(n_rows));
 
-      // step 3: query how much memory used in csric02 and csrsv2, and allocate
+      // step 3: query how much memory used in csrilu02 and csrsv2, and allocate
       // the buffer
       int              BufferSize_M;
-      cusparseStatus_t status = cusparseXcsric02_bufferSize(cusparse_handle,
-                                                            n_rows,
-                                                            n_nonzero_elements,
-                                                            descr_M,
-                                                            P_val_dev.get(),
-                                                            P_row_ptr_dev,
-                                                            P_column_index_dev,
-                                                            info_M,
-                                                            &BufferSize_M);
+      cusparseStatus_t status = cusparseXcsrilu02_bufferSize(cusparse_handle,
+                                                             n_rows,
+                                                             n_nonzero_elements,
+                                                             descr_M,
+                                                             P_val_dev.get(),
+                                                             P_row_ptr_dev,
+                                                             P_column_index_dev,
+                                                             info_M,
+                                                             &BufferSize_M);
       AssertCusparse(status);
 
       int BufferSize_L;
@@ -1570,21 +1592,21 @@ namespace dealii
                                           &BufferSize_L);
       AssertCusparse(status);
 
-      int BufferSize_Lt;
+      int BufferSize_U;
       status = cusparseXcsrsv2_bufferSize(cusparse_handle,
-                                          CUSPARSE_OPERATION_TRANSPOSE,
+                                          CUSPARSE_OPERATION_NON_TRANSPOSE,
                                           n_rows,
                                           n_nonzero_elements,
-                                          descr_L,
+                                          descr_U,
                                           P_val_dev.get(),
                                           P_row_ptr_dev,
                                           P_column_index_dev,
-                                          info_Lt,
-                                          &BufferSize_Lt);
+                                          info_U,
+                                          &BufferSize_U);
       AssertCusparse(status);
 
       const int BufferSize =
-        std::max(BufferSize_M, std::max(BufferSize_L, BufferSize_Lt));
+        std::max(BufferSize_M, std::max(BufferSize_L, BufferSize_U));
       // workaround: since allocate_device_vector needs a type, we pass char
       // which is required to have size 1.
       buffer_dev.reset(static_cast<void *>(
@@ -1592,38 +1614,25 @@ namespace dealii
 
       // step 4: perform analysis of incomplete Cholesky on M
       //         perform analysis of triangular solve on L
-      //         perform analysis of triangular solve on L'
-      // The lower triangular part of M has the same sparsity pattern as L, so
-      // we can do analysis of csric02 and csrsv2 simultaneously.
+      //         perform analysis of triangular solve on U
+      // The lower(upper) triangular part of M has the same sparsity pattern as
+      // L(U), we can do analysis of csrilu0 and csrsv2 simultaneously.
 
-      status = cusparseXcsric02_analysis(cusparse_handle,
-                                         n_rows,
-                                         n_nonzero_elements,
-                                         descr_M,
-                                         P_val_dev.get(),
-                                         P_row_ptr_dev,
-                                         P_column_index_dev,
-                                         info_M,
-                                         policy_M,
-                                         buffer_dev.get());
+      status = cusparseXcsrilu02_analysis(cusparse_handle,
+                                          n_rows,
+                                          n_nonzero_elements,
+                                          descr_M,
+                                          P_val_dev.get(),
+                                          P_row_ptr_dev,
+                                          P_column_index_dev,
+                                          info_M,
+                                          policy_M,
+                                          buffer_dev.get());
       AssertCusparse(status);
 
       int structural_zero;
       status =
-        cusparseXcsric02_zeroPivot(cusparse_handle, info_M, &structural_zero);
-      AssertCusparse(status);
-
-      status = cusparseXcsrsv2_analysis(cusparse_handle,
-                                        CUSPARSE_OPERATION_TRANSPOSE,
-                                        n_rows,
-                                        n_nonzero_elements,
-                                        descr_L,
-                                        P_val_dev.get(),
-                                        P_row_ptr_dev,
-                                        P_column_index_dev,
-                                        info_Lt,
-                                        policy_Lt,
-                                        buffer_dev.get());
+        cusparseXcsrilu02_zeroPivot(cusparse_handle, info_M, &structural_zero);
       AssertCusparse(status);
 
       status = cusparseXcsrsv2_analysis(cusparse_handle,
@@ -1639,22 +1648,34 @@ namespace dealii
                                         buffer_dev.get());
       AssertCusparse(status);
 
-      // step 5: M = L * L'
-      status = cusparseXcsric02(cusparse_handle,
-                                n_rows,
-                                n_nonzero_elements,
-                                descr_M,
-                                P_val_dev.get(),
-                                P_row_ptr_dev,
-                                P_column_index_dev,
-                                info_M,
-                                policy_M,
-                                buffer_dev.get());
+      status = cusparseXcsrsv2_analysis(cusparse_handle,
+                                        CUSPARSE_OPERATION_NON_TRANSPOSE,
+                                        n_rows,
+                                        n_nonzero_elements,
+                                        descr_U,
+                                        P_val_dev.get(),
+                                        P_row_ptr_dev,
+                                        P_column_index_dev,
+                                        info_U,
+                                        policy_U,
+                                        buffer_dev.get());
+
+      // step 5: M = L * U
+      status = cusparseXcsrilu02(cusparse_handle,
+                                 n_rows,
+                                 n_nonzero_elements,
+                                 descr_M,
+                                 P_val_dev.get(),
+                                 P_row_ptr_dev,
+                                 P_column_index_dev,
+                                 info_M,
+                                 policy_M,
+                                 buffer_dev.get());
       AssertCusparse(status);
 
       int numerical_zero;
       status =
-        cusparseXcsric02_zeroPivot(cusparse_handle, info_M, &numerical_zero);
+        cusparseXcsrilu02_zeroPivot(cusparse_handle, info_M, &numerical_zero);
       AssertCusparse(status);
     }
 
@@ -1662,7 +1683,7 @@ namespace dealii
 
     template <typename Number>
     void
-    PreconditionIC<Number>::vmult(
+    PreconditionILU<Number>::vmult(
       LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
       const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const
     {
@@ -1675,8 +1696,9 @@ namespace dealii
 
       const Number *const src_dev = src.get_values();
       Number *const       dst_dev = dst.get_values();
+
       // step 6: solve L*z = alpha*x
-      const double     alpha = 1.;
+      const Number     alpha = 1.;
       cusparseStatus_t status =
         cusparseXcsrsv2_solve(cusparse_handle,
                               CUSPARSE_OPERATION_NON_TRANSPOSE,
@@ -1694,20 +1716,20 @@ namespace dealii
                               buffer_dev.get());
       AssertCusparse(status);
 
-      // step 7: solve L'*y = alpha*z
+      // step 7: solve U*y = alpha*z
       status = cusparseXcsrsv2_solve(cusparse_handle,
-                                     CUSPARSE_OPERATION_TRANSPOSE,
+                                     CUSPARSE_OPERATION_NON_TRANSPOSE,
                                      n_rows,
                                      n_nonzero_elements,
                                      &alpha,
-                                     descr_L,
+                                     descr_U,
                                      P_val_dev.get(),
                                      P_row_ptr_dev,
                                      P_column_index_dev,
-                                     info_Lt,
+                                     info_U,
                                      tmp_dev.get(),
                                      dst_dev,
-                                     policy_Lt,
+                                     policy_U,
                                      buffer_dev.get());
       AssertCusparse(status);
     }
@@ -1716,7 +1738,7 @@ namespace dealii
 
     template <typename Number>
     void
-    PreconditionIC<Number>::Tvmult(
+    PreconditionILU<Number>::Tvmult(
       LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
       const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const
     {
@@ -1725,16 +1747,16 @@ namespace dealii
     }
 
     template <typename Number>
-    PreconditionIC<Number>::size_type
-    PreconditionIC<Number>::m() const
+    PreconditionILU<Number>::size_type
+    PreconditionILU<Number>::m() const
     {
       return n_rows;
     }
 
 
     template <typename Number>
-    PreconditionIC<Number>::size_type
-    PreconditionIC<Number>::n() const
+    PreconditionILU<Number>::size_type
+    PreconditionILU<Number>::n() const
     {
       return n_rows;
     }
@@ -2040,19 +2062,19 @@ test(Utilities::CUDA::Handle &cuda_handle)
 
   A_dev.print(std::cout);
   A_dev.print_formatted(std::cout);
-  CUDAWrappers::PreconditionIC<double>          prec_double(cuda_handle);
-  CUDAWrappers::PreconditionIC<float>           prec_float(cuda_handle);
-  CUDAWrappers::PreconditionIC<cuComplex>       prec_complex_float(cuda_handle);
-  CUDAWrappers::PreconditionIC<cuDoubleComplex> prec_complex_double(
+  CUDAWrappers::PreconditionILU<double>    prec_double(cuda_handle);
+  CUDAWrappers::PreconditionILU<float>     prec_float(cuda_handle);
+  CUDAWrappers::PreconditionILU<cuComplex> prec_complex_float(cuda_handle);
+  CUDAWrappers::PreconditionILU<cuDoubleComplex> prec_complex_double(
     cuda_handle);
 
-  apply_preconditioner(A_dev, cuda_handle.cusparse_handle, sol_dev, rhs_dev);
+  // apply_preconditioner(A_dev, cuda_handle.cusparse_handle, sol_dev, rhs_dev);
   // A_dev.print_formatted(std::cout);
-  // prec_double.initialize(A_dev);
+  prec_double.initialize(A_dev);
   // A_dev.print_formatted(std::cout);
   // prec_double.vmult(sol_dev, rhs_dev);
   // A_dev.print_formatted(std::cout);
-  // cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
+  cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_double);
 
   // Check the result
   rw_vector.import(sol_dev, VectorOperation::insert);
