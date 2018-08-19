@@ -21,6 +21,8 @@
 
 #include <deal.II/base/types.h>
 
+#include <cuComplex.h>
+
 #include <cmath>
 #include <complex>
 #include <cstdlib>
@@ -663,6 +665,28 @@ namespace internal
                              NumberType<T>::value(t.imag()));
     }
   };
+
+#ifdef DEAL_II_COMPILER_CUDA_AWARE
+  template <>
+  struct NumberType<cuComplex>
+  {
+    static cuComplex
+    value(const float t)
+    {
+      return make_cuComplex(t, 0.f);
+    }
+  };
+
+  template <>
+  struct NumberType<cuDoubleComplex>
+  {
+    static cuDoubleComplex
+    value(const double t)
+    {
+      return make_cuDoubleComplex(t, 0.);
+    }
+  };
+#endif
 } // namespace internal
 
 namespace numbers
