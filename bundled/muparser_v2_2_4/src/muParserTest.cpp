@@ -1107,8 +1107,8 @@ namespace mu
       int iStat = 0;
       try
       {
-        for (int i=0; i<(int)m_vTestFun.size(); ++i)
-          iStat += (this->*m_vTestFun[i])();
+        for (auto & i : m_vTestFun)
+          iStat += (this->*i)();
       }
       catch(Parser::exception_type &e)
       {
@@ -1377,9 +1377,9 @@ namespace mu
 
         // limited floating point accuracy requires the following test
         bool bCloseEnough(true);
-        for (unsigned i=0; i<sizeof(fVal)/sizeof(value_type); ++i)
+        for (double i : fVal)
         {
-          bCloseEnough &= (fabs(a_fRes-fVal[i]) <= fabs(fVal[i]*0.00001));
+          bCloseEnough &= (fabs(a_fRes-i) <= fabs(i*0.00001));
 
           // The tests equations never result in infinity, if they do thats a bug.
           // reference:
@@ -1389,7 +1389,7 @@ namespace mu
 		  if (std::numeric_limits<value_type>::has_infinity)
           #pragma warning(pop)
 		  {
-            bCloseEnough &= (fabs(fVal[i]) != numeric_limits<value_type>::infinity());
+            bCloseEnough &= (fabs(i) != numeric_limits<value_type>::infinity());
 		  }
 		}
 

@@ -374,22 +374,20 @@ GridIn<dim, spacedim>::read_vtk(std::istream &in)
 
           if (dim == 3)
             {
-              for (unsigned int i = 0; i < subcelldata.boundary_quads.size();
-                   i++)
+              for (auto &boundary_quad : subcelldata.boundary_quads)
                 {
                   double id;
                   in >> id;
-                  subcelldata.boundary_quads[i].material_id = id;
+                  boundary_quad.material_id = id;
                 }
             }
           else if (dim == 2)
             {
-              for (unsigned int i = 0; i < subcelldata.boundary_lines.size();
-                   i++)
+              for (auto &boundary_line : subcelldata.boundary_lines)
                 {
                   double id;
                   in >> id;
-                  subcelldata.boundary_lines[i].material_id = id;
+                  boundary_line.material_id = id;
                 }
             }
         }
@@ -540,14 +538,15 @@ GridIn<dim, spacedim>::read_unv(std::istream &in)
           subcelldata.boundary_lines.emplace_back();
 
           AssertThrow(in, ExcIO());
-          for (unsigned int v = 0; v < 2; v++)
-            in >> subcelldata.boundary_lines.back().vertices[v];
+          for (unsigned int &vertice :
+               subcelldata.boundary_lines.back().vertices)
+            in >> vertice;
 
           subcelldata.boundary_lines.back().material_id = 0;
 
-          for (unsigned int v = 0; v < 2; v++)
-            subcelldata.boundary_lines.back().vertices[v] =
-              vertex_indices[subcelldata.boundary_lines.back().vertices[v]];
+          for (unsigned int &vertice :
+               subcelldata.boundary_lines.back().vertices)
+            vertice = vertex_indices[vertice];
 
           line_indices[no] = no_line;
 
@@ -558,14 +557,15 @@ GridIn<dim, spacedim>::read_unv(std::istream &in)
           subcelldata.boundary_quads.emplace_back();
 
           AssertThrow(in, ExcIO());
-          for (unsigned int v = 0; v < 4; v++)
-            in >> subcelldata.boundary_quads.back().vertices[v];
+          for (unsigned int &vertice :
+               subcelldata.boundary_quads.back().vertices)
+            in >> vertice;
 
           subcelldata.boundary_quads.back().material_id = 0;
 
-          for (unsigned int v = 0; v < 4; v++)
-            subcelldata.boundary_quads.back().vertices[v] =
-              vertex_indices[subcelldata.boundary_quads.back().vertices[v]];
+          for (unsigned int &vertice :
+               subcelldata.boundary_quads.back().vertices)
+            vertice = vertex_indices[vertice];
 
           quad_indices[no] = no_quad;
 
@@ -816,22 +816,16 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
 
           // transform from ucd to
           // consecutive numbering
-          for (unsigned int i = 0; i < 2; ++i)
-            if (vertex_indices.find(
-                  subcelldata.boundary_lines.back().vertices[i]) !=
-                vertex_indices.end())
+          for (unsigned int &vertice :
+               subcelldata.boundary_lines.back().vertices)
+            if (vertex_indices.find(vertice) != vertex_indices.end())
               // vertex with this index exists
-              subcelldata.boundary_lines.back().vertices[i] =
-                vertex_indices[subcelldata.boundary_lines.back().vertices[i]];
+              vertice = vertex_indices[vertice];
             else
               {
                 // no such vertex index
-                AssertThrow(false,
-                            ExcInvalidVertexIndex(
-                              cell,
-                              subcelldata.boundary_lines.back().vertices[i]));
-                subcelldata.boundary_lines.back().vertices[i] =
-                  numbers::invalid_unsigned_int;
+                AssertThrow(false, ExcInvalidVertexIndex(cell, vertice));
+                vertice = numbers::invalid_unsigned_int;
               };
         }
       else if ((cell_type == "quad") && (dim == 3))
@@ -876,21 +870,16 @@ GridIn<dim, spacedim>::read_ucd(std::istream &in,
 
           // transform from ucd to
           // consecutive numbering
-          for (unsigned int i = 0; i < 4; ++i)
-            if (vertex_indices.find(
-                  subcelldata.boundary_quads.back().vertices[i]) !=
-                vertex_indices.end())
+          for (unsigned int &vertice :
+               subcelldata.boundary_quads.back().vertices)
+            if (vertex_indices.find(vertice) != vertex_indices.end())
               // vertex with this index exists
-              subcelldata.boundary_quads.back().vertices[i] =
-                vertex_indices[subcelldata.boundary_quads.back().vertices[i]];
+              vertice = vertex_indices[vertice];
             else
               {
                 // no such vertex index
-                Assert(false,
-                       ExcInvalidVertexIndex(
-                         cell, subcelldata.boundary_quads.back().vertices[i]));
-                subcelldata.boundary_quads.back().vertices[i] =
-                  numbers::invalid_unsigned_int;
+                Assert(false, ExcInvalidVertexIndex(cell, vertice));
+                vertice = numbers::invalid_unsigned_int;
               };
         }
       else
@@ -1213,8 +1202,8 @@ GridIn<2>::read_xda(std::istream &in)
       AssertThrow(in, ExcIO());
       Assert(GeometryInfo<2>::vertices_per_cell == 4, ExcInternalError());
 
-      for (unsigned int i = 0; i < 4; ++i)
-        in >> cells[cell].vertices[i];
+      for (unsigned int &vertice : cells[cell].vertices)
+        in >> vertice;
     };
 
 
@@ -1288,8 +1277,8 @@ GridIn<3>::read_xda(std::istream &in)
 
       unsigned int xda_ordered_nodes[8];
 
-      for (unsigned int i = 0; i < 8; ++i)
-        in >> xda_ordered_nodes[i];
+      for (unsigned int &xda_ordered_node : xda_ordered_nodes)
+        in >> xda_ordered_node;
 
       for (unsigned int i = 0; i < 8; i++)
         cells[cell].vertices[i] = xda_ordered_nodes[xda_to_dealII_map[i]];
@@ -1576,22 +1565,16 @@ GridIn<dim, spacedim>::read_msh(std::istream &in)
 
           // transform from ucd to
           // consecutive numbering
-          for (unsigned int i = 0; i < 2; ++i)
-            if (vertex_indices.find(
-                  subcelldata.boundary_lines.back().vertices[i]) !=
-                vertex_indices.end())
+          for (unsigned int &vertice :
+               subcelldata.boundary_lines.back().vertices)
+            if (vertex_indices.find(vertice) != vertex_indices.end())
               // vertex with this index exists
-              subcelldata.boundary_lines.back().vertices[i] =
-                vertex_indices[subcelldata.boundary_lines.back().vertices[i]];
+              vertice = vertex_indices[vertice];
             else
               {
                 // no such vertex index
-                AssertThrow(false,
-                            ExcInvalidVertexIndex(
-                              cell,
-                              subcelldata.boundary_lines.back().vertices[i]));
-                subcelldata.boundary_lines.back().vertices[i] =
-                  numbers::invalid_unsigned_int;
+                AssertThrow(false, ExcInvalidVertexIndex(cell, vertice));
+                vertice = numbers::invalid_unsigned_int;
               };
         }
       else if ((cell_type == 3) && (dim == 3))
@@ -1620,21 +1603,16 @@ GridIn<dim, spacedim>::read_msh(std::istream &in)
 
           // transform from gmsh to
           // consecutive numbering
-          for (unsigned int i = 0; i < 4; ++i)
-            if (vertex_indices.find(
-                  subcelldata.boundary_quads.back().vertices[i]) !=
-                vertex_indices.end())
+          for (unsigned int &vertice :
+               subcelldata.boundary_quads.back().vertices)
+            if (vertex_indices.find(vertice) != vertex_indices.end())
               // vertex with this index exists
-              subcelldata.boundary_quads.back().vertices[i] =
-                vertex_indices[subcelldata.boundary_quads.back().vertices[i]];
+              vertice = vertex_indices[vertice];
             else
               {
                 // no such vertex index
-                Assert(false,
-                       ExcInvalidVertexIndex(
-                         cell, subcelldata.boundary_quads.back().vertices[i]));
-                subcelldata.boundary_quads.back().vertices[i] =
-                  numbers::invalid_unsigned_int;
+                Assert(false, ExcInvalidVertexIndex(cell, vertice));
+                vertice = numbers::invalid_unsigned_int;
               }
         }
       else if (cell_type == 15)
@@ -1891,8 +1869,8 @@ GridIn<2>::read_netcdf(const std::string &filename)
                           n_bquads,
                           vertices_per_quad);
 
-  for (unsigned int i = 0; i < vertex_indices.size(); ++i)
-    AssertThrow(vertex_indices[i] >= 0, ExcIO());
+  for (int vertex_indice : vertex_indices)
+    AssertThrow(vertex_indice >= 0, ExcIO());
 
   // next we read
   //   double points_xc(no_of_points)
@@ -2053,8 +2031,8 @@ GridIn<3>::read_netcdf(const std::string &filename)
   // vector<int>::iterator to int *
   vertex_indices_var->get(&*vertex_indices.begin(), n_cells, vertices_per_hex);
 
-  for (unsigned int i = 0; i < vertex_indices.size(); ++i)
-    AssertThrow(vertex_indices[i] >= 0, ExcIO());
+  for (int vertex_indice : vertex_indices)
+    AssertThrow(vertex_indice >= 0, ExcIO());
 
   // next we read
   //   double points_xc(no_of_points)
@@ -2151,10 +2129,12 @@ GridIn<3>::read_netcdf(const std::string &filename)
   // types::boundary_id. Also, we don't
   // take numbers::internal_face_boundary_id
   // as it denotes an internal face
-  for (unsigned int i = 0; i < bmarker.size(); ++i)
-    Assert(0 <= bmarker[i] && static_cast<types::boundary_id>(bmarker[i]) !=
-                                numbers::internal_face_boundary_id,
+#  ifdef DEBUG
+  for (int boundary_id : bmarker)
+    Assert(0 <= boundary_id && static_cast<types::boundary_id>(boundary_id) !=
+                                 numbers::internal_face_boundary_id,
            ExcIO());
+#  endif
 
   // finally we setup the boundary
   // information
@@ -2631,9 +2611,8 @@ GridIn<2>::read_tecplot(std::istream &in)
           // get the connectivity from the
           // input file. the vertices are
           // ordered like in the ucd format
-          for (unsigned int j = 0; j < GeometryInfo<dim>::vertices_per_cell;
-               ++j)
-            in >> cells[i].vertices[j];
+          for (unsigned int &vertice : cells[i].vertices)
+            in >> vertice;
         }
       // do some clean-up on vertices
       GridTools::delete_unused_vertices(vertices, cells, subcelldata);
@@ -2904,9 +2883,9 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>> &cells,
 
   for (unsigned int i = 0; i < cells.size(); ++i)
     {
-      for (unsigned int v = 0; v < 4; ++v)
+      for (unsigned int vertice : cells[i].vertices)
         {
-          const Point<2> &p = vertices[cells[i].vertices[v]];
+          const Point<2> &p = vertices[vertice];
 
           if (p(0) < min_x)
             min_x = p(0);
@@ -2920,8 +2899,8 @@ GridIn<2>::debug_output_grid(const std::vector<CellData<2>> &cells,
 
       out << "# cell " << i << std::endl;
       Point<2> center;
-      for (unsigned int f = 0; f < 4; ++f)
-        center += vertices[cells[i].vertices[f]];
+      for (unsigned int vertice : cells[i].vertices)
+        center += vertices[vertice];
       center /= 4;
 
       out << "set label \"" << i << "\" at " << center(0) << ',' << center(1)
@@ -2958,66 +2937,66 @@ GridIn<3>::debug_output_grid(const std::vector<CellData<3>> &cells,
                              const std::vector<Point<3>> &   vertices,
                              std::ostream &                  out)
 {
-  for (unsigned int cell = 0; cell < cells.size(); ++cell)
+  for (const auto &cell : cells)
     {
       // line 0
-      out << vertices[cells[cell].vertices[0]] << std::endl
-          << vertices[cells[cell].vertices[1]] << std::endl
+      out << vertices[cell.vertices[0]] << std::endl
+          << vertices[cell.vertices[1]] << std::endl
           << std::endl
           << std::endl;
       // line 1
-      out << vertices[cells[cell].vertices[1]] << std::endl
-          << vertices[cells[cell].vertices[2]] << std::endl
+      out << vertices[cell.vertices[1]] << std::endl
+          << vertices[cell.vertices[2]] << std::endl
           << std::endl
           << std::endl;
       // line 2
-      out << vertices[cells[cell].vertices[3]] << std::endl
-          << vertices[cells[cell].vertices[2]] << std::endl
+      out << vertices[cell.vertices[3]] << std::endl
+          << vertices[cell.vertices[2]] << std::endl
           << std::endl
           << std::endl;
       // line 3
-      out << vertices[cells[cell].vertices[0]] << std::endl
-          << vertices[cells[cell].vertices[3]] << std::endl
+      out << vertices[cell.vertices[0]] << std::endl
+          << vertices[cell.vertices[3]] << std::endl
           << std::endl
           << std::endl;
       // line 4
-      out << vertices[cells[cell].vertices[4]] << std::endl
-          << vertices[cells[cell].vertices[5]] << std::endl
+      out << vertices[cell.vertices[4]] << std::endl
+          << vertices[cell.vertices[5]] << std::endl
           << std::endl
           << std::endl;
       // line 5
-      out << vertices[cells[cell].vertices[5]] << std::endl
-          << vertices[cells[cell].vertices[6]] << std::endl
+      out << vertices[cell.vertices[5]] << std::endl
+          << vertices[cell.vertices[6]] << std::endl
           << std::endl
           << std::endl;
       // line 6
-      out << vertices[cells[cell].vertices[7]] << std::endl
-          << vertices[cells[cell].vertices[6]] << std::endl
+      out << vertices[cell.vertices[7]] << std::endl
+          << vertices[cell.vertices[6]] << std::endl
           << std::endl
           << std::endl;
       // line 7
-      out << vertices[cells[cell].vertices[4]] << std::endl
-          << vertices[cells[cell].vertices[7]] << std::endl
+      out << vertices[cell.vertices[4]] << std::endl
+          << vertices[cell.vertices[7]] << std::endl
           << std::endl
           << std::endl;
       // line 8
-      out << vertices[cells[cell].vertices[0]] << std::endl
-          << vertices[cells[cell].vertices[4]] << std::endl
+      out << vertices[cell.vertices[0]] << std::endl
+          << vertices[cell.vertices[4]] << std::endl
           << std::endl
           << std::endl;
       // line 9
-      out << vertices[cells[cell].vertices[1]] << std::endl
-          << vertices[cells[cell].vertices[5]] << std::endl
+      out << vertices[cell.vertices[1]] << std::endl
+          << vertices[cell.vertices[5]] << std::endl
           << std::endl
           << std::endl;
       // line 10
-      out << vertices[cells[cell].vertices[2]] << std::endl
-          << vertices[cells[cell].vertices[6]] << std::endl
+      out << vertices[cell.vertices[2]] << std::endl
+          << vertices[cell.vertices[6]] << std::endl
           << std::endl
           << std::endl;
       // line 11
-      out << vertices[cells[cell].vertices[3]] << std::endl
-          << vertices[cells[cell].vertices[7]] << std::endl
+      out << vertices[cell.vertices[3]] << std::endl
+          << vertices[cell.vertices[7]] << std::endl
           << std::endl
           << std::endl;
     };
@@ -3243,11 +3222,11 @@ namespace
   extract_int(const std::string &s)
   {
     std::string tmp;
-    for (unsigned int i = 0; i < s.size(); ++i)
+    for (char i : s)
       {
-        if (isdigit(s[i]))
+        if (isdigit(i))
           {
-            tmp += s[i];
+            tmp += i;
           }
       }
 
@@ -3417,9 +3396,9 @@ namespace
                     iss >> stmp >> temp >> face_number;
 
                     const std::vector<int> cells = elsets_list[elset_name];
-                    for (unsigned int i = 0; i < cells.size(); ++i)
+                    for (int cell : cells)
                       {
-                        el_idx = cells[i];
+                        el_idx = cell;
                         quad_node_list =
                           get_global_node_numbers(el_idx, face_number);
                         quad_node_list.insert(quad_node_list.begin(),
@@ -3557,9 +3536,9 @@ namespace
 
             // Assign material id to cells
             const std::vector<int> &elset_cells = elsets_list[elset_name];
-            for (unsigned int i = 0; i < elset_cells.size(); ++i)
+            for (int elset_cell : elset_cells)
               {
-                const int cell_id     = elset_cells[i] - 1;
+                const int cell_id     = elset_cell - 1;
                 cell_list[cell_id][0] = material_id;
               }
           }

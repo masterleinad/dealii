@@ -739,7 +739,7 @@ namespace internal
                         DoFIdentities &identities =
                           *vertex_dof_identities[first_fe_index]
                                                 [other_fe_index];
-                        for (unsigned int i = 0; i < identities.size(); ++i)
+                        for (auto &identitie : identities)
                           {
                             const types::global_dof_index lower_dof_index =
                               dealii::internal::DoFAccessorImplementation::
@@ -747,14 +747,14 @@ namespace internal
                                   dof_handler,
                                   vertex_index,
                                   first_fe_index,
-                                  identities[i].first);
+                                  identitie.first);
                             const types::global_dof_index higher_dof_index =
                               dealii::internal::DoFAccessorImplementation::
                                 Implementation::get_vertex_dof_index(
                                   dof_handler,
                                   vertex_index,
                                   other_fe_index,
-                                  identities[i].second);
+                                  identitie.second);
 
                             Assert((dof_identities.find(higher_dof_index) ==
                                     dof_identities.end()) ||
@@ -1006,16 +1006,15 @@ namespace internal
                                 DoFIdentities &identities =
                                   *line_dof_identities[most_dominating_fe_index]
                                                       [other_fe_index];
-                                for (unsigned int i = 0; i < identities.size();
-                                     ++i)
+                                for (auto &identitie : identities)
                                   {
                                     const types::global_dof_index
                                       master_dof_index = line->dof_index(
-                                        identities[i].first,
+                                        identitie.first,
                                         most_dominating_fe_index);
                                     const types::global_dof_index
                                       slave_dof_index =
-                                        line->dof_index(identities[i].second,
+                                        line->dof_index(identitie.second,
                                                         other_fe_index);
 
                                     Assert((dof_identities.find(
@@ -1167,13 +1166,13 @@ namespace internal
                             DoFIdentities &identities =
                               *quad_dof_identities[most_dominating_fe_index]
                                                   [other_fe_index];
-                            for (unsigned int i = 0; i < identities.size(); ++i)
+                            for (auto &identitie : identities)
                               {
                                 const types::global_dof_index master_dof_index =
-                                  quad->dof_index(identities[i].first,
+                                  quad->dof_index(identitie.first,
                                                   most_dominating_fe_index);
                                 const types::global_dof_index slave_dof_index =
-                                  quad->dof_index(identities[i].second,
+                                  quad->dof_index(identitie.second,
                                                   other_fe_index);
 
                                 Assert((dof_identities.find(master_dof_index) ==
@@ -3628,12 +3627,9 @@ namespace internal
           using cellmap_t =
             std::map<dealii::types::subdomain_id, CellDataTransferBuffer<dim>>;
           cellmap_t neighbor_cell_list;
-          for (std::set<dealii::types::subdomain_id>::iterator it =
-                 level_ghost_owners.begin();
-               it != level_ghost_owners.end();
-               ++it)
+          for (unsigned int level_ghost_owner : level_ghost_owners)
             neighbor_cell_list.insert(
-              std::make_pair(*it, CellDataTransferBuffer<dim>()));
+              std::make_pair(level_ghost_owner, CellDataTransferBuffer<dim>()));
 
           for (typename DoFHandlerType::level_cell_iterator cell =
                  dof_handler.begin(0);
@@ -4430,12 +4426,9 @@ namespace internal
             // TODO: make this code simpler with the new constructors of
             // NumberCache make indices consecutive
             level_number_cache.n_locally_owned_dofs = 0;
-            for (std::vector<dealii::types::global_dof_index>::iterator it =
-                   renumbering.begin();
-                 it != renumbering.end();
-                 ++it)
-              if (*it != numbers::invalid_dof_index)
-                *it = level_number_cache.n_locally_owned_dofs++;
+            for (unsigned long long &it : renumbering)
+              if (it != numbers::invalid_dof_index)
+                it = level_number_cache.n_locally_owned_dofs++;
 
             //* 3. communicate local dofcount and shift ids to make
             // them unique
@@ -4457,12 +4450,9 @@ namespace internal
               level_number_cache.n_locally_owned_dofs_per_processor.begin() +
                 triangulation->locally_owned_subdomain(),
               static_cast<dealii::types::global_dof_index>(0));
-            for (std::vector<dealii::types::global_dof_index>::iterator it =
-                   renumbering.begin();
-                 it != renumbering.end();
-                 ++it)
-              if (*it != numbers::invalid_dof_index)
-                (*it) += shift;
+            for (unsigned long long &it : renumbering)
+              if (it != numbers::invalid_dof_index)
+                it += shift;
 
             // now re-enumerate all dofs to this shifted and condensed
             // numbering form.  we renumber some dofs as invalid, so

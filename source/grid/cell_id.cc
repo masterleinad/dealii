@@ -28,8 +28,8 @@ CellId::CellId()
   // initialize the child indices to invalid values
   // (the only allowed values are between zero and
   // GeometryInfo<dim>::max_children_per_cell)
-  for (unsigned int i = 0; i < child_indices.size(); ++i)
-    child_indices[i] = std::numeric_limits<char>::max();
+  for (unsigned char &child_indice : child_indices)
+    child_indice = std::numeric_limits<char>::max();
 }
 
 

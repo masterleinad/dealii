@@ -502,8 +502,8 @@ namespace
   void reorder_compatibility(std::vector<CellData<2>> &cells,
                              const SubCellData &)
   {
-    for (unsigned int cell = 0; cell < cells.size(); ++cell)
-      std::swap(cells[cell].vertices[2], cells[cell].vertices[3]);
+    for (auto &cell : cells)
+      std::swap(cell.vertices[2], cell.vertices[3]);
   }
 
 
@@ -511,12 +511,12 @@ namespace
                              SubCellData &             subcelldata)
   {
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
-    for (unsigned int cell = 0; cell < cells.size(); ++cell)
+    for (auto &cell : cells)
       {
         for (unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          tmp[i] = cells[cell].vertices[i];
+          tmp[i] = cell.vertices[i];
         for (unsigned int i = 0; i < GeometryInfo<3>::vertices_per_cell; ++i)
-          cells[cell].vertices[GeometryInfo<3>::ucd_to_deal[i]] = tmp[i];
+          cell.vertices[GeometryInfo<3>::ucd_to_deal[i]] = tmp[i];
       }
 
     // now points in boundary quads
@@ -1774,8 +1774,8 @@ namespace internal
         // some security tests
         {
           unsigned int boundary_nodes = 0;
-          for (unsigned int i = 0; i < lines_at_vertex.size(); ++i)
-            switch (lines_at_vertex[i].size())
+          for (auto &i : lines_at_vertex)
+            switch (i.size())
               {
                 case 1:
                   // this vertex has only
@@ -1953,11 +1953,10 @@ namespace internal
           needed_lines;
         for (unsigned int cell = 0; cell < cells.size(); ++cell)
           {
-            for (unsigned int vertex = 0; vertex < 4; ++vertex)
-              AssertThrow(cells[cell].vertices[vertex] <
-                            triangulation.vertices.size(),
+            for (unsigned int vertice : cells[cell].vertices)
+              AssertThrow(vertice < triangulation.vertices.size(),
                           ExcInvalidVertexIndex(cell,
-                                                cells[cell].vertices[vertex],
+                                                vertice,
                                                 triangulation.vertices.size()));
 
             for (unsigned int line = 0;
@@ -2100,10 +2099,8 @@ namespace internal
               // note that this cell is
               // adjacent to the four
               // lines
-              for (unsigned int line = 0;
-                   line < GeometryInfo<dim>::lines_per_cell;
-                   ++line)
-                adjacent_cells[lines[line]->index()].push_back(cell);
+              for (auto &line : lines)
+                adjacent_cells[line->index()].push_back(cell);
             }
         }
 
@@ -2338,13 +2335,10 @@ namespace internal
           {
             // check whether vertex indices
             // are valid ones
-            for (unsigned int vertex = 0;
-                 vertex < GeometryInfo<dim>::vertices_per_cell;
-                 ++vertex)
-              AssertThrow(cells[cell].vertices[vertex] <
-                            triangulation.vertices.size(),
+            for (unsigned int vertice : cells[cell].vertices)
+              AssertThrow(vertice < triangulation.vertices.size(),
                           ExcInvalidVertexIndex(cell,
-                                                cells[cell].vertices[vertex],
+                                                vertice,
                                                 triangulation.vertices.size()));
 
             for (unsigned int line = 0;
@@ -2467,7 +2461,7 @@ namespace internal
                            std::array<bool, GeometryInfo<dim>::lines_per_face>>,
                  QuadComparator>
           needed_quads;
-        for (unsigned int cell = 0; cell < cells.size(); ++cell)
+        for (const auto &cell : cells)
           {
             // the faces are quads which
             // consist of four numbers
@@ -2502,15 +2496,15 @@ namespace internal
                  ++line)
               {
                 line_list[line] = std::pair<int, int>(
-                  cells[cell].vertices[GeometryInfo<dim>::line_to_cell_vertices(
-                    line, 0)],
-                  cells[cell].vertices[GeometryInfo<dim>::line_to_cell_vertices(
-                    line, 1)]);
+                  cell.vertices[GeometryInfo<dim>::line_to_cell_vertices(line,
+                                                                         0)],
+                  cell.vertices[GeometryInfo<dim>::line_to_cell_vertices(line,
+                                                                         1)]);
                 inverse_line_list[line] = std::pair<int, int>(
-                  cells[cell].vertices[GeometryInfo<dim>::line_to_cell_vertices(
-                    line, 1)],
-                  cells[cell].vertices[GeometryInfo<dim>::line_to_cell_vertices(
-                    line, 0)]);
+                  cell.vertices[GeometryInfo<dim>::line_to_cell_vertices(line,
+                                                                         1)],
+                  cell.vertices[GeometryInfo<dim>::line_to_cell_vertices(line,
+                                                                         0)]);
               }
 
             for (unsigned int face = 0;
@@ -2928,10 +2922,8 @@ namespace internal
               // note that this cell is
               // adjacent to the six
               // quads
-              for (unsigned int quad = 0;
-                   quad < GeometryInfo<dim>::faces_per_cell;
-                   ++quad)
-                adjacent_cells[face_iterator[quad]->index()].push_back(cell);
+              for (auto &quad : face_iterator)
+                adjacent_cells[quad->index()].push_back(cell);
 
 #ifdef DEBUG
               // make some checks on the
@@ -5875,22 +5867,21 @@ namespace internal
                             quad->line_index(3)));
                       }
 
-                    for (unsigned int i = 0; i < 2; ++i)
+                    for (auto &new_quad : new_quads)
                       {
-                        new_quads[i]->set_used_flag();
-                        new_quads[i]->clear_user_flag();
-                        new_quads[i]->clear_user_data();
-                        new_quads[i]->clear_children();
-                        new_quads[i]->set_boundary_id_internal(
-                          quad->boundary_id());
-                        new_quads[i]->set_manifold_id(quad->manifold_id());
+                        new_quad->set_used_flag();
+                        new_quad->clear_user_flag();
+                        new_quad->clear_user_data();
+                        new_quad->clear_children();
+                        new_quad->set_boundary_id_internal(quad->boundary_id());
+                        new_quad->set_manifold_id(quad->manifold_id());
                         // set all line orientations to true, change
                         // this after the loop, as we have to consider
                         // different lines for each child
                         for (unsigned int j = 0;
                              j < GeometryInfo<dim>::lines_per_face;
                              ++j)
-                          new_quads[i]->set_line_orientation(j, true);
+                          new_quad->set_line_orientation(j, true);
                       }
                     // now set the line orientation of children of
                     // outer lines correctly, the lines in the
@@ -6452,15 +6443,14 @@ namespace internal
                       internal::TriangulationImplementation::TriaObject<1>(
                         vertex_indices[4], vertex_indices[1]));
 
-                    for (unsigned int i = 0; i < 4; ++i)
+                    for (auto &new_line : new_lines)
                       {
-                        new_lines[i]->set_used_flag();
-                        new_lines[i]->clear_user_flag();
-                        new_lines[i]->clear_user_data();
-                        new_lines[i]->clear_children();
-                        new_lines[i]->set_boundary_id_internal(
-                          quad->boundary_id());
-                        new_lines[i]->set_manifold_id(quad->manifold_id());
+                        new_line->set_used_flag();
+                        new_line->clear_user_flag();
+                        new_line->clear_user_data();
+                        new_line->clear_children();
+                        new_line->set_boundary_id_internal(quad->boundary_id());
+                        new_line->set_manifold_id(quad->manifold_id());
                       }
 
                     // now for the quads. again, first collect some
@@ -6588,22 +6578,21 @@ namespace internal
                         line_indices[3],
                         line_indices[11],
                         line_indices[7]));
-                    for (unsigned int i = 0; i < 4; ++i)
+                    for (auto &new_quad : new_quads)
                       {
-                        new_quads[i]->set_used_flag();
-                        new_quads[i]->clear_user_flag();
-                        new_quads[i]->clear_user_data();
-                        new_quads[i]->clear_children();
-                        new_quads[i]->set_boundary_id_internal(
-                          quad->boundary_id());
-                        new_quads[i]->set_manifold_id(quad->manifold_id());
+                        new_quad->set_used_flag();
+                        new_quad->clear_user_flag();
+                        new_quad->clear_user_data();
+                        new_quad->clear_children();
+                        new_quad->set_boundary_id_internal(quad->boundary_id());
+                        new_quad->set_manifold_id(quad->manifold_id());
                         // set all line orientations to true, change
                         // this after the loop, as we have to consider
                         // different lines for each child
                         for (unsigned int j = 0;
                              j < GeometryInfo<dim>::lines_per_face;
                              ++j)
-                          new_quads[i]->set_line_orientation(j, true);
+                          new_quad->set_line_orientation(j, true);
                       }
                     // now set the line orientation of children of
                     // outer lines correctly, the lines in the
@@ -10995,8 +10984,8 @@ namespace
       &levels,
     internal::TriangulationImplementation::TriaFaces<1> *)
   {
-    for (unsigned int level = 0; level < levels.size(); ++level)
-      levels[level]->cells.clear_user_flags();
+    for (auto &level : levels)
+      level->cells.clear_user_flags();
   }
 
   template <int dim>
@@ -11036,8 +11025,8 @@ namespace
       &levels,
     internal::TriangulationImplementation::TriaFaces<2> *)
   {
-    for (unsigned int level = 0; level < levels.size(); ++level)
-      levels[level]->cells.clear_user_flags();
+    for (auto &level : levels)
+      level->cells.clear_user_flags();
   }
 
   template <int dim>
@@ -11086,8 +11075,8 @@ namespace
       &levels,
     internal::TriangulationImplementation::TriaFaces<3> *)
   {
-    for (unsigned int level = 0; level < levels.size(); ++level)
-      levels[level]->cells.clear_user_flags();
+    for (auto &level : levels)
+      level->cells.clear_user_flags();
   }
 } // namespace
 

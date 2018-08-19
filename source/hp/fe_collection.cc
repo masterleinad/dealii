@@ -48,17 +48,15 @@ namespace hp
         FiniteElementDomination::Domination domination =
           FiniteElementDomination::no_requirements;
         // check if cur_fe can dominate all FEs in @p fes:
-        for (std::set<unsigned int>::const_iterator it = fes.begin();
-             it != fes.end();
-             ++it)
+        for (unsigned int fe : fes)
           {
-            Assert(*it < fe_collection.size(),
-                   ExcIndexRangeType<unsigned int>(*it,
+            Assert(fe < fe_collection.size(),
+                   ExcIndexRangeType<unsigned int>(fe,
                                                    0,
                                                    fe_collection.size()));
             domination =
               domination & fe_collection[cur_fe].compare_for_face_domination(
-                             fe_collection[*it]);
+                             fe_collection[fe]);
           }
 
         // if we found dominating element, keep them in a set.

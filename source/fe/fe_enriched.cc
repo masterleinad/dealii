@@ -1407,8 +1407,7 @@ namespace ColorEnriched
       // loop through color sets and create FE_enriched element for each
       // of them provided before calling this function, we have color
       // enrichment function associated with each color.
-      for (unsigned int color_set_id = 0; color_set_id < fe_sets.size();
-           ++color_set_id)
+      for (const auto &fe_set : fe_sets)
         {
           std::vector<const FiniteElement<dim, spacedim> *> vec_fe_enriched(
             num_colors, &fe_nothing);
@@ -1416,7 +1415,7 @@ namespace ColorEnriched
             const typename Triangulation<dim, spacedim>::cell_iterator &)>>>
             functions(num_colors, {dummy_function});
 
-          for (const auto it : fe_sets[color_set_id])
+          for (const auto it : fe_set)
             {
               // Given a color id ( = it), corresponding color enrichment
               // function is at index id-1 because color_enrichments are

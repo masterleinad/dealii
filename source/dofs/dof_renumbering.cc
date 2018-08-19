@@ -447,17 +447,17 @@ namespace DoFRenumbering
         DoFTools::extract_locally_active_dofs(dof_handler, locally_active_dofs);
 
         bool needs_locally_active = false;
-        for (unsigned int i = 0; i < starting_indices.size(); ++i)
+        for (unsigned long long starting_indice : starting_indices)
           {
             if ((needs_locally_active ==
                  /* previously already set to */ true) ||
-                (locally_owned_dofs.is_element(starting_indices[i]) == false))
+                (locally_owned_dofs.is_element(starting_indice) == false))
               {
                 Assert(
-                  locally_active_dofs.is_element(starting_indices[i]),
+                  locally_active_dofs.is_element(starting_indice),
                   ExcMessage(
                     "You specified global degree of freedom " +
-                    Utilities::to_string(starting_indices[i]) +
+                    Utilities::to_string(starting_indice) +
                     " as a starting index, but this index is not among the "
                     "locally active ones on this processor, as required "
                     "for this function."));
@@ -589,8 +589,8 @@ namespace DoFRenumbering
         // above, we ended up with new_indices only containing the local
         // indices of the locally-owned DoFs. so that's where we get the
         // indices
-        for (std::size_t i = 0; i < new_indices.size(); ++i)
-          new_indices[i] = locally_owned_dofs.nth_index_in_set(new_indices[i]);
+        for (unsigned long long &new_indice : new_indices)
+          new_indice = locally_owned_dofs.nth_index_in_set(new_indice);
       }
   }
 
@@ -727,11 +727,11 @@ namespace DoFRenumbering
            ExcDimensionMismatch(component_order.size(),
                                 fe_collection.n_components()));
 
-    for (unsigned int i = 0; i < component_order.size(); ++i)
-      Assert(component_order[i] < fe_collection.n_components(),
-             ExcIndexRange(component_order[i],
-                           0,
-                           fe_collection.n_components()));
+#ifdef DEBUG
+    for (unsigned int &component : component_order)
+      Assert(component < fe_collection.n_components(),
+             ExcIndexRange(component, 0, fe_collection.n_components()));
+#endif
 
     // vector to hold the dof indices on
     // the cell we visit at a time

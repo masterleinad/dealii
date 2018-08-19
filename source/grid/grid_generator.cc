@@ -2378,9 +2378,9 @@ namespace GridGenerator
     coords[3] = right + thickness;
 
     unsigned int k = 0;
-    for (unsigned int i0 = 0; i0 < 4; ++i0)
-      for (unsigned int i1 = 0; i1 < 4; ++i1)
-        vertices[k++] = Point<2>(coords[i1], coords[i0]);
+    for (double coord : coords)
+      for (double i1 : coords)
+        vertices[k++] = Point<2>(i1, coord);
 
     const types::material_id materials[9] = {5, 4, 6, 1, 0, 2, 9, 8, 10};
 
@@ -3063,10 +3063,10 @@ namespace GridGenerator
     coords[3] = right + thickness;
 
     unsigned int k = 0;
-    for (unsigned int z = 0; z < 4; ++z)
-      for (unsigned int y = 0; y < 4; ++y)
-        for (unsigned int x = 0; x < 4; ++x)
-          vertices[k++] = Point<3>(coords[x], coords[y], coords[z]);
+    for (double coord : coords)
+      for (double y : coords)
+        for (double x : coords)
+          vertices[k++] = Point<3>(x, y, coord);
 
     const types::material_id materials[27] = {21, 20, 22, 17, 16, 18, 25,
                                               24, 26, 5,  4,  6,  1,  0,
@@ -3377,11 +3377,11 @@ namespace GridGenerator
       Point<3>(d, half_length, d),
     };
     // Turn cylinder such that y->x
-    for (unsigned int i = 0; i < 24; ++i)
+    for (auto &vertice : vertices)
       {
-        const double h = vertices[i](1);
-        vertices[i](1) = -vertices[i](0);
-        vertices[i](0) = h;
+        const double h = vertice(1);
+        vertice(1)     = -vertice(0);
+        vertice(0)     = h;
       }
 
     int cell_vertices[10][8] = {{0, 1, 8, 9, 2, 3, 10, 11},
@@ -3682,10 +3682,10 @@ namespace GridGenerator
     // two nested cubes
     if (n == 6)
       {
-        for (unsigned int i = 0; i < 8; ++i)
-          vertices.push_back(p + hexahedron[i] * irad);
-        for (unsigned int i = 0; i < 8; ++i)
-          vertices.push_back(p + hexahedron[i] * orad);
+        for (const auto &i : hexahedron)
+          vertices.push_back(p + i * irad);
+        for (const auto &i : hexahedron)
+          vertices.push_back(p + i * orad);
 
         const unsigned int n_cells                   = 6;
         const int          cell_vertices[n_cells][8] = {
@@ -3713,14 +3713,14 @@ namespace GridGenerator
     // rhombic dodecahedra
     else if (n == 12)
       {
-        for (unsigned int i = 0; i < 8; ++i)
-          vertices.push_back(p + hexahedron[i] * irad);
-        for (unsigned int i = 0; i < 6; ++i)
-          vertices.push_back(p + octahedron[i] * inner_radius);
-        for (unsigned int i = 0; i < 8; ++i)
-          vertices.push_back(p + hexahedron[i] * orad);
-        for (unsigned int i = 0; i < 6; ++i)
-          vertices.push_back(p + octahedron[i] * outer_radius);
+        for (const auto &i : hexahedron)
+          vertices.push_back(p + i * irad);
+        for (const auto &i : octahedron)
+          vertices.push_back(p + i * inner_radius);
+        for (const auto &i : hexahedron)
+          vertices.push_back(p + i * orad);
+        for (const auto &i : octahedron)
+          vertices.push_back(p + i * outer_radius);
 
         const unsigned int n_cells            = 12;
         const unsigned int rhombi[n_cells][4] = {{10, 4, 0, 8},
@@ -4618,10 +4618,8 @@ namespace GridGenerator
         quads.push_back(quad);
 
         quad.boundary_id = top_boundary_id;
-        for (unsigned int vertex_n = 0;
-             vertex_n < GeometryInfo<3>::vertices_per_face;
-             ++vertex_n)
-          quad.vertices[vertex_n] += (n_slices - 1) * input.n_vertices();
+        for (unsigned int &vertice : quad.vertices)
+          vertice += (n_slices - 1) * input.n_vertices();
         if (copy_manifold_ids)
           quad.manifold_id = cell->manifold_id();
         quads.push_back(quad);
@@ -5206,20 +5204,18 @@ namespace GridGenerator
                     // orientation. if so, skip it.
                     {
                       bool edge_found = false;
-                      for (unsigned int i = 0;
-                           i < subcell_data.boundary_lines.size();
-                           ++i)
-                        if (((subcell_data.boundary_lines[i].vertices[0] ==
+                      for (auto &boundary_line : subcell_data.boundary_lines)
+                        if (((boundary_line.vertices[0] ==
                               map_vert_index[face->line(e)->vertex_index(0)]) &&
-                             (subcell_data.boundary_lines[i].vertices[1] ==
+                             (boundary_line.vertices[1] ==
                               map_vert_index[face->line(e)->vertex_index(
                                 1)])) ||
-                            ((subcell_data.boundary_lines[i].vertices[0] ==
+                            ((boundary_line.vertices[0] ==
                               map_vert_index[face->line(e)->vertex_index(1)]) &&
-                             (subcell_data.boundary_lines[i].vertices[1] ==
+                             (boundary_line.vertices[1] ==
                               map_vert_index[face->line(e)->vertex_index(0)])))
                           {
-                            subcell_data.boundary_lines[i].boundary_id =
+                            boundary_line.boundary_id =
                               numbers::internal_face_boundary_id;
                             edge_found = true;
                             break;

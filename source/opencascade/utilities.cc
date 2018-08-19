@@ -323,14 +323,14 @@ namespace OpenCASCADE
 
     extract_geometrical_shapes(shape, faces, edges, vertices);
 
-    for (unsigned int i = 0; i < vertices.size(); ++i)
-      tolerance = fmax(tolerance, BRep_Tool::Tolerance(vertices[i]));
+    for (const auto &vertice : vertices)
+      tolerance = fmax(tolerance, BRep_Tool::Tolerance(vertice));
 
-    for (unsigned int i = 0; i < edges.size(); ++i)
-      tolerance = fmax(tolerance, BRep_Tool::Tolerance(edges[i]));
+    for (const auto &edge : edges)
+      tolerance = fmax(tolerance, BRep_Tool::Tolerance(edge));
 
-    for (unsigned int i = 0; i < faces.size(); ++i)
-      tolerance = fmax(tolerance, BRep_Tool::Tolerance(faces[i]));
+    for (const auto &face : faces)
+      tolerance = fmax(tolerance, BRep_Tool::Tolerance(face));
 
 
     return tolerance;

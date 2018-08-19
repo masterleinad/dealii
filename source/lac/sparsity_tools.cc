@@ -592,11 +592,13 @@ namespace SparsityTools
              sparsity.row_index_set().size() == sparsity.n_rows(),
            ExcMessage(
              "Only valid for sparsity patterns which store all rows."));
-    for (SparsityPattern::size_type i = 0; i < starting_indices.size(); ++i)
-      Assert(starting_indices[i] < sparsity.n_rows(),
+#ifdef DEBUG
+    for (unsigned long long starting_indice : starting_indices)
+      Assert(starting_indice < sparsity.n_rows(),
              ExcMessage("Invalid starting index: All starting indices need "
                         "to be between zero and the number of rows in the "
                         "sparsity pattern."));
+#endif
 
     // store the indices of the dofs renumbered in the last round. Default to
     // starting points
@@ -629,12 +631,10 @@ namespace SparsityTools
         std::vector<DynamicSparsityPattern::size_type> next_round_dofs;
 
         // find all neighbors of the dofs numbered in the last round
-        for (DynamicSparsityPattern::size_type i = 0;
-             i < last_round_dofs.size();
-             ++i)
+        for (unsigned long long last_round_dof : last_round_dofs)
           for (DynamicSparsityPattern::iterator j =
-                 sparsity.begin(last_round_dofs[i]);
-               j < sparsity.end(last_round_dofs[i]);
+                 sparsity.begin(last_round_dof);
+               j < sparsity.end(last_round_dof);
                ++j)
             next_round_dofs.push_back(j->column());
 
@@ -689,17 +689,14 @@ namespace SparsityTools
           dofs_by_coordination;
 
         // find coordination number for each of these dofs
-        for (std::vector<DynamicSparsityPattern::size_type>::iterator s =
-               next_round_dofs.begin();
-             s != next_round_dofs.end();
-             ++s)
+        for (unsigned long long &next_round_dof : next_round_dofs)
           {
             const DynamicSparsityPattern::size_type coordination =
-              sparsity.row_length(*s);
+              sparsity.row_length(next_round_dof);
 
             // insert this dof at its coordination number
             const std::pair<const DynamicSparsityPattern::size_type, int>
-              new_entry(coordination, *s);
+              new_entry(coordination, next_round_dof);
             dofs_by_coordination.insert(new_entry);
           }
 
@@ -793,16 +790,16 @@ namespace SparsityTools
               // next set of possible neighbors
               min_neighbors = std::make_pair(numbers::invalid_dof_index,
                                              numbers::invalid_dof_index);
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
-                   it != current_neighbors.end();
-                   ++it)
+              for (unsigned long long current_neighbor : current_neighbors)
                 {
-                  Assert(touched_nodes[*it] == numbers::invalid_dof_index,
+                  Assert(touched_nodes[current_neighbor] ==
+                           numbers::invalid_dof_index,
                          ExcInternalError());
-                  if (n_remaining_neighbors[*it] < min_neighbors.second)
+                  if (n_remaining_neighbors[current_neighbor] <
+                      min_neighbors.second)
                     min_neighbors =
-                      std::make_pair(*it, n_remaining_neighbors[*it]);
+                      std::make_pair(current_neighbor,
+                                     n_remaining_neighbors[current_neighbor]);
                 }
 
               // Among the set of nodes with the minimal number of neighbors,
@@ -810,13 +807,12 @@ namespace SparsityTools
               // i.e., the one with the largest row length
               const types::global_dof_index best_row_length =
                 min_neighbors.second;
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
-                   it != current_neighbors.end();
-                   ++it)
-                if (n_remaining_neighbors[*it] == best_row_length)
-                  if (row_lengths[*it] > min_neighbors.second)
-                    min_neighbors = std::make_pair(*it, row_lengths[*it]);
+              for (unsigned long long current_neighbor : current_neighbors)
+                if (n_remaining_neighbors[current_neighbor] == best_row_length)
+                  if (row_lengths[current_neighbor] > min_neighbors.second)
+                    min_neighbors =
+                      std::make_pair(current_neighbor,
+                                     row_lengths[current_neighbor]);
 
               // Add the pivot and all direct neighbors of the pivot node not
               // yet touched to the list of new entries.
@@ -840,11 +836,11 @@ namespace SparsityTools
               // valid neighbor (here we assume symmetry of the
               // connectivity). Delete the entries of the current list from
               // the set of possible next pivots.
-              for (unsigned int i = 0; i < next_group.size(); ++i)
+              for (unsigned long long i : next_group)
                 {
                   for (DynamicSparsityPattern::iterator it =
-                         connectivity.begin(next_group[i]);
-                       it != connectivity.end(next_group[i]);
+                         connectivity.begin(i);
+                       it != connectivity.end(i);
                        ++it)
                     {
                       if (touched_nodes[it->column()] ==
@@ -852,7 +848,7 @@ namespace SparsityTools
                         current_neighbors.insert(it->column());
                       n_remaining_neighbors[it->column()]--;
                     }
-                  current_neighbors.erase(next_group[i]);
+                  current_neighbors.erase(i);
                 }
             }
         }
@@ -982,9 +978,8 @@ namespace SparsityTools
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it)
-        send_to.push_back(it->first);
+      for (auto &it : send_data)
+        send_to.push_back(it.first);
 
       num_receive =
         Utilities::MPI::compute_point_to_point_communication_pattern(mpi_comm,
@@ -1129,9 +1124,8 @@ namespace SparsityTools
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it)
-        send_to.push_back(it->first);
+      for (auto &it : send_data)
+        send_to.push_back(it.first);
 
       num_receive =
         Utilities::MPI::compute_point_to_point_communication_pattern(mpi_comm,
