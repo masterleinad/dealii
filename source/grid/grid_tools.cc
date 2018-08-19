@@ -4659,11 +4659,11 @@ namespace GridTools
                                 point_idx))
           // The point wasn't found in ghost or locally owned cells: adding it
           // to the map
-          for (unsigned int i = 0; i < probable_owners_rks.size(); ++i)
-            if (probable_owners_rks[i] != my_rank)
+          for (unsigned int probable_owners_rk : probable_owners_rks)
+            if (probable_owners_rk != my_rank)
               {
                 // add to the data for process probable_owners_rks[i]
-                auto &current_pts = other_check_pts[probable_owners_rks[i]];
+                auto &current_pts = other_check_pts[probable_owners_rk];
                 // The point local_points[point_idx]
                 current_pts.first.emplace_back(local_points[point_idx]);
                 // and its index in the current process
