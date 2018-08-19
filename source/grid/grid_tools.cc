@@ -477,7 +477,7 @@ namespace GridTools
         cells[c].vertices[v] = new_vertex_numbers[cells[c].vertices[v]];
 
     // same for boundary data
-    for (unsigned int c = 0; c < subcelldata.boundary_lines.size(); ++c)
+    for (auto &boundary_line : subcelldata.boundary_lines)
       for (unsigned int v = 0; v < GeometryInfo<1>::vertices_per_cell; ++v)
         {
           Assert(subcelldata.boundary_lines[c].vertices[v] <
@@ -492,11 +492,11 @@ namespace GridTools
                    " is invalid, because only " +
                    Utilities::int_to_string(vertices.size()) +
                    " vertices were supplied."));
-          subcelldata.boundary_lines[c].vertices[v] =
-            new_vertex_numbers[subcelldata.boundary_lines[c].vertices[v]];
+          boundary_line.vertices[v] =
+            new_vertex_numbers[boundary_line.vertices[v]];
         }
 
-    for (unsigned int c = 0; c < subcelldata.boundary_quads.size(); ++c)
+    for (auto &boundary_quad : subcelldata.boundary_quads)
       for (unsigned int v = 0; v < GeometryInfo<2>::vertices_per_cell; ++v)
         {
           Assert(subcelldata.boundary_quads[c].vertices[v] <
@@ -512,8 +512,8 @@ namespace GridTools
                    Utilities::int_to_string(vertices.size()) +
                    " vertices were supplied."));
 
-          subcelldata.boundary_quads[c].vertices[v] =
-            new_vertex_numbers[subcelldata.boundary_quads[c].vertices[v]];
+          boundary_quad.vertices[v] =
+            new_vertex_numbers[boundary_quad.vertices[v]];
         }
 
     // finally copy over the vertices which we really need to a new array and
