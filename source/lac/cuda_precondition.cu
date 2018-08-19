@@ -28,16 +28,16 @@ namespace
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsric02(cusparseHandle_t         handle,
-                   int                      m,
-                   int                      nnz,
-                   const cusparseMatDescr_t descrA,
-                   Number *                 csrValA_valM,
-                   const int *              csrRowPtrA,
-                   const int *              csrColIndA,
-                   csric02Info_t            info,
-                   cusparseSolvePolicy_t    policy,
-                   void *                   pBuffer)
+  cusparseXcsric02(cusparseHandle_t /*handle*/,
+                   int /*m*/,
+                   int /*nnz*/,
+                   const cusparseMatDescr_t /*descrA*/,
+                   Number * /*csrValA_valM*/,
+                   const int * /*csrRowPtrA*/,
+                   const int * /*csrColIndA*/,
+                   csric02Info_t /*info*/,
+                   cusparseSolvePolicy_t /*policy*/,
+                   void * /*pBuffer*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -93,79 +93,82 @@ namespace
                             pBuffer);
   }
 
-  template <>
-  cusparseStatus_t
-  cusparseXcsric02<cuComplex>(cusparseHandle_t         handle,
-                              int                      m,
-                              int                      nnz,
-                              const cusparseMatDescr_t descrA,
-                              cuComplex *              csrValA_valM,
-                              const int *              csrRowPtrA,
-                              const int *              csrColIndA,
-                              csric02Info_t            info,
-                              cusparseSolvePolicy_t    policy,
-                              void *                   pBuffer)
-  {
-    return cusparseCcsric02(handle,
-                            m,
-                            nnz,
-                            descrA,
-                            csrValA_valM,
-                            csrRowPtrA,
-                            csrColIndA,
-                            info,
-                            policy,
-                            pBuffer);
-  }
+  /*
+    template <>
+    cusparseStatus_t
+    cusparseXcsric02<cuComplex>(cusparseHandle_t         handle,
+                                int                      m,
+                                int                      nnz,
+                                const cusparseMatDescr_t descrA,
+                                cuComplex *              csrValA_valM,
+                                const int *              csrRowPtrA,
+                                const int *              csrColIndA,
+                                csric02Info_t            info,
+                                cusparseSolvePolicy_t    policy,
+                                void *                   pBuffer)
+    {
+      return cusparseCcsric02(handle,
+                              m,
+                              nnz,
+                              descrA,
+                              csrValA_valM,
+                              csrRowPtrA,
+                              csrColIndA,
+                              info,
+                              policy,
+                              pBuffer);
+    }
 
-  template <>
-  cusparseStatus_t
-  cusparseXcsric02<cuDoubleComplex>(cusparseHandle_t         handle,
-                                    int                      m,
-                                    int                      nnz,
-                                    const cusparseMatDescr_t descrA,
-                                    cuDoubleComplex *        csrValA_valM,
-                                    const int *              csrRowPtrA,
-                                    const int *              csrColIndA,
-                                    csric02Info_t            info,
-                                    cusparseSolvePolicy_t    policy,
-                                    void *                   pBuffer)
-  {
-    return cusparseZcsric02(handle,
-                            m,
-                            nnz,
-                            descrA,
-                            csrValA_valM,
-                            csrRowPtrA,
-                            csrColIndA,
-                            info,
-                            policy,
-                            pBuffer);
-  }
+    template <>
+    cusparseStatus_t
+    cusparseXcsric02<cuDoubleComplex>(cusparseHandle_t         handle,
+                                      int                      m,
+                                      int                      nnz,
+                                      const cusparseMatDescr_t descrA,
+                                      cuDoubleComplex *        csrValA_valM,
+                                      const int *              csrRowPtrA,
+                                      const int *              csrColIndA,
+                                      csric02Info_t            info,
+                                      cusparseSolvePolicy_t    policy,
+                                      void *                   pBuffer)
+    {
+      return cusparseZcsric02(handle,
+                              m,
+                              nnz,
+                              descrA,
+                              csrValA_valM,
+                              csrRowPtrA,
+                              csrColIndA,
+                              info,
+                              policy,
+                              pBuffer);
+    }
+    */
+
 
 
   /**
    * Template wrapper for cusparse<t>csrsv2_solve
-   *(https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csrsv2_solve).
+   * (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csrsv2_solve).
    * This function performs the solve phase of csrsv2, a new sparse triangular
-   *linear system op(A)*y = alpha*x.
+   * linear system op(A)*y = alpha*x.
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsrsv2_solve(cusparseHandle_t         handle,
-                        cusparseOperation_t      transA,
-                        int                      m,
-                        int                      nnz,
-                        const Number *           alpha,
-                        const cusparseMatDescr_t descra,
-                        const Number *           csrValA,
-                        const int *              csrRowPtrA,
-                        const int *              csrColIndA,
-                        csrsv2Info_t             info,
-                        const Number *           x,
-                        Number *                 y,
-                        cusparseSolvePolicy_t    policy,
-                        void *                   pBuffer)
+  cusparseXcsrsv2_solve(cusparseHandle_t /*handle*/,
+                        cusparseOperation_t /*transA*/,
+                        int /*m*/,
+                        int /*nnz*/,
+                        const Number * /*alpha*/,
+                        const cusparseMatDescr_t /*descra*/,
+                        const Number * /*csrValA*/,
+                        const int * /*csrRowPtrA*/,
+                        const int * /*csrColIndA*/,
+                        csrsv2Info_t /*info*/,
+                        const Number * /*x*/,
+                        Number * /*y*/,
+                        cusparseSolvePolicy_t /*policy*/,
+                        void * /*pBuffer*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -237,6 +240,7 @@ namespace
                                  pBuffer);
   }
 
+  /*
   template <>
   cusparseStatus_t
   cusparseXcsrsv2_solve<cuComplex>(cusparseHandle_t         handle,
@@ -302,6 +306,8 @@ namespace
                                  policy,
                                  pBuffer);
   }
+*/
+
 
 
   /**
@@ -312,17 +318,17 @@ namespace
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsrsv2_analysis(cusparseHandle_t         handle,
-                           cusparseOperation_t      transA,
-                           int                      m,
-                           int                      nnz,
-                           const cusparseMatDescr_t descrA,
-                           const Number *           csrValA,
-                           const int *              csrRowPtrA,
-                           const int *              csrColIndA,
-                           csrsv2Info_t             info,
-                           cusparseSolvePolicy_t    policy,
-                           void *                   pBuffer)
+  cusparseXcsrsv2_analysis(cusparseHandle_t /*handle*/,
+                           cusparseOperation_t /*transA*/,
+                           int /*m*/,
+                           int /*nnz*/,
+                           const cusparseMatDescr_t /*descrA*/,
+                           const Number * /*csrValA*/,
+                           const int * /*csrRowPtrA*/,
+                           const int * /*csrColIndA*/,
+                           csrsv2Info_t /*info*/,
+                           cusparseSolvePolicy_t /*policy*/,
+                           void * /*pBuffer*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -382,6 +388,7 @@ namespace
                                     pBuffer);
   }
 
+  /*
   template <>
   cusparseStatus_t
   cusparseXcsrsv2_analysis<cuComplex>(cusparseHandle_t         handle,
@@ -435,7 +442,7 @@ namespace
                                     policy,
                                     pBuffer);
   }
-
+*/
 
 
   /**
@@ -446,16 +453,16 @@ namespace
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsric02_analysis(cusparseHandle_t         handle,
-                            int                      m,
-                            int                      nnz,
-                            const cusparseMatDescr_t descrA,
-                            const Number *           csrValA,
-                            const int *              csrRowPtrA,
-                            const int *              csrColIndA,
-                            csric02Info_t            info,
-                            cusparseSolvePolicy_t    policy,
-                            void *                   pBuffer)
+  cusparseXcsric02_analysis(cusparseHandle_t /*handle*/,
+                            int /*m*/,
+                            int /*nnz*/,
+                            const cusparseMatDescr_t /*descrA*/,
+                            const Number * /*csrValA*/,
+                            const int * /*csrRowPtrA*/,
+                            const int * /*csrColIndA*/,
+                            csric02Info_t /*info*/,
+                            cusparseSolvePolicy_t /*policy*/,
+                            void * /*pBuffer*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -511,6 +518,7 @@ namespace
                                      pBuffer);
   }
 
+  /*
   template <>
   cusparseStatus_t
   cusparseXcsric02_analysis<cuComplex>(cusparseHandle_t         handle,
@@ -560,6 +568,8 @@ namespace
                                      policy,
                                      pBuffer);
   }
+*/
+
 
 
   /**
@@ -570,16 +580,16 @@ namespace
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsrsv2_bufferSize(cusparseHandle_t         handle,
-                             cusparseOperation_t      transA,
-                             int                      m,
-                             int                      nnz,
-                             const cusparseMatDescr_t descrA,
-                             Number *                 csrValA,
-                             const int *              csrRowPtrA,
-                             const int *              csrColIndA,
-                             csrsv2Info_t             info,
-                             int *                    pBufferSizeInBytes)
+  cusparseXcsrsv2_bufferSize(cusparseHandle_t /*handle*/,
+                             cusparseOperation_t /*transA*/,
+                             int /*m*/,
+                             int /*nnz*/,
+                             const cusparseMatDescr_t /*descrA*/,
+                             Number * /*csrValA*/,
+                             const int * /*csrRowPtrA*/,
+                             const int * /*csrColIndA*/,
+                             csrsv2Info_t /*info*/,
+                             int * /*pBufferSizeInBytes*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -635,6 +645,7 @@ namespace
                                       pBufferSizeInBytes);
   }
 
+  /*
   template <>
   cusparseStatus_t
   cusparseXcsrsv2_bufferSize<cuComplex>(cusparseHandle_t         handle,
@@ -684,26 +695,27 @@ namespace
                                       info,
                                       pBufferSizeInBytes);
   }
+*/
 
 
 
   /**
    * Template wrapper for cusparse<t>csric02_bufferSize
    * (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csric02_bufferSize).
-   *This function returns size of buffer used in computing the
-   *incomplete-Cholesky factorization with 0 fill-in and no pivoting.
+   * This function returns size of buffer used in computing the
+   * incomplete-Cholesky factorization with 0 fill-in and no pivoting.
    */
   template <typename Number>
   cusparseStatus_t
-  cusparseXcsric02_bufferSize(cusparseHandle_t         handle,
-                              int                      m,
-                              int                      nnz,
-                              const cusparseMatDescr_t descrA,
-                              Number *                 csrValA,
-                              const int *              csrRowPtrA,
-                              const int *              csrColIndA,
-                              csric02Info_t            info,
-                              int *                    pBufferSizeInBytes)
+  cusparseXcsric02_bufferSize(cusparseHandle_t /*handle*/,
+                              int /*m*/,
+                              int /*nnz*/,
+                              const cusparseMatDescr_t /*descrA*/,
+                              Number * /*csrValA*/,
+                              const int * /*csrRowPtrA*/,
+                              const int * /*csrColIndA*/,
+                              csric02Info_t /*info*/,
+                              int * /*pBufferSizeInBytes*/)
   {
     AssertThrow(false, ExcNotImplemented());
     return CUSPARSE_STATUS_INVALID_VALUE;
@@ -755,6 +767,7 @@ namespace
                                        pBufferSizeInBytes);
   }
 
+  /*
   template <>
   cusparseStatus_t
   cusparseXcsric02_bufferSize<cuComplex>(cusparseHandle_t         handle,
@@ -800,6 +813,9 @@ namespace
                                        info,
                                        pBufferSizeInBytes);
   }
+  */
+
+
 
   template <typename Number>
   void
