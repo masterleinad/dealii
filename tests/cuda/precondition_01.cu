@@ -45,6 +45,7 @@ test(Utilities::CUDA::Handle &cuda_handle)
   A.print(std::cout);
 
   // Solve on the device
+  CUDAWrappers::PreconditionIC<Number>        prec_ic(cuda_handle);
   CUDAWrappers::SparseMatrix<Number>          A_dev(cuda_handle, A);
   LinearAlgebra::CUDAWrappers::Vector<Number> sol_dev(size);
   LinearAlgebra::CUDAWrappers::Vector<Number> rhs_dev(size);
@@ -55,7 +56,6 @@ test(Utilities::CUDA::Handle &cuda_handle)
   SolverControl                                         control(100, 1.e-10);
   SolverCG<LinearAlgebra::CUDAWrappers::Vector<Number>> cg_dev(control);
 
-  CUDAWrappers::PreconditionIC<Number> prec_ic(cuda_handle);
   prec_ic.initialize(A_dev);
 
   cg_dev.solve(A_dev, sol_dev, rhs_dev, prec_ic);
