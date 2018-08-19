@@ -850,20 +850,21 @@ namespace dealii
 {
   namespace CUDAWrappers
   {
-   /**
-    * This class implements an incomplete Cholesky factorization (IC)
-    * preconditioner for @em symmetric CUDAWrappers::SparseMatrix matrices.
-    * 
-    * The implementation closely follows the one documented in the cuSPARSE
-    * documentation (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csric02).
-    *
-    * @note Instantiations for this template are provided for <tt>@<float@> and
-    * @<double@></tt>.
-    *
-    * @ingroup Preconditioners CUDAWrappers
-    * @author Daniel Arndt
-    * @date 2018
-    */
+    /**
+     * This class implements an incomplete Cholesky factorization (IC)
+     * preconditioner for @em symmetric CUDAWrappers::SparseMatrix matrices.
+     *
+     * The implementation closely follows the one documented in the cuSPARSE
+     * documentation
+     * (https://docs.nvidia.com/cuda/cusparse/index.html#cusparse-lt-t-gt-csric02).
+     *
+     * @note Instantiations for this template are provided for <tt>@<float@> and
+     * @<double@></tt>.
+     *
+     * @ingroup Preconditioners CUDAWrappers
+     * @author Daniel Arndt
+     * @date 2018
+     */
     template <typename Number>
     class PreconditionIC
     {
@@ -874,27 +875,31 @@ namespace dealii
       using size_type = int;
 
       /**
-       * Standardized data struct to pipe additional flags to the preconditioner.
+       * Standardized data struct to pipe additional flags to the
+       * preconditioner.
        */
       struct AdditionalData
       {
         /**
-* Constructor. cuSPARSE allows to compute and use level information. According to the documentation
-* it is this might improve performance. It is suggested to try both options.
-*/
-  AdditionalData(bool use_level_analysis = true);
+         * Constructor. cuSPARSE allows to compute and use level information.
+         * According to the documentation it is this might improve performance.
+         * It is suggested to try both options.
+         */
+        AdditionalData(bool use_level_analysis = true);
 
-/**
-* Flag that determines if level informations are used when creating and applying the preconditioner.
-* See the documentation for cusparseSolvePolicy_t at https://docs.nvidia.com/cuda/cusparse/index.html#cusparsesolvepolicy_t
-* for more information.
-*/
+        /**
+         * Flag that determines if level informations are used when creating and
+         * applying the preconditioner. See the documentation for
+         * cusparseSolvePolicy_t at
+         * https://docs.nvidia.com/cuda/cusparse/index.html#cusparsesolvepolicy_t
+         * for more information.
+         */
         bool use_level_analysis;
       };
 
-       /**
-      * Constructor.
-      */
+      /**
+       * Constructor.
+       */
       PreconditionIC(const Utilities::CUDA::Handle &handle);
 
       /**
@@ -902,86 +907,155 @@ namespace dealii
        */
       PreconditionIC(const PreconditionIC<Number> &) = delete;
 
-/** 
-* The copy assignment operator is deleted.
-*/
+      /**
+       * The copy assignment operator is deleted.
+       */
       PreconditionIC &
       operator=(const PreconditionIC<Number> &) = delete;
 
-/**
-* Destructor. Free all resources that were initialized in this class.
-*/
+      /**
+       * Destructor. Free all resources that were initialized in this class.
+       */
       ~PreconditionIC();
 
-/**
-* Initialize this object. In particular, the given matrix is copied to be modified in-place.
-* For the underlying sparsity pattern pointers are stored. Specifically, this means
-* that the current object can only be used reliably as long as @p matrix is valid
-* and has not been changed since calling this function.
-*
-* The @p additional_data determines if level information are used.
-*/
+      /**
+       * Initialize this object. In particular, the given matrix is copied to be
+       * modified in-place. For the underlying sparsity pattern pointers are
+       * stored. Specifically, this means
+       * that the current object can only be used reliably as long as @p matrix is valid
+       * and has not been changed since calling this function.
+       *
+       * The @p additional_data determines if level information are used.
+       */
       void
       initialize(const SparseMatrix<Number> &matrix,
                  const AdditionalData &additional_data = AdditionalData());
 
- /**
-      * Apply the preconditioner.
-      */
+      /**
+       * Apply the preconditioner.
+       */
       void
       vmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
             const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
-/**
-* Apply the preconditioner. Since the preconditioner is symmetric, this is the same as vmult().
-*/
+      /**
+       * Apply the preconditioner. Since the preconditioner is symmetric, this
+       * is the same as vmult().
+       */
       void
       Tvmult(LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
              const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const;
 
-/**
-*  Return the dimension of the codomain (or range) space. Note that the
-    * matrix is of dimension $m \times m$.
-    *
-    * @note This function should only be called if the preconditioner has been
-    * initialized.
-*/
+      /**
+       *  Return the dimension of the codomain (or range) space. Note that the
+       * matrix is square and has dimension $m \times m$.
+       *
+       * @note This function should only be called if the preconditioner has been
+       * initialized.
+       */
       size_type
       m() const;
 
- /**
- *  Return the dimension of the codomain (or range) space. Note that the
-     * matrix is of dimension $m \times m$.
-     *
-     * @note This function should only be called if the preconditioner has been
-     * initialized.
- */
+      /**
+       *  Return the dimension of the codomain (or range) space. Note that the
+       * matrix is square and has dimension $m \times m$.
+       *
+       * @note This function should only be called if the preconditioner has been
+       * initialized.
+       */
       size_type
       n() const;
 
     private:
+      /**
+       * cuSPARSE handle used to call cuSPARSE functions.
+       */
       cusparseHandle_t cusparse_handle;
 
+      /**
+       * cuSPARSE description of the sparse matrix $M=LL^T$.
+       */
       cusparseMatDescr_t descr_M;
+
+      /**
+       * cuSPARSE description of the lower triangular matrix $L$.
+       */
       cusparseMatDescr_t descr_L;
-      csric02Info_t      info_M;
-      csrsv2Info_t       info_L;
-      csrsv2Info_t       info_Lt;
 
-      const cusparseOperation_t trans_L  = CUSPARSE_OPERATION_NON_TRANSPOSE;
-      const cusparseOperation_t trans_Lt = CUSPARSE_OPERATION_TRANSPOSE;
+      /**
+       * Solve and analysis structure for $M=LL^T$.
+       */
+      csric02Info_t info_M;
 
+      /**
+       * Solve and analysis structure for the lower triangular matrix $L$.
+       */
+      csrsv2Info_t info_L;
+
+      /**
+       * Solve and analysis structure for the upper triangular matrix $L^T$.
+       */
+      csrsv2Info_t info_Lt;
+
+      /**
+       * Pointer to the values (on the device) of the computed preconditioning
+       * matrix.
+       */
       std::unique_ptr<Number[], void (*)(Number *)> P_val_dev;
-      const int *                                   P_row_ptr_dev;
-      const int *                                   P_column_index_dev;
+
+      /**
+       * Pointer to the row pointer (on the device) of the sparse matrix this
+       * object was initialized with.
+       */
+      const int *P_row_ptr_dev;
+
+      /**
+       * Pointer to the column indices (on the device) of the sparse matrix this
+       * object was initialized with.
+       */
+      const int *P_column_index_dev;
+
+      /**
+       * Pointer to the value (on the device) for a temporary (helper) vector
+       * used in vmult().
+       */
       std::unique_ptr<Number[], void (*)(Number *)> tmp_dev;
 
+      /**
+       *
+       */
       std::unique_ptr<void, void (*)(void *)> buffer_dev;
 
+      /**
+       * Determine if level information should be generated for the lower
+       * triangular matrix $L$. This value can be modified through an
+       * AdditionalData object.
+       */
       cusparseSolvePolicy_t policy_L;
+
+      /**
+       * Determine if level information should be generated for the upper
+       * triangular matrix $L^T$. This value can be modified through an
+       * AdditionalData object.
+       */
       cusparseSolvePolicy_t policy_Lt;
 
+      /**
+       * Determine if level information should be generated for $M=LL^T$. This
+       * value can be modified through an AdditionalData object.
+       */
+      cusparseSolvePolicy_t policy_M;
+
+      /**
+       * The number of rows is the same as for the matrix this object has been
+       * initialized with.
+       */
       int n_rows;
+
+      /**
+       * The number of non-zero elements is the same as for the matrix this
+       * object has been initialized with.
+       */
       int n_nonzero_elements;
     };
 
@@ -1004,6 +1078,7 @@ namespace dealii
       , buffer_dev(nullptr, delete_device_vector<void>)
       , policy_L(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
       , policy_Lt(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
+      , policy_M(CUSPARSE_SOLVE_POLICY_USE_LEVEL)
       , n_rows(0)
       , n_nonzero_elements(0)
     {
@@ -1072,11 +1147,13 @@ namespace dealii
         {
           policy_L  = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
           policy_Lt = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
+          policy_M  = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
         }
       else
         {
           policy_L  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
           policy_Lt = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
+          policy_M  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
         }
 
 
@@ -1116,7 +1193,7 @@ namespace dealii
 
       int BufferSize_L;
       status = cusparseXcsrsv2_bufferSize(cusparse_handle,
-                                          trans_L,
+                                          CUSPARSE_OPERATION_NON_TRANSPOSE,
                                           n_rows,
                                           n_nonzero_elements,
                                           descr_L,
@@ -1129,7 +1206,7 @@ namespace dealii
 
       int BufferSize_Lt;
       status = cusparseXcsrsv2_bufferSize(cusparse_handle,
-                                          trans_Lt,
+                                          CUSPARSE_OPERATION_TRANSPOSE,
                                           n_rows,
                                           n_nonzero_elements,
                                           descr_L,
@@ -1153,7 +1230,6 @@ namespace dealii
       // The lower triangular part of M has the same sparsity pattern as L, so
       // we can do analysis of csric02 and csrsv2 simultaneously.
 
-      const cusparseSolvePolicy_t policy_M = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
       status = cusparseXcsric02_analysis(cusparse_handle,
                                          n_rows,
                                          n_nonzero_elements,
@@ -1172,7 +1248,7 @@ namespace dealii
       AssertCusparse(status);
 
       status = cusparseXcsrsv2_analysis(cusparse_handle,
-                                        trans_Lt,
+                                        CUSPARSE_OPERATION_TRANSPOSE,
                                         n_rows,
                                         n_nonzero_elements,
                                         descr_L,
@@ -1185,7 +1261,7 @@ namespace dealii
       AssertCusparse(status);
 
       status = cusparseXcsrsv2_analysis(cusparse_handle,
-                                        trans_L,
+                                        CUSPARSE_OPERATION_NON_TRANSPOSE,
                                         n_rows,
                                         n_nonzero_elements,
                                         descr_L,
@@ -1227,33 +1303,34 @@ namespace dealii
       Assert(P_val_dev != nullptr, ExcNotInitialized());
       Assert(P_row_ptr_dev != nullptr, ExcNotInitialized());
       Assert(P_column_index_dev != nullptr, ExcNotInitialized());
-      AssertDimension(dst.size(), n_rows);
-      AssertDimension(src.size(), n_rows);
+      AssertDimension(dst.size(), static_cast<unsigned int>(n_rows));
+      AssertDimension(src.size(), static_cast<unsigned int>(n_rows));
       Assert(tmp_dev != nullptr, ExcInternalError());
 
       const Number *const src_dev = src.get_values();
       Number *const       dst_dev = dst.get_values();
       // step 6: solve L*z = alpha*x
-      const double     alpha  = 1.;
-      cusparseStatus_t status = cusparseXcsrsv2_solve(cusparse_handle,
-                                                      trans_L,
-                                                      n_rows,
-                                                      n_nonzero_elements,
-                                                      &alpha,
-                                                      descr_L,
-                                                      P_val_dev.get(),
-                                                      P_row_ptr_dev,
-                                                      P_column_index_dev,
-                                                      info_L,
-                                                      src_dev,
-                                                      tmp_dev.get(),
-                                                      policy_L,
-                                                      buffer_dev.get());
+      const double     alpha = 1.;
+      cusparseStatus_t status =
+        cusparseXcsrsv2_solve(cusparse_handle,
+                              CUSPARSE_OPERATION_NON_TRANSPOSE,
+                              n_rows,
+                              n_nonzero_elements,
+                              &alpha,
+                              descr_L,
+                              P_val_dev.get(),
+                              P_row_ptr_dev,
+                              P_column_index_dev,
+                              info_L,
+                              src_dev,
+                              tmp_dev.get(),
+                              policy_L,
+                              buffer_dev.get());
       AssertCusparse(status);
 
       // step 7: solve L'*y = alpha*z
       status = cusparseXcsrsv2_solve(cusparse_handle,
-                                     trans_Lt,
+                                     CUSPARSE_OPERATION_TRANSPOSE,
                                      n_rows,
                                      n_nonzero_elements,
                                      &alpha,
@@ -1351,8 +1428,6 @@ namespace dealii
       const cusparseSolvePolicy_t policy_M  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
       const cusparseSolvePolicy_t policy_L  = CUSPARSE_SOLVE_POLICY_NO_LEVEL;
       const cusparseSolvePolicy_t policy_Lt = CUSPARSE_SOLVE_POLICY_USE_LEVEL;
-      const cusparseOperation_t   trans_L   = CUSPARSE_OPERATION_NON_TRANSPOSE;
-      const cusparseOperation_t   trans_Lt  = CUSPARSE_OPERATION_TRANSPOSE;
 
       cusparseStatus_t status;
       // step 1: create a descriptor which contains
@@ -1400,7 +1475,7 @@ namespace dealii
                                            &BufferSize_M);
       AssertCusparse(status);
       status = cusparseXcsrsv2_bufferSize(handle,
-                                          trans_L,
+                                          CUSPARSE_OPERATION_NON_TRANSPOSE,
                                           n_rows,
                                           n_nonzero_elements,
                                           descr_L,
@@ -1411,7 +1486,7 @@ namespace dealii
                                           &BufferSize_L);
       AssertCusparse(status);
       status = cusparseXcsrsv2_bufferSize(handle,
-                                          trans_Lt,
+                                          CUSPARSE_OPERATION_TRANSPOSE,
                                           n_rows,
                                           n_nonzero_elements,
                                           descr_L,
@@ -1453,7 +1528,7 @@ namespace dealii
         }
 
       status = cusparseXcsrsv2_analysis(handle,
-                                        trans_Lt,
+                                        CUSPARSE_OPERATION_TRANSPOSE,
                                         n_rows,
                                         n_nonzero_elements,
                                         descr_L,
@@ -1466,7 +1541,7 @@ namespace dealii
       AssertCusparse(status);
 
       status = cusparseXcsrsv2_analysis(handle,
-                                        trans_L,
+                                        CUSPARSE_OPERATION_NON_TRANSPOSE,
                                         n_rows,
                                         n_nonzero_elements,
                                         descr_L,
@@ -1498,7 +1573,7 @@ namespace dealii
 
       // step 6: solve L*z = x
       status = cusparseXcsrsv2_solve(handle,
-                                     trans_L,
+                                     CUSPARSE_OPERATION_NON_TRANSPOSE,
                                      n_rows,
                                      n_nonzero_elements,
                                      &alpha,
@@ -1515,7 +1590,7 @@ namespace dealii
 
       // step 7: solve L'*y = z
       status = cusparseXcsrsv2_solve(handle,
-                                     trans_Lt,
+                                     CUSPARSE_OPERATION_TRANSPOSE,
                                      n_rows,
                                      n_nonzero_elements,
                                      &alpha,
