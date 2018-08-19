@@ -21,7 +21,9 @@
 
 #include <deal.II/base/types.h>
 
-#include <cuComplex.h>
+#ifdef DEAL_II_COMPILER_CUDA_AWARE
+#  include <cuComplex.h>
+#endif
 
 #include <cmath>
 #include <complex>
