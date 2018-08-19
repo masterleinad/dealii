@@ -1821,11 +1821,10 @@ namespace CUDAWrappers
   template <typename Number>
   void
   PreconditionILU<Number>::Tvmult(
-    LinearAlgebra::CUDAWrappers::Vector<Number> &      dst,
-    const LinearAlgebra::CUDAWrappers::Vector<Number> &src) const
+    LinearAlgebra::CUDAWrappers::Vector<Number> & /*dst*/,
+    const LinearAlgebra::CUDAWrappers::Vector<Number> & /*src*/) const
   {
-    // the constructed preconditioner is symmetric
-    vmult(dst, src);
+    Assert(false, ExcNotImplemented());
   }
 
 
