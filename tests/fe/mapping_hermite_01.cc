@@ -83,7 +83,7 @@ test()
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           20,
+                           5,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped" + Utilities::int_to_string(dim) +
@@ -96,7 +96,7 @@ test()
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
-    data_out.build_patches(20);
+    data_out.build_patches(5);
 
     std::ofstream filename("solution" + Utilities::int_to_string(dim) + ".vtk");
 
@@ -112,7 +112,7 @@ test()
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           20,
+                           5,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped-orthogonal" +
@@ -127,8 +127,8 @@ main()
 {
   initlog();
   {
-    test<2>();
-    // test<3>();
+    // test<2>();
+    test<3>();
   }
 
   return 0;
