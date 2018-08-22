@@ -324,10 +324,31 @@ namespace LinearAlgebra
        */
       size_type n_elements;
     };
+  } // namespace CUDAWrappers
+} // namespace LinearAlgebra
 
+// ---------------------------- Inline functions --------------------------
 
+/**
+ * Global function @p swap which overloads the default implementation of the
+ * C++ standard library which uses a temporary object. The function simply
+ * exchanges the data of the two vectors.
+ *
+ * @relatesalso Vector
+ * @author Daniel Arndt, 2018
+ */
+template <typename Number>
+inline void
+swap(LinearAlgebra::CUDAWrappers::Vector<Number> &u,
+     LinearAlgebra::CUDAWrappers::Vector<Number> &v)
+{
+  u.swap(v);
+}
 
-    // ---------------------------- Inline functions --------------------------
+namespace LinearAlgebra
+{
+  namespace CUDAWrappers
+  {
     template <typename Number>
     inline Number *
     Vector<Number>::get_values() const
@@ -350,6 +371,16 @@ namespace LinearAlgebra
     Vector<Number>::locally_owned_elements() const
     {
       return complete_index_set(n_elements);
+    }
+
+
+
+    template <typename Number>
+    inline void
+    Vector<Number>::swap(Vector<Number> &v)
+    {
+      std::swap(val, v.val);
+      std::swap(n_elements, v.n_elements);
     }
   } // namespace CUDAWrappers
 } // namespace LinearAlgebra
