@@ -65,25 +65,54 @@ test()
   // p1(2) = 1.;
   std::vector<unsigned int> subdivisions(dim, 1);
   subdivisions[0] = 2;
-  /*GridGenerator::subdivided_hyper_rectangle(triangulation,
-                                            subdivisions,
-                                            p0,
-                                            p1);*/
+  /*  GridGenerator::subdivided_hyper_rectangle(triangulation,
+                                              subdivisions,
+                                              p0,
+                                              p1);*/
   GridGenerator::hyper_cube(triangulation, 0., 1.);
   triangulation.refine_global(1);
   triangulation.begin_active()->set_refine_flag();
   triangulation.execute_coarsening_and_refinement();
-  GridTools::distort_random(.4, triangulation, false);
+  GridTools::distort_random(.3, triangulation, false);
+
+  /*  std::vector<Point<dim>> points(6);
+
+    // build the mesh layer by layer from points
+
+    // 1. cube cell
+    points[0] = Point<dim>(0, 0);
+    points[1] = Point<dim>(0, 1);
+    points[2] = Point<dim>(1., .1);
+    points[3] = Point<dim>(1., .9);
+    points[4] = Point<dim>(2, -.1);
+    points[5] = Point<dim>(1.1, 1.1);
+    // connect the points to cells
+    std::vector<CellData<dim>> cells(2);
+    cells[1].vertices[0] = 0;
+    cells[1].vertices[1] = 2;
+    cells[1].vertices[2] = 1;
+    cells[1].vertices[3] = 3;
+    cells[0].vertices[0] = 2;
+    cells[0].vertices[1] = 4;
+    cells[0].vertices[2] = 3;
+    cells[0].vertices[3] = 5;
+    triangulation.create_triangulation(points, cells, SubCellData());*/
+
+
+
+  DataOutBase::VtkFlags flags;
+  // flags.write_higher_order_cells = true;
 
   MappingHermite<dim> mapping_fe_field(triangulation, false);
   {
     DataOut<dim> data_out;
+    data_out.set_flags(flags);
 
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           5,
+                           10,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped" + Utilities::int_to_string(dim) +
@@ -93,10 +122,12 @@ test()
   }
   {
     DataOut<dim> data_out;
+    data_out.set_flags(flags);
+
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
-    data_out.build_patches(5);
+    data_out.build_patches(10);
 
     std::ofstream filename("solution" + Utilities::int_to_string(dim) + ".vtk");
 
@@ -104,15 +135,17 @@ test()
   }
   {
     DataOut<dim> data_out;
+    data_out.set_flags(flags);
+
     mapping_fe_field.get_hermite_vector().print(std::cout);
-    mapping_fe_field.reinit(true);
-    // mapping_fe_field.orthogonalize_gradients();
+    // mapping_fe_field.reinit(true);
+    mapping_fe_field.orthogonalize_gradients();
 
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
     data_out.add_data_vector(mapping_fe_field.get_hermite_vector(), "dummy");
     data_out.build_patches(mapping_fe_field,
-                           5,
+                           10,
                            DataOut<dim>::curved_inner_cells);
 
     std::ofstream filename("solution-mapped-orthogonal" +
@@ -127,7 +160,7 @@ main()
 {
   initlog();
   {
-    // test<2>();
+    test<2>();
     test<3>();
   }
 

@@ -40,11 +40,10 @@
 
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/full_matrix.h>
+#include <deal.II/lac/la_parallel_block_vector.h>
 #include <deal.II/lac/la_vector.h>
-#include <deal.II/lac/parallel_block_vector.h>
-#include <deal.II/lac/parallel_vector.h>
-#include <deal.II/lac/petsc_parallel_block_vector.h>
-#include <deal.II/lac/petsc_parallel_vector.h>
+#include <deal.II/lac/petsc_block_vector.h>
+#include <deal.II/lac/petsc_vector.h>
 #include <deal.II/lac/trilinos_parallel_block_vector.h>
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/vector.h>
@@ -67,6 +66,26 @@ MappingHermiteHelper<dim, spacedim>::MappingHermiteHelper(
 {
   reinit(orthogonalize);
 }
+
+namespace
+{
+  template <int dim, int spacedim>
+  std::vector<Point<spacedim>>
+  compute_intermediate_points(const std::vector<Point<spacedim>> &vertices,
+                              const std::vector<Point<dim>> &evaluation_points)
+  {
+    AssertDimension(vertices.size(), GeometryInfo<dim>::vertices_per_cell);
+    const unsigned int           n_points = evaluation_points.size();
+    std::vector<Point<spacedim>> intermediate_points(n_points);
+
+    for (unsigned int q = 0; q < n_points; ++q)
+      for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
+        intermediate_points[q] +=
+          vertices[i] *
+          GeometryInfo<dim>::d_linear_shape_function(evaluation_points[q], i);
+    return intermediate_points;
+  }
+} // namespace
 
 template <int dim, int spacedim>
 void
@@ -93,6 +112,10 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
+    std::vector<Point<dim>> unit_support_points = fe.get_unit_support_points();
+    AssertDimension(unit_support_points.size(),
+                    dim * Utilities::pow(fe.degree + 1, dim));
+
     for (const auto &cell : dof_handler->active_cell_iterators())
       if (cell->is_locally_owned())
         {
@@ -104,10 +127,15 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
             dim,
             std::vector<Vector<double>>(dofs_per_cell / dim,
                                         Vector<double>(1)));
-          std::vector<Point<spacedim>> vertex_values(
-            GeometryInfo<dim>::vertices_per_cell * dim *
-            component_dofs_per_vertex);
-          for (unsigned int component = 0; component < dim; ++component)
+          std::vector<Point<spacedim>> cell_vertices(
+            GeometryInfo<dim>::vertices_per_cell);
+          for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
+               ++v)
+            cell_vertices[v] = cell->vertex(v);
+
+          std::vector<Point<spacedim>> intermediate_points =
+            compute_intermediate_points(cell_vertices, unit_support_points);
+          /*for (unsigned int component = 0; component < dim; ++component)
             for (unsigned int vertex = 0;
                  vertex < GeometryInfo<dim>::vertices_per_cell;
                  ++vertex)
@@ -116,20 +144,18 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
                    ++vertex_dof)
                 vertex_values[component * dofs_per_cell / dim +
                               vertex * component_dofs_per_vertex + vertex_dof] =
-                  cell->vertex(vertex);
+                  cell->vertex(vertex);*/
 
-          AssertDimension(vertex_values.size(), dofs_per_cell);
-
-          for (unsigned int i = 0; i < vertex_values.size(); ++i)
+          for (unsigned int i = 0; i < intermediate_points.size(); ++i)
             {
               const unsigned int component =
                 fe.system_to_component_index(i).first;
               const unsigned int within_base =
                 fe.system_to_component_index(i).second;
               values_to_interpolate[component][within_base](0) =
-                vertex_values[i](component);
+                intermediate_points[i](component);
               std::cout << "(" << component << ", " << within_base
-                        << "): " << vertex_values[i] << std::endl;
+                        << "): " << intermediate_points[i] << std::endl;
             }
 
           std::vector<std::vector<double>> interpolated_values(

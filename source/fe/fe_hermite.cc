@@ -469,6 +469,38 @@ FE_Hermite<dim, spacedim>::
     }
 
   Assert(this->degree == 3, ExcNotImplemented());
+
+  if (this->degree > 3)
+    {
+      // lines (4*2^1*(degree-3)^1 in 2d, 12*2^2*(degree-3)^1 in 3d
+      const unsigned int starting_dof_lines =
+        Utilities::pow(2, dim) * GeometryInfo<dim>::vertices_per_cell;
+      nodal_values[starting_dof_lines] =
+        support_point_values[starting_dof_lines](0);
+
+      // faces 1*2^0*(degree-3)^2 in 2d, 6*2^1*(degree-3)^2 in 2d
+      const unsigned int starting_dof_quads =
+        starting_dof_lines + Utilities::pow(2, dim - 1) * (this->degree - 3) *
+                               GeometryInfo<dim>::lines_per_cell;
+      nodal_values[starting_dof_quads] =
+        support_point_values[starting_dof_quads](0);
+
+
+      if (dim >= 3)
+        {
+          // cell 1*2^0*(degree-3)^3 in 3d
+          const unsigned int starting_dof_hexes =
+            starting_dof_quads + Utilities::pow(2, dim - 2) *
+                                   Utilities::pow(this->degree - 3, 2) *
+                                   GeometryInfo<dim>::quads_per_cell;
+          nodal_values[starting_dof_hexes] =
+            support_point_values[starting_dof_hexes](0);
+
+          AssertDimension((starting_dof_hexes +
+                           Utilities::pow(this->degree - 3, 3)),
+                          Utilities::pow(this->degree + 1, dim));
+        }
+    }
 }
 
 template <int dim, int spacedim>
@@ -1024,48 +1056,15 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
                                 dof_indices_neighbor_start))
                             {
                               constraints.add_line(dof_indices_neighbor_start);
-                              constraints.add_entry(
-                                dof_indices_neighbor_start,
-                                dof_indices_own_start,
-                                1./*fe_values_own.shape_value(i, i) /
-                                  fe_values_neighbor.shape_value(j, j)*/);
+                              constraints.add_entry(dof_indices_neighbor_start,
+                                                    dof_indices_own_start,
+                                                    1.);
                             }
                           if (dim == 2)
                             {
                               FullMatrix<double> own_gradient_evaluations(dim,
                                                                           dim);
-                              own_gradient_evaluations[0][0] =
-                                fe_values_own.shape_grad(i + 1, i + 1)[0];
-                              own_gradient_evaluations[1][0] =
-                                fe_values_own.shape_grad(i + 1, i + 1)[1];
-                              own_gradient_evaluations[0][1] =
-                                fe_values_own.shape_grad(i + 2, i + 2)[0];
-                              own_gradient_evaluations[1][1] =
-                                fe_values_own.shape_grad(i + 2, i + 2)[1];
-                              own_gradient_evaluations.print(std::cout);
-
-                              FullMatrix<double> neighbor_gradient_evaluations(
-                                dim, dim);
-                              neighbor_gradient_evaluations[0][0] =
-                                fe_values_neighbor.shape_grad(j + 1, j + 1)[0];
-                              neighbor_gradient_evaluations[1][0] =
-                                fe_values_neighbor.shape_grad(j + 1, j + 1)[1];
-                              neighbor_gradient_evaluations[0][1] =
-                                fe_values_neighbor.shape_grad(j + 2, j + 2)[0];
-                              neighbor_gradient_evaluations[1][1] =
-                                fe_values_neighbor.shape_grad(j + 2, j + 2)[1];
-                              neighbor_gradient_evaluations.print(std::cout);
-
-                              FullMatrix<double>
-                                inverse_neighbor_gradient_evaluations(dim, dim);
-                              inverse_neighbor_gradient_evaluations.invert(
-                                neighbor_gradient_evaluations);
-
-                              FullMatrix<double> constraint_matrix(dim, dim);
-                              inverse_neighbor_gradient_evaluations.mmult(
-                                constraint_matrix, own_gradient_evaluations);
-
-                              const double factor = std::pow(
+                              const double       factor = std::pow(
                                 2., cell->level() - neighbor_cell->level());
 
                               for (unsigned int k = 0; k < dim; ++k)
@@ -1074,12 +1073,10 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
                                   {
                                     constraints.add_line(
                                       dof_indices_neighbor_start + k + 1);
-                                    for (unsigned int l = 0; l < dim; ++l)
-                                      if (k == l)
-                                        constraints.add_entry(
-                                          dof_indices_neighbor_start + k + 1,
-                                          dof_indices_own_start + l + 1,
-                                          factor /*constraint_matrix[k][l]*/);
+                                    constraints.add_entry(
+                                      dof_indices_neighbor_start + k + 1,
+                                      dof_indices_own_start + k + 1,
+                                      factor);
                                   }
 
                               if (!constraints.is_constrained(
@@ -1088,13 +1085,9 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
                                   constraints.add_line(
                                     dof_indices_neighbor_start + 3);
                                   constraints.add_entry(
-                                dof_indices_neighbor_start + 3,
-                                dof_indices_own_start + 3,
-                                factor*factor/*fe_values_own.shape_hessian(i + 3,
-                                                            i + 3)[0][1] /
-                                  fe_values_neighbor.shape_hessian(j + 3,
-                                                                   j +
-                                                                     3)[0][1]*/);
+                                    dof_indices_neighbor_start + 3,
+                                    dof_indices_own_start + 3,
+                                    factor * factor);
                                 }
                             }
                           else if (dim == 3)
