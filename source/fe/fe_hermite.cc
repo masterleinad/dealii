@@ -313,6 +313,15 @@ FE_Hermite<dim, spacedim>::
   AssertDimension(nodal_values.size(), this->dofs_per_cell);
 
   const unsigned int dofs_per_vertex = Utilities::pow(2, dim);
+  const unsigned int dofs_per_line =
+    Utilities::pow(this->degree - 3, 1) * Utilities::pow(2, dim - 1);
+  const unsigned int dofs_per_quad =
+    Utilities::pow(this->degree - 3, 2) * Utilities::pow(2, dim - 2);
+
+  std::cout << "input begin" << std::endl;
+  for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
+    std::cout << i << ": " << support_point_values[i](0) << std::endl;
+  std::cout << "input end" << std::endl;
 
   // The easy part: values at vertice 0,4,8,12
   for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_cell; ++i)
@@ -468,23 +477,58 @@ FE_Hermite<dim, spacedim>::
         nodal_values[3 * dofs_per_vertex + 7];
     }
 
-  Assert(this->degree == 3, ExcNotImplemented());
+  // Assert(this->degree == 3, ExcNotImplemented());
 
   if (this->degree > 3)
     {
       // lines (4*2^1*(degree-3)^1 in 2d, 12*2^2*(degree-3)^1 in 3d
       const unsigned int starting_dof_lines =
         Utilities::pow(2, dim) * GeometryInfo<dim>::vertices_per_cell;
-      nodal_values[starting_dof_lines] =
-        support_point_values[starting_dof_lines](0);
+      const unsigned int dofs_per_line_vertex = Utilities::pow(2, dim - 1);
+      {
+        for (unsigned int line = 0; line < GeometryInfo<dim>::lines_per_cell;
+             ++line)
+          for (unsigned int i = 0; i < dofs_per_line; i += dofs_per_line_vertex)
+            {
+              nodal_values[starting_dof_lines + line * dofs_per_line + i] =
+                support_point_values[starting_dof_lines + line * dofs_per_line +
+                                     i](0);
+            }
+
+        if (dim == 2)
+          {
+            for (unsigned int i = 0; i < dofs_per_line;
+                 i += dofs_per_line_vertex)
+              {
+                nodal_values[starting_dof_lines + i + 1] =
+                  nodal_values[starting_dof_lines + dofs_per_line + i] -
+                  nodal_values[starting_dof_lines + i];
+                nodal_values[starting_dof_lines + dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_lines + i + 1];
+                nodal_values[starting_dof_lines + 2 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_lines + 3 * dofs_per_line + i] -
+                  nodal_values[starting_dof_lines + 2 * dofs_per_line + i];
+                nodal_values[starting_dof_lines + 3 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_lines + 2 * dofs_per_line + i + 1];
+              }
+          }
+        else
+          {}
+      }
 
       // faces 1*2^0*(degree-3)^2 in 2d, 6*2^1*(degree-3)^2 in 2d
       const unsigned int starting_dof_quads =
         starting_dof_lines + Utilities::pow(2, dim - 1) * (this->degree - 3) *
                                GeometryInfo<dim>::lines_per_cell;
-      nodal_values[starting_dof_quads] =
-        support_point_values[starting_dof_quads](0);
-
+      const unsigned int dofs_per_quad_vertex = Utilities::pow(2, dim - 2);
+      {
+        for (unsigned int quad = 0; quad < GeometryInfo<dim>::quads_per_cell;
+             ++quad)
+          for (unsigned int i = 0; i < dofs_per_quad; i += dofs_per_quad_vertex)
+            nodal_values[starting_dof_quads + quad * dofs_per_quad_vertex + i] =
+              support_point_values[starting_dof_quads +
+                                   quad * dofs_per_quad_vertex + i](0);
+      }
 
       if (dim >= 3)
         {

@@ -70,9 +70,9 @@ test()
                                               p0,
                                               p1);*/
   GridGenerator::hyper_cube(triangulation, 0., 1.);
-  triangulation.refine_global(1);
-  triangulation.begin_active()->set_refine_flag();
-  triangulation.execute_coarsening_and_refinement();
+  // triangulation.refine_global(1);
+  // triangulation.begin_active()->set_refine_flag();
+  // triangulation.execute_coarsening_and_refinement();
   GridTools::distort_random(.3, triangulation, false);
 
   /*  std::vector<Point<dim>> points(6);
@@ -139,7 +139,7 @@ test()
 
     mapping_fe_field.get_hermite_vector().print(std::cout);
     // mapping_fe_field.reinit(true);
-    mapping_fe_field.orthogonalize_gradients();
+    // mapping_fe_field.orthogonalize_gradients();
 
     data_out.attach_dof_handler(mapping_fe_field.get_dof_handler());
     // Vector<float> dummy(triangulation.n_active_cells());
