@@ -313,10 +313,6 @@ FE_Hermite<dim, spacedim>::
   AssertDimension(nodal_values.size(), this->dofs_per_cell);
 
   const unsigned int dofs_per_vertex = Utilities::pow(2, dim);
-  const unsigned int dofs_per_line =
-    Utilities::pow(this->degree - 3, 1) * Utilities::pow(2, dim - 1);
-  const unsigned int dofs_per_quad =
-    Utilities::pow(this->degree - 3, 2) * Utilities::pow(2, dim - 2);
 
   std::cout << "input begin" << std::endl;
   for (unsigned int i = 0; i < this->dofs_per_cell; ++i)
@@ -482,6 +478,8 @@ FE_Hermite<dim, spacedim>::
   if (this->degree > 3)
     {
       // lines (4*2^1*(degree-3)^1 in 2d, 12*2^2*(degree-3)^1 in 3d
+      const unsigned int dofs_per_line =
+        Utilities::pow(this->degree - 3, 1) * Utilities::pow(2, dim - 1);
       const unsigned int starting_dof_lines =
         Utilities::pow(2, dim) * GeometryInfo<dim>::vertices_per_cell;
       const unsigned int dofs_per_line_vertex = Utilities::pow(2, dim - 1);
@@ -513,13 +511,39 @@ FE_Hermite<dim, spacedim>::
               }
           }
         else
-          {}
+          {
+            /*
+              // First order derivatives at vertices 1,2,5,6,9,10,13,14
+                   nodal_values[1] = nodal_values[dofs_per_vertex] -
+              nodal_values[0]; nodal_values[2] = nodal_values[2 *
+              dofs_per_vertex] - nodal_values[0]; nodal_values[dofs_per_vertex +
+              1] = nodal_values[1]; nodal_values[dofs_per_vertex + 2] =
+                     nodal_values[3 * dofs_per_vertex] -
+              nodal_values[dofs_per_vertex]; nodal_values[2 * dofs_per_vertex +
+              1] = nodal_values[3 * dofs_per_vertex] - nodal_values[2 *
+              dofs_per_vertex]; nodal_values[2 * dofs_per_vertex + 2] =
+              nodal_values[2]; nodal_values[3 * dofs_per_vertex + 1] =
+                     nodal_values[2 * dofs_per_vertex + 1];
+                   nodal_values[3 * dofs_per_vertex + 2] =
+              nodal_values[dofs_per_vertex + 2];
+
+                   // Second order derivatives at vertices 3,7,11,15
+                   nodal_values[dim + 1] =
+                     nodal_values[2 * dofs_per_vertex + 1] - nodal_values[1];
+                   nodal_values[dofs_per_vertex + dim + 1] =
+                     nodal_values[3 * dofs_per_vertex + 1] -
+                     nodal_values[dofs_per_vertex + 1];
+                   nodal_values[2 * dofs_per_vertex + dim + 1] =
+              nodal_values[dim + 1]; nodal_values[3 * dofs_per_vertex + dim + 1]
+              = nodal_values[2 * dofs_per_vertex + dim + 1];*/
+          }
       }
 
       // faces 1*2^0*(degree-3)^2 in 2d, 6*2^1*(degree-3)^2 in 2d
+      const unsigned int dofs_per_quad =
+        Utilities::pow(this->degree - 3, 2) * Utilities::pow(2, dim - 2);
       const unsigned int starting_dof_quads =
-        starting_dof_lines + Utilities::pow(2, dim - 1) * (this->degree - 3) *
-                               GeometryInfo<dim>::lines_per_cell;
+        starting_dof_lines + dofs_per_line * GeometryInfo<dim>::lines_per_cell;
       const unsigned int dofs_per_quad_vertex = Utilities::pow(2, dim - 2);
       {
         for (unsigned int quad = 0; quad < GeometryInfo<dim>::quads_per_cell;
@@ -528,17 +552,42 @@ FE_Hermite<dim, spacedim>::
             nodal_values[starting_dof_quads + quad * dofs_per_quad_vertex + i] =
               support_point_values[starting_dof_quads +
                                    quad * dofs_per_quad_vertex + i](0);
+
+        if (dim == 3)
+          {
+            for (unsigned int i = 0; i < dofs_per_quad;
+                 i += dofs_per_quad_vertex)
+              {
+                nodal_values[starting_dof_quads + i + 1] =
+                  nodal_values[starting_dof_quads + dofs_per_line + i] -
+                  nodal_values[starting_dof_quads + i];
+                nodal_values[starting_dof_quads + dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_quads + i + 1];
+                nodal_values[starting_dof_quads + 2 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_quads + 3 * dofs_per_line + i] -
+                  nodal_values[starting_dof_quads + 2 * dofs_per_line + i];
+                nodal_values[starting_dof_quads + 3 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_quads + 2 * dofs_per_line + i + 1];
+                nodal_values[starting_dof_quads + 4 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_quads + 5 * dofs_per_line + i] -
+                  nodal_values[starting_dof_quads + 4 * dofs_per_line + i];
+                nodal_values[starting_dof_quads + 5 * dofs_per_line + i + 1] =
+                  nodal_values[starting_dof_quads + 4 * dofs_per_line + i + 1];
+              }
+          }
       }
 
       if (dim >= 3)
         {
           // cell 1*2^0*(degree-3)^3 in 3d
+          const unsigned int dofs_per_hex =
+            Utilities::pow(this->degree - 3, 3) * Utilities::pow(2, dim - 3);
           const unsigned int starting_dof_hexes =
-            starting_dof_quads + Utilities::pow(2, dim - 2) *
-                                   Utilities::pow(this->degree - 3, 2) *
-                                   GeometryInfo<dim>::quads_per_cell;
-          nodal_values[starting_dof_hexes] =
-            support_point_values[starting_dof_hexes](0);
+            starting_dof_quads +
+            dofs_per_quad * GeometryInfo<dim>::quads_per_cell;
+          for (unsigned int i = 0; i < dofs_per_hex; ++i)
+            nodal_values[starting_dof_hexes + i] =
+              support_point_values[starting_dof_hexes + i](0);
 
           AssertDimension((starting_dof_hexes +
                            Utilities::pow(this->degree - 3, 3)),

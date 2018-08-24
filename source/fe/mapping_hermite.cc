@@ -95,7 +95,7 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
     dof_handler->distribute_dofs(dof_handler->get_fe());
   else
     dof_handler->distribute_dofs(
-      FESystem<dim, spacedim>(FE_Hermite<dim, spacedim>(4), dim));
+      FESystem<dim, spacedim>(FE_Hermite<dim, spacedim>(5), dim));
   IndexSet active_dofs;
   DoFTools::extract_locally_active_dofs(*dof_handler, active_dofs);
   hermite_vector.reinit(active_dofs, MPI_COMM_WORLD);
@@ -111,6 +111,8 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
               << std::endl;
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
+    std::vector<std::vector<double>>     interpolated_values(
+          dim, std::vector<double>(dofs_per_cell / dim));
 
     std::vector<Point<dim>> unit_support_points = fe.get_unit_support_points();
     AssertDimension(unit_support_points.size(),
@@ -158,8 +160,6 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
                         << "): " << intermediate_points[i] << std::endl;
             }
 
-          std::vector<std::vector<double>> interpolated_values(
-            dim, std::vector<double>(dofs_per_cell / dim));
           for (unsigned int d = 0; d < dim; ++d)
             fe.base_element(0)
               .convert_generalized_support_point_values_to_dof_values(
@@ -203,7 +203,7 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
 
     constraints.print(std::cout);
 
-    constraints.distribute(hermite_vector);
+    // constraints.distribute(hermite_vector);
   }
 }
 

@@ -350,9 +350,9 @@ namespace Utilities
    * calculations for constant expression arguments.
    */
   constexpr unsigned int
-  pow(const unsigned int base, const unsigned int iexp)
+  pow(const unsigned int base, const int iexp)
   {
-    return iexp == 0 ? 1 : base * dealii::Utilities::pow(base, iexp - 1);
+    return iexp <= 0 ? 1 : base * dealii::Utilities::pow(base, iexp - 1);
   }
 
   /**

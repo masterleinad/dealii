@@ -67,6 +67,24 @@ namespace FETools
       for (unsigned int i = 0; i < n_dofs_1d; ++i)
         *(object_array[i / n_vertex_dofs_1d][j / n_vertex_dofs_1d]++) = index++;
 
+    // Now reorder dofs on lines, line 0 and line 1 are fine already
+    std::vector<unsigned int> tmp(dpo[1]);
+    for (unsigned int i = 0; i < n_line_dofs_1d; ++i)
+      for (unsigned int j = 0; j < n_vertex_dofs_1d; ++j)
+        {
+          tmp[i * n_vertex_dofs_1d + j] =
+            object_array[1][2][j * n_line_dofs_1d + i];
+        }
+    std::copy(tmp.begin(), tmp.end(), object_array[1][2]);
+
+    for (unsigned int i = 0; i < n_line_dofs_1d; ++i)
+      for (unsigned int j = 0; j < n_vertex_dofs_1d; ++j)
+        {
+          tmp[i * n_vertex_dofs_1d + j] =
+            object_array[2][0][j * n_line_dofs_1d + i];
+        }
+    std::copy(tmp.begin(), tmp.end(), object_array[2][0]);
+
     AssertDimension(object_array[0][0] - return_vertices.data(),
                     dpo[0]); // vertex 0
     AssertDimension(object_array[1][0] - object_array[0][0],

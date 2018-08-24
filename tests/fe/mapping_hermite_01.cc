@@ -73,7 +73,7 @@ test()
   // triangulation.refine_global(1);
   // triangulation.begin_active()->set_refine_flag();
   // triangulation.execute_coarsening_and_refinement();
-  GridTools::distort_random(.3, triangulation, false);
+  // GridTools::distort_random(.3, triangulation, false);
 
   /*  std::vector<Point<dim>> points(6);
 
@@ -161,7 +161,7 @@ main()
   initlog();
   {
     test<2>();
-    test<3>();
+    // test<3>();
   }
 
   return 0;
