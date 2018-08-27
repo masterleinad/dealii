@@ -95,7 +95,7 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
     dof_handler->distribute_dofs(dof_handler->get_fe());
   else
     dof_handler->distribute_dofs(
-      FESystem<dim, spacedim>(FE_Hermite<dim, spacedim>(5), dim));
+      FESystem<dim, spacedim>(FE_Hermite<dim, spacedim>(4), dim));
   IndexSet active_dofs;
   DoFTools::extract_locally_active_dofs(*dof_handler, active_dofs);
   hermite_vector.reinit(active_dofs, MPI_COMM_WORLD);
@@ -190,20 +190,20 @@ MappingHermiteHelper<dim, spacedim>::reinit(const bool orthogonalize)
 
     AffineConstraints<double> constraints;
     constraints.clear();
-    /*FE_Hermite<dim, spacedim>::make_continuity_constraints(*dof_handler,
+    FE_Hermite<dim, spacedim>::make_continuity_constraints(*dof_handler,
                                                            constraints);
     std::ofstream print_continuity("continuity");
     constraints.print(print_continuity);
-    std::cout << "Hanging node constraints" << std::endl;
-    FE_Hermite<dim, spacedim>::make_hanging_node_constraints(*dof_handler,
-                                                             constraints);
+    /*    std::cout << "Hanging node constraints" << std::endl;
+        FE_Hermite<dim, spacedim>::make_hanging_node_constraints(*dof_handler,
+                                                                 constraints);*/
     std::ofstream print_combined("combined");
-    constraints.print(print_combined);*/
+    constraints.print(print_combined);
     constraints.close();
 
     constraints.print(std::cout);
 
-    // constraints.distribute(hermite_vector);
+    constraints.distribute(hermite_vector);
   }
 }
 

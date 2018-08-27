@@ -1054,17 +1054,10 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
 
   const Quadrature<dim> support(fe.get_unit_support_points());
 
-  FEValues<dim, spacedim> fe_values_own(fe,
-                                        support,
-                                        update_quadrature_points |
-                                          update_values | update_gradients |
-                                          update_hessians);
+  FEValues<dim, spacedim> fe_values_own(fe, support, update_quadrature_points);
   FEValues<dim, spacedim> fe_values_neighbor(fe,
                                              support,
-                                             update_quadrature_points |
-                                               update_values |
-                                               update_gradients |
-                                               update_hessians);
+                                             update_quadrature_points);
 
   std::vector<types::global_dof_index> dof_indices_own(dofs_per_cell);
   std::vector<types::global_dof_index> dof_indices_neighbor(dofs_per_cell);
@@ -1107,11 +1100,20 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
       }
   }
 
+  const unsigned int dofs_per_vertex = Utilities::pow(2, dim);
+  const unsigned int dofs_per_line =
+    Utilities::pow(2, dim - 1) * (fe.degree - 3);
+  //  const unsigned int dofs_per_quad = Utilities::pow(2,
+  //  dim-2)*Utilities::pow(fe.degree-3, 2); const unsigned int dofs_per_hex =
+  //  Utilities::pow(2, dim-3)*Utilities::pow(fe.degree-3, 3);
+
+  const unsigned int n_components =
+    dof_handler.get_fe_collection().n_components();
+  const unsigned int dofs_per_component = dofs_per_cell / n_components;
   for (const auto &cells : vertex_to_cell_map)
     for (auto cell_it = cells.begin(); cell_it != cells.end(); ++cell_it)
       {
         const auto &cell = *cell_it;
-        std::cout << "Cell center: " << cell->center() << std::endl;
         cell->get_dof_indices(dof_indices_own);
         fe_values_own.reinit(cell);
         points_own = fe_values_own.get_quadrature_points();
@@ -1121,90 +1123,103 @@ FE_Hermite<dim, spacedim>::make_continuity_constraints(
         for (; neighbor_cell_it != cells.end(); ++neighbor_cell_it)
           {
             const auto &neighbor_cell = *neighbor_cell_it;
-            std::cout << "Neighbor center: " << neighbor_cell->center()
-                      << std::endl;
             neighbor_cell->get_dof_indices(dof_indices_neighbor);
             {
               fe_values_neighbor.reinit(neighbor_cell);
               points_neighbor = fe_values_neighbor.get_quadrature_points();
 
-              for (unsigned int i = 0; i < dofs_per_cell;
-                   i += Utilities::pow(2, dim))
-                {
-                  const unsigned int component_i =
-                    fe.system_to_component_index(i).first;
-                  for (unsigned int j = 0; j < dofs_per_cell;
-                       j += Utilities::pow(2, dim))
-                    {
-                      const unsigned int component_j =
-                        fe.system_to_component_index(j).first;
-                      if ((points_own[i] - points_neighbor[j]).norm_square() <
-                            1.e-12 &&
-                          component_i == component_j)
-                        {
-                          const auto dof_indices_own_start = dof_indices_own[i];
-                          const auto dof_indices_neighbor_start =
-                            dof_indices_neighbor[j];
-                          if (!constraints.is_constrained(
-                                dof_indices_neighbor_start))
-                            {
-                              constraints.add_line(dof_indices_neighbor_start);
-                              constraints.add_entry(dof_indices_neighbor_start,
-                                                    dof_indices_own_start,
-                                                    1.);
-                            }
-                          if (dim == 2)
-                            {
-                              FullMatrix<double> own_gradient_evaluations(dim,
-                                                                          dim);
-                              const double       factor = std::pow(
-                                2., cell->level() - neighbor_cell->level());
+              // first identify degrees of freedoms at vertices
+              for (unsigned int c = 0; c < n_components; ++c)
+                for (unsigned int i = c * dofs_per_component;
+                     i <
+                     c * dofs_per_component +
+                       dofs_per_vertex * GeometryInfo<dim>::vertices_per_cell;
+                     i += dofs_per_vertex)
+                  {
+                    for (unsigned int j = c * dofs_per_component;
+                         j < c * dofs_per_component +
+                               dofs_per_vertex *
+                                 GeometryInfo<dim>::vertices_per_cell;
+                         j += dofs_per_vertex)
+                      {
+                        if ((points_own[i] - points_neighbor[j]).norm_square() <
+                            1.e-12)
+                          {
+                            const auto dof_indices_own_start =
+                              dof_indices_own[i];
+                            const auto dof_indices_neighbor_start =
+                              dof_indices_neighbor[j];
 
-                              for (unsigned int k = 0; k < dim; ++k)
-                                if (!constraints.is_constrained(
-                                      dof_indices_neighbor_start + k + 1))
-                                  {
-                                    constraints.add_line(
-                                      dof_indices_neighbor_start + k + 1);
-                                    constraints.add_entry(
-                                      dof_indices_neighbor_start + k + 1,
-                                      dof_indices_own_start + k + 1,
-                                      factor);
-                                  }
-
+                            for (unsigned int dof = 0; dof < dofs_per_vertex;
+                                 ++dof)
                               if (!constraints.is_constrained(
-                                    dof_indices_neighbor_start + 3))
+                                    dof_indices_neighbor_start + dof))
                                 {
-                                  constraints.add_line(
-                                    dof_indices_neighbor_start + 3);
-                                  constraints.add_entry(
-                                    dof_indices_neighbor_start + 3,
-                                    dof_indices_own_start + 3,
-                                    factor * factor);
-                                }
-                            }
-                          else if (dim == 3)
-                            {
-                              const double factor = std::pow(
-                                2., cell->level() - neighbor_cell->level());
+                                  const double factor = std::pow(
+                                    2., cell->level() - neighbor_cell->level());
 
-                              for (unsigned int k : {1, 2, 4})
-                                if (!constraints.is_constrained(
-                                      dof_indices_neighbor_start + k))
-                                  {
-                                    constraints.add_line(
-                                      dof_indices_neighbor_start + k);
-                                    constraints.add_entry(
-                                      dof_indices_neighbor_start + k,
-                                      dof_indices_own_start + k,
-                                      factor);
-                                  }
-                            }
-                          else
-                            AssertThrow(false, ExcNotImplemented());
-                        }
-                    }
-                }
+                                  constraints.add_line(
+                                    dof_indices_neighbor_start + dof);
+                                  constraints.add_entry(
+                                    dof_indices_neighbor_start + dof,
+                                    dof_indices_own_start + dof,
+                                    std::pow(factor,
+                                             std::bitset<dofs_per_vertex>(dof)
+                                               .count()));
+                                }
+                          }
+                      }
+                  }
+              // next identify degrees of freedoms on lines
+              for (unsigned int c = 0; c < n_components; ++c)
+                for (unsigned int i =
+                       c * dofs_per_component +
+                       dofs_per_vertex * GeometryInfo<dim>::vertices_per_cell;
+                     i <
+                     c * dofs_per_component +
+                       dofs_per_vertex * GeometryInfo<dim>::vertices_per_cell +
+                       dofs_per_line * GeometryInfo<dim>::lines_per_cell;
+                     i += dofs_per_line)
+                  {
+                    for (unsigned int j =
+                           c * dofs_per_component +
+                           dofs_per_vertex *
+                             GeometryInfo<dim>::vertices_per_cell;
+                         j <
+                         c * dofs_per_component +
+                           dofs_per_vertex *
+                             GeometryInfo<dim>::vertices_per_cell +
+                           dofs_per_line * GeometryInfo<dim>::lines_per_cell;
+                         j += dofs_per_line)
+                      {
+                        if ((points_own[i] - points_neighbor[j]).norm_square() <
+                            1.e-12)
+                          {
+                            const auto dof_indices_own_start =
+                              dof_indices_own[i];
+                            const auto dof_indices_neighbor_start =
+                              dof_indices_neighbor[j];
+
+                            for (unsigned int dof = 0; dof < dofs_per_line;
+                                 ++dof)
+                              if (!constraints.is_constrained(
+                                    dof_indices_neighbor_start + dof))
+                                {
+                                  const double factor = std::pow(
+                                    2., cell->level() - neighbor_cell->level());
+
+                                  constraints.add_line(
+                                    dof_indices_neighbor_start + dof);
+                                  constraints.add_entry(
+                                    dof_indices_neighbor_start + dof,
+                                    dof_indices_own_start + dof,
+                                    std::pow(factor,
+                                             std::bitset<dofs_per_vertex>(dof)
+                                               .count()));
+                                }
+                          }
+                      }
+                  }
             }
           }
       }
