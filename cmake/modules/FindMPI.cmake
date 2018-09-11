@@ -26,6 +26,7 @@
 #   MPI_VERSION_MINOR
 #   OMPI_VERSION
 #   MPI_HAVE_MPI_SEEK_SET
+#   MPI_IS_CUDA_AWARE
 #
 
 #
@@ -74,6 +75,23 @@ CHECK_CXX_SOURCE_COMPILES(
   int main() {}
   "
   MPI_HAVE_MPI_SEEK_SET
+  )
+
+#
+# Check if the MPI compiler has been built CUDA-aware.
+# This is the correct check for OpenMPI.
+#
+
+CHECK_CXX_SOURCE_COMPILES(
+  "
+  #include <mpi.h>
+  #include <mpi-ext.h>
+  #if !(MPIX_CUDA_AWARE_SUPPORT)
+  #  error
+  #endif
+  int main() {}
+  "
+  MPI_IS_CUDA_AWARE
   )
 RESET_CMAKE_REQUIRED()
 
@@ -144,5 +162,6 @@ DEAL_II_PACKAGE_HANDLE(MPI
     MPI_LIBRARY
     MPI_MPI_H
     MPI_HAVE_MPI_SEEK_SET
+    MPI_IS_CUDA_AWARE
   )
 
