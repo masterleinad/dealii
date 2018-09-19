@@ -259,14 +259,18 @@ namespace CUDAWrappers
      */
     std::vector<Number *> JxW;
 
-    // Constraints
-    unsigned int *              constrained_dofs;
+    // Pointer to the constrained degrees of freedom.
+    types::global_dof_index *constrained_dofs;
+
+    // Mask deciding where constraints are set on a given cell.
     std::vector<unsigned int *> constraint_mask;
+
     /**
      * Grid dimensions associated to the different colors. The grid dimensions
      * are used to launch the CUDA kernels.
      */
     std::vector<dim3> grid_dim;
+
     /**
      * Block dimensions associated to the different colors. The block dimensions
      * are used to launch the CUDA kernels.
