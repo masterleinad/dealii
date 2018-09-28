@@ -13,18 +13,6 @@ FOREACH(_file ${_macro_files})
   INCLUDE(${_file})
 ENDFOREACH()
 
-#
-# Avoid verbose "Up-to-date" status information during installation:
-#
-SET_IF_EMPTY(CMAKE_INSTALL_MESSAGE "LAZY")
-
-#
-# Check for the existence of various optional folders:
-#
-IF(EXISTS ${CMAKE_SOURCE_DIR}/bundled/CMakeLists.txt)
-  SET(DEAL_II_HAVE_BUNDLED_DIRECTORY TRUE)
-ENDIF()
-
 IF(EXISTS ${CMAKE_SOURCE_DIR}/tests/CMakeLists.txt)
   SET(DEAL_II_HAVE_TESTS_DIRECTORY TRUE)
 ENDIF()
