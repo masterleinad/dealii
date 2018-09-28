@@ -27,18 +27,10 @@ VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_cached_variables.cmake)
 # Now, set the project and set up the rest:
 #
 PROJECT(deal.II CXX C)
-ENABLE_LANGUAGE_OPTIONAL(Fortran)
 
 VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_deal_ii.cmake)
 
 VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_compiler_flags.cmake)
-
-#
-# Include information about bundled libraries:
-#
-IF(DEAL_II_HAVE_BUNDLED_DIRECTORY)
-  VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/bundled/setup_bundled.cmake)
-ENDIF()
 
 #
 # Run all system checks:
@@ -96,8 +88,3 @@ IF(DEAL_II_HAVE_TESTS_DIRECTORY)
   ADD_SUBDIRECTORY(tests)
 ENDIF()
 
-#
-# And finally, print the configuration:
-#
-FILE(READ ${CMAKE_BINARY_DIR}/summary.log DEAL_II_LOG_SUMMARY)
-MESSAGE("${DEAL_II_LOG_SUMMARY}")
