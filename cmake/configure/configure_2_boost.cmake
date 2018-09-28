@@ -27,7 +27,7 @@ IF(NOT FEATURE_ZLIB_PROCESSED)
 ENDIF()
 
 
-SET(DEAL_II_WITH_BOOST ON # Always true. We need it :-]
+SET(DEAL_II_WITH_BOOST OFF # Always true. We need it :-]
   CACHE BOOL "Build deal.II with support for boost." FORCE
   )
 
@@ -231,18 +231,3 @@ ENDMACRO()
 
 
 CONFIGURE_FEATURE(BOOST)
-
-
-#
-# DEAL_II_WITH_BOOST is always required.
-#
-IF(NOT DEAL_II_WITH_BOOST)
-  IF(DEAL_II_FEATURE_AUTODETECTION)
-    FEATURE_ERROR_MESSAGE("BOOST")
-  ELSE()
-    MESSAGE(FATAL_ERROR "\n"
-      "Unmet configuration requirements: "
-      "DEAL_II_WITH_BOOST required, but set to OFF!.\n\n"
-      )
-  ENDIF()
-ENDIF()

@@ -20,80 +20,19 @@ INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 # unity build file (see the developer documentation on DEAL_II_UNITY_BUILD
 # for more information).
 #
-SET(_unity_include_src
-  auto_derivative_function.cc
-  bounding_box.cc
-  conditional_ostream.cc
-  config.cc
-  convergence_table.cc
-  event.cc
-  exceptions.cc
-  flow_function.cc
-  function.cc
-  function_cspline.cc
-  function_derivative.cc
-  function_lib.cc
-  function_lib_cutoff.cc
-  function_parser.cc
-  function_spherical.cc
-  function_time.cc
-  geometry_info.cc
-  geometric_utilities.cc
-  graph_coloring.cc
-  index_set.cc
-  job_identifier.cc
-  logstream.cc
-  mpi.cc
-  multithread_info.cc
-  named_selection.cc
-  parallel.cc
-  parameter_handler.cc
-  parameter_acceptor.cc
-  parsed_function.cc
-  partitioner.cc
-  patterns.cc
-  path_search.cc
-  polynomial.cc
-  polynomials_abf.cc
-  polynomials_adini.cc
-  polynomials_bernstein.cc
-  polynomials_bdm.cc
-  polynomials_bernardi_raugel.cc
-  polynomials_nedelec.cc
-  polynomials_integrated_legendre_sz.cc
-  polynomial_space.cc
-  polynomials_p.cc
-  polynomials_piecewise.cc
-  polynomials_rannacher_turek.cc
-  polynomials_raviart_thomas.cc
-  polynomials_rt_bubbles.cc
-  process_grid.cc
-  quadrature.cc
-  quadrature_lib.cc
-  quadrature_selector.cc
-  subscriptor.cc
-  table_handler.cc
-  tensor_function.cc
-  tensor_product_polynomials.cc
-  tensor_product_polynomials_bubbles.cc
-  tensor_product_polynomials_const.cc
-  thread_management.cc
-  tensor.cc
-  timer.cc
-  time_stepping.cc
-  utilities.cc
-  vectorization.cc
-  )
 
 SET(_separate_src
-  data_out_base.cc
-  symmetric_tensor.cc
   )
 
 # Add CUDA wrapper files
 IF(DEAL_II_WITH_CUDA)
   SET(_separate_src
     ${_separate_src}
+    #logstream.cc
+    #exceptions.cc
+    #subscriptor.cc
+    #thread_management.cc
+    #job_identifier.cc
     cuda.cu
   )
 ENDIF()
@@ -108,26 +47,15 @@ SETUP_SOURCE_LIST("${_unity_include_src}"
   )
 
 SET(_inst
-  bounding_box.inst.in
-  data_out_base.inst.in
-  function.inst.in
-  function_time.inst.in
-  geometric_utilities.inst.in
-  mpi.inst.in
-  partitioner.inst.in
-  polynomials_rannacher_turek.inst.in
-  symmetric_tensor.inst.in
-  tensor.inst.in
-  tensor_function.inst.in
-  time_stepping.inst.in
   )
 
-FILE(GLOB _header
-  ${CMAKE_SOURCE_DIR}/include/deal.II/base/*.h
-  ${CMAKE_SOURCE_DIR}/include/deal.II/base/*.cuh
-  )
+#FILE(GLOB _header
+#  ${CMAKE_SOURCE_DIR}/include/deal.II/base/*.h
+#  ${CMAKE_SOURCE_DIR}/include/deal.II/base/*.cuh
+#  )
 
-DEAL_II_ADD_LIBRARY(obj_base OBJECT ${_src} ${_header} ${_inst}
-  ${CMAKE_BINARY_DIR}/include/deal.II/base/config.h
+DEAL_II_ADD_LIBRARY(obj_base OBJECT cuda.cu
+    #${_src} ${_header} ${_inst}
+    #  ${CMAKE_BINARY_DIR}/include/deal.II/base/config.h
   )
-EXPAND_INSTANTIATIONS(obj_base "${_inst}")
+#EXPAND_INSTANTIATIONS(obj_base "${_inst}")
