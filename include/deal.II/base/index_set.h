@@ -1395,7 +1395,8 @@ operator-(const IndexSet::ElementIterator &other) const
   // so we need to return -c at the end.
 
   // first finish the current range:
-  std::ptrdiff_t c = index_set->ranges[range_idx].end - idx;
+  std::ptrdiff_t c =
+    static_cast<std::ptrdiff_t>(index_set->ranges[range_idx].end - idx);
 
   // now walk in steps of ranges (need to start one behind our current one):
   for (size_type range = range_idx + 1;

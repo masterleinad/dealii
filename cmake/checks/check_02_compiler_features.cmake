@@ -118,8 +118,8 @@ CHECK_CXX_COMPILER_BUG(
 #
 CHECK_CXX_SOURCE_COMPILES(
   "
-  bool f() {}
-  int main(){ if (__builtin_expect(f(),false)) ; }
+  bool f() {return true;}
+  int main(){ if (__builtin_expect(f(),false)) return 1; }
   "
   DEAL_II_HAVE_BUILTIN_EXPECT)
 
@@ -179,7 +179,7 @@ CHECK_CXX_SOURCE_COMPILES(
     // exception classes not in <stdexcept>, thrown by the implementation
     // instead of the user
     std::bad_exception  e;
-    realname = abi::__cxa_demangle(e.what(), 0, 0, &status);
+    realname = abi::__cxa_demangle(e.what(), nullptr, nullptr, &status);
     free(realname);
 
 
@@ -187,7 +187,7 @@ CHECK_CXX_SOURCE_COMPILES(
     bar<empty,17>          u;
     const std::type_info  &ti = typeid(u);
 
-    realname = abi::__cxa_demangle(ti.name(), 0, 0, &status);
+    realname = abi::__cxa_demangle(ti.name(), nullptr, nullptr, &status);
     free(realname);
 
       return 0;

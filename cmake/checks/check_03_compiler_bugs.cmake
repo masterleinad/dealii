@@ -50,7 +50,7 @@ CHECK_CXX_COMPILER_BUG(
   };
 
   template <typename T> class X<1,T> {
-      int f () { return Y<T>::i; };     // access private field
+      int f () { return Y<T>::i; }     // access private field
   };
   int main() { return 0; }
   "
@@ -105,10 +105,10 @@ CHECK_CXX_COMPILER_BUG(
 CHECK_CXX_COMPILER_BUG(
   "
   template <typename T> struct identity { typedef T type; };
-  template <typename C> void new_thread (void (C::*fun_ptr)(),
-                typename identity<C>::type &c) {}
-  template <typename C> void new_thread (void (C::*fun_ptr)() const,
-                const typename identity<C>::type &c) {}
+  template <typename C> void new_thread (void (C::*)(),
+                typename identity<C>::type &/*c*/) {}
+  template <typename C> void new_thread (void (C::*)() const,
+                const typename identity<C>::type &) {}
   struct X { void f() const{} };
 
   int main()

@@ -345,10 +345,8 @@ inline BlockIndices::size_type
 BlockIndices::local_to_global(const unsigned int block,
                               const size_type    index) const
 {
-  Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
-  Assert(index < start_indices[block + 1] - start_indices[block],
-         ExcIndexRangeType<size_type>(
-           index, 0, start_indices[block + 1] - start_indices[block]));
+  AssertIndexRange(block, n_blocks);
+  AssertIndexRange(index, start_indices[block + 1] - start_indices[block]);
 
   return start_indices[block] + index;
 }
@@ -375,7 +373,7 @@ BlockIndices::total_size() const
 inline BlockIndices::size_type
 BlockIndices::block_size(const unsigned int block) const
 {
-  Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
+  AssertIndexRange(block, n_blocks);
   return start_indices[block + 1] - start_indices[block];
 }
 
@@ -400,7 +398,7 @@ BlockIndices::to_string() const
 inline BlockIndices::size_type
 BlockIndices::block_start(const unsigned int block) const
 {
-  Assert(block < n_blocks, ExcIndexRange(block, 0, n_blocks));
+  AssertIndexRange(block, n_blocks);
   return start_indices[block];
 }
 

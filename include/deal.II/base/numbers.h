@@ -429,6 +429,8 @@ namespace numbers
     return std::isnan(x);
   }
 
+
+
   inline bool
   is_finite(const double x)
   {
@@ -437,32 +439,15 @@ namespace numbers
 
 
 
-  inline bool
-  is_finite(const std::complex<double> &x)
+  template <typename Number>
+  bool
+  is_finite(const std::complex<Number> &x)
   {
     // Check complex numbers for infinity
     // by testing real and imaginary part
     return (is_finite(x.real()) && is_finite(x.imag()));
   }
 
-
-
-  inline bool
-  is_finite(const std::complex<float> &x)
-  {
-    // Check complex numbers for infinity
-    // by testing real and imaginary part
-    return (is_finite(x.real()) && is_finite(x.imag()));
-  }
-
-
-
-  inline bool
-  is_finite(const std::complex<long double> &x)
-  {
-    // Same for std::complex<long double>
-    return (is_finite(x.real()) && is_finite(x.imag()));
-  }
 
 
   template <typename number>

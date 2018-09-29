@@ -1700,7 +1700,8 @@ FullMatrix<number>::copy_from(const Tensor<2, dim> &T,
       {
         const unsigned int src_r_index = static_cast<unsigned int>(i + src_r_i);
         const unsigned int src_c_index = static_cast<unsigned int>(j + src_c_i);
-        (*this)(i + dst_r, j + dst_c)  = number(T[src_r_index][src_c_index]);
+        (*this)(i + dst_r, j + dst_c) =
+          static_cast<number>(T[src_r_index][src_c_index]);
       }
 }
 

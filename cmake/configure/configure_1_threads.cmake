@@ -104,7 +104,7 @@ MACRO(SETUP_THREADING)
     int main()
     {
       pthread_barrier_t pb;
-      pthread_barrier_init (&pb, 0, 1);
+      pthread_barrier_init (&pb, nullptr, 1);
       pthread_barrier_wait (&pb);
       pthread_barrier_destroy (&pb);
       return 0;

@@ -2979,7 +2979,7 @@ inline DEAL_II_ALWAYS_INLINE VectorizedArray<float>
                              operator+(const double u, const VectorizedArray<float> &v)
 {
   VectorizedArray<float> tmp;
-  tmp = u;
+  tmp = static_cast<float>(u);
   return tmp += v;
 }
 

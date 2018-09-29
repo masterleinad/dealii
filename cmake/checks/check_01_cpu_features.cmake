@@ -86,10 +86,10 @@ IF(DEAL_II_ALLOW_PLATFORM_INTROSPECTION)
     __m128d * data =
       reinterpret_cast<__m128d*>(_mm_malloc (2*vector_bytes, vector_bytes));
     double * ptr = reinterpret_cast<double*>(&a);
-    ptr[0] = (volatile double)(1.0);
+    ptr[0] = static_cast<volatile double>(1.0);
     for (int i=1; i<n_vectors; ++i)
       ptr[i] = 0.0;
-    b = _mm_set1_pd ((volatile double)(2.25));
+    b = _mm_set1_pd (static_cast<volatile double>(2.25));
     data[0] = _mm_add_pd (a, b);
     data[1] = _mm_mul_pd (b, data[0]);
     ptr = reinterpret_cast<double*>(&data[1]);
@@ -142,10 +142,10 @@ IF(DEAL_II_ALLOW_PLATFORM_INTROSPECTION)
       __m256d * data =
         reinterpret_cast<__m256d*>(_mm_malloc (2*vector_bytes, vector_bytes));
       double * ptr = reinterpret_cast<double*>(&a);
-      ptr[0] = (volatile double)(1.0);
+      ptr[0] = static_cast<volatile double>(1.0);
       for (int i=1; i<n_vectors; ++i)
         ptr[i] = 0.0;
-      b = _mm256_set1_pd ((volatile double)(2.25));
+      b = _mm256_set1_pd (static_cast<volatile double>(2.25));
       data[0] = _mm256_add_pd (a, b);
       data[1] = _mm256_mul_pd (b, data[0]);
       ptr = reinterpret_cast<double*>(&data[1]);
@@ -183,7 +183,7 @@ IF(DEAL_II_ALLOW_PLATFORM_INTROSPECTION)
       __m512d * data =
         reinterpret_cast<__m512d*>(_mm_malloc (2*vector_bytes, vector_bytes));
       double * ptr = reinterpret_cast<double*>(&a);
-      ptr[0] = (volatile double)(1.0);
+      ptr[0] = static_cast<volatile double>(1.0);
       for (int i=1; i<n_vectors; ++i)
         ptr[i] = 0.0;
       const volatile double x = 2.25;

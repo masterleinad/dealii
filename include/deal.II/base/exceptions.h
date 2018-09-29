@@ -196,23 +196,26 @@ private:
  *
  * @ingroup Exceptions
  */
-#  define DeclExceptionMsg(Exception, defaulttext)    \
-    class Exception : public dealii::ExceptionBase    \
-    {                                                 \
-    public:                                           \
-      Exception(const std::string &msg = defaulttext) \
-        : arg(msg)                                    \
-      {}                                              \
-      virtual ~Exception() noexcept                   \
-      {}                                              \
-      virtual void                                    \
-      print_info(std::ostream &out) const override    \
-      {                                               \
-        out << "    " << arg << std::endl;            \
-      }                                               \
-                                                      \
-    private:                                          \
-      const std::string arg;                          \
+#  define DeclExceptionMsg(Exception, defaulttext)      \
+    class Exception : public dealii::ExceptionBase      \
+    {                                                   \
+    public:                                             \
+      Exception(const std::string &msg = defaulttext)   \
+        : arg(msg)                                      \
+      {}                                                \
+                                                        \
+      Exception(const Exception &) = default;           \
+                                                        \
+      virtual ~Exception() noexcept override = default; \
+                                                        \
+      virtual void                                      \
+      print_info(std::ostream &out) const override      \
+      {                                                 \
+        out << "    " << arg << std::endl;              \
+      }                                                 \
+                                                        \
+    private:                                            \
+      const std::string arg;                            \
     }
 
 /**
@@ -228,8 +231,11 @@ private:
       Exception1(type1 const &a1)                        \
         : arg1(a1)                                       \
       {}                                                 \
-      virtual ~Exception1() noexcept                     \
-      {}                                                 \
+                                                         \
+      Exception1(const Exception1 &) = default;          \
+                                                         \
+      virtual ~Exception1() noexcept override = default; \
+                                                         \
       virtual void                                       \
       print_info(std::ostream &out) const override       \
       {                                                  \
@@ -255,8 +261,11 @@ private:
         : arg1(a1)                                              \
         , arg2(a2)                                              \
       {}                                                        \
-      virtual ~Exception2() noexcept                            \
-      {}                                                        \
+                                                                \
+      Exception2(const Exception2 &) = default;                 \
+                                                                \
+      virtual ~Exception2() noexcept override = default;        \
+                                                                \
       virtual void                                              \
       print_info(std::ostream &out) const override              \
       {                                                         \
@@ -284,8 +293,11 @@ private:
         , arg2(a2)                                                     \
         , arg3(a3)                                                     \
       {}                                                               \
-      virtual ~Exception3() noexcept                                   \
-      {}                                                               \
+                                                                       \
+      Exception3(const Exception3 &) = default;                        \
+                                                                       \
+      virtual ~Exception3() noexcept override = default;               \
+                                                                       \
       virtual void                                                     \
       print_info(std::ostream &out) const override                     \
       {                                                                \
@@ -318,8 +330,11 @@ private:
         , arg3(a3)                                                            \
         , arg4(a4)                                                            \
       {}                                                                      \
-      virtual ~Exception4() noexcept                                          \
-      {}                                                                      \
+                                                                              \
+      Exception4(const Exception4 &) = default;                               \
+                                                                              \
+      virtual ~Exception4() noexcept override = default;                      \
+                                                                              \
       virtual void                                                            \
       print_info(std::ostream &out) const override                            \
       {                                                                       \
@@ -356,8 +371,11 @@ private:
         , arg4(a4)                                              \
         , arg5(a5)                                              \
       {}                                                        \
-      virtual ~Exception5() noexcept                            \
-      {}                                                        \
+                                                                \
+      Exception5(const Exception5 &) = default;                 \
+                                                                \
+      virtual ~Exception5() noexcept override = default;        \
+                                                                \
       virtual void                                              \
       print_info(std::ostream &out) const override              \
       {                                                         \

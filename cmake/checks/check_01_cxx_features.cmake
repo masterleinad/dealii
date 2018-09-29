@@ -611,7 +611,7 @@ PUSH_CMAKE_REQUIRED("${DEAL_II_CXX_VERSION_FLAG}")
 CHECK_CXX_SOURCE_COMPILES(
   "
   #include <type_traits>
-  int main(){ std::is_trivially_copyable<int> bob; }
+  int main(){ std::is_trivially_copyable<int> bob; (void) bob;}
   "
   DEAL_II_HAVE_CXX11_IS_TRIVIALLY_COPYABLE)
 

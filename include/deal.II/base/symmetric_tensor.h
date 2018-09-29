@@ -98,7 +98,7 @@ namespace internal
           const unsigned int     new_index,
           const unsigned int     position)
     {
-      Assert(position < 2, ExcIndexRange(position, 0, 2));
+      AssertIndexRange(position, 2);
 
       if (position == 0)
         return TableIndices<2>(new_index, numbers::invalid_unsigned_int);
@@ -119,7 +119,7 @@ namespace internal
           const unsigned int     new_index,
           const unsigned int     position)
     {
-      Assert(position < 4, ExcIndexRange(position, 0, 4));
+      AssertIndexRange(position, 4);
 
       switch (position)
         {

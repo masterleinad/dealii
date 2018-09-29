@@ -218,7 +218,6 @@ private:
    * template.
    *
    */
-  mutable std::atomic<unsigned int> counter;
 
   /**
    * In this map, we count subscriptions for each different identification
@@ -226,13 +225,18 @@ private:
    */
   mutable std::map<const char *, unsigned int> counter_map;
 
+  mutable const std::type_info *object_info;
+
+
+  mutable std::atomic<unsigned int> counter;
+
+
   /**
    * Pointer to the typeinfo object of this object, from which we can later
    * deduce the class name. Since this information on the derived class is
    * neither available in the destructor, nor in the constructor, we obtain it
    * in between and store it here.
    */
-  mutable const std::type_info *object_info;
 
   /**
    * Check that there are no objects subscribing to this object. If this check

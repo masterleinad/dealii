@@ -147,7 +147,7 @@ public:
     /**
      * Constructor. For the parameters' description, see below.
      */
-    AdditionalData(const double           strengthen_diagonal   = 0,
+    AdditionalData(const number           strengthen_diagonal   = 0,
                    const unsigned int     extra_off_diagonals   = 0,
                    const bool             use_previous_sparsity = false,
                    const SparsityPattern *use_this_sparsity     = nullptr);
@@ -313,7 +313,7 @@ protected:
   /**
    * The default strengthening value, returned by get_strengthen_diagonal().
    */
-  double strengthen_diagonal;
+  number strengthen_diagonal;
 
   /**
    * For every row in the underlying SparsityPattern, this array contains a
@@ -417,7 +417,7 @@ SparseLUDecomposition<number>::Tvmult_add(OutVector &     dst,
 
 template <typename number>
 SparseLUDecomposition<number>::AdditionalData::AdditionalData(
-  const double           strengthen_diag,
+  const number           strengthen_diag,
   const unsigned int     extra_off_diag,
   const bool             use_prev_sparsity,
   const SparsityPattern *use_this_spars)

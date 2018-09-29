@@ -137,7 +137,8 @@ namespace LinearAlgebra
 
               Number *new_val;
               Utilities::System::posix_memalign(
-                (void **)&new_val, 64, sizeof(Number) * new_alloc_size);
+                reinterpret_cast<void **>(&new_val, ) 64,
+                sizeof(Number) * new_alloc_size);
               data.values.reset(new_val);
 
               allocated_size = new_alloc_size;
