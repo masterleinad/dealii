@@ -1,4 +1,0 @@
-
-DEAL::check 1d parallelepiped (subdivided_parallelepiped):OK
-DEAL::check 2d parallelepiped (subdivided_parallelepiped):OK
-DEAL::check 3d parallelepiped (subdivided_parallelepiped):OK

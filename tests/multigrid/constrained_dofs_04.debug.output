@@ -1,2 +1,0 @@
-
-DEAL::ExcMessage("The level dofs are not set up properly! Did you call distribute_mg_dofs()?")
