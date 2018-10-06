@@ -1,5 +1,0 @@
-# Allow the last line to end with a '\'.
-#---------------------------------------
-subsection Testing
-  set value = value
-end\

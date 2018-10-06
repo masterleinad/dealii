@@ -1,7 +1,0 @@
-#Listing of Parameters
-#---------------------
-subsection Testing
-  set Function = a,\ # first term
-                 b,\ # second
-                 c   # third
-end
