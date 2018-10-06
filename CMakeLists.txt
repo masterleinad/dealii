@@ -58,25 +58,7 @@ VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_custom_targets.cmake)
 VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_finalize.cmake)
 VERBOSE_INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_write_config.cmake)
 
-########################################################################
-#                                                                      #
-#                     Compilation and installation:                    #
-#                                                                      #
-########################################################################
-
-MESSAGE(STATUS "")
-MESSAGE(STATUS "Configuring done. Proceed to target definitions now.")
-
-ADD_SUBDIRECTORY(cmake/scripts)
-
 ADD_SUBDIRECTORY(source) # has to be included after bundled
 
-ADD_SUBDIRECTORY(cmake/config) # has to be included after source
-ADD_SUBDIRECTORY(examples)
-
-ADD_SUBDIRECTORY(contrib/python-bindings)
-
-IF(DEAL_II_HAVE_TESTS_DIRECTORY)
-  ADD_SUBDIRECTORY(tests)
-ENDIF()
+ADD_SUBDIRECTORY(tests)
 
