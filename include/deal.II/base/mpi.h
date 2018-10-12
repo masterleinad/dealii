@@ -271,11 +271,11 @@ namespace Utilities
      * processor.
      *
      * This function can also be used for ArrayView objects initialized with
-     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     * data living in CUDA memory.
      *
      * Input and output arrays may be the same.
      */
-    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T>
     void
     sum(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
@@ -359,11 +359,11 @@ namespace Utilities
      * processor.
      *
      * This function can also be used for ArrayView objects initialized with
-     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     * data living in CUDA memory.
      *
      * Input and output arrays may be the same.
      */
-    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T>
     void
     max(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
@@ -413,11 +413,11 @@ namespace Utilities
      * processor.
      *
      * This function can also be used for ArrayView objects initialized with
-     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     * data living in CUDA memory.
      *
      * Input and output arrays may be the same.
      */
-    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T>
     void
     min(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
@@ -429,7 +429,7 @@ namespace Utilities
      * be used to communicate data located on a CUDA device both in the case
      * that the MPI implementation is CUDA-aware or not.
      */
-    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T>
     void
     Isend(const ArrayView<const T> &values,
           MPI_Datatype              datatype,
@@ -444,7 +444,7 @@ namespace Utilities
      * function can be used to communicate data located on a CUDA device both in
      * the case that the MPI implementation is CUDA-aware or not.
      */
-    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T>
     void
     Irecv(ArrayView<T> values,
           MPI_Datatype datatype,
@@ -715,8 +715,7 @@ namespace Utilities
     // declaration for an internal function that lives in mpi.templates.h
     namespace internal
     {
-      template <typename T,
-                typename MemorySpaceType = dealii::MemorySpace::Host>
+      template <typename T>
       void
       all_reduce(const MPI_Op &            mpi_op,
                  const ArrayView<const T> &values,
@@ -725,40 +724,34 @@ namespace Utilities
     }
 
     // Since these depend on N they must live in the header file
-    template <typename T,
-              unsigned int N,
-              typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T, unsigned int N>
     void
     sum(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&sums)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(sums, N));
+      internal::all_reduce(MPI_SUM,
+                           ArrayView<const T>(values, N),
+                           mpi_communicator,
+                           ArrayView<T>(sums, N));
     }
 
-    template <typename T,
-              unsigned int N,
-              typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T, unsigned int N>
     void
     max(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&maxima)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(maxima, N));
+      internal::all_reduce(MPI_MAX,
+                           ArrayView<const T>(values, N),
+                           mpi_communicator,
+                           ArrayView<T>(maxima, N));
     }
 
-    template <typename T,
-              unsigned int N,
-              typename MemorySpaceType = dealii::MemorySpace::Host>
+    template <typename T, unsigned int N>
     void
     min(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&minima)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(minima, N));
+      internal::all_reduce(MPI_MIN,
+                           ArrayView<const T>(values, N),
+                           mpi_communicator,
+                           ArrayView<T>(minima, N));
     }
 
     template <typename T>

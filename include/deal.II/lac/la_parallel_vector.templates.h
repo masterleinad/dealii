@@ -1014,7 +1014,7 @@ namespace LinearAlgebra
 
       if (std::is_same<MemorySpace, dealii::MemorySpace::Host>::value)
         {
-          partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
+          partitioner->export_to_ghosted_array_start(
             counter,
             ArrayView<const Number>(data.values.get(),
                                     partitioner->local_size()),
@@ -1026,7 +1026,7 @@ namespace LinearAlgebra
         }
       else
         {
-          partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
+          partitioner->export_to_ghosted_array_start(
             counter,
             ArrayView<const Number>(data.values_dev.get(),
                                     partitioner->local_size()),

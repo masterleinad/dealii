@@ -57,29 +57,15 @@ for (S : MPI_SCALARS)
                                       const MPI_Comm &,
                                       std::vector<S> &);
 
-    template void Isend<S, dealii::MemorySpace::Host>(
-      const ArrayView<const S> &,
-      MPI_Datatype,
-      int,
-      int,
-      MPI_Comm,
-      MPI_Request *);
+    template void Isend<S>(const ArrayView<const S> &,
+                           MPI_Datatype,
+                           int,
+                           int,
+                           MPI_Comm,
+                           MPI_Request *);
 
-    template void Irecv<S, dealii::MemorySpace::Host>(
+    template void Irecv<S>(
       ArrayView<S>, MPI_Datatype, int, int, MPI_Comm, MPI_Request *);
-
-#ifdef DEAL_II_WITH_CUDA
-    template void Isend<S, dealii::MemorySpace::CUDA>(
-      const ArrayView<const S> &,
-      MPI_Datatype,
-      int,
-      int,
-      MPI_Comm,
-      MPI_Request *);
-
-    template void Irecv<S, dealii::MemorySpace::CUDA>(
-      ArrayView<S>, MPI_Datatype, int, int, MPI_Comm, MPI_Request *);
-#endif
 
     // The fixed-length array (i.e., things declared like T(&values)[N])
     // versions of the functions above live in the header file mpi.h since the

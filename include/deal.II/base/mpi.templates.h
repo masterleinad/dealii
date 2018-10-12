@@ -124,44 +124,33 @@ namespace Utilities
 #endif
 
 
-      template <typename T, typename MemorySpaceType>
+      template <typename T>
       void
       all_reduce(const MPI_Op &            mpi_op,
                  const ArrayView<const T> &values,
                  const MPI_Comm &          mpi_communicator,
                  const ArrayView<T> &      output)
       {
-        if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        Assert(
+          values.data_is_stored_on_host() == output.data_is_stored_on_host(),
+          ExcMessage(
+            "The input and the output ArrayView object have the same underlying memeory space!"));
+#ifndef DEAL_II_WITH_CUDA_AWARE_MPI
+        if (!values.data_is_stored_on_host())
           {
-#ifdef DEAL_II_WITH_CUDA
-#  ifdef DEAL_II_WITH_CUDA_AWARE_MPI
-            // In this case, we can just use the same code.
-            all_reduce<T, dealii::MemorySpace::Host>(mpi_op,
-                                                     values,
-                                                     mpi_communicator,
-                                                     output);
-#  else
             // If MPI is not CUDA-aware, we have to copy to the CPU, do the
             // operation there and then copy back.
             std::vector<T> cpu_values(values.size());
             std::vector<T> cpu_output(output.size());
             Utilities::CUDA::copy_to_host(values.data(), cpu_values);
-            all_reduce<T, dealii::MemorySpace::Host>(
-              mpi_op,
-              make_array_view(cpu_values),
-              mpi_communicator,
-              make_array_view(cpu_output));
+            all_reduce(mpi_op,
+                       ArrayView<const T>(cpu_values.data(), cpu_values.size()),
+                       mpi_communicator,
+                       make_array_view(cpu_output));
             Utilities::CUDA::copy_to_dev(cpu_output, output.data());
-#  endif
-#else
-            Assert(
-              false,
-              ExcMessage(
-                "This function can only used with dealii::MemorySpace::CUDA "
-                "if DEAL_II_WITH_CUDA is enabled!"));
-#endif
           }
         else
+#endif
           {
             AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
@@ -227,16 +216,21 @@ namespace Utilities
 
 
 
-      template <typename T, typename MemorySpaceType>
+      template <typename T>
       void
       all_reduce(const MPI_Op &                          mpi_op,
                  const ArrayView<const std::complex<T>> &values,
                  const MPI_Comm &                        mpi_communicator,
                  const ArrayView<std::complex<T>> &      output)
       {
-        static_assert(
-          std::is_same<MemorySpaceType, dealii::MemorySpace::Host>::value,
-          "The complex overload of this function is only implemented for MemorySpace::Host!");
+        Assert(
+          values.data_is_stored_on_host() == output.data_is_stored_on_host(),
+          ExcMessage(
+            "The input and the output ArrayView object have the same underlying memeory space!"));
+        Assert(
+          values.data_is_stored_on_host(),
+          ExcMessage(
+            "The complex overload of this function is only implemented for MemorySpace::Host!"));
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
         if (job_supports_mpi())
@@ -302,16 +296,13 @@ namespace Utilities
 
 
 
-    template <typename T, typename MemorySpaceType>
+    template <typename T>
     void
     sum(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      sums)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
-                                               values,
-                                               mpi_communicator,
-                                               sums);
+      internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
     }
 
 
@@ -410,16 +401,13 @@ namespace Utilities
 
 
 
-    template <typename T, typename MemorySpaceType>
+    template <typename T>
     void
     max(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      maxima)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
-                                               values,
-                                               mpi_communicator,
-                                               maxima);
+      internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
     }
 
 
@@ -455,21 +443,18 @@ namespace Utilities
 
 
 
-    template <typename T, typename MemorySpaceType>
+    template <typename T>
     void
     min(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      minima)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
-                                               values,
-                                               mpi_communicator,
-                                               minima);
+      internal::all_reduce(MPI_MIN, values, mpi_communicator, minima);
     }
 
 
 
-    template <typename T, typename MemorySpaceType>
+    template <typename T>
     void
     Isend(const ArrayView<const T> &values,
           MPI_Datatype              datatype,
@@ -489,21 +474,9 @@ namespace Utilities
              ExcMessage("This function can only be called "
                         "if deal.II was compiled with MPI support!"));
 #else
-      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+#  ifndef DEAL_II_WITH_CUDA_AWARE_MPI
+      if (!values.data_is_stored_on_host())
         {
-#  ifdef DEAL_II_WITH_CUDA
-#    ifdef DEAL_II_WITH_CUDA_AWARE_MPI
-          // In this case, we can just use the same code.
-          const int ierr = MPI_Isend(values.data(),
-                                     values.size() * sizeof(T),
-                                     datatype,
-                                     destination,
-                                     tag,
-                                     comm,
-                                     request);
-          (void)ierr;
-          AssertThrowMPI(ierr);
-#    else
           // If MPI is not CUDA-aware, we have to copy to the CPU and do the
           // operation there.
           std::vector<T> cpu_values(values.size());
@@ -517,15 +490,9 @@ namespace Utilities
                                      request);
           (void)ierr;
           AssertThrowMPI(ierr);
-#    endif
-#  else
-          Assert(false,
-                 ExcMessage(
-                   "This function can only used with dealii::MemorySpace::CUDA "
-                   "if DEAL_II_WITH_CUDA is enabled!"));
-#  endif
         }
       else
+#  endif
         {
           const int ierr = MPI_Isend(values.data(),
                                      values.size() * sizeof(T),
@@ -542,7 +509,7 @@ namespace Utilities
 
 
 
-    template <typename T, typename MemorySpaceType>
+    template <typename T>
     void
     Irecv(ArrayView<T> values,
           MPI_Datatype datatype,
@@ -562,21 +529,9 @@ namespace Utilities
              ExcMessage("This function can only be called "
                         "if deal.II was compiled with MPI support!"));
 #else
-      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+#  ifndef DEAL_II_WITH_CUDA_AWARE_MPI
+      if (!values.data_is_stored_on_host())
         {
-#  ifdef DEAL_II_WITH_CUDA
-#    ifdef DEAL_II_WITH_CUDA_AWARE_MPI
-          // In this case, we can just use the same code.
-          const int ierr = MPI_Irecv(values.data(),
-                                     values.size() * sizeof(T),
-                                     datatype,
-                                     source,
-                                     tag,
-                                     comm,
-                                     request);
-          (void)ierr;
-          AssertThrowMPI(ierr);
-#    else
           // If MPI is not CUDA-aware, we have to copy to the CPU and do the
           // operation there.
           std::vector<T> cpu_values(values.size());
@@ -590,15 +545,9 @@ namespace Utilities
           (void)ierr;
           AssertThrowMPI(ierr);
           Utilities::CUDA::copy_to_dev(cpu_values, values.data());
-#    endif
-#  else
-          Assert(false,
-                 ExcMessage(
-                   "This function can only used with dealii::MemorySpace::CUDA "
-                   "if DEAL_II_WITH_CUDA is enabled!"));
-#  endif
         }
       else
+#  endif
         {
           const int ierr = MPI_Irecv(values.data(),
                                      values.size() * sizeof(T),
@@ -612,8 +561,8 @@ namespace Utilities
         }
 #endif
     }
-  } // end of namespace MPI
-} // end of namespace Utilities
+  } // namespace MPI
+} // namespace Utilities
 
 
 DEAL_II_NAMESPACE_CLOSE
