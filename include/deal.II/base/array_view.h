@@ -430,11 +430,11 @@ inline bool
 ArrayView<ElementType>::data_is_stored_on_host() const
 {
 #ifdef DEAL_II_COMPILER_CUDA_AWARE
-  auto               attributes = new cudaPointerAttributes;
+  auto              attributes = new cudaPointerAttributes;
   const cudaError_t ierr =
     cudaPointerGetAttributes(attributes, starting_element);
   AssertCuda(ierr);
-  return cudaPointerAttributes->type == cudaMemoryTypeHost;
+  return attributes->type == cudaMemoryTypeHost;
 #else
   return true;
 #endif
