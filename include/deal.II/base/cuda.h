@@ -120,6 +120,7 @@ namespace Utilities
         false,
         ExcMessage(
           "This function can only be used if deal.II is built with CUDA support!"));
+      return nullptr;
 #endif
     }
 
