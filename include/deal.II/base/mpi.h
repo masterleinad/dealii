@@ -19,6 +19,7 @@
 #include <deal.II/base/config.h>
 
 #include <deal.II/base/array_view.h>
+#include <deal.II/base/memory_space.h>
 
 #include <map>
 #include <vector>
@@ -30,6 +31,7 @@
 using MPI_Comm     = int;
 using MPI_Datatype = int;
 using MPI_Op       = int;
+using MPI_Request  = int;
 #  ifndef MPI_COMM_WORLD
 #    define MPI_COMM_WORLD 0
 #  endif
@@ -268,9 +270,12 @@ namespace Utilities
      * array is the sum over the i-th entries of the input arrays from each
      * processor.
      *
+     * This function can also be used for ArrayView objects initialized with
+     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     *
      * Input and output arrays may be the same.
      */
-    template <typename T>
+    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     sum(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
@@ -353,9 +358,12 @@ namespace Utilities
      * array is the maximum over the i-th entries of the input arrays from each
      * processor.
      *
+     * This function can also be used for ArrayView objects initialized with
+     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     *
      * Input and output arrays may be the same.
      */
-    template <typename T>
+    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     max(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
@@ -404,13 +412,46 @@ namespace Utilities
      * array is the minimum over the i-th entries of the input arrays from each
      * processor.
      *
+     * This function can also be used for ArrayView objects initialized with
+     * data living in CUDA memory if MemorySpace::CUDA is chosen.
+     *
      * Input and output arrays may be the same.
      */
-    template <typename T>
+    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     min(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      minima);
+
+    /**
+     * A wrapper for MPI_Isend that allows to send data residing in a
+     * MemorySpace given as template argument. In particular, this function can
+     * be used to communicate data located on a CUDA device both in the case
+     * that the MPI implementation is CUDA-aware or not.
+     */
+    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    void
+    Isend(const ArrayView<const T> &values,
+          MPI_Datatype              datatype,
+          int                       destination,
+          int                       tag,
+          MPI_Comm                  comm,
+          MPI_Request *             request);
+
+    /**
+     * A wrapper for MPI_Irecv that allows to receive data sent by the
+     * corresponding Utilities::MPI::Isend function. In particular, this
+     * function can be used to communicate data located on a CUDA device both in
+     * the case that the MPI implementation is CUDA-aware or not.
+     */
+    template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
+    void
+    Irecv(ArrayView<T> values,
+          MPI_Datatype datatype,
+          int          source,
+          int          tag,
+          MPI_Comm     comm,
+          MPI_Request *request);
 
     /**
      * A data structure to store the result of the min_max_avg() function.
@@ -674,7 +715,8 @@ namespace Utilities
     // declaration for an internal function that lives in mpi.templates.h
     namespace internal
     {
-      template <typename T>
+      template <typename T,
+                typename MemorySpaceType = dealii::MemorySpace::Host>
       void
       all_reduce(const MPI_Op &            mpi_op,
                  const ArrayView<const T> &values,
@@ -683,34 +725,40 @@ namespace Utilities
     }
 
     // Since these depend on N they must live in the header file
-    template <typename T, unsigned int N>
+    template <typename T,
+              unsigned int N,
+              typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     sum(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&sums)[N])
     {
-      internal::all_reduce(MPI_SUM,
-                           ArrayView<const T>(values, N),
-                           mpi_communicator,
-                           ArrayView<T>(sums, N));
+      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
+                                               ArrayView<const T>(values, N),
+                                               mpi_communicator,
+                                               ArrayView<T>(sums, N));
     }
 
-    template <typename T, unsigned int N>
+    template <typename T,
+              unsigned int N,
+              typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     max(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&maxima)[N])
     {
-      internal::all_reduce(MPI_MAX,
-                           ArrayView<const T>(values, N),
-                           mpi_communicator,
-                           ArrayView<T>(maxima, N));
+      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
+                                               ArrayView<const T>(values, N),
+                                               mpi_communicator,
+                                               ArrayView<T>(maxima, N));
     }
 
-    template <typename T, unsigned int N>
+    template <typename T,
+              unsigned int N,
+              typename MemorySpaceType = dealii::MemorySpace::Host>
     void
     min(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&minima)[N])
     {
-      internal::all_reduce(MPI_MIN,
-                           ArrayView<const T>(values, N),
-                           mpi_communicator,
-                           ArrayView<T>(minima, N));
+      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
+                                               ArrayView<const T>(values, N),
+                                               mpi_communicator,
+                                               ArrayView<T>(minima, N));
     }
 
     template <typename T>

@@ -18,7 +18,9 @@
 
 #include <deal.II/base/config.h>
 
+#include <deal.II/base/cuda.h>
 #include <deal.II/base/exceptions.h>
+#include <deal.II/base/memory_space.h>
 #include <deal.II/base/mpi.h>
 #include <deal.II/base/symmetric_tensor.h>
 #include <deal.II/base/tensor.h>
@@ -122,82 +124,119 @@ namespace Utilities
 #endif
 
 
-      template <typename T>
+      template <typename T, typename MemorySpaceType>
       void
       all_reduce(const MPI_Op &            mpi_op,
                  const ArrayView<const T> &values,
                  const MPI_Comm &          mpi_communicator,
                  const ArrayView<T> &      output)
       {
-        AssertDimension(values.size(), output.size());
-#ifdef DEAL_II_WITH_MPI
-        if (job_supports_mpi())
+        if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
           {
-#  ifdef DEBUG
-            {
-              const unsigned int rank     = this_mpi_process(mpi_communicator);
-              unsigned int       size     = values.size();
-              unsigned int       size_min = 0;
-              unsigned int       size_max = 0;
-              int                ierr2    = 0;
-              ierr2                       = MPI_Reduce(&size,
-                                 &size_min,
-                                 1,
-                                 MPI_UNSIGNED,
-                                 MPI_MIN,
-                                 0,
-                                 mpi_communicator);
-              AssertThrowMPI(ierr2);
-              ierr2 = MPI_Reduce(&size,
-                                 &size_max,
-                                 1,
-                                 MPI_UNSIGNED,
-                                 MPI_MAX,
-                                 0,
-                                 mpi_communicator);
-              AssertThrowMPI(ierr2);
-              if (rank == 0)
-                Assert(size_min == size_max,
-                       ExcMessage(
-                         "values has different size across MPI processes."));
-            }
+#ifdef DEAL_II_WITH_CUDA
+#  ifdef DEAL_II_WITH_CUDA_AWARE_MPI
+            // In this case, we can just use the same code.
+            all_reduce<T, dealii::MemorySpace::Host>(mpi_op,
+                                                     values,
+                                                     mpi_communicator,
+                                                     output);
+#  else
+            // If MPI is not CUDA-aware, we have to copy to the CPU, do the
+            // operation there and then copy back.
+            std::vector<T> cpu_values(values.size());
+            std::vector<T> cpu_output(output.size());
+            Utilities::CUDA::copy_to_host(values.data(), cpu_values);
+            all_reduce<T, dealii::MemorySpace::Host>(
+              mpi_op,
+              make_array_view(cpu_values),
+              mpi_communicator,
+              make_array_view(cpu_output));
+            Utilities::CUDA::copy_to_dev(cpu_output, output.data());
 #  endif
-            const int ierr =
-              MPI_Allreduce(values != output ?
-                              // TODO This const_cast is only needed for older
-                              // (e.g., openMPI 1.6, released in 2012)
-                              // implementations of MPI-2. It is not needed as
-                              // of MPI-3 and we should remove it at some
-                              // point in the future.
-                              const_cast<void *>(
-                                static_cast<const void *>(values.data())) :
-                              MPI_IN_PLACE,
-                            static_cast<void *>(output.data()),
-                            static_cast<int>(values.size()),
-                            internal::mpi_type_id(values.data()),
-                            mpi_op,
-                            mpi_communicator);
-            AssertThrowMPI(ierr);
+#else
+            Assert(
+              false,
+              ExcMessage(
+                "This function can only used with dealii::MemorySpace::CUDA "
+                "if DEAL_II_WITH_CUDA is enabled!"));
+#endif
           }
         else
-#endif
           {
-            (void)mpi_op;
-            (void)mpi_communicator;
-            if (values != output)
-              std::copy(values.begin(), values.end(), output.begin());
+            AssertDimension(values.size(), output.size());
+#ifdef DEAL_II_WITH_MPI
+            if (job_supports_mpi())
+              {
+#  ifdef DEBUG
+                {
+                  const unsigned int rank = this_mpi_process(mpi_communicator);
+                  unsigned int       size = values.size();
+                  unsigned int       size_min = 0;
+                  unsigned int       size_max = 0;
+                  int                ierr2    = 0;
+                  ierr2                       = MPI_Reduce(&size,
+                                     &size_min,
+                                     1,
+                                     MPI_UNSIGNED,
+                                     MPI_MIN,
+                                     0,
+                                     mpi_communicator);
+                  AssertThrowMPI(ierr2);
+                  ierr2 = MPI_Reduce(&size,
+                                     &size_max,
+                                     1,
+                                     MPI_UNSIGNED,
+                                     MPI_MAX,
+                                     0,
+                                     mpi_communicator);
+                  AssertThrowMPI(ierr2);
+                  if (rank == 0)
+                    Assert(
+                      size_min == size_max,
+                      ExcMessage(
+                        "values has different size across MPI processes."));
+                }
+#  endif
+                const int ierr =
+                  MPI_Allreduce(values != output ?
+                                  // TODO This const_cast is only needed for
+                                  // older (e.g., openMPI 1.6, released in 2012)
+                                  // implementations of MPI-2. It is not needed
+                                  // as of MPI-3 and we should remove it at some
+                                  // point in the future.
+                                  const_cast<void *>(
+                                    static_cast<const void *>(values.data())) :
+                                  MPI_IN_PLACE,
+                                static_cast<void *>(output.data()),
+                                static_cast<int>(values.size()),
+                                internal::mpi_type_id(values.data()),
+                                mpi_op,
+                                mpi_communicator);
+                AssertThrowMPI(ierr);
+              }
+            else
+#endif
+              {
+                (void)mpi_op;
+                (void)mpi_communicator;
+                if (values != output)
+                  std::copy(values.begin(), values.end(), output.begin());
+              }
           }
       }
 
 
 
-      template <typename T>
+      template <typename T, typename MemorySpaceType>
       void
       all_reduce(const MPI_Op &                          mpi_op,
                  const ArrayView<const std::complex<T>> &values,
                  const MPI_Comm &                        mpi_communicator,
                  const ArrayView<std::complex<T>> &      output)
       {
+        static_assert(
+          std::is_same<MemorySpaceType, dealii::MemorySpace::Host>::value,
+          "The complex overload of this function is only implemented for MemorySpace::Host!");
         AssertDimension(values.size(), output.size());
 #ifdef DEAL_II_WITH_MPI
         if (job_supports_mpi())
@@ -263,13 +302,16 @@ namespace Utilities
 
 
 
-    template <typename T>
+    template <typename T, typename MemorySpaceType>
     void
     sum(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      sums)
     {
-      internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
+      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
+                                               values,
+                                               mpi_communicator,
+                                               sums);
     }
 
 
@@ -368,13 +410,16 @@ namespace Utilities
 
 
 
-    template <typename T>
+    template <typename T, typename MemorySpaceType>
     void
     max(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      maxima)
     {
-      internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
+      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
+                                               values,
+                                               mpi_communicator,
+                                               maxima);
     }
 
 
@@ -410,13 +455,162 @@ namespace Utilities
 
 
 
-    template <typename T>
+    template <typename T, typename MemorySpaceType>
     void
     min(const ArrayView<const T> &values,
         const MPI_Comm &          mpi_communicator,
         const ArrayView<T> &      minima)
     {
-      internal::all_reduce(MPI_MIN, values, mpi_communicator, minima);
+      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
+                                               values,
+                                               mpi_communicator,
+                                               minima);
+    }
+
+
+
+    template <typename T, typename MemorySpaceType>
+    void
+    Isend(const ArrayView<const T> &values,
+          MPI_Datatype              datatype,
+          int                       destination,
+          int                       tag,
+          MPI_Comm                  comm,
+          MPI_Request *             request)
+    {
+#ifndef DEAL_II_WITH_MPI
+      (void)values;
+      (void)datatype;
+      (void)destination;
+      (void)tag;
+      (void)comm;
+      (void)request;
+      Assert(false,
+             ExcMessage("This function can only be called "
+                        "if deal.II was compiled with MPI support!"));
+#else
+      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        {
+#  ifdef DEAL_II_WITH_CUDA
+#    ifdef DEAL_II_WITH_CUDA_AWARE_MPI
+          // In this case, we can just use the same code.
+          const int ierr = MPI_Isend(values.data(),
+                                     values.size() * sizeof(T),
+                                     datatype,
+                                     destination,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+#    else
+          // If MPI is not CUDA-aware, we have to copy to the CPU and do the
+          // operation there.
+          std::vector<T> cpu_values(values.size());
+          Utilities::CUDA::copy_to_host(values.data(), cpu_values);
+          const int ierr = MPI_Isend(cpu_values.data(),
+                                     cpu_values.size() * sizeof(T),
+                                     datatype,
+                                     destination,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+#    endif
+#  else
+          Assert(false,
+                 ExcMessage(
+                   "This function can only used with dealii::MemorySpace::CUDA "
+                   "if DEAL_II_WITH_CUDA is enabled!"));
+#  endif
+        }
+      else
+        {
+          const int ierr = MPI_Isend(values.data(),
+                                     values.size() * sizeof(T),
+                                     datatype,
+                                     destination,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+        }
+#endif
+    }
+
+
+
+    template <typename T, typename MemorySpaceType>
+    void
+    Irecv(ArrayView<T> values,
+          MPI_Datatype datatype,
+          int          source,
+          int          tag,
+          MPI_Comm     comm,
+          MPI_Request *request)
+    {
+#ifndef DEAL_II_WITH_MPI
+      (void)values;
+      (void)datatype;
+      (void)source;
+      (void)tag;
+      (void)comm;
+      (void)request;
+      Assert(false,
+             ExcMessage("This function can only be called "
+                        "if deal.II was compiled with MPI support!"));
+#else
+      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        {
+#  ifdef DEAL_II_WITH_CUDA
+#    ifdef DEAL_II_WITH_CUDA_AWARE_MPI
+          // In this case, we can just use the same code.
+          const int ierr = MPI_Irecv(values.data(),
+                                     values.size() * sizeof(T),
+                                     datatype,
+                                     source,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+#    else
+          // If MPI is not CUDA-aware, we have to copy to the CPU and do the
+          // operation there.
+          std::vector<T> cpu_values(values.size());
+          const int      ierr = MPI_Irecv(cpu_values.data(),
+                                     cpu_values.size() * sizeof(T),
+                                     datatype,
+                                     source,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+          Utilities::CUDA::copy_to_dev(cpu_values, values.data());
+#    endif
+#  else
+          Assert(false,
+                 ExcMessage(
+                   "This function can only used with dealii::MemorySpace::CUDA "
+                   "if DEAL_II_WITH_CUDA is enabled!"));
+#  endif
+        }
+      else
+        {
+          const int ierr = MPI_Irecv(values.data(),
+                                     values.size() * sizeof(T),
+                                     datatype,
+                                     source,
+                                     tag,
+                                     comm,
+                                     request);
+          (void)ierr;
+          AssertThrowMPI(ierr);
+        }
+#endif
     }
   } // end of namespace MPI
 } // end of namespace Utilities
