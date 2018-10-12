@@ -419,7 +419,8 @@ namespace LinearAlgebra
       resize_val(size);
 
       // delete previous content in import data
-      import_data.reset();
+      import_data.values.reset();
+      import_data.values_dev.reset();
 
       // set partitioner to serial version
       partitioner = std::make_shared<Utilities::MPI::Partitioner>(size);
@@ -463,7 +464,8 @@ namespace LinearAlgebra
       // is only used as temporary storage for compress() and
       // update_ghost_values, and we might have vectors where we never
       // call these methods and hence do not need to have the storage.
-      import_data.reset();
+      import_data.values.reset();
+      import_data.values_dev.reset();
 
       thread_loop_partitioner = v.thread_loop_partitioner;
     }
@@ -520,7 +522,8 @@ namespace LinearAlgebra
       // is only used as temporary storage for compress() and
       // update_ghost_values, and we might have vectors where we never
       // call these methods and hence do not need to have the storage.
-      import_data.reset();
+      import_data.values.reset();
+      import_data.values_dev.reset();
 
       vector_is_ghosted = false;
     }
@@ -531,6 +534,7 @@ namespace LinearAlgebra
     Vector<Number, MemorySpace>::Vector()
       : partitioner(new Utilities::MPI::Partitioner())
       , allocated_size(0)
+      , vector_is_ghosted(false)
     {
       reinit(0);
     }
@@ -878,9 +882,15 @@ namespace LinearAlgebra
       std::lock_guard<std::mutex> lock(mutex);
 
       // allocate import_data in case it is not set up yet
-      if (import_data == nullptr && partitioner->n_import_indices() > 0)
-        import_data =
-          std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
+      if (import_data.values == nullptr && partitioner->n_import_indices() > 0)
+        {
+          Number *new_val;
+          Utilities::System::posix_memalign((void **)&new_val,
+                                            64,
+                                            sizeof(Number) *
+                                              partitioner->n_import_indices());
+          import_data.values.reset(new_val);
+        }
 
 #  ifdef DEAL_II_COMPILER_CUDA_AWARE
       // TODO: for now move the data to the host and then move it back to the
@@ -908,7 +918,8 @@ namespace LinearAlgebra
         counter,
         ArrayView<Number>(data.values.get() + partitioner->local_size(),
                           partitioner->n_ghost_indices()),
-        ArrayView<Number>(import_data.get(), partitioner->n_import_indices()),
+        ArrayView<Number>(import_data.values.get(),
+                          partitioner->n_import_indices()),
         compress_requests);
 #endif
     }
@@ -930,11 +941,12 @@ namespace LinearAlgebra
       // make this function thread safe
       std::lock_guard<std::mutex> lock(mutex);
 
-      Assert(partitioner->n_import_indices() == 0 || import_data != nullptr,
+      Assert(partitioner->n_import_indices() == 0 ||
+               import_data.values != nullptr,
              ExcNotInitialized());
       partitioner->import_from_ghosted_array_finish(
         operation,
-        ArrayView<const Number>(import_data.get(),
+        ArrayView<const Number>(import_data.values.get(),
                                 partitioner->n_import_indices()),
         ArrayView<Number>(data.values.get(), partitioner->local_size()),
         ArrayView<Number>(data.values.get() + partitioner->local_size(),
@@ -978,40 +990,52 @@ namespace LinearAlgebra
       std::lock_guard<std::mutex> lock(mutex);
 
       // allocate import_data in case it is not set up yet
-      if (import_data == nullptr && partitioner->n_import_indices() > 0)
-        import_data =
-          std_cxx14::make_unique<Number[]>(partitioner->n_import_indices());
-
-#  ifdef DEAL_II_COMPILER_CUDA_AWARE
-      // TODO: for now move the data to the host and then move it back to the
-      // the device. We use values to store the elements because the function
-      // uses a view of the array and thus we need the data on the host to
-      // outlive the scope of the function.
-      if (std::is_same<MemorySpace, ::dealii::MemorySpace::CUDA>::value)
+      if (std::is_same<MemorySpace, dealii::MemorySpace::CUDA>::value)
         {
-          Number *new_val;
-          Utilities::System::posix_memalign((void **)&new_val,
-                                            64,
-                                            sizeof(Number) * allocated_size);
-
-          data.values.reset(new_val);
-
-          cudaError_t cuda_error_code =
-            cudaMemcpy(data.values.get(),
-                       data.values_dev.get(),
-                       allocated_size * sizeof(Number),
-                       cudaMemcpyDeviceToHost);
-          AssertCuda(cuda_error_code);
+          if (import_data.values_dev == nullptr &&
+              partitioner->n_import_indices() > 0)
+            import_data.values_dev.reset(
+              Utilities::CUDA::allocate_device_data<Number>(
+                partitioner->n_import_indices()));
         }
-#  endif
+      else
+        {
+          if (import_data.values == nullptr &&
+              partitioner->n_import_indices() > 0)
+            {
+              Number *new_val;
+              Utilities::System::posix_memalign(
+                (void **)&new_val,
+                64,
+                sizeof(Number) * partitioner->n_import_indices());
+              import_data.values.reset(new_val);
+            }
+        }
 
-      partitioner->export_to_ghosted_array_start(
-        counter,
-        ArrayView<const Number>(data.values.get(), partitioner->local_size()),
-        ArrayView<Number>(import_data.get(), partitioner->n_import_indices()),
-        ArrayView<Number>(data.values.get() + partitioner->local_size(),
-                          partitioner->n_ghost_indices()),
-        update_ghost_values_requests);
+      if (std::is_same<MemorySpace, dealii::MemorySpace::Host>::value)
+        {
+          partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
+            counter,
+            ArrayView<const Number>(data.values.get(),
+                                    partitioner->local_size()),
+            ArrayView<Number>(import_data.values.get(),
+                              partitioner->n_import_indices()),
+            ArrayView<Number>(data.values.get() + partitioner->local_size(),
+                              partitioner->n_ghost_indices()),
+            update_ghost_values_requests);
+        }
+      else
+        {
+          partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
+            counter,
+            ArrayView<const Number>(data.values_dev.get(),
+                                    partitioner->local_size()),
+            ArrayView<Number>(import_data.values_dev.get(),
+                              partitioner->n_import_indices()),
+            ArrayView<Number>(data.values_dev.get() + partitioner->local_size(),
+                              partitioner->n_ghost_indices()),
+            update_ghost_values_requests);
+        }
 
 #else
       (void)counter;
@@ -1035,26 +1059,22 @@ namespace LinearAlgebra
           // make this function thread safe
           std::lock_guard<std::mutex> lock(mutex);
 
-          partitioner->export_to_ghosted_array_finish(
-            ArrayView<Number>(data.values.get() + partitioner->local_size(),
-                              partitioner->n_ghost_indices()),
-            update_ghost_values_requests);
+          if (std::is_same<MemorySpace, ::dealii::MemorySpace::Host>::value)
+            {
+              partitioner->export_to_ghosted_array_finish(
+                ArrayView<Number>(data.values.get() + partitioner->local_size(),
+                                  partitioner->n_ghost_indices()),
+                update_ghost_values_requests);
+            }
+          else
+            {
+              partitioner->export_to_ghosted_array_finish(
+                ArrayView<Number>(data.values_dev.get() +
+                                    partitioner->local_size(),
+                                  partitioner->n_ghost_indices()),
+                update_ghost_values_requests);
+            }
         }
-#  ifdef DEAL_II_COMPILER_CUDA_AWARE
-      // TODO For now, the communication is done on the host, so we need to
-      // move the data back to the device.
-      if (std::is_same<MemorySpace, ::dealii::MemorySpace::CUDA>::value)
-        {
-          cudaError_t cuda_error_code =
-            cudaMemcpy(data.values_dev.get() + partitioner->local_size(),
-                       data.values.get() + partitioner->local_size(),
-                       partitioner->n_ghost_indices() * sizeof(Number),
-                       cudaMemcpyHostToDevice);
-          AssertCuda(cuda_error_code);
-
-          data.values.reset();
-        }
-#  endif
 #endif
       vector_is_ghosted = true;
     }
@@ -1881,7 +1901,7 @@ namespace LinearAlgebra
       if (partitioner.use_count() > 0)
         memory +=
           partitioner->memory_consumption() / partitioner.use_count() + 1;
-      if (import_data != nullptr)
+      if (import_data.values != nullptr || import_data.values_dev != nullptr)
         memory += (static_cast<std::size_t>(partitioner->n_import_indices()) *
                    sizeof(Number));
       return memory;
