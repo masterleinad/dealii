@@ -35,7 +35,7 @@ namespace Utilities
 
 #  ifdef DEAL_II_WITH_MPI
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::export_to_ghosted_array_start(
       const unsigned int             communication_channel,
@@ -83,15 +83,13 @@ namespace Utilities
         {
           // allow writing into ghost indices even though we are in a
           // const function
-          const int ierr =
-            MPI_Irecv(ghost_array_ptr,
-                      ghost_targets_data[i].second * sizeof(Number),
-                      MPI_BYTE,
-                      ghost_targets_data[i].first,
-                      ghost_targets_data[i].first + communication_channel,
-                      communicator,
-                      &requests[i]);
-          AssertThrowMPI(ierr);
+          Utilities::MPI::Irecv<Number, MemorySpaceType>(
+            ArrayView<Number>(ghost_array_ptr, ghost_targets_data[i].second),
+            MPI_BYTE,
+            ghost_targets_data[i].first,
+            ghost_targets_data[i].first + communication_channel,
+            communicator,
+            &requests[i]);
           ghost_array_ptr += ghost_targets()[i].second;
         }
 
@@ -106,28 +104,50 @@ namespace Utilities
                              import_indices_chunks_by_rank_data[i + 1];
           unsigned int index = 0;
           for (; my_imports != end_my_imports; ++my_imports)
-            for (unsigned int j = my_imports->first; j < my_imports->second;
-                 j++)
-              temp_array_ptr[index++] = locally_owned_array[j];
+            {
+              const unsigned int chunk_size =
+                my_imports->second - my_imports->first;
+              if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+                {
+#    ifdef DEAL_II_COMPILER_CUDA_AWARE
+                  cudaMemcpy(temp_array_ptr + index,
+                             locally_owned_array.data() + my_imports->first,
+                             chunk_size * sizeof(Number),
+                             cudaMemcpyDeviceToDevice);
+#    else
+                  static_assert(
+                    std::is_same<MemorySpaceType, MemorySpace::Host>::value,
+                    "");
+                  Assert(
+                    false,
+                    ExcMessage(
+                      "This function can only be called with MemeorySpace::CUDA "
+                      "if deal.II was compiled with CUDA support!"));
+#    endif
+                }
+              else
+                std::memcpy(temp_array_ptr + index,
+                            locally_owned_array.data() + my_imports->first,
+                            chunk_size * sizeof(Number));
+              index += chunk_size;
+            }
           AssertDimension(index, import_targets_data[i].second);
 
           // start the send operations
-          const int ierr =
-            MPI_Isend(temp_array_ptr,
-                      import_targets_data[i].second * sizeof(Number),
-                      MPI_BYTE,
-                      import_targets_data[i].first,
-                      my_pid + communication_channel,
-                      communicator,
-                      &requests[n_ghost_targets + i]);
-          AssertThrowMPI(ierr);
+          Utilities::MPI::Isend<Number, MemorySpaceType>(
+            ArrayView<Number>(temp_array_ptr, import_targets_data[i].second),
+            MPI_BYTE,
+            import_targets_data[i].first,
+            my_pid + communication_channel,
+            communicator,
+            &requests[n_ghost_targets + i]);
           temp_array_ptr += import_targets_data[i].second;
         }
     }
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::export_to_ghosted_array_finish(
       const ArrayView<Number> & ghost_array,
@@ -180,7 +200,7 @@ namespace Utilities
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_start(
       const VectorOperation::values vector_operation,
@@ -239,15 +259,13 @@ namespace Utilities
             ExcMessage("Index overflow: Maximum message size in MPI is 2GB. "
                        "The number of ghost entries times the size of 'Number' "
                        "exceeds this value. This is not supported."));
-          const int ierr =
-            MPI_Irecv(temp_array_ptr,
-                      import_targets_data[i].second * sizeof(Number),
-                      MPI_BYTE,
-                      import_targets_data[i].first,
-                      import_targets_data[i].first + channel,
-                      communicator,
-                      &requests[i]);
-          AssertThrowMPI(ierr);
+          Utilities::MPI::Irecv<Number, MemorySpaceType>(
+            ArrayView<Number>(temp_array_ptr, import_targets_data[i].second),
+            MPI_BYTE,
+            import_targets_data[i].first,
+            import_targets_data[i].first + channel,
+            communicator,
+            &requests[i]);
           temp_array_ptr += import_targets_data[i].second;
         }
 
@@ -370,7 +388,7 @@ namespace Utilities
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_finish(
       const VectorOperation::values  vector_operation,
