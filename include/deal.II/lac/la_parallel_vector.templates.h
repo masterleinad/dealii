@@ -1014,27 +1014,35 @@ namespace LinearAlgebra
 
       if (std::is_same<MemorySpace, dealii::MemorySpace::Host>::value)
         {
+          std::cout << "no update_ghost_startj start" << std::endl;
+
           partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
             counter,
-            ArrayView<const Number>(data.values.get(),
-                                    partitioner->local_size()),
-            ArrayView<Number>(import_data.values.get(),
-                              partitioner->n_import_indices()),
-            ArrayView<Number>(data.values.get() + partitioner->local_size(),
-                              partitioner->n_ghost_indices()),
+            ArrayView<const Number, MemorySpace>(data.values.get(),
+                                                 partitioner->local_size()),
+            ArrayView<Number, MemorySpace>(import_data.values.get(),
+                                           partitioner->n_import_indices()),
+            ArrayView<Number, MemorySpace>(data.values.get() +
+                                             partitioner->local_size(),
+                                           partitioner->n_ghost_indices()),
             update_ghost_values_requests);
+          std::cout << "njupdate_ghost_startstart" << std::endl;
+          Assert(false, ExcMessage("WTF"));
         }
       else
         {
+          std::cout << "update_ghost_start start" << std::endl;
           partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
             counter,
-            ArrayView<const Number>(data.values_dev.get(),
-                                    partitioner->local_size()),
-            ArrayView<Number>(import_data.values_dev.get(),
-                              partitioner->n_import_indices()),
-            ArrayView<Number>(data.values_dev.get() + partitioner->local_size(),
-                              partitioner->n_ghost_indices()),
+            ArrayView<const Number, MemorySpace>(data.values_dev.get(),
+                                                 partitioner->local_size()),
+            ArrayView<Number, MemorySpace>(import_data.values_dev.get(),
+                                           partitioner->n_import_indices()),
+            ArrayView<Number, MemorySpace>(data.values_dev.get() +
+                                             partitioner->local_size(),
+                                           partitioner->n_ghost_indices()),
             update_ghost_values_requests);
+          std::cout << "update_ghost_start end" << std::endl;
         }
 
 #else
@@ -1058,21 +1066,26 @@ namespace LinearAlgebra
         {
           // make this function thread safe
           std::lock_guard<std::mutex> lock(mutex);
-
           if (std::is_same<MemorySpace, ::dealii::MemorySpace::Host>::value)
             {
+              std::cout << "no update_ghost_finish start" << std::endl;
+
               partitioner->export_to_ghosted_array_finish(
                 ArrayView<Number>(data.values.get() + partitioner->local_size(),
                                   partitioner->n_ghost_indices()),
                 update_ghost_values_requests);
+              std::cout << "no updatejl;_ghost_finish start" << std::endl;
             }
           else
             {
+              std::cout << "update_ghost_finish start" << std::endl;
+
               partitioner->export_to_ghosted_array_finish(
                 ArrayView<Number>(data.values_dev.get() +
                                     partitioner->local_size(),
                                   partitioner->n_ghost_indices()),
                 update_ghost_values_requests);
+              std::cout << "update_ghost_finish end" << std::endl;
             }
         }
 #endif

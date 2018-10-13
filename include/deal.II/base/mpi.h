@@ -277,9 +277,9 @@ namespace Utilities
      */
     template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
-    sum(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      sums);
+    sum(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      sums);
 
     /**
      * Perform an MPI sum of the entries of a symmetric tensor.
@@ -365,9 +365,9 @@ namespace Utilities
      */
     template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
-    max(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      maxima);
+    max(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      maxima);
 
     /**
      * Return the minimum over all processors of the value @p t. This function
@@ -419,9 +419,9 @@ namespace Utilities
      */
     template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
-    min(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      minima);
+    min(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      minima);
 
     /**
      * A wrapper for MPI_Isend that allows to send data residing in a
@@ -431,12 +431,12 @@ namespace Utilities
      */
     template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
-    Isend(const ArrayView<const T> &values,
-          MPI_Datatype              datatype,
-          int                       destination,
-          int                       tag,
-          MPI_Comm                  comm,
-          MPI_Request *             request);
+    Isend(const ArrayView<const T, MemorySpaceType> &values,
+          MPI_Datatype                               datatype,
+          int                                        destination,
+          int                                        tag,
+          MPI_Comm                                   comm,
+          MPI_Request *                              request);
 
     /**
      * A wrapper for MPI_Irecv that allows to receive data sent by the
@@ -446,12 +446,12 @@ namespace Utilities
      */
     template <typename T, typename MemorySpaceType = dealii::MemorySpace::Host>
     void
-    Irecv(ArrayView<T> values,
-          MPI_Datatype datatype,
-          int          source,
-          int          tag,
-          MPI_Comm     comm,
-          MPI_Request *request);
+    Irecv(ArrayView<T, MemorySpaceType> values,
+          MPI_Datatype                  datatype,
+          int                           source,
+          int                           tag,
+          MPI_Comm                      comm,
+          MPI_Request *                 request);
 
     /**
      * A data structure to store the result of the min_max_avg() function.
@@ -718,10 +718,10 @@ namespace Utilities
       template <typename T,
                 typename MemorySpaceType = dealii::MemorySpace::Host>
       void
-      all_reduce(const MPI_Op &            mpi_op,
-                 const ArrayView<const T> &values,
-                 const MPI_Comm &          mpi_communicator,
-                 const ArrayView<T> &      output);
+      all_reduce(const MPI_Op &                             mpi_op,
+                 const ArrayView<const T, MemorySpaceType> &values,
+                 const MPI_Comm &                           mpi_communicator,
+                 const ArrayView<T, MemorySpaceType> &      output);
     }
 
     // Since these depend on N they must live in the header file
@@ -731,10 +731,10 @@ namespace Utilities
     void
     sum(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&sums)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(sums, N));
+      internal::all_reduce(MPI_SUM,
+                           ArrayView<const T, MemorySpaceType>(values, N),
+                           mpi_communicator,
+                           ArrayView<T, MemorySpaceType>(sums, N));
     }
 
     template <typename T,
@@ -743,10 +743,10 @@ namespace Utilities
     void
     max(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&maxima)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(maxima, N));
+      internal::all_reduce(MPI_MAX,
+                           ArrayView<const T, MemorySpaceType>(values, N),
+                           mpi_communicator,
+                           ArrayView<T, MemorySpaceType>(maxima, N));
     }
 
     template <typename T,
@@ -755,10 +755,10 @@ namespace Utilities
     void
     min(const T (&values)[N], const MPI_Comm &mpi_communicator, T (&minima)[N])
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
-                                               ArrayView<const T>(values, N),
-                                               mpi_communicator,
-                                               ArrayView<T>(minima, N));
+      internal::all_reduce(MPI_MIN,
+                           ArrayView<const T, MemorySpaceType>(values, N),
+                           mpi_communicator,
+                           ArrayView<T, MemorySpaceType>(minima, N));
     }
 
     template <typename T>

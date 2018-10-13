@@ -42,12 +42,12 @@ test()
     nullptr, Utilities::CUDA::delete_device_data<double>);
   dev_array_output_ptr.reset(Utilities::CUDA::allocate_device_data<double>(n));
 
-  ArrayView<double> value_array_view(dev_array_value_ptr.get(), n);
-  ArrayView<double> output_array_view(dev_array_output_ptr.get(), n);
+  const ArrayView<const double, MemorySpace::CUDA> value_array_view(
+    dev_array_value_ptr.get(), n);
+  const ArrayView<double, MemorySpace::CUDA> output_array_view(
+    dev_array_output_ptr.get(), n);
 
-  Utilities::MPI::sum<double, MemorySpace::CUDA>(value_array_view,
-                                                 MPI_COMM_WORLD,
-                                                 output_array_view);
+  Utilities::MPI::sum(value_array_view, MPI_COMM_WORLD, output_array_view);
   Utilities::CUDA::copy_to_host(dev_array_output_ptr.get(), cpu_array);
 
   for (double val : cpu_array)

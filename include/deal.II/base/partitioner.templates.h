@@ -38,11 +38,11 @@ namespace Utilities
     template <typename Number, typename MemorySpaceType>
     void
     Partitioner::export_to_ghosted_array_start(
-      const unsigned int             communication_channel,
-      const ArrayView<const Number> &locally_owned_array,
-      const ArrayView<Number> &      temporary_storage,
-      const ArrayView<Number> &      ghost_array,
-      std::vector<MPI_Request> &     requests) const
+      const unsigned int                              communication_channel,
+      const ArrayView<const Number, MemorySpaceType> &locally_owned_array,
+      const ArrayView<Number, MemorySpaceType> &      temporary_storage,
+      const ArrayView<Number, MemorySpaceType> &      ghost_array,
+      std::vector<MPI_Request> &                      requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices() ||
@@ -83,8 +83,9 @@ namespace Utilities
         {
           // allow writing into ghost indices even though we are in a
           // const function
-          Utilities::MPI::Irecv<Number, MemorySpaceType>(
-            ArrayView<Number>(ghost_array_ptr, ghost_targets_data[i].second),
+          Utilities::MPI::Irecv(
+            ArrayView<Number, MemorySpaceType>(ghost_array_ptr,
+                                               ghost_targets_data[i].second),
             MPI_BYTE,
             ghost_targets_data[i].first,
             ghost_targets_data[i].first + communication_channel,
@@ -134,13 +135,14 @@ namespace Utilities
           AssertDimension(index, import_targets_data[i].second);
 
           // start the send operations
-          Utilities::MPI::Isend<Number, MemorySpaceType>(
-            ArrayView<Number>(temp_array_ptr, import_targets_data[i].second),
-            MPI_BYTE,
-            import_targets_data[i].first,
-            my_pid + communication_channel,
-            communicator,
-            &requests[n_ghost_targets + i]);
+          Utilities::MPI::Isend(ArrayView<const Number, MemorySpaceType>(
+                                  temp_array_ptr,
+                                  import_targets_data[i].second),
+                                MPI_BYTE,
+                                import_targets_data[i].first,
+                                my_pid + communication_channel,
+                                communicator,
+                                &requests[n_ghost_targets + i]);
           temp_array_ptr += import_targets_data[i].second;
         }
     }
@@ -150,8 +152,8 @@ namespace Utilities
     template <typename Number, typename MemorySpaceType>
     void
     Partitioner::export_to_ghosted_array_finish(
-      const ArrayView<Number> & ghost_array,
-      std::vector<MPI_Request> &requests) const
+      const ArrayView<Number, MemorySpaceType> &ghost_array,
+      std::vector<MPI_Request> &                requests) const
     {
       Assert(ghost_array.size() == n_ghost_indices() ||
                ghost_array.size() == n_ghost_indices_in_larger_set,
@@ -203,11 +205,11 @@ namespace Utilities
     template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_start(
-      const VectorOperation::values vector_operation,
-      const unsigned int            communication_channel,
-      const ArrayView<Number> &     ghost_array,
-      const ArrayView<Number> &     temporary_storage,
-      std::vector<MPI_Request> &    requests) const
+      const VectorOperation::values             vector_operation,
+      const unsigned int                        communication_channel,
+      const ArrayView<Number, MemorySpaceType> &ghost_array,
+      const ArrayView<Number, MemorySpaceType> &temporary_storage,
+      std::vector<MPI_Request> &                requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices() ||
@@ -259,8 +261,9 @@ namespace Utilities
             ExcMessage("Index overflow: Maximum message size in MPI is 2GB. "
                        "The number of ghost entries times the size of 'Number' "
                        "exceeds this value. This is not supported."));
-          Utilities::MPI::Irecv<Number, MemorySpaceType>(
-            ArrayView<Number>(temp_array_ptr, import_targets_data[i].second),
+          Utilities::MPI::Irecv(
+            ArrayView<Number, MemorySpaceType>(temp_array_ptr,
+                                               import_targets_data[i].second),
             MPI_BYTE,
             import_targets_data[i].first,
             import_targets_data[i].first + channel,
@@ -391,11 +394,11 @@ namespace Utilities
     template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_finish(
-      const VectorOperation::values  vector_operation,
-      const ArrayView<const Number> &temporary_storage,
-      const ArrayView<Number> &      locally_owned_array,
-      const ArrayView<Number> &      ghost_array,
-      std::vector<MPI_Request> &     requests) const
+      const VectorOperation::values                   vector_operation,
+      const ArrayView<const Number, MemorySpaceType> &temporary_storage,
+      const ArrayView<Number, MemorySpaceType> &      locally_owned_array,
+      const ArrayView<Number, MemorySpaceType> &      ghost_array,
+      std::vector<MPI_Request> &                      requests) const
     {
       AssertDimension(temporary_storage.size(), n_import_indices());
       Assert(ghost_array.size() == n_ghost_indices() ||

@@ -126,10 +126,10 @@ namespace Utilities
 
       template <typename T, typename MemorySpaceType>
       void
-      all_reduce(const MPI_Op &            mpi_op,
-                 const ArrayView<const T> &values,
-                 const MPI_Comm &          mpi_communicator,
-                 const ArrayView<T> &      output)
+      all_reduce(const MPI_Op &                             mpi_op,
+                 const ArrayView<const T, MemorySpaceType> &values,
+                 const MPI_Comm &                           mpi_communicator,
+                 const ArrayView<T, MemorySpaceType> &      output)
       {
         if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
           {
@@ -304,14 +304,11 @@ namespace Utilities
 
     template <typename T, typename MemorySpaceType>
     void
-    sum(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      sums)
+    sum(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      sums)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_SUM,
-                                               values,
-                                               mpi_communicator,
-                                               sums);
+      internal::all_reduce(MPI_SUM, values, mpi_communicator, sums);
     }
 
 
@@ -412,14 +409,11 @@ namespace Utilities
 
     template <typename T, typename MemorySpaceType>
     void
-    max(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      maxima)
+    max(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      maxima)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MAX,
-                                               values,
-                                               mpi_communicator,
-                                               maxima);
+      internal::all_reduce(MPI_MAX, values, mpi_communicator, maxima);
     }
 
 
@@ -457,26 +451,23 @@ namespace Utilities
 
     template <typename T, typename MemorySpaceType>
     void
-    min(const ArrayView<const T> &values,
-        const MPI_Comm &          mpi_communicator,
-        const ArrayView<T> &      minima)
+    min(const ArrayView<const T, MemorySpaceType> &values,
+        const MPI_Comm &                           mpi_communicator,
+        const ArrayView<T, MemorySpaceType> &      minima)
     {
-      internal::all_reduce<T, MemorySpaceType>(MPI_MIN,
-                                               values,
-                                               mpi_communicator,
-                                               minima);
+      internal::all_reduce(MPI_MIN, values, mpi_communicator, minima);
     }
 
 
 
     template <typename T, typename MemorySpaceType>
     void
-    Isend(const ArrayView<const T> &values,
-          MPI_Datatype              datatype,
-          int                       destination,
-          int                       tag,
-          MPI_Comm                  comm,
-          MPI_Request *             request)
+    Isend(const ArrayView<const T, MemorySpaceType> &values,
+          MPI_Datatype                               datatype,
+          int                                        destination,
+          int                                        tag,
+          MPI_Comm                                   comm,
+          MPI_Request *                              request)
     {
 #ifndef DEAL_II_WITH_MPI
       (void)values;
@@ -544,12 +535,12 @@ namespace Utilities
 
     template <typename T, typename MemorySpaceType>
     void
-    Irecv(ArrayView<T> values,
-          MPI_Datatype datatype,
-          int          source,
-          int          tag,
-          MPI_Comm     comm,
-          MPI_Request *request)
+    Irecv(ArrayView<T, MemorySpaceType> values,
+          MPI_Datatype                  datatype,
+          int                           source,
+          int                           tag,
+          MPI_Comm                      comm,
+          MPI_Request *                 request)
     {
 #ifndef DEAL_II_WITH_MPI
       (void)values;
