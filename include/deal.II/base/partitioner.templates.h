@@ -35,7 +35,7 @@ namespace Utilities
 
 #  ifdef DEAL_II_WITH_MPI
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType = MemorySpace::Host>
     void
     Partitioner::export_to_ghosted_array_start(
       const unsigned int             communication_channel,
@@ -105,10 +105,27 @@ namespace Utilities
             end_my_imports = import_indices_data.begin() +
                              import_indices_chunks_by_rank_data[i + 1];
           unsigned int index = 0;
-          for (; my_imports != end_my_imports; ++my_imports)
-            for (unsigned int j = my_imports->first; j < my_imports->second;
-                 j++)
-              temp_array_ptr[index++] = locally_owned_array[j];
+     for (; my_imports != end_my_imports; ++my_imports)
+            {
+              const unsigned int chunk_size =
+                my_imports->second - my_imports->first;
+#if defined(DEAL_II_COMPILER_CUDA_AWARE) && defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+              if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+                {
+                  cudaMemcpy(temp_array_ptr + index,
+                             locally_owned_array.data() + my_imports->first,
+                             chunk_size * sizeof(Number),
+                             cudaMemcpyDeviceToDevice);
+                }
+              else
+#endif
+{
+                std::memcpy(temp_array_ptr + index,
+                            locally_owned_array.data() + my_imports->first,
+                            chunk_size * sizeof(Number));
+}
+              index += chunk_size;
+}
           AssertDimension(index, import_targets_data[i].second);
 
           // start the send operations
