@@ -95,6 +95,7 @@ IF(DEAL_II_WITH_CUDA)
   SET(_separate_src
     ${_separate_src}
     cuda.cu
+    partitioner.cu
   )
 ENDIF()
 
@@ -115,6 +116,7 @@ SET(_inst
   geometric_utilities.inst.in
   mpi.inst.in
   partitioner.inst.in
+  partitioner.cuda.inst.in
   polynomials_rannacher_turek.inst.in
   symmetric_tensor.inst.in
   tensor.inst.in
