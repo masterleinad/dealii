@@ -993,9 +993,10 @@ namespace LinearAlgebra
         {
 #  if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
     defined(DEAL_II_WITH_CUDA_AWARE_MPI)
-          static_assert(
-            std::is_same<MemorySpace, dealii::MemorySpace::CUDA>::value,
-            "Using MemorySpace::CUDA only allowed if the code is compiled with a CUDA compiler!");
+          Assert(
+            (std::is_same<MemorySpace, dealii::MemorySpace::CUDA>::value),
+            ExcMessage(
+              "Using MemorySpace::CUDA only allowed if the code is compiled with a CUDA compiler!"));
           if (import_data.values_dev == nullptr)
             import_data.values_dev.reset(
               Utilities::CUDA::allocate_device_data<Number>(
@@ -1148,7 +1149,7 @@ namespace LinearAlgebra
                       ExcMessage("The communication pattern is not of type "
                                  "Utilities::MPI::Partitioner."));
         }
-      Vector<Number> tmp_vector(comm_pattern);
+      Vector<Number, ::dealii::MemorySpace::Host> tmp_vector(comm_pattern);
 
       data.copy_to(tmp_vector.begin(), local_size());
 
