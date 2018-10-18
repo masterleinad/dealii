@@ -1087,7 +1087,7 @@ namespace LinearAlgebra
 
 #  if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
         defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-      partitioner->export_to_ghosted_array_start(
+      partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
         counter,
         ArrayView<const Number>(data.values.get(), partitioner->local_size()),
         ArrayView<Number>(import_data.values.get(),
@@ -1096,7 +1096,7 @@ namespace LinearAlgebra
                           partitioner->n_ghost_indices()),
         update_ghost_values_requests);
 #  else
-      partitioner->export_to_ghosted_array_start(
+      partitioner->export_to_ghosted_array_start<Number, MemorySpace>(
         counter,
         ArrayView<const Number>(data.values_dev.get(),
                                 partitioner->local_size()),
