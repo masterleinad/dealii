@@ -388,7 +388,7 @@ namespace Utilities
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_finish(
       const VectorOperation::values  vector_operation,
@@ -523,18 +523,34 @@ namespace Utilities
       if (ghost_array.size() > 0)
         {
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
-#    ifdef DEAL_II_WITH_CXX17
-          if constexpr (std::is_trivial<Number>::value)
-#    else
-          if (std::is_trivial<Number>::value)
-#    endif
-            std::memset(ghost_array.data(),
-                        0,
-                        sizeof(Number) * n_ghost_indices());
+
+#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
+      defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+          if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+            {
+              Assert(std::is_trivial<Number>::value, ExcNotImplemented());
+              cudaMemset(ghost_array.data(),
+                         0,
+                         sizeof(Number) * n_ghost_indices());
+            }
           else
-            std::fill(ghost_array.data(),
-                      ghost_array.data() + n_ghost_indices(),
-                      0);
+#    endif
+            {
+#    ifdef DEAL_II_WITH_CXX17
+              if constexpr (std::is_trivial<Number>::value)
+#    else
+            if (std::is_trivial<Number>::value)
+#    endif
+                {
+                  std::memset(ghost_array.data(),
+                              0,
+                              sizeof(Number) * n_ghost_indices());
+                }
+              else
+                std::fill(ghost_array.data(),
+                          ghost_array.data() + n_ghost_indices(),
+                          0);
+            }
         }
 
       // clear the compress requests
@@ -547,7 +563,7 @@ namespace Utilities
 
   } // end of namespace MPI
 
-} // end of namespace Utilities
+} // namespace Utilities
 
 
 DEAL_II_NAMESPACE_CLOSE

@@ -530,7 +530,7 @@ namespace Utilities
        * This functionality is used in
        * LinearAlgebra::distributed::Vector::compress().
        */
-      template <typename Number>
+      template <typename Number, typename MemorySpaceType>          
       void
       import_from_ghosted_array_finish(
         const VectorOperation::values  vector_operation,
