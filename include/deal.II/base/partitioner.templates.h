@@ -20,6 +20,7 @@
 
 #include <deal.II/base/partitioner.h>
 
+#include <deal.II/lac/cuda_kernels.h>
 #include <deal.II/lac/la_parallel_vector.h>
 
 #include <type_traits>
@@ -454,6 +455,8 @@ namespace Utilities
           std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
             my_imports = import_indices_data.begin();
 
+#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
+          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
           // If the operation is no insertion, add the imported data to the
           // local values. For insert, nothing is done here (but in debug mode
           // we assert that the specified value is either zero or matches with
@@ -482,6 +485,29 @@ namespace Utilities
                   read_position++;
                 }
           else
+#    else
+          if (vector_operation == dealii::VectorOperation::add)
+            {
+              for (; my_imports != import_indices_data.end(); ++my_imports)
+                {
+                  const auto chunk_size =
+                    my_imports->second - my_imports->first;
+                  dealii::LinearAlgebra::CUDAWrappers::kernel::
+                    vector_bin_op<Number, kernel::Binop_Addition>
+                    <<<n_blocks, block_size>>>(&locally_owned_array[my_imports],
+                                               read_position,
+                                               chunk_size);
+                  read_position += chunk_size;
+                }
+            }
+
+
+          static_assert(
+            std::is_same<MemorySpaceType, MemorySpace::CUDA>::value,
+            "If we are using the CPU implementation, we should not trigger the restriction");
+          Assert(vector_operation == dealii::VectorOperation::insert,
+                 ExcNotImplemented());
+#    endif
             for (; my_imports != import_indices_data.end(); ++my_imports)
               for (unsigned int j = my_imports->first; j < my_imports->second;
                    j++, read_position++)
