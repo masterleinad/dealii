@@ -161,7 +161,7 @@ MACRO(DEAL_II_SETUP_TARGET _target)
   #
   GET_PROPERTY(_type TARGET ${_target} PROPERTY TYPE)
   IF(NOT "${_type}" STREQUAL "OBJECT_LIBRARY")
-    TARGET_LINK_LIBRARIES(${_target} ${DEAL_II_TARGET_${_build}})
+    TARGET_LINK_LIBRARIES(${_target} ${DEAL_II_TARGET_${_build}} cusparse)
   ENDIF()
 
   #
