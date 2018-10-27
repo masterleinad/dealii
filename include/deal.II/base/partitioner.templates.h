@@ -18,9 +18,10 @@
 
 #include <deal.II/base/config.h>
 
+#include <deal.II/base/cuda_size.h>
 #include <deal.II/base/partitioner.h>
 
-#include <deal.II/lac/cuda_kernels.h>
+#include <deal.II/lac/cuda_kernels.templates.h>
 #include <deal.II/lac/la_parallel_vector.h>
 
 #include <type_traits>
@@ -452,9 +453,6 @@ namespace Utilities
           AssertThrowMPI(ierr);
 
           const Number *read_position = temporary_storage.data();
-          std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-            my_imports = import_indices_data.begin();
-
 #    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
           defined(DEAL_II_WITH_CUDA_AWARE_MPI))
           // If the operation is no insertion, add the imported data to the
@@ -462,13 +460,13 @@ namespace Utilities
           // we assert that the specified value is either zero or matches with
           // the ones already present
           if (vector_operation == dealii::VectorOperation::add)
-            for (; my_imports != import_indices_data.end(); ++my_imports)
-              for (unsigned int j = my_imports->first; j < my_imports->second;
+            for (const auto &import_range : import_indices_data)
+              for (unsigned int j = import_range.first; j < import_range.second;
                    j++)
                 locally_owned_array[j] += *read_position++;
           else if (vector_operation == dealii::VectorOperation::min)
-            for (; my_imports != import_indices_data.end(); ++my_imports)
-              for (unsigned int j = my_imports->first; j < my_imports->second;
+            for (const auto &import_range : import_indices_data)
+              for (unsigned int j = import_range.first; j < import_range.second;
                    j++)
                 {
                   locally_owned_array[j] =
@@ -476,8 +474,8 @@ namespace Utilities
                   read_position++;
                 }
           else if (vector_operation == dealii::VectorOperation::max)
-            for (; my_imports != import_indices_data.end(); ++my_imports)
-              for (unsigned int j = my_imports->first; j < my_imports->second;
+            for (const auto &import_range : import_indices_data)
+              for (unsigned int j = import_range.first; j < import_range.second;
                    j++)
                 {
                   locally_owned_array[j] =
@@ -485,31 +483,8 @@ namespace Utilities
                   read_position++;
                 }
           else
-#    else
-          if (vector_operation == dealii::VectorOperation::add)
-            {
-              for (; my_imports != import_indices_data.end(); ++my_imports)
-                {
-                  const auto chunk_size =
-                    my_imports->second - my_imports->first;
-                  dealii::LinearAlgebra::CUDAWrappers::kernel::
-                    vector_bin_op<Number, kernel::Binop_Addition>
-                    <<<n_blocks, block_size>>>(&locally_owned_array[my_imports],
-                                               read_position,
-                                               chunk_size);
-                  read_position += chunk_size;
-                }
-            }
-
-
-          static_assert(
-            std::is_same<MemorySpaceType, MemorySpace::CUDA>::value,
-            "If we are using the CPU implementation, we should not trigger the restriction");
-          Assert(vector_operation == dealii::VectorOperation::insert,
-                 ExcNotImplemented());
-#    endif
-            for (; my_imports != import_indices_data.end(); ++my_imports)
-              for (unsigned int j = my_imports->first; j < my_imports->second;
+            for (const auto &import_range : import_indices_data)
+              for (unsigned int j = import_range.first; j < import_range.second;
                    j++, read_position++)
                 // Below we use relatively large precision in units in the last
                 // place (ULP) as this Assert can be easily triggered in
@@ -531,6 +506,35 @@ namespace Utilities
                                                          my_pid));
           AssertDimension(read_position - temporary_storage.data(),
                           n_import_indices());
+#    else
+          if (vector_operation == dealii::VectorOperation::add)
+            {
+              for (const auto &import_range : import_indices_data)
+                {
+                  const auto chunk_size =
+                    import_range.second - import_range.first;
+                  const int n_blocks =
+                    1 + (chunk_size - 1) / (::dealii::CUDAWrappers::chunk_size *
+                                            ::dealii::CUDAWrappers::block_size);
+                  dealii::LinearAlgebra::CUDAWrappers::kernel::vector_bin_op<
+                    Number,
+                    dealii::LinearAlgebra::CUDAWrappers::kernel::Binop_Addition>
+                    <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
+                      locally_owned_array.data() + import_range.first,
+                      read_position,
+                      chunk_size);
+                  read_position += chunk_size;
+                }
+            }
+
+
+          static_assert(
+            std::is_same<MemorySpaceType, MemorySpace::CUDA>::value,
+            "If we are using the CPU implementation, we should not trigger the restriction");
+          Assert(vector_operation == dealii::VectorOperation::insert ||
+                   vector_operation == dealii::VectorOperation::add,
+                 ExcNotImplemented());
+#    endif
         }
 
       // wait for the send operations to complete
@@ -589,7 +593,7 @@ namespace Utilities
 
   } // end of namespace MPI
 
-} // namespace Utilities
+} // end of namespace Utilities
 
 
 DEAL_II_NAMESPACE_CLOSE

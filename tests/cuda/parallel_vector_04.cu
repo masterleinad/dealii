@@ -127,10 +127,12 @@ test()
                   ExcInternalError());
     }
 
+  v.print(std::cout);
   // check that all processors get the correct
   // value again, and that it is erased by
   // operator=
   v.update_ghost_values();
+  v.print(std::cout);
 
   Utilities::CUDA::copy_to_host(v.get_values(), v_host);
   AssertThrow(v_host[partitioner->global_to_local(1)] == 2.,
