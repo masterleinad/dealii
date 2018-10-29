@@ -119,6 +119,9 @@ test()
       unsigned int local_index = partitioner->global_to_local(1);
       double *     values_dev  = v.get_values();
       set_value<<<1, 1>>>(values_dev, local_index, 2);
+      Utilities::CUDA::copy_to_host(v.get_values(), v_host);
+      AssertThrow(v_host[partitioner->global_to_local(1)] == 2.,
+                  ExcInternalError());
     }
   if (myid > 0)
     {
@@ -127,6 +130,7 @@ test()
                   ExcInternalError());
     }
 
+  std::cout << "Start" << std::endl;
   v.print(std::cout);
   // check that all processors get the correct
   // value again, and that it is erased by
@@ -152,12 +156,6 @@ test()
 int
 main(int argc, char **argv)
 {
-  Utilities::MPI::MPI_InitFinalize mpi_initialization(
-    argc, argv, testing_max_num_threads());
-
-  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-  deallog.push(Utilities::int_to_string(myid));
-
   Utilities::CUDA::Handle cuda_handle;
   // By default, all the ranks will try to access the device 0. This is fine if
   // we have one rank per node _and_ one gpu per node. If we have multiple GPUs
@@ -166,10 +164,15 @@ main(int argc, char **argv)
   int         n_devices       = 0;
   cudaError_t cuda_error_code = cudaGetDeviceCount(&n_devices);
   AssertCuda(cuda_error_code);
-  int device_id   = myid % n_devices;
+  int device_id   = atoi(getenv("OMPI_COMM_WORLD_LOCAL_RANK")) % n_devices;
   cuda_error_code = cudaSetDevice(device_id);
   AssertCuda(cuda_error_code);
 
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(
+    argc, argv, testing_max_num_threads());
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  deallog.push(Utilities::int_to_string(myid));
 
   if (myid == 0)
     {

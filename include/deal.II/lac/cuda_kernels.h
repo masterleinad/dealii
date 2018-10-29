@@ -26,7 +26,7 @@
 
 #  include <deal.II/lac/cuda_atomic.h>
 
-#include <assert.h>
+#  include <assert.h>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -69,9 +69,9 @@ namespace LinearAlgebra
         }
       };
 
-  template <typename Number>
+      template <typename Number>
       struct Binop_Addition<std::complex<Number>>
-{
+      {
         __device__ static inline std::complex<Number>
         operation(const std::complex<Number> a, const std::complex<Number> b)
         {
@@ -79,7 +79,7 @@ namespace LinearAlgebra
           assert(false);
           return {};
         }
-};
+      };
 
 
 

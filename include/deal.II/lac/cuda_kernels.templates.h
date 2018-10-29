@@ -44,7 +44,7 @@ namespace LinearAlgebra
 
 
 
-      template <typename Number, template<typename> class Binop>
+      template <typename Number, template <typename> class Binop>
       __global__ void
       vector_bin_op(Number *v1, const Number *v2, const size_type N)
       {

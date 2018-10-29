@@ -842,6 +842,7 @@ namespace LinearAlgebra
     Vector<Number, MemorySpaceType>::update_ghost_values() const
     {
       update_ghost_values_start();
+      print(std::cout);
       update_ghost_values_finish();
     }
 
@@ -1090,7 +1091,8 @@ namespace LinearAlgebra
                                                cudaMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
 #  endif
-
+      std::cout << "partitioner->local_size(): " << partitioner->local_size()
+                << std::endl;
 #  if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
         defined(DEAL_II_WITH_CUDA_AWARE_MPI))
       partitioner->export_to_ghosted_array_start<Number, MemorySpaceType>(
@@ -1124,6 +1126,8 @@ namespace LinearAlgebra
     void
     Vector<Number, MemorySpaceType>::update_ghost_values_finish() const
     {
+      std::cout << "before finish" << std::endl;
+      print(std::cout);
 #ifdef DEAL_II_WITH_MPI
       // wait for both sends and receives to complete, even though only
       // receives are really necessary. this gives (much) better performance
@@ -1147,7 +1151,12 @@ namespace LinearAlgebra
                               partitioner->n_ghost_indices()),
             update_ghost_values_requests);
 #  endif
+          std::cout << "after finish" << std::endl;
+          print(std::cout);
         }
+      std::cout << "after finish1" << std::endl;
+      print(std::cout);
+
 
 #  if defined DEAL_II_COMPILER_CUDA_AWARE && \
     !defined  DEAL_II_WITH_CUDA_AWARE_MPI
@@ -1165,6 +1174,8 @@ namespace LinearAlgebra
           data.values.reset();
         }
 #  endif
+      std::cout << "after finish2" << std::endl;
+      print(std::cout);
 
 #endif
       vector_is_ghosted = true;
@@ -2054,12 +2065,12 @@ namespace LinearAlgebra
           if (across)
             for (size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
               out << '(' << partitioner->ghost_indices().nth_index_in_set(i)
-                  << '/' << stored_elements[partitioner->local_size() + i]
+                  << '/' << stored_elements.at(partitioner->local_size() + i)
                   << ") ";
           else
             for (size_type i = 0; i < partitioner->n_ghost_indices(); ++i)
               out << '(' << partitioner->ghost_indices().nth_index_in_set(i)
-                  << '/' << stored_elements[partitioner->local_size() + i]
+                  << '/' << stored_elements.at(partitioner->local_size() + i)
                   << ")" << std::endl;
           out << std::endl;
         }
