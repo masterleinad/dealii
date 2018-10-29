@@ -126,7 +126,7 @@ test1()
   std::vector<double> cpu_values(my_total_size);
   for (unsigned int i = 0; i < my_total_size; ++i)
     {
-      cpu_values[i] = i + 100;
+      cpu_values[i] = i + 10;
     }
   Utilities::CUDA::copy_to_dev(cpu_values, device_memory_pointer);
 
@@ -144,17 +144,11 @@ test1()
                                  1,
                                  MPI_DOUBLE,
                                  0, // source
-                                 0, // channel
+                                 1000, // channel
                                  MPI_COMM_WORLD,
                                  &requests[0]);
       AssertThrowMPI(ierr);
     }
-
-  double *const device_temporary_memory_pointer = [](const std::size_t size) {
-    double *device_ptr;
-    Utilities::CUDA::malloc(device_ptr, size);
-    return device_ptr;
-  }(my_total_size);
 
   if (n_import_targets > 0)
     {
@@ -162,7 +156,7 @@ test1()
                                  1,
                                  MPI_DOUBLE,
                                  1, // destination,
-                                 0, // channel,
+                                 1000, // channel,
                                  MPI_COMM_WORLD,
                                  &requests[0]);
       AssertThrowMPI(ierr);
