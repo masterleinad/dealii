@@ -73,6 +73,85 @@ namespace Utilities
              ExcMessage("Another operation seems to still be running. "
                         "Call update_ghost_values_finish() first."));
 
+// TODO start
+#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
+      defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+      {
+        const unsigned int my_owned_size = 2; // locally_owned_array.size();
+        const unsigned int my_ghost_size = ghost_array.size(); /// TODO
+        const unsigned int my_total_size = my_owned_size + my_ghost_size;
+        double *const      device_memory_pointer = [](const std::size_t size) {
+          double *device_ptr;
+          Utilities::CUDA::malloc(device_ptr, size);
+          return device_ptr;
+        }(my_total_size);
+        {
+          std::vector<double> cpu_values(my_total_size);
+          for (unsigned int i = 0; i < my_total_size; ++i)
+            {
+              cpu_values[i] = i + 10;
+            }
+          Utilities::CUDA::copy_to_dev(cpu_values, device_memory_pointer);
+        }
+
+        double *const device_owned_pointer = device_memory_pointer;
+        double *const device_ghost_pointer =
+          device_memory_pointer + my_owned_size;
+
+        std::vector<MPI_Request> new_requests(n_import_targets +
+                                              n_ghost_targets);
+
+        if (n_ghost_targets > 0)
+          {
+            const int ierr = MPI_Irecv(device_ghost_pointer,
+                                       1,
+                                       MPI_DOUBLE,
+                                       0,    // source
+                                       1000, // channel
+                                       MPI_COMM_WORLD,
+                                       &new_requests[0]);
+            AssertThrowMPI(ierr);
+          }
+
+        if (n_import_targets > 0)
+          {
+            const int ierr = MPI_Isend(device_owned_pointer,
+                                       1,
+                                       MPI_DOUBLE,
+                                       1,    // destination,
+                                       1000, // channel,
+                                       communicator,
+                                       &new_requests[0]);
+            AssertThrowMPI(ierr);
+
+            std::vector<double> cpu_values(1);
+            Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+            for (const auto value : cpu_values)
+              std::cout << value << std::endl;
+          }
+        for (auto request : new_requests)
+          {
+            MPI_Status status;
+            MPI_Wait(&request, &status);
+            int number_amount;
+            MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
+            std::cout << "NEW received " << number_amount << " elements from "
+                      << status.MPI_SOURCE << " with tag " << status.MPI_TAG
+                      << std::endl;
+          }
+
+        std::vector<double> cpu_values(my_total_size);
+        Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+        std::cout << "NEW" << std::endl;
+        for (unsigned int j = 0; j < cpu_values.size(); ++j)
+          std::cout << device_memory_pointer + j << " : " << cpu_values[j]
+                    << std::endl;
+        std::cout << "NEW end" << std::endl;
+      }
+#    endif
+      // TODO end
+
+
       // Need to send and receive the data. Use non-blocking communication,
       // where it is usually less overhead to first initiate the receive and
       // then actually send the data
@@ -111,6 +190,51 @@ namespace Utilities
                     << " to be stored at " << ghost_array_ptr << std::endl;
           ghost_array_ptr += ghost_targets_data[i].second;
         }
+
+
+      /*        // TODO start
+      #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
+            defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+            if (n_import_targets > 0)
+              {
+                const int ierr = MPI_Isend(device_owned_pointer,
+                                           1,
+                                           MPI_DOUBLE,
+                                           1,    // destination,
+                                           1000, // channel,
+                                           communicator,
+                                           &new_requests[0]);
+                AssertThrowMPI(ierr);
+
+                std::vector<Number> cpu_values(1);
+                Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+                for (const auto value : cpu_values)
+                  std::cout << value << std::endl;
+              }
+            for (auto request : new_requests)
+              {
+                MPI_Status status;
+                MPI_Wait(&request, &status);
+                int number_amount;
+                MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
+                std::cout << "NEW received " << number_amount << " elements from
+      "
+                          << status.MPI_SOURCE << " with tag " << status.MPI_TAG
+                          << std::endl;
+              }
+
+            std::vector<Number> cpu_values(locally_owned_array.size() +
+                                           ghost_array.size());
+            Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+            std::cout << "NEW" << std::endl;
+            for (unsigned int j = 0;
+                 j < locally_owned_array.size() + ghost_array.size();
+                 ++j)
+              std::cout << device_memory_pointer + j << " : " << cpu_values[j]
+                        << std::endl;
+            std::cout << "NEW end" << std::endl;
+      #    endif
+            // TODO end*/
 
       Number *temp_array_ptr = temporary_storage.data();
       for (unsigned int i = 0; i < n_import_targets; i++)
@@ -153,6 +277,7 @@ namespace Utilities
                 }
               index += chunk_size;
             }
+
           AssertDimension(index, import_targets_data[i].second);
 
           Assert((std::is_same<Number, double>::value), ExcInternalError());
@@ -169,18 +294,20 @@ namespace Utilities
           AssertThrowMPI(ierr);
           std::cout << "Sending " << import_targets_data[i].second
                     << "elements: \n";
+          {
 #    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
           defined(DEAL_II_WITH_CUDA_AWARE_MPI))
 
-          for (unsigned int j = 0; j < import_targets_data[i].second; ++j)
-            std::cout << temp_array_ptr[j] << std::endl;
+            for (unsigned int j = 0; j < import_targets_data[i].second; ++j)
+              std::cout << temp_array_ptr[j] << std::endl;
 #    else
-          std::vector<Number> cpu_values(import_targets_data[i].second);
-          Utilities::CUDA::copy_to_host(
-            locally_owned_array.data() /*temp_array_ptr*/, cpu_values);
-          for (const auto value : cpu_values)
-            std::cout << value << std::endl;
+            std::vector<Number> cpu_values(import_targets_data[i].second);
+            Utilities::CUDA::copy_to_host(
+              locally_owned_array.data() /*temp_array_ptr*/, cpu_values);
+            for (const auto value : cpu_values)
+              std::cout << value << std::endl;
 #    endif
+          }
           std::cout << "to " << import_targets_data[i].first << " on channel "
                     << my_pid + communication_channel << std::endl;
 
@@ -205,14 +332,16 @@ namespace Utilities
         std::cout << locally_owned_array.data() + j << " : "
                   << *(locally_owned_array.data() + j) << std::endl;
 #    else
-      std::vector<Number> cpu_values(locally_owned_array.size() +
-                                     ghost_array.size());
-      Utilities::CUDA::copy_to_host(locally_owned_array.data(), cpu_values);
-      for (unsigned int j = 0;
-           j < locally_owned_array.size() + ghost_array.size();
-           ++j)
-        std::cout << locally_owned_array.data() + j << " : " << cpu_values[j]
-                  << std::endl;
+      {
+        std::vector<Number> cpu_values(locally_owned_array.size() +
+                                       ghost_array.size());
+        Utilities::CUDA::copy_to_host(locally_owned_array.data(), cpu_values);
+        for (unsigned int j = 0;
+             j < locally_owned_array.size() + ghost_array.size();
+             ++j)
+          std::cout << locally_owned_array.data() + j << " : " << cpu_values[j]
+                    << std::endl;
+      }
 #    endif
       MPI_Barrier(MPI_COMM_WORLD);
     }
