@@ -126,6 +126,11 @@ namespace Utilities
             {
               const unsigned int chunk_size =
                 my_imports->second - my_imports->first;
+              std::cout << "Copying elements [" << my_imports->first << ","
+                        << my_imports->second << "] "
+                        << "from "
+                        << locally_owned_array.data() + my_imports->first
+                        << " to " << temp_array_ptr + index << std::endl;
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
       defined(DEAL_II_WITH_CUDA_AWARE_MPI)
               if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
@@ -153,13 +158,14 @@ namespace Utilities
           Assert((std::is_same<Number, double>::value), ExcInternalError());
 
           // start the send operations
-          const int ierr = MPI_Isend(temp_array_ptr,
-                                     import_targets_data[i].second,
-                                     MPI_DOUBLE,
-                                     import_targets_data[i].first,
-                                     my_pid + communication_channel,
-                                     communicator,
-                                     &requests[n_ghost_targets + i]);
+          const int ierr =
+            MPI_Isend(locally_owned_array.data() /*temp_array_ptr*/,
+                      import_targets_data[i].second,
+                      MPI_DOUBLE,
+                      import_targets_data[i].first,
+                      my_pid + communication_channel,
+                      communicator,
+                      &requests[n_ghost_targets + i]);
           AssertThrowMPI(ierr);
           std::cout << "Sending " << import_targets_data[i].second
                     << "elements: \n";
@@ -170,7 +176,8 @@ namespace Utilities
             std::cout << temp_array_ptr[j] << std::endl;
 #    else
           std::vector<Number> cpu_values(import_targets_data[i].second);
-          Utilities::CUDA::copy_to_host(temp_array_ptr, cpu_values);
+          Utilities::CUDA::copy_to_host(
+            locally_owned_array.data() /*temp_array_ptr*/, cpu_values);
           for (const auto value : cpu_values)
             std::cout << value << std::endl;
 #    endif
