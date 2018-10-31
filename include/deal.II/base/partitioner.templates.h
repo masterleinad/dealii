@@ -77,8 +77,11 @@ namespace Utilities
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
       defined(DEAL_II_WITH_CUDA_AWARE_MPI)
       {
+        const unsigned int my_id =
+          Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
         const unsigned int my_owned_size = 2; // locally_owned_array.size();
-        const unsigned int my_ghost_size = ghost_array.size(); /// TODO
+        const unsigned int my_ghost_size =
+          (my_id == 0) ? 0 : 1; // ghost_array.size(); /// TODO
         const unsigned int my_total_size = my_owned_size + my_ghost_size;
         double *const      device_memory_pointer = [](const std::size_t size) {
           double *device_ptr;
@@ -89,39 +92,68 @@ namespace Utilities
           std::vector<double> cpu_values(my_total_size);
           for (unsigned int i = 0; i < my_total_size; ++i)
             {
-              cpu_values[i] = i + 10;
+              const unsigned int offset = (my_id == 0) ? 10 : 100;
+              cpu_values[i]             = i + offset;
             }
           Utilities::CUDA::copy_to_dev(cpu_values, device_memory_pointer);
+        }
+        {
+          std::vector<double> cpu_values(my_total_size);
+          Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
+          std::cout << "NEW previous" << std::endl;
+          for (unsigned int j = 0; j < cpu_values.size(); ++j)
+            std::cout << device_memory_pointer + j << " : " << cpu_values[j]
+                      << std::endl;
+          std::cout << "NEW end" << std::endl;
         }
 
         double *const device_owned_pointer = device_memory_pointer;
         double *const device_ghost_pointer =
           device_memory_pointer + my_owned_size;
 
-        std::vector<MPI_Request> new_requests(n_import_targets +
-                                              n_ghost_targets);
+        const unsigned int n_import_targets = (my_id == 0) ? 1 : 0;
+        const unsigned int n_ghost_targets  = (my_id == 0) ? 0 : 1;
+
+        std::vector<MPI_Request> new_requests(0);
 
         if (n_ghost_targets > 0)
           {
-            const int ierr = MPI_Irecv(device_ghost_pointer,
-                                       1,
-                                       MPI_DOUBLE,
-                                       0,    // source
-                                       1000, // channel
-                                       MPI_COMM_WORLD,
-                                       &new_requests[0]);
+            cudaPointerAttributes attributes;
+            const cudaError_t     cuda_error =
+              cudaPointerGetAttributes(&attributes, device_ghost_pointer);
+            std::cout << "NEW Receiving on device: " << attributes.device
+                      << " at " << device_ghost_pointer << std::endl;
+            MPI_Status status;
+            const int  ierr = MPI_Recv(device_ghost_pointer,
+                                      1,
+                                      MPI_DOUBLE,
+                                      0,    // source
+                                      1000, // channel
+                                      MPI_COMM_WORLD,
+                                      &status);
+            //                                      &new_requests[0]);
+            int number_amount;
+            MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
+            std::cout << "NEW received " << number_amount << " elements from "
+                      << status.MPI_SOURCE << " with tag " << status.MPI_TAG
+                      << std::endl;
             AssertThrowMPI(ierr);
           }
 
         if (n_import_targets > 0)
           {
-            const int ierr = MPI_Isend(device_owned_pointer,
+            cudaPointerAttributes attributes;
+            const cudaError_t     cuda_error =
+              cudaPointerGetAttributes(&attributes, device_owned_pointer);
+            std::cout << "NEW Sending from device: " << attributes.device
+                      << " at " << device_owned_pointer << std::endl;
+            const int ierr = MPI_Send(device_owned_pointer,
                                        1,
                                        MPI_DOUBLE,
                                        1,    // destination,
                                        1000, // channel,
-                                       communicator,
-                                       &new_requests[0]);
+                                       MPI_COMM_WORLD/*,
+                                       &new_requests[0]*/);
             AssertThrowMPI(ierr);
 
             std::vector<double> cpu_values(1);
@@ -141,7 +173,7 @@ namespace Utilities
           }
 
         std::vector<double> cpu_values(my_total_size);
-        Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+        Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
         std::cout << "NEW" << std::endl;
         for (unsigned int j = 0; j < cpu_values.size(); ++j)
           std::cout << device_memory_pointer + j << " : " << cpu_values[j]
@@ -916,7 +948,7 @@ namespace Utilities
 #  endif // ifdef DEAL_II_WITH_MPI
 #endif   // ifndef DOXYGEN
 
-  } // end of namespace MPI
+  } // namespace MPI
 
 } // end of namespace Utilities
 

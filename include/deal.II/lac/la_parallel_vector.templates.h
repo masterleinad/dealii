@@ -472,7 +472,116 @@ namespace LinearAlgebra
       thread_loop_partitioner = v.thread_loop_partitioner;
     }
 
+#if defined(DEAL_II_COMPILER_CUDA_AWARE) && defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+    void
+    test_cuda()
+    {
+      const unsigned int my_id =
+        Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+      const unsigned int my_owned_size = 2; // locally_owned_array.size();
+      const unsigned int my_ghost_size =
+        (my_id == 0) ? 0 : 1; // ghost_array.size(); /// TODO
+      const unsigned int my_total_size         = my_owned_size + my_ghost_size;
+      double *const      device_memory_pointer = [](const std::size_t size) {
+        double *device_ptr;
+        Utilities::CUDA::malloc(device_ptr, size);
+        return device_ptr;
+      }(my_total_size);
+      {
+        std::vector<double> cpu_values(my_total_size);
+        for (unsigned int i = 0; i < my_total_size; ++i)
+          {
+            const unsigned int offset = (my_id == 0) ? 10 : 100;
+            cpu_values[i]             = i + offset;
+          }
+        Utilities::CUDA::copy_to_dev(cpu_values, device_memory_pointer);
+      }
+      {
+        std::vector<double> cpu_values(my_total_size);
+        Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
+        std::cout << "NEW previous" << std::endl;
+        for (unsigned int j = 0; j < cpu_values.size(); ++j)
+          std::cout << device_memory_pointer + j << " : " << cpu_values[j]
+                    << std::endl;
+        std::cout << "NEW end" << std::endl;
+      }
 
+      double *const device_owned_pointer = device_memory_pointer;
+      double *const device_ghost_pointer =
+        device_memory_pointer + my_owned_size;
+
+      const unsigned int n_import_targets = (my_id == 0) ? 1 : 0;
+      const unsigned int n_ghost_targets  = (my_id == 0) ? 0 : 1;
+
+      std::vector<MPI_Request> new_requests(
+        0); // n_import_targets + n_ghost_targets);
+
+      if (n_ghost_targets > 0)
+        {
+          cudaPointerAttributes attributes;
+          const cudaError_t     cuda_error =
+            cudaPointerGetAttributes(&attributes, device_ghost_pointer);
+          std::cout << "NEW Receiving on device: " << attributes.device
+                    << " at " << device_ghost_pointer << std::endl;
+          MPI_Status status;
+          const int  ierr = MPI_Recv(device_ghost_pointer,
+                                    1,
+                                    MPI_DOUBLE,
+                                    0,    // source
+                                    1234, // channel
+                                    MPI_COMM_WORLD,
+                                    &status); //&new_requests[0]
+          int        number_amount;
+          MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
+          std::cout << "NEW received " << number_amount << " elements from "
+                    << status.MPI_SOURCE << " with tag " << status.MPI_TAG
+                    << std::endl;
+          AssertThrowMPI(ierr);
+        }
+
+      if (n_import_targets > 0)
+        {
+          cudaPointerAttributes attributes;
+          const cudaError_t     cuda_error =
+            cudaPointerGetAttributes(&attributes, device_owned_pointer);
+          std::cout << "NEW Sending from device: " << attributes.device
+                    << " at " << device_owned_pointer << std::endl;
+          const int ierr = MPI_Send(device_owned_pointer,
+                                  1,
+                                  MPI_DOUBLE,
+                                  1,    // destination,
+                                  1234, // channel,
+                                  MPI_COMM_WORLD/*,
+                                  &new_requests[0]*/);
+          AssertThrowMPI(ierr);
+
+          std::vector<double> cpu_values(1);
+          Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
+          for (const auto value : cpu_values)
+            std::cout << value << std::endl;
+        }
+      for (auto request : new_requests)
+        {
+          MPI_Status status;
+          MPI_Wait(&request, &status);
+          int number_amount;
+          MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
+          std::cout << "NEW received " << number_amount << " elements from "
+                    << status.MPI_SOURCE << " with tag " << status.MPI_TAG
+                    << std::endl;
+        }
+
+      std::vector<double> cpu_values(my_total_size);
+      Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
+      std::cout << "NEW" << std::endl;
+      for (unsigned int j = 0; j < cpu_values.size(); ++j)
+        std::cout << device_memory_pointer + j << " : " << cpu_values[j]
+                  << std::endl;
+      std::cout << "NEW end" << std::endl;
+      const cudaError_t error_code = cudaFree(device_memory_pointer);
+      AssertCuda(error_code);
+    }
+#endif
 
     template <typename Number, typename MemorySpaceType>
     void
@@ -481,12 +590,37 @@ namespace LinearAlgebra
       const IndexSet &ghost_indices,
       const MPI_Comm  communicator)
     {
+#if defined(DEAL_II_COMPILER_CUDA_AWARE) && defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        {
+          std::cout << "begin test" << std::endl;
+          test_cuda();
+        }
+#endif
+
       // set up parallel partitioner with index sets and communicator
       std::shared_ptr<const Utilities::MPI::Partitioner> new_partitioner(
         new Utilities::MPI::Partitioner(locally_owned_indices,
                                         ghost_indices,
                                         communicator));
+
+#if defined(DEAL_II_COMPILER_CUDA_AWARE) && defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        {
+          std::cout << "middle test" << std::endl;
+          test_cuda();
+        }
+#endif
+
       reinit(new_partitioner);
+
+#if defined(DEAL_II_COMPILER_CUDA_AWARE) && defined(DEAL_II_WITH_CUDA_AWARE_MPI)
+      if (std::is_same<MemorySpaceType, dealii::MemorySpace::CUDA>::value)
+        {
+          std::cout << "end test" << std::endl;
+          //    test_cuda();
+        }
+#endif
     }
 
 
