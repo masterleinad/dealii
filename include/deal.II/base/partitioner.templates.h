@@ -54,17 +54,7 @@ namespace Utilities
                                             n_ghost_indices_in_larger_set));
 
       const unsigned int n_import_targets = import_targets_data.size();
-      std::cout << "n_import_targets: " << n_import_targets << std::endl;
-      const unsigned int n_ghost_targets = ghost_targets_data.size();
-      std::cout << "n_ghost_targets: " << n_ghost_targets << std::endl;
-      std::cout << "locally_owned_array starts at "
-                << locally_owned_array.data() << std::endl;
-      std::cout << "temporary_storage starts at " << temporary_storage.data()
-                << std::endl;
-      std::cout << "ghost_array starts at " << ghost_array.data() << std::endl;
-      std::cout << "pointer diff "
-                << ghost_array.data() - locally_owned_array.data() << std::endl;
-      std::cout << "sizeof(Number): " << sizeof(Number) << std::endl;
+      const unsigned int n_ghost_targets  = ghost_targets_data.size();
 
       if (n_import_targets > 0)
         AssertDimension(locally_owned_array.size(), local_size());
@@ -72,117 +62,6 @@ namespace Utilities
       Assert(requests.size() == 0,
              ExcMessage("Another operation seems to still be running. "
                         "Call update_ghost_values_finish() first."));
-
-// TODO start
-#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_WITH_CUDA_AWARE_MPI)
-      {
-        const unsigned int my_id =
-          Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
-        const unsigned int my_owned_size = 2; // locally_owned_array.size();
-        const unsigned int my_ghost_size =
-          (my_id == 0) ? 0 : 1; // ghost_array.size(); /// TODO
-        const unsigned int my_total_size = my_owned_size + my_ghost_size;
-        double *const      device_memory_pointer = [](const std::size_t size) {
-          double *device_ptr;
-          Utilities::CUDA::malloc(device_ptr, size);
-          return device_ptr;
-        }(my_total_size);
-        {
-          std::vector<double> cpu_values(my_total_size);
-          for (unsigned int i = 0; i < my_total_size; ++i)
-            {
-              const unsigned int offset = (my_id == 0) ? 10 : 100;
-              cpu_values[i]             = i + offset;
-            }
-          Utilities::CUDA::copy_to_dev(cpu_values, device_memory_pointer);
-        }
-        {
-          std::vector<double> cpu_values(my_total_size);
-          Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
-          std::cout << "NEW previous" << std::endl;
-          for (unsigned int j = 0; j < cpu_values.size(); ++j)
-            std::cout << device_memory_pointer + j << " : " << cpu_values[j]
-                      << std::endl;
-          std::cout << "NEW end" << std::endl;
-        }
-
-        double *const device_owned_pointer = device_memory_pointer;
-        double *const device_ghost_pointer =
-          device_memory_pointer + my_owned_size;
-
-        const unsigned int n_import_targets = (my_id == 0) ? 1 : 0;
-        const unsigned int n_ghost_targets  = (my_id == 0) ? 0 : 1;
-
-        std::vector<MPI_Request> new_requests(0);
-
-        if (n_ghost_targets > 0)
-          {
-            cudaPointerAttributes attributes;
-            const cudaError_t     cuda_error =
-              cudaPointerGetAttributes(&attributes, device_ghost_pointer);
-            std::cout << "NEW Receiving on device: " << attributes.device
-                      << " at " << device_ghost_pointer << std::endl;
-            MPI_Status status;
-            const int  ierr = MPI_Recv(device_ghost_pointer,
-                                      1,
-                                      MPI_DOUBLE,
-                                      0,    // source
-                                      1000, // channel
-                                      MPI_COMM_WORLD,
-                                      &status);
-            //                                      &new_requests[0]);
-            int number_amount;
-            MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
-            std::cout << "NEW received " << number_amount << " elements from "
-                      << status.MPI_SOURCE << " with tag " << status.MPI_TAG
-                      << std::endl;
-            AssertThrowMPI(ierr);
-          }
-
-        if (n_import_targets > 0)
-          {
-            cudaPointerAttributes attributes;
-            const cudaError_t     cuda_error =
-              cudaPointerGetAttributes(&attributes, device_owned_pointer);
-            std::cout << "NEW Sending from device: " << attributes.device
-                      << " at " << device_owned_pointer << std::endl;
-            const int ierr = MPI_Send(device_owned_pointer,
-                                       1,
-                                       MPI_DOUBLE,
-                                       1,    // destination,
-                                       1000, // channel,
-                                       MPI_COMM_WORLD/*,
-                                       &new_requests[0]*/);
-            AssertThrowMPI(ierr);
-
-            std::vector<double> cpu_values(1);
-            Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
-            for (const auto value : cpu_values)
-              std::cout << value << std::endl;
-          }
-        for (auto request : new_requests)
-          {
-            MPI_Status status;
-            MPI_Wait(&request, &status);
-            int number_amount;
-            MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
-            std::cout << "NEW received " << number_amount << " elements from "
-                      << status.MPI_SOURCE << " with tag " << status.MPI_TAG
-                      << std::endl;
-          }
-
-        std::vector<double> cpu_values(my_total_size);
-        Utilities::CUDA::copy_to_host(device_memory_pointer, cpu_values);
-        std::cout << "NEW" << std::endl;
-        for (unsigned int j = 0; j < cpu_values.size(); ++j)
-          std::cout << device_memory_pointer + j << " : " << cpu_values[j]
-                    << std::endl;
-        std::cout << "NEW end" << std::endl;
-      }
-#    endif
-      // TODO end
-
 
       // Need to send and receive the data. Use non-blocking communication,
       // where it is usually less overhead to first initiate the receive and
@@ -208,65 +87,15 @@ namespace Utilities
           // const function
           const int ierr =
             MPI_Irecv(ghost_array_ptr,
-                      ghost_targets_data[i].second,
-                      MPI_DOUBLE,
+                      ghost_targets_data[i].second * sizeof(Number),
+                      MPI_BYTE,
                       ghost_targets_data[i].first,
                       ghost_targets_data[i].first + communication_channel,
                       communicator,
                       &requests[i]);
           AssertThrowMPI(ierr);
-          std::cout << "Receiving " << ghost_targets_data[i].second
-                    << " values from " << ghost_targets_data[i].first
-                    << " on channel "
-                    << ghost_targets_data[i].first + communication_channel
-                    << " to be stored at " << ghost_array_ptr << std::endl;
           ghost_array_ptr += ghost_targets_data[i].second;
         }
-
-
-      /*        // TODO start
-      #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-            defined(DEAL_II_WITH_CUDA_AWARE_MPI)
-            if (n_import_targets > 0)
-              {
-                const int ierr = MPI_Isend(device_owned_pointer,
-                                           1,
-                                           MPI_DOUBLE,
-                                           1,    // destination,
-                                           1000, // channel,
-                                           communicator,
-                                           &new_requests[0]);
-                AssertThrowMPI(ierr);
-
-                std::vector<Number> cpu_values(1);
-                Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
-                for (const auto value : cpu_values)
-                  std::cout << value << std::endl;
-              }
-            for (auto request : new_requests)
-              {
-                MPI_Status status;
-                MPI_Wait(&request, &status);
-                int number_amount;
-                MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
-                std::cout << "NEW received " << number_amount << " elements from
-      "
-                          << status.MPI_SOURCE << " with tag " << status.MPI_TAG
-                          << std::endl;
-              }
-
-            std::vector<Number> cpu_values(locally_owned_array.size() +
-                                           ghost_array.size());
-            Utilities::CUDA::copy_to_host(device_owned_pointer, cpu_values);
-            std::cout << "NEW" << std::endl;
-            for (unsigned int j = 0;
-                 j < locally_owned_array.size() + ghost_array.size();
-                 ++j)
-              std::cout << device_memory_pointer + j << " : " << cpu_values[j]
-                        << std::endl;
-            std::cout << "NEW end" << std::endl;
-      #    endif
-            // TODO end*/
 
       Number *temp_array_ptr = temporary_storage.data();
       for (unsigned int i = 0; i < n_import_targets; i++)
@@ -282,11 +111,6 @@ namespace Utilities
             {
               const unsigned int chunk_size =
                 my_imports->second - my_imports->first;
-              std::cout << "Copying elements [" << my_imports->first << ","
-                        << my_imports->second << "] "
-                        << "from "
-                        << locally_owned_array.data() + my_imports->first
-                        << " to " << temp_array_ptr + index << std::endl;
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
       defined(DEAL_II_WITH_CUDA_AWARE_MPI)
               if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
@@ -297,7 +121,6 @@ namespace Utilities
                                chunk_size * sizeof(Number),
                                cudaMemcpyDeviceToDevice);
                   AssertCuda(cuda_error_code);
-                  std::cout << "CUDA" << std::endl;
                 }
               else
 #    endif
@@ -305,77 +128,24 @@ namespace Utilities
                   std::memcpy(temp_array_ptr + index,
                               locally_owned_array.data() + my_imports->first,
                               chunk_size * sizeof(Number));
-                  std::cout << "CPU" << std::endl;
                 }
               index += chunk_size;
             }
 
           AssertDimension(index, import_targets_data[i].second);
 
-          Assert((std::is_same<Number, double>::value), ExcInternalError());
-
           // start the send operations
           const int ierr =
-            MPI_Isend(locally_owned_array.data() /*temp_array_ptr*/,
-                      import_targets_data[i].second,
-                      MPI_DOUBLE,
+            MPI_Isend(temp_array_ptr,
+                      import_targets_data[i].second * sizeof(Number),
+                      MPI_BYTE,
                       import_targets_data[i].first,
                       my_pid + communication_channel,
                       communicator,
                       &requests[n_ghost_targets + i]);
           AssertThrowMPI(ierr);
-          std::cout << "Sending " << import_targets_data[i].second
-                    << "elements: \n";
-          {
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-
-            for (unsigned int j = 0; j < import_targets_data[i].second; ++j)
-              std::cout << temp_array_ptr[j] << std::endl;
-#    else
-            std::vector<Number> cpu_values(import_targets_data[i].second);
-            Utilities::CUDA::copy_to_host(
-              locally_owned_array.data() /*temp_array_ptr*/, cpu_values);
-            for (const auto value : cpu_values)
-              std::cout << value << std::endl;
-#    endif
-          }
-          std::cout << "to " << import_targets_data[i].first << " on channel "
-                    << my_pid + communication_channel << std::endl;
-
           temp_array_ptr += import_targets_data[i].second;
         }
-      for (auto request : requests)
-        {
-          MPI_Status status;
-          MPI_Wait(&request, &status);
-          int number_amount;
-          MPI_Get_count(&status, MPI_DOUBLE, &number_amount);
-          std::cout << "received " << number_amount << " elements from "
-                    << status.MPI_SOURCE << " with tag " << status.MPI_TAG
-                    << std::endl;
-        }
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-
-      for (unsigned int j = 0;
-           j < locally_owned_array.size() + ghost_array.size();
-           ++j)
-        std::cout << locally_owned_array.data() + j << " : "
-                  << *(locally_owned_array.data() + j) << std::endl;
-#    else
-      {
-        std::vector<Number> cpu_values(locally_owned_array.size() +
-                                       ghost_array.size());
-        Utilities::CUDA::copy_to_host(locally_owned_array.data(), cpu_values);
-        for (unsigned int j = 0;
-             j < locally_owned_array.size() + ghost_array.size();
-             ++j)
-          std::cout << locally_owned_array.data() + j << " : " << cpu_values[j]
-                    << std::endl;
-      }
-#    endif
-      MPI_Barrier(MPI_COMM_WORLD);
     }
 
 
@@ -684,41 +454,6 @@ namespace Utilities
             MPI_Waitall(n_import_targets, requests.data(), MPI_STATUSES_IGNORE);
           AssertThrowMPI(ierr);
 
-          {
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-            std::cout << "temporary storage" << std::endl;
-            for (const auto value : temporary_storage)
-              std::cout << value << std::endl;
-            std::cout << "owned values" << std::endl;
-            for (const auto value : locally_owned_array)
-              std::cout << value << std::endl;
-            std::cout << "ghost values" << std::endl;
-            for (const auto value : ghost_array)
-              std::cout << value << std::endl;
-#    else
-            std::vector<Number> cpu_values_temp(temporary_storage.size());
-            Utilities::CUDA::copy_to_host(temporary_storage.data(),
-                                          cpu_values_temp);
-            std::cout << "temporary storage" << std::endl;
-            for (const auto value : cpu_values_temp)
-              std::cout << value << std::endl;
-
-            std::vector<Number> cpu_values_owned(locally_owned_array.size());
-            Utilities::CUDA::copy_to_host(locally_owned_array.data(),
-                                          cpu_values_owned);
-            std::cout << "owned values" << std::endl;
-            for (const auto value : cpu_values_owned)
-              std::cout << value << std::endl;
-
-            std::vector<Number> cpu_values_ghost(ghost_array.size());
-            Utilities::CUDA::copy_to_host(ghost_array.data(), cpu_values_ghost);
-            std::cout << "ghost values" << std::endl;
-            for (const auto value : cpu_values_ghost)
-              std::cout << value << std::endl;
-#    endif
-          }
-
           const Number *read_position = temporary_storage.data();
 #    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
           defined(DEAL_II_WITH_CUDA_AWARE_MPI))
@@ -730,11 +465,7 @@ namespace Utilities
             for (const auto &import_range : import_indices_data)
               for (unsigned int j = import_range.first; j < import_range.second;
                    j++)
-                {
-                  locally_owned_array[j] += *read_position++;
-                  std::cout << "locally_owned_array[" << j
-                            << "]: " << locally_owned_array[j] << std::endl;
-                }
+                locally_owned_array[j] += *read_position++;
           else if (vector_operation == dealii::VectorOperation::min)
             for (const auto &import_range : import_indices_data)
               for (unsigned int j = import_range.first; j < import_range.second;
@@ -775,9 +506,6 @@ namespace Utilities
                          Number>::ExcNonMatchingElements(*read_position,
                                                          locally_owned_array[j],
                                                          my_pid));
-          std::cout << "CPU values " << std::endl;
-          for (const auto value : locally_owned_array)
-            std::cout << value << std::endl;
 #    else
           if (vector_operation == dealii::VectorOperation::add)
             {
@@ -818,48 +546,10 @@ namespace Utilities
           Assert(vector_operation == dealii::VectorOperation::insert ||
                    vector_operation == dealii::VectorOperation::add,
                  ExcNotImplemented());
-          std::vector<Number> cpu_values(locally_owned_array.size());
-          Utilities::CUDA::copy_to_host(locally_owned_array.data(), cpu_values);
-          std::cout << "CPU values" << std::endl;
-          for (const auto value : cpu_values)
-            std::cout << value << std::endl;
 #    endif
           AssertDimension(read_position - temporary_storage.data(),
                           n_import_indices());
         }
-
-      {
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-        std::cout << "temporary storage" << std::endl;
-        for (const auto value : temporary_storage)
-          std::cout << value << std::endl;
-        std::cout << "owned values" << std::endl;
-        for (const auto value : locally_owned_array)
-          std::cout << value << std::endl;
-        std::cout << "ghost values" << std::endl;
-        for (const auto value : ghost_array)
-          std::cout << value << std::endl;
-#    else
-        std::vector<Number> cpu_values_temp(temporary_storage.size());
-        Utilities::CUDA::copy_to_host(temporary_storage.data(),
-                                      cpu_values_temp);
-        std::cout << "temporary storage" << std::endl;
-        for (const auto value : cpu_values_temp)
-          std::cout << value << std::endl;
-        std::vector<Number> cpu_values_owned(locally_owned_array.size());
-        Utilities::CUDA::copy_to_host(locally_owned_array.data(),
-                                      cpu_values_owned);
-        std::cout << "owned values" << std::endl;
-        for (const auto value : cpu_values_owned)
-          std::cout << value << std::endl;
-        std::vector<Number> cpu_values_ghost(ghost_array.size());
-        Utilities::CUDA::copy_to_host(ghost_array.data(), cpu_values_ghost);
-        std::cout << "ghost values" << std::endl;
-        for (const auto value : cpu_values_ghost)
-          std::cout << value << std::endl;
-#    endif
-      }
 
       // wait for the send operations to complete
       if (requests.size() > 0 && n_ghost_targets > 0)
@@ -909,39 +599,6 @@ namespace Utilities
 
       // clear the compress requests
       requests.resize(0);
-
-      {
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_WITH_CUDA_AWARE_MPI))
-        std::cout << "temporary storage" << std::endl;
-        for (const auto value : temporary_storage)
-          std::cout << value << std::endl;
-        std::cout << "owned values" << std::endl;
-        for (const auto value : locally_owned_array)
-          std::cout << value << std::endl;
-        std::cout << "ghost values" << std::endl;
-        for (const auto value : ghost_array)
-          std::cout << value << std::endl;
-#    else
-        std::vector<Number> cpu_values_temp(temporary_storage.size());
-        Utilities::CUDA::copy_to_host(temporary_storage.data(),
-                                      cpu_values_temp);
-        std::cout << "temporary storage" << std::endl;
-        for (const auto value : cpu_values_temp)
-          std::cout << value << std::endl;
-        std::vector<Number> cpu_values_owned(locally_owned_array.size());
-        Utilities::CUDA::copy_to_host(locally_owned_array.data(),
-                                      cpu_values_owned);
-        std::cout << "owned values" << std::endl;
-        for (const auto value : cpu_values_owned)
-          std::cout << value << std::endl;
-        std::vector<Number> cpu_values_ghost(ghost_array.size());
-        Utilities::CUDA::copy_to_host(ghost_array.data(), cpu_values_ghost);
-        std::cout << "ghost values" << std::endl;
-        for (const auto value : cpu_values_ghost)
-          std::cout << value << std::endl;
-#    endif
-      }
     }
 
 
@@ -950,7 +607,7 @@ namespace Utilities
 
   } // namespace MPI
 
-} // end of namespace Utilities
+} // namespace Utilities
 
 
 DEAL_II_NAMESPACE_CLOSE

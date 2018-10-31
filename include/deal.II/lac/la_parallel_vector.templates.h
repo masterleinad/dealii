@@ -2232,8 +2232,8 @@ namespace LinearAlgebra
       out.precision(old_precision);
     }
 
-  } // namespace distributed
-} // namespace LinearAlgebra
+  } // end of namespace distributed
+} // end of namespace LinearAlgebra
 
 
 DEAL_II_NAMESPACE_CLOSE
