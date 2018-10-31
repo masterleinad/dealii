@@ -605,9 +605,9 @@ namespace Utilities
 #  endif // ifdef DEAL_II_WITH_MPI
 #endif   // ifndef DOXYGEN
 
-  } // namespace MPI
+  } // end of namespace MPI
 
-} // namespace Utilities
+} // end of namespace Utilities
 
 
 DEAL_II_NAMESPACE_CLOSE

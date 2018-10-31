@@ -54,11 +54,7 @@ namespace LinearAlgebra
           {
             const size_type idx = idx_base + i * block_size;
             if (idx < N)
-              {
-                printf("Input %f and %f at %d\n.", idx, v1[idx], v2[idx]);
-                v1[idx] = Binop<Number>::operation(v1[idx], v2[idx]);
-                printf("Output at %d is %f.\n", idx, v1[idx]);
-              }
+              v1[idx] = Binop<Number>::operation(v1[idx], v2[idx]);
           }
       }
 
