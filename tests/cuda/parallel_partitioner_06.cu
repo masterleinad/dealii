@@ -141,10 +141,12 @@ test()
 
   // send only the array in w
   cudaError_t cuda_error =
-    cudaMemset(ghosts_view.data(), 0, ghosts_view.size()*sizeof(unsigned int));
+    cudaMemset(ghosts_view.data(),
+               0,
+               ghosts_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);
 
-  Assert(temp_array_view.size() > w.n_import_indices(), ExcInternalError());
+  Assert(temp_array_view.size() >= w.n_import_indices(), ExcInternalError());
   ArrayView<unsigned int> temp_array_view_w(temp_array_view.data(),
                                             w.n_import_indices());
   w.export_to_ghosted_array_start<unsigned int, MemorySpace::CUDA>(
@@ -174,10 +176,12 @@ test()
   deallog << "Ghosts on reduced 1: ";
   print_cuda_view(ghosts_view);
 
-  cuda_error = cudaMemset(ghosts_view.data(), 0, ghosts_view.size()*sizeof(unsigned int));
+  cuda_error = cudaMemset(ghosts_view.data(),
+                          0,
+                          ghosts_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);
 
-  Assert(temp_array_view.size() > x.n_import_indices(), ExcInternalError());
+  Assert(temp_array_view.size() >= x.n_import_indices(), ExcInternalError());
   ArrayView<unsigned int> temp_array_view_x(temp_array_view.data(),
                                             x.n_import_indices());
   x.export_to_ghosted_array_start<unsigned int, MemorySpace::CUDA>(
