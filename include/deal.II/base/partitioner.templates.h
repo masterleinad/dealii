@@ -188,13 +188,40 @@ namespace Utilities
                 {
                   const unsigned int chunk_size =
                     ghost_range.second - ghost_range.first;
-                  std::copy(ghost_array.data() + offset,
-                            ghost_array.data() + offset + chunk_size,
-                            ghost_array.data() + ghost_range.first);
-                  std::fill(ghost_array.data() +
-                              std::max(ghost_range.second, offset),
-                            ghost_array.data() + offset + chunk_size,
-                            Number{});
+                  if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
+                    {
+                      std::copy(ghost_array.data() + offset,
+                                ghost_array.data() + offset + chunk_size,
+                                ghost_array.data() + ghost_range.first);
+                      std::fill(ghost_array.data() +
+                                  std::max(ghost_range.second, offset),
+                                ghost_array.data() + offset + chunk_size,
+                                Number{});
+                    }
+                  else
+                    {
+#    if defined(DEAL_II_COMPILER_CUDA_AWARE)
+                      cudaError_t cuda_error =
+                        cudaMemcpy(ghost_array.data() + ghost_range.first,
+                                   ghost_array.data() + offset,
+                                   chunk_size * sizeof(Number),
+                                   cudaMemcpyDeviceToDevice);
+                      AssertCuda(cuda_error);
+                      cuda_error =
+                        cudaMemset(ghost_array.data() +
+                                     std::max(ghost_range.second, offset),
+                                   0,
+                                   (offset + chunk_size -
+                                    std::max(ghost_range.second, offset)) *
+                                     sizeof(Number));
+                      AssertCuda(cuda_error);
+#    else
+                      Assert(
+                        false,
+                        ExcMessage(
+                          "If the compiler doesn't understand CUDA code, only MemorySpace::Host is allowed!"));
+#    endif
+                    }
                   offset += chunk_size;
                 }
               else
