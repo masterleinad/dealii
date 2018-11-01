@@ -338,11 +338,11 @@ namespace Utilities
                           std::copy(ghost_array.data() + my_ghosts->first,
                                     ghost_array.data() + my_ghosts->second,
                                     ghost_array_ptr + offset);
-                          std::fill(ghost_array.data() +
-                                      std::max(my_ghosts->first,
-                                               offset + chunk_size),
-                                    ghost_array.data() + my_ghosts->second,
-                                    Number{});
+                          std::fill(
+                            std::max(ghost_array.data() + my_ghosts->first,
+                                     ghost_array_ptr + offset + chunk_size),
+                            ghost_array.data() + my_ghosts->second,
+                            Number{});
                         }
                       else
                         {
@@ -354,11 +354,12 @@ namespace Utilities
                                        cudaMemcpyDeviceToDevice);
                           AssertCuda(cuda_error);
                           cuda_error = cudaMemset(
-                            ghost_array.data() +
-                              std::max(my_ghosts->first, offset + chunk_size),
+                            std::max(ghost_array.data() + my_ghosts->first,
+                                     ghost_array_ptr + offset + chunk_size),
                             0,
-                            (my_ghosts->second -
-                             std::max(my_ghosts->first, offset + chunk_size)) *
+                            (ghost_array.data() + my_ghosts->second -
+                             std::max(ghost_array.data() + my_ghosts->first,
+                                      ghost_array_ptr + offset + chunk_size)) *
                               sizeof(Number));
                           AssertCuda(cuda_error);
 #    else
