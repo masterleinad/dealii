@@ -326,16 +326,51 @@ namespace Utilities
                                 ghost_indices_subset_chunks_by_rank_data[i + 1];
               unsigned int offset = 0;
               for (; my_ghosts != end_my_ghosts; ++my_ghosts)
-                if (ghost_array_ptr + offset !=
-                    ghost_array.data() + my_ghosts->first)
-                  for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
-                       ++j, ++offset)
+                {
+                  const unsigned int chunk_size =
+                    my_ghosts->second - my_ghosts->first;
+                  if (ghost_array_ptr + offset !=
+                      ghost_array.data() + my_ghosts->first)
                     {
-                      ghost_array_ptr[offset] = ghost_array[j];
-                      ghost_array[j]          = Number();
+                      if (std::is_same<MemorySpaceType,
+                                       MemorySpace::Host>::value)
+                        {
+                          std::copy(ghost_array.data() + my_ghosts->first,
+                                    ghost_array.data() + my_ghosts->second,
+                                    ghost_array_ptr + offset);
+                          std::fill(ghost_array.data() +
+                                      std::max(my_ghosts->first,
+                                               offset + chunk_size),
+                                    ghost_array.data() + my_ghosts->second,
+                                    Number{});
+                        }
+                      else
+                        {
+#    if defined(DEAL_II_COMPILER_CUDA_AWARE)
+                          cudaError_t cuda_error =
+                            cudaMemcpy(ghost_array_ptr + offset,
+                                       ghost_array.data() + my_ghosts->first,
+                                       chunk_size * sizeof(Number),
+                                       cudaMemcpyDeviceToDevice);
+                          AssertCuda(cuda_error);
+                          cuda_error = cudaMemset(
+                            ghost_array.data() +
+                              std::max(my_ghosts->first, offset + chunk_size),
+                            0,
+                            (my_ghosts->second -
+                             std::max(my_ghosts->first, offset + chunk_size)) *
+                              sizeof(Number));
+                          AssertCuda(cuda_error);
+#    else
+                          Assert(
+                            false,
+                            ExcMessage(
+                              "If the compiler doesn't understand CUDA code, only MemorySpace::Host is allowed!"));
+#    endif
+                        }
                     }
-                else
-                  offset += my_ghosts->second - my_ghosts->first;
+                  offset += chunk_size;
+                }
               AssertDimension(offset, ghost_targets_data[i].second);
             }
 
