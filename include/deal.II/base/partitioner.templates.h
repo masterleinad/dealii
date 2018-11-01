@@ -186,17 +186,16 @@ namespace Utilities
             {
               if (offset > ghost_range.first)
                 {
-                  const unsigned int original_offset = offset;
-                  for (unsigned int j = ghost_range.first;
-                       j < ghost_range.second;
-                       ++j, ++offset)
-                    ghost_array[j] = ghost_array[offset];
-                  for (unsigned int j =
-                         std::max(ghost_range.second, original_offset);
-                       j < original_offset +
-                             (ghost_range.second - ghost_range.first);
-                       ++j)
-                    ghost_array[j] = Number();
+                  const unsigned int chunk_size =
+                    ghost_range.second - ghost_range.first;
+                  std::copy(ghost_array.data() + offset,
+                            ghost_array.data() + offset + chunk_size,
+                            ghost_array.data() + ghost_range.first);
+                  std::fill(ghost_array.data() +
+                              std::max(ghost_range.second, offset),
+                            ghost_array.data() + offset + chunk_size,
+                            Number{});
+                  offset += chunk_size;
                 }
               else
                 {
