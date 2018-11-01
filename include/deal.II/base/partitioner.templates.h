@@ -150,7 +150,7 @@ namespace Utilities
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::export_to_ghosted_array_finish(
       const ArrayView<Number> & ghost_array,
@@ -182,28 +182,34 @@ namespace Utilities
           unsigned int offset =
             n_ghost_indices_in_larger_set - n_ghost_indices();
           // must copy ghost data into extended ghost array
-          for (std::vector<std::pair<unsigned int, unsigned int>>::
-                 const_iterator my_ghosts = ghost_indices_subset_data.begin();
-               my_ghosts != ghost_indices_subset_data.end();
-               ++my_ghosts)
-            if (offset > my_ghosts->first)
-              for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
-                   ++j, ++offset)
+          for (const auto ghost_range : ghost_indices_subset_data)
+            {
+              if (offset > ghost_range.first)
                 {
-                  ghost_array[j]      = ghost_array[offset];
-                  ghost_array[offset] = Number();
+                  const unsigned int original_offset = offset;
+                  for (unsigned int j = ghost_range.first;
+                       j < ghost_range.second;
+                       ++j, ++offset)
+                    ghost_array[j] = ghost_array[offset];
+                  for (unsigned int j =
+                         std::max(ghost_range.second, original_offset);
+                       j < original_offset +
+                             (ghost_range.second - ghost_range.first);
+                       ++j)
+                    ghost_array[j] = Number();
                 }
-            else
-              {
-                AssertDimension(offset, my_ghosts->first);
-                break;
-              }
+              else
+                {
+                  AssertDimension(offset, ghost_range.first);
+                  break;
+                }
+            }
         }
     }
 
 
 
-    template <typename Number>
+    template <typename Number, typename MemorySpaceType>
     void
     Partitioner::import_from_ghosted_array_start(
       const VectorOperation::values vector_operation,
