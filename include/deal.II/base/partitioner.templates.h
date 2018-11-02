@@ -594,7 +594,41 @@ namespace Utilities
                   read_position += chunk_size;
                 }
             }
-          else
+          else if (vector_operation == dealii::VectorOperation::min)
+            for (const auto &import_range : import_indices_data)
+              {
+                const auto chunk_size =
+                  import_range.second - import_range.first;
+                const int n_blocks =
+                  1 + (chunk_size - 1) / (::dealii::CUDAWrappers::chunk_size *
+                                          ::dealii::CUDAWrappers::block_size);
+                dealii::LinearAlgebra::CUDAWrappers::kernel::vector_bin_op<
+                  Number,
+                  dealii::LinearAlgebra::CUDAWrappers::kernel::Binop_Min>
+                  <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
+                    locally_owned_array.data() + import_range.first,
+                    read_position,
+                    chunk_size);
+                read_position += chunk_size;
+              }
+          else if (vector_operation == dealii::VectorOperation::max)
+            for (const auto &import_range : import_indices_data)
+              {
+                const auto chunk_size =
+                  import_range.second - import_range.first;
+                const int n_blocks =
+                  1 + (chunk_size - 1) / (::dealii::CUDAWrappers::chunk_size *
+                                          ::dealii::CUDAWrappers::block_size);
+                dealii::LinearAlgebra::CUDAWrappers::kernel::vector_bin_op<
+                  Number,
+                  dealii::LinearAlgebra::CUDAWrappers::kernel::Binop_Max>
+                  <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
+                    locally_owned_array.data() + import_range.first,
+                    read_position,
+                    chunk_size);
+                read_position += chunk_size;
+              }
+          else // TODO
             for (const auto &import_range : import_indices_data)
               {
                 const auto chunk_size =
@@ -607,13 +641,6 @@ namespace Utilities
                 AssertCuda(cuda_error_code);
                 read_position += chunk_size;
               }
-
-          static_assert(
-            std::is_same<MemorySpaceType, MemorySpace::CUDA>::value,
-            "If we are using the CPU implementation, we should not trigger the restriction");
-          Assert(vector_operation == dealii::VectorOperation::insert ||
-                   vector_operation == dealii::VectorOperation::add,
-                 ExcNotImplemented());
 #    endif
           AssertDimension(read_position - temporary_storage.data(),
                           n_import_indices());

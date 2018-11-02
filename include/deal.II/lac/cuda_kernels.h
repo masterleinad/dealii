@@ -101,6 +101,40 @@ namespace LinearAlgebra
 
 
       /**
+       * Functor defining the maximum of two Numbers.
+       *
+       * @ingroup CUDAWrappers
+       */
+      template <typename Number>
+      struct Binop_Max
+      {
+        __device__ static inline Number
+        operation(const Number a, const Number b)
+        {
+          return a > b ? a : b;
+        }
+      };
+
+
+
+      /**
+       * Functor defining the maximum of two Numbers.
+       *
+       * @ingroup CUDAWrappers
+       */
+      template <typename Number>
+      struct Binop_Min
+      {
+        __device__ static inline Number
+        operation(const Number a, const Number b)
+        {
+          return a > b ? b : a;
+        }
+      };
+
+
+
+      /**
        * Apply the functor @tparam Binop to each element of @p v1 and @p v2.
        *
        * @ingroup CUDAWrappers
