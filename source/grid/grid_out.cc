@@ -3792,7 +3792,7 @@ namespace internal
             }
         }
 
-      if (q_projector != nullptr)
+      
         delete q_projector;
 
       // make sure everything now gets to disk
@@ -4014,7 +4014,7 @@ namespace internal
             }
         }
 
-      if (q_projector != nullptr)
+      
         delete q_projector;
 
 
