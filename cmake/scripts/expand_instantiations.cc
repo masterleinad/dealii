@@ -220,10 +220,7 @@ std::list<std::string>
 delete_empty_entries (const std::list<std::string> &list)
 {
   std::list<std::string> return_list;
-  for (std::list<std::string>::const_iterator i = list.begin();
-       i != list.end(); ++i)
-    if (!*i->empty())
-      return_list.push_back (*i);
+  std::copy_if (list.begin(), list.end(), std::back_inserter(return_list), [](const std::string& str){return str!="";} );
 
   return return_list;
 }
