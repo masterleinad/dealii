@@ -1609,7 +1609,7 @@ FESystem<dim, spacedim>::initialize(
 {
   Assert(fes.size() == multiplicities.size(),
          ExcDimensionMismatch(fes.size(), multiplicities.size()));
-  Assert(fes.size() > 0,
+  Assert(!fes.empty(),
          ExcMessage("Need to pass at least one finite element."));
   Assert(count_nonzeros(multiplicities) > 0,
          ExcMessage("You only passed FiniteElements with multiplicity 0."));
@@ -2324,11 +2324,11 @@ FESystem<dim, spacedim>::unit_support_point(const unsigned int index) const
   Assert(index < this->dofs_per_cell,
          ExcIndexRange(index, 0, this->dofs_per_cell));
   Assert((this->unit_support_points.size() == this->dofs_per_cell) ||
-           (this->unit_support_points.size() == 0),
+           (this->unit_support_points.empty()),
          (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
 
   // let's see whether we have the information pre-computed
-  if (this->unit_support_points.size() != 0)
+  if (!this->unit_support_points.empty())
     return this->unit_support_points[index];
   else
     // no. ask the base element whether it would like to provide this
@@ -2346,11 +2346,11 @@ FESystem<dim, spacedim>::unit_face_support_point(const unsigned int index) const
   Assert(index < this->dofs_per_face,
          ExcIndexRange(index, 0, this->dofs_per_face));
   Assert((this->unit_face_support_points.size() == this->dofs_per_face) ||
-           (this->unit_face_support_points.size() == 0),
+           (this->unit_face_support_points.empty()),
          (typename FiniteElement<dim, spacedim>::ExcFEHasNoSupportPoints()));
 
   // let's see whether we have the information pre-computed
-  if (this->unit_face_support_points.size() != 0)
+  if (!this->unit_face_support_points.empty())
     return this->unit_face_support_points[index];
   else
     // no. ask the base element whether it would like to provide this

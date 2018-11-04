@@ -1014,7 +1014,7 @@ FiniteElement<dim, spacedim>::get_unit_support_points() const
   // support points, but only if
   // there are as many as there are
   // degrees of freedom
-  Assert((unit_support_points.size() == 0) ||
+  Assert((unit_support_points.empty()) ||
            (unit_support_points.size() == this->dofs_per_cell),
          ExcInternalError());
   return unit_support_points;
@@ -1026,7 +1026,7 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_support_points() const
 {
-  return (unit_support_points.size() != 0);
+  return (!unit_support_points.empty());
 }
 
 
@@ -1037,7 +1037,7 @@ FiniteElement<dim, spacedim>::get_generalized_support_points() const
 {
   // If the finite element implements generalized support points, return
   // those. Otherwise fall back to unit support points.
-  return ((generalized_support_points.size() == 0) ?
+  return ((generalized_support_points.empty()) ?
             unit_support_points :
             generalized_support_points);
 }
@@ -1048,7 +1048,7 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_generalized_support_points() const
 {
-  return (get_generalized_support_points().size() != 0);
+  return (!get_generalized_support_points().empty());
 }
 
 
@@ -1074,7 +1074,7 @@ FiniteElement<dim, spacedim>::get_unit_face_support_points() const
   // support points, but only if
   // there are as many as there are
   // degrees of freedom on a face
-  Assert((unit_face_support_points.size() == 0) ||
+  Assert((unit_face_support_points.empty()) ||
            (unit_face_support_points.size() == this->dofs_per_face),
          ExcInternalError());
   return unit_face_support_points;
@@ -1086,7 +1086,7 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_face_support_points() const
 {
-  return (unit_face_support_points.size() != 0);
+  return (!unit_face_support_points.empty());
 }
 
 
@@ -1099,7 +1099,7 @@ FiniteElement<dim, spacedim>::get_generalized_face_support_points() const
   // support points, but only if
   // there are as many as there are
   // degrees of freedom on a face
-  return ((generalized_face_support_points.size() == 0) ?
+  return ((generalized_face_support_points.empty()) ?
             unit_face_support_points :
             generalized_face_support_points);
 }
@@ -1110,7 +1110,7 @@ template <int dim, int spacedim>
 bool
 FiniteElement<dim, spacedim>::has_generalized_face_support_points() const
 {
-  return (generalized_face_support_points.size() != 0);
+  return (!generalized_face_support_points.empty());
 }
 
 

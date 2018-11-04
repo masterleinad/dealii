@@ -50,22 +50,22 @@ PolynomialsRT_Bubbles<dim>::compute(
   std::vector<Tensor<4, dim>> &third_derivatives,
   std::vector<Tensor<5, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch(values.size(), n_pols));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch(grads.size(), n_pols));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch(grad_grads.size(), n_pols));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch(third_derivatives.size(), n_pols));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   // Third and fourth derivatives are not implemented
   (void)third_derivatives;
-  Assert(third_derivatives.size() == 0, ExcNotImplemented());
+  Assert(third_derivatives.empty(), ExcNotImplemented());
   (void)fourth_derivatives;
-  Assert(fourth_derivatives.size() == 0, ExcNotImplemented());
+  Assert(fourth_derivatives.empty(), ExcNotImplemented());
 
   const unsigned int n_sub = raviart_thomas_space.n();
 
@@ -82,9 +82,9 @@ PolynomialsRT_Bubbles<dim>::compute(
     static std::vector<Tensor<4, dim>> p_third_derivatives;
     static std::vector<Tensor<5, dim>> p_fourth_derivatives;
 
-    p_values.resize((values.size() == 0) ? 0 : n_sub);
-    p_grads.resize((grads.size() == 0) ? 0 : n_sub);
-    p_grad_grads.resize((grad_grads.size() == 0) ? 0 : n_sub);
+    p_values.resize((values.empty()) ? 0 : n_sub);
+    p_grads.resize((grads.empty()) ? 0 : n_sub);
+    p_grad_grads.resize((grad_grads.empty()) ? 0 : n_sub);
 
     // This is the Raviart-Thomas part of the space
     raviart_thomas_space.compute(unit_point,
@@ -133,7 +133,7 @@ PolynomialsRT_Bubbles<dim>::compute(
           for (unsigned int d = 0; d < dim; ++d)
             monomials[i].value(unit_point(d), n_derivatives, monoval_i[d]);
 
-          if (values.size() != 0)
+          if (!values.empty())
             {
               values[start][0] = monoval_i[0][0] * monoval_plus[1][1];
               values[start][1] = -monoval_i[0][1] * monoval_plus[1][0];
@@ -144,7 +144,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                 monoval_plus[0][1] * monoval_i[1][0];
             }
 
-          if (grads.size() != 0)
+          if (!grads.empty())
             {
               grads[start][0][0] = monoval_i[0][1] * monoval_plus[1][1];
               grads[start][0][1] = monoval_i[0][0] * monoval_plus[1][2];
@@ -161,7 +161,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                 monoval_plus[0][1] * monoval_i[1][1];
             }
 
-          if (grad_grads.size() != 0)
+          if (!grad_grads.empty())
             {
               grad_grads[start][0][0][0] = monoval_i[0][2] * monoval_plus[1][1];
               grad_grads[start][0][0][1] = monoval_i[0][1] * monoval_plus[1][2];
@@ -235,7 +235,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                                          monoval_jplus[d]);
                 }
 
-              if (values.size() != 0)
+              if (!values.empty())
                 {
                   values[start][0] = monoval_i[0][0] * monoval_j[1][0] *
                                      monoval[2][0] *
@@ -291,7 +291,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     }
                 }
 
-              if (grads.size() != 0)
+              if (!grads.empty())
                 {
                   grads[start][0][0] = monoval_i[0][1] * monoval_j[1][0] *
                                        monoval[2][0] *
@@ -429,7 +429,7 @@ PolynomialsRT_Bubbles<dim>::compute(
                     }
                 }
 
-              if (grad_grads.size() != 0)
+              if (!grad_grads.empty())
                 {
                   grad_grads[start][0][0][0] =
                     monoval_i[0][2] * monoval_j[1][0] * monoval[2][0] *

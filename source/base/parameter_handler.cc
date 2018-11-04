@@ -257,7 +257,7 @@ std::string
 ParameterHandler::collate_path_string(
   const std::vector<std::string> &subsection_path)
 {
-  if (subsection_path.size() > 0)
+  if (!subsection_path.empty())
     {
       std::string p = mangle(subsection_path[0]);
       for (unsigned int i = 1; i < subsection_path.size(); ++i)
@@ -356,7 +356,7 @@ ParameterHandler::parse_input(std::istream &     input,
       }
     catch (...)
       {
-        while ((saved_path != subsection_path) && (subsection_path.size() > 0))
+        while ((saved_path != subsection_path) && (!subsection_path.empty()))
           leave_subsection();
 
         throw;
@@ -421,7 +421,7 @@ ParameterHandler::parse_input(std::istream &     input,
   if (saved_path != subsection_path)
     {
       std::stringstream paths_message;
-      if (saved_path.size() > 0)
+      if (!saved_path.empty())
         {
           paths_message << "Path before loading input:\n";
           for (unsigned int i = 0; i < subsection_path.size(); ++i)
@@ -496,7 +496,7 @@ namespace
             // make sure we have a corresponding entry in the destination
             // object as well
             const std::string full_path =
-              (current_path == "" ? p->first :
+              (current_path.empty() ? p->first :
                                     current_path + path_separator + p->first);
 
             const std::string new_value = p->second.get<std::string>("value");
@@ -535,7 +535,7 @@ namespace
           {
             // it must be a subsection
             read_xml_recursively(p->second,
-                                 (current_path == "" ?
+                                 (current_path.empty() ?
                                     p->first :
                                     current_path + path_separator + p->first),
                                  path_separator,
@@ -781,9 +781,9 @@ ParameterHandler::leave_subsection()
 {
   // assert there is a subsection that
   // we may leave
-  Assert(subsection_path.size() != 0, ExcAlreadyAtTopLevel());
+  Assert(!subsection_path.empty(), ExcAlreadyAtTopLevel());
 
-  if (subsection_path.size() > 0)
+  if (!subsection_path.empty())
     subsection_path.pop_back();
 }
 
@@ -1592,7 +1592,7 @@ ParameterHandler::print_parameters_section(
               // if there is no subsection selected, add the whole tree of
               // entries, otherwise add a root element and the selected
               // subsection under it
-              if (subsection_path.size() == 0)
+              if (subsection_path.empty())
                 {
                   single_node_tree.add_child("ParameterHandler", *entries);
                 }
@@ -1618,7 +1618,7 @@ ParameterHandler::print_parameters_section(
       case ShortText:
         {
           // if there are top level elements to print, do it
-          if (include_top_level_elements && (subsection_path.size() > 0))
+          if (include_top_level_elements && (!subsection_path.empty()))
             for (unsigned int i = 0; i < subsection_path.size(); ++i)
               {
                 out << std::setw(overall_indent_level * 2) << ""
@@ -1829,7 +1829,7 @@ ParameterHandler::print_parameters_section(
       case Description:
         {
           // if there are top level elements to print, do it
-          if (include_top_level_elements && (subsection_path.size() > 0))
+          if (include_top_level_elements && (!subsection_path.empty()))
             for (unsigned int i = 0; i < subsection_path.size(); ++i)
               {
                 out << std::setw(overall_indent_level * 2) << ""
@@ -2012,7 +2012,7 @@ ParameterHandler::print_parameters_section(
       case Text:
       case ShortText:
         {
-          if (include_top_level_elements && (subsection_path.size() > 0))
+          if (include_top_level_elements && (!subsection_path.empty()))
             for (unsigned int i = 0; i < subsection_path.size(); ++i)
               {
                 overall_indent_level -= 1;
@@ -2128,15 +2128,15 @@ ParameterHandler::scan_line(std::string        line,
            Utilities::match_at_string_start(line, "end"))
     {
       line.erase(0, 3);
-      while ((line.size() > 0) && (std::isspace(line[0])))
+      while ((!line.empty()) && (std::isspace(line[0])))
         line.erase(0, 1);
 
       AssertThrow(
-        line.size() == 0,
+        line.empty(),
         ExcCannotParseLine(current_line_n,
                            input_filename,
                            "Invalid content after 'end' or 'END' statement."));
-      AssertThrow(subsection_path.size() != 0,
+      AssertThrow(!subsection_path.empty(),
                   ExcCannotParseLine(current_line_n,
                                      input_filename,
                                      "There is no subsection to leave here."));
@@ -2237,11 +2237,11 @@ ParameterHandler::scan_line(std::string        line,
     {
       // erase "include " statement and eliminate spaces
       line.erase(0, 7);
-      while ((line.size() > 0) && (line[0] == ' '))
+      while ((!line.empty()) && (line[0] == ' '))
         line.erase(0, 1);
 
       // the remainder must then be a filename
-      AssertThrow(line.size() != 0,
+      AssertThrow(!line.empty(),
                   ExcCannotParseLine(current_line_n,
                                      input_filename,
                                      "The current line is an 'include' or "

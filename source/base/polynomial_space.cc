@@ -210,15 +210,15 @@ PolynomialSpace<dim>::compute(
 {
   const unsigned int n_1d = polynomials.size();
 
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch2(values.size(), n_pols, 0));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch2(grads.size(), n_pols, 0));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), n_pols, 0));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(), n_pols, 0));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch2(fourth_derivatives.size(), n_pols, 0));
 
   unsigned int v_size = 0;

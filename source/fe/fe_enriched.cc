@@ -77,7 +77,7 @@ namespace internal
           const typename dealii::Triangulation<dim, spacedim>::cell_iterator
             &)>>> &                                              functions)
       {
-        AssertThrow(fes.size() > 0, ExcMessage("FEs size should be >=1"));
+        AssertThrow(!fes.empty(), ExcMessage("FEs size should be >=1"));
         AssertThrow(fes.size() == multiplicities.size(),
                     ExcMessage(
                       "FEs and multiplicities should have the same size"));
@@ -723,7 +723,7 @@ FE_Enriched<dim, spacedim>::multiply_by_enrichment(
           // Avoid evaluating quadrature points if no dofs are assigned. This
           // happens when FE_Nothing is used together with other FE (i.e. FE_Q)
           // as enrichments.
-          if (base_no_mult_local_enriched_dofs[base_no][m].size() == 0)
+          if (base_no_mult_local_enriched_dofs[base_no][m].empty())
             continue;
 
           Assert(enrichments[base_no - 1][m](cell) != nullptr,
@@ -1470,7 +1470,7 @@ namespace ColorEnriched
   {
     AssertDimension(predicates.size(), enrichments.size());
     AssertDimension(fe_base.n_components(), fe_enriched.n_components());
-    AssertThrow(predicates.size() > 0,
+    AssertThrow(!predicates.empty(),
                 ExcMessage("Number of predicates should be positive"));
   }
 

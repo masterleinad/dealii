@@ -93,7 +93,7 @@ namespace internal
     ss << value;
 
     cached_value = ss.str();
-    if (cached_value.size() == 0)
+    if (cached_value.empty())
       cached_value = "\"\"";
   }
 
@@ -160,7 +160,7 @@ TableHandler::Column::pad_column_below(const unsigned int size)
 {
   // we should never have a column that is completely
   // empty and that needs to be padded
-  Assert(entries.size() > 0, ExcInternalError());
+  Assert(!entries.empty(), ExcInternalError());
 
   // add as many elements as necessary
   while (entries.size() < size)
@@ -735,9 +735,9 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
     }
 
   out << "\\end{tabular}" << std::endl << "\\end{center}" << std::endl;
-  if (tex_table_caption != "")
+  if (!tex_table_caption.empty())
     out << "\\caption{" << tex_table_caption << "}" << std::endl;
-  if (tex_table_label != "")
+  if (!tex_table_label.empty())
     out << "\\label{" << tex_table_label << "}" << std::endl;
   out << "\\end{table}" << std::endl;
   if (with_header)
@@ -761,7 +761,7 @@ TableHandler::clear()
 unsigned int
 TableHandler::n_rows() const
 {
-  if (columns.size() == 0)
+  if (columns.empty())
     return 0;
 
   std::map<std::string, Column>::const_iterator col_iter = columns.begin();

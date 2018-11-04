@@ -253,7 +253,7 @@ namespace Step19
     // format. Finally, for <code>-o</code> it is the name of the output
     // file. In all cases, once we've treated a parameter, we remove it from
     // the list of parameters:
-    while (args.size())
+    while (!args.empty())
       {
         if (args.front() == std::string("-p"))
           {
@@ -277,10 +277,10 @@ namespace Step19
             // set in the parameter file. We therefore need to extract them
             // from the parameter file here, because they may be overridden by
             // later command line parameters:
-            if (output_file == "")
+            if (output_file.empty())
               output_file = prm.get("Output file");
 
-            if (output_format == "")
+            if (output_format.empty())
               output_format = prm.get("Output format");
 
             // Finally, let us note that if we were interested in the values
@@ -340,7 +340,7 @@ namespace Step19
 
     // Next check a few things and create errors if the checks fail. Firstly,
     // there must be at least one input file
-    if (input_file_names.size() == 0)
+    if (input_file_names.empty())
       {
         std::cerr << "Error: No input file specified." << std::endl;
         print_usage_message();
@@ -430,7 +430,7 @@ namespace Step19
   // code that shouldn't be reached:
   void convert()
   {
-    AssertThrow(input_file_names.size() > 0,
+    AssertThrow(!input_file_names.empty(),
                 ExcMessage("No input files specified."));
 
     std::ifstream input(input_file_names[0]);

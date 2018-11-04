@@ -901,7 +901,7 @@ namespace GridGenerator
                             const bool                       colorize)
   {
     std::vector<unsigned int> compute_subdivisions = subdivisions;
-    if (compute_subdivisions.size() == 0)
+    if (compute_subdivisions.empty())
       {
         compute_subdivisions.resize(dim, 1);
       }
@@ -4718,7 +4718,7 @@ namespace GridGenerator
       // if a non-empty (i.e., not the default) vector is given for
       // manifold_priorities then use it (but check its validity in debug
       // mode)
-      if (0 < manifold_priorities.size())
+      if (!manifold_priorities.empty())
         {
 #ifdef DEBUG
           // check that the provided manifold_priorities is valid
@@ -5516,7 +5516,7 @@ namespace GridGenerator
         }
 
     // create level 0 surface triangulation
-    Assert(cells.size() > 0, ExcMessage("No boundary faces selected"));
+    Assert(!cells.empty(), ExcMessage("No boundary faces selected"));
     const_cast<Triangulation<dim - 1, spacedim> &>(
       surface_mesh.get_triangulation())
       .create_triangulation(vertices, cells, subcell_data);

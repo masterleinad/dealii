@@ -658,7 +658,7 @@ namespace Patterns
   {
     Assert(min_elements <= max_elements,
            ExcInvalidRange(min_elements, max_elements));
-    Assert(separator.size() > 0,
+    Assert(!separator.empty(),
            ExcMessage("The separator must have a non-zero length."));
   }
 
@@ -833,9 +833,9 @@ namespace Patterns
   {
     Assert(min_elements <= max_elements,
            ExcInvalidRange(min_elements, max_elements));
-    Assert(separator.size() > 0,
+    Assert(!separator.empty(),
            ExcMessage("The separator must have a non-zero length."));
-    Assert(key_value_separator.size() > 0,
+    Assert(!key_value_separator.empty(),
            ExcMessage("The key_value_separator must have a non-zero length."));
     Assert(separator != key_value_separator,
            ExcMessage(
@@ -1054,9 +1054,9 @@ namespace Patterns
                const std::string &                              separator)
     : separator(separator)
   {
-    Assert(ps.size() > 0,
+    Assert(!ps.empty(),
            ExcMessage("The Patterns list must have a non-zero length."));
-    Assert(separator.size() > 0,
+    Assert(!separator.empty(),
            ExcMessage("The separator must have a non-zero length."));
     patterns.resize(ps.size());
     for (unsigned int i = 0; i < ps.size(); ++i)

@@ -324,7 +324,7 @@ DataOut<dim, DoFHandlerType>::build_one_patch(
       // then do the cell data. only compute the number of a cell if needed;
       // also make sure that we only access cell data if the
       // first_cell/next_cell functions only return active cells
-      if (this->cell_data.size() != 0)
+      if (!this->cell_data.empty())
         {
           Assert(!cell_and_index->first->has_children(), ExcNotImplemented());
 
@@ -575,7 +575,7 @@ DataOut<dim, DoFHandlerType>::build_patches(
                 cell_to_patch_index_map);
 
   // now build the patches in parallel
-  if (all_cells.size() > 0)
+  if (!all_cells.empty())
     WorkStream::run(
       &all_cells[0],
       &all_cells[0] + all_cells.size(),

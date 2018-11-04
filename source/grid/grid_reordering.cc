@@ -1080,7 +1080,7 @@ void
 GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
                                              const bool use_new_style_ordering)
 {
-  Assert(cells.size() != 0,
+  Assert(!cells.empty(),
          ExcMessage("List of elements to orient must have at least one cell"));
 
   // there is nothing for us to do in 1d

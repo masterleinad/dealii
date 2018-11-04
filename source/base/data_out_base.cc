@@ -260,7 +260,7 @@ namespace
                          const DataOutBase::VtkFlags &flags,
                          std::ostream &               output_stream)
   {
-    if (data.size() != 0)
+    if (!data.empty())
       {
         // allocate a buffer for compressing data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
@@ -402,7 +402,7 @@ namespace DataOutBase
       Table<2, Number> &                       data_vectors)
     {
       // If there is nothing to write, just return
-      if (patches.size() == 0)
+      if (patches.empty())
         return;
 
       // unlike in the main function, we don't have here the data_names field,
@@ -3057,7 +3057,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -3171,7 +3171,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
     // Stream with special features for dx output
@@ -3478,7 +3478,7 @@ namespace DataOutBase
     // are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -3714,7 +3714,7 @@ namespace DataOutBase
     // actually owns, and in that case it is legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
     Assert(dim == 2,
@@ -3768,7 +3768,7 @@ namespace DataOutBase
     }
 
     // max. and min. height of solution
-    Assert(patches.size() > 0, ExcInternalError());
+    Assert(!patches.empty(), ExcInternalError());
     double hmin = patches[0].data(0, 0);
     double hmax = patches[0].data(0, 0);
 
@@ -4104,7 +4104,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -4465,7 +4465,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -4623,7 +4623,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -5251,7 +5251,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       return;
 #endif
 
@@ -5413,7 +5413,7 @@ namespace DataOutBase
         // underscores unless a vector name has been specified
         out << "VECTORS ";
 
-        if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
+        if (!std::get<2>(nonscalar_data_ranges[n_th_vector]).empty())
           out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
         else
           {
@@ -5635,7 +5635,7 @@ namespace DataOutBase
     // legit if there are no patches
     Assert(patches.size() > 0, ExcNoPatches());
 #else
-    if (patches.size() == 0)
+    if (patches.empty())
       {
         // we still need to output a valid vtu file, because other CPUs might
         // output data. This is the minimal file that is accepted by paraview
@@ -5661,7 +5661,7 @@ namespace DataOutBase
             // underscores unless a vector name has been specified
             out << "    <DataArray type=\"Float32\" Name=\"";
 
-            if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
+            if (!std::get<2>(nonscalar_data_ranges[n_th_vector]).empty())
               out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
             else
               {
@@ -5894,7 +5894,7 @@ namespace DataOutBase
         // underscores unless a vector name has been specified
         out << "    <DataArray type=\"Float32\" Name=\"";
 
-        if (name != "")
+        if (!name.empty())
           out << name;
         else
           {
@@ -6102,7 +6102,7 @@ namespace DataOutBase
         // underscores unless a vector name has been specified
         out << "    <PDataArray type=\"Float32\" Name=\"";
 
-        if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
+        if (!std::get<2>(nonscalar_data_ranges[n_th_vector]).empty())
           out << std::get<2>(nonscalar_data_ranges[n_th_vector]);
         else
           {
@@ -6200,7 +6200,7 @@ namespace DataOutBase
   {
     AssertThrow(out, ExcIO());
 
-    if (piece_names.size() == 0)
+    if (piece_names.empty())
       return;
 
     const double nblocks = piece_names[0].size();
@@ -6230,7 +6230,7 @@ namespace DataOutBase
   {
     AssertThrow(out, ExcIO());
 
-    if (times_and_piece_names.size() == 0)
+    if (times_and_piece_names.empty())
       return;
 
     const double nblocks = times_and_piece_names[0].second.size();
@@ -7876,7 +7876,7 @@ DataOutBase::write_filtered_data(
   // patches
   Assert(patches.size() > 0, ExcNoPatches());
 #else
-  if (patches.size() == 0)
+  if (patches.empty())
     return;
 #endif
 
@@ -7929,7 +7929,7 @@ DataOutBase::write_filtered_data(
 
           // Determine the vector name. Concatenate all the component names with
           // double underscores unless a vector name has been specified
-          if (std::get<2>(nonscalar_data_ranges[n_th_vector]) != "")
+          if (!std::get<2>(nonscalar_data_ranges[n_th_vector]).empty())
             {
               vector_name = std::get<2>(nonscalar_data_ranges[n_th_vector]);
             }
@@ -8675,7 +8675,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
          ++n_th_vector)
       {
         const std::string &name = std::get<2>(ranges[n_th_vector]);
-        if (name != "")
+        if (!name.empty())
           {
             Assert(all_names.find(name) == all_names.end(),
                    ExcMessage(
@@ -8828,8 +8828,8 @@ DataOutReader<dim, spacedim>::merge(const DataOutReader<dim, spacedim> &source)
 
 
   const std::vector<Patch> &source_patches = source.get_patches();
-  Assert(patches.size() != 0, DataOutBase::ExcNoPatches());
-  Assert(source_patches.size() != 0, DataOutBase::ExcNoPatches());
+  Assert(!patches.empty(), DataOutBase::ExcNoPatches());
+  Assert(!source_patches.empty(), DataOutBase::ExcNoPatches());
   // check equality of component names
   Assert(get_dataset_names() == source.get_dataset_names(),
          ExcIncompatibleDatasetNames());
@@ -9123,10 +9123,10 @@ namespace DataOutBase
       do
         {
           getline(in, header);
-          while ((header.size() != 0) && (header[header.size() - 1] == ' '))
+          while ((!header.empty()) && (header[header.size() - 1] == ' '))
             header.erase(header.size() - 1);
         }
-      while ((header == "") && in);
+      while ((header.empty()) && in);
 
       std::ostringstream s;
       s << "[deal.II intermediate Patch<" << dim << ',' << spacedim << ">]";

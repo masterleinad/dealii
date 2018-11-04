@@ -545,7 +545,7 @@ namespace GridTools
 
     // if the considered_vertices vector is
     // empty, consider all vertices
-    if (considered_vertices.size() == 0)
+    if (considered_vertices.empty())
       considered_vertices = new_vertex_numbers;
 
     Assert(considered_vertices.size() <= vertices.size(), ExcInternalError());
@@ -1166,7 +1166,7 @@ namespace GridTools
     const std::vector<Point<spacedim>> &vertices = tria.get_vertices();
 
     Assert(tria.get_vertices().size() == marked_vertices.size() ||
-             marked_vertices.size() == 0,
+             marked_vertices.empty(),
            ExcDimensionMismatch(tria.get_vertices().size(),
                                 marked_vertices.size()));
 
@@ -1178,7 +1178,7 @@ namespace GridTools
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
     Assert(
-      marked_vertices.size() == 0 ||
+      marked_vertices.empty() ||
         std::equal(marked_vertices.begin(),
                    marked_vertices.end(),
                    tria.get_used_vertices().begin(),
@@ -1193,7 +1193,7 @@ namespace GridTools
     // could be the potentially closest
     // vertex to the point, use it instead
     // of used vertices
-    const std::vector<bool> &used = (marked_vertices.size() == 0) ?
+    const std::vector<bool> &used = (marked_vertices.empty()) ?
                                       tria.get_used_vertices() :
                                       marked_vertices;
 
@@ -1247,7 +1247,7 @@ namespace GridTools
     auto vertices = extract_used_vertices(tria, mapping);
 
     Assert(tria.get_vertices().size() == marked_vertices.size() ||
-             marked_vertices.size() == 0,
+             marked_vertices.empty(),
            ExcDimensionMismatch(tria.get_vertices().size(),
                                 marked_vertices.size()));
 
@@ -1259,7 +1259,7 @@ namespace GridTools
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
     Assert(
-      marked_vertices.size() == 0 ||
+      marked_vertices.empty() ||
         std::equal(marked_vertices.begin(),
                    marked_vertices.end(),
                    tria.get_used_vertices().begin(),
@@ -1269,7 +1269,7 @@ namespace GridTools
         "but marked_vertices contains one or more vertices that are not used vertices!"));
 
     // Remove from the map unwanted elements.
-    if (marked_vertices.size())
+    if (!marked_vertices.empty())
       for (auto it = vertices.begin(); it != vertices.end();)
         {
           if (marked_vertices[it->first] == false)
@@ -1685,7 +1685,7 @@ namespace GridTools
           ++i;
 
         // No active cells or no active cells with property
-        if (active_cells.size() == 0 || i == active_cells.size())
+        if (active_cells.empty() || i == active_cells.size())
           {
             BoundingBox<spacedim> bbox;
             return std::make_tuple(bbox, has_predicate);
@@ -1889,7 +1889,7 @@ namespace GridTools
                   break; // We can check now the next process
                 }
           }
-        Assert(owners_found.size() > 0,
+        Assert(!owners_found.empty(),
                ExcMessage("No owners found for the point " +
                           std::to_string(pt)));
         if (owners_found.size() == 1)
@@ -3480,7 +3480,7 @@ namespace GridTools
   {
     AssertDimension(src_boundary_ids.size(), dst_manifold_ids.size());
     const auto reset_boundary_ids =
-      reset_boundary_ids_.size() ? reset_boundary_ids_ : src_boundary_ids;
+      !reset_boundary_ids_.empty() ? reset_boundary_ids_ : src_boundary_ids;
     AssertDimension(reset_boundary_ids.size(), src_boundary_ids.size());
 
     // in 3d, we not only have to copy boundary ids of faces, but also of edges
@@ -3891,7 +3891,7 @@ namespace GridTools
 
     // if no cells need to be added, then no regularization is necessary.
     // Restore things as they were before this function was called.
-    if (cells_to_add.size() == 0)
+    if (cells_to_add.empty())
       {
         while (refinement_cycles > 0)
           {

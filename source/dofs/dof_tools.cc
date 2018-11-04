@@ -633,7 +633,7 @@ namespace DoFTools
 
     // let's see whether we have to check for certain boundary indicators
     // or whether we can accept all
-    const bool check_boundary_id = (boundary_ids.size() != 0);
+    const bool check_boundary_id = (!boundary_ids.empty());
 
     // also see whether we have to check whether a certain vector component
     // is selected, or all
@@ -741,7 +741,7 @@ namespace DoFTools
 
     // let's see whether we have to check for certain boundary indicators
     // or whether we can accept all
-    const bool check_boundary_id = (boundary_ids.size() != 0);
+    const bool check_boundary_id = (!boundary_ids.empty());
 
     // also see whether we have to check whether a certain vector component
     // is selected, or all
@@ -1884,7 +1884,7 @@ namespace DoFTools
 
     // If the empty vector was given as default argument, set up this
     // vector as identity.
-    if (target_component.size() == 0)
+    if (target_component.empty())
       {
         target_component.resize(n_components);
         for (unsigned int i = 0; i < n_components; ++i)
@@ -1988,7 +1988,7 @@ namespace DoFTools
 
         // If the empty vector was given as default argument, set up this
         // vector as identity.
-        if (target_block.size() == 0)
+        if (target_block.empty())
           {
             target_block.resize(fe.n_blocks());
             for (unsigned int i = 0; i < fe.n_blocks(); ++i)
@@ -2111,7 +2111,7 @@ namespace DoFTools
                    numbers::invalid_dof_index);
 
     // return if there is nothing to do
-    if (boundary_ids.size() == 0)
+    if (boundary_ids.empty())
       return;
 
     std::vector<types::global_dof_index> dofs_on_face;
@@ -2441,12 +2441,12 @@ namespace DoFTools
           indices.resize(cell->get_fe().dofs_per_cell);
           cell->get_mg_dof_indices(indices);
 
-          if (selected_dofs.size() != 0)
+          if (!selected_dofs.empty())
             AssertDimension(indices.size(), selected_dofs.size());
 
           for (types::global_dof_index j = 0; j < indices.size(); ++j)
             {
-              if (selected_dofs.size() == 0)
+              if (selected_dofs.empty())
                 block_list.add(i, indices[j] - offset);
               else
                 {

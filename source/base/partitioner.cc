@@ -353,7 +353,7 @@ namespace Utilities
         AssertDimension(current_index_start, n_ghost_indices_data);
 
         // wait for all import from other processes to be done
-        if (import_requests.size() > 0)
+        if (!import_requests.empty())
           {
             const int ierr = MPI_Waitall(import_requests.size(),
                                          import_requests.data(),

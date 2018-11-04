@@ -257,7 +257,7 @@ namespace Step54
     // Once the projector is created, we then assign it to all the parts of
     // the triangulation with manifold_id = 2:
     Assert(
-      wires.size() > 0,
+      !wires.empty(),
       ExcMessage(
         "I could not find any wire in the CAD file you gave me. Bailing out."));
 

@@ -328,7 +328,7 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
           dst.block(i).add(-1.0 * m->prefix, aux);
         }
     }
-  Assert(diagonals.size() != 0, ExcNoDiagonal(row_num));
+  Assert(!diagonals.empty(), ExcNoDiagonal(row_num));
 
   // Inverting the diagonal block is
   // simple, if there is only one

@@ -281,7 +281,7 @@ FunctionParser<dim>::init_muparser() const
   // check that we have not already initialized the parser on the
   // current thread, i.e., that the current function is only called
   // once per thread
-  Assert(fp.get().size() == 0, ExcInternalError());
+  Assert(fp.get().empty(), ExcInternalError());
 
   // initialize the objects for the current thread (fp.get() and
   // vars.get())
@@ -443,7 +443,7 @@ FunctionParser<dim>::value(const Point<dim> & p,
          ExcIndexRange(component, 0, this->n_components));
 
   // initialize the parser if that hasn't happened yet on the current thread
-  if (fp.get().size() == 0)
+  if (fp.get().empty())
     init_muparser();
 
   for (unsigned int i = 0; i < dim; ++i)
@@ -480,7 +480,7 @@ FunctionParser<dim>::vector_value(const Point<dim> &p,
 
 
   // initialize the parser if that hasn't happened yet on the current thread
-  if (fp.get().size() == 0)
+  if (fp.get().empty())
     init_muparser();
 
   for (unsigned int i = 0; i < dim; ++i)

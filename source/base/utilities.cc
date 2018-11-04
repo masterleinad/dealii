@@ -101,7 +101,7 @@ namespace Utilities
     using LongDouble = long double;
 
     // return if there is nothing to do
-    if (points.size() == 0)
+    if (points.empty())
       return std::vector<std::array<std::uint64_t, dim>>();
 
     // get bounding box:
@@ -343,7 +343,7 @@ namespace Utilities
   trim(const std::string &input)
   {
     std::string::size_type left  = 0;
-    std::string::size_type right = input.size() > 0 ? input.size() - 1 : 0;
+    std::string::size_type right = !input.empty() ? input.size() - 1 : 0;
 
     for (; left < input.size(); ++left)
       {
@@ -402,9 +402,9 @@ namespace Utilities
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
-    while ((s.size() > 0) && (s[0] == ' '))
+    while ((!s.empty()) && (s[0] == ' '))
       s.erase(s.begin());
-    while ((s.size() > 0) && (s[s.size() - 1] == ' '))
+    while ((!s.empty()) && (s[s.size() - 1] == ' '))
       s.erase(s.end() - 1);
 
     // now convert and see whether we succeed. note that strtol only
@@ -416,8 +416,8 @@ namespace Utilities
     char *p;
     errno       = 0;
     const int i = std::strtol(s.c_str(), &p, 10);
-    AssertThrow(!((errno != 0) || (s.size() == 0) ||
-                  ((s.size() > 0) && (*p != '\0'))),
+    AssertThrow(!((errno != 0) || (s.empty()) ||
+                  ((!s.empty()) && (*p != '\0'))),
                 ExcMessage("Can't convert <" + s + "> to an integer."));
 
     return i;
@@ -441,9 +441,9 @@ namespace Utilities
   {
     // trim whitespace on either side of the text if necessary
     std::string s = s_;
-    while ((s.size() > 0) && (s[0] == ' '))
+    while ((!s.empty()) && (s[0] == ' '))
       s.erase(s.begin());
-    while ((s.size() > 0) && (s[s.size() - 1] == ' '))
+    while ((!s.empty()) && (s[s.size() - 1] == ' '))
       s.erase(s.end() - 1);
 
     // now convert and see whether we succeed. note that strtol only
@@ -455,8 +455,8 @@ namespace Utilities
     char *p;
     errno          = 0;
     const double d = std::strtod(s.c_str(), &p);
-    AssertThrow(!((errno != 0) || (s.size() == 0) ||
-                  ((s.size() > 0) && (*p != '\0'))),
+    AssertThrow(!((errno != 0) || (s.empty()) ||
+                  ((!s.empty()) && (*p != '\0'))),
                 ExcMessage("Can't convert <" + s + "> to a double."));
 
     return d;

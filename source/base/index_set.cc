@@ -108,7 +108,7 @@ IndexSet::add_range(const size_type begin, const size_type end)
 
       // the new index might be larger than the last index present in the
       // ranges. Then we can skip the binary search
-      if (ranges.size() == 0 || begin > ranges.back().end)
+      if (ranges.empty() || begin > ranges.back().end)
         ranges.push_back(new_range);
       else
         ranges.insert(Utilities::lower_bound(ranges.begin(),
@@ -379,7 +379,7 @@ IndexSet::add_indices(const IndexSet &other, const unsigned int offset)
   if ((this == &other) && (offset == 0))
     return;
 
-  Assert(other.ranges.size() == 0 ||
+  Assert(other.ranges.empty() ||
            other.ranges.back().end - 1 < index_space_size,
          ExcIndexRangeType<size_type>(other.ranges.back().end - 1,
                                       0,

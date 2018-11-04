@@ -47,7 +47,7 @@ ParameterAcceptor::~ParameterAcceptor()
 std::string
 ParameterAcceptor::get_section_name() const
 {
-  return (section_name != "" ? section_name :
+  return (!section_name.empty() ? section_name :
                                boost::core::demangle(typeid(*this).name()));
 }
 
@@ -60,7 +60,7 @@ ParameterAcceptor::initialize(
   ParameterHandler &                  prm)
 {
   declare_all_parameters(prm);
-  if (filename != "")
+  if (!filename.empty())
     {
       // check the extension of input file
       if (filename.substr(filename.find_last_of('.') + 1) == "prm")
@@ -106,7 +106,7 @@ ParameterAcceptor::initialize(
             "Invalid extension of parameter file. Please use .prm or .xml"));
     }
 
-  if (output_filename != "")
+  if (!output_filename.empty())
     {
       std::ofstream outfile(output_filename.c_str());
       Assert(outfile, ExcIO());
@@ -225,7 +225,7 @@ ParameterAcceptor::get_section_path() const
             auto previous_path = class_list[i]->get_section_path();
 
             // See if we need to remove last piece of the path
-            if ((previous_path.size() > 0) && has_trailing == false)
+            if ((!previous_path.empty()) && has_trailing == false)
               previous_path.resize(previous_path.size() - 1);
 
             sections.insert(sections.begin(),

@@ -100,7 +100,7 @@ namespace
     // directly after this function was
     // called, we use the arguments
     // directly.
-    if (target_component.size() == 0)
+    if (target_component.empty())
       {
         target_component.resize(ncomp);
         for (unsigned int i = 0; i < ncomp; ++i)
@@ -109,7 +109,7 @@ namespace
 
     // If selected is an empty vector,
     // all components are selected.
-    if (selected.size() == 0)
+    if (selected.empty())
       {
         selected.resize(target_component.size());
         std::fill_n(selected.begin(), ncomp, false);
@@ -124,7 +124,7 @@ namespace
     const unsigned int n_selected =
       std::accumulate(selected.begin(), selected.end(), 0u);
 
-    if (ndofs.size() == 0)
+    if (ndofs.empty())
       {
         std::vector<std::vector<types::global_dof_index>> new_dofs(
           mg_dof.get_triangulation().n_levels(),
@@ -194,7 +194,7 @@ namespace
       if (component_mask[i])
         selected_block = target_component[i];
 
-    if (ndofs.size() == 0)
+    if (ndofs.empty())
       {
         std::vector<std::vector<types::global_dof_index>> new_dofs(
           mg_dof.get_triangulation().n_levels(),
@@ -261,7 +261,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
   // Fill target component with
   // standard values (identity) if it
   // is empty
-  if (target_component.size() == 0)
+  if (target_component.empty())
     {
       target_component.resize(mg_dof.get_fe(0).n_components());
       for (unsigned int i = 0; i < target_component.size(); ++i)
@@ -283,7 +283,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
   // Do the same for the multilevel
   // components. These may be
   // different.
-  if (mg_target_component.size() == 0)
+  if (mg_target_component.empty())
     {
       mg_target_component.resize(mg_dof.get_fe(0).n_components());
       for (unsigned int i = 0; i < mg_target_component.size(); ++i)
@@ -502,7 +502,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
   // the prolongation matrix
   // TODO: this way is not very efficient
 
-  if (boundary_indices.size() != 0)
+  if (!boundary_indices.empty())
     {
       std::vector<std::vector<types::global_dof_index>> dofs_per_component(
         mg_dof.get_triangulation().n_levels(),
@@ -513,7 +513,7 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
                                     mg_target_component);
       for (unsigned int level = 0; level < n_levels - 1; ++level)
         {
-          if (boundary_indices[level].size() == 0)
+          if (boundary_indices[level].empty())
             continue;
 
           for (unsigned int iblock = 0; iblock < n_components; ++iblock)

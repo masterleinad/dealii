@@ -150,36 +150,36 @@ PolynomialsRannacherTurek<dim>::compute(
   std::vector<Tensor<4, dim>> &fourth_derivatives) const
 {
   const unsigned int n_pols = dealii::GeometryInfo<dim>::faces_per_cell;
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch(values.size(), n_pols));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch(grads.size(), n_pols));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch(grad_grads.size(), n_pols));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch(third_derivatives.size(), n_pols));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   for (unsigned int i = 0; i < n_pols; ++i)
     {
-      if (values.size() != 0)
+      if (!values.empty())
         {
           values[i] = compute_value(i, unit_point);
         }
-      if (grads.size() != 0)
+      if (!grads.empty())
         {
           grads[i] = compute_grad(i, unit_point);
         }
-      if (grad_grads.size() != 0)
+      if (!grad_grads.empty())
         {
           grad_grads[i] = compute_grad_grad(i, unit_point);
         }
-      if (third_derivatives.size() != 0)
+      if (!third_derivatives.empty())
         {
           third_derivatives[i] = compute_derivative<3>(i, unit_point);
         }
-      if (fourth_derivatives.size() != 0)
+      if (!fourth_derivatives.empty())
         {
           fourth_derivatives[i] = compute_derivative<4>(i, unit_point);
         }

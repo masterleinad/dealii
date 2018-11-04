@@ -326,7 +326,7 @@ namespace PETScWrappers
                      0,
                      int_row_lengths.data(),
                      0,
-                     offdiag_row_lengths.size() ?
+                     !offdiag_row_lengths.empty() ?
                        int_offdiag_row_lengths.data() :
                        nullptr,
                      &matrix);

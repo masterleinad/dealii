@@ -1540,7 +1540,7 @@ namespace hp
   DoFHandler<dim, spacedim>::renumber_dofs(
     const std::vector<types::global_dof_index> &new_numbers)
   {
-    Assert(levels.size() > 0,
+    Assert(!levels.empty(),
            ExcMessage(
              "You need to distribute DoFs before you can renumber them."));
 
@@ -1659,7 +1659,7 @@ namespace hp
     // of active_fe_indices; preset them to zero, i.e. the default FE
     for (unsigned int level = 0; level < levels.size(); ++level)
       {
-        if (levels[level]->active_fe_indices.size() == 0)
+        if (levels[level]->active_fe_indices.empty())
           levels[level]->active_fe_indices.resize(tria->n_raw_cells(level), 0);
         else
           {
@@ -1690,7 +1690,7 @@ namespace hp
 
     // Remember if the cells already have children. That will make the
     // transfer of the active_fe_index to the finer levels easier.
-    Assert(has_children.size() == 0, ExcInternalError());
+    Assert(has_children.empty(), ExcInternalError());
     for (unsigned int i = 0; i < levels.size(); ++i)
       {
         const unsigned int cells_on_level = tria->n_raw_cells(i);

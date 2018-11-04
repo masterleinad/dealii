@@ -290,7 +290,7 @@ LogStream::get_prefix() const
 {
   static std::string empty_string;
 
-  if (get_prefixes().size() > 0)
+  if (!get_prefixes().empty())
     return get_prefixes().top();
   else
     return empty_string;
@@ -302,7 +302,7 @@ void
 LogStream::push(const std::string &text)
 {
   std::string pre;
-  if (get_prefixes().size() > 0)
+  if (!get_prefixes().empty())
     pre = get_prefixes().top();
 
   pre += text;
@@ -315,7 +315,7 @@ LogStream::push(const std::string &text)
 void
 LogStream::pop()
 {
-  if (get_prefixes().size() > 0)
+  if (!get_prefixes().empty())
     get_prefixes().pop();
 }
 
@@ -423,7 +423,7 @@ LogStream::print_line_head()
       if (print_thread_id)
         *std_out << '[' << thread << ']';
 
-      if (head.size() > 0)
+      if (!head.empty())
         *std_out << head << ':';
     }
 
@@ -432,7 +432,7 @@ LogStream::print_line_head()
       if (print_thread_id)
         *file << '[' << thread << ']';
 
-      if (head.size() > 0)
+      if (!head.empty())
         *file << head << ':';
     }
 }

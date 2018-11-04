@@ -190,7 +190,7 @@ template <int dim, int spacedim>
 void
 PersistentTriangulation<dim, spacedim>::read_flags(std::istream &in)
 {
-  Assert(refine_flags.size() == 0 && coarsen_flags.size() == 0,
+  Assert(refine_flags.empty() && coarsen_flags.empty(),
          ExcFlagsNotCleared());
   AssertThrow(in, ExcIO());
 

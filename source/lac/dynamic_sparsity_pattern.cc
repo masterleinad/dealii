@@ -53,7 +53,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       }
 #endif
 
-      if (entries.size() == 0 || entries.back() < *begin)
+      if (entries.empty() || entries.back() < *begin)
         {
           entries.insert(entries.end(), begin, end);
           return;
@@ -150,7 +150,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
   // insert the first element as for one
   // entry only first check the last
   // element (or if line is still empty)
-  if ((entries.size() == 0) || (entries.back() < col))
+  if ((entries.empty()) || (entries.back() < col))
     {
       entries.push_back(col);
       it = entries.end() - 1;

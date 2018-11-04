@@ -62,7 +62,7 @@ namespace
     const unsigned int n_selected =
       std::accumulate(selected.begin(), selected.end(), 0u);
 
-    if (ndofs.size() == 0)
+    if (ndofs.empty())
       {
         std::vector<std::vector<types::global_dof_index>> new_dofs(
           mg_dof.get_triangulation().n_levels(),
@@ -110,7 +110,7 @@ namespace
     std::vector<bool> selected(n_blocks, false);
     selected[selected_block] = true;
 
-    if (ndofs.size() == 0)
+    if (ndofs.empty())
       {
         std::vector<std::vector<types::global_dof_index>> new_dofs(
           mg_dof.get_triangulation().n_levels(),
@@ -570,13 +570,13 @@ MGTransferBlock<number>::build_matrices(const DoFHandler<dim, spacedim> &dof,
   const FiniteElement<dim> &fe       = mg_dof.get_fe();
   unsigned int              n_blocks = mg_dof.get_fe().n_blocks();
 
-  if (sel.size() != 0)
+  if (!sel.empty())
     {
       Assert(sel.size() == n_blocks,
              ExcDimensionMismatch(sel.size(), n_blocks));
       selected = sel;
     }
-  if (selected.size() == 0)
+  if (selected.empty())
     selected = std::vector<bool>(n_blocks, true);
 
   MGTransferBlockBase::build_matrices(dof, mg_dof);

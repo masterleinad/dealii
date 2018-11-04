@@ -707,7 +707,7 @@ namespace Step27
         // 2D or 3D respectively. This vector will be the same for all the cells
         // so we can calculate logarithms of the corresponding Fourier vectors
         // $|{\bf k}|$ only once in the whole hp-refinement cycle:
-        if (ln_k.size() == 0)
+        if (ln_k.empty())
           {
             ln_k.resize(res.first.size(), 0);
             for (unsigned int f = 0; f < ln_k.size(); f++)

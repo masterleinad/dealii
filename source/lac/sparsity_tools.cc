@@ -112,7 +112,7 @@ namespace SparsityTools
 
       // Setup cell weighting option
       std::vector<idx_t> int_cell_weights;
-      if (cell_weights.size() > 0)
+      if (!cell_weights.empty())
         {
           Assert(cell_weights.size() == sparsity_pattern.n_rows(),
                  ExcDimensionMismatch(cell_weights.size(),
@@ -125,7 +125,7 @@ namespace SparsityTools
       // Set a pointer to the optional cell weighting information.
       // METIS expects a null pointer if there are no weights to be considered.
       idx_t *const p_int_cell_weights =
-        (cell_weights.size() > 0 ? int_cell_weights.data() : nullptr);
+        (!cell_weights.empty() ? int_cell_weights.data() : nullptr);
 
 
       // Make use of METIS' error code.
@@ -305,7 +305,7 @@ namespace SparsityTools
 #else
 
       Assert(
-        cell_weights.size() == 0,
+        cell_weights.empty(),
         ExcMessage(
           "The cell weighting functionality for Zoltan has not yet been implemented."));
       (void)cell_weights;
@@ -1055,7 +1055,7 @@ namespace SparsityTools
     }
 
     // complete all sends, so that we can safely destroy the buffers.
-    if (requests.size())
+    if (!requests.empty())
       {
         const int ierr =
           MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);
@@ -1201,7 +1201,7 @@ namespace SparsityTools
     }
 
     // complete all sends, so that we can safely destroy the buffers.
-    if (requests.size())
+    if (!requests.empty())
       {
         const int ierr =
           MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);

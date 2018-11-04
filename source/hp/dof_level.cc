@@ -33,7 +33,7 @@ namespace internal
     {
       (void)fe_collection;
 
-      if (dof_offsets.size() == 0 || dof_indices.size() == 0)
+      if (dof_offsets.empty() || dof_indices.empty())
         return;
 
       // in a first run through, count how many new slots we need in the
@@ -162,7 +162,7 @@ namespace internal
     DoFLevel::uncompress_data(
       const dealii::hp::FECollection<dim, spacedim> &fe_collection)
     {
-      if (dof_offsets.size() == 0 || dof_indices.size() == 0)
+      if (dof_offsets.empty() || dof_indices.empty())
         return;
 
       // in a first run through, count how many new slots we need in the

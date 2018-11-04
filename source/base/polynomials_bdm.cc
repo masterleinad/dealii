@@ -60,22 +60,22 @@ PolynomialsBDM<dim>::compute(
   std::vector<Tensor<4, dim>> &third_derivatives,
   std::vector<Tensor<5, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch(values.size(), n_pols));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch(grads.size(), n_pols));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch(grad_grads.size(), n_pols));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch(third_derivatives.size(), n_pols));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   // third and fourth derivatives not implemented
   (void)third_derivatives;
-  Assert(third_derivatives.size() == 0, ExcNotImplemented());
+  Assert(third_derivatives.empty(), ExcNotImplemented());
   (void)fourth_derivatives;
-  Assert(fourth_derivatives.size() == 0, ExcNotImplemented());
+  Assert(fourth_derivatives.empty(), ExcNotImplemented());
 
   const unsigned int n_sub = polynomial_space.n();
 
@@ -87,9 +87,9 @@ PolynomialsBDM<dim>::compute(
   {
     std::lock_guard<std::mutex> lock(mutex);
 
-    p_values.resize((values.size() == 0) ? 0 : n_sub);
-    p_grads.resize((grads.size() == 0) ? 0 : n_sub);
-    p_grad_grads.resize((grad_grads.size() == 0) ? 0 : n_sub);
+    p_values.resize((values.empty()) ? 0 : n_sub);
+    p_grads.resize((grads.empty()) ? 0 : n_sub);
+    p_grad_grads.resize((grad_grads.empty()) ? 0 : n_sub);
 
     // Compute values of complete space
     // and insert into tensors.  Result
@@ -133,14 +133,14 @@ PolynomialsBDM<dim>::compute(
     {
       for (unsigned int d = 0; d < dim; ++d)
         monomials[0].value(unit_point(d), monovali[d]);
-      if (values.size() != 0)
+      if (!values.empty())
         {
           values[start][0]     = monovali[0][0];
           values[start][1]     = -unit_point(1) * monovali[0][1];
           values[start + 1][0] = unit_point(0) * monovali[1][1];
           values[start + 1][1] = -monovali[1][0];
         }
-      if (grads.size() != 0)
+      if (!grads.empty())
         {
           grads[start][0][0]     = monovali[0][1];
           grads[start][0][1]     = 0.;
@@ -151,7 +151,7 @@ PolynomialsBDM<dim>::compute(
           grads[start + 1][1][0] = 0.;
           grads[start + 1][1][1] = -monovali[1][1];
         }
-      if (grad_grads.size() != 0)
+      if (!grad_grads.empty())
         {
           grad_grads[start][0][0][0]     = monovali[0][2];
           grad_grads[start][0][0][1]     = 0.;
@@ -193,7 +193,7 @@ PolynomialsBDM<dim>::compute(
               // q(t) = t^(k-i)
               monomials[degree() - i].value(unit_point(d), monovalk[d]);
             }
-          if (values.size() != 0)
+          if (!values.empty())
             {
               // x p'(y) q(z)
               values[start][0] =
@@ -216,7 +216,7 @@ PolynomialsBDM<dim>::compute(
               values[start + 2][0] = -monovali[0][0] * monovalk[1][0];
               values[start + 2][1] = 0.;
             }
-          if (grads.size() != 0)
+          if (!grads.empty())
             {
               grads[start][0][0] = monovali[1][1] * monovalk[2][0];
               grads[start][0][1] =
@@ -254,7 +254,7 @@ PolynomialsBDM<dim>::compute(
               grads[start + 2][1][0] = 0.;
               grads[start + 2][1][1] = 0.;
             }
-          if (grad_grads.size() != 0)
+          if (!grad_grads.empty())
             {
               grad_grads[start][0][0][0] = 0.;
               grad_grads[start][0][0][1] = monovali[1][2] * monovalk[2][0];

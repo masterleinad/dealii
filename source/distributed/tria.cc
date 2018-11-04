@@ -1150,9 +1150,9 @@ namespace parallel
       const std::vector<typename CellAttachedData::pack_callback_t>
         &pack_callbacks_variable)
     {
-      Assert(src_data_fixed.size() == 0,
+      Assert(src_data_fixed.empty(),
              ExcMessage("Previously packed data has not been released yet!"));
-      Assert(src_sizes_variable.size() == 0, ExcInternalError());
+      Assert(src_sizes_variable.empty(), ExcInternalError());
 
       const unsigned int n_callbacks_fixed    = pack_callbacks_fixed.size();
       const unsigned int n_callbacks_variable = pack_callbacks_variable.size();
@@ -1496,7 +1496,7 @@ namespace parallel
       const typename dealii::internal::p4est::types<dim>::gloidx
         *previous_global_first_quadrant)
     {
-      Assert(sizes_fixed_cumulative.size() > 0,
+      Assert(!sizes_fixed_cumulative.empty(),
              ExcMessage("No data has been packed!"));
 
       // Resize memory according to the data that we will receive.
@@ -1554,9 +1554,9 @@ namespace parallel
           // at all, which is mandatory if one of our processes does not own
           // any quadrant. This bypasses the assertion from being triggered.
           //   - see: https://github.com/cburstedde/p4est/issues/48
-          if (src_sizes_variable.size() == 0)
+          if (src_sizes_variable.empty())
             src_sizes_variable.resize(1);
-          if (dest_sizes_variable.size() == 0)
+          if (dest_sizes_variable.empty())
             dest_sizes_variable.resize(1);
 #  endif
 
@@ -1586,11 +1586,11 @@ namespace parallel
     Triangulation<dim, spacedim>::DataTransfer::unpack_cell_status(
       std::vector<quadrant_cell_relation_t> &quad_cell_relations) const
     {
-      Assert(sizes_fixed_cumulative.size() > 0,
+      Assert(!sizes_fixed_cumulative.empty(),
              ExcMessage("No data has been packed!"));
-      if (quad_cell_relations.size() > 0)
+      if (!quad_cell_relations.empty())
         {
-          Assert(dest_data_fixed.size() > 0,
+          Assert(!dest_data_fixed.empty(),
                  ExcMessage("No data has been received!"));
         }
 
@@ -1635,15 +1635,15 @@ namespace parallel
       const bool         callback_variable_transfer = (handle % 2 == 0);
       const unsigned int callback_index             = handle / 2;
 
-      Assert(sizes_fixed_cumulative.size() > 0,
+      Assert(!sizes_fixed_cumulative.empty(),
              ExcMessage("No data has been packed!"));
-      if (quad_cell_relations.size() > 0)
+      if (!quad_cell_relations.empty())
         {
-          Assert(dest_data_fixed.size() > 0,
+          Assert(!dest_data_fixed.empty(),
                  ExcMessage("No data has been received!"));
 
           if (callback_variable_transfer)
-            Assert(dest_data_variable.size() > 0,
+            Assert(!dest_data_variable.empty(),
                    ExcMessage("No data has been received!"));
         }
 
@@ -1795,7 +1795,7 @@ namespace parallel
       // DataOutInterface::write_vtu_in_parallel.
       // TODO: Write general MPIIO interface.
 
-      Assert(sizes_fixed_cumulative.size() > 0,
+      Assert(!sizes_fixed_cumulative.empty(),
              ExcMessage("No data has been packed!"));
 
       const int myrank = Utilities::MPI::this_mpi_process(mpi_communicator);
@@ -1972,7 +1972,7 @@ namespace parallel
       // DataOutInterface::write_vtu_in_parallel.
       // TODO: Write general MPIIO interface.
 
-      Assert(dest_data_fixed.size() == 0,
+      Assert(dest_data_fixed.empty(),
              ExcMessage("Previously loaded data has not been released yet!"));
 
       variable_size_data_stored = (n_attached_deserialize_variable > 0);
@@ -2475,7 +2475,7 @@ namespace parallel
                   if (neighbor_subdomains_of_vertex !=
                       vertices_with_ghost_neighbors.end())
                     {
-                      Assert(neighbor_subdomains_of_vertex->second.size() != 0,
+                      Assert(!neighbor_subdomains_of_vertex->second.empty(),
                              ExcInternalError());
                       send_to.insert(
                         neighbor_subdomains_of_vertex->second.begin(),
@@ -2483,7 +2483,7 @@ namespace parallel
                     }
                 }
 
-              if (send_to.size() > 0)
+              if (!send_to.empty())
                 {
                   std::vector<unsigned int>            vertex_indices;
                   std::vector<dealii::Point<spacedim>> local_vertices;
@@ -2496,7 +2496,7 @@ namespace parallel
                         local_vertices.push_back(dealii_cell->vertex(v));
                       }
 
-                  if (vertex_indices.size() > 0)
+                  if (!vertex_indices.empty())
                     for (std::set<dealii::types::subdomain_id>::iterator it =
                            send_to.begin();
                          it != send_to.end();
@@ -3211,7 +3211,7 @@ namespace parallel
       enforce_mesh_balance_over_periodic_boundaries(
         Triangulation<dim, spacedim> &tria)
       {
-        if (tria.get_periodic_face_map().size() == 0)
+        if (tria.get_periodic_face_map().empty())
           return false;
 
         std::vector<bool> flags_before[2];
@@ -4335,7 +4335,7 @@ namespace parallel
 
       // complete all sends, so that we can
       // safely destroy the buffers.
-      if (requests.size() > 0)
+      if (!requests.empty())
         {
           const int ierr =
             MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);

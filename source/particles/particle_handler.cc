@@ -347,7 +347,7 @@ namespace Particles
     auto &local_positions = std::get<1>(point_locations);
     auto &index_map       = std::get<2>(point_locations);
 
-    if (cells.size() == 0)
+    if (cells.empty())
       return;
 
     auto hint =
@@ -762,7 +762,7 @@ namespace Particles
                   vertex_to_neighbor_subdomain[cell->vertex_index(v)].end());
               }
 
-            if (cell_to_neighbor_subdomain.size() > 0)
+            if (!cell_to_neighbor_subdomain.empty())
               {
                 const particle_iterator_range particle_range =
                   particles_in_cell(cell);
@@ -808,7 +808,7 @@ namespace Particles
                                                      ghost_owners.end());
     const unsigned int                     n_neighbors = neighbors.size();
 
-    if (send_cells.size() != 0)
+    if (!send_cells.empty())
       Assert(particles_to_send.size() == send_cells.size(), ExcInternalError());
 
     // If we do not know the subdomain this particle needs to be send to, throw
@@ -864,7 +864,7 @@ namespace Particles
                 // If no target cells are given, use the iterator information
                 typename Triangulation<dim, spacedim>::active_cell_iterator
                   cell;
-                if (send_cells.size() == 0)
+                if (send_cells.empty())
                   cell =
                     particles_to_send.at(neighbors[i])[j]->get_surrounding_cell(
                       *triangulation);

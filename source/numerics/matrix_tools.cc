@@ -94,7 +94,7 @@ namespace MatrixTools
 
     // if no boundary values are to be applied
     // simply return
-    if (boundary_values.size() == 0)
+    if (boundary_values.empty())
       return;
 
 
@@ -265,7 +265,7 @@ namespace MatrixTools
 
     // if no boundary values are to be applied
     // simply return
-    if (boundary_values.size() == 0)
+    if (boundary_values.empty())
       return;
 
 
@@ -518,7 +518,7 @@ namespace MatrixTools
 
     // if there is nothing to do, then exit
     // right away
-    if (boundary_values.size() == 0)
+    if (boundary_values.empty())
       return;
 
     // otherwise traverse all the dofs used in

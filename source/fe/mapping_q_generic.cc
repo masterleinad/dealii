@@ -247,13 +247,13 @@ namespace internal
 
         std::vector<double>         values;
         std::vector<Tensor<1, dim>> grads;
-        if (data.shape_values.size() != 0)
+        if (!data.shape_values.empty())
           {
             Assert(data.shape_values.size() == n_shape_functions * n_points,
                    ExcInternalError());
             values.resize(n_shape_functions);
           }
-        if (data.shape_derivatives.size() != 0)
+        if (!data.shape_derivatives.empty())
           {
             Assert(data.shape_derivatives.size() ==
                      n_shape_functions * n_points,
@@ -262,7 +262,7 @@ namespace internal
           }
 
         std::vector<Tensor<2, dim>> grad2;
-        if (data.shape_second_derivatives.size() != 0)
+        if (!data.shape_second_derivatives.empty())
           {
             Assert(data.shape_second_derivatives.size() ==
                      n_shape_functions * n_points,
@@ -271,7 +271,7 @@ namespace internal
           }
 
         std::vector<Tensor<3, dim>> grad3;
-        if (data.shape_third_derivatives.size() != 0)
+        if (!data.shape_third_derivatives.empty())
           {
             Assert(data.shape_third_derivatives.size() ==
                      n_shape_functions * n_points,
@@ -280,7 +280,7 @@ namespace internal
           }
 
         std::vector<Tensor<4, dim>> grad4;
-        if (data.shape_fourth_derivatives.size() != 0)
+        if (!data.shape_fourth_derivatives.empty())
           {
             Assert(data.shape_fourth_derivatives.size() ==
                      n_shape_functions * n_points,
@@ -289,33 +289,33 @@ namespace internal
           }
 
 
-        if (data.shape_values.size() != 0 ||
-            data.shape_derivatives.size() != 0 ||
-            data.shape_second_derivatives.size() != 0 ||
-            data.shape_third_derivatives.size() != 0 ||
-            data.shape_fourth_derivatives.size() != 0)
+        if (!data.shape_values.empty() ||
+            !data.shape_derivatives.empty() ||
+            !data.shape_second_derivatives.empty() ||
+            !data.shape_third_derivatives.empty() ||
+            !data.shape_fourth_derivatives.empty())
           for (unsigned int point = 0; point < n_points; ++point)
             {
               tensor_pols.compute(
                 unit_points[point], values, grads, grad2, grad3, grad4);
 
-              if (data.shape_values.size() != 0)
+              if (!data.shape_values.empty())
                 for (unsigned int i = 0; i < n_shape_functions; ++i)
                   data.shape(point, renumber[i]) = values[i];
 
-              if (data.shape_derivatives.size() != 0)
+              if (!data.shape_derivatives.empty())
                 for (unsigned int i = 0; i < n_shape_functions; ++i)
                   data.derivative(point, renumber[i]) = grads[i];
 
-              if (data.shape_second_derivatives.size() != 0)
+              if (!data.shape_second_derivatives.empty())
                 for (unsigned int i = 0; i < n_shape_functions; ++i)
                   data.second_derivative(point, renumber[i]) = grad2[i];
 
-              if (data.shape_third_derivatives.size() != 0)
+              if (!data.shape_third_derivatives.empty())
                 for (unsigned int i = 0; i < n_shape_functions; ++i)
                   data.third_derivative(point, renumber[i]) = grad3[i];
 
-              if (data.shape_fourth_derivatives.size() != 0)
+              if (!data.shape_fourth_derivatives.empty())
                 for (unsigned int i = 0; i < n_shape_functions; ++i)
                   data.fourth_derivative(point, renumber[i]) = grad4[i];
             }
@@ -334,14 +334,14 @@ namespace internal
           {
             double x = unit_points[k](0);
 
-            if (data.shape_values.size() != 0)
+            if (!data.shape_values.empty())
               {
                 Assert(data.shape_values.size() == n_shape_functions * n_points,
                        ExcInternalError());
                 data.shape(k, 0) = 1. - x;
                 data.shape(k, 1) = x;
               }
-            if (data.shape_derivatives.size() != 0)
+            if (!data.shape_derivatives.empty())
               {
                 Assert(data.shape_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -349,7 +349,7 @@ namespace internal
                 data.derivative(k, 0)[0] = -1.;
                 data.derivative(k, 1)[0] = 1.;
               }
-            if (data.shape_second_derivatives.size() != 0)
+            if (!data.shape_second_derivatives.empty())
               {
                 Assert(data.shape_second_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -357,7 +357,7 @@ namespace internal
                 data.second_derivative(k, 0)[0][0] = 0;
                 data.second_derivative(k, 1)[0][0] = 0;
               }
-            if (data.shape_third_derivatives.size() != 0)
+            if (!data.shape_third_derivatives.empty())
               {
                 Assert(data.shape_third_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -367,7 +367,7 @@ namespace internal
                 data.third_derivative(k, 0) = zero;
                 data.third_derivative(k, 1) = zero;
               }
-            if (data.shape_fourth_derivatives.size() != 0)
+            if (!data.shape_fourth_derivatives.empty())
               {
                 Assert(data.shape_fourth_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -394,7 +394,7 @@ namespace internal
             double x = unit_points[k](0);
             double y = unit_points[k](1);
 
-            if (data.shape_values.size() != 0)
+            if (!data.shape_values.empty())
               {
                 Assert(data.shape_values.size() == n_shape_functions * n_points,
                        ExcInternalError());
@@ -403,7 +403,7 @@ namespace internal
                 data.shape(k, 2) = (1. - x) * y;
                 data.shape(k, 3) = x * y;
               }
-            if (data.shape_derivatives.size() != 0)
+            if (!data.shape_derivatives.empty())
               {
                 Assert(data.shape_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -417,7 +417,7 @@ namespace internal
                 data.derivative(k, 2)[1] = (1. - x);
                 data.derivative(k, 3)[1] = x;
               }
-            if (data.shape_second_derivatives.size() != 0)
+            if (!data.shape_second_derivatives.empty())
               {
                 Assert(data.shape_second_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -439,7 +439,7 @@ namespace internal
                 data.second_derivative(k, 2)[1][1] = 0;
                 data.second_derivative(k, 3)[1][1] = 0;
               }
-            if (data.shape_third_derivatives.size() != 0)
+            if (!data.shape_third_derivatives.empty())
               {
                 Assert(data.shape_third_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -449,7 +449,7 @@ namespace internal
                 for (unsigned int i = 0; i < 4; ++i)
                   data.third_derivative(k, i) = zero;
               }
-            if (data.shape_fourth_derivatives.size() != 0)
+            if (!data.shape_fourth_derivatives.empty())
               {
                 Assert(data.shape_fourth_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -477,7 +477,7 @@ namespace internal
             double y = unit_points[k](1);
             double z = unit_points[k](2);
 
-            if (data.shape_values.size() != 0)
+            if (!data.shape_values.empty())
               {
                 Assert(data.shape_values.size() == n_shape_functions * n_points,
                        ExcInternalError());
@@ -490,7 +490,7 @@ namespace internal
                 data.shape(k, 6) = (1. - x) * y * z;
                 data.shape(k, 7) = x * y * z;
               }
-            if (data.shape_derivatives.size() != 0)
+            if (!data.shape_derivatives.empty())
               {
                 Assert(data.shape_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -520,7 +520,7 @@ namespace internal
                 data.derivative(k, 6)[2] = (1. - x) * y;
                 data.derivative(k, 7)[2] = x * y;
               }
-            if (data.shape_second_derivatives.size() != 0)
+            if (!data.shape_second_derivatives.empty())
               {
                 Assert(data.shape_second_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -601,7 +601,7 @@ namespace internal
                 data.second_derivative(k, 6)[2][1] = (1. - x);
                 data.second_derivative(k, 7)[2][1] = x;
               }
-            if (data.shape_third_derivatives.size() != 0)
+            if (!data.shape_third_derivatives.empty())
               {
                 Assert(data.shape_third_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -627,7 +627,7 @@ namespace internal
                           data.third_derivative(k, 7)[i][j][l] = 1.;
                         }
               }
-            if (data.shape_fourth_derivatives.size() != 0)
+            if (!data.shape_fourth_derivatives.empty())
               {
                 Assert(data.shape_fourth_derivatives.size() ==
                          n_shape_functions * n_points,
@@ -3260,7 +3260,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_face_values(
   // cell (note that we need to first check the triangulation pointer, since
   // otherwise the second test might trigger an exception if the triangulations
   // are not the same)
-  if ((data.mapping_support_points.size() == 0) ||
+  if ((data.mapping_support_points.empty()) ||
       (&cell->get_triangulation() !=
        &data.cell_of_current_support_points->get_triangulation()) ||
       (cell != data.cell_of_current_support_points))
@@ -3306,7 +3306,7 @@ MappingQGeneric<dim, spacedim>::fill_fe_subface_values(
   // cell (note that we need to first check the triangulation pointer, since
   // otherwise the second test might trigger an exception if the triangulations
   // are not the same)
-  if ((data.mapping_support_points.size() == 0) ||
+  if ((data.mapping_support_points.empty()) ||
       (&cell->get_triangulation() !=
        &data.cell_of_current_support_points->get_triangulation()) ||
       (cell != data.cell_of_current_support_points))

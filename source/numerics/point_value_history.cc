@@ -1023,7 +1023,7 @@ PointValueHistory<dim>::write_gnuplot(
       // write column headings
       to_gnuplot << "# <Key> ";
 
-      if (indep_names.size() > 0)
+      if (!indep_names.empty())
         {
           for (unsigned int name = 0; name < indep_names.size(); name++)
             {
@@ -1060,7 +1060,7 @@ PointValueHistory<dim>::write_gnuplot(
   if (have_dof_handler)
     {
       AssertThrow(have_dof_handler, ExcDoFHandlerRequired());
-      AssertThrow(postprocessor_locations.size() == 0 ||
+      AssertThrow(postprocessor_locations.empty() ||
                     postprocessor_locations.size() ==
                       point_geometry_data.size(),
                   ExcDimensionMismatch(postprocessor_locations.size(),
@@ -1114,7 +1114,7 @@ PointValueHistory<dim>::write_gnuplot(
             to_gnuplot
               << "# (Original components and locations, may be invalidated by mesh change.)\n";
 
-          if (postprocessor_locations.size() != 0)
+          if (!postprocessor_locations.empty())
             {
               to_gnuplot << "# Postprocessor location: "
                          << postprocessor_locations[data_store_index];
@@ -1127,7 +1127,7 @@ PointValueHistory<dim>::write_gnuplot(
           // write column headings
           to_gnuplot << "# <Key> ";
 
-          if (indep_names.size() > 0)
+          if (!indep_names.empty())
             {
               for (unsigned int name = 0; name < indep_names.size(); name++)
                 {
@@ -1153,7 +1153,7 @@ PointValueHistory<dim>::write_gnuplot(
               std::vector<std::string> names =
                 (component_names_map.find(data_store_begin->first))->second;
 
-              if (names.size() > 0)
+              if (!names.empty())
                 {
                   AssertThrow(names.size() == n_stored,
                               ExcDimensionMismatch(names.size(), n_stored));
@@ -1373,11 +1373,11 @@ PointValueHistory<dim>::status(std::ostream &out)
     }
   out << "\n";
 
-  if (independent_values.size() != 0)
+  if (!independent_values.empty())
     {
       out << "Independent value(s): " << independent_values.size() << " : "
           << independent_values[0].size() << "\n";
-      if (indep_names.size() > 0)
+      if (!indep_names.empty())
         {
           out << "Names: ";
           for (unsigned int name = 0; name < indep_names.size(); name++)
@@ -1412,7 +1412,7 @@ PointValueHistory<dim>::status(std::ostream &out)
       Assert(component_names != component_names_map.end(),
              ExcMessage("vector_name not in class"));
 
-      if (data_store_begin->second.size() != 0)
+      if (!data_store_begin->second.empty())
         {
           out << data_store_begin->first << ": "
               << data_store_begin->second.size() << " (";
@@ -1430,7 +1430,7 @@ PointValueHistory<dim>::status(std::ostream &out)
               << "\n";
         }
       // add names, if available
-      if (component_names->second.size() > 0)
+      if (!component_names->second.empty())
         {
           for (unsigned int name = 0; name < component_names->second.size();
                name++)
@@ -1467,7 +1467,7 @@ PointValueHistory<dim>::deep_check(const bool strict)
         {
           for (; data_store_begin != data_store.end(); ++data_store_begin)
             {
-              Assert(data_store_begin->second.size() > 0, ExcInternalError());
+              Assert(!data_store_begin->second.empty(), ExcInternalError());
               if ((data_store_begin->second)[0].size() != dataset_key.size())
                 return false;
               // this loop only tests one
@@ -1495,7 +1495,7 @@ PointValueHistory<dim>::deep_check(const bool strict)
         data_store_begin = data_store.begin();
       for (; data_store_begin != data_store.end(); ++data_store_begin)
         {
-          Assert(data_store_begin->second.size() > 0, ExcInternalError());
+          Assert(!data_store_begin->second.empty(), ExcInternalError());
 
           if (std::abs((int)(data_store_begin->second)[0].size() -
                        (int)dataset_key.size()) >= 2)

@@ -295,7 +295,7 @@ namespace parallel
           AssertThrowMPI(ierr);
         }
 
-      if (requests.size() > 0)
+      if (!requests.empty())
         {
           ierr =
             MPI_Waitall(requests.size(), requests.data(), MPI_STATUSES_IGNORE);
@@ -365,7 +365,7 @@ namespace parallel
     // we can remove the overriding implementation for p::d::Triangulation
     // that is currently using a p4est callback to get correct ghost neighbors
     // over periodic faces.
-    Assert(this->get_periodic_face_map().size() == 0, ExcNotImplemented());
+    Assert(this->get_periodic_face_map().empty(), ExcNotImplemented());
 
 
     std::vector<bool> vertex_of_own_cell(this->n_vertices(), false);

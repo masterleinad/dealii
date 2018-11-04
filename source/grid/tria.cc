@@ -49,9 +49,9 @@ SubCellData::check_consistency(const unsigned int dim) const
   switch (dim)
     {
       case 1:
-        return ((boundary_lines.size() == 0) && (boundary_quads.size() == 0));
+        return ((boundary_lines.empty()) && (boundary_quads.empty()));
       case 2:
-        return (boundary_quads.size() == 0);
+        return (boundary_quads.empty());
     };
   return true;
 }
@@ -1694,8 +1694,8 @@ namespace internal
                            const SubCellData & /*subcelldata*/,
                            Triangulation<1, spacedim> &triangulation)
       {
-        AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
-        AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
+        AssertThrow(!v.empty(), ExcMessage("No vertices given"));
+        AssertThrow(!cells.empty(), ExcMessage("No cells given"));
 
         // note: since no boundary
         // information can be given in one
@@ -1904,8 +1904,8 @@ namespace internal
                            const SubCellData &                 subcelldata,
                            Triangulation<2, spacedim> &        triangulation)
       {
-        AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
-        AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
+        AssertThrow(!v.empty(), ExcMessage("No vertices given"));
+        AssertThrow(!cells.empty(), ExcMessage("No cells given"));
 
         const unsigned int dim = 2;
 
@@ -2287,8 +2287,8 @@ namespace internal
                            const SubCellData &                 subcelldata,
                            Triangulation<3, spacedim> &        triangulation)
       {
-        AssertThrow(v.size() > 0, ExcMessage("No vertices given"));
-        AssertThrow(cells.size() > 0, ExcMessage("No cells given"));
+        AssertThrow(!v.empty(), ExcMessage("No vertices given"));
+        AssertThrow(!cells.empty(), ExcMessage("No cells given"));
 
         const unsigned int dim = 3;
 
@@ -10473,9 +10473,9 @@ void
 Triangulation<dim, spacedim>::copy_triangulation(
   const Triangulation<dim, spacedim> &other_tria)
 {
-  Assert((vertices.size() == 0) && (levels.size() == 0) && (faces == nullptr),
+  Assert((vertices.empty()) && (levels.empty()) && (faces == nullptr),
          ExcTriangulationNotEmpty(vertices.size(), levels.size()));
-  Assert((other_tria.levels.size() != 0) && (other_tria.vertices.size() != 0) &&
+  Assert((!other_tria.levels.empty()) && (!other_tria.vertices.empty()) &&
            (dim == 1 || other_tria.faces != nullptr),
          ExcMessage(
            "When calling Triangulation::copy_triangulation(), "
@@ -10558,7 +10558,7 @@ Triangulation<dim, spacedim>::create_triangulation(
   const std::vector<CellData<dim>> &  cells,
   const SubCellData &                 subcelldata)
 {
-  Assert((vertices.size() == 0) && (levels.size() == 0) && (faces == nullptr),
+  Assert((vertices.empty()) && (levels.empty()) && (faces == nullptr),
          ExcTriangulationNotEmpty(vertices.size(), levels.size()));
   // check that no forbidden arrays
   // are used
@@ -10593,7 +10593,7 @@ Triangulation<dim, spacedim>::create_triangulation(
       // throw the array (and fill the various location fields) if
       // there are distorted cells. otherwise, just fall off the end
       // of the function
-      AssertThrow(distorted_cells.distorted_cells.size() == 0, distorted_cells);
+      AssertThrow(distorted_cells.distorted_cells.empty(), distorted_cells);
     }
 
 
@@ -10667,7 +10667,7 @@ Triangulation<dim, spacedim>::create_triangulation(
       begin_active()->set_direction_flag(true);
       begin_active()->set_user_flag();
 
-      while (this_round.size() > 0)
+      while (!this_round.empty())
         {
           for (typename std::list<active_cell_iterator>::iterator cell =
                  this_round.begin();
@@ -10717,7 +10717,7 @@ Triangulation<dim, spacedim>::create_triangulation(
           // that if the triangulation
           // is disconnected that we
           // still get all cells
-          if (next_round.size() == 0)
+          if (next_round.empty())
             for (active_cell_iterator cell = begin_active(); cell != end();
                  ++cell)
               if (cell->user_flag_set() == false)
@@ -11958,7 +11958,7 @@ Triangulation<dim, spacedim>::last() const
 
   Assert(level < n_global_levels() || level < levels.size(),
          ExcInvalidLevel(level));
-  if (levels[level]->cells.cells.size() == 0)
+  if (levels[level]->cells.cells.empty())
     return end(level);
 
   // find the last raw iterator on
@@ -12218,7 +12218,7 @@ Triangulation<dim, spacedim>::begin_raw_line(const unsigned int level) const
         Assert(level < n_global_levels() || level < levels.size(),
                ExcInvalidLevel(level));
 
-        if (level >= levels.size() || levels[level]->cells.cells.size() == 0)
+        if (level >= levels.size() || levels[level]->cells.cells.empty())
           return end_line();
 
         return raw_line_iterator(
@@ -12292,7 +12292,7 @@ Triangulation<dim, spacedim>::begin_raw_quad(const unsigned int level) const
           Assert(level < n_global_levels() || level < levels.size(),
                  ExcInvalidLevel(level));
 
-          if (level >= levels.size() || levels[level]->cells.cells.size() == 0)
+          if (level >= levels.size() || levels[level]->cells.cells.empty())
             return end_quad();
 
           return raw_quad_iterator(
@@ -12376,7 +12376,7 @@ Triangulation<dim, spacedim>::begin_raw_hex(const unsigned int level) const
           Assert(level < n_global_levels() || level < levels.size(),
                  ExcInvalidLevel(level));
 
-          if (level >= levels.size() || levels[level]->cells.cells.size() == 0)
+          if (level >= levels.size() || levels[level]->cells.cells.empty())
             return end_hex();
 
           return raw_hex_iterator(
@@ -13250,7 +13250,7 @@ Triangulation<dim, spacedim>::execute_coarsening_and_refinement()
   // Inform all listeners about end of refinement.
   signals.post_refinement();
 
-  AssertThrow(cells_with_distorted_children.distorted_cells.size() == 0,
+  AssertThrow(cells_with_distorted_children.distorted_cells.empty(),
               cells_with_distorted_children);
 
   update_periodic_face_map();

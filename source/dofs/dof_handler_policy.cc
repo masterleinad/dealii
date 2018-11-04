@@ -4169,7 +4169,7 @@ namespace internal
             // to an array of bytes, and then serialize that
             std::vector<char> quadrants_as_chars(sizeof(quadrants[0]) *
                                                  quadrants.size());
-            if (quadrants_as_chars.size() > 0)
+            if (!quadrants_as_chars.empty())
               {
                 Assert(quadrants.data() != nullptr, ExcInternalError());
                 std::memcpy(quadrants_as_chars.data(),
@@ -4193,7 +4193,7 @@ namespace internal
             std::vector<char> quadrants_as_chars;
             ar &quadrants_as_chars &tree_indices &dof_numbers_and_indices;
 
-            if (quadrants_as_chars.size() > 0)
+            if (!quadrants_as_chars.empty())
               {
                 quadrants.resize(quadrants_as_chars.size() /
                                  sizeof(quadrants[0]));
@@ -4610,7 +4610,7 @@ namespace internal
               AssertThrowMPI(ierr);
 
               cell_data_transfer_buffer.unpack_data(receive);
-              if (cell_data_transfer_buffer.tree_indices.size() == 0)
+              if (cell_data_transfer_buffer.tree_indices.empty())
                 continue;
 
               // set the dof indices for each cell
@@ -4645,14 +4645,14 @@ namespace internal
 
           // complete all sends, so that we can safely destroy the
           // buffers.
-          if (requests.size() > 0)
+          if (!requests.empty())
             {
               const int ierr = MPI_Waitall(requests.size(),
                                            requests.data(),
                                            MPI_STATUSES_IGNORE);
               AssertThrowMPI(ierr);
             }
-          if (reply_requests.size() > 0)
+          if (!reply_requests.empty())
             {
               const int ierr = MPI_Waitall(reply_requests.size(),
                                            reply_requests.data(),
@@ -5809,7 +5809,7 @@ namespace internal
                            sizeof(types::global_dof_index) *
                              n_ghosts_on_smaller_ranks);
             }
-          if (new_numbers.size() > 0)
+          if (!new_numbers.empty())
             {
               Assert(new_numbers.data() != nullptr, ExcInternalError());
               std::memcpy(ghosted_new_numbers.data() +

@@ -29,7 +29,7 @@ namespace Functions
     : interpolation_points(x_)
     , interpolation_values(y_)
   {
-    Assert(interpolation_points.size() > 0,
+    Assert(!interpolation_points.empty(),
            ExcCSplineEmpty(interpolation_points.size()));
 
     Assert(interpolation_points.size() == interpolation_values.size(),

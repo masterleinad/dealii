@@ -300,8 +300,8 @@ SparseDirectUMFPACK::solve(Vector<double> &rhs_and_solution,
                            bool            transpose /*=false*/) const
 {
   // make sure that some kind of factorize() call has happened before
-  Assert(Ap.size() != 0, ExcNotInitialized());
-  Assert(Ai.size() != 0, ExcNotInitialized());
+  Assert(!Ap.empty(), ExcNotInitialized());
+  Assert(!Ai.empty(), ExcNotInitialized());
   Assert(Ai.size() == Ax.size(), ExcNotInitialized());
 
   Vector<double> rhs(rhs_and_solution.size());

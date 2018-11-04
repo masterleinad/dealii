@@ -700,7 +700,7 @@ namespace TrilinosWrappers
 
       Epetra_Map off_processor_map(-1,
                                    ghost_rows.size(),
-                                   (ghost_rows.size() > 0) ?
+                                   (!ghost_rows.empty()) ?
                                      (ghost_rows.data()) :
                                      nullptr,
                                    0,
@@ -713,7 +713,7 @@ namespace TrilinosWrappers
           graph = std_cxx14::make_unique<Epetra_CrsGraph>(
             Copy,
             input_row_map,
-            (n_entries_per_row.size() > 0) ? (n_entries_per_row.data()) :
+            (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) :
                                              nullptr,
             exchange_data ? false : true);
           if (have_ghost_rows == true)
@@ -725,7 +725,7 @@ namespace TrilinosWrappers
           Copy,
           input_row_map,
           input_col_map,
-          (n_entries_per_row.size() > 0) ? (n_entries_per_row.data()) : nullptr,
+          (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) : nullptr,
           true);
 
       // now insert the indices, select between the right matrix

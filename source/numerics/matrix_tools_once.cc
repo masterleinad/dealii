@@ -81,7 +81,7 @@ namespace MatrixTools
     // if no boundary values are to be applied, then
     // jump straight to the compress() calls that we still have
     // to perform because they are collective operations
-    if (boundary_values.size() > 0)
+    if (!boundary_values.empty())
       {
         const std::pair<types::global_dof_index, types::global_dof_index>
           local_range = matrix.local_range();
@@ -268,7 +268,7 @@ namespace MatrixTools
         // if no boundary values are to be applied, then
         // jump straight to the compress() calls that we still have
         // to perform because they are collective operations
-        if (boundary_values.size() > 0)
+        if (!boundary_values.empty())
           {
             const std::pair<types::global_dof_index, types::global_dof_index>
               local_range = matrix.local_range();

@@ -1509,7 +1509,7 @@ namespace DoFTools
                             // break if the n_master_dofs == 0, because we are
                             // attempting to constrain to an element that has no
                             // face dofs
-                            if (master_dofs.size() == 0)
+                            if (master_dofs.empty())
                               break;
 
                             slave_dofs.resize(neighbor->get_fe().dofs_per_face);
@@ -3253,7 +3253,7 @@ namespace DoFTools
         {
           // if this is the line of a parameter dof on the coarse grid, then it
           // should have at least one dependent node on the fine grid
-          Assert(weights[parameter_dof].size() > 0, ExcInternalError());
+          Assert(!weights[parameter_dof].empty(), ExcInternalError());
 
           // find the column where the representant is mentioned
           std::map<types::global_dof_index, float>::const_iterator i =
@@ -3281,7 +3281,7 @@ namespace DoFTools
         {
           // consistency check: if this is no parameter dof on the coarse grid,
           // then the respective row must be empty!
-          Assert(weights[parameter_dof].size() == 0, ExcInternalError());
+          Assert(weights[parameter_dof].empty(), ExcInternalError());
         }
 
 
@@ -3309,7 +3309,7 @@ namespace DoFTools
           types::global_dof_index first_used_row = 0;
 
           {
-            Assert(weights.size() > 0, ExcInternalError());
+            Assert(!weights.empty(), ExcInternalError());
             std::map<types::global_dof_index, float>::const_iterator col_entry =
               weights[0].end();
             for (; first_used_row < n_coarse_dofs; ++first_used_row)

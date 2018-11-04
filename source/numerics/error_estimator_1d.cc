@@ -367,7 +367,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
            (coefficient->n_components == 1),
          ExcInvalidCoefficient());
 
-  Assert(solutions.size() > 0, ExcNoSolutions());
+  Assert(!solutions.empty(), ExcNoSolutions());
   Assert(solutions.size() == errors.size(),
          ExcIncompatibleNumberOfElements(solutions.size(), errors.size()));
   for (unsigned int n = 0; n < solutions.size(); ++n)

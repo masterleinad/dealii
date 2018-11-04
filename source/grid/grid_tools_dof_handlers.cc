@@ -66,7 +66,7 @@ namespace GridTools
     const std::vector<Point<spacedim>> &vertices = tria.get_vertices();
 
     Assert(tria.get_vertices().size() == marked_vertices.size() ||
-             marked_vertices.size() == 0,
+             marked_vertices.empty(),
            ExcDimensionMismatch(tria.get_vertices().size(),
                                 marked_vertices.size()));
 
@@ -78,7 +78,7 @@ namespace GridTools
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
     Assert(
-      marked_vertices.size() == 0 ||
+      marked_vertices.empty() ||
         std::equal(marked_vertices.begin(),
                    marked_vertices.end(),
                    tria.get_used_vertices().begin(),
@@ -93,7 +93,7 @@ namespace GridTools
     // could be the potentially closest
     // vertex to the point, use it instead
     // of used vertices
-    const std::vector<bool> &used = (marked_vertices.size() == 0) ?
+    const std::vector<bool> &used = (marked_vertices.empty()) ?
                                       tria.get_used_vertices() :
                                       marked_vertices;
 
@@ -147,7 +147,7 @@ namespace GridTools
     auto vertices = extract_used_vertices(tria, mapping);
 
     Assert(tria.get_vertices().size() == marked_vertices.size() ||
-             marked_vertices.size() == 0,
+             marked_vertices.empty(),
            ExcDimensionMismatch(tria.get_vertices().size(),
                                 marked_vertices.size()));
 
@@ -159,7 +159,7 @@ namespace GridTools
     // (if p is false, q could be false or true).
     // p implies q logic is encapsulated in ~p|q.
     Assert(
-      marked_vertices.size() == 0 ||
+      marked_vertices.empty() ||
         std::equal(marked_vertices.begin(),
                    marked_vertices.end(),
                    tria.get_used_vertices().begin(),
@@ -169,7 +169,7 @@ namespace GridTools
         "but marked_vertices contains one or more vertices that are not used vertices!"));
 
     // Remove from the map unwanted elements.
-    if (marked_vertices.size())
+    if (!marked_vertices.empty())
       for (auto it = vertices.begin(); it != vertices.end();)
         {
           if (marked_vertices[it->first] == false)
@@ -320,7 +320,7 @@ namespace GridTools
 
     // if this was an active vertex then there needs to have been
     // at least one cell to which it is adjacent!
-    Assert(adjacent_cells.size() > 0, ExcInternalError());
+    Assert(!adjacent_cells.empty(), ExcInternalError());
 
     // return the result as a vector, rather than the set we built above
     return std::vector<
@@ -385,7 +385,7 @@ namespace GridTools
       adjacent_cells.clear();
       adjacent_cells.insert(adjacent_cells_new.begin(),
                             adjacent_cells_new.end());
-      if (adjacent_cells.size() == 0)
+      if (adjacent_cells.empty())
         {
           // we haven't found any other cell that would be a
           // neighbor of a previously found cell, but we know
@@ -441,7 +441,7 @@ namespace GridTools
 
       // Make sure that we have found
       // at least one cell adjacent to vertex.
-      Assert(adjacent_cells_tmp.size() > 0, ExcInternalError());
+      Assert(!adjacent_cells_tmp.empty(), ExcInternalError());
 
       // Copy all the cells into a std::set
       std::set<active_cell_iterator> adjacent_cells(adjacent_cells_tmp.begin(),
@@ -513,7 +513,7 @@ namespace GridTools
           // if the user provided a custom mask for vertices,
           // terminate the search without trying to expand the search
           // to all cells of the triangulation, as done below.
-          if (marked_vertices.size() > 0)
+          if (!marked_vertices.empty())
             cells_searched = n_active_cells;
 
           // if we have not found the cell in
@@ -1298,7 +1298,7 @@ namespace GridTools
 
         // Make sure that we have found
         // at least one cell adjacent to vertex.
-        Assert(adjacent_cells_tmp.size() > 0, ExcInternalError());
+        Assert(!adjacent_cells_tmp.empty(), ExcInternalError());
 
         // Copy all the cells into a std::set
         std::set<cell_iterator> adjacent_cells(adjacent_cells_tmp.begin(),
@@ -1441,7 +1441,7 @@ namespace GridTools
   get_cells_at_coarsest_common_level(
     const std::vector<typename Container::active_cell_iterator> &patch)
   {
-    Assert(patch.size() > 0,
+    Assert(!patch.empty(),
            ExcMessage(
              "Vector containing patch cells should not be an empty vector!"));
     // In order to extract the set of cells with the coarsest common level from
@@ -2082,7 +2082,7 @@ namespace GridTools
       }
 
     // Assure that all faces are matched
-    AssertThrow(n_matches == pairs1.size() && pairs2.size() == 0,
+    AssertThrow(n_matches == pairs1.size() && pairs2.empty(),
                 ExcMessage("Unmatched faces on periodic boundaries"));
   }
 
@@ -2141,7 +2141,7 @@ namespace GridTools
     Assert(pairs1.size() == pairs2.size(),
            ExcMessage("Unmatched faces on periodic boundaries"));
 
-    Assert(pairs1.size() > 0,
+    Assert(!pairs1.empty(),
            ExcMessage("No new periodic face pairs have been found. "
                       "Are you sure that you've selected the correct boundary "
                       "id's and that the coarsest level mesh is colorized?"));
@@ -2221,7 +2221,7 @@ namespace GridTools
     Assert(pairs1.size() == pairs2.size(),
            ExcMessage("Unmatched faces on periodic boundaries"));
 
-    Assert(pairs1.size() > 0,
+    Assert(!pairs1.empty(),
            ExcMessage("No new periodic face pairs have been found. "
                       "Are you sure that you've selected the correct boundary "
                       "id's and that the coarsest level mesh is colorized?"));

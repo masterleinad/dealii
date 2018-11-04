@@ -75,15 +75,15 @@ PolynomialsBernardiRaugel<dim>::compute(
   std::vector<Tensor<4, dim>> &third_derivatives,
   std::vector<Tensor<5, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch(values.size(), n_pols));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch(grads.size(), n_pols));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch(grad_grads.size(), n_pols));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch(third_derivatives.size(), n_pols));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   std::vector<double>         Q_values;
@@ -101,18 +101,18 @@ PolynomialsBernardiRaugel<dim>::compute(
   int n_q       = 1 << dim;         // size for create_polynomials_q
 
   // don't resize if the provided vector has 0 length
-  Q_values.resize((values.size() == 0) ? 0 : n_q);
-  Q_grads.resize((grads.size() == 0) ? 0 : n_q);
-  Q_grad_grads.resize((grad_grads.size() == 0) ? 0 : n_q);
-  Q_third_derivatives.resize((third_derivatives.size() == 0) ? 0 : n_q);
-  Q_fourth_derivatives.resize((fourth_derivatives.size() == 0) ? 0 : n_q);
-  bubble_values.resize((values.size() == 0) ? 0 : n_bubbles);
-  bubble_grads.resize((grads.size() == 0) ? 0 : n_bubbles);
-  bubble_grad_grads.resize((grad_grads.size() == 0) ? 0 : n_bubbles);
-  bubble_third_derivatives.resize((third_derivatives.size() == 0) ? 0 :
+  Q_values.resize((values.empty()) ? 0 : n_q);
+  Q_grads.resize((grads.empty()) ? 0 : n_q);
+  Q_grad_grads.resize((grad_grads.empty()) ? 0 : n_q);
+  Q_third_derivatives.resize((third_derivatives.empty()) ? 0 : n_q);
+  Q_fourth_derivatives.resize((fourth_derivatives.empty()) ? 0 : n_q);
+  bubble_values.resize((values.empty()) ? 0 : n_bubbles);
+  bubble_grads.resize((grads.empty()) ? 0 : n_bubbles);
+  bubble_grad_grads.resize((grad_grads.empty()) ? 0 : n_bubbles);
+  bubble_third_derivatives.resize((third_derivatives.empty()) ? 0 :
                                                                     n_bubbles);
   bubble_fourth_derivatives.resize(
-    (fourth_derivatives.size() == 0) ? 0 : n_bubbles);
+    (fourth_derivatives.empty()) ? 0 : n_bubbles);
 
   // 1 normal vector per face, ordering consistent with GeometryInfo
   // Normal vectors point in the +x, +y, and +z directions for
@@ -170,24 +170,24 @@ PolynomialsBernardiRaugel<dim>::compute(
   // first dim*vertices_per_cell functions are Q_1^2 functions
   for (unsigned int i = 0; i < dim * GeometryInfo<dim>::vertices_per_cell; ++i)
     {
-      if (values.size() != 0)
+      if (!values.empty())
         {
           values[i] = units[i % dim] * Q_values[i / dim];
         }
-      if (grads.size() != 0)
+      if (!grads.empty())
         {
           grads[i] = outer_product(units[i % dim], Q_grads[i / dim]);
         }
-      if (grad_grads.size() != 0)
+      if (!grad_grads.empty())
         {
           grad_grads[i] = outer_product(units[i % dim], Q_grad_grads[i / dim]);
         }
-      if (third_derivatives.size() != 0)
+      if (!third_derivatives.empty())
         {
           third_derivatives[i] =
             outer_product(units[i % dim], Q_third_derivatives[i / dim]);
         }
-      if (fourth_derivatives.size() != 0)
+      if (!fourth_derivatives.empty())
         {
           fourth_derivatives[i] =
             outer_product(units[i % dim], Q_fourth_derivatives[i / dim]);
@@ -204,26 +204,26 @@ PolynomialsBernardiRaugel<dim>::compute(
         i -
         dim *
           GeometryInfo<dim>::vertices_per_cell; // ranges 0 to faces_per_cell-1
-      if (values.size() != 0)
+      if (!values.empty())
         {
           values[i] = normals[j] * bubble_values[aniso_indices[j]];
         }
-      if (grads.size() != 0)
+      if (!grads.empty())
         {
           grads[i] = outer_product(normals[j], bubble_grads[aniso_indices[j]]);
         }
-      if (grad_grads.size() != 0)
+      if (!grad_grads.empty())
         {
           grad_grads[i] =
             outer_product(normals[j], bubble_grad_grads[aniso_indices[j]]);
         }
-      if (third_derivatives.size() != 0)
+      if (!third_derivatives.empty())
         {
           third_derivatives[i] =
             outer_product(normals[j],
                           bubble_third_derivatives[aniso_indices[j]]);
         }
-      if (fourth_derivatives.size() != 0)
+      if (!fourth_derivatives.empty())
         {
           fourth_derivatives[i] =
             outer_product(normals[j],

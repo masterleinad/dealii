@@ -98,13 +98,13 @@ get_substring_with_delim (std::string       &in,
                           const std::string &delim_list)
 {
   std::string x;
-  while (in.size() != 0)
+  while (!in.empty())
     {
       // stop copying to the result if the current character is a
       // delimiter, but only if the previous character was not a backslash
       if ((delim_list.find (in[0]) != std::string::npos)
           &&
-          !((x.size() > 0)
+          !((!x.empty())
             &&
             (x[x.size()-1] == '\\')))
         break;
@@ -121,7 +121,7 @@ get_substring_with_delim (std::string       &in,
 void
 skip_space (std::string &in)
 {
-  while ((in.size() != 0)
+  while ((!in.empty())
          &&
          ((in[0] == ' ') || (in[0] == '\t') || (in[0] == '\n')))
     in.erase (0, 1);
@@ -203,7 +203,7 @@ split_string_list (const std::string &s,
 
       skip_space (name);
 
-      while ((name.size() != 0) && (name[name.length()-1] == ' '
+      while ((!name.empty()) && (name[name.length()-1] == ' '
                                     || name[name.length()-1] == '\n'))
         name.erase (name.length()-1, 1);
 
@@ -222,7 +222,7 @@ delete_empty_entries (const std::list<std::string> &list)
   std::list<std::string> return_list;
   for (std::list<std::string>::const_iterator i = list.begin();
        i != list.end(); ++i)
-    if (*i != "")
+    if (!*i.empty())
       return_list.push_back (*i);
 
   return return_list;
@@ -305,7 +305,7 @@ void read_expansion_lists (const std::string &filename)
 
   // now process entries of the form
   //   NAME := { class1; class2; ...}.
-  while (whole_file.size() != 0)
+  while (!whole_file.empty())
     {
       const std::string
       name = get_substring_with_delim (whole_file, " :");
@@ -440,7 +440,7 @@ void process_instantiations ()
 
   // process entries of the form
   //   for (X:Y; A:B) { INST }
-  while (whole_file.size() != 0)
+  while (!whole_file.empty())
     {
       skip_space (whole_file);
       if (!has_prefix(whole_file, "for"))

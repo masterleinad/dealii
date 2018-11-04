@@ -101,7 +101,7 @@ Subscriptor::check_no_subscribers() const noexcept
                   std::string("\n  from Subscriber ") + std::string(it->first);
             }
 
-          if (infostring == "")
+          if (infostring.empty())
             infostring = "<none>";
 
           AssertNothrow(counter == 0,

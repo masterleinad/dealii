@@ -203,7 +203,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_value_component(
 
   std::lock_guard<std::mutex> lock(cache_mutex);
 
-  if (cached_point != p || cached_values.size() == 0)
+  if (cached_point != p || cached_values.empty())
     {
       cached_point = p;
       cached_values.resize(poly_space.n());
@@ -249,7 +249,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_component(
 
   std::lock_guard<std::mutex> lock(cache_mutex);
 
-  if (cached_point != p || cached_grads.size() == 0)
+  if (cached_point != p || cached_grads.empty())
     {
       cached_point = p;
       cached_grads.resize(poly_space.n());
@@ -296,7 +296,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::shape_grad_grad_component(
 
   std::lock_guard<std::mutex> lock(cache_mutex);
 
-  if (cached_point != p || cached_grad_grads.size() == 0)
+  if (cached_point != p || cached_grad_grads.empty())
     {
       cached_point = p;
       cached_grad_grads.resize(poly_space.n());

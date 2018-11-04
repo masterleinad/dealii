@@ -1263,7 +1263,7 @@ void
 DoFHandler<dim, spacedim>::distribute_mg_dofs()
 {
   Assert(
-    levels.size() > 0,
+    !levels.empty(),
     ExcMessage(
       "Distribute active DoFs using distribute_dofs() before calling distribute_mg_dofs()."));
 
@@ -1330,7 +1330,7 @@ void
 DoFHandler<dim, spacedim>::renumber_dofs(
   const std::vector<types::global_dof_index> &new_numbers)
 {
-  Assert(levels.size() > 0,
+  Assert(!levels.empty(),
          ExcMessage(
            "You need to distribute DoFs before you can renumber them."));
 
@@ -1389,7 +1389,7 @@ DoFHandler<dim, spacedim>::renumber_dofs(
   const std::vector<types::global_dof_index> &new_numbers)
 {
   Assert(
-    mg_levels.size() > 0 && levels.size() > 0,
+    !mg_levels.empty() && !levels.empty(),
     ExcMessage(
       "You need to distribute active and level DoFs before you can renumber level DoFs."));
   AssertIndexRange(level, get_triangulation().n_global_levels());

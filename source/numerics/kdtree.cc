@@ -27,7 +27,7 @@ KDTree<dim>::KDTree(const unsigned int             max_leaf_size,
                     const std::vector<Point<dim>> &pts)
   : max_leaf_size(max_leaf_size)
 {
-  if (pts.size() > 0)
+  if (!pts.empty())
     set_points(pts);
 }
 
@@ -83,7 +83,7 @@ template <int dim>
 void
 KDTree<dim>::set_points(const std::vector<Point<dim>> &pts)
 {
-  Assert(pts.size() > 0, ExcMessage("Expecting a non zero set of points."));
+  Assert(!pts.empty(), ExcMessage("Expecting a non zero set of points."));
   adaptor = std_cxx14::make_unique<PointCloudAdaptor>(pts);
   kdtree  = std_cxx14::make_unique<NanoFlannKDTree>(
     dim, *adaptor, nanoflann::KDTreeSingleIndexAdaptorParams(max_leaf_size));

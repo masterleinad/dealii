@@ -62,7 +62,7 @@ namespace
     const std::map<unsigned int, types::boundary_id> &boundary_ids,
     Triangulation<1, spacedim> &                      triangulation)
   {
-    if (boundary_ids.size() > 0)
+    if (!boundary_ids.empty())
       for (typename Triangulation<1, spacedim>::active_cell_iterator cell =
              triangulation.begin_active();
            cell != triangulation.end();
@@ -213,8 +213,8 @@ GridIn<dim, spacedim>::read_vtk(std::istream &in)
                 {
                   // we assume that the file contains first all cells,
                   // and only then any faces or lines
-                  AssertThrow(subcelldata.boundary_quads.size() == 0 &&
-                                subcelldata.boundary_lines.size() == 0,
+                  AssertThrow(subcelldata.boundary_quads.empty() &&
+                                subcelldata.boundary_lines.empty(),
                               ExcNotImplemented());
 
                   cells.emplace_back();
@@ -255,7 +255,7 @@ GridIn<dim, spacedim>::read_vtk(std::istream &in)
                 {
                   // we assume that the file contains first all cells,
                   // and only then any faces
-                  AssertThrow(subcelldata.boundary_lines.size() == 0,
+                  AssertThrow(subcelldata.boundary_lines.empty(),
                               ExcNotImplemented());
 
                   cells.emplace_back();
@@ -1703,7 +1703,7 @@ GridIn<dim, spacedim>::read_msh(std::istream &in)
 
   // check that we actually read some
   // cells.
-  AssertThrow(cells.size() > 0, ExcGmshNoCellInformation());
+  AssertThrow(!cells.empty(), ExcGmshNoCellInformation());
 
   // do some clean-up on
   // vertices...
@@ -2788,7 +2788,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string &filename,
     }
 
   // No cells were read
-  if (cells.size() == 0)
+  if (cells.empty())
     return;
 
   if (remove_duplicates)

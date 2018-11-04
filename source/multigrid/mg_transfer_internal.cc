@@ -175,7 +175,7 @@ namespace internal
         (dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
           &mg_dof.get_triangulation()));
       AssertThrow(
-        send_data_temp.size() == 0 || tria != nullptr,
+        send_data_temp.empty() || tria != nullptr,
         ExcMessage(
           "We should only be sending information with a parallel Triangulation!"));
 
@@ -229,7 +229,7 @@ namespace internal
                 // If there is nothing to send, we still need to send a message,
                 // because the receiving end will be waitng. In that case we
                 // just send an empty message.
-                if (data.size())
+                if (!data.empty())
                   {
                     const int ierr = MPI_Isend(data.data(),
                                                data.size() * sizeof(data[0]),
@@ -309,7 +309,7 @@ namespace internal
           }
 
           // * wait for all MPI_Isend to complete
-          if (requests.size() > 0)
+          if (!requests.empty())
             {
               const int ierr = MPI_Waitall(requests.size(),
                                            requests.data(),

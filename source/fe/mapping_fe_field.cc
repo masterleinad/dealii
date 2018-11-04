@@ -350,25 +350,25 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
 
   for (unsigned int point = 0; point < n_points; ++point)
     {
-      if (data.shape_values.size() != 0)
+      if (!data.shape_values.empty())
         for (unsigned int i = 0; i < data.n_shape_functions; ++i)
           data.shape(point, i) = fe->shape_value(i, unit_points[point]);
 
-      if (data.shape_derivatives.size() != 0)
+      if (!data.shape_derivatives.empty())
         for (unsigned int i = 0; i < data.n_shape_functions; ++i)
           data.derivative(point, i) = fe->shape_grad(i, unit_points[point]);
 
-      if (data.shape_second_derivatives.size() != 0)
+      if (!data.shape_second_derivatives.empty())
         for (unsigned int i = 0; i < data.n_shape_functions; ++i)
           data.second_derivative(point, i) =
             fe->shape_grad_grad(i, unit_points[point]);
 
-      if (data.shape_third_derivatives.size() != 0)
+      if (!data.shape_third_derivatives.empty())
         for (unsigned int i = 0; i < data.n_shape_functions; ++i)
           data.third_derivative(point, i) =
             fe->shape_3rd_derivative(i, unit_points[point]);
 
-      if (data.shape_fourth_derivatives.size() != 0)
+      if (!data.shape_fourth_derivatives.empty())
         for (unsigned int i = 0; i < data.n_shape_functions; ++i)
           data.fourth_derivative(point, i) =
             fe->shape_4th_derivative(i, unit_points[point]);

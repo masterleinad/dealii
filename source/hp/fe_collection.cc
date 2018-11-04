@@ -167,7 +167,7 @@ namespace hp
   FECollection<dim, spacedim>::FECollection(
     const std::vector<const FiniteElement<dim, spacedim> *> &fes)
   {
-    Assert(fes.size() > 0,
+    Assert(!fes.empty(),
            ExcMessage("Need to pass at least one finite element."));
 
     for (unsigned int i = 0; i < fes.size(); ++i)
@@ -186,7 +186,7 @@ namespace hp
     // the first element, since all the other
     // elements have already passed the test
     // against the first element
-    if (finite_elements.size() != 0)
+    if (!finite_elements.empty())
       Assert(new_fe.n_components() == finite_elements[0]->n_components(),
              ExcMessage("All elements inside a collection need to have the "
                         "same number of vector components!"));
@@ -371,7 +371,7 @@ namespace hp
   unsigned int
   FECollection<dim, spacedim>::n_blocks() const
   {
-    Assert(finite_elements.size() > 0, ExcNoFiniteElements());
+    Assert(!finite_elements.empty(), ExcNoFiniteElements());
 
     const unsigned int nb = finite_elements[0]->n_blocks();
     for (unsigned int i = 1; i < finite_elements.size(); ++i)

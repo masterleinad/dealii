@@ -59,33 +59,33 @@ PolynomialsNedelec<dim>::compute(
   std::vector<Tensor<4, dim>> &third_derivatives,
   std::vector<Tensor<5, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == n_pols || values.size() == 0,
+  Assert(values.size() == n_pols || values.empty(),
          ExcDimensionMismatch(values.size(), n_pols));
-  Assert(grads.size() == n_pols || grads.size() == 0,
+  Assert(grads.size() == n_pols || grads.empty(),
          ExcDimensionMismatch(grads.size(), n_pols));
-  Assert(grad_grads.size() == n_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_pols || grad_grads.empty(),
          ExcDimensionMismatch(grad_grads.size(), n_pols));
-  Assert(third_derivatives.size() == n_pols || third_derivatives.size() == 0,
+  Assert(third_derivatives.size() == n_pols || third_derivatives.empty(),
          ExcDimensionMismatch(third_derivatives.size(), n_pols));
-  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.size() == 0,
+  Assert(fourth_derivatives.size() == n_pols || fourth_derivatives.empty(),
          ExcDimensionMismatch(fourth_derivatives.size(), n_pols));
 
   // third and fourth derivatives not implemented
   (void)third_derivatives;
-  Assert(third_derivatives.size() == 0, ExcNotImplemented());
+  Assert(third_derivatives.empty(), ExcNotImplemented());
   (void)fourth_derivatives;
-  Assert(fourth_derivatives.size() == 0, ExcNotImplemented());
+  Assert(fourth_derivatives.empty(), ExcNotImplemented());
 
   // Declare the values, derivatives
   // and second derivatives vectors of
   // <tt>polynomial_space</tt> at
   // <tt>unit_point</tt>
   const unsigned int  n_basis = polynomial_space.n();
-  std::vector<double> unit_point_values((values.size() == 0) ? 0 : n_basis);
-  std::vector<Tensor<1, dim>> unit_point_grads((grads.size() == 0) ? 0 :
+  std::vector<double> unit_point_values((values.empty()) ? 0 : n_basis);
+  std::vector<Tensor<1, dim>> unit_point_grads((grads.empty()) ? 0 :
                                                                      n_basis);
   std::vector<Tensor<2, dim>> unit_point_grad_grads(
-    (grad_grads.size() == 0) ? 0 : n_basis);
+    (grad_grads.empty()) ? 0 : n_basis);
   std::vector<Tensor<3, dim>> empty_vector_of_3rd_order_tensors;
   std::vector<Tensor<4, dim>> empty_vector_of_4th_order_tensors;
 
@@ -102,15 +102,15 @@ PolynomialsNedelec<dim>::compute(
 
           // Assign the correct values to the
           // corresponding shape functions.
-          if (values.size() > 0)
+          if (!values.empty())
             for (unsigned int i = 0; i < unit_point_values.size(); ++i)
               values[i][0] = unit_point_values[i];
 
-          if (grads.size() > 0)
+          if (!grads.empty())
             for (unsigned int i = 0; i < unit_point_grads.size(); ++i)
               grads[i][0][0] = unit_point_grads[i][0];
 
-          if (grad_grads.size() > 0)
+          if (!grad_grads.empty())
             for (unsigned int i = 0; i < unit_point_grad_grads.size(); ++i)
               grad_grads[i][0][0][0] = unit_point_grad_grads[i][0][0];
 
@@ -136,11 +136,11 @@ PolynomialsNedelec<dim>::compute(
           p(0) = unit_point(1);
           p(1) = unit_point(0);
 
-          std::vector<double> p_values((values.size() == 0) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p_grads((grads.size() == 0) ? 0 :
+          std::vector<double> p_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p_grads((grads.empty()) ? 0 :
                                                                     n_basis);
           std::vector<Tensor<2, dim>> p_grad_grads(
-            (grad_grads.size() == 0) ? 0 : n_basis);
+            (grad_grads.empty()) ? 0 : n_basis);
 
           polynomial_space.compute(p,
                                    p_values,
@@ -151,7 +151,7 @@ PolynomialsNedelec<dim>::compute(
 
           // Assign the correct values to the
           // corresponding shape functions.
-          if (values.size() > 0)
+          if (!values.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 for (unsigned int j = 0; j < 2; ++j)
@@ -185,7 +185,7 @@ PolynomialsNedelec<dim>::compute(
                     }
             }
 
-          if (grads.size() > 0)
+          if (!grads.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 for (unsigned int j = 0; j < 2; ++j)
@@ -234,7 +234,7 @@ PolynomialsNedelec<dim>::compute(
                     }
             }
 
-          if (grad_grads.size() > 0)
+          if (!grad_grads.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 for (unsigned int j = 0; j < 2; ++j)
@@ -319,16 +319,16 @@ PolynomialsNedelec<dim>::compute(
           // shifted two steps in positive
           // direction
           Point<dim>          p1, p2;
-          std::vector<double> p1_values((values.size() == 0) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p1_grads((grads.size() == 0) ? 0 :
+          std::vector<double> p1_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p1_grads((grads.empty()) ? 0 :
                                                                      n_basis);
           std::vector<Tensor<2, dim>> p1_grad_grads(
-            (grad_grads.size() == 0) ? 0 : n_basis);
-          std::vector<double> p2_values((values.size() == 0) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p2_grads((grads.size() == 0) ? 0 :
+            (grad_grads.empty()) ? 0 : n_basis);
+          std::vector<double> p2_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p2_grads((grads.empty()) ? 0 :
                                                                      n_basis);
           std::vector<Tensor<2, dim>> p2_grad_grads(
-            (grad_grads.size() == 0) ? 0 : n_basis);
+            (grad_grads.empty()) ? 0 : n_basis);
 
           p1(0) = unit_point(1);
           p1(1) = unit_point(2);
@@ -351,7 +351,7 @@ PolynomialsNedelec<dim>::compute(
 
           // Assign the correct values to the
           // corresponding shape functions.
-          if (values.size() > 0)
+          if (!values.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 {
@@ -521,7 +521,7 @@ PolynomialsNedelec<dim>::compute(
                     }
             }
 
-          if (grads.size() > 0)
+          if (!grads.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 {
@@ -806,7 +806,7 @@ PolynomialsNedelec<dim>::compute(
                     }
             }
 
-          if (grad_grads.size() > 0)
+          if (!grad_grads.empty())
             {
               for (unsigned int i = 0; i <= my_degree; ++i)
                 {

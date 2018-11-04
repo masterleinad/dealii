@@ -398,7 +398,7 @@ namespace DoFRenumbering
     // this processor
     if (dof_handler.locally_owned_dofs().n_elements() == 0)
       {
-        Assert(new_indices.size() == 0, ExcInternalError());
+        Assert(new_indices.empty(), ExcInternalError());
         return;
       }
 
@@ -687,7 +687,7 @@ namespace DoFRenumbering
 
     Assert(result == dof_handler.n_dofs(level), ExcInternalError());
 
-    if (renumbering.size() != 0)
+    if (!renumbering.empty())
       dof_handler.renumber_dofs(level, renumbering);
   }
 
@@ -719,7 +719,7 @@ namespace DoFRenumbering
     // empty vector, set up things to
     // store components in the order
     // found in the system.
-    if (component_order.size() == 0)
+    if (component_order.empty())
       for (unsigned int i = 0; i < fe_collection.n_components(); ++i)
         component_order.push_back(i);
 
@@ -1042,7 +1042,7 @@ namespace DoFRenumbering
 
     Assert(result == dof_handler.n_dofs(level), ExcInternalError());
 
-    if (renumbering.size() != 0)
+    if (!renumbering.empty())
       dof_handler.renumber_dofs(level, renumbering);
   }
 

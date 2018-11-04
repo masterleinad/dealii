@@ -123,7 +123,7 @@ MGTransferBlock<number>::restrict_and_add(const unsigned int         from_level,
     {
       if (this->selected[b])
         {
-          if (factors.size() != 0)
+          if (!factors.empty())
             {
               Assert(memory != nullptr, ExcNotInitialized());
               Vector<number> *aux = memory->alloc();

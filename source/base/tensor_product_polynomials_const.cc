@@ -94,19 +94,19 @@ TensorProductPolynomialsConst<dim>::compute(
   std::vector<Tensor<3, dim>> &third_derivatives,
   std::vector<Tensor<4, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == this->n_tensor_pols + 1 || values.size() == 0,
+  Assert(values.size() == this->n_tensor_pols + 1 || values.empty(),
          ExcDimensionMismatch2(values.size(), this->n_tensor_pols + 1, 0));
-  Assert(grads.size() == this->n_tensor_pols + 1 || grads.size() == 0,
+  Assert(grads.size() == this->n_tensor_pols + 1 || grads.empty(),
          ExcDimensionMismatch2(grads.size(), this->n_tensor_pols + 1, 0));
-  Assert(grad_grads.size() == this->n_tensor_pols + 1 || grad_grads.size() == 0,
+  Assert(grad_grads.size() == this->n_tensor_pols + 1 || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), this->n_tensor_pols + 1, 0));
   Assert(third_derivatives.size() == this->n_tensor_pols + 1 ||
-           third_derivatives.size() == 0,
+           third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(),
                                this->n_tensor_pols + 1,
                                0));
   Assert(fourth_derivatives.size() == this->n_tensor_pols + 1 ||
-           fourth_derivatives.size() == 0,
+           fourth_derivatives.empty(),
          ExcDimensionMismatch2(fourth_derivatives.size(),
                                this->n_tensor_pols + 1,
                                0));

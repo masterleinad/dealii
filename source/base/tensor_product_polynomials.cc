@@ -250,17 +250,17 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
   std::vector<Tensor<4, dim>> &fourth_derivatives) const
 {
   Assert(dim <= 3, ExcNotImplemented());
-  Assert(values.size() == n_tensor_pols || values.size() == 0,
+  Assert(values.size() == n_tensor_pols || values.empty(),
          ExcDimensionMismatch2(values.size(), n_tensor_pols, 0));
-  Assert(grads.size() == n_tensor_pols || grads.size() == 0,
+  Assert(grads.size() == n_tensor_pols || grads.empty(),
          ExcDimensionMismatch2(grads.size(), n_tensor_pols, 0));
-  Assert(grad_grads.size() == n_tensor_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_tensor_pols || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), n_tensor_pols, 0));
   Assert(third_derivatives.size() == n_tensor_pols ||
-           third_derivatives.size() == 0,
+           third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(), n_tensor_pols, 0));
   Assert(fourth_derivatives.size() == n_tensor_pols ||
-           fourth_derivatives.size() == 0,
+           fourth_derivatives.empty(),
          ExcDimensionMismatch2(fourth_derivatives.size(), n_tensor_pols, 0));
 
   const bool update_values     = (values.size() == n_tensor_pols),
@@ -416,7 +416,7 @@ AnisotropicPolynomials<dim>::AnisotropicPolynomials(
 {
   Assert(pols.size() == dim, ExcDimensionMismatch(pols.size(), dim));
   for (unsigned int d = 0; d < dim; ++d)
-    Assert(pols[d].size() > 0,
+    Assert(!pols[d].empty(),
            ExcMessage("The number of polynomials must be larger than zero "
                       "for all coordinate directions."));
 }
@@ -539,17 +539,17 @@ AnisotropicPolynomials<dim>::compute(
   std::vector<Tensor<3, dim>> &third_derivatives,
   std::vector<Tensor<4, dim>> &fourth_derivatives) const
 {
-  Assert(values.size() == n_tensor_pols || values.size() == 0,
+  Assert(values.size() == n_tensor_pols || values.empty(),
          ExcDimensionMismatch2(values.size(), n_tensor_pols, 0));
-  Assert(grads.size() == n_tensor_pols || grads.size() == 0,
+  Assert(grads.size() == n_tensor_pols || grads.empty(),
          ExcDimensionMismatch2(grads.size(), n_tensor_pols, 0));
-  Assert(grad_grads.size() == n_tensor_pols || grad_grads.size() == 0,
+  Assert(grad_grads.size() == n_tensor_pols || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), n_tensor_pols, 0));
   Assert(third_derivatives.size() == n_tensor_pols ||
-           third_derivatives.size() == 0,
+           third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(), n_tensor_pols, 0));
   Assert(fourth_derivatives.size() == n_tensor_pols ||
-           fourth_derivatives.size() == 0,
+           fourth_derivatives.empty(),
          ExcDimensionMismatch2(fourth_derivatives.size(), n_tensor_pols, 0));
 
   const bool update_values     = (values.size() == n_tensor_pols),

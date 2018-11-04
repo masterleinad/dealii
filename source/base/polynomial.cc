@@ -71,7 +71,7 @@ namespace Polynomials
                                  const unsigned int           center)
     : in_lagrange_product_form(true)
   {
-    Assert(supp.size() > 0, ExcEmptyObject());
+    Assert(!supp.empty(), ExcEmptyObject());
     AssertIndexRange(center, supp.size());
 
     lagrange_support_points.reserve(supp.size() - 1);
@@ -98,7 +98,7 @@ namespace Polynomials
   void
   Polynomial<number>::value(const number x, std::vector<number> &values) const
   {
-    Assert(values.size() > 0, ExcZero());
+    Assert(!values.empty(), ExcZero());
 
     value(x, values.size() - 1, values.data());
   }
@@ -201,7 +201,7 @@ namespace Polynomials
         return;
       }
 
-    Assert(coefficients.size() > 0, ExcEmptyObject());
+    Assert(!coefficients.empty(), ExcEmptyObject());
 
     // if we only need the value, then call the other function since that is
     // significantly faster (there is no need to allocate and free memory,
@@ -244,11 +244,11 @@ namespace Polynomials
   {
     // should only be called when the product form is active
     Assert(in_lagrange_product_form == true, ExcInternalError());
-    Assert(coefficients.size() == 0, ExcInternalError());
+    Assert(coefficients.empty(), ExcInternalError());
 
     // compute coefficients by expanding the product (x-x_i) term by term
     coefficients.resize(lagrange_support_points.size() + 1);
-    if (lagrange_support_points.size() == 0)
+    if (lagrange_support_points.empty())
       coefficients[0] = 1.;
     else
       {
@@ -720,7 +720,7 @@ namespace Polynomials
                            generate_equidistant_unit_points(n),
                          support_point)
   {
-    Assert(coefficients.size() == 0, ExcInternalError());
+    Assert(coefficients.empty(), ExcInternalError());
 
     // For polynomial order up to 3, we have precomputed weights. Use these
     // weights instead of the product form
