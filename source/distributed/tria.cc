@@ -124,7 +124,7 @@ namespace
                      triangulation.get_used_vertices().end(),
                      false) == triangulation.get_used_vertices().end(),
            ExcInternalError());
-    if (set_vertex_info == true)
+    if (set_vertex_info)
       for (unsigned int v = 0; v < triangulation.n_vertices(); ++v)
         {
           connectivity->vertices[3 * v] = triangulation.get_vertices()[v][0];
@@ -149,7 +149,7 @@ namespace
 
         for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell; ++v)
           {
-            if (set_vertex_info == true)
+            if (set_vertex_info)
               connectivity
                 ->tree_to_vertex[index * GeometryInfo<dim>::vertices_per_cell +
                                  v] = cell->vertex_index(v);
@@ -2965,7 +2965,7 @@ namespace parallel
         ;
 
       connectivity = dealii::internal::p4est::functions<2>::connectivity_new(
-        (set_vertex_info == true ? this->n_vertices() : 0),
+        (set_vertex_info ? this->n_vertices() : 0),
         this->n_cells(0),
         this->n_vertices(),
         num_vtt);
@@ -3032,7 +3032,7 @@ namespace parallel
         ;
 
       connectivity = dealii::internal::p4est::functions<2>::connectivity_new(
-        (set_vertex_info == true ? this->n_vertices() : 0),
+        (set_vertex_info ? this->n_vertices() : 0),
         this->n_cells(0),
         this->n_vertices(),
         num_vtt);
@@ -3102,7 +3102,7 @@ namespace parallel
         ;
 
       connectivity = dealii::internal::p4est::functions<3>::connectivity_new(
-        (set_vertex_info == true ? this->n_vertices() : 0),
+        (set_vertex_info ? this->n_vertices() : 0),
         this->n_cells(0),
         this->n_active_lines(),
         num_ett,

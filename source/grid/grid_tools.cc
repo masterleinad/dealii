@@ -118,7 +118,7 @@ namespace GridTools
       {
         std::vector<bool>::const_iterator pj = pi + 1;
         for (unsigned int j = i + 1; j < N; ++j, ++pj)
-          if ((*pi == true) && (*pj == true) &&
+          if ((*pi) && (*pj) &&
               ((vertices[i] - vertices[j]).norm_square() > max_distance_sqr))
             max_distance_sqr = (vertices[i] - vertices[j]).norm_square();
       };
@@ -465,7 +465,7 @@ namespace GridTools
                                                  invalid_vertex);
     unsigned int              next_free_number = 0;
     for (unsigned int i = 0; i < vertices.size(); ++i)
-      if (vertex_used[i] == true)
+      if (vertex_used[i])
         {
           new_vertex_numbers[i] = next_free_number;
           ++next_free_number;
@@ -521,7 +521,7 @@ namespace GridTools
     std::vector<Point<spacedim>> tmp;
     tmp.reserve(std::count(vertex_used.begin(), vertex_used.end(), true));
     for (unsigned int v = 0; v < vertices.size(); ++v)
-      if (vertex_used[v] == true)
+      if (vertex_used[v])
         tmp.push_back(vertices[v]);
     swap(vertices, tmp);
   }
@@ -1523,7 +1523,7 @@ namespace GridTools
     Tensor<1, spacedim> vertex_to_point;
     auto                current_cell = cell_hint;
 
-    while (found_cell == false)
+    while (!found_cell)
       {
         // First look at the vertices of the cell cell_hint. If it's an
         // invalid cell, then query for the closest global vertex
@@ -1606,9 +1606,9 @@ namespace GridTools
               {}
           }
 
-        if (found_cell == true)
+        if (found_cell)
           return cell_and_position;
-        else if (approx_cell == true)
+        else if (approx_cell)
           return cell_and_position_approx;
 
         // The first time around, we check for vertices in the hint_cell. If
@@ -2289,7 +2289,7 @@ namespace GridTools
             typename std::set<active_cell_iterator>::iterator
               cell_set_it = missing_vert_cells.begin(),
               end_cell_set = missing_vert_cells.end();
-            for (; (found == false) && (cell_set_it != end_cell_set);
+            for (; (!found) && (cell_set_it != end_cell_set);
                  ++cell_set_it)
               {
                 typename std::set<active_cell_iterator>::iterator
@@ -3395,7 +3395,7 @@ namespace GridTools
                   break;
                 }
 
-            if (subface_is_more_refined == true)
+            if (subface_is_more_refined)
               continue;
 
             // we finally know that we can do something about this face
@@ -3556,7 +3556,7 @@ namespace GridTools
     for (; cell != endc; ++cell)
       {
         cell->set_manifold_id(cell->material_id());
-        if (compute_face_ids == true)
+        if (compute_face_ids)
           {
             for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
               {

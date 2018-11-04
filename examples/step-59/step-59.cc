@@ -963,8 +963,7 @@ namespace Step59
     , setup_time(0.)
     , pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
     , time_details(std::cout,
-                   false &&
-                     Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+                   false)
   {}
 
 

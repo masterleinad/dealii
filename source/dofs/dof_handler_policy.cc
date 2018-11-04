@@ -1419,7 +1419,7 @@ namespace internal
                ++vertex_index)
             if ((dof_handler.get_triangulation()
                    .get_used_vertices()[vertex_index] == true) &&
-                (include_vertex[vertex_index] == true))
+                (include_vertex[vertex_index]))
               {
                 const unsigned int n_active_fe_indices =
                   dealii::internal::DoFAccessorImplementation::Implementation::

@@ -487,7 +487,7 @@ namespace Step41
 
           const unsigned int dof_index = cell->vertex_dof_index(v, 0);
 
-          if (dof_touched[dof_index] == false)
+          if (!dof_touched[dof_index])
             dof_touched[dof_index] = true;
           else
             continue;

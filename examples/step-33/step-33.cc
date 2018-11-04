@@ -1228,7 +1228,7 @@ namespace Step33
                 const std::string boundary_type =
                   prm.get("w_" + Utilities::int_to_string(di));
 
-                if ((di < dim) && (no_penetration == true))
+                if ((di < dim) && (no_penetration))
                   boundary_conditions[boundary_id].kind[di] =
                     EulerEquations<dim>::no_penetration_boundary;
                 else if (boundary_type == "inflow")
@@ -1924,11 +1924,11 @@ namespace Step33
 
     std::vector<Sacado::Fad::DFad<double>> independent_local_dof_values(
       dofs_per_cell),
-      independent_neighbor_dof_values(external_face == false ? dofs_per_cell :
+      independent_neighbor_dof_values(!external_face ? dofs_per_cell :
                                                                0);
 
     const unsigned int n_independent_variables =
-      (external_face == false ? 2 * dofs_per_cell : dofs_per_cell);
+      (!external_face ? 2 * dofs_per_cell : dofs_per_cell);
 
     for (unsigned int i = 0; i < dofs_per_cell; i++)
       {
@@ -1936,7 +1936,7 @@ namespace Step33
         independent_local_dof_values[i].diff(i, n_independent_variables);
       }
 
-    if (external_face == false)
+    if (!external_face)
       for (unsigned int i = 0; i < dofs_per_cell; i++)
         {
           independent_neighbor_dof_values[i] =
@@ -1976,7 +1976,7 @@ namespace Step33
     // Computing "opposite side" is a bit more complicated. If this is
     // an internal face, we can compute it as above by simply using the
     // independent variables from the neighbor:
-    if (external_face == false)
+    if (!external_face)
       {
         for (unsigned int q = 0; q < n_q_points; ++q)
           for (unsigned int i = 0; i < dofs_per_cell; ++i)
@@ -2104,7 +2104,7 @@ namespace Step33
             residual_derivatives[k] = R_i.fastAccessDx(k);
           system_matrix.add(dof_indices[i], dof_indices, residual_derivatives);
 
-          if (external_face == false)
+          if (!external_face)
             {
               for (unsigned int k = 0; k < dofs_per_cell; ++k)
                 residual_derivatives[k] = R_i.fastAccessDx(dofs_per_cell + k);

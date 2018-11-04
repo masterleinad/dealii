@@ -4497,7 +4497,7 @@ namespace internal
 
       // finally write the cell numbers
       // in 2d, if that is desired
-      if ((dim == 2) && (eps_flags_2.write_cell_numbers == true))
+      if ((dim == 2) && (eps_flags_2.write_cell_numbers))
         {
           out << "(Helvetica) findfont 140 scalefont setfont" << '\n';
 
@@ -4520,7 +4520,7 @@ namespace internal
         }
 
       // and the vertex numbers
-      if ((dim == 2) && (eps_flags_2.write_vertex_numbers == true))
+      if ((dim == 2) && (eps_flags_2.write_vertex_numbers))
         {
           out << "(Helvetica) findfont 140 scalefont setfont" << '\n';
 

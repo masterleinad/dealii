@@ -1088,7 +1088,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::face_to_cell_index(
           case 2:
             // in 2d, only face_flip has a meaning. if it is set, consider
             // dofs in reverse order
-            if (face_flip == false)
+            if (!face_flip)
               adjusted_dof_index_on_line = dof_index_on_line;
             else
               adjusted_dof_index_on_line =

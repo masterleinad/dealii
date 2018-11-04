@@ -405,7 +405,7 @@ namespace Utilities
     {
       // If MPI was not started, we have a serial computation and cannot run
       // the other MPI commands
-      if (job_supports_mpi() == false)
+      if (!job_supports_mpi())
         {
           MinMaxAvg result;
           result.sum       = my_value;
@@ -727,7 +727,7 @@ namespace Utilities
       // when running PETSc, because we initialize MPI ourselves before
       // calling PetscInitialize
 #ifdef DEAL_II_WITH_MPI
-      if (job_supports_mpi() == true)
+      if (job_supports_mpi())
         {
           if (std::uncaught_exception())
             {

@@ -119,7 +119,7 @@ LaplaceProblem<dim>::setup_system()
   mean_value_constraints.clear();
   mean_value_constraints.add_line(first_boundary_dof);
   for (unsigned int i = first_boundary_dof + 1; i < dof_handler.n_dofs(); ++i)
-    if (boundary_dofs[i] == true)
+    if (boundary_dofs[i])
       mean_value_constraints.add_entry(first_boundary_dof, i, -1);
   mean_value_constraints.close();
 

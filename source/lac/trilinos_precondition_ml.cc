@@ -87,7 +87,7 @@ namespace TrilinosWrappers
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
 
-    if (additional_data.elliptic == true)
+    if (additional_data.elliptic)
       {
         ML_Epetra::SetDefaults("SA", parameter_list);
 
@@ -122,7 +122,7 @@ namespace TrilinosWrappers
                        static_cast<int>(additional_data.smoother_sweeps));
     parameter_list.set("cycle applications",
                        static_cast<int>(additional_data.n_cycles));
-    if (additional_data.w_cycle == true)
+    if (additional_data.w_cycle)
       parameter_list.set("prec type", "MGW");
     else
       parameter_list.set("prec type", "MGV");

@@ -137,7 +137,7 @@ FE_Q_DG0<dim, spacedim>::get_name() const
         break;
       }
 
-  if (type == true)
+  if (type)
     {
       if (this->degree > 2)
         namebuf << "FE_Q_DG0<" << Utilities::dim_string(dim, spacedim)
@@ -157,7 +157,7 @@ FE_Q_DG0<dim, spacedim>::get_name() const
             type = false;
             break;
           }
-      if (type == true)
+      if (type)
         namebuf << "FE_Q_DG0<" << Utilities::dim_string(dim, spacedim) << ">("
                 << this->degree << ")";
       else

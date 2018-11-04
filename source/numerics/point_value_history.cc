@@ -476,7 +476,7 @@ PointValueHistory<dim>::add_field_name(const std::string &  vector_name,
   AssertThrow(!triangulation_changed, ExcDoFHandlerChanged());
 
   // insert a component mask that is always of the right size
-  if (mask.represents_the_all_selected_mask() == false)
+  if (!mask.represents_the_all_selected_mask())
     component_mask.insert(std::make_pair(vector_name, mask));
   else
     component_mask.insert(
@@ -496,7 +496,7 @@ PointValueHistory<dim>::add_field_name(const std::string &  vector_name,
   std::pair<std::string, std::vector<std::vector<double>>> pair_data;
   pair_data.first = vector_name;
   const unsigned int n_stored =
-    (mask.represents_the_all_selected_mask() == false ?
+    (!mask.represents_the_all_selected_mask() ?
        mask.n_selected_components() :
        dof_handler->get_fe(0).n_components());
 

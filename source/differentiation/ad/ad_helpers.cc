@@ -453,7 +453,7 @@ namespace Differentiation
       TapelessDrivers<ad_type, scalar_type>::initialize_global_environment(
         n_independent_variables);
 
-      if (ensure_persistent_setting == true)
+      if (ensure_persistent_setting)
         if (is_adolc_tapeless_number<ad_type>::value)
           {
             // In order to ensure that the settings remain for the entire
@@ -493,7 +493,7 @@ namespace Differentiation
           // A tape may have been defined by a different ADHelper, so in this
           // case we ignore the fact that any dependent variables within the
           // current data structure have not been marked as dependents
-          if (read_mode == true)
+          if (read_mode)
             {
               Assert(is_registered_tape(tape_index),
                      ExcMessage("Tape number not registered"));
@@ -543,14 +543,14 @@ namespace Differentiation
 
       if (ADNumberTraits<ad_type>::is_taped == true)
         {
-          if (overwrite_tape != true)
+          if (!overwrite_tape)
             {
               Assert(is_recording() == false,
                      ExcMessage("Already recording..."));
             }
 
           // Check conditions to enable tracing
-          if (is_registered_tape(tape_index) == false || overwrite_tape == true)
+          if (is_registered_tape(tape_index) == false || overwrite_tape)
             {
               // Setup the data structures for this class in the
               // appropriate manner

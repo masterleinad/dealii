@@ -2473,7 +2473,7 @@ namespace Step44
     {
       const int boundary_id = 0;
 
-      if (apply_dirichlet_bc == true)
+      if (apply_dirichlet_bc)
         VectorTools::interpolate_boundary_values(
           dof_handler_ref,
           boundary_id,
@@ -2491,7 +2491,7 @@ namespace Step44
     {
       const int boundary_id = 2;
 
-      if (apply_dirichlet_bc == true)
+      if (apply_dirichlet_bc)
         VectorTools::interpolate_boundary_values(
           dof_handler_ref,
           boundary_id,
@@ -2514,7 +2514,7 @@ namespace Step44
         {
           const int boundary_id = 3;
 
-          if (apply_dirichlet_bc == true)
+          if (apply_dirichlet_bc)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
               boundary_id,
@@ -2534,7 +2534,7 @@ namespace Step44
         {
           const int boundary_id = 4;
 
-          if (apply_dirichlet_bc == true)
+          if (apply_dirichlet_bc)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
               boundary_id,
@@ -2553,7 +2553,7 @@ namespace Step44
         {
           const int boundary_id = 6;
 
-          if (apply_dirichlet_bc == true)
+          if (apply_dirichlet_bc)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
               boundary_id,
@@ -2576,7 +2576,7 @@ namespace Step44
         {
           const int boundary_id = 3;
 
-          if (apply_dirichlet_bc == true)
+          if (apply_dirichlet_bc)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
               boundary_id,
@@ -2594,7 +2594,7 @@ namespace Step44
         {
           const int boundary_id = 6;
 
-          if (apply_dirichlet_bc == true)
+          if (apply_dirichlet_bc)
             VectorTools::interpolate_boundary_values(
               dof_handler_ref,
               boundary_id,
@@ -2884,7 +2884,7 @@ namespace Step44
     unsigned int lin_it  = 0;
     double       lin_res = 0.0;
 
-    if (parameters.use_static_condensation == true)
+    if (parameters.use_static_condensation)
       {
         // Firstly, here is the approach using the (permanent) augmentation of
         // the tangent matrix. For the following, recall that

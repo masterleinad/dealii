@@ -90,7 +90,7 @@ Subscriptor::check_no_subscribers() const noexcept
   // just display a message and continue the program.
   if (counter != 0)
     {
-      if (std::uncaught_exception() == false)
+      if (!std::uncaught_exception())
         {
           std::string infostring;
           for (map_iterator it = counter_map.begin(); it != counter_map.end();

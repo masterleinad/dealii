@@ -726,7 +726,7 @@ SparsityPattern::add_entries(const size_type row,
                              ForwardIterator end,
                              const bool      indices_are_sorted)
 {
-  if (indices_are_sorted == true)
+  if (indices_are_sorted)
     {
       if (begin != end)
         {
@@ -742,7 +742,7 @@ SparsityPattern::add_entries(const size_type row,
                 has_larger_entries = true;
                 break;
               }
-          if (has_larger_entries == false)
+          if (!has_larger_entries)
             for (; it != end; ++it)
               {
                 if (store_diagonal_first_in_row && *it == row)

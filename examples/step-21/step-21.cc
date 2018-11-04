@@ -966,7 +966,7 @@ namespace Step21
                 for (unsigned int i = 0; i < dofs_per_cell; ++i)
                   local_rhs(i) -=
                     time_step * normal_flux *
-                    fractional_flow((is_outflow_q_point == true ?
+                    fractional_flow((is_outflow_q_point ?
                                        old_solution_values_face[q](dim + 1) :
                                        neighbor_saturation[q]),
                                     viscosity) *

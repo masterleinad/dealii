@@ -744,7 +744,7 @@ namespace Step37
     // specified here. For detailed timings, removing the @p false argument
     // prints all the details.
     time_details(std::cout,
-                 false && Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
+                 false)
   {}
 
 

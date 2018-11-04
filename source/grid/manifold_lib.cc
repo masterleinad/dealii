@@ -683,7 +683,7 @@ SphericalManifold<dim, spacedim>::get_new_points(
             }
         }
 
-      if (found_duplicate == false)
+      if (!found_duplicate)
         {
           merged_directions[n_unique_directions] = directions[i];
           merged_distances[n_unique_directions]  = distances[i];
@@ -2027,7 +2027,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::
             inside_circle = false;
             break;
           }
-      if (inside_circle == false)
+      if (!inside_circle)
         continue;
 
       // slightly more expensive search
@@ -2231,7 +2231,7 @@ TransfiniteInterpolationManifold<dim, spacedim>::compute_chart_points(
               break;
             }
         }
-      if (inside_unit_cell == true)
+      if (inside_unit_cell)
         {
           return cell;
         }

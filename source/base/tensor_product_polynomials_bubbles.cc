@@ -247,7 +247,7 @@ TensorProductPolynomialsBubbles<dim>::compute(
 
   bool do_values = false, do_grads = false, do_grad_grads = false;
   bool do_3rd_derivatives = false, do_4th_derivatives = false;
-  if (values.empty() == false)
+  if (!values.empty())
     {
       values.resize(this->n_tensor_pols);
       do_values = true;

@@ -600,7 +600,7 @@ namespace internal
                                                 cell_partition_data[i + 1]));
                     }
 
-                  if (face_partition_data.empty() == false)
+                  if (!face_partition_data.empty())
                     {
                       if (face_partition_data[i + 1] > face_partition_data[i])
                         funct.face(std::make_pair(face_partition_data[i],
@@ -841,7 +841,7 @@ namespace internal
 
       unsigned int              n_categories = 1;
       std::vector<unsigned int> tight_category_map;
-      if (cell_vectorization_categories.empty() == false)
+      if (!cell_vectorization_categories.empty())
         {
           AssertDimension(cell_vectorization_categories.size(),
                           n_active_cells + n_ghost_cells);
@@ -897,7 +897,7 @@ namespace internal
 
           // step 2: if we want to fill up the ranges in vectorization, promote
           // some of the cells to a higher category
-          if (cell_vectorization_categories_strict == false && n_categories > 1)
+          if (!cell_vectorization_categories_strict && n_categories > 1)
             for (unsigned int j = n_categories - 1; j > 0; --j)
               {
                 unsigned int lower_index = j - 1;
@@ -951,7 +951,7 @@ namespace internal
           if (block == 3 || (block == 1 && n_procs == 1))
             cell_partition_data.push_back(n_cells);
         }
-      if (cell_vectorization_categories_strict == true)
+      if (cell_vectorization_categories_strict)
         {
           Assert(n_cells >= n_macro_cells + n_ghost_slots, ExcInternalError());
         }
@@ -1646,7 +1646,7 @@ namespace internal
                                    renumbering_fe_index;
                       unsigned int cell;
                       bool         filled = true;
-                      if (hp_bool == true)
+                      if (hp_bool)
                         {
                           renumbering_fe_index.resize(max_fe_index + 1);
                           for (cell = counter - partition_counter;
@@ -1691,7 +1691,7 @@ namespace internal
                         cluster_size - (missing_macros % cluster_size);
 
                       // now we realized that there are some cells missing.
-                      while (missing_macros > 0 || filled == false)
+                      while (missing_macros > 0 || !filled)
                         {
                           if (index == 0)
                             {
@@ -1727,7 +1727,7 @@ namespace internal
                                     numbers::invalid_unsigned_int)
                                 {
                                   unsigned int this_index = 0;
-                                  if (hp_bool == true)
+                                  if (hp_bool)
                                     this_index =
                                       cell_active_fe_index.empty() ?
                                         0 :
@@ -1745,7 +1745,7 @@ namespace internal
                                         partition_l2;
                                       neighbor_neighbor_list.push_back(
                                         neighbor->column());
-                                      if (hp_bool == true)
+                                      if (hp_bool)
                                         renumbering_fe_index[this_index]
                                           .push_back(neighbor->column());
                                       partition_partition_list[counter] =
@@ -1774,13 +1774,13 @@ namespace internal
                                                   [fe_ind] != 0)
                                               filled = false;
                                         }
-                                      if (filled == true)
+                                      if (filled)
                                         break;
                                     }
                                 }
                             }
                         }
-                      if (hp_bool == true)
+                      if (hp_bool)
                         {
                           // set the renumbering according to their active FE
                           // index within one partition-partition which was
@@ -1830,7 +1830,7 @@ namespace internal
               partition_row_index[part] + partition_l2;
           }
       }
-      if (hp_bool == true)
+      if (hp_bool)
         {
           partition_partition_list.swap(renumbering);
         }
@@ -1885,7 +1885,7 @@ namespace internal
                 }
               // Choose the smallest color that is not taken for the block
               cell_color[cell] = 0;
-              while (color_finder[cell_color[cell]] == false)
+              while (!color_finder[cell_color[cell]])
                 cell_color[cell]++;
               if (cell_color[cell] > max_color)
                 max_color = cell_color[cell];

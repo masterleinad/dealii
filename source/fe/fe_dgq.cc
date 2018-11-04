@@ -742,7 +742,7 @@ FE_DGQ<dim, spacedim>::has_support_on_face(const unsigned int shape_index,
   for (unsigned int d = 0; d < dim; ++d)
     if (std::abs(this->unit_support_points.back()[d] - 1.) > 1e-13)
       support_points_on_boundary = false;
-  if (support_points_on_boundary == false)
+  if (!support_points_on_boundary)
     return true;
 
   unsigned int n2 = n * n;
@@ -869,7 +869,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
   if (this->degree == 0 && std::abs(points[0] - 0.5) < 1e-15)
     equidistant = true;
 
-  if (equidistant == true)
+  if (equidistant)
     {
       if (this->degree > 2)
         namebuf << "FE_DGQArbitraryNodes<"
@@ -891,7 +891,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
         break;
       }
 
-  if (gauss_lobatto == true)
+  if (gauss_lobatto)
     {
       namebuf << "FE_DGQ<" << Utilities::dim_string(dim, spacedim) << ">("
               << this->degree << ")";
@@ -908,7 +908,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
         break;
       }
 
-  if (gauss == true)
+  if (gauss)
     {
       namebuf << "FE_DGQArbitraryNodes<" << Utilities::dim_string(dim, spacedim)
               << ">(QGauss(" << this->degree + 1 << "))";
@@ -925,7 +925,7 @@ FE_DGQArbitraryNodes<dim, spacedim>::get_name() const
         break;
       }
 
-  if (gauss_log == true)
+  if (gauss_log)
     {
       namebuf << "FE_DGQArbitraryNodes<" << Utilities::dim_string(dim, spacedim)
               << ">(QGaussLog(" << this->degree + 1 << "))";

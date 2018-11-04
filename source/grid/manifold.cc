@@ -627,7 +627,7 @@ FlatManifold<dim, spacedim>::get_new_points(
             adjust_periodicity = true;
             break;
           }
-  if (adjust_periodicity == true)
+  if (adjust_periodicity)
     {
       modified_points.resize(surrounding_points.size());
       std::copy(surrounding_points.begin(),

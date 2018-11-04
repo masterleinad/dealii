@@ -382,19 +382,18 @@ namespace OpenCASCADE
     bool              check = false, one_added = true, one_failed = true;
     std::vector<bool> added(numIntersEdges, false);
     added[0] = true;
-    while (one_added == true)
+    while (one_added)
       {
         one_added  = false;
         one_failed = false;
         for (unsigned int i = 1; i < numIntersEdges; ++i)
-          if (added[i] == false)
+          if (!added[i])
             {
               Handle(Geom_Curve) curve = intersections[i];
               Handle(Geom_BoundedCurve) bcurve =
                 Handle(Geom_BoundedCurve)::DownCast(curve);
               check = convert_bspline.Add(bcurve, tolerance, false, true, 0);
-              if (check ==
-                  false) // If we failed, try again with the reversed curve
+              if (!check) // If we failed, try again with the reversed curve
                 {
                   curve->Reverse();
                   Handle(Geom_BoundedCurve) bcurve =
@@ -402,8 +401,8 @@ namespace OpenCASCADE
                   check =
                     convert_bspline.Add(bcurve, tolerance, false, true, 0);
                 }
-              one_failed = one_failed || (check == false);
-              one_added  = one_added || (check == true);
+              one_failed = one_failed || (!check);
+              one_added  = one_added || (check);
               added[i]   = check;
             }
       }
@@ -566,7 +565,7 @@ namespace OpenCASCADE
     bool                     finished = (face_to_verts.empty());
     face_index = finished ? 0 : face_to_verts.begin()->first;
 
-    while (finished == false)
+    while (!finished)
       {
         const unsigned int start_point_index = face_to_verts[face_index].first;
         unsigned int       point_index       = start_point_index;
@@ -598,7 +597,7 @@ namespace OpenCASCADE
 
         finished = true;
         for (const auto &f : visited_faces)
-          if (f.second == false)
+          if (!f.second)
             {
               face_index = f.first;
               finished   = false;

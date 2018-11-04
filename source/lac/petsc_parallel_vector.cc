@@ -180,7 +180,7 @@ namespace PETScWrappers
 
       // finally clear the new vector if so
       // desired
-      if (omit_zeroing_entries == false)
+      if (!omit_zeroing_entries)
         *this = 0;
     }
 

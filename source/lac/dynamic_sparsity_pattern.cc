@@ -40,7 +40,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
 
   const size_type stop_size = entries.size() + n_elements;
 
-  if (indices_are_sorted == true && n_elements > 3)
+  if (indices_are_sorted && n_elements > 3)
     {
       // in debug mode, check whether the
       // indices really are sorted.

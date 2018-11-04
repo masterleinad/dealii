@@ -225,7 +225,7 @@ ParameterAcceptor::get_section_path() const
             auto previous_path = class_list[i]->get_section_path();
 
             // See if we need to remove last piece of the path
-            if ((!previous_path.empty()) && has_trailing == false)
+            if ((!previous_path.empty()) && !has_trailing)
               previous_path.resize(previous_path.size() - 1);
 
             sections.insert(sections.begin(),

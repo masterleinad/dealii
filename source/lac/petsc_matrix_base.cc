@@ -35,7 +35,7 @@ namespace PETScWrappers
       // if we are asked to visit the past-the-end line (or a line that is not
       // stored on the current processor), then simply release all our caches
       // and go on with life
-      if (matrix->in_local_range(this->a_row) == false)
+      if (!matrix->in_local_range(this->a_row))
         {
           colnum_cache.reset();
           value_cache.reset();
@@ -495,8 +495,8 @@ namespace PETScWrappers
                   const VectorBase &V,
                   const bool        transpose_left)
     {
-      const bool use_vector = (V.size() == inputright.m() ? true : false);
-      if (transpose_left == false)
+      const bool use_vector = (V.size() == inputright.m());
+      if (!transpose_left)
         {
           Assert(inputleft.n() == inputright.m(),
                  ExcDimensionMismatch(inputleft.n(), inputright.m()));
@@ -511,7 +511,7 @@ namespace PETScWrappers
 
       PetscErrorCode ierr;
 
-      if (use_vector == false)
+      if (!use_vector)
         {
           if (transpose_left)
             {

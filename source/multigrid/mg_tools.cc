@@ -1393,8 +1393,8 @@ namespace MGTools
 
                         bool selected = false;
                         for (unsigned int c = 0; c < n_components; ++c)
-                          if (nonzero_component_array[c] == true &&
-                              component_mask[c] == true)
+                          if (nonzero_component_array[c] &&
+                              component_mask[c])
                             {
                               selected = true;
                               break;
@@ -1430,7 +1430,7 @@ namespace MGTools
                                 const ComponentMask &nonzero_component_array =
                                   cell->get_fe().get_nonzero_components(i);
                                 for (unsigned int c = 0; c < n_components; ++c)
-                                  if (nonzero_component_array[c] == true)
+                                  if (nonzero_component_array[c])
                                     {
                                       component = c;
                                       break;
@@ -1438,7 +1438,7 @@ namespace MGTools
                               }
                             Assert(component != numbers::invalid_unsigned_int,
                                    ExcInternalError());
-                            if (component_mask[component] == true)
+                            if (component_mask[component])
                               boundary_indices[level].add_index(local_dofs[i]);
                           }
                       }
@@ -1602,7 +1602,7 @@ namespace MGTools
               }
           }
 
-        if (has_coarser_neighbor == false)
+        if (!has_coarser_neighbor)
           continue;
 
         const unsigned int level = cell->level();

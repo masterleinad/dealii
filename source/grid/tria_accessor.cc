@@ -1754,7 +1754,7 @@ TriaAccessor<structdim, dim, spacedim>::center(
   const bool respect_manifold,
   const bool use_interpolation) const
 {
-  if (respect_manifold == false)
+  if (!respect_manifold)
     {
       Assert(use_interpolation == false, ExcNotImplemented());
       Point<spacedim> p;
@@ -2526,11 +2526,9 @@ CellAccessor<dim, spacedim>::has_periodic_neighbor(
   using cell_iterator = TriaIterator<CellAccessor<dim, spacedim>>;
   // my_it : is the iterator to the current cell.
   cell_iterator my_it(*this);
-  if (this->tria->periodic_face_map.find(
+  return static_cast<bool>(this->tria->periodic_face_map.find(
         std::pair<cell_iterator, unsigned int>(my_it, i_face)) !=
-      this->tria->periodic_face_map.end())
-    return true;
-  return false;
+      this->tria->periodic_face_map.end());
 }
 
 

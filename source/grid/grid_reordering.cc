@@ -1088,7 +1088,7 @@ GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
     return;
 
   // if necessary, convert to new-style format
-  if (use_new_style_ordering == false)
+  if (!use_new_style_ordering)
     reorder_old_to_new_style(cells);
 
   // check if grids are already consistent. if so, do
@@ -1108,7 +1108,7 @@ GridReordering<dim, spacedim>::reorder_cells(std::vector<CellData<dim>> &cells,
       }
 
   // and convert back if necessary
-  if (use_new_style_ordering == false)
+  if (!use_new_style_ordering)
     reorder_new_to_old_style(cells);
 }
 

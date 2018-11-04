@@ -384,7 +384,7 @@ SolutionTransfer<dim, VectorType, DoFHandlerType>::
           // take FE index from the child with most
           // degrees of freedom locally
           unsigned int most_general_child = 0;
-          if (different_fe_on_children == true)
+          if (different_fe_on_children)
             for (unsigned int child = 1; child < cell->n_children(); ++child)
               if (cell->child(child)->get_fe().dofs_per_cell >
                   cell->child(most_general_child)->get_fe().dofs_per_cell)

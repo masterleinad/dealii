@@ -569,7 +569,7 @@ namespace Step15
                                     ComponentMask(),
                                     boundary_dofs);
     for (unsigned int i = 0; i < dof_handler.n_dofs(); ++i)
-      if (boundary_dofs[i] == true)
+      if (boundary_dofs[i])
         residual(i) = 0;
 
     // At the end of the function, we return the norm of the residual:
@@ -630,7 +630,7 @@ namespace Step15
     double previous_res = 0;
     while (first_step || (previous_res > 1e-3))
       {
-        if (first_step == true)
+        if (first_step)
           {
             std::cout << "******** Initial mesh "
                       << " ********" << std::endl;

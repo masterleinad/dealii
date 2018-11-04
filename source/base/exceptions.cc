@@ -221,7 +221,7 @@ ExceptionBase::print_stack_trace(std::ostream &out) const
   if (n_stacktrace_frames == 0)
     return;
 
-  if (deal_II_exceptions::internals::show_stacktrace == false)
+  if (!deal_II_exceptions::internals::show_stacktrace)
     return;
 
   // if there is a stackframe stored, print it

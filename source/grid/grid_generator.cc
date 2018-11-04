@@ -4601,7 +4601,7 @@ namespace GridGenerator
               result_cell->set_refine_flag();
             }
 
-        if (any_cell_flagged == false)
+        if (!any_cell_flagged)
           break;
         else
           result.execute_coarsening_and_refinement();
@@ -4969,7 +4969,7 @@ namespace GridGenerator
                    ++v)
                 {
                   unsigned int vv = cell->face(f)->vertex_index(v);
-                  if (treated_vertices[vv] == false)
+                  if (!treated_vertices[vv])
                     {
                       treated_vertices[vv] = true;
                       switch (vv)
@@ -5187,7 +5187,7 @@ namespace GridGenerator
                    ++v)
                 {
                   unsigned int vv = cell->face(f)->vertex_index(v);
-                  if (treated_vertices[vv] == false)
+                  if (!treated_vertices[vv])
                     {
                       treated_vertices[vv] = true;
                       for (unsigned int i = 0; i <= Nz; ++i)
@@ -5494,7 +5494,7 @@ namespace GridGenerator
                             edge_found = true;
                             break;
                           }
-                      if (edge_found == true)
+                      if (edge_found)
                         continue; // try next edge of current face
                     }
 

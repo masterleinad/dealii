@@ -307,7 +307,7 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
         break;
       }
 
-  if (type == true)
+  if (type)
     {
       if (this->degree > 3)
         namebuf << "FE_Q_Bubbles<" << Utilities::dim_string(dim, spacedim)
@@ -327,7 +327,7 @@ FE_Q_Bubbles<dim, spacedim>::get_name() const
             type = false;
             break;
           }
-      if (type == true)
+      if (type)
         namebuf << "FE_Q_Bubbles<" << dim << ">(" << this->degree - 1 << ")";
       else
         namebuf << "FE_Q_Bubbles<" << dim << ">(QUnknownNodes(" << this->degree

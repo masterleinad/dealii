@@ -1526,7 +1526,7 @@ namespace GridTools
                     break;
                   }
               }
-            if (repeat_vertex == false)
+            if (!repeat_vertex)
               {
                 vertices.push_back(position);
                 cells[k].vertices[v] = i;

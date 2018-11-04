@@ -5472,7 +5472,7 @@ namespace DataOutBase
 
     // now do the left over scalar data sets
     for (unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
-      if (data_set_written[data_set] == false)
+      if (!data_set_written[data_set])
         {
           out << "SCALARS " << data_names[data_set] << " double 1" << '\n'
               << "LOOKUP_TABLE default" << '\n';
@@ -5679,7 +5679,7 @@ namespace DataOutBase
 
         for (unsigned int data_set = 0; data_set < data_names.size();
              ++data_set)
-          if (data_set_written[data_set] == false)
+          if (!data_set_written[data_set])
             {
               out << "    <DataArray type=\"Float32\" Name=\""
                   << data_names[data_set] << "\"></DataArray>\n";
@@ -5982,7 +5982,7 @@ namespace DataOutBase
 
     // now do the left over scalar data sets
     for (unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
-      if (data_set_written[data_set] == false)
+      if (!data_set_written[data_set])
         {
           out << "    <DataArray type=\"Float32\" Name=\""
               << data_names[data_set] << "\" format=\"" << ascii_or_binary
@@ -6118,7 +6118,7 @@ namespace DataOutBase
       }
 
     for (unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
-      if (data_set_written[data_set] == false)
+      if (!data_set_written[data_set])
         {
           out << "    <PDataArray type=\"Float32\" Name=\""
               << data_names[data_set] << "\" format=\"ascii\"/>\n";
@@ -8691,7 +8691,7 @@ DataOutInterface<dim, spacedim>::validate_dataset_names() const
       }
 
     for (unsigned int data_set = 0; data_set < n_data_sets; ++data_set)
-      if (data_set_written[data_set] == false)
+      if (!data_set_written[data_set])
         {
           const std::string &name = data_names[data_set];
           Assert(all_names.find(name) == all_names.end(),

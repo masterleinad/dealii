@@ -147,7 +147,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set symmetric flag, if so requested
-    if (is_symmetric == true)
+    if (is_symmetric)
       {
         set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
       }
@@ -180,7 +180,7 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     // set symmetric flag, if so requested
-    if (is_symmetric == true)
+    if (is_symmetric)
       {
         set_matrix_option(matrix, MAT_SYMMETRIC, PETSC_TRUE);
       }
@@ -215,7 +215,7 @@ namespace PETScWrappers
     // for the usefulness of this option
     // read the documentation of this
     // class.
-    if (preset_nonzero_locations == true)
+    if (preset_nonzero_locations)
       {
         std::vector<PetscInt>    row_entries;
         std::vector<PetscScalar> row_values;

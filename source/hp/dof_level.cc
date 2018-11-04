@@ -71,7 +71,7 @@ namespace internal
                       compressible = false;
                       break;
                     }
-                if (compressible == true)
+                if (compressible)
                   new_size += 1;
                 else
                   new_size += (next_offset - dof_offsets[cell]);
@@ -124,7 +124,7 @@ namespace internal
 
                 // if this cell is compressible, then copy the first index and
                 // mark this in the dof_offsets array
-                if (compressible == true)
+                if (compressible)
                   {
                     new_dof_indices.push_back(dof_indices[dof_offsets[cell]]);
 
@@ -200,7 +200,7 @@ namespace internal
             new_dof_offsets[cell] = new_dof_indices.size();
 
             // see if we need to uncompress this set of dofs
-            if (is_compressed_entry(active_fe_indices[cell]) == false)
+            if (!is_compressed_entry(active_fe_indices[cell]))
               {
                 // apparently not. simply copy them
                 Assert(next_offset - dof_offsets[cell] ==

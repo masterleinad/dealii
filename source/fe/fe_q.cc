@@ -112,7 +112,7 @@ FE_Q<dim, spacedim>::get_name() const
         break;
       }
 
-  if (equidistant == true)
+  if (equidistant)
     {
       if (this->degree > 2)
         namebuf << "FE_Q<" << Utilities::dim_string(dim, spacedim)
@@ -132,7 +132,7 @@ FE_Q<dim, spacedim>::get_name() const
             gauss_lobatto = false;
             break;
           }
-      if (gauss_lobatto == true)
+      if (gauss_lobatto)
         namebuf << "FE_Q<" << Utilities::dim_string(dim, spacedim) << ">("
                 << this->degree << ")";
       else

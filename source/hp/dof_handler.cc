@@ -172,12 +172,12 @@ namespace internal
                 // ghost or locally owned cells
 #ifdef DEBUG
           for (unsigned int v = 0; v < dof_handler.tria->n_vertices(); ++v)
-            if (locally_used_vertices[v] == true)
+            if (locally_used_vertices[v])
               if (dof_handler.tria->vertex_used(v) == true)
                 {
                   unsigned int fe = 0;
                   for (; fe < dof_handler.fe_collection.size(); ++fe)
-                    if (vertex_fe_association[fe][v] == true)
+                    if (vertex_fe_association[fe][v])
                       break;
                   Assert(fe != dof_handler.fe_collection.size(),
                          ExcInternalError());
@@ -195,14 +195,14 @@ namespace internal
           unsigned int vertex_slots_needed = 0;
           for (unsigned int v = 0; v < dof_handler.tria->n_vertices(); ++v)
             if (dof_handler.tria->vertex_used(v) == true)
-              if (locally_used_vertices[v] == true)
+              if (locally_used_vertices[v])
                 {
                   dof_handler.vertex_dof_offsets[v] = vertex_slots_needed;
 
                   for (unsigned int fe = 0;
                        fe < dof_handler.fe_collection.size();
                        ++fe)
-                    if (vertex_fe_association[fe][v] == true)
+                    if (vertex_fe_association[fe][v])
                       vertex_slots_needed +=
                         dof_handler.get_fe(fe).dofs_per_vertex + 1;
 
@@ -216,14 +216,14 @@ namespace internal
                                          numbers::invalid_dof_index);
           for (unsigned int v = 0; v < dof_handler.tria->n_vertices(); ++v)
             if (dof_handler.tria->vertex_used(v) == true)
-              if (locally_used_vertices[v] == true)
+              if (locally_used_vertices[v])
                 {
                   unsigned int current_index =
                     dof_handler.vertex_dof_offsets[v];
                   for (unsigned int fe = 0;
                        fe < dof_handler.fe_collection.size();
                        ++fe)
-                    if (vertex_fe_association[fe][v] == true)
+                    if (vertex_fe_association[fe][v])
                       {
                         // if this vertex uses this fe, then set the
                         // fe_index and move the pointer ahead
@@ -763,7 +763,7 @@ namespace internal
                  ++line)
               for (unsigned int fe = 0; fe < dof_handler.fe_collection.size();
                    ++fe)
-                if (line_fe_association[fe][line] == true)
+                if (line_fe_association[fe][line])
                   {
                     line_is_used[line] = true;
                     break;
@@ -780,7 +780,7 @@ namespace internal
             unsigned int line_slots_needed = 0;
             for (unsigned int line = 0; line < dof_handler.tria->n_raw_lines();
                  ++line)
-              if (line_is_used[line] == true)
+              if (line_is_used[line])
                 {
                   dof_handler.faces->lines.dof_offsets[line] =
                     line_slots_needed;
@@ -788,7 +788,7 @@ namespace internal
                   for (unsigned int fe = 0;
                        fe < dof_handler.fe_collection.size();
                        ++fe)
-                    if (line_fe_association[fe][line] == true)
+                    if (line_fe_association[fe][line])
                       line_slots_needed +=
                         dof_handler.get_fe(fe).dofs_per_line + 1;
                   ++line_slots_needed;
@@ -800,14 +800,14 @@ namespace internal
                                                  numbers::invalid_dof_index);
             for (unsigned int line = 0; line < dof_handler.tria->n_raw_lines();
                  ++line)
-              if (line_is_used[line] == true)
+              if (line_is_used[line])
                 {
                   unsigned int pointer =
                     dof_handler.faces->lines.dof_offsets[line];
                   for (unsigned int fe = 0;
                        fe < dof_handler.fe_collection.size();
                        ++fe)
-                    if (line_fe_association[fe][line] == true)
+                    if (line_fe_association[fe][line])
                       {
                         // if this line uses this fe, then set the
                         // fe_index and move the pointer ahead

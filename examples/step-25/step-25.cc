@@ -640,14 +640,14 @@ namespace Step25
           {
             assemble_system();
 
-            if (first_iteration == true)
+            if (first_iteration)
               initial_rhs_norm = system_rhs.l2_norm();
 
             const unsigned int n_iterations = solve();
 
             solution += solution_update;
 
-            if (first_iteration == true)
+            if (first_iteration)
               std::cout << "    " << n_iterations;
             else
               std::cout << '+' << n_iterations;

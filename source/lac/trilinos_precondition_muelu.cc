@@ -97,7 +97,7 @@ namespace TrilinosWrappers
     // Build the AMG preconditioner.
     Teuchos::ParameterList parameter_list;
 
-    if (additional_data.elliptic == true)
+    if (additional_data.elliptic)
       ML_Epetra::SetDefaults("SA", parameter_list);
     else
       {
@@ -116,7 +116,7 @@ namespace TrilinosWrappers
                        static_cast<int>(additional_data.smoother_sweeps));
     parameter_list.set("cycle applications",
                        static_cast<int>(additional_data.n_cycles));
-    if (additional_data.w_cycle == true)
+    if (additional_data.w_cycle)
       parameter_list.set("prec type", "MGW");
     else
       parameter_list.set("prec type", "MGV");
@@ -150,7 +150,7 @@ namespace TrilinosWrappers
           constant_modes_are_global ? n_rows :
                                       additional_data.constant_modes[0].size();
         const size_type my_size = domain_map.NumMyElements();
-        if (constant_modes_are_global == false)
+        if (!constant_modes_are_global)
           Assert(n_relevant_rows == my_size,
                  ExcDimensionMismatch(n_relevant_rows, my_size));
         Assert(n_rows == static_cast<size_type>(TrilinosWrappers::global_length(

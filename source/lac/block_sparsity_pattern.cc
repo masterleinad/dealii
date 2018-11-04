@@ -374,7 +374,7 @@ BlockSparsityPattern::is_compressed() const
 {
   for (size_type i = 0; i < rows; ++i)
     for (size_type j = 0; j < columns; ++j)
-      if (sub_objects[i][j]->is_compressed() == false)
+      if (!sub_objects[i][j]->is_compressed())
         return false;
   return true;
 }

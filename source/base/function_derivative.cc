@@ -167,7 +167,7 @@ FunctionDerivative<dim>::value_list(const std::vector<Point<dim>> &points,
                                     const unsigned int component) const
 {
   const unsigned int n                  = points.size();
-  const bool         variable_direction = (incr.size() == 1) ? false : true;
+  const bool         variable_direction = static_cast<bool>(incr.size() != 1);
   if (variable_direction)
     Assert(incr.size() == points.size(),
            ExcDimensionMismatch(incr.size(), points.size()));

@@ -225,7 +225,7 @@ namespace DoFTools
 
                 // then see what happens. if it succeeds, fine
                 if (check_master_dof_list(face_interpolation_matrix,
-                                          master_dof_list) == true)
+                                          master_dof_list))
                   ++dofs_added;
                 else
                   // well, it didn't. simply pop that dof from the list again
@@ -251,7 +251,7 @@ namespace DoFTools
 
                 master_dof_list.push_back(index + i);
                 if (check_master_dof_list(face_interpolation_matrix,
-                                          master_dof_list) == true)
+                                          master_dof_list))
                   ++dofs_added;
                 else
                   master_dof_list.pop_back();
@@ -274,7 +274,7 @@ namespace DoFTools
 
                 master_dof_list.push_back(index + i);
                 if (check_master_dof_list(face_interpolation_matrix,
-                                          master_dof_list) == true)
+                                          master_dof_list))
                   ++dofs_added;
                 else
                   master_dof_list.pop_back();
@@ -404,7 +404,7 @@ namespace DoFTools
             unsigned int nth_master_dof = 0, nth_slave_dof = 0;
 
             for (unsigned int i = 0; i < n_dofs; ++i)
-              if (master_dof_mask[i] == true)
+              if (master_dof_mask[i])
                 {
                   for (unsigned int j = 0; j < n_master_dofs; ++j)
                     split_matrix->first(nth_master_dof, j) =
@@ -520,7 +520,7 @@ namespace DoFTools
                       break;
                     }
 
-              if (constraint_already_satisfied == false)
+              if (!constraint_already_satisfied)
                 {
                   // add up the absolute values of all constraints in this line
                   // to get a measure of their absolute size
@@ -1966,13 +1966,13 @@ namespace DoFTools
                     }
                 unsigned int identity_constraint_target =
                   numbers::invalid_unsigned_int;
-                if (is_identity_constrained == true)
+                if (is_identity_constrained)
                   {
                     bool one_identity_found = false;
                     for (unsigned int jj = 0; jj < dofs_per_face; ++jj)
                       if (std::abs(transformation(i, jj) - 1.) < eps)
                         {
-                          if (one_identity_found == false)
+                          if (!one_identity_found)
                             {
                               one_identity_found         = true;
                               identity_constraint_target = jj;
@@ -2004,7 +2004,7 @@ namespace DoFTools
                     for (unsigned int jj = 0; jj < dofs_per_face; ++jj)
                       if (std::abs(transformation(i, jj) + 1) < eps)
                         {
-                          if (one_identity_found == false)
+                          if (!one_identity_found)
                             {
                               one_identity_found        = true;
                               inverse_constraint_target = jj;
@@ -3228,8 +3228,7 @@ namespace DoFTools
     // get an array in which we store which dof on the coarse grid is a
     // parameter and which is not
     std::vector<bool> coarse_dof_is_parameter(coarse_grid.n_dofs());
-    if (true)
-      {
+    {
         std::vector<bool> mask(coarse_grid.get_fe(0).n_components(), false);
         mask[coarse_component] = true;
         extract_dofs(coarse_grid, ComponentMask(mask), coarse_dof_is_parameter);
@@ -3249,7 +3248,7 @@ namespace DoFTools
     for (types::global_dof_index parameter_dof = 0;
          parameter_dof < n_coarse_dofs;
          ++parameter_dof)
-      if (coarse_dof_is_parameter[parameter_dof] == true)
+      if (coarse_dof_is_parameter[parameter_dof])
         {
           // if this is the line of a parameter dof on the coarse grid, then it
           // should have at least one dependent node on the fine grid

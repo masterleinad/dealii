@@ -284,7 +284,7 @@ std::string
 ParameterHandler::get_current_full_path(const std::string &name) const
 {
   std::string path = get_current_path();
-  if (path.empty() == false)
+  if (!path.empty())
     path += path_separator;
 
   path += mangle(name);
@@ -300,10 +300,10 @@ ParameterHandler::get_current_full_path(
   const std::string &             name) const
 {
   std::string path = get_current_path();
-  if (path.empty() == false)
+  if (!path.empty())
     path += path_separator;
 
-  if (sub_path.empty() == false)
+  if (!sub_path.empty())
     path += collate_path_string(sub_path) + path_separator;
 
   path += mangle(name);
@@ -924,10 +924,7 @@ ParameterHandler::get_bool(const std::string &entry_string) const
               ExcMessage("Can't convert the parameter value <" +
                          get(entry_string) + "> for entry <" + entry_string +
                          "> to a boolean."));
-  if (s == "true" || s == "yes")
-    return true;
-  else
-    return false;
+  return s == "true" || s == "yes";
 }
 
 
@@ -946,10 +943,7 @@ ParameterHandler::get_bool(
                          demangle(get_current_full_path(entry_subsection_path,
                                                         entry_string)) +
                          "> to a boolean."));
-  if (s == "true" || s == "yes")
-    return true;
-  else
-    return false;
+  return s == "true" || s == "yes";
 }
 
 
@@ -1157,7 +1151,7 @@ ParameterHandler::recursively_print_parameters(
                  current_section.begin();
                p != current_section.end();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               {
                 longest_name =
                   std::max(longest_name, demangle(p->first).length());
@@ -1173,7 +1167,7 @@ ParameterHandler::recursively_print_parameters(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               {
                 const std::string value = p->second.get<std::string>("value");
 
@@ -1185,7 +1179,7 @@ ParameterHandler::recursively_print_parameters(
                 if ((style == Text) &&
                     !p->second.get<std::string>("documentation").empty())
                   {
-                    if (first_entry == false)
+                    if (!first_entry)
                       out << '\n';
                     else
                       first_entry = false;
@@ -1240,8 +1234,8 @@ ParameterHandler::recursively_print_parameters(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if ((is_parameter_node(p->second) == true) ||
-                (is_alias_node(p->second) == true))
+            if ((is_parameter_node(p->second)) ||
+                (is_alias_node(p->second)))
               {
                 parameters_exist_here = true;
                 break;
@@ -1257,7 +1251,7 @@ ParameterHandler::recursively_print_parameters(
                      current_section.ordered_begin();
                    p != current_section.not_found();
                    ++p)
-                if (is_parameter_node(p->second) == true)
+                if (is_parameter_node(p->second))
                   {
                     const std::string value =
                       p->second.get<std::string>("value");
@@ -1320,7 +1314,7 @@ ParameterHandler::recursively_print_parameters(
                         Patterns::PatternBase::LaTeX);
                     out << "{\\it Possible values:} " << desc_str << '\n';
                   }
-                else if (is_alias_node(p->second) == true)
+                else if (is_alias_node(p->second))
                   {
                     const std::string alias =
                       p->second.get<std::string>("alias");
@@ -1384,7 +1378,7 @@ ParameterHandler::recursively_print_parameters(
                  current_section.begin();
                p != current_section.end();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               longest_name =
                 std::max(longest_name, demangle(p->first).length());
 
@@ -1394,7 +1388,7 @@ ParameterHandler::recursively_print_parameters(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               {
                 // print name and value
                 out << std::setw(overall_indent_level * 2) << ""
@@ -1419,7 +1413,7 @@ ParameterHandler::recursively_print_parameters(
                       out << std::setw(overall_indent_level * 2 + 6) << ""
                           << description_str[i] << '\n';
                   }
-                else if (description_str.empty() == false)
+                else if (!description_str.empty())
                   out << "  " << description_str[0] << '\n';
                 else
                   out << '\n';
@@ -1449,9 +1443,9 @@ ParameterHandler::recursively_print_parameters(
            current_section.begin();
          p != current_section.end();
          ++p)
-      if (is_parameter_node(p->second) == true)
+      if (is_parameter_node(p->second))
         ++n_parameters;
-      else if (is_alias_node(p->second) == false)
+      else if (!is_alias_node(p->second))
         ++n_sections;
 
     if ((style != Description) && (style != ShortText) && (n_parameters != 0) &&
@@ -1464,8 +1458,8 @@ ParameterHandler::recursively_print_parameters(
          current_section.ordered_begin();
        p != current_section.not_found();
        ++p)
-    if ((is_parameter_node(p->second) == false) &&
-        (is_alias_node(p->second) == false))
+    if ((!is_parameter_node(p->second)) &&
+        (!is_alias_node(p->second)))
       {
         // first print the subsection header
         switch (style)
@@ -1636,7 +1630,7 @@ ParameterHandler::print_parameters_section(
                  current_section.begin();
                p != current_section.end();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               longest_name =
                 std::max(longest_name, demangle(p->first).length());
 
@@ -1647,7 +1641,7 @@ ParameterHandler::print_parameters_section(
                  current_section.begin();
                p != current_section.end();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               longest_value =
                 std::max(longest_value,
                          p->second.get<std::string>("value").length());
@@ -1660,7 +1654,7 @@ ParameterHandler::print_parameters_section(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               {
                 const std::string value = p->second.get<std::string>("value");
 
@@ -1672,7 +1666,7 @@ ParameterHandler::print_parameters_section(
                 if ((!(style & 128)) &&
                     !p->second.get<std::string>("documentation").empty())
                   {
-                    if (first_entry == false)
+                    if (!first_entry)
                       out << std::endl;
                     else
                       first_entry = false;
@@ -1727,8 +1721,8 @@ ParameterHandler::print_parameters_section(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if ((is_parameter_node(p->second) == true) ||
-                (is_alias_node(p->second) == true))
+            if ((is_parameter_node(p->second)) ||
+                (is_alias_node(p->second)))
               {
                 parameters_exist_here = true;
                 break;
@@ -1744,7 +1738,7 @@ ParameterHandler::print_parameters_section(
                      current_section.ordered_begin();
                    p != current_section.not_found();
                    ++p)
-                if (is_parameter_node(p->second) == true)
+                if (is_parameter_node(p->second))
                   {
                     const std::string value =
                       p->second.get<std::string>("value");
@@ -1788,7 +1782,7 @@ ParameterHandler::print_parameters_section(
                         Patterns::PatternBase::LaTeX);
                     out << "{\\it Possible values:} " << desc_str << std::endl;
                   }
-                else if (is_alias_node(p->second) == true)
+                else if (is_alias_node(p->second))
                   {
                     const std::string alias =
                       p->second.get<std::string>("alias");
@@ -1845,7 +1839,7 @@ ParameterHandler::print_parameters_section(
                  current_section.begin();
                p != current_section.end();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               longest_name =
                 std::max(longest_name, demangle(p->first).length());
 
@@ -1855,7 +1849,7 @@ ParameterHandler::print_parameters_section(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if (is_parameter_node(p->second) == true)
+            if (is_parameter_node(p->second))
               {
                 // print name and value
                 out << std::setw(overall_indent_level * 2) << ""
@@ -1880,7 +1874,7 @@ ParameterHandler::print_parameters_section(
                       out << std::setw(overall_indent_level * 2 + 6) << ""
                           << description_str[i] << std::endl;
                   }
-                else if (description_str.empty() == false)
+                else if (!description_str.empty())
                   out << "  " << description_str[0] << std::endl;
                 else
                   out << std::endl;
@@ -1911,9 +1905,9 @@ ParameterHandler::print_parameters_section(
              current_section.begin();
            p != current_section.end();
            ++p)
-        if (is_parameter_node(p->second) == true)
+        if (is_parameter_node(p->second))
           ++n_parameters;
-        else if (is_alias_node(p->second) == false)
+        else if (!is_alias_node(p->second))
           ++n_sections;
 
       if ((style != Description) && (!(style & 128)) && (n_parameters != 0) &&
@@ -1925,8 +1919,8 @@ ParameterHandler::print_parameters_section(
              current_section.ordered_begin();
            p != current_section.not_found();
            ++p)
-        if ((is_parameter_node(p->second) == false) &&
-            (is_alias_node(p->second) == false))
+        if ((!is_parameter_node(p->second)) &&
+            (!is_alias_node(p->second)))
           {
             // first print the subsection header
             switch (style)
@@ -2056,7 +2050,7 @@ ParameterHandler::log_parameters_section(LogStream &out)
          current_section.ordered_begin();
        p != current_section.not_found();
        ++p)
-    if (is_parameter_node(p->second) == true)
+    if (is_parameter_node(p->second))
       out << demangle(p->first) << ": " << p->second.get<std::string>("value")
           << std::endl;
 
@@ -2067,7 +2061,7 @@ ParameterHandler::log_parameters_section(LogStream &out)
          current_section.ordered_begin();
        p != current_section.not_found();
        ++p)
-    if (is_parameter_node(p->second) == false)
+    if (!is_parameter_node(p->second))
       {
         out.push(demangle(p->first));
         enter_subsection(demangle(p->first));
@@ -2404,7 +2398,7 @@ MultipleParameterLoop::init_branches_current_section()
          current_section.ordered_begin();
        p != current_section.not_found();
        ++p)
-    if (is_parameter_node(p->second) == true)
+    if (is_parameter_node(p->second))
       {
         const std::string value = p->second.get<std::string>("value");
         if (value.find('{') != std::string::npos)
@@ -2417,7 +2411,7 @@ MultipleParameterLoop::init_branches_current_section()
   for (boost::property_tree::ptree::const_iterator p = current_section.begin();
        p != current_section.end();
        ++p)
-    if (is_parameter_node(p->second) == false)
+    if (!is_parameter_node(p->second))
       {
         enter_subsection(demangle(p->first));
         init_branches_current_section();

@@ -599,7 +599,7 @@ namespace MatrixTools
 
             // finally do the elimination step
             // if requested
-            if (eliminate_columns == true)
+            if (eliminate_columns)
               {
                 for (unsigned int row = 0; row < n_local_dofs; ++row)
                   if (row != i)

@@ -586,7 +586,7 @@ QGaussLogR<1>::QGaussLogR(const unsigned int n,
             -std::log(alpha / (1 - fraction)) * quad.weight(i) * (1 - fraction);
         }
     }
-  if (factor_out_singularity == true)
+  if (factor_out_singularity)
     for (unsigned int i = 0; i < size(); ++i)
       {
         Assert(

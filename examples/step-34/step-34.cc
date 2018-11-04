@@ -634,7 +634,7 @@ namespace Step34
             // the local degrees of freedom, we simply have to add the single
             // layer terms to the right hand side, and the double layer terms
             // to the matrix:
-            if (is_singular == false)
+            if (!is_singular)
               {
                 for (unsigned int q = 0; q < n_q_points; ++q)
                   {

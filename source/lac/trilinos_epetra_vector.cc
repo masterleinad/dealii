@@ -69,9 +69,9 @@ namespace LinearAlgebra
     {
       Epetra_Map input_map =
         parallel_partitioner.make_trilinos_map(communicator, false);
-      if (vector->Map().SameAs(input_map) == false)
+      if (!vector->Map().SameAs(input_map))
         vector = std_cxx14::make_unique<Epetra_FEVector>(input_map);
-      else if (omit_zeroing_entries == false)
+      else if (!omit_zeroing_entries)
         {
           const int ierr = vector->PutScalar(0.);
           Assert(ierr == 0, ExcTrilinosError(ierr));
@@ -422,7 +422,7 @@ namespace LinearAlgebra
       // Downcast V. If fails, throws an exception.
       const Vector &down_V = dynamic_cast<const Vector &>(V);
       // If we don't have the same map, copy.
-      if (vector->Map().SameAs(down_V.trilinos_vector().Map()) == false)
+      if (!vector->Map().SameAs(down_V.trilinos_vector().Map()))
         this->sadd(0., a, V);
       else
         {

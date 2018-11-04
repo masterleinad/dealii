@@ -394,7 +394,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
   boost::io::ios_flags_saver restore_flags(out);
 
   // first pad the table from below if necessary
-  if (auto_fill_mode == true)
+  if (auto_fill_mode)
     {
       unsigned int max_rows = 0;
       for (std::map<std::string, Column>::const_iterator p = columns.begin();
@@ -623,7 +623,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
       << "\\begin{tabular}{|";
 
   // first pad the table from below if necessary
-  if (auto_fill_mode == true)
+  if (auto_fill_mode)
     {
       unsigned int max_rows = 0;
       for (std::map<std::string, Column>::const_iterator p = columns.begin();

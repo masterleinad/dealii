@@ -700,7 +700,7 @@ namespace Patterns
 
     // check the different possibilities
     for (const std::string &string : split_list)
-      if (pattern->match(string) == false)
+      if (!pattern->match(string))
         return false;
 
     return true;
@@ -876,9 +876,9 @@ namespace Patterns
           return false;
 
         // then verify that the patterns are satisfied
-        if (key_pattern->match(pair[0]) == false)
+        if (!key_pattern->match(pair[0]))
           return false;
-        if (value_pattern->match(pair[1]) == false)
+        if (!value_pattern->match(pair[1]))
           return false;
       }
 
@@ -1092,7 +1092,7 @@ namespace Patterns
 
     for (unsigned int i = 0; i < patterns.size(); ++i)
       {
-        if (patterns[i]->match(split_list[i]) == false)
+        if (!patterns[i]->match(split_list[i]))
           return false;
       }
 

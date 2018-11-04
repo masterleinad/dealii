@@ -161,7 +161,7 @@ namespace DoFTools
               // mask is true, so we will for sure run into the break()
               // at one point
               for (unsigned int c = first_comp; c < fe.n_components(); ++c)
-                if (component_mask[c] == true)
+                if (component_mask[c])
                   {
                     local_component_association[i] = c;
                     break;
@@ -336,7 +336,7 @@ namespace DoFTools
     const bool consider_components = (n_components(dof_handler) != 1);
 
     // zero out the components that we will touch
-    if (consider_components == false)
+    if (!consider_components)
       dof_data = 0;
     else
       {
@@ -438,7 +438,7 @@ namespace DoFTools
     internal::get_component_association(dof, component_mask, dofs_by_component);
 
     for (types::global_dof_index i = 0; i < dof.n_locally_owned_dofs(); ++i)
-      if (component_mask[dofs_by_component[i]] == true)
+      if (component_mask[dofs_by_component[i]])
         selected_dofs[i] = true;
   }
 
@@ -485,7 +485,7 @@ namespace DoFTools
     internal::get_component_association(dof, component_mask, dofs_by_component);
 
     for (types::global_dof_index i = 0; i < dof.n_dofs(); ++i)
-      if (component_mask[dofs_by_component[i]] == true)
+      if (component_mask[dofs_by_component[i]])
         selected_dofs[i] = true;
   }
 
@@ -638,7 +638,7 @@ namespace DoFTools
     // also see whether we have to check whether a certain vector component
     // is selected, or all
     const bool check_vector_component =
-      ((component_mask.represents_the_all_selected_mask() == false) ||
+      ((!component_mask.represents_the_all_selected_mask()) ||
        (component_mask.n_selected_components(n_components(dof_handler)) !=
         n_components(dof_handler)));
 
@@ -716,7 +716,7 @@ namespace DoFTools
                           Assert(first_nonzero_comp < fe.n_components(),
                                  ExcInternalError());
 
-                          if (component_mask[first_nonzero_comp] == true)
+                          if (component_mask[first_nonzero_comp])
                             selected_dofs.add_index(face_dof_indices[i]);
                         }
                     }
@@ -746,7 +746,7 @@ namespace DoFTools
     // also see whether we have to check whether a certain vector component
     // is selected, or all
     const bool check_vector_component =
-      (component_mask.represents_the_all_selected_mask() == false);
+      (!component_mask.represents_the_all_selected_mask());
 
     // clear and reset array by default values
     selected_dofs.clear();
@@ -803,7 +803,7 @@ namespace DoFTools
                                    ExcInternalError());
 
                             selected_dofs[cell_dof_indices[i]] =
-                              (component_mask[first_nonzero_comp] == true);
+                              (component_mask[first_nonzero_comp]);
                           }
                       }
                   }
@@ -1246,7 +1246,7 @@ namespace DoFTools
                                         dofs_by_component);
     unsigned int n_selected_dofs = 0;
     for (unsigned int i = 0; i < n_components; ++i)
-      if (component_mask[i] == true)
+      if (component_mask[i])
         n_selected_dofs +=
           std::count(dofs_by_component.begin(), dofs_by_component.end(), i);
 

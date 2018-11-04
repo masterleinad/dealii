@@ -2837,7 +2837,7 @@ namespace Step32
   {
     const bool use_bdf2_scheme = (timestep_number != 0);
 
-    if (use_bdf2_scheme == true)
+    if (use_bdf2_scheme)
       {
         temperature_matrix.copy_from(temperature_mass_matrix);
         temperature_matrix *=

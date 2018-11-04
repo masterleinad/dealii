@@ -1059,7 +1059,7 @@ namespace Utilities
     Epetra_Map
     duplicate_map(const Epetra_BlockMap &map, const Epetra_Comm &comm)
     {
-      if (map.LinearMap() == true)
+      if (map.LinearMap())
         {
           // each processor stores a
           // contiguous range of

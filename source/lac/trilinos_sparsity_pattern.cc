@@ -412,7 +412,7 @@ namespace TrilinosWrappers
 
       // Include possibility to exchange data since DynamicSparsityPattern is
       // able to do so
-      if (exchange_data == false)
+      if (!exchange_data)
         for (size_type row = first_row; row < last_row; ++row)
           {
             const TrilinosWrappers::types::int_type row_length =
@@ -793,7 +793,7 @@ namespace TrilinosWrappers
     Assert(column_space_map.get() != nullptr, ExcInternalError());
     if (nonlocal_graph.get() != nullptr)
       {
-        if (nonlocal_graph->IndicesAreGlobal() == false &&
+        if (!nonlocal_graph->IndicesAreGlobal() &&
             nonlocal_graph->RowMap().NumMyElements() > 0)
           {
             // insert dummy element
@@ -860,7 +860,7 @@ namespace TrilinosWrappers
         // Check whether the matrix
         // already is transformed to
         // local indices.
-        if (graph->Filled() == false)
+        if (!graph->Filled())
           {
             int nnz_present = graph->NumGlobalIndices(i);
             int nnz_extracted;
@@ -968,7 +968,7 @@ namespace TrilinosWrappers
   SparsityPattern::n_cols() const
   {
     TrilinosWrappers::types::int_type n_cols;
-    if (graph->Filled() == true)
+    if (graph->Filled())
       n_cols = n_global_cols(*graph);
     else
       n_cols = TrilinosWrappers::n_global_elements(*column_space_map);

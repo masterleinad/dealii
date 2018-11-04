@@ -534,7 +534,7 @@ KellyErrorEstimator<1, spacedim>::estimate(
             for (unsigned int s = 0; s < n_solution_vectors; ++s)
               for (unsigned int component = 0; component < n_components;
                    ++component)
-                if (component_mask[component] == true)
+                if (component_mask[component])
                   {
                     // get gradient here
                     const typename ProductType<number, double>::type

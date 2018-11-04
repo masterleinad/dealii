@@ -115,7 +115,7 @@ TensorProductPolynomialsConst<dim>::compute(
   // finally append the const value again
   bool do_values = false, do_grads = false, do_grad_grads = false;
   bool do_3rd_derivatives = false, do_4th_derivatives = false;
-  if (values.empty() == false)
+  if (!values.empty())
     {
       values.pop_back();
       do_values = true;

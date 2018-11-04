@@ -519,7 +519,7 @@ FiniteElement<dim, spacedim>::block_mask(
   for (unsigned int c = 0; c < this->n_components();)
     {
       const unsigned int block = component_to_block_index(c);
-      if (component_mask[c] == true)
+      if (component_mask[c])
         block_mask[block] = true;
 
       // now check all of the other
@@ -572,8 +572,8 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
   // assertion -- in essence, derived classes have to implement
   // an overloaded version of this function if we are to use any
   // other than standard orientation
-  if ((face_orientation != true) || (face_flip != false) ||
-      (face_rotation != false))
+  if ((!face_orientation) || (face_flip) ||
+      (face_rotation))
     Assert((this->dofs_per_line <= 1) && (this->dofs_per_quad <= 1),
            ExcMessage(
              "The function in this base class can not handle this case. "

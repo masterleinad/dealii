@@ -373,7 +373,7 @@ TimerOutput::~TimerOutput()
         // don't print unless we leave all subsections
         if ((output_frequency == summary ||
              output_frequency == every_call_and_summary) &&
-            output_is_enabled == true)
+            output_is_enabled)
           print_summary();
       }
     catch (...)
@@ -488,7 +488,7 @@ TimerOutput::leave_subsection(const std::string &section_name)
   // in case we have to print out something, do that here...
   if ((output_frequency == every_call ||
        output_frequency == every_call_and_summary) &&
-      output_is_enabled == true)
+      output_is_enabled)
     {
       std::string        output_time;
       std::ostringstream cpu;

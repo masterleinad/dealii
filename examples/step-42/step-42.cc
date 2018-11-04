@@ -1291,7 +1291,7 @@ namespace Step42
 
                   const unsigned int index_z = dof_indices[q_point];
 
-                  if ((component == 2) && (dof_touched[index_z] == false))
+                  if ((component == 2) && (!dof_touched[index_z]))
                     {
                       dof_touched[index_z] = true;
 

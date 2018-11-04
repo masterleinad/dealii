@@ -166,7 +166,7 @@ namespace TrilinosWrappers
 
       vector = std_cxx14::make_unique<Epetra_FEVector>(map);
 
-      has_ghosts = vector->Map().UniqueGIDs() == false;
+      has_ghosts = !vector->Map().UniqueGIDs();
 
       // If the IndexSets are overlapping, we don't really know
       // which process owns what. So we decide that no process
@@ -202,7 +202,7 @@ namespace TrilinosWrappers
       // In case we do not allow to have different maps, this call means that
       // we have to reset the vector. So clear the vector, initialize our map
       // with the map in v, and generate the vector.
-      if (allow_different_maps == false)
+      if (!allow_different_maps)
         {
           // check equality for MPI communicators: We can only choose the fast
           // version in case the underlying Epetra_MpiComm object is the same,
@@ -220,14 +220,14 @@ namespace TrilinosWrappers
           const bool same_communicators = true;
 #  endif
           if (!same_communicators ||
-              vector->Map().SameAs(v.vector->Map()) == false)
+              !vector->Map().SameAs(v.vector->Map()))
             {
               vector = std_cxx14::make_unique<Epetra_FEVector>(v.vector->Map());
               has_ghosts     = v.has_ghosts;
               last_action    = Zero;
               owned_elements = v.owned_elements;
             }
-          else if (omit_zeroing_entries == false)
+          else if (!omit_zeroing_entries)
             {
               // old and new vectors have exactly the same map, i.e. size and
               // parallel distribution
@@ -324,7 +324,7 @@ namespace TrilinosWrappers
           entries += v.block(block).local_size();
         }
 
-      if (import_data == true)
+      if (import_data)
         {
           AssertThrow(static_cast<size_type>(TrilinosWrappers::global_length(
                         *actual_vec)) == v.size(),
@@ -362,7 +362,7 @@ namespace TrilinosWrappers
     {
       nonlocal_vector.reset();
       owned_elements = locally_owned_entries;
-      if (vector_writable == false)
+      if (!vector_writable)
         {
           IndexSet parallel_partitioner = locally_owned_entries;
           parallel_partitioner.add_indices(ghost_entries);
@@ -378,7 +378,7 @@ namespace TrilinosWrappers
                  ExcMessage("A writable vector must not have ghost entries in "
                             "its parallel partitioning"));
 
-          if (vector->Map().SameAs(map) == false)
+          if (!vector->Map().SameAs(map))
             vector = std_cxx14::make_unique<Epetra_FEVector>(map);
           else
             {
@@ -398,7 +398,7 @@ namespace TrilinosWrappers
             }
         }
 
-      has_ghosts = vector->Map().UniqueGIDs() == false;
+      has_ghosts = !vector->Map().UniqueGIDs();
 
       last_action = Zero;
 
@@ -532,7 +532,7 @@ namespace TrilinosWrappers
              ExcMessage("The input vector has overlapping data, "
                         "which is not allowed."));
 
-      if (vector->Map().SameAs(m.trilinos_matrix().ColMap()) == false)
+      if (!vector->Map().SameAs(m.trilinos_matrix().ColMap()))
         vector =
           std_cxx14::make_unique<Epetra_FEVector>(m.trilinos_matrix().ColMap());
 
@@ -677,7 +677,7 @@ namespace TrilinosWrappers
     void
     Vector::add(const Vector &v, const bool allow_different_maps)
     {
-      if (allow_different_maps == false)
+      if (!allow_different_maps)
         *this += v;
       else
         {

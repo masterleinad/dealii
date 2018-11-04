@@ -614,7 +614,7 @@ namespace Step56
 
     // If true, we will assemble the pressure mass matrix in the (1,1) block:
     const bool assemble_pressure_mass_matrix =
-      (solver_type == SolverType::UMFPACK) ? false : true;
+      solver_type != SolverType::UMFPACK;
 
     QGauss<dim> quadrature_formula(pressure_degree + 2);
 

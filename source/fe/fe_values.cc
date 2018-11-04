@@ -158,7 +158,7 @@ namespace FEValuesViews
       {
         const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-        if (is_primitive == true)
+        if (is_primitive)
           shape_function_data[i].is_nonzero_shape_function_component =
             (component == fe.system_to_component_index(i).first);
         else
@@ -221,7 +221,7 @@ namespace FEValuesViews
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if (is_primitive == true)
+            if (is_primitive)
               shape_function_data[i].is_nonzero_shape_function_component[d] =
                 (component == fe.system_to_component_index(i).first);
             else
@@ -318,7 +318,7 @@ namespace FEValuesViews
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if (is_primitive == true)
+            if (is_primitive)
               shape_function_data[i].is_nonzero_shape_function_component[d] =
                 (component == fe.system_to_component_index(i).first);
             else
@@ -414,7 +414,7 @@ namespace FEValuesViews
           {
             const bool is_primitive = fe.is_primitive() || fe.is_primitive(i);
 
-            if (is_primitive == true)
+            if (is_primitive)
               shape_function_data[i].is_nonzero_shape_function_component[d] =
                 (component == fe.system_to_component_index(i).first);
             else

@@ -160,7 +160,7 @@ namespace DoFRenumbering
 
       std::vector<boosttypes::Vertex> inv_perm(num_vertices(graph));
 
-      if (reversed_numbering == false)
+      if (!reversed_numbering)
         ::boost::cuthill_mckee_ordering(graph,
                                         inv_perm.rbegin(),
                                         get(::boost::vertex_color, graph),
@@ -222,7 +222,7 @@ namespace DoFRenumbering
 
       std::vector<boosttypes::Vertex> inv_perm(num_vertices(graph));
 
-      if (reversed_numbering == false)
+      if (!reversed_numbering)
         ::boost::king_ordering(graph, inv_perm.rbegin());
       else
         ::boost::king_ordering(graph, inv_perm.begin());
@@ -349,7 +349,7 @@ namespace DoFRenumbering
           Assert(inverse_perm[perm[i]] == i, ExcInternalError());
         }
 
-      if (reversed_numbering == true)
+      if (reversed_numbering)
         std::copy(perm.begin(), perm.end(), new_dof_indices.begin());
       else
         std::copy(inverse_perm.begin(),
@@ -451,7 +451,7 @@ namespace DoFRenumbering
           {
             if ((needs_locally_active ==
                  /* previously already set to */ true) ||
-                (locally_owned_dofs.is_element(starting_indices[i]) == false))
+                (!locally_owned_dofs.is_element(starting_indices[i])))
               {
                 Assert(
                   locally_active_dofs.is_element(starting_indices[i]),
@@ -520,7 +520,7 @@ namespace DoFRenumbering
         // functions only want new indices for the locally owned DoFs (other
         // processors are responsible for renumbering the ones that are
         // on cell interfaces)
-        if (needs_locally_active == true)
+        if (needs_locally_active)
           {
             // first step: figure out which DoF indices to eliminate
             IndexSet active_but_not_owned_dofs = locally_active_dofs;
@@ -1501,7 +1501,7 @@ namespace DoFRenumbering
     types::global_dof_index next_unselected = 0;
     types::global_dof_index next_selected   = n_selected_dofs;
     for (types::global_dof_index i = 0; i < n_dofs; ++i)
-      if (selected_dofs[i] == false)
+      if (!selected_dofs[i])
         {
           new_indices[i] = next_unselected;
           ++next_unselected;
@@ -1543,7 +1543,7 @@ namespace DoFRenumbering
     unsigned int next_unselected = 0;
     unsigned int next_selected   = n_selected_dofs;
     for (unsigned int i = 0; i < n_dofs; ++i)
-      if (selected_dofs[i] == false)
+      if (!selected_dofs[i])
         {
           new_indices[i] = next_unselected;
           ++next_unselected;
@@ -1757,7 +1757,7 @@ namespace DoFRenumbering
               &dof.get_triangulation()) == nullptr),
            ExcNotImplemented());
 
-    if (dof_wise_renumbering == false)
+    if (!dof_wise_renumbering)
       {
         std::vector<typename DoFHandlerType::active_cell_iterator>
           ordered_cells;
@@ -1876,7 +1876,7 @@ namespace DoFRenumbering
     const Tensor<1, DoFHandlerType::space_dimension> &direction,
     const bool                                        dof_wise_renumbering)
   {
-    if (dof_wise_renumbering == false)
+    if (!dof_wise_renumbering)
       {
         std::vector<typename DoFHandlerType::level_cell_iterator> ordered_cells;
         ordered_cells.reserve(dof.get_triangulation().n_cells(level));

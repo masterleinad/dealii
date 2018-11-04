@@ -119,7 +119,7 @@ namespace TrilinosWrappers
       // owned. this is simply going to make non-locally owned rows
       // look like they're empty
       if ((this->a_row == matrix->m()) ||
-          (matrix->in_local_range(this->a_row) == false))
+          (!matrix->in_local_range(this->a_row)))
         {
           colnum_cache.reset();
           value_cache.reset();
@@ -674,10 +674,7 @@ namespace TrilinosWrappers
                indices.data())),
           0,
           input_row_map.Comm());
-        if (relevant_map.SameAs(input_row_map))
-          have_ghost_rows = false;
-        else
-          have_ghost_rows = true;
+        have_ghost_rows = !relevant_map.SameAs(input_row_map);
       }
 
       const unsigned int n_rows = relevant_rows.n_elements();
@@ -715,8 +712,8 @@ namespace TrilinosWrappers
             input_row_map,
             (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) :
                                              nullptr,
-            exchange_data ? false : true);
-          if (have_ghost_rows == true)
+            !exchange_data);
+          if (have_ghost_rows)
             nonlocal_graph = std_cxx14::make_unique<Epetra_CrsGraphMod>(
               off_processor_map, n_entries_per_ghost_row.data());
         }
@@ -951,7 +948,7 @@ namespace TrilinosWrappers
     const bool                            copy_values,
     const ::dealii::SparsityPattern *     use_this_sparsity)
   {
-    if (copy_values == false)
+    if (!copy_values)
       {
         // in case we do not copy values, just
         // call the other function.
@@ -1001,7 +998,7 @@ namespace TrilinosWrappers
 
     for (size_type row = 0; row < n_rows; ++row)
       // see if the row is locally stored on this processor
-      if (row_parallel_partitioning.is_element(row) == true)
+      if (row_parallel_partitioning.is_element(row))
         {
           ::dealii::SparsityPattern::iterator select_index =
             sparsity_pattern.begin(row);
@@ -1131,7 +1128,7 @@ namespace TrilinosWrappers
 
     matrix->FillComplete(*column_space_map, input_matrix.RangeMap(), true);
 
-    if (copy_values == true)
+    if (copy_values)
       {
         // point to the first data entry in the two
         // matrices and copy the content
@@ -1548,7 +1545,7 @@ namespace TrilinosWrappers
     // If we don't elide zeros, the pointers are already available... need to
     // cast to non-const pointers as that is the format taken by Trilinos (but
     // we will not modify const data)
-    if (elide_zero_values == false)
+    if (!elide_zero_values)
       {
         col_index_ptr = (TrilinosWrappers::types::int_type *)col_indices;
         col_value_ptr = const_cast<TrilinosScalar *>(values);
@@ -1588,9 +1585,9 @@ namespace TrilinosWrappers
     // the possibility to insert new values, and in the second we just replace
     // data.
     if (matrix->RowMap().MyGID(
-          static_cast<TrilinosWrappers::types::int_type>(row)) == true)
+          static_cast<TrilinosWrappers::types::int_type>(row)))
       {
-        if (matrix->Filled() == false)
+        if (!matrix->Filled())
           {
             ierr = matrix->Epetra_CrsMatrix::InsertGlobalValues(
               static_cast<TrilinosWrappers::types::int_type>(row),
@@ -1620,7 +1617,7 @@ namespace TrilinosWrappers
         // a time).
         compressed = false;
 
-        if (matrix->Filled() == false)
+        if (!matrix->Filled())
           {
             ierr = matrix->InsertGlobalValues(
               1,
@@ -1745,7 +1742,7 @@ namespace TrilinosWrappers
     // If we don't elide zeros, the pointers are already available... need to
     // cast to non-const pointers as that is the format taken by Trilinos (but
     // we will not modify const data)
-    if (elide_zero_values == false)
+    if (!elide_zero_values)
       {
         col_index_ptr = (TrilinosWrappers::types::int_type *)col_indices;
         col_value_ptr = const_cast<TrilinosScalar *>(values);
@@ -1789,7 +1786,7 @@ namespace TrilinosWrappers
     // can directly call the Epetra_CrsMatrix input function, which is much
     // faster than the Epetra_FECrsMatrix function.
     if (matrix->RowMap().MyGID(
-          static_cast<TrilinosWrappers::types::int_type>(row)) == true)
+          static_cast<TrilinosWrappers::types::int_type>(row)))
       {
         ierr = matrix->Epetra_CrsMatrix::SumIntoGlobalValues(row,
                                                              n_columns,
@@ -1845,17 +1842,16 @@ namespace TrilinosWrappers
           std::cout << col_index_ptr[i] << " ";
         std::cout << std::endl << std::endl;
         std::cout << "Matrix row "
-                  << (matrix->RowMap().MyGID(
-                        static_cast<TrilinosWrappers::types::int_type>(row)) ==
-                          false ?
+                  << (!matrix->RowMap().MyGID(
+                        static_cast<TrilinosWrappers::types::int_type>(row)) ?
                         "(nonlocal part)" :
                         "")
                   << " has the following indices:" << std::endl;
         std::vector<TrilinosWrappers::types::int_type> indices;
         const Epetra_CrsGraph *                        graph =
           (nonlocal_matrix.get() != nullptr &&
-           matrix->RowMap().MyGID(
-             static_cast<TrilinosWrappers::types::int_type>(row)) == false) ?
+           !matrix->RowMap().MyGID(
+             static_cast<TrilinosWrappers::types::int_type>(row))) ?
             &nonlocal_matrix->Graph() :
             &matrix->Graph();
 
@@ -2240,8 +2236,8 @@ namespace TrilinosWrappers
                   const MPI::Vector & V,
                   const bool          transpose_left)
     {
-      const bool use_vector = (V.size() == inputright.m() ? true : false);
-      if (transpose_left == false)
+      const bool use_vector = (V.size() == inputright.m());
+      if (!transpose_left)
         {
           Assert(inputleft.n() == inputright.m(),
                  ExcDimensionMismatch(inputleft.n(), inputright.m()));
@@ -2267,7 +2263,7 @@ namespace TrilinosWrappers
       // multiply each row with the respective
       // vector element.
       Teuchos::RCP<Epetra_CrsMatrix> mod_B;
-      if (use_vector == false)
+      if (!use_vector)
         {
           mod_B = Teuchos::rcp(const_cast<Epetra_CrsMatrix *>(
                                  &inputright.trilinos_matrix()),
@@ -2356,7 +2352,7 @@ namespace TrilinosWrappers
   SparseMatrix::print(std::ostream &out,
                       const bool    print_detailed_trilinos_information) const
   {
-    if (print_detailed_trilinos_information == true)
+    if (print_detailed_trilinos_information)
       out << *matrix;
     else
       {

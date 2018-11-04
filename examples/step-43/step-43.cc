@@ -1497,7 +1497,7 @@ namespace Step43
         for (unsigned int i = 0; i < dofs_per_cell; ++i)
           local_rhs(i) -=
             time_step * normal_flux *
-            fractional_flow((is_outflow_q_point == true ?
+            fractional_flow((is_outflow_q_point ?
                                old_saturation_solution_values_face[q] :
                                neighbor_saturation[q]),
                             viscosity) *
@@ -1530,7 +1530,7 @@ namespace Step43
     const bool solve_for_pressure_and_velocity =
       determine_whether_to_solve_for_pressure_and_velocity();
 
-    if (solve_for_pressure_and_velocity == true)
+    if (solve_for_pressure_and_velocity)
       {
         std::cout << "   Solving Darcy (pressure-velocity) system..."
                   << std::endl;
@@ -1625,7 +1625,7 @@ namespace Step43
     // time step. (ii) If we have not recomputed the Darcy solution, then the
     // length of the current macro time step has just grown by
     // <code>time_step</code>.
-    if (solve_for_pressure_and_velocity == true)
+    if (solve_for_pressure_and_velocity)
       {
         old_macro_time_step     = current_macro_time_step;
         current_macro_time_step = time_step;

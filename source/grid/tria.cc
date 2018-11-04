@@ -2260,15 +2260,12 @@ namespace internal
           // compiler will probably
           // take care of most of
           // it anyway
-          if ((q1.face(0) < q2.face(0)) ||
+          return (q1.face(0) < q2.face(0)) ||
               ((q1.face(0) == q2.face(0)) && (q1.face(1) < q2.face(1))) ||
               ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
                (q1.face(2) < q2.face(2))) ||
               ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
-               (q1.face(2) == q2.face(2)) && (q1.face(3) < q2.face(3))))
-            return true;
-          else
-            return false;
+               (q1.face(2) == q2.face(2)) && (q1.face(3) < q2.face(3)));
         }
       };
 
@@ -5239,7 +5236,7 @@ namespace internal
                                   next_unused_cell,
                                   cell);
 
-                  if ((check_for_distorted_cells == true) &&
+                  if ((check_for_distorted_cells) &&
                       has_distorted_children(
                         cell,
                         std::integral_constant<int, dim>(),
@@ -9704,7 +9701,7 @@ namespace internal
 
                   // now see if we have created cells that are
                   // distorted and if so add them to our list
-                  if ((check_for_distorted_cells == true) &&
+                  if ((check_for_distorted_cells) &&
                       has_distorted_children(
                         hex,
                         std::integral_constant<int, dim>(),
@@ -10031,7 +10028,7 @@ namespace internal
                       }
               }
           }
-        while (mesh_changed == true);
+        while (mesh_changed);
       }
 
 
@@ -10840,7 +10837,7 @@ Triangulation<dim, spacedim>::load_refine_flags(const std::vector<bool> &v)
       unsigned int ref_case = 0;
 
       for (unsigned int j = 0; j < dim; ++j, ++i)
-        if (*i == true)
+        if (*i)
           ref_case += 1 << j;
       Assert(ref_case < RefinementCase<dim>::isotropic_refinement + 1,
              ExcGridReadError());
@@ -10907,7 +10904,7 @@ Triangulation<dim, spacedim>::load_coarsen_flags(const std::vector<bool> &v)
   active_cell_iterator              cell = begin_active(), endc = end();
   std::vector<bool>::const_iterator i = v.begin();
   for (; cell != endc; ++cell, ++i)
-    if (*i == true)
+    if (*i)
       cell->set_coarsen_flag();
     else
       cell->clear_coarsen_flag();
@@ -11258,7 +11255,7 @@ Triangulation<dim, spacedim>::load_user_flags_line(const std::vector<bool> &v)
   line_iterator                     line = begin_line(), endl = end_line();
   std::vector<bool>::const_iterator i = v.begin();
   for (; line != endl; ++line, ++i)
-    if (*i == true)
+    if (*i)
       line->set_user_flag();
     else
       line->clear_user_flag();
@@ -11383,7 +11380,7 @@ Triangulation<dim, spacedim>::load_user_flags_quad(const std::vector<bool> &v)
       quad_iterator                     quad = begin_quad(), endq = end_quad();
       std::vector<bool>::const_iterator i = v.begin();
       for (; quad != endq; ++quad, ++i)
-        if (*i == true)
+        if (*i)
           set_user_flag(quad);
         else
           clear_user_flag(quad);
@@ -11452,7 +11449,7 @@ Triangulation<dim, spacedim>::load_user_flags_hex(const std::vector<bool> &v)
       hex_iterator                      hex = begin_hex(), endh = end_hex();
       std::vector<bool>::const_iterator i = v.begin();
       for (; hex != endh; ++hex, ++i)
-        if (*i == true)
+        if (*i)
           set_user_flag(hex);
         else
           clear_user_flag(hex);
@@ -13672,7 +13669,7 @@ Triangulation<dim, spacedim>::fix_coarsen_flags()
       continue_iterating = (current_coarsen_flags != previous_coarsen_flags);
       previous_coarsen_flags = current_coarsen_flags;
     }
-  while (continue_iterating == true);
+  while (continue_iterating);
 }
 
 
@@ -13812,7 +13809,7 @@ namespace
     // one) are refined, the current cell is flagged to be refined in
     // an according direction.
 
-    if (allow_anisotropic_smoothing == false)
+    if (!allow_anisotropic_smoothing)
       {
         // use first algorithm
         unsigned int refined_neighbors = 0, unrefined_neighbors = 0;
@@ -14378,7 +14375,7 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
                     break;
                   }
 
-              if (has_active_grandchildren == false)
+              if (!has_active_grandchildren)
                 continue;
 
 
