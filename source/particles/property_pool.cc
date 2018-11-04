@@ -42,7 +42,7 @@ namespace Particles
 
 
   void
-  PropertyPool::deallocate_properties_array(Handle handle)
+  PropertyPool::deallocate_properties_array(const Handle handle)
   {
     delete[] handle;
   }

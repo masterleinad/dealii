@@ -72,7 +72,7 @@ namespace Particles
      * handle causes undefined behavior.
      */
     void
-    deallocate_properties_array(const Handle handle);
+    deallocate_properties_array(const const Handle handle);
 
     /**
      * Return an ArrayView to the properties that correspond to the given

@@ -362,7 +362,7 @@ namespace Utilities
       void
       max_reduce(const void *in_lhs_,
                  void *      inout_rhs_,
-                 int *       len,
+                 const int *       len,
                  MPI_Datatype *)
       {
         (void)len;
