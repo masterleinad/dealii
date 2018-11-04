@@ -259,7 +259,7 @@ namespace TrilinosWrappers
     vector_distributor = std::make_shared<Epetra_Map>(
       static_cast<TrilinosWrappers::types::int_type>(n_rows), 0, communicator);
 
-    if (trilinos_matrix.get() == nullptr)
+    if (trilinos_matrix == nullptr)
       trilinos_matrix = std::make_shared<SparseMatrix>();
 
     trilinos_matrix->reinit(*vector_distributor,
@@ -290,7 +290,7 @@ namespace TrilinosWrappers
 
     // todo: find a way to read out ML's data
     // sizes
-    if (trilinos_matrix.get() != nullptr)
+    if (trilinos_matrix != nullptr)
       memory += trilinos_matrix->memory_consumption();
     return memory;
   }

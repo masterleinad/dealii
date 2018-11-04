@@ -254,7 +254,7 @@ LogStream::get_stream()
   // note that in all of this we need not worry about thread-safety
   // because we operate on a thread-local object and by definition
   // there can only be one access at a time
-  if (outstreams.get().get() == nullptr)
+  if (outstreams.get() == nullptr)
     {
       outstreams.get() = std::make_shared<std::ostringstream>();
       outstreams.get()->setf(std::ios::showpoint | std::ios::left);

@@ -343,7 +343,7 @@ namespace Step59
   template <int dim, int fe_degree, typename number>
   types::global_dof_index LaplaceOperator<dim, fe_degree, number>::m() const
   {
-    Assert(data.get() != nullptr, ExcNotInitialized());
+    Assert(data != nullptr, ExcNotInitialized());
     return data->get_dof_handler().n_dofs();
   }
 

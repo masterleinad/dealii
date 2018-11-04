@@ -179,7 +179,7 @@ namespace internal
         {
           // see if we need to fill this entry, or whether it already
           // exists
-          if (identities.get() == nullptr)
+          if (identities == nullptr)
             {
               switch (structdim)
                 {

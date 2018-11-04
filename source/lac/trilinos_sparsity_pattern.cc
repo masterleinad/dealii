@@ -739,7 +739,7 @@ namespace TrilinosWrappers
     column_space_map = std_cxx14::make_unique<Epetra_Map>(*sp.column_space_map);
     graph            = std_cxx14::make_unique<Epetra_FECrsGraph>(*sp.graph);
 
-    if (sp.nonlocal_graph.get() != nullptr)
+    if (sp.nonlocal_graph != nullptr)
       nonlocal_graph =
         std_cxx14::make_unique<Epetra_CrsGraph>(*sp.nonlocal_graph);
     else
@@ -790,8 +790,8 @@ namespace TrilinosWrappers
   SparsityPattern::compress()
   {
     int ierr;
-    Assert(column_space_map.get() != nullptr, ExcInternalError());
-    if (nonlocal_graph.get() != nullptr)
+    Assert(column_space_map != nullptr, ExcInternalError());
+    if (nonlocal_graph != nullptr)
       {
         if (!nonlocal_graph->IndicesAreGlobal() &&
             nonlocal_graph->RowMap().NumMyElements() > 0)

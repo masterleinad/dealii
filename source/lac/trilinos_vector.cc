@@ -415,7 +415,7 @@ namespace TrilinosWrappers
     Vector &
     Vector::operator=(const Vector &v)
     {
-      Assert(vector.get() != nullptr,
+      Assert(vector != nullptr,
              ExcMessage("Vector is not constructed properly."));
 
       // check equality for MPI communicators to avoid accessing a possibly
@@ -458,7 +458,7 @@ namespace TrilinosWrappers
       if (same_communicators && v.vector->Map().SameAs(vector->Map()))
         {
           *vector = *v.vector;
-          if (v.nonlocal_vector.get() != nullptr)
+          if (v.nonlocal_vector != nullptr)
             nonlocal_vector = std_cxx14::make_unique<Epetra_MultiVector>(
               v.nonlocal_vector->Map(), 1);
           last_action = Zero;
@@ -482,7 +482,7 @@ namespace TrilinosWrappers
           owned_elements = v.owned_elements;
         }
 
-      if (v.nonlocal_vector.get() != nullptr)
+      if (v.nonlocal_vector != nullptr)
         nonlocal_vector =
           std_cxx14::make_unique<Epetra_MultiVector>(v.nonlocal_vector->Map(),
                                                      1);
@@ -631,7 +631,7 @@ namespace TrilinosWrappers
 
       // Now pass over the information about what we did last to the vector.
       int ierr = 0;
-      if (nonlocal_vector.get() == nullptr || mode != Add)
+      if (nonlocal_vector == nullptr || mode != Add)
         ierr = vector->GlobalAssemble(mode);
       else
         {

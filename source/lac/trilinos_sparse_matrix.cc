@@ -130,7 +130,7 @@ namespace TrilinosWrappers
       // get a representation of the present row
       int                               ncols;
       TrilinosWrappers::types::int_type colnums = matrix->n();
-      if (value_cache.get() == nullptr)
+      if (value_cache == nullptr)
         {
           value_cache =
             std::make_shared<std::vector<TrilinosScalar>>(matrix->n());
@@ -461,7 +461,7 @@ namespace TrilinosWrappers
         matrix->FillComplete(*column_space_map, matrix->RowMap());
       }
 
-    if (rhs.nonlocal_matrix.get() != nullptr)
+    if (rhs.nonlocal_matrix != nullptr)
       nonlocal_matrix =
         std_cxx14::make_unique<Epetra_CrsMatrix>(Copy,
                                                  rhs.nonlocal_matrix->Graph());
@@ -746,7 +746,7 @@ namespace TrilinosWrappers
                                        row_indices.data());
           else
             {
-              Assert(nonlocal_graph.get() != nullptr, ExcInternalError());
+              Assert(nonlocal_graph != nullptr, ExcInternalError());
               nonlocal_graph->InsertGlobalIndices(global_row,
                                                   row_length,
                                                   row_indices.data());
@@ -754,7 +754,7 @@ namespace TrilinosWrappers
         }
 
       // finalize nonlocal graph and create nonlocal matrix
-      if (nonlocal_graph.get() != nullptr)
+      if (nonlocal_graph != nullptr)
         {
           // must make sure the IndicesAreGlobal flag is set on all processors
           // because some processors might not call InsertGlobalIndices (and
@@ -900,7 +900,7 @@ namespace TrilinosWrappers
     matrix = std_cxx14::make_unique<Epetra_FECrsMatrix>(
       Copy, sparsity_pattern.trilinos_sparsity_pattern(), false);
 
-    if (sparsity_pattern.nonlocal_graph.get() != nullptr)
+    if (sparsity_pattern.nonlocal_graph != nullptr)
       nonlocal_matrix = std_cxx14::make_unique<Epetra_CrsMatrix>(
         Copy, *sparsity_pattern.nonlocal_graph);
     else
@@ -977,7 +977,7 @@ namespace TrilinosWrappers
         *use_this_sparsity :
         dealii_sparse_matrix.get_sparsity_pattern();
 
-    if (matrix.get() == nullptr || m() != n_rows ||
+    if (matrix == nullptr || m() != n_rows ||
         n_nonzero_elements() != sparsity_pattern.n_nonzero_elements())
       {
         reinit(row_parallel_partitioning,
@@ -1172,12 +1172,12 @@ namespace TrilinosWrappers
 
     // flush buffers
     int ierr;
-    if (nonlocal_matrix.get() != nullptr && mode == Add)
+    if (nonlocal_matrix != nullptr && mode == Add)
       {
         // do only export in case of an add() operation, otherwise the owning
         // processor must have set the correct entry
         nonlocal_matrix->FillComplete(*column_space_map, matrix->RowMap());
-        if (nonlocal_matrix_exporter.get() == nullptr)
+        if (nonlocal_matrix_exporter == nullptr)
           nonlocal_matrix_exporter =
             std_cxx14::make_unique<Epetra_Export>(nonlocal_matrix->RowMap(),
                                                   matrix->RowMap());
@@ -1794,7 +1794,7 @@ namespace TrilinosWrappers
                                                              col_index_ptr);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
-    else if (nonlocal_matrix.get() != nullptr)
+    else if (nonlocal_matrix != nullptr)
       {
         compressed = false;
         // this is the case when we have explicitly set the off-processor rows
@@ -1849,7 +1849,7 @@ namespace TrilinosWrappers
                   << " has the following indices:" << std::endl;
         std::vector<TrilinosWrappers::types::int_type> indices;
         const Epetra_CrsGraph *                        graph =
-          (nonlocal_matrix.get() != nullptr &&
+          (nonlocal_matrix != nullptr &&
            !matrix->RowMap().MyGID(
              static_cast<TrilinosWrappers::types::int_type>(row))) ?
             &nonlocal_matrix->Graph() :
@@ -1886,7 +1886,7 @@ namespace TrilinosWrappers
 
     const int ierr = matrix->PutScalar(d);
     AssertThrow(ierr == 0, ExcTrilinosError(ierr));
-    if (nonlocal_matrix.get() != nullptr)
+    if (nonlocal_matrix != nullptr)
       nonlocal_matrix->PutScalar(d);
 
     return *this;

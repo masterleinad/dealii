@@ -86,7 +86,7 @@ namespace internal
               Assert(false, ExcInternalError());
           }
 
-        Assert(q_fine.get() != nullptr, ExcInternalError());
+        Assert(q_fine != nullptr, ExcInternalError());
         const unsigned int nq = q_fine->size();
 
         // loop over all possible refinement cases
