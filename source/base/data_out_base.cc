@@ -811,7 +811,7 @@ namespace
 
     if (nbdy == 2) // Vertex DOF
       { // ijk is a corner node. Return the proper index (somewhere in [0,3]):
-        return (i ? (j ? 2 : 1) : (j ? 3 : 0));
+        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0));
       }
 
     int offset = 4;
@@ -819,13 +819,13 @@ namespace
       {
         if (!ibdy)
           { // On i axis
-            return (i - 1) + (j ? order[0] - 1 + order[1] - 1 : 0) + offset;
+            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) + offset;
           }
 
         if (!jbdy)
           { // On j axis
             return (j - 1) +
-                   (i ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
+                   (i != 0u ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
                    offset;
           }
       }
@@ -856,7 +856,7 @@ namespace
 
     if (nbdy == 3) // Vertex DOF
       { // ijk is a corner node. Return the proper index (somewhere in [0,7]):
-        return (i ? (j ? 2 : 1) : (j ? 3 : 0)) + (k ? 4 : 0);
+        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0)) + (k != 0u ? 4 : 0);
       }
 
     int offset = 8;
@@ -864,18 +864,18 @@ namespace
       {
         if (!ibdy)
           { // On i axis
-            return (i - 1) + (j ? order[0] - 1 + order[1] - 1 : 0) +
-                   (k ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
+            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) +
+                   (k != 0u ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
           }
         if (!jbdy)
           { // On j axis
             return (j - 1) +
-                   (i ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
-                   (k ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
+                   (i != 0u ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
+                   (k != 0u ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
           }
         // !kbdy, On k axis
         offset += 4 * (order[0] - 1) + 4 * (order[1] - 1);
-        return (k - 1) + (order[2] - 1) * (i ? (j ? 3 : 1) : (j ? 2 : 0)) +
+        return (k - 1) + (order[2] - 1) * (i != 0u ? (j != 0u ? 3 : 1) : (j != 0u ? 2 : 0)) +
                offset;
       }
 
@@ -885,18 +885,18 @@ namespace
         if (ibdy) // On i-normal face
           {
             return (j - 1) + ((order[1] - 1) * (k - 1)) +
-                   (i ? (order[1] - 1) * (order[2] - 1) : 0) + offset;
+                   (i != 0u ? (order[1] - 1) * (order[2] - 1) : 0) + offset;
           }
         offset += 2 * (order[1] - 1) * (order[2] - 1);
         if (jbdy) // On j-normal face
           {
             return (i - 1) + ((order[0] - 1) * (k - 1)) +
-                   (j ? (order[2] - 1) * (order[0] - 1) : 0) + offset;
+                   (j != 0u ? (order[2] - 1) * (order[0] - 1) : 0) + offset;
           }
         offset += 2 * (order[2] - 1) * (order[0] - 1);
         // kbdy, On k-normal face
         return (i - 1) + ((order[0] - 1) * (j - 1)) +
-               (k ? (order[0] - 1) * (order[1] - 1) : 0) + offset;
+               (k != 0u ? (order[0] - 1) * (order[1] - 1) : 0) + offset;
       }
 
     // nbdy == 0: Body DOF

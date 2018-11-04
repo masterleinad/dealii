@@ -1663,7 +1663,7 @@ ParameterHandler::print_parameters_section(
                 // the documentation, and then the actual entry; break the
                 // documentation into readable chunks such that the whole
                 // thing is at most 78 characters wide
-                if ((!(style & 128)) &&
+                if (((style & 128) == 0) &&
                     !p->second.get<std::string>("documentation").empty())
                   {
                     if (!first_entry)
@@ -1692,7 +1692,7 @@ ParameterHandler::print_parameters_section(
 
                 // finally print the default value, but only if it differs
                 // from the actual value
-                if ((!(style & 64)) &&
+                if (((style & 64) == 0) &&
                     value != p->second.get<std::string>("default_value"))
                   {
                     out << std::setw(longest_value - value.length() + 1) << ' '
@@ -1910,7 +1910,7 @@ ParameterHandler::print_parameters_section(
         else if (!is_alias_node(p->second))
           ++n_sections;
 
-      if ((style != Description) && (!(style & 128)) && (n_parameters != 0) &&
+      if ((style != Description) && ((style & 128) == 0) && (n_parameters != 0) &&
           (n_sections != 0))
         out << std::endl << std::endl;
 
@@ -2122,7 +2122,7 @@ ParameterHandler::scan_line(std::string        line,
            Utilities::match_at_string_start(line, "end"))
     {
       line.erase(0, 3);
-      while ((!line.empty()) && (std::isspace(line[0])))
+      while ((!line.empty()) && ((std::isspace(line[0])) != 0))
         line.erase(0, 1);
 
       AssertThrow(
@@ -2514,9 +2514,9 @@ MultipleParameterLoop::Entry::split_different_values()
     multiple.erase(multiple.size() - 1, 1);
   // erase leading and trailing spaces
   // in multiple
-  while (std::isspace(multiple[0]))
+  while (std::isspace(multiple[0]) != 0)
     multiple.erase(0, 1);
-  while (std::isspace(multiple[multiple.size() - 1]))
+  while (std::isspace(multiple[multiple.size() - 1]) != 0)
     multiple.erase(multiple.size() - 1, 1);
 
   // delete spaces around '|'

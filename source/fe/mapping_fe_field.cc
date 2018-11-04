@@ -240,7 +240,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::MappingFEField(
   const ComponentMask & mask)
   : euler_vector(&euler_vector)
   , euler_dof_handler(&euler_dof_handler)
-  , fe_mask(mask.size() ?
+  , fe_mask(mask.size() != 0u ?
               mask :
               ComponentMask(
                 euler_dof_handler.get_fe().get_nonzero_components(0).size(),
@@ -399,18 +399,18 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       // update_boundary_forms is simply
       // ignored for the interior of a
       // cell.
-      if (out & (update_JxW_values | update_normal_vectors))
+      if ((out & (update_JxW_values | update_normal_vectors)) != 0u)
         out |= update_boundary_forms;
 
-      if (out & (update_covariant_transformation | update_JxW_values |
+      if ((out & (update_covariant_transformation | update_JxW_values |
                  update_jacobians | update_jacobian_grads |
-                 update_boundary_forms | update_normal_vectors))
+                 update_boundary_forms | update_normal_vectors)) != 0u)
         out |= update_contravariant_transformation;
 
-      if (out &
+      if ((out &
           (update_inverse_jacobians | update_jacobian_pushed_forward_grads |
            update_jacobian_pushed_forward_2nd_derivatives |
-           update_jacobian_pushed_forward_3rd_derivatives))
+           update_jacobian_pushed_forward_3rd_derivatives)) != 0u)
         out |= update_covariant_transformation;
 
       // The contravariant transformation
@@ -419,10 +419,10 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
       // Jacobi matrix of the transformation.
       // Therefore these values have to be
       // updated for each cell.
-      if (out & update_contravariant_transformation)
+      if ((out & update_contravariant_transformation) != 0u)
         out |= update_JxW_values;
 
-      if (out & update_normal_vectors)
+      if ((out & update_normal_vectors) != 0u)
         out |= update_JxW_values;
     }
 
@@ -1574,7 +1574,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
   // Multiply quadrature weights by absolute value of Jacobian determinants or
   // the area element g=sqrt(DX^t DX) in case of codim > 0
 
-  if (update_flags & (update_normal_vectors | update_JxW_values))
+  if ((update_flags & (update_normal_vectors | update_JxW_values)) != 0u)
     {
       AssertDimension(output_data.JxW_values.size(), n_q_points);
 
@@ -1624,12 +1624,12 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
                 if (cell_similarity == CellSimilarity::inverted_translation)
                   {
                     // we only need to flip the normal
-                    if (update_flags & update_normal_vectors)
+                    if ((update_flags & update_normal_vectors) != 0u)
                       output_data.normal_vectors[point] *= -1.;
                   }
                 else
                   {
-                    if (update_flags & update_normal_vectors)
+                    if ((update_flags & update_normal_vectors) != 0u)
                       {
                         Assert(spacedim - dim == 1,
                                ExcMessage(
@@ -1654,7 +1654,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
     }
 
   // copy values from InternalData to vector given by reference
-  if (update_flags & update_jacobians)
+  if ((update_flags & update_jacobians) != 0u)
     {
       AssertDimension(output_data.jacobians.size(), n_q_points);
       if (cell_similarity != CellSimilarity::translation)
@@ -1663,7 +1663,7 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::fill_fe_values(
     }
 
   // copy values from InternalData to vector given by reference
-  if (update_flags & update_inverse_jacobians)
+  if ((update_flags & update_inverse_jacobians) != 0u)
     {
       AssertDimension(output_data.inverse_jacobians.size(), n_q_points);
       if (cell_similarity != CellSimilarity::translation)

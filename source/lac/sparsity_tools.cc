@@ -959,7 +959,7 @@ namespace SparsityTools
           DynamicSparsityPattern::size_type rlen = dsp.row_length(row);
 
           // skip empty lines
-          if (!rlen)
+          if (rlen == 0u)
             continue;
 
           // save entries
@@ -1105,7 +1105,7 @@ namespace SparsityTools
           BlockDynamicSparsityPattern::size_type rlen = dsp.row_length(row);
 
           // skip empty lines
-          if (!rlen)
+          if (rlen == 0u)
             continue;
 
           // save entries

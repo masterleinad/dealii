@@ -798,8 +798,8 @@ namespace TrilinosWrappers
           {
             // insert dummy element
             TrilinosWrappers::types::int_type row =
-              nonlocal_graph->RowMap().MyGID(
-                static_cast<TrilinosWrappers::types::int_type>(0));
+              static_cast<TrilinosWrappers::types::int_type>(nonlocal_graph->RowMap().MyGID(
+                static_cast<TrilinosWrappers::types::int_type>(0)));
             nonlocal_graph->InsertGlobalIndices(row, 1, &row);
           }
         Assert(nonlocal_graph->RowMap().NumMyElements() == 0 ||

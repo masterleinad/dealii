@@ -2144,14 +2144,14 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
     {
       case mapping_none:
         {
-          if (flags & update_values)
+          if ((flags & update_values) != 0u)
             out |= update_values;
 
-          if (flags & update_gradients)
+          if ((flags & update_gradients) != 0u)
             out |= update_gradients | update_values |
                    update_jacobian_pushed_forward_grads;
 
-          if (flags & update_hessians)
+          if ((flags & update_hessians) != 0u)
             out |= update_hessians | update_values | update_gradients |
                    update_jacobian_pushed_forward_grads |
                    update_jacobian_pushed_forward_2nd_derivatives;
@@ -2161,16 +2161,16 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
       case mapping_raviart_thomas:
       case mapping_piola:
         {
-          if (flags & update_values)
+          if ((flags & update_values) != 0u)
             out |= update_values | update_piola;
 
-          if (flags & update_gradients)
+          if ((flags & update_gradients) != 0u)
             out |= update_gradients | update_values | update_piola |
                    update_jacobian_pushed_forward_grads |
                    update_covariant_transformation |
                    update_contravariant_transformation;
 
-          if (flags & update_hessians)
+          if ((flags & update_hessians) != 0u)
             out |= update_hessians | update_piola | update_values |
                    update_gradients | update_jacobian_pushed_forward_grads |
                    update_jacobian_pushed_forward_2nd_derivatives |
@@ -2181,16 +2181,16 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
 
       case mapping_contravariant:
         {
-          if (flags & update_values)
+          if ((flags & update_values) != 0u)
             out |= update_values | update_piola;
 
-          if (flags & update_gradients)
+          if ((flags & update_gradients) != 0u)
             out |= update_gradients | update_values |
                    update_jacobian_pushed_forward_grads |
                    update_covariant_transformation |
                    update_contravariant_transformation;
 
-          if (flags & update_hessians)
+          if ((flags & update_hessians) != 0u)
             out |= update_hessians | update_piola | update_values |
                    update_gradients | update_jacobian_pushed_forward_grads |
                    update_jacobian_pushed_forward_2nd_derivatives |
@@ -2202,15 +2202,15 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::requires_update_flags(
       case mapping_nedelec:
       case mapping_covariant:
         {
-          if (flags & update_values)
+          if ((flags & update_values) != 0u)
             out |= update_values | update_covariant_transformation;
 
-          if (flags & update_gradients)
+          if ((flags & update_gradients) != 0u)
             out |= update_gradients | update_values |
                    update_jacobian_pushed_forward_grads |
                    update_covariant_transformation;
 
-          if (flags & update_hessians)
+          if ((flags & update_hessians) != 0u)
             out |= update_hessians | update_values | update_gradients |
                    update_jacobian_pushed_forward_grads |
                    update_jacobian_pushed_forward_2nd_derivatives |

@@ -85,7 +85,7 @@ MappingCartesian<dim, spacedim>::requires_update_flags(
   // since they can be computed from the normal vectors without much
   // further ado
   UpdateFlags out = in;
-  if (out & update_boundary_forms)
+  if ((out & update_boundary_forms) != 0u)
     out |= update_normal_vectors;
 
   return out;
@@ -240,7 +240,7 @@ MappingCartesian<dim, spacedim>::compute_fill(
   // is obtained simply by scaling
   // unit coordinates with lengths in
   // each direction
-  if (update_flags & update_quadrature_points)
+  if ((update_flags & update_quadrature_points) != 0u)
     {
       const typename QProjector<dim>::DataSetDescriptor offset =
         (face_no == invalid_face_number ?
@@ -280,7 +280,7 @@ MappingCartesian<dim, spacedim>::compute_fill(
   // 1 or -1. Furthermore, all
   // normals on a face have the same
   // value
-  if (update_flags & update_normal_vectors)
+  if ((update_flags & update_normal_vectors) != 0u)
     {
       Assert(face_no < GeometryInfo<dim>::faces_per_cell, ExcInternalError());
 

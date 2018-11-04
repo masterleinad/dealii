@@ -3257,7 +3257,7 @@ namespace
     std::string tmp;
     for (unsigned int i = 0; i < s.size(); ++i)
       {
-        if (isdigit(s[i]))
+        if (isdigit(s[i]) != 0)
           {
             tmp += s[i];
           }

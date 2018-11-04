@@ -486,7 +486,7 @@ AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
     {
       grad[d] = 1.;
       for (unsigned int x = 0; x < dim; ++x)
-        grad[d] *= v[x][d == x];
+        grad[d] *= v[x][static_cast<std::vector::size_type>(d == x)];
     }
 
   return grad;

@@ -901,10 +901,10 @@ namespace internal
             for (unsigned int j = n_categories - 1; j > 0; --j)
               {
                 unsigned int lower_index = j - 1;
-                while (renumbering_category[j].size() % vectorization_length)
+                while ((renumbering_category[j].size() % vectorization_length) != 0u)
                   {
-                    while (renumbering_category[j].size() %
-                             vectorization_length &&
+                    while (((renumbering_category[j].size() %
+                             vectorization_length) != 0u) &&
                            !renumbering_category[lower_index].empty())
                       {
                         renumbering_category[j].push_back(
@@ -926,7 +926,7 @@ namespace internal
                 renumbering[counter++] = renumbering_category[j][jj];
               unsigned int remainder =
                 renumbering_category[j].size() % vectorization_length;
-              if (remainder)
+              if (remainder != 0u)
                 incompletely_filled_vectorization
                   [renumbering_category[j].size() / vectorization_length +
                    n_cells] = remainder;

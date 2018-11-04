@@ -172,7 +172,7 @@ namespace TrilinosWrappers
                   TrilinosWrappers::global_index(domain_map, row) :
                   row;
               distributed_constant_modes[d][row] =
-                additional_data.constant_modes[d][global_row_id];
+                static_cast<double>(additional_data.constant_modes[d][global_row_id]);
             }
 
         parameter_list.set("null space: type", "pre-computed");

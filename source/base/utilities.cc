@@ -347,7 +347,7 @@ namespace Utilities
 
     for (; left < input.size(); ++left)
       {
-        if (!std::isspace(input[left]))
+        if (std::isspace(input[left]) == 0)
           {
             break;
           }
@@ -355,7 +355,7 @@ namespace Utilities
 
     for (; right >= left; --right)
       {
-        if (!std::isspace(input[right]))
+        if (std::isspace(input[right]) == 0)
           {
             break;
           }

@@ -14807,14 +14807,14 @@ Triangulation<dim, spacedim>::prepare_coarsening_and_refinement()
                                         nb->face_flip(nb_indices.first),
                                         nb->face_rotation(nb_indices.first));
                                     if ((nb_frc & RefinementCase<dim>::cut_x) &&
-                                        !(refined_along_x ||
-                                          to_be_refined_along_x))
+                                        !((refined_along_x != 0u) ||
+                                          (to_be_refined_along_x != 0u)))
                                       changed |= cell->flag_for_face_refinement(
                                         i,
                                         RefinementCase<dim - 1>::cut_axis(0));
                                     if ((nb_frc & RefinementCase<dim>::cut_y) &&
-                                        !(refined_along_y ||
-                                          to_be_refined_along_y))
+                                        !((refined_along_y != 0u) ||
+                                          (to_be_refined_along_y != 0u)))
                                       changed |= cell->flag_for_face_refinement(
                                         i,
                                         RefinementCase<dim - 1>::cut_axis(1));
@@ -14999,7 +14999,7 @@ Triangulation<dim, spacedim>::read_bool_vector(const unsigned int magic_number1,
     }
 
   for (unsigned int position = 0; position != N; ++position)
-    v[position] = (flags[position / 8] & (1 << (position % 8)));
+    v[position] = ((flags[position / 8] & (1 << (position % 8))) != 0);
 
   in >> magic_number;
   AssertThrow(magic_number == magic_number2, ExcGridReadError());

@@ -154,14 +154,14 @@ namespace PETScWrappers
       // only do something if the sizes
       // mismatch (may not be true for every proc)
 
-      int k_global, k = ((size() != n) || (local_size() != local_sz));
+      int k_global, k = static_cast<int>((size() != n) || (local_size() != local_sz));
       {
         const int ierr =
           MPI_Allreduce(&k, &k_global, 1, MPI_INT, MPI_LOR, communicator);
         AssertThrowMPI(ierr);
       }
 
-      if (k_global || has_ghost_elements())
+      if ((k_global != 0) || has_ghost_elements())
         {
           // FIXME: I'd like to use this here,
           // but somehow it leads to odd errors

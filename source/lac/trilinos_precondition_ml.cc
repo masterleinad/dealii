@@ -179,7 +179,7 @@ namespace TrilinosWrappers
                     TrilinosWrappers::global_index(domain_map, row) :
                     row;
                 distributed_constant_modes[d][row] =
-                  additional_data.constant_modes[d][mode_index];
+                  static_cast<double>(additional_data.constant_modes[d][mode_index]);
               }
           }
         (void)expected_mode_size;
