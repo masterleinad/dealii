@@ -1924,8 +1924,7 @@ namespace Step33
 
     std::vector<Sacado::Fad::DFad<double>> independent_local_dof_values(
       dofs_per_cell),
-      independent_neighbor_dof_values(!external_face ? dofs_per_cell :
-                                                               0);
+      independent_neighbor_dof_values(!external_face ? dofs_per_cell : 0);
 
     const unsigned int n_independent_variables =
       (!external_face ? 2 * dofs_per_cell : dofs_per_cell);

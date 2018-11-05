@@ -231,9 +231,10 @@ TensorProductPolynomialsBubbles<dim>::compute(
          ExcDimensionMismatch2(values.size(), max_q_indices + n_bubbles, 0));
   Assert(grads.size() == max_q_indices + n_bubbles || grads.empty(),
          ExcDimensionMismatch2(grads.size(), max_q_indices + n_bubbles, 0));
-  Assert(
-    grad_grads.size() == max_q_indices + n_bubbles || grad_grads.empty(),
-    ExcDimensionMismatch2(grad_grads.size(), max_q_indices + n_bubbles, 0));
+  Assert(grad_grads.size() == max_q_indices + n_bubbles || grad_grads.empty(),
+         ExcDimensionMismatch2(grad_grads.size(),
+                               max_q_indices + n_bubbles,
+                               0));
   Assert(third_derivatives.size() == max_q_indices + n_bubbles ||
            third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(),

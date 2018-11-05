@@ -154,7 +154,8 @@ namespace PETScWrappers
       // only do something if the sizes
       // mismatch (may not be true for every proc)
 
-      int k_global, k = static_cast<int>((size() != n) || (local_size() != local_sz));
+      int k_global,
+        k = static_cast<int>((size() != n) || (local_size() != local_sz));
       {
         const int ierr =
           MPI_Allreduce(&k, &k_global, 1, MPI_INT, MPI_LOR, communicator);
@@ -267,7 +268,7 @@ namespace PETScWrappers
 
       const PetscInt *ptr =
         (!ghostindices.empty() ? (const PetscInt *)(&(ghostindices[0])) :
-                                   nullptr);
+                                 nullptr);
 
       PetscErrorCode ierr = VecCreateGhost(communicator,
                                            local_size,

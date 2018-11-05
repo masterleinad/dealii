@@ -40,8 +40,7 @@ BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry &e)
 template <typename number, typename BlockVectorType>
 BlockMatrixArray<number, BlockVectorType>::Entry::~Entry()
 {
-  
-    delete matrix;
+  delete matrix;
 }
 
 

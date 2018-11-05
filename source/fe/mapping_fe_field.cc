@@ -403,14 +403,14 @@ MappingFEField<dim, spacedim, VectorType, DoFHandlerType>::
         out |= update_boundary_forms;
 
       if ((out & (update_covariant_transformation | update_JxW_values |
-                 update_jacobians | update_jacobian_grads |
-                 update_boundary_forms | update_normal_vectors)) != 0u)
+                  update_jacobians | update_jacobian_grads |
+                  update_boundary_forms | update_normal_vectors)) != 0u)
         out |= update_contravariant_transformation;
 
       if ((out &
-          (update_inverse_jacobians | update_jacobian_pushed_forward_grads |
-           update_jacobian_pushed_forward_2nd_derivatives |
-           update_jacobian_pushed_forward_3rd_derivatives)) != 0u)
+           (update_inverse_jacobians | update_jacobian_pushed_forward_grads |
+            update_jacobian_pushed_forward_2nd_derivatives |
+            update_jacobian_pushed_forward_3rd_derivatives)) != 0u)
         out |= update_covariant_transformation;
 
       // The contravariant transformation

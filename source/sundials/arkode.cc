@@ -114,7 +114,7 @@ namespace SUNDIALS
                             int          convfail,
                             N_Vector     ypred,
                             N_Vector     fpred,
-                            const booleantype *jcurPtr,
+                            booleantype *jcurPtr,
                             N_Vector,
                             N_Vector,
                             N_Vector)

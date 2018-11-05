@@ -219,8 +219,7 @@ namespace TrilinosWrappers
 #  else
           const bool same_communicators = true;
 #  endif
-          if (!same_communicators ||
-              !vector->Map().SameAs(v.vector->Map()))
+          if (!same_communicators || !vector->Map().SameAs(v.vector->Map()))
             {
               vector = std_cxx14::make_unique<Epetra_FEVector>(v.vector->Map());
               has_ghosts     = v.has_ghosts;

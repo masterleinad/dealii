@@ -1193,9 +1193,8 @@ namespace GridTools
     // could be the potentially closest
     // vertex to the point, use it instead
     // of used vertices
-    const std::vector<bool> &used = (marked_vertices.empty()) ?
-                                      tria.get_used_vertices() :
-                                      marked_vertices;
+    const std::vector<bool> &used =
+      (marked_vertices.empty()) ? tria.get_used_vertices() : marked_vertices;
 
     // At the beginning, the first
     // used vertex is the closest one
@@ -2289,8 +2288,7 @@ namespace GridTools
             typename std::set<active_cell_iterator>::iterator
               cell_set_it = missing_vert_cells.begin(),
               end_cell_set = missing_vert_cells.end();
-            for (; (!found) && (cell_set_it != end_cell_set);
-                 ++cell_set_it)
+            for (; (!found) && (cell_set_it != end_cell_set); ++cell_set_it)
               {
                 typename std::set<active_cell_iterator>::iterator
                   candidate_cell =

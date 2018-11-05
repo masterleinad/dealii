@@ -48,7 +48,7 @@ std::string
 ParameterAcceptor::get_section_name() const
 {
   return (!section_name.empty() ? section_name :
-                               boost::core::demangle(typeid(*this).name()));
+                                  boost::core::demangle(typeid(*this).name()));
 }
 
 

@@ -3792,8 +3792,8 @@ namespace internal
             }
         }
 
-      
-        delete q_projector;
+
+      delete q_projector;
 
       // make sure everything now gets to disk
       out.flush();
@@ -4014,8 +4014,8 @@ namespace internal
             }
         }
 
-      
-        delete q_projector;
+
+      delete q_projector;
 
 
       // make sure everything now gets to disk

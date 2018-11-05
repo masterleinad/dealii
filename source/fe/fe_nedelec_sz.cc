@@ -1238,8 +1238,8 @@ FE_NedelecSZ<dim, spacedim>::fill_edge_values(
               // If we want to generate shape gradients then we need second
               // derivatives of the 1d polynomials, but only first derivatives
               // for the shape values.
-              const unsigned int poly_length((flags & update_gradients) != 0u ? 3 :
-                                                                          2);
+              const unsigned int poly_length(
+                (flags & update_gradients) != 0u ? 3 : 2);
 
               for (unsigned int m = 0; m < lines_per_cell; ++m)
                 {
@@ -1426,8 +1426,8 @@ FE_NedelecSZ<dim, spacedim>::fill_edge_values(
               // If we want to generate shape gradients then we need second
               // derivatives of the 1d polynomials, but only first derivatives
               // for the shape values.
-              const unsigned int poly_length((flags & update_gradients) != 0u ? 3 :
-                                                                          2);
+              const unsigned int poly_length(
+                (flags & update_gradients) != 0u ? 3 : 2);
               std::vector<std::vector<double>> poly(
                 degree, std::vector<double>(poly_length));
               for (unsigned int m = 0; m < lines_per_cell; ++m)
@@ -1676,7 +1676,8 @@ FE_NedelecSZ<dim, spacedim>::fill_face_values(
                 }
             }
           // Now can generate the basis
-          const unsigned int poly_length((flags & update_gradients) != 0u ? 3 : 2);
+          const unsigned int poly_length((flags & update_gradients) != 0u ? 3 :
+                                                                            2);
           std::vector<std::vector<double>> polyxi(
             degree, std::vector<double>(poly_length));
           std::vector<std::vector<double>> polyeta(

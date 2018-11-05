@@ -681,8 +681,8 @@ namespace Step55
     TimerOutput::Scope t(computing_timer, "refine");
 
     {
-        triangulation.refine_global();
-      }
+      triangulation.refine_global();
+    }
   }
 
 

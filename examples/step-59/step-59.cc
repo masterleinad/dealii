@@ -962,8 +962,7 @@ namespace Step59
     , dof_handler(triangulation)
     , setup_time(0.)
     , pcout(std::cout, Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) == 0)
-    , time_details(std::cout,
-                   false)
+    , time_details(std::cout, false)
   {}
 
 

@@ -3229,10 +3229,10 @@ namespace DoFTools
     // parameter and which is not
     std::vector<bool> coarse_dof_is_parameter(coarse_grid.n_dofs());
     {
-        std::vector<bool> mask(coarse_grid.get_fe(0).n_components(), false);
-        mask[coarse_component] = true;
-        extract_dofs(coarse_grid, ComponentMask(mask), coarse_dof_is_parameter);
-      }
+      std::vector<bool> mask(coarse_grid.get_fe(0).n_components(), false);
+      mask[coarse_component] = true;
+      extract_dofs(coarse_grid, ComponentMask(mask), coarse_dof_is_parameter);
+    }
 
     // now we know that the weights in each row constitute a constraint. enter
     // this into the constraints object

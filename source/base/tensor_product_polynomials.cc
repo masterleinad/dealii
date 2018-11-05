@@ -256,8 +256,7 @@ TensorProductPolynomials<dim, PolynomialType>::compute(
          ExcDimensionMismatch2(grads.size(), n_tensor_pols, 0));
   Assert(grad_grads.size() == n_tensor_pols || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), n_tensor_pols, 0));
-  Assert(third_derivatives.size() == n_tensor_pols ||
-           third_derivatives.empty(),
+  Assert(third_derivatives.size() == n_tensor_pols || third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(), n_tensor_pols, 0));
   Assert(fourth_derivatives.size() == n_tensor_pols ||
            fourth_derivatives.empty(),
@@ -486,7 +485,7 @@ AnisotropicPolynomials<dim>::compute_grad(const unsigned int i,
     {
       grad[d] = 1.;
       for (unsigned int x = 0; x < dim; ++x)
-        grad[d] *= v[x][static_cast<std::vector::size_type>(d == x)];
+        grad[d] *= v[x][(d == x) ? 1 : 0];
     }
 
   return grad;
@@ -545,8 +544,7 @@ AnisotropicPolynomials<dim>::compute(
          ExcDimensionMismatch2(grads.size(), n_tensor_pols, 0));
   Assert(grad_grads.size() == n_tensor_pols || grad_grads.empty(),
          ExcDimensionMismatch2(grad_grads.size(), n_tensor_pols, 0));
-  Assert(third_derivatives.size() == n_tensor_pols ||
-           third_derivatives.empty(),
+  Assert(third_derivatives.size() == n_tensor_pols || third_derivatives.empty(),
          ExcDimensionMismatch2(third_derivatives.size(), n_tensor_pols, 0));
   Assert(fourth_derivatives.size() == n_tensor_pols ||
            fourth_derivatives.empty(),

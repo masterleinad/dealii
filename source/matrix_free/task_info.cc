@@ -901,7 +901,8 @@ namespace internal
             for (unsigned int j = n_categories - 1; j > 0; --j)
               {
                 unsigned int lower_index = j - 1;
-                while ((renumbering_category[j].size() % vectorization_length) != 0u)
+                while (
+                  (renumbering_category[j].size() % vectorization_length) != 0u)
                   {
                     while (((renumbering_category[j].size() %
                              vectorization_length) != 0u) &&

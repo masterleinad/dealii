@@ -819,13 +819,15 @@ namespace
       {
         if (!ibdy)
           { // On i axis
-            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) + offset;
+            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) +
+                   offset;
           }
 
         if (!jbdy)
           { // On j axis
             return (j - 1) +
-                   (i != 0u ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
+                   (i != 0u ? order[0] - 1 :
+                              2 * (order[0] - 1) + order[1] - 1) +
                    offset;
           }
       }
@@ -856,7 +858,8 @@ namespace
 
     if (nbdy == 3) // Vertex DOF
       { // ijk is a corner node. Return the proper index (somewhere in [0,7]):
-        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0)) + (k != 0u ? 4 : 0);
+        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0)) +
+               (k != 0u ? 4 : 0);
       }
 
     int offset = 8;
@@ -870,12 +873,15 @@ namespace
         if (!jbdy)
           { // On j axis
             return (j - 1) +
-                   (i != 0u ? order[0] - 1 : 2 * (order[0] - 1) + order[1] - 1) +
+                   (i != 0u ? order[0] - 1 :
+                              2 * (order[0] - 1) + order[1] - 1) +
                    (k != 0u ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
           }
         // !kbdy, On k axis
         offset += 4 * (order[0] - 1) + 4 * (order[1] - 1);
-        return (k - 1) + (order[2] - 1) * (i != 0u ? (j != 0u ? 3 : 1) : (j != 0u ? 2 : 0)) +
+        return (k - 1) +
+               (order[2] - 1) *
+                 (i != 0u ? (j != 0u ? 3 : 1) : (j != 0u ? 2 : 0)) +
                offset;
       }
 

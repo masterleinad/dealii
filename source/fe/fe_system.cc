@@ -173,7 +173,8 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim> &fe1,
                                                        n2,
                                                        &fe3,
                                                        n3))
-  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) + static_cast<int>(n3 > 0))
+  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) +
+                  static_cast<int>(n3 > 0))
 {
   std::vector<const FiniteElement<dim, spacedim> *> fes;
   fes.push_back(&fe1);
@@ -222,7 +223,8 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim> &fe1,
                                                        n3,
                                                        &fe4,
                                                        n4))
-  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) + static_cast<int>(n3 > 0) + static_cast<int>(n4 > 0))
+  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) +
+                  static_cast<int>(n3 > 0) + static_cast<int>(n4 > 0))
 {
   std::vector<const FiniteElement<dim, spacedim> *> fes;
   fes.push_back(&fe1);
@@ -273,7 +275,9 @@ FESystem<dim, spacedim>::FESystem(const FiniteElement<dim, spacedim> &fe1,
                                                        n4,
                                                        &fe5,
                                                        n5))
-  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) + static_cast<int>(n3 > 0) + static_cast<int>(n4 > 0) + static_cast<int>(n5 > 0))
+  , base_elements(static_cast<int>(n1 > 0) + static_cast<int>(n2 > 0) +
+                  static_cast<int>(n3 > 0) + static_cast<int>(n4 > 0) +
+                  static_cast<int>(n5 > 0))
 {
   std::vector<const FiniteElement<dim, spacedim> *> fes;
   fes.push_back(&fe1);
@@ -1609,8 +1613,7 @@ FESystem<dim, spacedim>::initialize(
 {
   Assert(fes.size() == multiplicities.size(),
          ExcDimensionMismatch(fes.size(), multiplicities.size()));
-  Assert(!fes.empty(),
-         ExcMessage("Need to pass at least one finite element."));
+  Assert(!fes.empty(), ExcMessage("Need to pass at least one finite element."));
   Assert(count_nonzeros(multiplicities) > 0,
          ExcMessage("You only passed FiniteElements with multiplicity 0."));
 

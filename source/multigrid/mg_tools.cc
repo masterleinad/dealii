@@ -1393,8 +1393,7 @@ namespace MGTools
 
                         bool selected = false;
                         for (unsigned int c = 0; c < n_components; ++c)
-                          if (nonzero_component_array[c] &&
-                              component_mask[c])
+                          if (nonzero_component_array[c] && component_mask[c])
                             {
                               selected = true;
                               break;

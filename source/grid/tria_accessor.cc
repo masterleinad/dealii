@@ -2526,9 +2526,10 @@ CellAccessor<dim, spacedim>::has_periodic_neighbor(
   using cell_iterator = TriaIterator<CellAccessor<dim, spacedim>>;
   // my_it : is the iterator to the current cell.
   cell_iterator my_it(*this);
-  return static_cast<bool>(this->tria->periodic_face_map.find(
-        std::pair<cell_iterator, unsigned int>(my_it, i_face)) !=
-      this->tria->periodic_face_map.end());
+  return static_cast<bool>(
+    this->tria->periodic_face_map.find(
+      std::pair<cell_iterator, unsigned int>(my_it, i_face)) !=
+    this->tria->periodic_face_map.end());
 }
 
 

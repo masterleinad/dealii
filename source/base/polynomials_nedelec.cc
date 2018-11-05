@@ -80,10 +80,9 @@ PolynomialsNedelec<dim>::compute(
   // and second derivatives vectors of
   // <tt>polynomial_space</tt> at
   // <tt>unit_point</tt>
-  const unsigned int  n_basis = polynomial_space.n();
-  std::vector<double> unit_point_values((values.empty()) ? 0 : n_basis);
-  std::vector<Tensor<1, dim>> unit_point_grads((grads.empty()) ? 0 :
-                                                                     n_basis);
+  const unsigned int          n_basis = polynomial_space.n();
+  std::vector<double>         unit_point_values((values.empty()) ? 0 : n_basis);
+  std::vector<Tensor<1, dim>> unit_point_grads((grads.empty()) ? 0 : n_basis);
   std::vector<Tensor<2, dim>> unit_point_grad_grads(
     (grad_grads.empty()) ? 0 : n_basis);
   std::vector<Tensor<3, dim>> empty_vector_of_3rd_order_tensors;
@@ -136,9 +135,8 @@ PolynomialsNedelec<dim>::compute(
           p(0) = unit_point(1);
           p(1) = unit_point(0);
 
-          std::vector<double> p_values((values.empty()) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p_grads((grads.empty()) ? 0 :
-                                                                    n_basis);
+          std::vector<double>         p_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p_grads((grads.empty()) ? 0 : n_basis);
           std::vector<Tensor<2, dim>> p_grad_grads(
             (grad_grads.empty()) ? 0 : n_basis);
 
@@ -318,15 +316,13 @@ PolynomialsNedelec<dim>::compute(
           // <tt>unit_point</tt> with coordinates
           // shifted two steps in positive
           // direction
-          Point<dim>          p1, p2;
-          std::vector<double> p1_values((values.empty()) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p1_grads((grads.empty()) ? 0 :
-                                                                     n_basis);
+          Point<dim>                  p1, p2;
+          std::vector<double>         p1_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p1_grads((grads.empty()) ? 0 : n_basis);
           std::vector<Tensor<2, dim>> p1_grad_grads(
             (grad_grads.empty()) ? 0 : n_basis);
-          std::vector<double> p2_values((values.empty()) ? 0 : n_basis);
-          std::vector<Tensor<1, dim>> p2_grads((grads.empty()) ? 0 :
-                                                                     n_basis);
+          std::vector<double>         p2_values((values.empty()) ? 0 : n_basis);
+          std::vector<Tensor<1, dim>> p2_grads((grads.empty()) ? 0 : n_basis);
           std::vector<Tensor<2, dim>> p2_grad_grads(
             (grad_grads.empty()) ? 0 : n_basis);
 

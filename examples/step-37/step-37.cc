@@ -743,8 +743,7 @@ namespace Step37
     // time_details, is disabled by default through the @p false argument
     // specified here. For detailed timings, removing the @p false argument
     // prints all the details.
-    time_details(std::cout,
-                 false)
+    time_details(std::cout, false)
   {}
 
 

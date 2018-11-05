@@ -93,9 +93,8 @@ namespace GridTools
     // could be the potentially closest
     // vertex to the point, use it instead
     // of used vertices
-    const std::vector<bool> &used = (marked_vertices.empty()) ?
-                                      tria.get_used_vertices() :
-                                      marked_vertices;
+    const std::vector<bool> &used =
+      (marked_vertices.empty()) ? tria.get_used_vertices() : marked_vertices;
 
     // At the beginning, the first
     // used vertex is the closest one

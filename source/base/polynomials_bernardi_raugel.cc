@@ -109,10 +109,9 @@ PolynomialsBernardiRaugel<dim>::compute(
   bubble_values.resize((values.empty()) ? 0 : n_bubbles);
   bubble_grads.resize((grads.empty()) ? 0 : n_bubbles);
   bubble_grad_grads.resize((grad_grads.empty()) ? 0 : n_bubbles);
-  bubble_third_derivatives.resize((third_derivatives.empty()) ? 0 :
-                                                                    n_bubbles);
-  bubble_fourth_derivatives.resize(
-    (fourth_derivatives.empty()) ? 0 : n_bubbles);
+  bubble_third_derivatives.resize((third_derivatives.empty()) ? 0 : n_bubbles);
+  bubble_fourth_derivatives.resize((fourth_derivatives.empty()) ? 0 :
+                                                                  n_bubbles);
 
   // 1 normal vector per face, ordering consistent with GeometryInfo
   // Normal vectors point in the +x, +y, and +z directions for

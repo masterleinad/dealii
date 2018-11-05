@@ -494,11 +494,10 @@ PointValueHistory<dim>::add_field_name(const std::string &  vector_name,
   // make and add a new vector
   // point_geometry_data.size() long
   std::pair<std::string, std::vector<std::vector<double>>> pair_data;
-  pair_data.first = vector_name;
-  const unsigned int n_stored =
-    (!mask.represents_the_all_selected_mask() ?
-       mask.n_selected_components() :
-       dof_handler->get_fe(0).n_components());
+  pair_data.first             = vector_name;
+  const unsigned int n_stored = (!mask.represents_the_all_selected_mask() ?
+                                   mask.n_selected_components() :
+                                   dof_handler->get_fe(0).n_components());
 
   int n_datastreams =
     point_geometry_data.size() * n_stored; // each point has n_stored sub parts

@@ -572,8 +572,7 @@ FiniteElement<dim, spacedim>::face_to_cell_index(const unsigned int face_index,
   // assertion -- in essence, derived classes have to implement
   // an overloaded version of this function if we are to use any
   // other than standard orientation
-  if ((!face_orientation) || (face_flip) ||
-      (face_rotation))
+  if ((!face_orientation) || (face_flip) || (face_rotation))
     Assert((this->dofs_per_line <= 1) && (this->dofs_per_quad <= 1),
            ExcMessage(
              "The function in this base class can not handle this case. "
@@ -659,8 +658,11 @@ FiniteElement<dim, spacedim>::adjust_quad_dof_index_for_face_orientation(
   Assert(adjust_quad_dof_index_for_face_orientation_table.n_elements() ==
            8 * this->dofs_per_quad,
          ExcInternalError());
-  return index + adjust_quad_dof_index_for_face_orientation_table(
-                   index, 4 * static_cast<int>(face_orientation) + 2 * static_cast<int>(face_flip) + static_cast<int>(face_rotation));
+  return index +
+         adjust_quad_dof_index_for_face_orientation_table(
+           index,
+           4 * static_cast<int>(face_orientation) +
+             2 * static_cast<int>(face_flip) + static_cast<int>(face_rotation));
 }
 
 
@@ -1037,9 +1039,8 @@ FiniteElement<dim, spacedim>::get_generalized_support_points() const
 {
   // If the finite element implements generalized support points, return
   // those. Otherwise fall back to unit support points.
-  return ((generalized_support_points.empty()) ?
-            unit_support_points :
-            generalized_support_points);
+  return ((generalized_support_points.empty()) ? unit_support_points :
+                                                 generalized_support_points);
 }
 
 

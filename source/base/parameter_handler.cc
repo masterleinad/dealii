@@ -345,23 +345,22 @@ ParameterHandler::parse_input(std::istream &     input,
   // unknown state.
   //
   // after unwinding the subsection stack, just re-throw the exception
-  auto scan_line_or_cleanup = [this,
-                               &skip_undefined,
-                               &saved_path](const std::string &line,
-                                            const std::string &filename,
-                                            const unsigned int line_number) {
-    try
-      {
-        scan_line(line, filename, line_number, skip_undefined);
-      }
-    catch (...)
-      {
-        while ((saved_path != subsection_path) && (!subsection_path.empty()))
-          leave_subsection();
+  auto scan_line_or_cleanup =
+    [this, &skip_undefined, &saved_path](const std::string &line,
+                                         const std::string &filename,
+                                         const unsigned int line_number) {
+      try
+        {
+          scan_line(line, filename, line_number, skip_undefined);
+        }
+      catch (...)
+        {
+          while ((saved_path != subsection_path) && (!subsection_path.empty()))
+            leave_subsection();
 
-        throw;
-      }
-  };
+          throw;
+        }
+    };
 
 
   while (std::getline(input, input_line))
@@ -497,7 +496,7 @@ namespace
             // object as well
             const std::string full_path =
               (current_path.empty() ? p->first :
-                                    current_path + path_separator + p->first);
+                                      current_path + path_separator + p->first);
 
             const std::string new_value = p->second.get<std::string>("value");
             AssertThrow(destination.get_optional<std::string>(full_path) &&
@@ -1234,8 +1233,7 @@ ParameterHandler::recursively_print_parameters(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if ((is_parameter_node(p->second)) ||
-                (is_alias_node(p->second)))
+            if ((is_parameter_node(p->second)) || (is_alias_node(p->second)))
               {
                 parameters_exist_here = true;
                 break;
@@ -1458,8 +1456,7 @@ ParameterHandler::recursively_print_parameters(
          current_section.ordered_begin();
        p != current_section.not_found();
        ++p)
-    if ((!is_parameter_node(p->second)) &&
-        (!is_alias_node(p->second)))
+    if ((!is_parameter_node(p->second)) && (!is_alias_node(p->second)))
       {
         // first print the subsection header
         switch (style)
@@ -1721,8 +1718,7 @@ ParameterHandler::print_parameters_section(
                  current_section.ordered_begin();
                p != current_section.not_found();
                ++p)
-            if ((is_parameter_node(p->second)) ||
-                (is_alias_node(p->second)))
+            if ((is_parameter_node(p->second)) || (is_alias_node(p->second)))
               {
                 parameters_exist_here = true;
                 break;
@@ -1910,8 +1906,8 @@ ParameterHandler::print_parameters_section(
         else if (!is_alias_node(p->second))
           ++n_sections;
 
-      if ((style != Description) && ((style & 128) == 0) && (n_parameters != 0) &&
-          (n_sections != 0))
+      if ((style != Description) && ((style & 128) == 0) &&
+          (n_parameters != 0) && (n_sections != 0))
         out << std::endl << std::endl;
 
       // now traverse subsections tree, in alphabetical order
@@ -1919,8 +1915,7 @@ ParameterHandler::print_parameters_section(
              current_section.ordered_begin();
            p != current_section.not_found();
            ++p)
-        if ((!is_parameter_node(p->second)) &&
-            (!is_alias_node(p->second)))
+        if ((!is_parameter_node(p->second)) && (!is_alias_node(p->second)))
           {
             // first print the subsection header
             switch (style)

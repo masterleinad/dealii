@@ -2261,11 +2261,11 @@ namespace internal
           // take care of most of
           // it anyway
           return (q1.face(0) < q2.face(0)) ||
-              ((q1.face(0) == q2.face(0)) && (q1.face(1) < q2.face(1))) ||
-              ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
-               (q1.face(2) < q2.face(2))) ||
-              ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
-               (q1.face(2) == q2.face(2)) && (q1.face(3) < q2.face(3)));
+                 ((q1.face(0) == q2.face(0)) && (q1.face(1) < q2.face(1))) ||
+                 ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
+                  (q1.face(2) < q2.face(2))) ||
+                 ((q1.face(0) == q2.face(0)) && (q1.face(1) == q2.face(1)) &&
+                  (q1.face(2) == q2.face(2)) && (q1.face(3) < q2.face(3)));
         }
       };
 

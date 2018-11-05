@@ -173,13 +173,15 @@ namespace internal
   double
   mu_or(double left, double right)
   {
-    return static_cast<double>(((mu_round(left)) != 0) || ((mu_round(right))) != 0);
+    return static_cast<double>(((mu_round(left)) != 0) ||
+                               ((mu_round(right))) != 0);
   }
 
   double
   mu_and(double left, double right)
   {
-    return static_cast<double>(((mu_round(left)) != 0) && ((mu_round(right))) != 0);
+    return static_cast<double>(((mu_round(left)) != 0) &&
+                               ((mu_round(right))) != 0);
   }
 
   double
@@ -296,8 +298,7 @@ FunctionParser<dim>::init_muparser() const
            constant != constants.end();
            ++constant)
         {
-          fp.get()[component]->DefineConst(constant->first,
-                                           constant->second);
+          fp.get()[component]->DefineConst(constant->first, constant->second);
         }
 
       for (unsigned int iv = 0; iv < var_names.size(); ++iv)

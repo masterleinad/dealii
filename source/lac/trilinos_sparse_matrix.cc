@@ -697,9 +697,8 @@ namespace TrilinosWrappers
 
       Epetra_Map off_processor_map(-1,
                                    ghost_rows.size(),
-                                   (!ghost_rows.empty()) ?
-                                     (ghost_rows.data()) :
-                                     nullptr,
+                                   (!ghost_rows.empty()) ? (ghost_rows.data()) :
+                                                           nullptr,
                                    0,
                                    input_row_map.Comm());
 
@@ -710,20 +709,21 @@ namespace TrilinosWrappers
           graph = std_cxx14::make_unique<Epetra_CrsGraph>(
             Copy,
             input_row_map,
-            (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) :
-                                             nullptr,
+            (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) : nullptr,
             !exchange_data);
           if (have_ghost_rows)
             nonlocal_graph = std_cxx14::make_unique<Epetra_CrsGraphMod>(
               off_processor_map, n_entries_per_ghost_row.data());
         }
       else
-        graph = std_cxx14::make_unique<Epetra_CrsGraph>(
-          Copy,
-          input_row_map,
-          input_col_map,
-          (!n_entries_per_row.empty()) ? (n_entries_per_row.data()) : nullptr,
-          true);
+        graph =
+          std_cxx14::make_unique<Epetra_CrsGraph>(Copy,
+                                                  input_row_map,
+                                                  input_col_map,
+                                                  (!n_entries_per_row.empty()) ?
+                                                    (n_entries_per_row.data()) :
+                                                    nullptr,
+                                                  true);
 
       // now insert the indices, select between the right matrix
       std::vector<TrilinosWrappers::types::int_type> row_indices;
