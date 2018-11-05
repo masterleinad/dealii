@@ -729,7 +729,7 @@ namespace TrilinosWrappers
     // solver, if possible.
     Amesos Factory;
 
-    AssertThrow(Factory.Query(additional_data.solver_type.c_str()),
+    AssertThrow(Factory.Query(additional_data.solver_type),
                 ExcMessage(
                   std::string("You tried to select the solver type <") +
                   additional_data.solver_type +
@@ -738,7 +738,7 @@ namespace TrilinosWrappers
                   "configured for its use."));
 
     solver.reset(
-      Factory.Create(additional_data.solver_type.c_str(), *linear_problem));
+      Factory.Create(additional_data.solver_type, *linear_problem));
 
     verbose_cout << "Starting symbolic factorization" << std::endl;
     ierr = solver->SymbolicFactorization();
@@ -829,7 +829,7 @@ namespace TrilinosWrappers
     // solver, if possible.
     Amesos Factory;
 
-    AssertThrow(Factory.Query(additional_data.solver_type.c_str()),
+    AssertThrow(Factory.Query(additional_data.solver_type),
                 ExcMessage(
                   std::string("You tried to select the solver type <") +
                   additional_data.solver_type +
@@ -838,7 +838,7 @@ namespace TrilinosWrappers
                   "configured for its use."));
 
     solver.reset(
-      Factory.Create(additional_data.solver_type.c_str(), *linear_problem));
+      Factory.Create(additional_data.solver_type, *linear_problem));
 
     verbose_cout << "Starting symbolic factorization" << std::endl;
     ierr = solver->SymbolicFactorization();

@@ -5162,7 +5162,7 @@ namespace DataOutBase
       // Unfortunately, TECINI takes a char *, but c_str() gives a const char *.
       // As we don't do anything else with tec_var_names following const_cast is
       // ok
-      char *var_names = const_cast<char *>(tec_var_names.c_str());
+      char *var_names = const_cast<char *>(tec_var_names);
       ierr = TECINI(NULL, var_names, file_name, dot, &tec_debug, &is_double);
 
       Assert(ierr == 0, ExcErrorOpeningTecplotFile(file_name));
@@ -7771,7 +7771,7 @@ DataOutInterface<dim, spacedim>::write_xdmf_file(
   // Only rank 0 process writes the XDMF file
   if (myrank == 0)
     {
-      std::ofstream                          xdmf_file(filename.c_str());
+      std::ofstream                          xdmf_file(filename);
       std::vector<XDMFEntry>::const_iterator it;
 
       xdmf_file << "<?xml version=\"1.0\" ?>\n";

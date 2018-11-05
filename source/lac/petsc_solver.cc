@@ -789,7 +789,7 @@ namespace PETScWrappers
         /**
          * set the command line option prefix name
          */
-        ierr = KSPSetOptionsPrefix(solver_data->ksp, prefix_name.c_str());
+        ierr = KSPSetOptionsPrefix(solver_data->ksp, prefix_name);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         /**

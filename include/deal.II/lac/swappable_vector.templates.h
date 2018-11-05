@@ -114,7 +114,7 @@ SwappableVector<number>::swap_out(const std::string &name)
   //  @p reload function
   Assert(data_is_preloaded == false, ExcInternalError());
 
-  std::ofstream tmp_out(filename.c_str());
+  std::ofstream tmp_out(filename);
   this->block_write(tmp_out);
   tmp_out.close();
 
@@ -200,7 +200,7 @@ SwappableVector<number>::reload_vector(const bool set_flag)
   Assert(filename != "", ExcInvalidFilename(filename));
   Assert(this->size() == 0, ExcSizeNonzero());
 
-  std::ifstream tmp_in(filename.c_str());
+  std::ifstream tmp_in(filename);
   this->block_read(tmp_in);
   tmp_in.close();
 

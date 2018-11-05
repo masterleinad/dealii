@@ -454,7 +454,7 @@ ParameterHandler::parse_input(const std::string &filename,
   PathSearch search("PARAMETERS");
 
   std::string   openname = search.find(filename);
-  std::ifstream file_stream(openname.c_str());
+  std::ifstream file_stream(openname);
   parse_input(file_stream, filename, last_line, skip_undefined);
 }
 
@@ -2248,7 +2248,7 @@ ParameterHandler::scan_line(std::string        line,
                                      "'INCLUDE' statement, but it does not "
                                      "name a file for inclusion."));
 
-      std::ifstream input(line.c_str());
+      std::ifstream input(line);
       AssertThrow(input,
                   ExcCannotOpenIncludeStatementFile(current_line_n,
                                                     input_filename,

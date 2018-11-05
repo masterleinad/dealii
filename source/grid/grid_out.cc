@@ -3093,7 +3093,7 @@ GridOut::write_mesh_per_processor_as_vtu(
 
           const std::string pvtu_master_filename =
             (filename_without_extension + ".pvtu");
-          std::ofstream pvtu_master(pvtu_master_filename.c_str());
+          std::ofstream pvtu_master(pvtu_master_filename);
 
           DataOut<dim, DoFHandler<dim, spacedim>> data_out;
           data_out.attach_triangulation(*tr);
@@ -3112,7 +3112,7 @@ GridOut::write_mesh_per_processor_as_vtu(
         }
     }
 
-  std::ofstream out(new_file.c_str());
+  std::ofstream out(new_file);
   std::vector<
     std::tuple<unsigned int,
                unsigned int,

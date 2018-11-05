@@ -108,7 +108,7 @@ ParameterAcceptor::initialize(
 
   if (output_filename != "")
     {
-      std::ofstream outfile(output_filename.c_str());
+      std::ofstream outfile(output_filename);
       Assert(outfile, ExcIO());
       std::string extension =
         output_filename.substr(output_filename.find_last_of('.') + 1);

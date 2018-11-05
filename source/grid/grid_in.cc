@@ -1801,7 +1801,7 @@ GridIn<2>::read_netcdf(const std::string &filename)
   // accordingly.
 
   // First, open the file
-  NcFile nc(filename.c_str());
+  NcFile nc(filename);
   AssertThrow(nc.is_valid(), ExcIO());
 
   // then read n_cells
@@ -2020,7 +2020,7 @@ GridIn<3>::read_netcdf(const std::string &filename)
   // grid format.
 
   // First, open the file
-  NcFile nc(filename.c_str());
+  NcFile nc(filename);
   AssertThrow(nc.is_valid(), ExcIO());
 
   // then read n_cells
@@ -2686,7 +2686,7 @@ GridIn<dim, spacedim>::read_assimp(const std::string &filename,
 
   // And have it read the given file with some  postprocessing
   const aiScene *scene =
-    importer.ReadFile(filename.c_str(),
+    importer.ReadFile(filename,
                       aiProcess_RemoveComponent |
                         aiProcess_JoinIdenticalVertices |
                         aiProcess_ImproveCacheLocality | aiProcess_SortByPType |
@@ -3044,7 +3044,7 @@ GridIn<dim, spacedim>::read(const std::string &filename, Format format)
   else
     name = search.find(filename, default_suffix(format));
 
-  std::ifstream in(name.c_str());
+  std::ifstream in(name);
 
   if (format == Default)
     {
