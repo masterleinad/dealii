@@ -190,5 +190,7 @@ main(int argc, char **argv)
 
   MPILogInitAll log;
 
+  init_cuda(true);
+
   test();
 }
