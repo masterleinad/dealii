@@ -109,6 +109,9 @@ main(int argc, char **argv)
     argc, argv, testing_max_num_threads());
 
   MPILogInitAll mpilog;
+
+  init_cuda(true);
+
   deallog << std::setprecision(12);
 
   test();
