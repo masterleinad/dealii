@@ -22,13 +22,18 @@ DEAL_II_NAMESPACE_OPEN
 
 namespace Algorithms
 {
-  std::vector<std::string> Event::names;
+  std::vector<std::string> &
+  Event::get_names()
+  {
+    static std::vector<std::string> names;
+    return names;
+  }
 
   Event
   Event::assign(const std::string &name)
   {
-    unsigned int index = names.size();
-    names.emplace_back(name);
+    unsigned int index = get_names().size();
+    get_names().emplace_back(name);
 
     Event result;
     // The constructor generated an
@@ -42,7 +47,7 @@ namespace Algorithms
 
   Event::Event()
     : all_true(false)
-    , flags(names.size(), false)
+    , flags(get_names().size(), false)
   {}
 
 
