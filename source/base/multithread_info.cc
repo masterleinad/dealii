@@ -36,87 +36,94 @@
 DEAL_II_NAMESPACE_OPEN
 
 #ifdef DEAL_II_WITH_THREADS
-
-/* Detecting how many processors a given machine has is something that
-   varies greatly between operating systems. For a few operating
-   systems, we have figured out how to do that below, but some others
-   are still missing. If you find a way to do this on your favorite
-   system, please let us know.
- */
+namespace
+{
+  /* Detecting how many processors a given machine has is something that
+     varies greatly between operating systems. For a few operating
+     systems, we have figured out how to do that below, but some others
+     are still missing. If you find a way to do this on your favorite
+     system, please let us know.
+   */
 
 
 #  if defined(__linux__) || defined(__sun__) || defined(__osf__) || \
     defined(_AIX)
 
-unsigned int
-MultithreadInfo::get_n_cpus()
-{
-  return sysconf(_SC_NPROCESSORS_ONLN);
-}
+  unsigned int
+  get_n_cpus()
+  {
+    return sysconf(_SC_NPROCESSORS_ONLN);
+  }
 
 #  elif (defined(__MACH__) && defined(__APPLE__)) || defined(__FreeBSD__)
-// This is only tested on a dual G5 2.5GHz running MacOSX 10.3.6
-// and on an Intel Mac Book Pro.
-// If it doesn't work please contact the mailinglist.
-unsigned int
-MultithreadInfo::get_n_cpus()
-{
-  int    mib[2];
-  int    n_cpus;
-  size_t len;
+  // This is only tested on a dual G5 2.5GHz running MacOSX 10.3.6
+  // and on an Intel Mac Book Pro.
+  // If it doesn't work please contact the mailinglist.
+  unsigned int
+  get_n_cpus()
+  {
+    int    mib[2];
+    int    n_cpus;
+    size_t len;
 
-  mib[0] = CTL_HW;
-  mib[1] = HW_NCPU;
-  len    = sizeof(n_cpus);
-  sysctl(mib, 2, &n_cpus, &len, NULL, 0);
+    mib[0] = CTL_HW;
+    mib[1] = HW_NCPU;
+    len    = sizeof(n_cpus);
+    sysctl(mib, 2, &n_cpus, &len, NULL, 0);
 
-  return n_cpus;
-}
+    return n_cpus;
+  }
 
 #  else
 
-// If you get n_cpus=1 although you are on a multi-processor machine,
-// then this may have two reasons: either because the system macros,
-// e.g.__linux__, __sgi__, etc. weren't defined by the compiler or the
-// detection of processors is really not implemented for your specific
-// system. In the first case you can add e.g. -D__sgi__ to your
-// compiling flags, in the latter case you need to implement the
-// get_n_cpus() function for your system.
-//
-// In both cases, this #else case is compiled, a fact that you can
-// easily verify by uncommenting the following #error directive,
-// recompiling and getting a compilation error right at that line.
-// After definition of the system macro or the implementation of the
-// new detection this #error message during compilation shouldn't
-// occur any more.
-//
-// Please send all new implementations of detection of processors to
-// the deal.II mailing list, such that it can be included into the
-// next deal.II release.
+  // If you get n_cpus=1 although you are on a multi-processor machine,
+  // then this may have two reasons: either because the system macros,
+  // e.g.__linux__, __sgi__, etc. weren't defined by the compiler or the
+  // detection of processors is really not implemented for your specific
+  // system. In the first case you can add e.g. -D__sgi__ to your
+  // compiling flags, in the latter case you need to implement the
+  // get_n_cpus() function for your system.
+  //
+  // In both cases, this #else case is compiled, a fact that you can
+  // easily verify by uncommenting the following #error directive,
+  // recompiling and getting a compilation error right at that line.
+  // After definition of the system macro or the implementation of the
+  // new detection this #error message during compilation shouldn't
+  // occur any more.
+  //
+  // Please send all new implementations of detection of processors to
+  // the deal.II mailing list, such that it can be included into the
+  // next deal.II release.
 
-//#error Detection of Processors not supported on this OS. Setting n_cpus=1 by
-// default.
+  //#error Detection of Processors not supported on this OS. Setting
+  // n_cpus=1 by default.
 
-unsigned int
-MultithreadInfo::get_n_cpus()
-{
-  return 1;
-}
+  unsigned int
+  get_n_cpus()
+  {
+    return 1;
+  }
 
 #  endif
+} // namespace
+
+
 
 unsigned int
 MultithreadInfo::n_cores()
 {
-  return MultithreadInfo::n_cpus;
+  static const unsigned int n_cpus = get_n_cpus();
+  return n_cpus;
 }
+
 
 
 void
 MultithreadInfo::set_thread_limit(const unsigned int max_threads)
 {
   // set the maximal number of threads to the given value as specified
-  n_max_threads = max_threads;
+  unsigned int &n_max_threads = get_n_max_threads();
+  n_max_threads               = max_threads;
 
   // then also see if something was given in the environment
   {
@@ -168,18 +175,13 @@ MultithreadInfo::set_thread_limit(const unsigned int max_threads)
 unsigned int
 MultithreadInfo::n_threads()
 {
-  Assert(n_max_threads != numbers::invalid_unsigned_int, ExcInternalError());
-  return n_max_threads;
+  Assert(get_n_max_threads() != numbers::invalid_unsigned_int,
+         ExcInternalError());
+  return get_n_max_threads();
 }
 
 
 #else // not in MT mode
-
-unsigned int
-MultithreadInfo::get_n_cpus()
-{
-  return 1;
-}
 
 unsigned int
 MultithreadInfo::n_cores()
@@ -229,14 +231,21 @@ MultithreadInfo::initialize_multithreading()
 
 
 
-const unsigned int MultithreadInfo::n_cpus  = MultithreadInfo::get_n_cpus();
-unsigned int MultithreadInfo::n_max_threads = numbers::invalid_unsigned_int;
+unsigned int &
+MultithreadInfo::get_n_max_threads()
+{
+  static unsigned int n_max_threads = numbers::invalid_unsigned_int;
+  return n_max_threads;
+}
+
+
 
 namespace
 {
-  // Force the first call to set_thread_limit happen before any tasks in TBB are
-  // used. This is necessary as tbb::task_scheduler_init has no effect if TBB
-  // got automatically initialized (which happens the first time we use it).
+  // Force the first call to set_thread_limit happen before any tasks in TBB
+  // are used. This is necessary as tbb::task_scheduler_init has no effect if
+  // TBB got automatically initialized (which happens the first time we use
+  // it).
   struct DoOnce
   {
     DoOnce()
