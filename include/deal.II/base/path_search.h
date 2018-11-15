@@ -227,12 +227,14 @@ private:
   /**
    * All path lists for all classes, such that we can build them only once.
    */
-  static std::map<std::string, std::vector<std::string>> path_lists;
+  static std::map<std::string, std::vector<std::string>> &
+  get_path_lists();
 
   /**
    * List of suffixes for each class.
    */
-  static std::map<std::string, std::vector<std::string>> suffix_lists;
+  static std::map<std::string, std::vector<std::string>> &
+  get_suffix_lists();
 
   /**
    * Path list for the class this object belongs to.
@@ -252,7 +254,7 @@ private:
   /**
    * The empty string.
    */
-  static std::string empty;
+  static const char *empty;
 };
 
 

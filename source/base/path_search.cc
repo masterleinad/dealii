@@ -25,26 +25,43 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-std::map<std::string, std::vector<std::string>> PathSearch::path_lists;
-std::map<std::string, std::vector<std::string>> PathSearch::suffix_lists;
-std::string                                     PathSearch::empty("");
+
+const char *PathSearch::empty = "";
+
+std::map<std::string, std::vector<std::string>> &
+PathSearch::get_path_lists()
+{
+  static std::map<std::string, std::vector<std::string>> path_lists;
+  return path_lists;
+};
+
+
+
+std::map<std::string, std::vector<std::string>> &
+PathSearch::get_suffix_lists()
+{
+  static std::map<std::string, std::vector<std::string>> suffix_lists;
+  return suffix_lists;
+};
+
+
 
 void
 PathSearch::initialize_classes()
 {
   std::vector<std::string> v;
   v.emplace_back();
-  path_lists.insert(map_type(std::string("PARAMETER"), v));
+  get_path_lists().insert(map_type(std::string("PARAMETER"), v));
 
   /*
    * TODO: reenable some sensible default paths. Maier, 2012
    */
-  path_lists.insert(map_type(std::string("MESH"), v));
+  get_path_lists().insert(map_type(std::string("MESH"), v));
 
   v.clear();
   v.emplace_back();
   v.emplace_back(".prm");
-  suffix_lists.insert(map_type(std::string("PARAMETER"), v));
+  get_suffix_lists().insert(map_type(std::string("PARAMETER"), v));
 
   /*
    * TODO: "Would require linking with the deal.II libraries"? This .cc
@@ -63,23 +80,23 @@ PathSearch::initialize_classes()
   v.emplace_back(".plt");
   v.emplace_back(".nc");
   v.emplace_back(".msh");
-  suffix_lists.insert(map_type(std::string("MESH"), v));
+  get_suffix_lists().insert(map_type(std::string("MESH"), v));
 }
 
 std::vector<std::string> &
 PathSearch::get_path_list(const std::string &cls)
 {
-  if (path_lists.empty())
+  if (get_path_lists().empty())
     initialize_classes();
 
   // Modified by Luca Heltai. If a class is not there, add it
-  if (path_lists.count(cls) == 0)
+  if (get_path_lists().count(cls) == 0)
     add_class(cls);
 
-  // Assert(path_lists.count(cls) != 0, ExcNoClass(cls));
-  Assert(path_lists.count(cls) != 0, ExcInternalError());
+  // Assert(get_path_lists().count(cls) != 0, ExcNoClass(cls));
+  Assert(get_path_lists().count(cls) != 0, ExcInternalError());
 
-  return path_lists.find(cls)->second;
+  return get_path_lists().find(cls)->second;
 }
 
 
@@ -90,13 +107,13 @@ PathSearch::get_suffix_list(const std::string &cls)
   // add_path function with the path_list bit...
 
   // Modified by Luca Heltai. If a class is not there, add it
-  if (suffix_lists.count(cls) == 0)
+  if (get_suffix_lists().count(cls) == 0)
     add_class(cls);
 
-  // Assert(suffix_lists.count(cls) != 0, ExcNoClass(cls));
-  Assert(suffix_lists.count(cls) != 0, ExcInternalError());
+  // Assert(get_suffix_lists().count(cls) != 0, ExcNoClass(cls));
+  Assert(get_suffix_lists().count(cls) != 0, ExcInternalError());
 
-  return suffix_lists.find(cls)->second;
+  return get_suffix_lists().find(cls)->second;
 }
 
 
@@ -199,14 +216,14 @@ PathSearch::add_class(const std::string &cls)
 {
   // Make sure standard classes are
   // initialized first
-  if (path_lists.empty())
+  if (get_path_lists().empty())
     initialize_classes();
   // Add empty path and empty suffix
   // for new class
   std::vector<std::string> v;
   v.emplace_back();
-  path_lists.insert(map_type(cls, v));
-  suffix_lists.insert(map_type(cls, v));
+  get_path_lists().insert(map_type(cls, v));
+  get_suffix_lists().insert(map_type(cls, v));
 }
 
 
