@@ -139,12 +139,18 @@ INSTANTIATE_DLTG_MATRIX(TrilinosWrappers::BlockSparseMatrix);
 
 namespace internals
 {
-#define SCRATCH_INITIALIZER(number, Name)                                     \
-  AffineConstraintsData<number>::ScratchData scratch_data_initializer_##Name; \
-  template <>                                                                 \
-  Threads::ThreadLocalStorage<AffineConstraintsData<number>::ScratchData>     \
-    AffineConstraintsData<number>::scratch_data(                              \
-      scratch_data_initializer_##Name)
+#define SCRATCH_INITIALIZER(number, Name)                                 \
+  template <>                                                             \
+  Threads::ThreadLocalStorage<AffineConstraintsData<number>::ScratchData> \
+    &AffineConstraintsData<number>::get_scratch_data()                    \
+  {                                                                       \
+    static AffineConstraintsData<number>::ScratchData                     \
+      scratch_data_initializer_##Name;                                    \
+    static Threads::ThreadLocalStorage<                                   \
+      AffineConstraintsData<number>::ScratchData>                         \
+      scratch_data(scratch_data_initializer_##Name);                      \
+    return scratch_data;                                                  \
+  }
 
   SCRATCH_INITIALIZER(double, d);
   SCRATCH_INITIALIZER(float, f);
