@@ -25,35 +25,24 @@ DEAL_II_NAMESPACE_OPEN
 
 
 // Static empty class list
-std::vector<SmartPointer<ParameterAcceptor>> &
-ParameterAcceptor::get_class_list()
-{
-  static std::vector<SmartPointer<ParameterAcceptor>> class_list;
-  return class_list;
-}
-
-
-
+std::vector<SmartPointer<ParameterAcceptor>> ParameterAcceptor::class_list;
 // Static parameter handler
 ParameterHandler ParameterAcceptor::prm;
 
 ParameterAcceptor::ParameterAcceptor(const std::string &name)
-  : acceptor_id(get_class_list().size())
+  : acceptor_id(class_list.size())
   , section_name(name)
 {
   SmartPointer<ParameterAcceptor> pt(
     this, boost::core::demangle(typeid(*this).name()).c_str());
-  get_class_list().push_back(pt);
+  class_list.push_back(pt);
 }
-
 
 
 ParameterAcceptor::~ParameterAcceptor()
 {
-  get_class_list()[acceptor_id] = nullptr;
+  class_list[acceptor_id] = nullptr;
 }
-
-
 
 std::string
 ParameterAcceptor::get_section_name() const
@@ -61,7 +50,6 @@ ParameterAcceptor::get_section_name() const
   return (section_name != "" ? section_name :
                                boost::core::demangle(typeid(*this).name()));
 }
-
 
 
 void
@@ -164,7 +152,7 @@ ParameterAcceptor::initialize(std::istream &input_stream, ParameterHandler &prm)
 void
 ParameterAcceptor::clear()
 {
-  get_class_list().clear();
+  class_list.clear();
   prm.clear();
 }
 
@@ -185,26 +173,26 @@ ParameterAcceptor::parse_parameters(ParameterHandler &)
 void
 ParameterAcceptor::parse_all_parameters(ParameterHandler &prm)
 {
-  for (unsigned int i = 0; i < get_class_list().size(); ++i)
-    if (get_class_list()[i] != nullptr)
+  for (unsigned int i = 0; i < class_list.size(); ++i)
+    if (class_list[i] != nullptr)
       {
-        get_class_list()[i]->enter_my_subsection(prm);
-        get_class_list()[i]->parse_parameters(prm);
-        get_class_list()[i]->parse_parameters_call_back();
-        get_class_list()[i]->leave_my_subsection(prm);
+        class_list[i]->enter_my_subsection(prm);
+        class_list[i]->parse_parameters(prm);
+        class_list[i]->parse_parameters_call_back();
+        class_list[i]->leave_my_subsection(prm);
       }
 }
 
 void
 ParameterAcceptor::declare_all_parameters(ParameterHandler &prm)
 {
-  for (unsigned int i = 0; i < get_class_list().size(); ++i)
-    if (get_class_list()[i] != nullptr)
+  for (unsigned int i = 0; i < class_list.size(); ++i)
+    if (class_list[i] != nullptr)
       {
-        get_class_list()[i]->enter_my_subsection(prm);
-        get_class_list()[i]->declare_parameters(prm);
-        get_class_list()[i]->declare_parameters_call_back();
-        get_class_list()[i]->leave_my_subsection(prm);
+        class_list[i]->enter_my_subsection(prm);
+        class_list[i]->declare_parameters(prm);
+        class_list[i]->declare_parameters_call_back();
+        class_list[i]->leave_my_subsection(prm);
       }
 }
 
@@ -212,7 +200,7 @@ ParameterAcceptor::declare_all_parameters(ParameterHandler &prm)
 std::vector<std::string>
 ParameterAcceptor::get_section_path() const
 {
-  Assert(acceptor_id < get_class_list().size(), ExcInternalError());
+  Assert(acceptor_id < class_list.size(), ExcInternalError());
   const auto my_section_name = get_section_name();
   const bool is_absolute     = (my_section_name.front() == sep);
 
@@ -231,11 +219,10 @@ ParameterAcceptor::get_section_path() const
       // trailing /, then the full path is used, else only the path except the
       // last one
       for (int i = acceptor_id - 1; i >= 0; --i)
-        if (get_class_list()[i] != nullptr)
+        if (class_list[i] != nullptr)
           {
-            bool has_trailing =
-              get_class_list()[i]->get_section_name().back() == sep;
-            auto previous_path = get_class_list()[i]->get_section_path();
+            bool has_trailing = class_list[i]->get_section_name().back() == sep;
+            auto previous_path = class_list[i]->get_section_path();
 
             // See if we need to remove last piece of the path
             if ((previous_path.size() > 0) && has_trailing == false)

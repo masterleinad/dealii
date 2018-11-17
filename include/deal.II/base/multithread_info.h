@@ -117,10 +117,23 @@ public:
 
 private:
   /**
-   * Private function returning the maximum number of threads.
+   * Private function to determine the number of CPUs. Implementation for
+   * Linux, OSF, SGI, and Sun machines; if no detection of the number of CPUs
+   * is supported, or if detection fails, this function returns one.
    */
-  static unsigned int &
-  get_n_max_threads();
+  static unsigned int
+  get_n_cpus();
+
+  /**
+   * Variable representing the maximum number of threads.
+   */
+  static unsigned int n_max_threads;
+
+  /**
+   * Variable representing the number of cores in the system. This is computed
+   * by get_n_cpus() and is returned by n_cores().
+   */
+  static const unsigned int n_cpus;
 };
 
 

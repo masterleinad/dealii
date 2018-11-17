@@ -2838,7 +2838,7 @@ namespace internals
        * mark it as used
        */
       ScratchDataAccessor()
-        : my_scratch_data(&AffineConstraintsData::get_scratch_data().get())
+        : my_scratch_data(&AffineConstraintsData::scratch_data.get())
       {
         Assert(my_scratch_data->in_use == false,
                ExcMessage(
@@ -2879,8 +2879,7 @@ namespace internals
     /**
      * The actual data object that contains a scratch data for each thread.
      */
-    static Threads::ThreadLocalStorage<ScratchData> &
-    get_scratch_data();
+    static Threads::ThreadLocalStorage<ScratchData> scratch_data;
   };
 
 

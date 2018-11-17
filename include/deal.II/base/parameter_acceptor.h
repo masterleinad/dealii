@@ -525,8 +525,7 @@ private:
    * A list containing all constructed classes of type
    * ParameterAcceptor.
    */
-  static std::vector<SmartPointer<ParameterAcceptor>> &
-  get_class_list();
+  static std::vector<SmartPointer<ParameterAcceptor>> class_list;
 
   /** The index of this specific class within the class list. */
   const unsigned int acceptor_id;

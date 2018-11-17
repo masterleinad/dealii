@@ -134,8 +134,7 @@ namespace Algorithms
      * The names of registered events
      */
     // TODO: This static field must be guarded by a mutex to be thread-safe!
-    static std::vector<std::string> &
-    get_names();
+    static std::vector<std::string> names;
   };
 
   /**
@@ -282,7 +281,7 @@ namespace Algorithms
 
     for (unsigned int i = 0; i < flags.size(); ++i)
       if (flags[i])
-        os << ' ' << get_names()[i];
+        os << ' ' << names[i];
   }
 
 
@@ -290,8 +289,8 @@ namespace Algorithms
   inline void
   Event::print_assigned(OS &os)
   {
-    for (unsigned int i = 0; i < get_names().size(); ++i)
-      os << i << '\t' << get_names()[i] << std::endl;
+    for (unsigned int i = 0; i < names.size(); ++i)
+      os << i << '\t' << names[i] << std::endl;
   }
 
 
