@@ -143,7 +143,7 @@ namespace TrilinosWrappers
         }
 
       int ierr = matrix->trilinos_matrix().ExtractGlobalRowCopy(
-        (TrilinosWrappers::types::int_type)this->a_row,
+        static_cast<TrilinosWrappers::types::int_type>(this->a_row),
         colnums,
         ncols,
         &((*value_cache)[0]),
@@ -205,8 +205,9 @@ namespace TrilinosWrappers
     : column_space_map(new Epetra_Map(input_map))
     , matrix(new Epetra_FECrsMatrix(Copy,
                                     *column_space_map,
-                                    (int *)const_cast<unsigned int *>(
-                                      &(n_entries_per_row[0])),
+                                    reinterpret_cast<int *>(
+                                      const_cast<unsigned int *>(
+                                        &(n_entries_per_row[0]))),
                                     false))
     , last_action(Zero)
     , compressed(false)
@@ -235,8 +236,9 @@ namespace TrilinosWrappers
     : column_space_map(new Epetra_Map(input_col_map))
     , matrix(new Epetra_FECrsMatrix(Copy,
                                     input_row_map,
-                                    (int *)const_cast<unsigned int *>(
-                                      &(n_entries_per_row[0])),
+                                    reinterpret_cast<int *>(
+                                      const_cast<unsigned int *>(
+                                        &(n_entries_per_row[0]))),
                                     false))
     , last_action(Zero)
     , compressed(false)
@@ -288,7 +290,8 @@ namespace TrilinosWrappers
                    0,
                    Utilities::Trilinos::comm_self()),
         *column_space_map,
-        (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+        reinterpret_cast<int *>(
+          const_cast<unsigned int *>(&(n_entries_per_row[0]))),
         false))
     , last_action(Zero)
     , compressed(false)
@@ -318,8 +321,9 @@ namespace TrilinosWrappers
         parallel_partitioning.make_trilinos_map(communicator, false)))
     , matrix(new Epetra_FECrsMatrix(Copy,
                                     *column_space_map,
-                                    (int *)const_cast<unsigned int *>(
-                                      &(n_entries_per_row[0])),
+                                    reinterpret_cast<int *>(
+                                      const_cast<unsigned int *>(
+                                        &(n_entries_per_row[0]))),
                                     false))
     , last_action(Zero)
     , compressed(false)
@@ -353,7 +357,8 @@ namespace TrilinosWrappers
     , matrix(new Epetra_FECrsMatrix(
         Copy,
         row_parallel_partitioning.make_trilinos_map(communicator, false),
-        (int *)const_cast<unsigned int *>(&(n_entries_per_row[0])),
+        reinterpret_cast<int *>(
+          const_cast<unsigned int *>(&(n_entries_per_row[0]))),
         false))
     , last_action(Zero)
     , compressed(false)
@@ -1251,7 +1256,7 @@ namespace TrilinosWrappers
 
         int *diag_find =
           std::find(col_indices, col_indices + num_entries, local_row);
-        int diag_index = (int)(diag_find - col_indices);
+        int diag_index = static_cast<int>(diag_find - col_indices);
 
         for (TrilinosWrappers::types::int_type j = 0; j < num_entries; ++j)
           if (diag_index != j || new_diag_value == 0)
@@ -1333,7 +1338,7 @@ namespace TrilinosWrappers
         int *el_find =
           std::find(col_indices, col_indices + nnz_present, trilinos_j);
 
-        int local_col_index = (int)(el_find - col_indices);
+        int local_col_index = static_cast<int>(el_find - col_indices);
 
         // This is actually the only
         // difference to the el(i,j)
@@ -1409,7 +1414,7 @@ namespace TrilinosWrappers
         int *el_find =
           std::find(col_indices, col_indices + nnz_present, trilinos_j);
 
-        int local_col_index = (int)(el_find - col_indices);
+        int local_col_index = static_cast<int>(el_find - col_indices);
 
 
         // This is actually the only

@@ -1881,7 +1881,7 @@ LAPACKFullMatrix<number>::compute_eigenvalues(const bool right, const bool left)
   lwork = static_cast<types::blas_int>(std::abs(work[0]) + 1);
 
   // resize workspace array
-  work.resize((size_type)lwork);
+  work.resize(static_cast<size_type>(lwork));
 
   // Finally compute the eigenvalues.
   internal::LAPACKFullMatrixImplementation::geev_helper(jobvl,

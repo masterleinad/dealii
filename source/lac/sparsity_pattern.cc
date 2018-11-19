@@ -53,7 +53,7 @@ SparsityPattern::SparsityPattern()
 
 
 SparsityPattern::SparsityPattern(const SparsityPattern &s)
-  : Subscriptor()
+  : Subscriptor(s)
   , max_dim(0)
   , max_vec_len(0)
   , rowstart(nullptr)

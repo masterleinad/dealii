@@ -677,7 +677,7 @@ namespace SUNDIALS
                       const double      gamma,
                       const VectorType &ypred,
                       const VectorType &fpred,
-                      bool &            j_is_current)>
+                      booleantype       j_is_current)>
       setup_jacobian;
 
     /**
