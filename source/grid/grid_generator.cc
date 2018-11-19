@@ -1196,22 +1196,23 @@ namespace GridGenerator
       {
         case 1:
           for (unsigned int x = 0; x <= repetitions[0]; ++x)
-            points.push_back(p1 + (double)x * delta[0]);
+            points.push_back(p1 + static_cast<double>(x) * delta[0]);
           break;
 
         case 2:
           for (unsigned int y = 0; y <= repetitions[1]; ++y)
             for (unsigned int x = 0; x <= repetitions[0]; ++x)
-              points.push_back(p1 + (double)x * delta[0] +
-                               (double)y * delta[1]);
+              points.push_back(p1 + static_cast<double>(x) * delta[0] +
+                               static_cast<double>(y) * delta[1]);
           break;
 
         case 3:
           for (unsigned int z = 0; z <= repetitions[2]; ++z)
             for (unsigned int y = 0; y <= repetitions[1]; ++y)
               for (unsigned int x = 0; x <= repetitions[0]; ++x)
-                points.push_back(p1 + (double)x * delta[0] +
-                                 (double)y * delta[1] + (double)z * delta[2]);
+                points.push_back(p1 + static_cast<double>(x) * delta[0] +
+                                 static_cast<double>(y) * delta[1] +
+                                 static_cast<double>(z) * delta[2]);
           break;
 
         default:
@@ -1826,22 +1827,23 @@ namespace GridGenerator
       {
         case 1:
           for (unsigned int x = 0; x <= repetitions[0]; ++x)
-            points.push_back(p1 + (double)x * delta[0]);
+            points.push_back(p1 + static_cast<double>(x) * delta[0]);
           break;
 
         case 2:
           for (unsigned int y = 0; y <= repetitions[1]; ++y)
             for (unsigned int x = 0; x <= repetitions[0]; ++x)
-              points.push_back(p1 + (double)x * delta[0] +
-                               (double)y * delta[1]);
+              points.push_back(p1 + static_cast<double>(x) * delta[0] +
+                               static_cast<double>(y) * delta[1]);
           break;
 
         case 3:
           for (unsigned int z = 0; z <= repetitions[2]; ++z)
             for (unsigned int y = 0; y <= repetitions[1]; ++y)
               for (unsigned int x = 0; x <= repetitions[0]; ++x)
-                points.push_back(p1 + (double)x * delta[0] +
-                                 (double)y * delta[1] + (double)z * delta[2]);
+                points.push_back(p1 + static_cast<double>(x) * delta[0] +
+                                 static_cast<double>(y) * delta[1] +
+                                 static_cast<double>(z) * delta[2]);
           break;
 
         default:
@@ -5156,7 +5158,8 @@ namespace GridGenerator
                       treated_vertices[vv] = true;
                       for (unsigned int i = 0; i <= Nz; ++i)
                         {
-                          double d = ((double)i) * L / ((double)Nz);
+                          double d = (static_cast<double>(i)) * L /
+                                     (static_cast<double>(Nz));
                           switch (vv - i * 16)
                             {
                               case 1:

@@ -137,7 +137,7 @@ namespace SUNDIALS
                                       arkode_mem->ark_gamma,
                                       *src_ypred,
                                       *src_fpred,
-                                      (bool &)*jcurPtr);
+                                      *jcurPtr);
 
       return err;
     }

@@ -266,8 +266,9 @@ namespace PETScWrappers
       ghostnodes.fill_index_vector(ghostindices);
 
       const PetscInt *ptr =
-        (ghostindices.size() > 0 ? (const PetscInt *)(&(ghostindices[0])) :
-                                   nullptr);
+        (ghostindices.size() > 0 ?
+           reinterpret_cast<const PetscInt *>(&(ghostindices[0])) :
+           nullptr);
 
       PetscErrorCode ierr = VecCreateGhost(communicator,
                                            local_size,

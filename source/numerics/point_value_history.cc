@@ -1482,8 +1482,8 @@ PointValueHistory<dim>::deep_check(const bool strict)
     }
   if (n_indep != 0)
     {
-      if (std::abs((int)dataset_key.size() -
-                   (int)independent_values[0].size()) >= 2)
+      if (std::abs(static_cast<int>(dataset_key.size()) -
+                   static_cast<int>(independent_values[0].size())) >= 2)
         {
           return false;
         }
@@ -1497,8 +1497,8 @@ PointValueHistory<dim>::deep_check(const bool strict)
         {
           Assert(data_store_begin->second.size() > 0, ExcInternalError());
 
-          if (std::abs((int)(data_store_begin->second)[0].size() -
-                       (int)dataset_key.size()) >= 2)
+          if (std::abs(static_cast<int>((data_store_begin->second)[0].size()) -
+                       static_cast<int>(dataset_key.size())) >= 2)
             return false;
           // this loop only tests one member
           // for each name, i.e. checks the

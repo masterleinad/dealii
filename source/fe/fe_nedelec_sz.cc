@@ -753,10 +753,10 @@ FE_NedelecSZ<dim, spacedim>::get_data(
             {
               data->edge_lambda_gradgrads_3d[m][edge_lambda_directions[m][0]]
                                             [edge_lambda_directions[m][1]] =
-                (double)edge_lambda_sign[m] * 1.0;
+                static_cast<double>(edge_lambda_sign[m]) * 1.0;
               data->edge_lambda_gradgrads_3d[m][edge_lambda_directions[m][1]]
                                             [edge_lambda_directions[m][0]] =
-                (double)edge_lambda_sign[m] * 1.0;
+                static_cast<double>(edge_lambda_sign[m]) * 1.0;
             }
           // Precomputation for higher order shape functions,
           // and the face parameterisation.

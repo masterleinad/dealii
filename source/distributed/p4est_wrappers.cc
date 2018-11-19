@@ -123,8 +123,9 @@ namespace internal
             return;
           }
 
-        nsubs         = (int)subids->elem_count;
-        subdomain_ids = (dealii::types::subdomain_id *)(subids->array);
+        nsubs = static_cast<int>(subids->elem_count);
+        subdomain_ids =
+          reinterpret_cast<dealii::types::subdomain_id *>(subids->array);
 
         for (i = 0; i < nsides; i++)
           {
@@ -160,13 +161,12 @@ namespace internal
         typename dealii::internal::p4est::iter<dim>::edge_info *info,
         void *                                                  user_data)
       {
-        int i, j, k;
-        int nsides = info->sides.elem_count;
-        typename dealii::internal::p4est::iter<dim>::edge_side *sides =
-          (typename dealii::internal::p4est::iter<dim>::edge_side *)(info->sides
-                                                                       .array);
-        FindGhosts<dim, spacedim> *fg =
-          static_cast<FindGhosts<dim, spacedim> *>(user_data);
+        int   i, j, k;
+        int   nsides = info->sides.elem_count;
+        auto *sides  = reinterpret_cast<
+          typename dealii::internal::p4est::iter<dim>::edge_side *>(
+          info->sides.array);
+        auto *      fg = static_cast<FindGhosts<dim, spacedim> *>(user_data);
         sc_array_t *subids = fg->subids;
         const dealii::parallel::distributed::Triangulation<dim, spacedim>
           *                          triangulation = fg->triangulation;
@@ -203,8 +203,9 @@ namespace internal
             return;
           }
 
-        nsubs         = (int)subids->elem_count;
-        subdomain_ids = (dealii::types::subdomain_id *)(subids->array);
+        nsubs = static_cast<int>(subids->elem_count);
+        subdomain_ids =
+          reinterpret_cast<dealii::types::subdomain_id *>(subids->array);
 
         for (i = 0; i < nsides; i++)
           {
@@ -288,8 +289,9 @@ namespace internal
             return;
           }
 
-        nsubs         = (int)subids->elem_count;
-        subdomain_ids = (dealii::types::subdomain_id *)(subids->array);
+        nsubs = static_cast<int>(subids->elem_count);
+        subdomain_ids =
+          reinterpret_cast<dealii::types::subdomain_id *>(subids->array);
 
         for (i = 0; i < nsides; i++)
           {

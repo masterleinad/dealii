@@ -1451,8 +1451,8 @@ GridOut::write_xfig(const Triangulation<2> &tria,
             cell->vertex(GeometryInfo<dim>::ucd_to_deal[k % nv]);
           for (unsigned int d = 0; d < static_cast<unsigned int>(dim); ++d)
             {
-              int val = (int)(1200 * xfig_flags.scaling(d) *
-                              (p(d) - xfig_flags.offset(d)));
+              int val = static_cast<int>(1200 * xfig_flags.scaling(d) *
+                                         (p(d) - xfig_flags.offset(d)));
               out << '\t' << ((d == 0) ? val : -val);
             }
           out << std::endl;
@@ -1472,7 +1472,7 @@ GridOut::write_xfig(const Triangulation<2> &tria,
                     // with line style and thickness
                     << xfig_flags.boundary_style << ' '
                     << xfig_flags.boundary_thickness << ' '
-                    << (1 + (unsigned int)bi);
+                    << (1 + static_cast<unsigned int>(bi));
                 // Fill color
                 out << " -1 ";
                 // Depth 100 less than cells
@@ -1496,8 +1496,9 @@ GridOut::write_xfig(const Triangulation<2> &tria,
                     for (unsigned int d = 0; d < static_cast<unsigned int>(dim);
                          ++d)
                       {
-                        int val = (int)(1200 * xfig_flags.scaling(d) *
-                                        (p(d) - xfig_flags.offset(d)));
+                        int val =
+                          static_cast<int>(1200 * xfig_flags.scaling(d) *
+                                           (p(d) - xfig_flags.offset(d)));
                         out << '\t' << ((d == 0) ? val : -val);
                       }
                     out << std::endl;
@@ -1626,13 +1627,13 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
             y_max = cell->vertex(vertex_index)[1];
         }
 
-      if ((unsigned int)cell->level() < min_level)
+      if (static_cast<unsigned int>(cell->level()) < min_level)
         min_level = cell->level();
-      if ((unsigned int)cell->level() > max_level)
+      if (static_cast<unsigned int>(cell->level()) > max_level)
         max_level = cell->level();
 
-      materials[(unsigned int)cell->material_id()] = 1;
-      levels[(unsigned int)cell->level()]          = 1;
+      materials[static_cast<unsigned int>(cell->material_id())] = 1;
+      levels[static_cast<unsigned int>(cell->level())]          = 1;
       if (cell->active())
         subdomains[cell->subdomain_id() + 2] = 1;
       level_subdomains[cell->level_subdomain_id() + 2] = 1;
@@ -1795,7 +1796,8 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
   if (svg_flags.convert_level_number_to_height)
     {
       point[2] = svg_flags.level_height_factor *
-                 ((float)tria.begin()->level() / (float)n_levels) *
+                 (static_cast<float>(tria.begin()->level()) /
+                  static_cast<float>(n_levels)) *
                  std::max(x_dimension, y_dimension);
     }
 
@@ -1818,9 +1820,10 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
 
       if (svg_flags.convert_level_number_to_height)
         {
-          point[2] = svg_flags.level_height_factor *
-                     ((float)cell->level() / (float)n_levels) *
-                     std::max(x_dimension, y_dimension);
+          point[2] =
+            svg_flags.level_height_factor *
+            (static_cast<float>(cell->level()) / static_cast<float>(n_levels)) *
+            std::max(x_dimension, y_dimension);
         }
 
       projection_decomposition = GridOut::svg_project_point(point,
@@ -1896,7 +1899,7 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
       if (y_min_perspective > projection_decomposition[1])
         y_min_perspective = projection_decomposition[1];
 
-      if ((unsigned int)cell->level() == min_level)
+      if (static_cast<unsigned int>(cell->level()) == min_level)
         min_level_min_vertex_distance = cell->minimum_vertex_distance();
     }
 
@@ -2139,10 +2142,10 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
               switch (svg_flags.coloring)
                 {
                   case GridOutFlags::Svg::material_id:
-                    out << (unsigned int)cell->material_id();
+                    out << static_cast<unsigned int>(cell->material_id());
                     break;
                   case GridOutFlags::Svg::level_number:
-                    out << (unsigned int)cell->level();
+                    out << static_cast<unsigned int>(cell->level());
                     break;
                   case GridOutFlags::Svg::subdomain_id:
                     if (cell->active())
@@ -2169,7 +2172,8 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
           if (svg_flags.convert_level_number_to_height)
             {
               point[2] = svg_flags.level_height_factor *
-                         ((float)cell->level() / (float)n_levels) *
+                         (static_cast<float>(cell->level()) /
+                          static_cast<float>(n_levels)) *
                          std::max(x_dimension, y_dimension);
             }
 
@@ -2307,7 +2311,8 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
               if (svg_flags.convert_level_number_to_height)
                 {
                   point[2] = svg_flags.level_height_factor *
-                             ((float)cell->level() / (float)n_levels) *
+                             (static_cast<float>(cell->level()) /
+                              static_cast<float>(n_levels)) *
                              std::max(x_dimension, y_dimension);
                 }
 
@@ -2326,11 +2331,11 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
                                            camera_focus);
 
               const unsigned int font_size_this_cell =
-                static_cast<unsigned int>(.5 +
-                                          cell_label_font_size *
-                                            std::pow(.5,
-                                                     (float)cell->level() - 4. +
-                                                       3.5 * distance_factor));
+                static_cast<unsigned int>(
+                  .5 + cell_label_font_size *
+                         std::pow(.5,
+                                  static_cast<float>(cell->level()) - 4. +
+                                    3.5 * distance_factor));
 
               out << "  <text"
                   << " x=\""
@@ -2366,7 +2371,7 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
                   if (svg_flags.label_level_number ||
                       svg_flags.label_cell_index)
                     out << ',';
-                  out << (int)cell->material_id();
+                  out << static_cast<int>(cell->material_id());
                 }
 
               if (svg_flags.label_subdomain_id)
@@ -2408,7 +2413,8 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
                       if (svg_flags.convert_level_number_to_height)
                         {
                           point[2] = svg_flags.level_height_factor *
-                                     ((float)cell->level() / (float)n_levels) *
+                                     (static_cast<float>(cell->level()) /
+                                      static_cast<float>(n_levels)) *
                                      std::max(x_dimension, y_dimension);
                         }
 
@@ -2445,7 +2451,8 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
                       if (svg_flags.convert_level_number_to_height)
                         {
                           point[2] = svg_flags.level_height_factor *
-                                     ((float)cell->level() / (float)n_levels) *
+                                     (static_cast<float>(cell->level()) /
+                                      static_cast<float>(n_levels)) *
                                      std::max(x_dimension, y_dimension);
                         }
 
