@@ -1556,8 +1556,8 @@ namespace TrilinosWrappers
     // we will not modify const data)
     if (elide_zero_values == false)
       {
-        col_index_ptr =
-          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type *>(col_indices));
+        col_index_ptr = reinterpret_cast<TrilinosWrappers::types::int_type *>(
+          const_cast<size_type *>(col_indices));
         col_value_ptr = const_cast<TrilinosScalar *>(values);
         n_columns     = n_cols;
       }
@@ -1752,8 +1752,8 @@ namespace TrilinosWrappers
     // we will not modify const data)
     if (elide_zero_values == false)
       {
-        col_index_ptr =
-          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type*>(col_indices));
+        col_index_ptr = reinterpret_cast<TrilinosWrappers::types::int_type *>(
+          const_cast<size_type *>(col_indices));
         col_value_ptr = const_cast<TrilinosScalar *>(values);
         n_columns     = n_cols;
 #  ifdef DEBUG
@@ -1832,7 +1832,8 @@ namespace TrilinosWrappers
 
         ierr = matrix->SumIntoGlobalValues(
           1,
-          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type*>(&row)),
+          reinterpret_cast<TrilinosWrappers::types::int_type *>(
+            const_cast<size_type *>(&row)),
           n_columns,
           col_index_ptr,
           &col_value_ptr,
