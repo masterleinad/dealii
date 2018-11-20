@@ -288,7 +288,7 @@ namespace PETScWrappers
         ierr = VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        Assert(local_size == (size_type)(end - begin), ExcInternalError());
+        AssertDimension(local_size, static_cast<size_type>(end - begin));
 
         Vec l;
         ierr = VecGhostGetLocalForm(vector, &l);
@@ -301,8 +301,9 @@ namespace PETScWrappers
         ierr = VecGhostRestoreLocalForm(vector, &l);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        Assert(lsize == end - begin + (PetscInt)ghost_indices.n_elements(),
-               ExcInternalError());
+        AssertDimension(lsize,
+                        end - begin +
+                          static_cast<PetscInt>(ghost_indices.n_elements()));
       }
 #  endif
 
