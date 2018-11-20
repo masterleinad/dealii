@@ -54,12 +54,14 @@ namespace TrilinosWrappers
       if (colnum_cache->size() > 0)
         {
           // get a representation of the present row
-          int       ncols;
+          int                               ncols;
+          TrilinosWrappers::types::int_type trilinos_colnum =
+            (*colnum_cache)[0];
           const int ierr = sparsity_pattern->graph->ExtractGlobalRowCopy(
             static_cast<TrilinosWrappers::types::int_type>(this->a_row),
             colnum_cache->size(),
             ncols,
-            (TrilinosWrappers::types::int_type *)&(*colnum_cache)[0]);
+            &trilinos_colnum);
           AssertThrow(ierr == 0, ExcTrilinosError(ierr));
           AssertThrow(static_cast<std::vector<size_type>::size_type>(ncols) ==
                         colnum_cache->size(),

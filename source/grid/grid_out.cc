@@ -875,7 +875,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim> &tria,
       out << "object \"material\" class array type int rank 0 items " << n_cells
           << " data follows" << '\n';
       for (cell = tria.begin_active(); cell != endc; ++cell)
-        out << ' ' << (unsigned int)cell->material_id();
+        out << ' ' << cell->material_id();
       out << '\n' << "attribute \"dep\" string \"connections\"" << '\n' << '\n';
 
       out << "object \"level\" class array type int rank 0 items " << n_cells
@@ -947,7 +947,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim> &tria,
           // Little trick to get -1
           // for the interior
           for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-            out << ' ' << (int)(signed char)cell->face(f)->boundary_id();
+            out << ' ' << cell->face(f)->boundary_id();
           out << '\n';
         }
       out << "attribute \"dep\" string \"connections\"" << '\n' << '\n';
@@ -3242,12 +3242,10 @@ GridOut::write_mesh_per_processor_as_vtu(
           patch.vertices[vertex] = cell->vertex(vertex);
           patch.data(0, vertex)  = cell->level();
           if (!cell->has_children())
-            patch.data(1, vertex) =
-              (double)static_cast<int>(cell->subdomain_id());
+            patch.data(1, vertex) = cell->subdomain_id();
           else
             patch.data(1, vertex) = -1.0;
-          patch.data(2, vertex) =
-            (double)static_cast<int>(cell->level_subdomain_id());
+          patch.data(2, vertex) = cell->level_subdomain_id();
           patch.data(3, vertex) = tria.locally_owned_subdomain();
         }
 

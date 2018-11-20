@@ -84,11 +84,11 @@ namespace internal
         typename dealii::internal::p4est::iter<dim>::corner_info *info,
         void *                                                    user_data)
       {
-        int i, j;
-        int nsides = info->sides.elem_count;
-        typename dealii::internal::p4est::iter<dim>::corner_side *sides =
-          (typename dealii::internal::p4est::iter<dim>::corner_side
-             *)(info->sides.array);
+        int   i, j;
+        int   nsides = info->sides.elem_count;
+        auto *sides  = reinterpret_cast<
+          typename dealii::internal::p4est::iter<dim>::corner_side *>(
+          info->sides.array);
         FindGhosts<dim, spacedim> *fg =
           static_cast<FindGhosts<dim, spacedim> *>(user_data);
         sc_array_t *subids = fg->subids;
@@ -245,11 +245,11 @@ namespace internal
         typename dealii::internal::p4est::iter<dim>::face_info *info,
         void *                                                  user_data)
       {
-        int i, j, k;
-        int nsides = info->sides.elem_count;
-        typename dealii::internal::p4est::iter<dim>::face_side *sides =
-          (typename dealii::internal::p4est::iter<dim>::face_side *)(info->sides
-                                                                       .array);
+        int   i, j, k;
+        int   nsides = info->sides.elem_count;
+        auto *sides  = reinterpret_cast<
+          typename dealii::internal::p4est::iter<dim>::face_side *>(
+          info->sides.array);
         FindGhosts<dim, spacedim> *fg =
           static_cast<FindGhosts<dim, spacedim> *>(user_data);
         sc_array_t *subids = fg->subids;

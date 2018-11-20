@@ -1541,9 +1541,10 @@ namespace TrilinosWrappers
 
     last_action = Insert;
 
-    TrilinosWrappers::types::int_type *col_index_ptr;
-    TrilinosScalar *                   col_value_ptr;
-    TrilinosWrappers::types::int_type  n_columns;
+    const TrilinosWrappers::types::int_type trilinos_row = row;
+    TrilinosWrappers::types::int_type *     col_index_ptr;
+    TrilinosScalar *                        col_value_ptr;
+    TrilinosWrappers::types::int_type       n_columns;
 
     boost::container::small_vector<TrilinosScalar, 200> local_value_array(
       n_cols);
@@ -1555,7 +1556,8 @@ namespace TrilinosWrappers
     // we will not modify const data)
     if (elide_zero_values == false)
       {
-        col_index_ptr = (TrilinosWrappers::types::int_type *)col_indices;
+        col_index_ptr =
+          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type *>(col_indices));
         col_value_ptr = const_cast<TrilinosScalar *>(values);
         n_columns     = n_cols;
       }
@@ -1592,13 +1594,12 @@ namespace TrilinosWrappers
     // one is when the pattern is already fixed. In the former case, we add
     // the possibility to insert new values, and in the second we just replace
     // data.
-    if (matrix->RowMap().MyGID(
-          static_cast<TrilinosWrappers::types::int_type>(row)) == true)
+    if (matrix->RowMap().MyGID(trilinos_row) == true)
       {
         if (matrix->Filled() == false)
           {
             ierr = matrix->Epetra_CrsMatrix::InsertGlobalValues(
-              static_cast<TrilinosWrappers::types::int_type>(row),
+              trilinos_row,
               static_cast<int>(n_columns),
               const_cast<double *>(col_value_ptr),
               col_index_ptr);
@@ -1610,7 +1611,7 @@ namespace TrilinosWrappers
               ierr = 0;
           }
         else
-          ierr = matrix->Epetra_CrsMatrix::ReplaceGlobalValues(row,
+          ierr = matrix->Epetra_CrsMatrix::ReplaceGlobalValues(trilinos_row,
                                                                n_columns,
                                                                col_value_ptr,
                                                                col_index_ptr);
@@ -1627,24 +1628,22 @@ namespace TrilinosWrappers
 
         if (matrix->Filled() == false)
           {
-            ierr = matrix->InsertGlobalValues(
-              1,
-              (TrilinosWrappers::types::int_type *)&row,
-              n_columns,
-              col_index_ptr,
-              &col_value_ptr,
-              Epetra_FECrsMatrix::ROW_MAJOR);
+            ierr = matrix->InsertGlobalValues(1,
+                                              &trilinos_row,
+                                              n_columns,
+                                              col_index_ptr,
+                                              &col_value_ptr,
+                                              Epetra_FECrsMatrix::ROW_MAJOR);
             if (ierr > 0)
               ierr = 0;
           }
         else
-          ierr = matrix->ReplaceGlobalValues(
-            1,
-            (TrilinosWrappers::types::int_type *)&row,
-            n_columns,
-            col_index_ptr,
-            &col_value_ptr,
-            Epetra_FECrsMatrix::ROW_MAJOR);
+          ierr = matrix->ReplaceGlobalValues(1,
+                                             &trilinos_row,
+                                             n_columns,
+                                             col_index_ptr,
+                                             &col_value_ptr,
+                                             Epetra_FECrsMatrix::ROW_MAJOR);
         // use the FECrsMatrix facilities for set even in the case when we
         // have explicitly set the off-processor rows because that only works
         // properly when adding elements, not when setting them (since we want
@@ -1652,7 +1651,8 @@ namespace TrilinosWrappers
         // no way on the receiving processor to identify them otherwise)
       }
 
-    Assert(ierr <= 0, ExcAccessToNonPresentElement(row, col_index_ptr[0]));
+    Assert(ierr <= 0,
+           ExcAccessToNonPresentElement(trilinos_row, col_index_ptr[0]));
     AssertThrow(ierr >= 0, ExcTrilinosError(ierr));
   }
 
@@ -1752,7 +1752,8 @@ namespace TrilinosWrappers
     // we will not modify const data)
     if (elide_zero_values == false)
       {
-        col_index_ptr = (TrilinosWrappers::types::int_type *)col_indices;
+        col_index_ptr =
+          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type*>(col_indices));
         col_value_ptr = const_cast<TrilinosScalar *>(values);
         n_columns     = n_cols;
 #  ifdef DEBUG
@@ -1829,13 +1830,13 @@ namespace TrilinosWrappers
         // a time).
         compressed = false;
 
-        ierr =
-          matrix->SumIntoGlobalValues(1,
-                                      (TrilinosWrappers::types::int_type *)&row,
-                                      n_columns,
-                                      col_index_ptr,
-                                      &col_value_ptr,
-                                      Epetra_FECrsMatrix::ROW_MAJOR);
+        ierr = matrix->SumIntoGlobalValues(
+          1,
+          reinterpret_cast<TrilinosWrappers::types::int_type *>(const_cast<size_type*>(&row)),
+          n_columns,
+          col_index_ptr,
+          &col_value_ptr,
+          Epetra_FECrsMatrix::ROW_MAJOR);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
 

@@ -424,7 +424,7 @@ namespace SUNDIALS
     status = ARKodeSetInitStep(arkode_mem, current_time_step);
     AssertARKode(status);
 
-    status = ARKodeSetUserData(arkode_mem, (void *)this);
+    status = ARKodeSetUserData(arkode_mem, this);
     AssertARKode(status);
 
     status = ARKodeSetStopTime(arkode_mem, data.final_time);
@@ -435,7 +435,7 @@ namespace SUNDIALS
     AssertARKode(status);
 
     // Initialize solver
-    ARKodeMem ARKode_mem = (ARKodeMem)arkode_mem;
+    auto ARKode_mem = static_cast<ARKodeMem>(arkode_mem);
 
     if (solve_jacobian_system)
       {
