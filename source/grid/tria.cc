@@ -1195,7 +1195,7 @@ namespace internal
       types::boundary_id,
       << "The input data for creating a triangulation contained "
       << "information about a line with indices " << arg1 << " and " << arg2
-      << " that is described to have boundary indicator " << (int)arg3
+      << " that is described to have boundary indicator " << arg3
       << ". However, this is an internal line not located on the "
       << "boundary. You cannot assign a boundary indicator to it." << std::endl
       << std::endl
@@ -1228,7 +1228,7 @@ namespace internal
       << "The input data for creating a triangulation contained "
       << "information about a quad with indices " << arg1 << ", " << arg2
       << ", " << arg3 << ", and " << arg4
-      << " that is described to have boundary indicator " << (int)arg5
+      << " that is described to have boundary indicator " << arg5
       << ". However, this is an internal quad not located on the "
       << "boundary. You cannot assign a boundary indicator to it." << std::endl
       << std::endl

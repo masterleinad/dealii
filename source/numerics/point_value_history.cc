@@ -600,8 +600,8 @@ PointValueHistory<dim>::evaluate_field(const std::string &vector_name,
   if (n_indep != 0) // hopefully this will get optimized, can't test
                     // independent_values[0] unless n_indep > 0
     {
-      Assert(std::abs((int)dataset_key.size() -
-                      (int)independent_values[0].size()) < 2,
+      Assert(std::abs(static_cast<int>(dataset_key.size()) -
+                      static_cast<int>(independent_values[0].size())) < 2,
              ExcDataLostSync());
     }
   // Look up the field name and get an
@@ -669,8 +669,8 @@ PointValueHistory<dim>::evaluate_field(
   if (n_indep != 0) // hopefully this will get optimized, can't test
                     // independent_values[0] unless n_indep > 0
     {
-      Assert(std::abs((int)dataset_key.size() -
-                      (int)independent_values[0].size()) < 2,
+      Assert(std::abs(static_cast<int>(dataset_key.size()) -
+                      static_cast<int>(independent_values[0].size())) < 2,
              ExcDataLostSync());
     }
 
@@ -912,8 +912,8 @@ PointValueHistory<dim>::evaluate_field_at_requested_location(
   if (n_indep != 0) // hopefully this will get optimized, can't test
                     // independent_values[0] unless n_indep > 0
     {
-      Assert(std::abs((int)dataset_key.size() -
-                      (int)independent_values[0].size()) < 2,
+      Assert(std::abs(static_cast<int>(dataset_key.size()) -
+                      static_cast<int>(independent_values[0].size())) < 2,
              ExcDataLostSync());
     }
   // Look up the field name and get an
@@ -992,8 +992,8 @@ PointValueHistory<dim>::push_back_independent(
   Assert(indep_values.size() == n_indep,
          ExcDimensionMismatch(indep_values.size(), n_indep));
   Assert(n_indep != 0, ExcNoIndependent());
-  Assert(std::abs((int)dataset_key.size() - (int)independent_values[0].size()) <
-           2,
+  Assert(std::abs(static_cast<int>(dataset_key.size()) -
+                  static_cast<int>(independent_values[0].size())) < 2,
          ExcDataLostSync());
 
   for (unsigned int component = 0; component < n_indep; component++)

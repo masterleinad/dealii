@@ -170,7 +170,7 @@ namespace DoFTools
 
       Assert(std::find(local_component_association.begin(),
                        local_component_association.end(),
-                       (unsigned char)(-1)) ==
+                       static_cast<unsigned char>(-1)) ==
                local_component_association.end(),
              ExcInternalError());
 
@@ -286,7 +286,7 @@ namespace DoFTools
 
           Assert(std::find(local_block_association[f].begin(),
                            local_block_association[f].end(),
-                           (unsigned char)(-1)) ==
+                           static_cast<unsigned char>(-1)) ==
                    local_block_association[f].end(),
                  ExcInternalError());
         }

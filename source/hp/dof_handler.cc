@@ -323,7 +323,7 @@ namespace internal
               Assert(static_cast<unsigned int>(std::count(
                        dof_handler.levels[level]->dof_offsets.begin(),
                        dof_handler.levels[level]->dof_offsets.end(),
-                       (DoFLevel::offset_type)(-1))) ==
+                       static_cast<DoFLevel::offset_type>(-1))) ==
                        dof_handler.tria->n_raw_cells(level) -
                          n_active_non_artificial_cells,
                      ExcInternalError());

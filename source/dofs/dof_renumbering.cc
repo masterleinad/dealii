@@ -1700,7 +1700,7 @@ namespace DoFRenumbering
 
     for (cell = cells.begin(); cell != cells.end(); ++cell)
       {
-        Assert((*cell)->level() == (int)level, ExcInternalError());
+        Assert((*cell)->level() == static_cast<int>(level), ExcInternalError());
 
         (*cell)->get_active_or_mg_dof_indices(cell_dofs);
         std::sort(cell_dofs.begin(), cell_dofs.end());

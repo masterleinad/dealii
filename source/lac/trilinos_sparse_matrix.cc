@@ -1581,8 +1581,7 @@ namespace TrilinosWrappers
               }
           }
 
-        Assert(n_columns <= (TrilinosWrappers::types::int_type)n_cols,
-               ExcInternalError());
+        AssertIndexRange(n_columns, n_cols + 1);
       }
 
 
@@ -1782,8 +1781,7 @@ namespace TrilinosWrappers
               }
           }
 
-        Assert(n_columns <= (TrilinosWrappers::types::int_type)n_cols,
-               ExcInternalError());
+        AssertIndexRange(n_columns, n_cols + 1);
       }
     // Exit early if there is nothing to do
     if (n_columns == 0)
