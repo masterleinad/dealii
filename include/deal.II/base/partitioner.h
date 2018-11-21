@@ -671,6 +671,9 @@ namespace Utilities
        * A variable storing whether the ghost indices have been explicitly set.
        */
       bool have_ghost_indices;
+
+      void
+      fill_ghost_indices_translation_table() const;
     };
 
 

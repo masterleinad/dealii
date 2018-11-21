@@ -148,6 +148,38 @@ namespace Utilities
         }
     }
 
+    inline void
+    Partitioner::fill_ghost_indices_translation_table() const
+    {
+      //Assert(false, ExcInternalError());
+      std::vector<unsigned int> owned_to_ghost;
+      if (n_ghost_indices_in_larger_set > n_ghost_indices())
+        {
+          unsigned int offset =
+            n_ghost_indices_in_larger_set - n_ghost_indices();
+          // must copy ghost data into extended ghost array
+          for (const auto ghost_range : ghost_indices_subset_data)
+            {
+              if (offset > ghost_range.first)
+                {
+                  const unsigned int chunk_size =
+                    ghost_range.second - ghost_range.first;
+                  for (unsigned int i = 0; i < chunk_size; ++i)
+                    {
+                      owned_to_ghost.push_back(ghost_range.first + i);
+                      std::cout << offset + i << " -> "
+                                << ghost_range.first + i << std::endl;
+                    }
+                  offset += chunk_size;
+                }
+              else
+                {
+                  AssertDimension(offset, ghost_range.first);
+                  break;
+                }
+            }
+        }
+    }
 
 
     template <typename Number, typename MemorySpaceType>
@@ -179,6 +211,7 @@ namespace Utilities
       if (n_ghost_indices_in_larger_set > n_ghost_indices() &&
           ghost_array.size() == n_ghost_indices_in_larger_set)
         {
+          fill_ghost_indices_translation_table();
           unsigned int offset =
             n_ghost_indices_in_larger_set - n_ghost_indices();
           // must copy ghost data into extended ghost array
