@@ -30,7 +30,7 @@ ChunkSparsityPattern::ChunkSparsityPattern()
 
 
 ChunkSparsityPattern::ChunkSparsityPattern(const ChunkSparsityPattern &s)
-  : Subscriptor(s)
+  : Subscriptor()
   , chunk_size(s.chunk_size)
   , sparsity_pattern(s.sparsity_pattern)
 {

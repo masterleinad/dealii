@@ -40,7 +40,7 @@ namespace TrilinosWrappers
 
 
   PreconditionBase::PreconditionBase(const PreconditionBase &base)
-    : Subscriptor(base)
+    : Subscriptor()
     , preconditioner(base.preconditioner)
     ,
 #  ifdef DEAL_II_WITH_MPI
