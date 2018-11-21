@@ -228,7 +228,7 @@ DynamicSparsityPattern::DynamicSparsityPattern()
 
 
 DynamicSparsityPattern::DynamicSparsityPattern(const DynamicSparsityPattern &s)
-  : Subscriptor(s)
+  : Subscriptor()
   , have_entries(false)
   , rows(0)
   , cols(0)

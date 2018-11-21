@@ -125,7 +125,7 @@ namespace PETScWrappers
 
 
   VectorBase::VectorBase(const VectorBase &v)
-    : Subscriptor(v)
+    : Subscriptor()
     , ghosted(v.ghosted)
     , ghost_indices(v.ghost_indices)
     , last_action(::dealii::VectorOperation::unknown)
