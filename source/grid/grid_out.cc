@@ -3249,10 +3249,10 @@ GridOut::write_mesh_per_processor_as_vtu(
           patch.vertices[vertex] = cell->vertex(vertex);
           patch.data(0, vertex)  = cell->level();
           if (!cell->has_children())
-            patch.data(1, vertex) = cell->subdomain_id();
+            patch.data(1, vertex) = static_cast<int>(cell->subdomain_id());
           else
             patch.data(1, vertex) = -1.0;
-          patch.data(2, vertex) = cell->level_subdomain_id();
+          patch.data(2, vertex) = static_cast<int>(cell->level_subdomain_id());
           patch.data(3, vertex) = tria.locally_owned_subdomain();
         }
 
