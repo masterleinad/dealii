@@ -121,7 +121,7 @@ namespace TrilinosWrappers
                       0));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -173,7 +173,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -226,7 +226,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -288,7 +288,7 @@ namespace TrilinosWrappers
                       0));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -356,7 +356,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -425,7 +425,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -484,7 +484,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -492,8 +492,7 @@ namespace TrilinosWrappers
     int ierr;
 
     Teuchos::ParameterList parameter_list;
-    parameter_list.set("fact: level-of-fill",
-                       static_cast<int>(additional_data.ic_fill));
+    parameter_list.set("fact: level-of-fill", (int)additional_data.ic_fill);
     parameter_list.set("fact: absolute threshold", additional_data.ic_atol);
     parameter_list.set("fact: relative threshold", additional_data.ic_rtol);
     parameter_list.set("schwarz: combine mode", "Add");
@@ -535,7 +534,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -588,7 +587,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -597,8 +596,7 @@ namespace TrilinosWrappers
 
     Teuchos::ParameterList parameter_list;
     parameter_list.set("fact: drop value", additional_data.ilut_drop);
-    parameter_list.set("fact: level-of-fill",
-                       static_cast<int>(additional_data.ilut_fill));
+    parameter_list.set("fact: level-of-fill", (int)additional_data.ilut_fill);
     parameter_list.set("fact: absolute threshold", additional_data.ilut_atol);
     parameter_list.set("fact: relative threshold", additional_data.ilut_rtol);
     parameter_list.set("schwarz: combine mode", "Add");
@@ -635,7 +633,7 @@ namespace TrilinosWrappers
                       additional_data.overlap));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -685,7 +683,7 @@ namespace TrilinosWrappers
       std::make_shared<Ifpack_Chebyshev>(&matrix.trilinos_matrix());
 
     Ifpack_Chebyshev *ifpack =
-      dynamic_cast<Ifpack_Chebyshev *>(preconditioner.get());
+      static_cast<Ifpack_Chebyshev *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -699,8 +697,7 @@ namespace TrilinosWrappers
                        additional_data.min_eigenvalue);
     parameter_list.set("chebyshev: max eigenvalue",
                        additional_data.max_eigenvalue);
-    parameter_list.set("chebyshev: degree",
-                       static_cast<int>(additional_data.degree));
+    parameter_list.set("chebyshev: degree", (int)additional_data.degree);
     parameter_list.set("chebyshev: min diagonal value",
                        additional_data.min_diagonal);
     parameter_list.set("chebyshev: zero starting solution",
@@ -741,7 +738,7 @@ namespace TrilinosWrappers
                       0));
 
     Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+      static_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
