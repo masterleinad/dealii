@@ -163,7 +163,7 @@ namespace TrilinosWrappers
   // Copy function only works if the
   // sparsity pattern is empty.
   SparsityPattern::SparsityPattern(const SparsityPattern &input_sparsity)
-    : Subscriptor(input_sparsity)
+    : Subscriptor()
     , column_space_map(new Epetra_Map(TrilinosWrappers::types::int_type(0),
                                       TrilinosWrappers::types::int_type(0),
                                       Utilities::Trilinos::comm_self()))
@@ -466,7 +466,7 @@ namespace TrilinosWrappers
           }
 
       int ierr = graph->GlobalAssemble(*column_space_map,
-                                       dynamic_cast<const Epetra_Map &>(
+                                       static_cast<const Epetra_Map &>(
                                          graph->RangeMap()),
                                        true);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -808,21 +808,21 @@ namespace TrilinosWrappers
                  nonlocal_graph->IndicesAreGlobal() == true,
                ExcInternalError());
         nonlocal_graph->FillComplete(*column_space_map,
-                                     dynamic_cast<const Epetra_Map &>(
+                                     static_cast<const Epetra_Map &>(
                                        graph->RangeMap()));
         nonlocal_graph->OptimizeStorage();
         Epetra_Export exporter(nonlocal_graph->RowMap(), graph->RowMap());
         ierr = graph->Export(*nonlocal_graph, exporter, Add);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
         ierr = graph->FillComplete(*column_space_map,
-                                   dynamic_cast<const Epetra_Map &>(
+                                   static_cast<const Epetra_Map &>(
                                      graph->RangeMap()));
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
     else
       {
         ierr = graph->GlobalAssemble(*column_space_map,
-                                     dynamic_cast<const Epetra_Map &>(
+                                     static_cast<const Epetra_Map &>(
                                        graph->RangeMap()),
                                      true);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
@@ -1048,7 +1048,7 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::domain_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->DomainMap());
+    return static_cast<const Epetra_Map &>(graph->DomainMap());
   }
 
 
@@ -1056,7 +1056,7 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::range_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->RangeMap());
+    return static_cast<const Epetra_Map &>(graph->RangeMap());
   }
 
 
@@ -1064,7 +1064,7 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::row_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->RowMap());
+    return static_cast<const Epetra_Map &>(graph->RowMap());
   }
 
 
@@ -1072,7 +1072,7 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::col_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->ColMap());
+    return static_cast<const Epetra_Map &>(graph->ColMap());
   }
 
 
