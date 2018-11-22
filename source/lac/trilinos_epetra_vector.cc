@@ -48,7 +48,7 @@ namespace LinearAlgebra
 
 
     Vector::Vector(const Vector &V)
-      : Subscriptor(V)
+      : Subscriptor()
       , vector(new Epetra_FEVector(V.trilinos_vector()))
     {}
 
