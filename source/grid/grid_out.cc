@@ -950,7 +950,7 @@ GridOut::write_dx(const Triangulation<dim, spacedim> &tria,
               const types::boundary_id boundary_id =
                 cell->face(f)->boundary_id();
               out << ' '
-                  << (boundary_id == -1 ?
+                  << (boundary_id == static_cast<types::boundary_id>(-1) ?
                         -1 :
                         static_cast<std::make_signed<types::boundary_id>::type>(
                           boundary_id));
