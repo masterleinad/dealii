@@ -313,6 +313,16 @@ namespace TrilinosWrappers
       else
         graph = std_cxx14::make_unique<Epetra_FECrsGraph>(
           Copy, row_map, col_map, n_entries_per_row, false);
+      const auto &range_map =
+        dynamic_cast<const Epetra_Map &>(graph->RangeMap());
+      Assert(dynamic_cast<const Epetra_Map *>(&graph->RangeMap()),
+             ExcInternalError());
+      Assert(dynamic_cast<const Epetra_Map *>(&graph->DomainMap()),
+             ExcInternalError());
+      Assert(dynamic_cast<const Epetra_Map *>(&graph->ColMap()),
+             ExcInternalError());
+      Assert(dynamic_cast<const Epetra_Map *>(&graph->RowMap()),
+             ExcInternalError());
     }
 
 
@@ -464,10 +474,11 @@ namespace TrilinosWrappers
               row_indices.data());
           }
 
-      int ierr = graph->GlobalAssemble(*column_space_map,
-                                       dynamic_cast<const Epetra_Map &>(
-                                         graph->RangeMap()),
-                                       true);
+      const auto &range_map =
+        static_cast<const Epetra_Map &>(graph->RangeMap());
+      Assert(dynamic_cast<const Epetra_Map *>(&graph->RangeMap()),
+             ExcInternalError());
+      int ierr = graph->GlobalAssemble(*column_space_map, range_map, true);
       AssertThrow(ierr == 0, ExcTrilinosError(ierr));
 
       ierr = graph->OptimizeStorage();
@@ -791,7 +802,7 @@ namespace TrilinosWrappers
   SparsityPattern::compress()
   {
     int ierr;
-    Assert(column_space_map.get() != nullptr, ExcInternalError());
+    Assert(column_space_map.get(), ExcInternalError());
     if (nonlocal_graph.get() != nullptr)
       {
         if (nonlocal_graph->IndicesAreGlobal() == false &&
@@ -806,24 +817,25 @@ namespace TrilinosWrappers
         Assert(nonlocal_graph->RowMap().NumMyElements() == 0 ||
                  nonlocal_graph->IndicesAreGlobal() == true,
                ExcInternalError());
-        nonlocal_graph->FillComplete(*column_space_map,
-                                     dynamic_cast<const Epetra_Map &>(
-                                       graph->RangeMap()));
+        const auto &range_map =
+          static_cast<const Epetra_Map &>(graph->RangeMap());
+        Assert(dynamic_cast<const Epetra_Map *>(&graph->RangeMap()),
+               ExcInternalError());
+        nonlocal_graph->FillComplete(*column_space_map, range_map);
         nonlocal_graph->OptimizeStorage();
         Epetra_Export exporter(nonlocal_graph->RowMap(), graph->RowMap());
         ierr = graph->Export(*nonlocal_graph, exporter, Add);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
-        ierr = graph->FillComplete(*column_space_map,
-                                   dynamic_cast<const Epetra_Map &>(
-                                     graph->RangeMap()));
+        ierr = graph->FillComplete(*column_space_map, range_map);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
     else
       {
-        ierr = graph->GlobalAssemble(*column_space_map,
-                                     dynamic_cast<const Epetra_Map &>(
-                                       graph->RangeMap()),
-                                     true);
+        const auto &range_map =
+          static_cast<const Epetra_Map &>(graph->RangeMap());
+        Assert(dynamic_cast<const Epetra_Map *>(&graph->RangeMap()),
+               ExcInternalError());
+        ierr = graph->GlobalAssemble(*column_space_map, range_map, true);
         AssertThrow(ierr == 0, ExcTrilinosError(ierr));
       }
 
@@ -886,7 +898,7 @@ namespace TrilinosWrappers
             TrilinosWrappers::types::int_type *el_find =
               std::find(col_indices, col_indices + nnz_present, trilinos_j);
 
-            const auto local_col_index =
+            const auto &local_col_index =
               static_cast<TrilinosWrappers::types::int_type>(el_find -
                                                              col_indices);
 
@@ -1047,7 +1059,11 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::domain_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->DomainMap());
+    const auto &domain_map =
+      static_cast<const Epetra_Map &>(graph->DomainMap());
+    Assert(dynamic_cast<const Epetra_Map *>(&graph->DomainMap()),
+           ExcInternalError());
+    return domain_map;
   }
 
 
@@ -1055,7 +1071,10 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::range_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->RangeMap());
+    const auto &range_map = static_cast<const Epetra_Map &>(graph->RangeMap());
+    Assert(dynamic_cast<const Epetra_Map *>(&graph->RangeMap()),
+           ExcInternalError());
+    return range_map;
   }
 
 
@@ -1063,7 +1082,10 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::row_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->RowMap());
+    const auto &row_map = static_cast<const Epetra_Map &>(graph->RowMap());
+    Assert(dynamic_cast<const Epetra_Map *>(&graph->RowMap()),
+           ExcInternalError());
+    return row_map;
   }
 
 
@@ -1071,7 +1093,10 @@ namespace TrilinosWrappers
   const Epetra_Map &
   SparsityPattern::col_partitioner() const
   {
-    return dynamic_cast<const Epetra_Map &>(graph->ColMap());
+    const auto &col_map = static_cast<const Epetra_Map &>(graph->ColMap());
+    Assert(dynamic_cast<const Epetra_Map *>(&graph->ColMap()),
+           ExcInternalError());
+    return col_map;
   }
 
 
