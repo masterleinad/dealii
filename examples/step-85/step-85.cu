@@ -41,30 +41,8 @@ namespace Step85
 {
   using namespace dealii;
 
-  //  template <int dim>
-  //  class Coefficient : public Function<dim>
-  //  {
-  //  public:
-  //    Coefficient()
-  //      : Function<dim>()
-  //    {}
-  //
-  //    virtual double value(const Point<dim> & p,
-  //                         const unsigned int component = 0) const override;
-  //  };
-  //
-  //
-  //
-  //  template <int dim>
-  //  double Coefficient<dim>::value(const Point<dim> &p,
-  //                                 const unsigned int /*component*/)
-  //  {
-  //    return 1. / (0.05 + 2. * p.square());
-  //  }
-
-
   template <int dim, int fe_degree>
-  class LaplaceOperatorQuad
+  class HelmholtzOperatorQuad
   {
   public:
     __device__ void operator()(CUDA::FEEvaluation<dim, fe_degree> *fe_eval,
@@ -74,7 +52,18 @@ namespace Step85
 
 
   template <int dim, int fe_degree>
-  class LocalLaplaceOperator
+  __device__ void HelmholtzOperatorQuad::
+                  operator()(CUDA::FEEvaluation<dim, fe_degree> *fe_eval,
+             const unsigned int                  q_point) const
+  {
+    fe_eval->submit_value(10. * fe_eval->get_value(q), q);
+    fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
+  }
+
+
+
+  template <int dim, int fe_degree>
+  class LocalHelmholtzOperator
   {
   public:
     __device__ void operator()(
@@ -85,8 +74,10 @@ namespace Step85
       Number *                                                    dst) const;
   };
 
+
+
   template <int dim, int fe_degree>
-  __device__ void LocalLaplaceOperator<dim, fe_free>::operator()(
+  __device__ void LocalHelmholtzOperator<dim, fe_free>::operator()(
     const unsigned int                                          cell,
     const typename CUDAWrappers::MatrixFree<dim, Number>::Data *gpu_data,
     CUDAWrappers::SharedData<dim, Number> *                     shared_data,
@@ -97,25 +88,149 @@ namespace Step85
       fe_eval(cell, gpu_data, shared_data);
     fe_eval.read_dof_values(src);
     fe_eval.evaluate(false true);
-    fe_eval.apply_quad_point_operations(LaplaceOperatorQuad<dim, fe_degree>());
+    fe_eval.apply_quad_point_operations(
+      HelmholtzOperatorQuad<dim, fe_degree>());
     fe_eval.integrate(false, true);
     fe_eval.distribute_local_to_global(dst);
   }
 
+
+
   template <int dim, int fe_degree>
-  class LaplaceOperator
+  class HelmholtzOperator
   {
   public:
-    LaplaceOperator();
+    HelmholtzOperator(const DoFHandler<dim> &          dof_handler,
+                      const AffineConstraints<double> &constraints);
 
-    void evaluate_coefficient(const Coefficient<dim> &coefficient_function);
+    // TODO add varying coefficient using a lambda function
+    // void evaluate_coefficient(const Coefficient<dim> &coefficient_function);
 
-    void compute_inverse_diagonal();
+    //    void compute_inverse_diagonal();
 
-  private:
     void
-    vmult(LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> &data,
+    vmult(LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> &dst,
           const LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>
             &src) const;
+
+  private:
+    CUDAWrappers::MatrixFree<dim, double> mf_data;
   };
+
+
+
+  template <int dim, int fe_degree>
+  HelmholtzOperator<dim, fe_degree>::HelmholtzOperator(
+    const DoFHandler<dim> &          dof_handler,
+    const AffineConstraints<double> &constraints)
+  {
+    MappingQGeneric<dim> mapping(fe_degree);
+    typename CUDAWrappers::MatrixFree<dim, Number>::AdditionalData
+      additional_data;
+    additional_data.mapping_update_flags = update_values | update_gradients |
+                                           update_JxW_values |
+                                           update_quadrature_points;
+    const QGauss<1> quad(fe_degree + 1);
+    mf_data.reinit(mapping, dof_handler, constraints, quad, additional_data);
+  }
+
+
+
+  template <int dim, int fe_degree>
+  void HelmholtzOperator<dim, fe_degre>::vmult(
+    LinearAlgebra::distributed::VectorVector<double, MemorySpace::CUDA> &dst,
+    const LinearAlgebra::distributed::VectorVector<double, MemorySpace::CUDA>
+      &src) const
+  {
+    dst = static_cast<Number>(0.);
+    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator();
+    data.cell_loop(helmholtz_operator, src, dst);
+    data.copy_constrained_values(src, dst);
+  }
+
+
+
+  template <int dim, int fe_degree>
+  class HelmholtzProblem
+  {
+  public:
+    HelmholtzProblem();
+    ~HelmholtzProblem();
+
+    void run();
+
+  private:
+    void setup_system();
+    // TODO just do it on the host and then move to the GPU
+    // void assemble_rhs();
+    void solve();
+    void refine_grid();
+    void output_results(const unsigned int cycle) const;
+
+    MPI_Comm mpi_communicator;
+
+    parallel::distributed::Triangulation<dim> triangulation;
+
+    DoFHandler<dim> dof_handler;
+    FE_Q<dim>       fe;
+
+    IndexSet locally_owned_dofs;
+    IndexSet locally_relevant_dofs;
+
+    AffineConstraints<double>                          constraints;
+    std::unique_ptr<HelmholtzOperator<dim, fe_degree>> system_matrix;
+
+    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> solution;
+    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> system_rhs;
+  };
+
+
+
+  template <int dim, int fe_degree>
+  HelmholtzProblem<dim, fe_degree>::HelmholtzProblem()
+    : mpi_communicator(MPI_COMM_WORLD)
+    , triangulation(mpi_communicator)
+    , dof_handler(triangulation)
+    , fe(fe_degree)
+  {}
+
+
+
+  template <int dim, int fe_degree>
+  HelmholtzProblem<dim, fe_degree>::~HelmholtzProblem()
+  {
+    dof_handler.clear();
+  }
+
+
+
+  template <int dim, int fe_degree>
+  void HelmholtzProblem<dim, fe_degree>::setup_system()
+  {
+    dof_handler.distribute_dofs(fe);
+
+    locally_owned_dofs = dof_handler.locally_owned_dofs();
+    DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
+
+    locally_relevant_solution.reinit(locally_owned_dofs,
+                                     locally_relevant_dofs,
+                                     mpi_communicator);
+    system_rhs.reinit(locally_owned_dofs, mpi_communicator);
+
+    constraints.clear();
+    constraints.reinit(locally_relevant_dofs);
+    DoFTools::make_hanging_node_constraints(dof_handler, constraints);
+    VectorTools::interpolate_boundary_values(dof_handler,
+                                             0,
+                                             Functions::ZeroFunction<dim>(),
+                                             constraints);
+    constraints.close();
+    system_matrix.reset(new HelmholtzOperator(dof_handler, constraints));
+
+    solution.reinit(locally_owned_dofs);
+    system_rhs.reinit(locally_owned_dofs);
+  }
+
+
+
 } // namespace Step85
