@@ -52,50 +52,37 @@ public:
     : data(data_in){};
 
   void
-  local_mass_operator(
-    const MatrixFree<dim, Number> &              data,
-    VectorType &                                 dst,
-    const VectorType &                           src,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
-  {
-    FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-    const unsigned int n_q_points = fe_eval.n_q_points;
-
-    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
-      {
-        fe_eval.reinit(cell);
-        fe_eval.read_dof_values(src);
-        fe_eval.evaluate(true, false);
-        for (unsigned int q = 0; q < n_q_points; ++q)
-          fe_eval.submit_value(fe_eval.get_value(q), q);
-        fe_eval.integrate(true, false);
-        fe_eval.distribute_local_to_global(dst);
-      }
-  }
+  local_cell_mass_operator(const MatrixFree<dim, Number> &,
+                           VectorType &,
+                           const VectorType &,
+                           const std::pair<unsigned int, unsigned int> &) const
+  {}
 
   void
-  local_inverse_mass_operator(
+  local_face_mass_operator(const MatrixFree<dim, Number> &,
+                           VectorType &,
+                           const VectorType &,
+                           const std::pair<unsigned int, unsigned int> &) const
+  {}
+
+  void
+  local_boundary_mass_operator(
     const MatrixFree<dim, Number> &              data,
     VectorType &                                 dst,
     const VectorType &                           src,
-    const std::pair<unsigned int, unsigned int> &cell_range) const
+    const std::pair<unsigned int, unsigned int> &face_range) const
   {
-    FEEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
-    MatrixFreeOperators::CellwiseInverseMassMatrix<dim, fe_degree, 1, Number>
-                                           mass_inv(fe_eval);
-    const unsigned int                     n_q_points = fe_eval.n_q_points;
-    AlignedVector<VectorizedArray<Number>> inverse_coefficients(n_q_points);
+    FEFaceEvaluation<dim, fe_degree, fe_degree + 1, 1, Number> fe_eval(data);
+    const unsigned int n_q_points = fe_eval.n_q_points;
 
-    for (unsigned int cell = cell_range.first; cell < cell_range.second; ++cell)
+
+    for (unsigned int face = face_range.first; face < face_range.second; face++)
       {
-        fe_eval.reinit(cell);
-        mass_inv.fill_inverse_JxW_values(inverse_coefficients);
-        fe_eval.read_dof_values(src);
-        mass_inv.apply(inverse_coefficients,
-                       1,
-                       fe_eval.begin_dof_values(),
-                       fe_eval.begin_dof_values());
-        fe_eval.distribute_local_to_global(dst);
+        fe_eval.reinit(face);
+        fe_eval.gather_evaluate(src, true, true);
+        for (unsigned int q = 0; q < fe_eval.n_q_points; ++q)
+          fe_eval.submit_value(fe_eval.get_value(q), q);
+        fe_eval.integrate_scatter(true, false, dst);
       }
   }
 
@@ -103,22 +90,18 @@ public:
   vmult(VectorType &dst, const VectorType &src) const
   {
     dst = 0;
-    data.cell_loop(
-      &MatrixFreeTest<dim, fe_degree, Number, VectorType>::local_mass_operator,
-      this,
-      dst,
-      src);
-  };
-
-  void
-  apply_inverse(VectorType &dst, const VectorType &src) const
-  {
-    dst = 0;
-    data.cell_loop(&MatrixFreeTest<dim, fe_degree, Number, VectorType>::
-                     local_inverse_mass_operator,
-                   this,
-                   dst,
-                   src);
+    data.loop(&MatrixFreeTest<dim, fe_degree, Number, VectorType>::
+                local_cell_mass_operator,
+              &MatrixFreeTest<dim, fe_degree, Number, VectorType>::
+                local_face_mass_operator,
+              &MatrixFreeTest<dim, fe_degree, Number, VectorType>::
+                local_boundary_mass_operator,
+              this,
+              dst,
+              src,
+              /*zero_dst_vector*/ true,
+              MatrixFree<dim, Number>::DataAccessOnFaces::none,
+              MatrixFree<dim, Number>::DataAccessOnFaces::none);
   };
 
 private:
@@ -152,11 +135,9 @@ do_test(const DoFHandler<dim> &dof)
 
   for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
-      const double entry = random_value<double>();
+      const double entry = 0; // random_value<double>();
       in(i)              = entry;
     }
-
-  mf.apply_inverse(inverse, in);
 
   SolverControl            control(1000, 1e-12);
   SolverCG<Vector<number>> solver(control);
