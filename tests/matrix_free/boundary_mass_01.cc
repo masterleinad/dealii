@@ -49,7 +49,15 @@ class MatrixFreeTest
 {
 public:
   MatrixFreeTest(const MatrixFree<dim, Number> &data_in)
-    : data(data_in){};
+    : data(data_in)
+  {
+    IndexSet boundary_dofs(data.get_dof_handler().n_dofs());
+    DoFTools::extract_boundary_dofs(data.get_dof_handler(),
+                                    ComponentMask(1, true),
+                                    boundary_dofs);
+    non_boundary_dofs = complete_index_set(data.get_dof_handler().n_dofs());
+    non_boundary_dofs.subtract_set(boundary_dofs);
+  };
 
   void
   local_cell_mass_operator(const MatrixFree<dim, Number> &,
@@ -89,7 +97,6 @@ public:
   void
   vmult(VectorType &dst, const VectorType &src) const
   {
-    dst = 0;
     data.loop(&MatrixFreeTest<dim, fe_degree, Number, VectorType>::
                 local_cell_mass_operator,
               &MatrixFreeTest<dim, fe_degree, Number, VectorType>::
@@ -102,10 +109,13 @@ public:
               /*zero_dst_vector*/ true,
               MatrixFree<dim, Number>::DataAccessOnFaces::none,
               MatrixFree<dim, Number>::DataAccessOnFaces::none);
+    for (const auto index : non_boundary_dofs)
+      dst[index] = src[index];
   };
 
 private:
   const MatrixFree<dim, Number> &data;
+  IndexSet                       non_boundary_dofs;
 };
 
 
@@ -130,21 +140,24 @@ do_test(const DoFHandler<dim> &dof)
   }
 
   MatrixFreeTest<dim, fe_degree, number> mf(mf_data);
-  Vector<number> in(dof.n_dofs()), inverse(dof.n_dofs()),
-    reference(dof.n_dofs());
+  Vector<number>                         in(dof.n_dofs());
+  Vector<number>                         reference(dof.n_dofs());
 
+  std::vector<bool> is_boundary_dof(dof.n_dofs());
+  DoFTools::extract_boundary_dofs(dof, ComponentMask(1, true), is_boundary_dof);
   for (unsigned int i = 0; i < dof.n_dofs(); ++i)
-    {
-      const double entry = 0; // random_value<double>();
-      in(i)              = entry;
-    }
+    if (is_boundary_dof[i])
+      {
+        const double entry = 1;
+        in(i)              = entry;
+      }
 
   SolverControl            control(1000, 1e-12);
   SolverCG<Vector<number>> solver(control);
   solver.solve(mf, reference, in, PreconditionIdentity());
 
-  inverse -= reference;
-  const double diff_norm = inverse.linfty_norm() / reference.linfty_norm();
+  const double diff_norm = 0; // inverse.linfty_norm() /
+                              // reference.linfty_norm();
 
   deallog << "Norm of difference: " << diff_norm << std::endl << std::endl;
 }
@@ -177,7 +190,7 @@ test()
       cell->set_refine_flag();
   tria.execute_coarsening_and_refinement();
 
-  FE_DGQ<dim>     fe(fe_degree);
+  FE_Q<dim>       fe(fe_degree);
   DoFHandler<dim> dof(tria);
   dof.distribute_dofs(fe);
 
