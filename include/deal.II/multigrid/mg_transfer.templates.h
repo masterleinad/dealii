@@ -211,11 +211,7 @@ namespace internal
   {
     // we should have i->second == i->first, therefore we can use the same
     // function for both copying to mg as well as copying from mg
-    for (std::vector<std::pair<types::global_dof_index,
-                               types::global_dof_index>>::const_iterator i =
-           copy_indices.begin();
-         i != copy_indices.end();
-         ++i)
+    for (auto i = copy_indices.begin(); i != copy_indices.end(); ++i)
       dst(i->first) = src(i->first);
     dst.compress(VectorOperation::insert);
   }
@@ -279,14 +275,13 @@ MGLevelGlobalTransfer<VectorType>::copy_to_mg(
       VectorType &dst_level = dst[level];
 
       // first copy local unknowns
-      for (dof_pair_iterator i = copy_indices[level].begin();
-           i != copy_indices[level].end();
+      for (auto i = copy_indices[level].begin(); i != copy_indices[level].end();
            ++i)
         dst_level(i->second) = src(i->first);
 
       // Do the same for the indices where the global index is local, but the
       // local index is not
-      for (dof_pair_iterator i = copy_indices_global_mine[level].begin();
+      for (auto i = copy_indices_global_mine[level].begin();
            i != copy_indices_global_mine[level].end();
            ++i)
         dst_level(i->second) = src(i->first);
@@ -346,14 +341,13 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg(
       const VectorType &src_level = src[level];
 
       // First copy all indices local to this process
-      for (dof_pair_iterator i = copy_indices[level].begin();
-           i != copy_indices[level].end();
+      for (auto i = copy_indices[level].begin(); i != copy_indices[level].end();
            ++i)
         dst(i->first) = src_level(i->second);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = copy_indices_level_mine[level].begin();
+      for (auto i = copy_indices_level_mine[level].begin();
            i != copy_indices_level_mine[level].end();
            ++i)
         dst(i->first) = src_level(i->second);
@@ -397,14 +391,13 @@ MGLevelGlobalTransfer<VectorType>::copy_from_mg_add(
       const VectorType &src_level = src[level];
 
       // First add all indices local to this process
-      for (dof_pair_iterator i = copy_indices[level].begin();
-           i != copy_indices[level].end();
+      for (auto i = copy_indices[level].begin(); i != copy_indices[level].end();
            ++i)
         dst(i->first) += src_level(i->second);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = copy_indices_level_mine[level].begin();
+      for (auto i = copy_indices_level_mine[level].begin();
            i != copy_indices_level_mine[level].end();
            ++i)
         dst(i->first) += src_level(i->second);
@@ -500,7 +493,7 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
       LinearAlgebra::distributed::Vector<Number> &dst_level = dst[level];
 
       // first copy local unknowns
-      for (dof_pair_iterator i = this_copy_indices[level].begin();
+      for (auto i = this_copy_indices[level].begin();
            i != this_copy_indices[level].end();
            ++i)
         dst_level.local_element(i->second) =
@@ -508,7 +501,7 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = this_copy_indices_level_mine[level].begin();
+      for (auto i = this_copy_indices_level_mine[level].begin();
            i != this_copy_indices_level_mine[level].end();
            ++i)
         dst_level.local_element(i->second) =
@@ -576,14 +569,13 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_from_mg(
       ghosted_vector.update_ghost_values();
 
       // first copy local unknowns
-      for (dof_pair_iterator i = copy_indices[level].begin();
-           i != copy_indices[level].end();
+      for (auto i = copy_indices[level].begin(); i != copy_indices[level].end();
            ++i)
         dst.local_element(i->first) = ghosted_vector.local_element(i->second);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = copy_indices_global_mine[level].begin();
+      for (auto i = copy_indices_global_mine[level].begin();
            i != copy_indices_global_mine[level].end();
            ++i)
         dst.local_element(i->first) = ghosted_vector.local_element(i->second);
@@ -625,14 +617,13 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::
       ghosted_vector.update_ghost_values();
 
       // first add local unknowns
-      for (dof_pair_iterator i = copy_indices[level].begin();
-           i != copy_indices[level].end();
+      for (auto i = copy_indices[level].begin(); i != copy_indices[level].end();
            ++i)
         dst.local_element(i->first) += ghosted_vector.local_element(i->second);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (dof_pair_iterator i = copy_indices_global_mine[level].begin();
+      for (auto i = copy_indices_global_mine[level].begin();
            i != copy_indices_global_mine[level].end();
            ++i)
         dst.local_element(i->first) += ghosted_vector.local_element(i->second);

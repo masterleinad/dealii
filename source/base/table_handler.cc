@@ -180,9 +180,7 @@ TableHandler::Column::invalidate_cache()
 {
   max_length = 0;
 
-  for (std::vector<dealii::internal::TableEntry>::iterator it = entries.begin();
-       it != entries.end();
-       ++it)
+  for (auto it = entries.begin(); it != entries.end(); ++it)
     {
       it->cache_string(this->scientific, this->precision);
       max_length =
@@ -220,18 +218,14 @@ TableHandler::start_new_row()
 {
   // figure out the longest current column
   unsigned int max_col_length = 0;
-  for (std::map<std::string, Column>::iterator p = columns.begin();
-       p != columns.end();
-       ++p)
+  for (auto p = columns.begin(); p != columns.end(); ++p)
     max_col_length =
       std::max(max_col_length,
                static_cast<unsigned int>(p->second.entries.size()));
 
 
   // then pad all columns to that length with empty strings
-  for (std::map<std::string, Column>::iterator col = columns.begin();
-       col != columns.end();
-       ++col)
+  for (auto col = columns.begin(); col != columns.end(); ++col)
     while (col->second.entries.size() < max_col_length)
       {
         col->second.entries.emplace_back("");
@@ -277,7 +271,7 @@ TableHandler::add_column_to_supercolumn(const std::string &key,
     {
       // remove key from column_order
       // for erase we need an iterator
-      for (std::vector<std::string>::iterator order_iter = column_order.begin();
+      for (auto order_iter = column_order.begin();
            order_iter != column_order.end();
            ++order_iter)
         if (*order_iter == key)
@@ -402,9 +396,7 @@ TableHandler::write_text(std::ostream &out, const TextOutputFormat format) const
            ++p)
         max_rows = std::max<unsigned int>(max_rows, p->second.entries.size());
 
-      for (std::map<std::string, Column>::iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         p->second.pad_column_below(max_rows);
     }
 
@@ -632,9 +624,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
            ++p)
         max_rows = std::max<unsigned int>(max_rows, p->second.entries.size());
 
-      for (std::map<std::string, Column>::iterator p = columns.begin();
-           p != columns.end();
-           ++p)
+      for (auto p = columns.begin(); p != columns.end(); ++p)
         p->second.pad_column_below(max_rows);
     }
 
@@ -685,8 +675,7 @@ TableHandler::write_tex(std::ostream &out, const bool with_header) const
         {
           const unsigned int n_subcolumns = super_iter->second.size();
           // avoid use of `tex_supercaptions[key]'
-          std::map<std::string, std::string>::const_iterator
-            tex_super_cap_iter = tex_supercaptions.find(key);
+          auto tex_super_cap_iter = tex_supercaptions.find(key);
           out << std::endl
               << "\\multicolumn{" << n_subcolumns << "}{|c|}{"
               << tex_super_cap_iter->second << "}";
@@ -816,16 +805,12 @@ TableHandler::clear_current_row()
   // Figure out what is the correct (max) length of the columns
   // so that we "shave" one off.
   std::vector<internal::TableEntry>::size_type n = 0;
-  for (std::map<std::string, Column>::iterator p = columns.begin();
-       p != columns.end();
-       ++p)
+  for (auto p = columns.begin(); p != columns.end(); ++p)
     n = std::max(n, p->second.entries.size());
 
   // shave the top most element
   if (n != 0)
-    for (std::map<std::string, Column>::iterator p = columns.begin();
-         p != columns.end();
-         ++p)
+    for (auto p = columns.begin(); p != columns.end(); ++p)
       if (p->second.entries.size() == n)
         p->second.entries.pop_back();
 }

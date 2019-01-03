@@ -50,7 +50,7 @@ namespace Algorithms
     out.attach_dof_handler(*dof);
     for (unsigned int i = 0; i < data.size(); ++i)
       {
-        const VectorType *p = data.try_read_ptr<VectorType>(i);
+        const auto *p = data.try_read_ptr<VectorType>(i);
         if (p != nullptr)
           {
             out.add_data_vector(*p, data.name(i));

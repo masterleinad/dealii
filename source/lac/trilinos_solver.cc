@@ -465,7 +465,7 @@ namespace TrilinosWrappers
     // status test.
     if (!status_test)
       {
-        if (const ReductionControl *const reduction_control =
+        if (const auto *const reduction_control =
               dynamic_cast<const ReductionControl *const>(&solver_control))
           {
             status_test =
@@ -518,10 +518,9 @@ namespace TrilinosWrappers
     // certain choices of solver or if a custom status test is set, then the
     // result returned by TrueResidual() is equal to -1. In this case we must
     // compute it ourself.
-    if (const internal::TrilinosReductionControl
-          *const reduction_control_status =
-            dynamic_cast<const internal::TrilinosReductionControl *const>(
-              status_test.get()))
+    if (const auto *const reduction_control_status =
+          dynamic_cast<const internal::TrilinosReductionControl *const>(
+            status_test.get()))
       {
         Assert(dynamic_cast<const ReductionControl *const>(&solver_control),
                ExcInternalError());

@@ -273,11 +273,9 @@ namespace Particles
     const Particle<dim, spacedim> &                                    particle,
     const typename Triangulation<dim, spacedim>::active_cell_iterator &cell)
   {
-    typename std::multimap<internal::LevelInd,
-                           Particle<dim, spacedim>>::iterator it =
-      particles.insert(
-        std::make_pair(internal::LevelInd(cell->level(), cell->index()),
-                       particle));
+    auto it = particles.insert(
+      std::make_pair(internal::LevelInd(cell->level(), cell->index()),
+                     particle));
 
     particle_iterator particle_it(particles, it);
     particle_it->set_property_pool(*property_pool);
@@ -573,9 +571,8 @@ namespace Particles
       std::vector<unsigned int> neighbor_permutation;
 
       // Find the cells that the particles moved to.
-      typename std::vector<particle_iterator>::iterator
-        it           = particles_out_of_cell.begin(),
-        end_particle = particles_out_of_cell.end();
+      auto it           = particles_out_of_cell.begin(),
+           end_particle = particles_out_of_cell.end();
 
       for (; it != end_particle; ++it)
         {
@@ -619,9 +616,7 @@ namespace Particles
             {
               try
                 {
-                  typename std::set<typename Triangulation<dim, spacedim>::
-                                      active_cell_iterator>::const_iterator
-                    cell = vertex_to_cells[closest_vertex_index].begin();
+                  auto cell = vertex_to_cells[closest_vertex_index].begin();
 
                   std::advance(cell, neighbor_permutation[i]);
                   const Point<dim> p_unit =
@@ -767,8 +762,7 @@ namespace Particles
                 const particle_iterator_range particle_range =
                   particles_in_cell(cell);
 
-                for (std::set<types::subdomain_id>::const_iterator domain =
-                       cell_to_neighbor_subdomain.begin();
+                for (auto domain = cell_to_neighbor_subdomain.begin();
                      domain != cell_to_neighbor_subdomain.end();
                      ++domain)
                   {
@@ -849,7 +843,7 @@ namespace Particles
           begin()->serialized_size_in_bytes() + cellid_size +
           (size_callback ? size_callback() : 0);
         send_data.resize(n_send_particles * particle_size);
-        void *data = static_cast<void *>(&send_data.front());
+        auto *data = static_cast<void *>(&send_data.front());
 
         // Serialize the data sorted by receiving process
         for (unsigned int i = 0; i < n_neighbors; ++i)
@@ -972,7 +966,7 @@ namespace Particles
 
     // Put the received particles into the domain if they are in the
     // triangulation
-    const void *recv_data_it = static_cast<const void *>(recv_data.data());
+    const auto *recv_data_it = static_cast<const void *>(recv_data.data());
 
     while (reinterpret_cast<std::size_t>(recv_data_it) -
              reinterpret_cast<std::size_t>(recv_data.data()) <
@@ -986,11 +980,9 @@ namespace Particles
         const typename Triangulation<dim, spacedim>::active_cell_iterator cell =
           id.to_cell(*triangulation);
 
-        typename std::multimap<internal::LevelInd,
-                               Particle<dim, spacedim>>::iterator
-          recv_particle = received_particles.insert(std::make_pair(
-            internal::LevelInd(cell->level(), cell->index()),
-            Particle<dim, spacedim>(recv_data_it, property_pool.get())));
+        auto recv_particle = received_particles.insert(std::make_pair(
+          internal::LevelInd(cell->level(), cell->index()),
+          Particle<dim, spacedim>(recv_data_it, property_pool.get())));
 
         if (load_callback)
           recv_data_it =
@@ -1026,10 +1018,9 @@ namespace Particles
   void
   ParticleHandler<dim, spacedim>::register_store_callback_function()
   {
-    parallel::distributed::Triangulation<dim, spacedim>
-      *non_const_triangulation =
-        const_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
-          &(*triangulation));
+    auto *non_const_triangulation =
+      const_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
+        &(*triangulation));
 
     // Only save and load particles if there are any, we might get here for
     // example if somebody created a ParticleHandler but generated 0 particles.
@@ -1062,10 +1053,9 @@ namespace Particles
     // particle data.
     clear_particles();
 
-    parallel::distributed::Triangulation<dim, spacedim>
-      *non_const_triangulation =
-        const_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
-          &(*triangulation));
+    auto *non_const_triangulation =
+      const_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
+        &(*triangulation));
 
     // If we are resuming from a checkpoint, we first have to register the
     // store function again, to set the triangulation in the same state as
@@ -1223,9 +1213,7 @@ namespace Particles
       {
         case parallel::distributed::Triangulation<dim, spacedim>::CELL_PERSIST:
           {
-            typename std::multimap<internal::LevelInd,
-                                   Particle<dim, spacedim>>::iterator
-              position_hint = particles.end();
+            auto position_hint = particles.end();
             for (auto &particle : loaded_particles_on_cell)
               {
                 // Use std::multimap::emplace_hint to speed up insertion of
@@ -1255,9 +1243,7 @@ namespace Particles
 
         case parallel::distributed::Triangulation<dim, spacedim>::CELL_COARSEN:
           {
-            typename std::multimap<internal::LevelInd,
-                                   Particle<dim, spacedim>>::iterator
-              position_hint = particles.end();
+            auto position_hint = particles.end();
             for (auto &particle : loaded_particles_on_cell)
               {
                 const Point<dim> p_unit =

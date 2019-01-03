@@ -2168,7 +2168,7 @@ namespace TrilinosWrappers
 
 #    ifdef DEAL_II_WITH_MPI
 
-      const Epetra_MpiComm *mpi_comm =
+      const auto *mpi_comm =
         dynamic_cast<const Epetra_MpiComm *>(&vector->Map().Comm());
       comm = mpi_comm->Comm();
 

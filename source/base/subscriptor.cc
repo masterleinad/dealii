@@ -94,8 +94,7 @@ Subscriptor::check_no_subscribers() const noexcept
       if (std::uncaught_exception() == false)
         {
           std::string infostring;
-          for (map_iterator it = counter_map.begin(); it != counter_map.end();
-               ++it)
+          for (auto it = counter_map.begin(); it != counter_map.end(); ++it)
             {
               if (it->second > 0)
                 infostring +=
@@ -164,7 +163,7 @@ Subscriptor::subscribe(std::atomic<bool> *const validity, const char *id) const
 
   const char *const name = (id != 0) ? id : unknown_subscriber;
 
-  map_iterator it = counter_map.find(name);
+  auto it = counter_map.find(name);
   if (it == counter_map.end())
     counter_map.insert(map_value_type(name, 1U));
   else
@@ -188,7 +187,7 @@ Subscriptor::unsubscribe(std::atomic<bool> *const validity,
 
   std::lock_guard<std::mutex> lock(mutex);
 
-  map_iterator it = counter_map.find(name);
+  auto it = counter_map.find(name);
   if (it == counter_map.end() || it->second == 0)
     {
       AssertNothrow(it != counter_map.end(),

@@ -2199,7 +2199,7 @@ CellAccessor<dim, spacedim>::id() const
       const unsigned int n_children = parent->n_children();
 
       // determine which child we are
-      unsigned char v = static_cast<unsigned char>(-1);
+      auto v = static_cast<unsigned char>(-1);
       for (unsigned int c = 0; c < n_children; ++c)
         {
           if (parent->child_index(c) == ptr.index())

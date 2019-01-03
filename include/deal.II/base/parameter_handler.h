@@ -2198,8 +2198,8 @@ ParameterHandler::add_parameter(const std::string &          entry,
                 pattern,
                 documentation);
 
-  std::string        path = get_current_full_path(entry);
-  const unsigned int pattern_index =
+  std::string path = get_current_full_path(entry);
+  const auto  pattern_index =
     entries->get<unsigned int>(path + path_separator + "pattern");
 
   auto action = [&, pattern_index](const std::string &val) {

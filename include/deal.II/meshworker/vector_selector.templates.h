@@ -131,7 +131,7 @@ namespace MeshWorker
     const AnyData &data = this->data;
     for (unsigned int i = 0; i < this->n_values(); ++i)
       {
-        const VectorType *src = data.read_ptr<VectorType>(this->value_index(i));
+        const auto *src = data.read_ptr<VectorType>(this->value_index(i));
         VectorSlice<std::vector<std::vector<typename VectorType::value_type>>>
           dst(values[i], component, n_comp);
         fe.get_function_values(*src, make_slice(index, start, size), dst, true);
@@ -139,8 +139,7 @@ namespace MeshWorker
 
     for (unsigned int i = 0; i < this->n_gradients(); ++i)
       {
-        const VectorType *src =
-          data.read_ptr<VectorType>(this->gradient_index(i));
+        const auto *src = data.read_ptr<VectorType>(this->gradient_index(i));
         VectorSlice<std::vector<
           std::vector<Tensor<1, spacedim, typename VectorType::value_type>>>>
           dst(gradients[i], component, n_comp);
@@ -152,8 +151,7 @@ namespace MeshWorker
 
     for (unsigned int i = 0; i < this->n_hessians(); ++i)
       {
-        const VectorType *src =
-          data.read_ptr<VectorType>(this->hessian_index(i));
+        const auto *src = data.read_ptr<VectorType>(this->hessian_index(i));
         VectorSlice<std::vector<
           std::vector<Tensor<2, spacedim, typename VectorType::value_type>>>>
           dst(hessians[i], component, n_comp);
@@ -231,7 +229,7 @@ namespace MeshWorker
     const AnyData &data = this->data;
     for (unsigned int i = 0; i < this->n_values(); ++i)
       {
-        const MGLevelObject<VectorType> *src =
+        const auto *src =
           data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
         VectorSlice<std::vector<std::vector<typename VectorType::value_type>>>
           dst(values[i], component, n_comp);
@@ -243,7 +241,7 @@ namespace MeshWorker
 
     for (unsigned int i = 0; i < this->n_gradients(); ++i)
       {
-        const MGLevelObject<VectorType> *src =
+        const auto *src =
           data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
         VectorSlice<std::vector<
           std::vector<Tensor<1, spacedim, typename VectorType::value_type>>>>
@@ -256,7 +254,7 @@ namespace MeshWorker
 
     for (unsigned int i = 0; i < this->n_hessians(); ++i)
       {
-        const MGLevelObject<VectorType> *src =
+        const auto *src =
           data.read_ptr<MGLevelObject<VectorType>>(this->value_index(i));
         VectorSlice<std::vector<
           std::vector<Tensor<2, spacedim, typename VectorType::value_type>>>>

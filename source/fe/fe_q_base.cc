@@ -356,9 +356,9 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
 
     for (unsigned int i = 0; i < constraint_points.size(); ++i)
       {
-        const double interval = static_cast<double>(q_deg * 2);
-        bool         mirror[dim - 1];
-        Point<dim>   constraint_point;
+        const auto interval = static_cast<double>(q_deg * 2);
+        bool       mirror[dim - 1];
+        Point<dim> constraint_point;
 
         // Eliminate FP errors in constraint points. Due to their origin, they
         // must all be fractions of the unit interval. If we have polynomial
@@ -371,7 +371,7 @@ struct FE_Q_Base<PolynomialType, xdim, xspacedim>::Implementation
         // coordinates should eliminate any FP errors.
         for (unsigned int k = 0; k < dim - 1; ++k)
           {
-            const int coord_int =
+            const auto coord_int =
               static_cast<int>(constraint_points[i](k) * interval + 0.25);
             constraint_point(k) = 1. * coord_int / interval;
 
@@ -501,7 +501,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_interpolation_matrix(
   FullMatrix<double> &                interpolation_matrix) const
 {
   // go through the list of elements we can interpolate from
-  if (const FE_Q_Base<PolynomialType, dim, spacedim> *source_fe =
+  if (const auto *source_fe =
         dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
           &x_source_fe))
     {
@@ -618,7 +618,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::get_subface_interpolation_matrix(
                               x_source_fe.dofs_per_face));
 
   // see if source is a Q element
-  if (const FE_Q_Base<PolynomialType, dim, spacedim> *source_fe =
+  if (const auto *source_fe =
         dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
           &x_source_fe))
     {
@@ -759,7 +759,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_line_dof_identities(
 {
   // we can presently only compute these identities if both FEs are FE_Qs or
   // if the other one is an FE_Nothing
-  if (const FE_Q_Base<PolynomialType, dim, spacedim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
           &fe_other))
     {
@@ -824,7 +824,7 @@ FE_Q_Base<PolynomialType, dim, spacedim>::hp_quad_dof_identities(
 {
   // we can presently only compute these identities if both FEs are FE_Qs or
   // if the other one is an FE_Nothing
-  if (const FE_Q_Base<PolynomialType, dim, spacedim> *fe_q_other =
+  if (const auto *fe_q_other =
         dynamic_cast<const FE_Q_Base<PolynomialType, dim, spacedim> *>(
           &fe_other))
     {

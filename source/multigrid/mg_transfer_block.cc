@@ -144,7 +144,7 @@ MGTransferBlockSelect<number>::copy_to_mg(
        level != 0;)
     {
       --level;
-      for (IT i = copy_indices[selected_block][level].begin();
+      for (auto i = copy_indices[selected_block][level].begin();
            i != copy_indices[selected_block][level].end();
            ++i)
         dst[level](i->second) = src.block(selected_block)(i->first);
@@ -169,7 +169,7 @@ MGTransferBlockSelect<number>::copy_to_mg(
        level != 0;)
     {
       --level;
-      for (IT i = copy_indices[selected_block][level].begin();
+      for (auto i = copy_indices[selected_block][level].begin();
            i != copy_indices[selected_block][level].end();
            ++i)
         dst[level](i->second) = src(i->first);
@@ -193,7 +193,7 @@ MGTransferBlock<number>::copy_to_mg(
       --level;
       for (unsigned int block = 0; block < selected.size(); ++block)
         if (selected[block])
-          for (IT i = copy_indices[block][level].begin();
+          for (auto i = copy_indices[block][level].begin();
                i != copy_indices[block][level].end();
                ++i)
             dst[level].block(mg_block[block])(i->second) =

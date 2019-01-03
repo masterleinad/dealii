@@ -3615,10 +3615,8 @@ namespace GridTools
           for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
                ++v)
             {
-              const std::map<unsigned int,
-                             std::set<dealii::types::subdomain_id>>::
-                const_iterator neighbor_subdomains_of_vertex =
-                  vertices_with_ghost_neighbors.find(cell->vertex_index(v));
+              const auto neighbor_subdomains_of_vertex =
+                vertices_with_ghost_neighbors.find(cell->vertex_index(v));
 
               if (neighbor_subdomains_of_vertex ==
                   vertices_with_ghost_neighbors.end())
@@ -3651,7 +3649,7 @@ namespace GridTools
 
                       // find the data buffer for proc "subdomain" if it exists
                       // or create an empty one otherwise
-                      typename DestinationToBufferMap::iterator p =
+                      auto p =
                         destination_to_data_buffer_map
                           .insert(std::make_pair(
                             subdomain, CellDataTransferBuffer<dim, DataType>()))

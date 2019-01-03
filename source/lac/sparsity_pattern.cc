@@ -679,7 +679,7 @@ SparsityPattern::operator()(const size_type i, const size_type j) const
   const size_type *sorted_region_start =
     (store_diagonal_first_in_row ? &colnums[rowstart[i] + 1] :
                                    &colnums[rowstart[i]]);
-  const size_type *const p =
+  const auto *const p =
     Utilities::lower_bound<const size_type *>(sorted_region_start,
                                               &colnums[rowstart[i + 1]],
                                               j);

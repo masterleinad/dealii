@@ -200,7 +200,7 @@ namespace TrilinosWrappers
 
     if (additional_data.output_details)
       {
-        ML_Epetra::MultiLevelPreconditioner *multilevel_operator =
+        auto *multilevel_operator =
           dynamic_cast<ML_Epetra::MultiLevelPreconditioner *>(
             preconditioner.get());
         Assert(multilevel_operator != nullptr,
@@ -268,7 +268,7 @@ namespace TrilinosWrappers
   void
   PreconditionAMG::reinit()
   {
-    ML_Epetra::MultiLevelPreconditioner *multilevel_operator =
+    auto *multilevel_operator =
       dynamic_cast<ML_Epetra::MultiLevelPreconditioner *>(preconditioner.get());
     multilevel_operator->ReComputePreconditioner();
   }

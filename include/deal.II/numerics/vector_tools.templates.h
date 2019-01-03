@@ -957,10 +957,7 @@ namespace VectorTools
       const AffineConstraints<number> &          constraints,
       std::map<types::global_dof_index, number> &boundary_values)
     {
-      for (typename std::map<types::global_dof_index, number>::iterator it =
-             boundary_values.begin();
-           it != boundary_values.end();
-           ++it)
+      for (auto it = boundary_values.begin(); it != boundary_values.end(); ++it)
         if (constraints.is_constrained(it->first))
           // TODO: This looks wrong -- shouldn't it be ==0 in the first
           // condition and && ?
@@ -1785,12 +1782,10 @@ namespace VectorTools
   {
     if (dim == spacedim)
       {
-        const Mapping<dim> *const mapping_ptr =
+        const auto *const mapping_ptr =
           dynamic_cast<const Mapping<dim> *>(&mapping);
-        const DoFHandler<dim> *const dof_ptr =
-          dynamic_cast<const DoFHandler<dim> *>(&dof);
-        const Function<dim,
-                       typename VectorType::value_type> *const function_ptr =
+        const auto *const dof_ptr = dynamic_cast<const DoFHandler<dim> *>(&dof);
+        const auto *const function_ptr =
           dynamic_cast<const Function<dim, typename VectorType::value_type> *>(
             &function);
         Assert(mapping_ptr != nullptr, ExcInternalError());
@@ -1925,7 +1920,7 @@ namespace VectorTools
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
     rhs_vector = typename VectorType::value_type(0.);
 
-    UpdateFlags update_flags =
+    auto update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     FEValues<dim, spacedim> fe_values(mapping, fe, quadrature, update_flags);
 
@@ -2065,7 +2060,7 @@ namespace VectorTools
            ExcDimensionMismatch(rhs_vector.size(), dof_handler.n_dofs()));
     rhs_vector = 0;
 
-    UpdateFlags update_flags =
+    auto update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     hp::FEValues<dim, spacedim> x_fe_values(mapping,
                                             fe,
@@ -2448,7 +2443,7 @@ namespace VectorTools
 
     rhs_vector = 0;
 
-    UpdateFlags update_flags =
+    auto update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     FEFaceValues<dim> fe_values(mapping, fe, quadrature, update_flags);
 
@@ -2597,7 +2592,7 @@ namespace VectorTools
 
     rhs_vector = 0;
 
-    UpdateFlags update_flags =
+    auto update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     hp::FEFaceValues<dim> x_fe_values(mapping, fe, quadrature, update_flags);
 
@@ -2777,11 +2772,7 @@ namespace VectorTools
                         "for interior faces in your function map."));
 
       const unsigned int n_components = DoFTools::n_components(dof);
-      for (typename std::map<types::boundary_id,
-                             const Function<spacedim, number> *>::const_iterator
-             i = function_map.begin();
-           i != function_map.end();
-           ++i)
+      for (auto i = function_map.begin(); i != function_map.end(); ++i)
         Assert(n_components == i->second->n_components,
                ExcDimensionMismatch(n_components, i->second->n_components));
 
@@ -3451,10 +3442,7 @@ namespace VectorTools
 
       std::vector<types::global_dof_index> dof_to_boundary_mapping;
       std::set<types::boundary_id>         selected_boundary_components;
-      for (typename std::map<types::boundary_id,
-                             const Function<spacedim, number> *>::const_iterator
-             i = boundary_functions.begin();
-           i != boundary_functions.end();
+      for (auto i = boundary_functions.begin(); i != boundary_functions.end();
            ++i)
         selected_boundary_components.insert(i->first);
 
@@ -6940,7 +6928,7 @@ namespace VectorTools
   {
     ZeroFunction<dim>                                        zero_function(dim);
     std::map<types::boundary_id, const Function<spacedim> *> function_map;
-    std::set<types::boundary_id>::const_iterator it = boundary_ids.begin();
+    auto it = boundary_ids.begin();
     for (; it != boundary_ids.end(); ++it)
       function_map[*it] = &zero_function;
     compute_nonzero_normal_flux_constraints(dof_handler,
@@ -7201,9 +7189,7 @@ namespace VectorTools
                    std::pair<Tensor<1, dim>, unsigned int>>;
 
         CellToNormalsMap cell_to_normals_map;
-        for (typename DoFToNormalsMap::const_iterator q = same_dof_range[0];
-             q != same_dof_range[1];
-             ++q)
+        for (auto q = same_dof_range[0]; q != same_dof_range[1]; ++q)
           if (cell_to_normals_map.find(q->second.second) ==
               cell_to_normals_map.end())
             cell_to_normals_map[q->second.second] =
@@ -7322,8 +7308,7 @@ namespace VectorTools
                 {
                   Tensor<2, dim> t;
 
-                  typename DoFToNormalsMap::const_iterator x =
-                    same_dof_range[0];
+                  auto x = same_dof_range[0];
                   for (unsigned int i = 0; i < dim; ++i, ++x)
                     for (unsigned int j = 0; j < dim; ++j)
                       t[i][j] = x->second.first[j];
@@ -7377,10 +7362,7 @@ namespace VectorTools
                   std::list<Tensor<1, dim>>>;
                 CellContributions cell_contributions;
 
-                for (typename DoFToNormalsMap::const_iterator q =
-                       same_dof_range[0];
-                     q != same_dof_range[1];
-                     ++q)
+                for (auto q = same_dof_range[0]; q != same_dof_range[1]; ++q)
                   cell_contributions[q->second.second].push_back(
                     q->second.first);
                 Assert(cell_contributions.size() >= 1, ExcInternalError());
@@ -7436,8 +7418,7 @@ namespace VectorTools
                     Tensor<1, dim> normals[dim - 1];
                     {
                       unsigned int index = 0;
-                      for (typename std::list<Tensor<1, dim>>::const_iterator
-                             t = contribution->second.begin();
+                      for (auto t = contribution->second.begin();
                            t != contribution->second.end();
                            ++t, ++index)
                         normals[index] = *t;
@@ -7486,8 +7467,7 @@ namespace VectorTools
                 {
                   const Tensor<1, dim> first_tangent =
                     tangential_vectors.front();
-                  typename std::list<Tensor<1, dim>>::iterator t =
-                    tangential_vectors.begin();
+                  auto t = tangential_vectors.begin();
                   ++t;
                   for (; t != tangential_vectors.end(); ++t)
                     if (*t * first_tangent < 0)
@@ -7550,7 +7530,7 @@ namespace VectorTools
   {
     ZeroFunction<dim>                                        zero_function(dim);
     std::map<types::boundary_id, const Function<spacedim> *> function_map;
-    std::set<types::boundary_id>::const_iterator it = boundary_ids.begin();
+    auto it = boundary_ids.begin();
     for (; it != boundary_ids.end(); ++it)
       function_map[*it] = &zero_function;
     compute_nonzero_tangential_flux_constraints(dof_handler,
@@ -7692,11 +7672,7 @@ namespace VectorTools
     // iterate over the list of all vector components we found and see if we
     // can find constrained ones
     unsigned int n_total_constraints_found = 0;
-    for (typename std::set<std::array<types::global_dof_index, dim>,
-                           internal::PointComparator<dim>>::const_iterator it =
-           vector_dofs.begin();
-         it != vector_dofs.end();
-         ++it)
+    for (auto it = vector_dofs.begin(); it != vector_dofs.end(); ++it)
       {
         unsigned int n_constraints = 0;
         bool         is_constrained[dim];
@@ -8226,7 +8202,7 @@ namespace VectorTools
             break;
         }
 
-      UpdateFlags update_flags =
+      auto update_flags =
         UpdateFlags(update_quadrature_points | update_JxW_values);
       switch (norm)
         {
@@ -8426,7 +8402,7 @@ namespace VectorTools
 
     MPI_Comm comm = MPI_COMM_SELF;
 #ifdef DEAL_II_WITH_MPI
-    if (const parallel::Triangulation<dim, spacedim> *ptria =
+    if (const auto *ptria =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(&tria))
       comm = ptria->get_communicator();
 #endif
@@ -9057,7 +9033,7 @@ namespace VectorTools
 #ifdef DEAL_II_WITH_MPI
     // if this was a distributed DoFHandler, we need to do the reduction
     // over the entire domain
-    if (const parallel::Triangulation<dim, spacedim> *p_triangulation =
+    if (const auto *p_triangulation =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
             &dof.get_triangulation()))
       {
@@ -9171,7 +9147,7 @@ namespace VectorTools
         // Once we have this, interpolate with the given finite element
         // to get a Mapping which is interpolatory at the support points
         // of FE_Q(fe.degree())
-        const FESystem<dim, spacedim> *fe_system =
+        const auto *fe_system =
           dynamic_cast<const FESystem<dim, spacedim> *>(&fe);
         Assert(fe_system, ExcNotImplemented());
         unsigned int degree = numbers::invalid_unsigned_int;

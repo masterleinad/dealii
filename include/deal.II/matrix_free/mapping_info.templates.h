@@ -905,10 +905,8 @@ namespace internal
                             std::vector<unsigned int> &indices)
       {
         indices.resize(source.size());
-        typename CONTAINER::iterator lookup = destination.begin();
-        for (typename CONTAINER::const_iterator it = source.begin();
-             it != source.end();
-             ++it)
+        auto lookup = destination.begin();
+        for (auto it = source.begin(); it != source.end(); ++it)
           {
             typename CONTAINER::value_type entry = *it;
             entry.second                         = destination.size();

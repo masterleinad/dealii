@@ -90,7 +90,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
 
       reinit(down_V.locally_owned_elements(),
              down_V.get_mpi_communicator(),
@@ -230,7 +230,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
       // If the maps are the same we can Update right away.
       if (vector->Map().SameAs(down_V.trilinos_vector().Map()))
         {
@@ -291,7 +291,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
       Assert(this->size() == down_V.size(),
              ExcDimensionMismatch(this->size(), down_V.size()));
       Assert(vector->Map().SameAs(down_V.trilinos_vector().Map()),
@@ -326,7 +326,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
       AssertIsFinite(a);
       Assert(vector->Map().SameAs(down_V.trilinos_vector().Map()),
              ExcDifferentParallelPartitioning());
@@ -352,9 +352,9 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
       // Downcast W. If fails, throws an exception.
-      const Vector &down_W = dynamic_cast<const Vector &>(W);
+      const auto &down_W = dynamic_cast<const Vector &>(W);
       Assert(vector->Map().SameAs(down_V.trilinos_vector().Map()),
              ExcDifferentParallelPartitioning());
       Assert(vector->Map().SameAs(down_W.trilinos_vector().Map()),
@@ -381,8 +381,8 @@ namespace LinearAlgebra
 
       *this *= s;
       // Downcast V. It fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
-      Vector        tmp(down_V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
+      Vector      tmp(down_V);
       tmp *= a;
       *this += tmp;
     }
@@ -397,7 +397,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast scaling_factors. If fails, throws an exception.
-      const Vector &down_scaling_factors =
+      const auto &down_scaling_factors =
         dynamic_cast<const Vector &>(scaling_factors);
       Assert(vector->Map().SameAs(down_scaling_factors.trilinos_vector().Map()),
              ExcDifferentParallelPartitioning());
@@ -420,7 +420,7 @@ namespace LinearAlgebra
              ExcVectorTypeNotCompatible());
 
       // Downcast V. If fails, throws an exception.
-      const Vector &down_V = dynamic_cast<const Vector &>(V);
+      const auto &down_V = dynamic_cast<const Vector &>(V);
       // If we don't have the same map, copy.
       if (vector->Map().SameAs(down_V.trilinos_vector().Map()) == false)
         this->sadd(0., a, V);
@@ -454,7 +454,7 @@ namespace LinearAlgebra
         }
 
       // Check that the vector is zero on _all_ processors.
-      const Epetra_MpiComm *mpi_comm =
+      const auto *mpi_comm =
         dynamic_cast<const Epetra_MpiComm *>(&vector->Map().Comm());
       Assert(mpi_comm != nullptr, ExcInternalError());
       unsigned int num_nonzero = Utilities::MPI::sum(flag, mpi_comm->Comm());
@@ -544,7 +544,7 @@ namespace LinearAlgebra
     MPI_Comm
     Vector::get_mpi_communicator() const
     {
-      const Epetra_MpiComm *epetra_comm =
+      const auto *epetra_comm =
         dynamic_cast<const Epetra_MpiComm *>(&(vector->Comm()));
       Assert(epetra_comm != nullptr, ExcInternalError());
       return epetra_comm->GetMpiComm();
@@ -571,8 +571,8 @@ namespace LinearAlgebra
         {
           const size_type n_indices = vector->Map().NumMyElements();
 #    ifndef DEAL_II_WITH_64BIT_INDICES
-          unsigned int *vector_indices =
-            (unsigned int *)vector->Map().MyGlobalElements();
+          auto *vector_indices =
+            reinterpret_cast<unsigned int *>(vector->Map().MyGlobalElements());
 #    else
           size_type *vector_indices =
             reinterpret_cast<size_type *>(vector->Map().MyGlobalElements64());

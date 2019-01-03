@@ -1165,9 +1165,7 @@ namespace Threads
     void
     join_all() const
     {
-      for (typename std::list<Thread<RT>>::const_iterator t = threads.begin();
-           t != threads.end();
-           ++t)
+      for (auto t = threads.begin(); t != threads.end(); ++t)
         t->join();
     }
 
@@ -1845,9 +1843,7 @@ namespace Threads
     void
     join_all() const
     {
-      for (typename std::list<Task<RT>>::const_iterator t = tasks.begin();
-           t != tasks.end();
-           ++t)
+      for (auto t = tasks.begin(); t != tasks.end(); ++t)
         t->join();
     }
 

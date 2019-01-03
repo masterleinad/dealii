@@ -3146,7 +3146,7 @@ FiniteElement<dim, spacedim>::component_to_system_index(
   const unsigned int index) const
 {
   AssertIndexRange(component, this->n_components());
-  const std::vector<std::pair<unsigned int, unsigned int>>::const_iterator it =
+  const auto it =
     std::find(system_to_component_table.begin(),
               system_to_component_table.end(),
               std::pair<unsigned int, unsigned int>(component, index));

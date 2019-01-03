@@ -294,9 +294,7 @@ namespace MatrixTools
             // figure out which rows of the matrix we
             // have to eliminate on this processor
             std::vector<types::global_dof_index> constrained_rows;
-            for (std::map<types::global_dof_index,
-                          TrilinosScalar>::const_iterator dof =
-                   boundary_values.begin();
+            for (auto dof = boundary_values.begin();
                  dof != boundary_values.end();
                  ++dof)
               if ((dof->first >= local_range.first) &&
@@ -314,9 +312,7 @@ namespace MatrixTools
 
             std::vector<types::global_dof_index> indices;
             std::vector<TrilinosScalar>          solution_values;
-            for (std::map<types::global_dof_index,
-                          TrilinosScalar>::const_iterator dof =
-                   boundary_values.begin();
+            for (auto dof = boundary_values.begin();
                  dof != boundary_values.end();
                  ++dof)
               if ((dof->first >= local_range.first) &&
@@ -380,9 +376,7 @@ namespace MatrixTools
         {
           int                     block  = 0;
           types::global_dof_index offset = 0;
-          for (std::map<types::global_dof_index, TrilinosScalar>::const_iterator
-                 dof = boundary_values.begin();
-               dof != boundary_values.end();
+          for (auto dof = boundary_values.begin(); dof != boundary_values.end();
                ++dof)
             {
               if (dof->first >= matrix.block(block, 0).m() + offset)

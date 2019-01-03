@@ -803,9 +803,7 @@ namespace Step28
       cell_list =
         GridTools::get_finest_common_cells(dof_handler, g_prime.dof_handler);
 
-    typename std::list<std::pair<typename DoFHandler<dim>::cell_iterator,
-                                 typename DoFHandler<dim>::cell_iterator>>::
-      const_iterator cell_iter = cell_list.begin();
+    auto cell_iter = cell_list.begin();
 
     for (; cell_iter != cell_list.end(); ++cell_iter)
       {

@@ -1549,7 +1549,7 @@ PreconditionSSOR<MatrixType>::initialize(
 
   // in case we have a SparseMatrix class, we can extract information about
   // the diagonal.
-  const SparseMatrix<typename MatrixType::value_type> *mat =
+  const auto *mat =
     dynamic_cast<const SparseMatrix<typename MatrixType::value_type> *>(
       &*this->A);
 

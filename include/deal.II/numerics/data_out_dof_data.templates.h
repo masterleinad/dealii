@@ -1310,7 +1310,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_dataset_names()
     internal::DataOutImplementation::DataEntryBase<DoFHandlerType>>>::
     const_iterator;
 
-  for (data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
+  for (auto d = dof_data.begin(); d != dof_data.end(); ++d)
     for (unsigned int i = 0; i < (*d)->names.size(); ++i)
       if ((*d)->is_complex_valued() == false)
         names.push_back((*d)->names[i]);
@@ -1319,7 +1319,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::get_dataset_names()
           names.push_back((*d)->names[i] + "_re");
           names.push_back((*d)->names[i] + "_im");
         }
-  for (data_iterator d = cell_data.begin(); d != cell_data.end(); ++d)
+  for (auto d = cell_data.begin(); d != cell_data.end(); ++d)
     {
       Assert((*d)->names.size() == 1, ExcInternalError());
       if ((*d)->is_complex_valued() == false)
@@ -1358,7 +1358,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
     const_iterator;
 
   unsigned int output_component = 0;
-  for (data_iterator d = dof_data.begin(); d != dof_data.end(); ++d)
+  for (auto d = dof_data.begin(); d != dof_data.end(); ++d)
     for (unsigned int i = 0; i < (*d)->n_output_variables;)
       // see what kind of data we have here. note that for the purpose of the
       // current function all we care about is vector data

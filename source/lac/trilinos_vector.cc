@@ -209,9 +209,9 @@ namespace TrilinosWrappers
           // otherwise we might access an MPI_Comm object that has been
           // deleted
 #  ifdef DEAL_II_WITH_MPI
-          const Epetra_MpiComm *my_comm =
+          const auto *my_comm =
             dynamic_cast<const Epetra_MpiComm *>(&vector->Comm());
-          const Epetra_MpiComm *v_comm =
+          const auto *v_comm =
             dynamic_cast<const Epetra_MpiComm *>(&v.vector->Comm());
           const bool same_communicators =
             my_comm != nullptr && v_comm != nullptr &&
@@ -266,7 +266,7 @@ namespace TrilinosWrappers
           last_action = Insert;
         }
 #  if defined(DEBUG) && defined(DEAL_II_WITH_MPI)
-      const Epetra_MpiComm *comm_ptr =
+      const auto *comm_ptr =
         dynamic_cast<const Epetra_MpiComm *>(&(v.vector->Comm()));
       Assert(comm_ptr != nullptr, ExcInternalError());
       const size_type n_elements_global =
@@ -342,7 +342,7 @@ namespace TrilinosWrappers
       else
         vector = std::move(actual_vec);
 #  if defined(DEBUG) && defined(DEAL_II_WITH_MPI)
-      const Epetra_MpiComm *comm_ptr =
+      const auto *comm_ptr =
         dynamic_cast<const Epetra_MpiComm *>(&(vector->Comm()));
       Assert(comm_ptr != nullptr, ExcInternalError());
       const size_type n_elements_global =
@@ -421,9 +421,9 @@ namespace TrilinosWrappers
       // check equality for MPI communicators to avoid accessing a possibly
       // invalid MPI_Comm object
 #  ifdef DEAL_II_WITH_MPI
-      const Epetra_MpiComm *my_comm =
+      const auto *my_comm =
         dynamic_cast<const Epetra_MpiComm *>(&vector->Comm());
-      const Epetra_MpiComm *v_comm =
+      const auto *v_comm =
         dynamic_cast<const Epetra_MpiComm *>(&v.vector->Comm());
       const bool same_communicators = my_comm != nullptr && v_comm != nullptr &&
                                       my_comm->DataPtr() == v_comm->DataPtr();
@@ -614,8 +614,8 @@ namespace TrilinosWrappers
       // check that every process has decided to use the same mode. This will
       // otherwise result in undefined behaviour in the call to
       // GlobalAssemble().
-      double                double_mode = mode;
-      const Epetra_MpiComm *comm_ptr =
+      double      double_mode = mode;
+      const auto *comm_ptr =
         dynamic_cast<const Epetra_MpiComm *>(&(trilinos_partitioner().Comm()));
       Assert(comm_ptr != nullptr, ExcInternalError());
       Utilities::MPI::MinMaxAvg result =
@@ -757,7 +757,7 @@ namespace TrilinosWrappers
 #  ifdef DEAL_II_WITH_MPI
       // in parallel, check that the vector
       // is zero on _all_ processors.
-      const Epetra_MpiComm *mpi_comm =
+      const auto *mpi_comm =
         dynamic_cast<const Epetra_MpiComm *>(&vector->Map().Comm());
       Assert(mpi_comm != nullptr, ExcInternalError());
       unsigned int num_nonzero = Utilities::MPI::sum(flag, mpi_comm->Comm());

@@ -495,7 +495,7 @@ namespace WorkStream
                                                ScratchData,
                                                CopyData>::ItemType;
 
-          ItemType *current_item = static_cast<ItemType *>(item);
+          auto *current_item = static_cast<ItemType *>(item);
 
           // we need to find an unused scratch data object in the list that
           // corresponds to the current thread and then mark it as used. if
@@ -515,8 +515,7 @@ namespace WorkStream
 
             // see if there is an unused object. if so, grab it and mark
             // it as used
-            for (typename ItemType::ScratchDataList::iterator p =
-                   scratch_data_list.begin();
+            for (auto p = scratch_data_list.begin();
                  p != scratch_data_list.end();
                  ++p)
               if (p->currently_in_use == false)
@@ -568,8 +567,7 @@ namespace WorkStream
             typename ItemType::ScratchDataList &scratch_data_list =
               current_item->scratch_data->get();
 
-            for (typename ItemType::ScratchDataList::iterator p =
-                   scratch_data_list.begin();
+            for (auto p = scratch_data_list.begin();
                  p != scratch_data_list.end();
                  ++p)
               if (p->scratch_data.get() == scratch_data)
@@ -640,7 +638,7 @@ namespace WorkStream
                                                ScratchData,
                                                CopyData>::ItemType;
 
-          ItemType *current_item = static_cast<ItemType *>(item);
+          auto *current_item = static_cast<ItemType *>(item);
 
           // initiate copying data. for the same reasons as in the worker class
           // above, catch exceptions rather than letting it propagate into
@@ -786,8 +784,7 @@ namespace WorkStream
 
             // see if there is an unused object. if so, grab it and mark
             // it as used
-            for (typename ScratchAndCopyDataList::iterator p =
-                   scratch_and_copy_data_list.begin();
+            for (auto p = scratch_and_copy_data_list.begin();
                  p != scratch_and_copy_data_list.end();
                  ++p)
               if (p->currently_in_use == false)
@@ -814,9 +811,7 @@ namespace WorkStream
 
           // then call the worker and copier functions on each
           // element of the chunk we were given.
-          for (typename std::vector<Iterator>::const_iterator p = range.begin();
-               p != range.end();
-               ++p)
+          for (auto p = range.begin(); p != range.end(); ++p)
             {
               try
                 {
@@ -841,8 +836,7 @@ namespace WorkStream
           {
             ScratchAndCopyDataList &scratch_and_copy_data_list = data.get();
 
-            for (typename ScratchAndCopyDataList::iterator p =
-                   scratch_and_copy_data_list.begin();
+            for (auto p = scratch_and_copy_data_list.begin();
                  p != scratch_and_copy_data_list.end();
                  ++p)
               if (p->scratch_data.get() == scratch_data)
@@ -1122,8 +1116,7 @@ namespace WorkStream
         CopyData    copy_data    = sample_copy_data; // NOLINT
 
         for (unsigned int color = 0; color < colored_iterators.size(); ++color)
-          for (typename std::vector<Iterator>::const_iterator p =
-                 colored_iterators[color].begin();
+          for (auto p = colored_iterators[color].begin();
                p != colored_iterators[color].end();
                ++p)
             {

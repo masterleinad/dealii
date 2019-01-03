@@ -127,7 +127,7 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   if (fe_data.update_each & update_values)
     for (unsigned int i = 0; i < quadrature.size(); ++i)
@@ -218,7 +218,7 @@ FE_PolyFace<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const unsigned int foffset = fe_data.shape_values.size() * face_no;
   const unsigned int offset  = sub_no * quadrature.size();

@@ -100,8 +100,8 @@ BlockSparsityPatternBase<SparsityPatternBase>::reinit(
   for (size_type i = 0; i < rows; ++i)
     for (size_type j = 0; j < columns; ++j)
       {
-        SparsityPatternBase *p = new SparsityPatternBase;
-        sub_objects[i][j]      = p;
+        auto *p           = new SparsityPatternBase;
+        sub_objects[i][j] = p;
       }
 }
 

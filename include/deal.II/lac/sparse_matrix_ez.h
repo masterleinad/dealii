@@ -1133,7 +1133,7 @@ template <typename number>
 inline const typename SparseMatrixEZ<number>::Entry *
 SparseMatrixEZ<number>::locate(const size_type row, const size_type col) const
 {
-  SparseMatrixEZ<number> *t = const_cast<SparseMatrixEZ<number> *>(this);
+  auto *t = const_cast<SparseMatrixEZ<number> *>(this);
   return t->locate(row, col);
 }
 

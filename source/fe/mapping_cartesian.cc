@@ -346,7 +346,7 @@ MappingCartesian<dim, spacedim>::fill_fe_values(
   // an exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   std::vector<Tensor<1, dim>> dummy;
 
@@ -459,7 +459,7 @@ MappingCartesian<dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   compute_fill(cell,
                face_no,
@@ -562,7 +562,7 @@ MappingCartesian<dim, spacedim>::fill_fe_subface_values(
   // an exception if that is not possible
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   compute_fill(cell,
                face_no,
@@ -671,7 +671,7 @@ MappingCartesian<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {
@@ -731,7 +731,7 @@ MappingCartesian<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {
@@ -841,7 +841,7 @@ MappingCartesian<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {
@@ -950,7 +950,7 @@ MappingCartesian<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {
@@ -987,7 +987,7 @@ MappingCartesian<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {

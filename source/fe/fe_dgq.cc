@@ -278,7 +278,7 @@ FE_DGQ<dim, spacedim>::get_interpolation_matrix(
 
   // ok, source is a Q element, so
   // we will be able to do the work
-  const FE_DGQ<dim, spacedim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_DGQ<dim, spacedim> &>(x_source_fe);
 
   Assert(interpolation_matrix.m() == this->dofs_per_cell,
@@ -424,8 +424,7 @@ FE_DGQ<dim, spacedim>::get_prolongation_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      auto &this_nonconst = const_cast<FE_DGQ<dim, spacedim> &>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(
@@ -504,8 +503,7 @@ FE_DGQ<dim, spacedim>::get_restriction_matrix(
 
       // now do the work. need to get a non-const version of data in order to
       // be able to modify them inside a const function
-      FE_DGQ<dim, spacedim> &this_nonconst =
-        const_cast<FE_DGQ<dim, spacedim> &>(*this);
+      auto &this_nonconst = const_cast<FE_DGQ<dim, spacedim> &>(*this);
       if (refinement_case == RefinementCase<dim>::isotropic_refinement)
         {
           std::vector<std::vector<FullMatrix<double>>> isotropic_matrices(
@@ -626,7 +624,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
   // The following block of conditionals is rather ugly, but there is currently
   // no other way how to deal with a robust comparison of FE_DGQ elements with
   // relevant others in the current implementation.
-  if (const FE_DGQ<dim, spacedim> *fe_dgq_other =
+  if (const auto *fe_dgq_other =
         dynamic_cast<const FE_DGQ<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_dgq_other->degree)
@@ -636,7 +634,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Q<dim, spacedim> *fe_q_other =
+  else if (const auto *fe_q_other =
              dynamic_cast<const FE_Q<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_q_other->degree)
@@ -646,7 +644,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Bernstein<dim, spacedim> *fe_bernstein_other =
+  else if (const auto *fe_bernstein_other =
              dynamic_cast<const FE_Bernstein<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_bernstein_other->degree)
@@ -656,7 +654,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Q_Bubbles<dim, spacedim> *fe_bubbles_other =
+  else if (const auto *fe_bubbles_other =
              dynamic_cast<const FE_Q_Bubbles<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_bubbles_other->degree)
@@ -666,7 +664,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Q_DG0<dim, spacedim> *fe_dg0_other =
+  else if (const auto *fe_dg0_other =
              dynamic_cast<const FE_Q_DG0<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_dg0_other->degree)
@@ -676,7 +674,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Q_iso_Q1<dim, spacedim> *fe_q_iso_q1_other =
+  else if (const auto *fe_q_iso_q1_other =
              dynamic_cast<const FE_Q_iso_Q1<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_q_iso_q1_other->degree)
@@ -686,7 +684,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Q_Hierarchical<dim> *fe_hierarchical_other =
+  else if (const auto *fe_hierarchical_other =
              dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other))
     {
       if (this->degree < fe_hierarchical_other->degree)
@@ -696,7 +694,7 @@ FE_DGQ<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())

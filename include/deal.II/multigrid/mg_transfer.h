@@ -82,12 +82,10 @@ namespace internal
            const SparsityPatternType &sp,
            DoFHandlerType &           dh)
     {
-      const parallel::Triangulation<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>
-        *dist_tria = dynamic_cast<
-          const parallel::Triangulation<DoFHandlerType::dimension,
-                                        DoFHandlerType::space_dimension> *>(
-          &(dh.get_triangulation()));
+      const auto *dist_tria = dynamic_cast<
+        const parallel::Triangulation<DoFHandlerType::dimension,
+                                      DoFHandlerType::space_dimension> *>(
+        &(dh.get_triangulation()));
       MPI_Comm communicator =
         dist_tria != nullptr ? dist_tria->get_communicator() : MPI_COMM_SELF;
 
@@ -115,12 +113,10 @@ namespace internal
            const SparsityPatternType &sp,
            DoFHandlerType &           dh)
     {
-      const parallel::Triangulation<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>
-        *dist_tria = dynamic_cast<
-          const parallel::Triangulation<DoFHandlerType::dimension,
-                                        DoFHandlerType::space_dimension> *>(
-          &(dh.get_triangulation()));
+      const auto *dist_tria = dynamic_cast<
+        const parallel::Triangulation<DoFHandlerType::dimension,
+                                      DoFHandlerType::space_dimension> *>(
+        &(dh.get_triangulation()));
       MPI_Comm communicator =
         dist_tria != nullptr ? dist_tria->get_communicator() : MPI_COMM_SELF;
       matrix.reinit(dh.locally_owned_mg_dofs(level + 1),
@@ -148,12 +144,10 @@ namespace internal
            const SparsityPatternType &sp,
            DoFHandlerType &           dh)
     {
-      const parallel::Triangulation<DoFHandlerType::dimension,
-                                    DoFHandlerType::space_dimension>
-        *dist_tria = dynamic_cast<
-          const parallel::Triangulation<DoFHandlerType::dimension,
-                                        DoFHandlerType::space_dimension> *>(
-          &(dh.get_triangulation()));
+      const auto *dist_tria = dynamic_cast<
+        const parallel::Triangulation<DoFHandlerType::dimension,
+                                      DoFHandlerType::space_dimension> *>(
+        &(dh.get_triangulation()));
       MPI_Comm communicator =
         dist_tria != nullptr ? dist_tria->get_communicator() : MPI_COMM_SELF;
       matrix.reinit(dh.locally_owned_mg_dofs(level + 1),

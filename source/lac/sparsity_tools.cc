@@ -183,7 +183,7 @@ namespace SparsityTools
     int
     get_number_of_objects(void *data, int *ierr)
     {
-      SparsityPattern *graph = reinterpret_cast<SparsityPattern *>(data);
+      auto *graph = reinterpret_cast<SparsityPattern *>(data);
 
       *ierr = ZOLTAN_OK;
 
@@ -201,8 +201,8 @@ namespace SparsityTools
                     float * /*obj_wgts*/,
                     int *ierr)
     {
-      SparsityPattern *graph = reinterpret_cast<SparsityPattern *>(data);
-      *ierr                  = ZOLTAN_OK;
+      auto *graph = reinterpret_cast<SparsityPattern *>(data);
+      *ierr       = ZOLTAN_OK;
 
       Assert(globalID != nullptr, ExcInternalError());
       Assert(localID != nullptr, ExcInternalError());
@@ -228,7 +228,7 @@ namespace SparsityTools
                        int *numEdges,
                        int *ierr)
     {
-      SparsityPattern *graph = reinterpret_cast<SparsityPattern *>(data);
+      auto *graph = reinterpret_cast<SparsityPattern *>(data);
 
       *ierr = ZOLTAN_OK;
 
@@ -259,8 +259,8 @@ namespace SparsityTools
                   float * /*ewgts*/,
                   int *ierr)
     {
-      SparsityPattern *graph = reinterpret_cast<SparsityPattern *>(data);
-      *ierr                  = ZOLTAN_OK;
+      auto *graph = reinterpret_cast<SparsityPattern *>(data);
+      *ierr       = ZOLTAN_OK;
 
       ZOLTAN_ID_PTR nextNborGID  = nborGID;
       int *         nextNborProc = nborProc;
@@ -689,10 +689,7 @@ namespace SparsityTools
           dofs_by_coordination;
 
         // find coordination number for each of these dofs
-        for (std::vector<DynamicSparsityPattern::size_type>::iterator s =
-               next_round_dofs.begin();
-             s != next_round_dofs.end();
-             ++s)
+        for (auto s = next_round_dofs.begin(); s != next_round_dofs.end(); ++s)
           {
             const DynamicSparsityPattern::size_type coordination =
               sparsity.row_length(*s);
@@ -793,8 +790,7 @@ namespace SparsityTools
               // next set of possible neighbors
               min_neighbors = std::make_pair(numbers::invalid_dof_index,
                                              numbers::invalid_dof_index);
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
+              for (auto it = current_neighbors.begin();
                    it != current_neighbors.end();
                    ++it)
                 {
@@ -810,8 +806,7 @@ namespace SparsityTools
               // i.e., the one with the largest row length
               const types::global_dof_index best_row_length =
                 min_neighbors.second;
-              for (std::set<types::global_dof_index>::iterator it =
-                     current_neighbors.begin();
+              for (auto it = current_neighbors.begin();
                    it != current_neighbors.end();
                    ++it)
                 if (n_remaining_neighbors[*it] == best_row_length)
@@ -982,8 +977,7 @@ namespace SparsityTools
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it)
+      for (auto it = send_data.begin(); it != send_data.end(); ++it)
         send_to.push_back(it->first);
 
       num_receive =
@@ -997,8 +991,7 @@ namespace SparsityTools
     // send data
     {
       unsigned int idx = 0;
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it, ++idx)
+      for (auto it = send_data.begin(); it != send_data.end(); ++it, ++idx)
         {
           const int ierr = MPI_Isend(&(it->second[0]),
                                      it->second.size(),
@@ -1128,8 +1121,7 @@ namespace SparsityTools
     {
       std::vector<unsigned int> send_to;
       send_to.reserve(send_data.size());
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it)
+      for (auto it = send_data.begin(); it != send_data.end(); ++it)
         send_to.push_back(it->first);
 
       num_receive =
@@ -1143,8 +1135,7 @@ namespace SparsityTools
     // send data
     {
       unsigned int idx = 0;
-      for (map_vec_t::iterator it = send_data.begin(); it != send_data.end();
-           ++it, ++idx)
+      for (auto it = send_data.begin(); it != send_data.end(); ++it, ++idx)
         {
           const int ierr = MPI_Isend(&(it->second[0]),
                                      it->second.size(),

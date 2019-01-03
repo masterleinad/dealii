@@ -199,7 +199,7 @@ namespace internal
                     }
                   else
                     {
-                      tbb::empty_task *child =
+                      auto *child =
                         new (worker[j]->allocate_child()) tbb::empty_task();
                       worker[j]->spawn(*child);
                     }
@@ -351,7 +351,7 @@ namespace internal
               std::vector<partition::PartitionWork *> worker(n_workers);
               std::vector<partition::PartitionWork *> blocked_worker(
                 n_blocked_workers);
-              MPICommunication *worker_compr =
+              auto *worker_compr =
                 new (root->allocate_child()) MPICommunication(funct, true);
               worker_compr->set_ref_count(1);
               for (unsigned int j = 0; j < evens; j++)
@@ -373,9 +373,8 @@ namespace internal
                       worker[j] = new (worker_compr->allocate_child())
                         partition::PartitionWork(funct, 2 * j, *this, false);
                       worker[j]->set_ref_count(2);
-                      MPICommunication *worker_dist =
-                        new (worker[j]->allocate_child())
-                          MPICommunication(funct, false);
+                      auto *worker_dist = new (worker[j]->allocate_child())
+                        MPICommunication(funct, false);
                       worker_dist->spawn(*worker_dist);
                     }
                   if (j < evens - 1)
@@ -396,7 +395,7 @@ namespace internal
                         }
                       else
                         {
-                          tbb::empty_task *child =
+                          auto *child =
                             new (worker[j]->allocate_child()) tbb::empty_task();
                           worker[j]->spawn(*child);
                         }
@@ -422,10 +421,10 @@ namespace internal
                   std::vector<color::PartitionWork *> worker(n_workers);
                   std::vector<color::PartitionWork *> blocked_worker(
                     n_blocked_workers);
-                  unsigned int      worker_index = 0, slice_index = 0;
-                  unsigned int      spawn_index       = 0;
-                  int               spawn_index_child = -2;
-                  MPICommunication *worker_compr =
+                  unsigned int worker_index = 0, slice_index = 0;
+                  unsigned int spawn_index       = 0;
+                  int          spawn_index_child = -2;
+                  auto *       worker_compr =
                     new (root->allocate_child()) MPICommunication(funct, true);
                   worker_compr->set_ref_count(1);
                   for (unsigned int part = 0;
@@ -481,7 +480,7 @@ namespace internal
                         }
                       else
                         {
-                          MPICommunication *worker_dist =
+                          auto *worker_dist =
                             new (worker[worker_index]->allocate_child())
                               MPICommunication(funct, false);
                           worker_dist->spawn(*worker_dist);
@@ -536,7 +535,7 @@ namespace internal
                         }
                       else
                         {
-                          tbb::empty_task *final =
+                          auto *final =
                             new (worker[worker_index - 1]->allocate_child())
                               tbb::empty_task;
                           worker[spawn_index]->spawn(*final);
@@ -565,9 +564,8 @@ namespace internal
                       tbb::empty_task *root =
                         new (tbb::task::allocate_root()) tbb::empty_task;
                       root->set_ref_count(2);
-                      color::PartitionWork *worker =
-                        new (root->allocate_child())
-                          color::PartitionWork(funct, color, *this, false);
+                      auto *worker = new (root->allocate_child())
+                        color::PartitionWork(funct, color, *this, false);
                       root->spawn(*worker);
                       root->wait_for_all();
                       root->destroy(*root);

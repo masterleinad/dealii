@@ -268,7 +268,7 @@ MatrixFree<dim, Number>::internal_reinit(
       // set variables that are independent of FE
       if (Utilities::MPI::job_supports_mpi() == true)
         {
-          const parallel::Triangulation<dim> *dist_tria =
+          const auto *dist_tria =
             dynamic_cast<const parallel::Triangulation<dim> *>(
               &(dof_handler[0]->get_triangulation()));
           task_info.communicator = dist_tria != nullptr ?
@@ -437,7 +437,7 @@ MatrixFree<dim, Number>::internal_reinit(
       // set variables that are independent of FE
       if (Utilities::MPI::job_supports_mpi() == true)
         {
-          const parallel::Triangulation<dim> *dist_tria =
+          const auto *dist_tria =
             dynamic_cast<const parallel::Triangulation<dim> *>(
               &(dof_handler[0]->get_triangulation()));
           task_info.communicator = dist_tria != nullptr ?
@@ -1284,11 +1284,8 @@ MatrixFree<dim, Number>::initialize_indices(
   }
 
   // set constraint pool from the std::map and reorder the indices
-  typename std::map<std::vector<double>,
-                    types::global_dof_index,
-                    internal::MatrixFreeFunctions::FPArrayComparator<double>>::
-    iterator it  = constraint_values.constraints.begin(),
-             end = constraint_values.constraints.end();
+  auto it  = constraint_values.constraints.begin(),
+       end = constraint_values.constraints.end();
   std::vector<const std::vector<double> *> constraints(
     constraint_values.constraints.size());
   unsigned int length = 0;

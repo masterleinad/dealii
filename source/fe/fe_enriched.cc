@@ -93,7 +93,7 @@ namespace internal
         // start from fe=1 as 0th is always non-enriched FE.
         for (unsigned int fe = 1; fe < fes.size(); fe++)
           {
-            const FE_Nothing<dim> *fe_nothing =
+            const auto *fe_nothing =
               dynamic_cast<const FE_Nothing<dim> *>(fes[fe]);
             if (fe_nothing)
               AssertThrow(
@@ -525,7 +525,7 @@ FE_Enriched<dim, spacedim>::fill_fe_values(
 {
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_values(cell,
@@ -560,7 +560,7 @@ FE_Enriched<dim, spacedim>::fill_fe_face_values(
 {
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_face_values(cell,
@@ -596,7 +596,7 @@ FE_Enriched<dim, spacedim>::fill_fe_subface_values(
 {
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // call FESystem's method to fill everything without enrichment function
   fe_system->fill_fe_subface_values(cell,
@@ -879,7 +879,7 @@ FE_Enriched<dim, spacedim>::get_face_interpolation_matrix(
   const FiniteElement<dim, spacedim> &source,
   FullMatrix<double> &                matrix) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&source))
     {
       fe_system->get_face_interpolation_matrix(fe_enr_other->get_fe_system(),
@@ -902,7 +902,7 @@ FE_Enriched<dim, spacedim>::get_subface_interpolation_matrix(
   const unsigned int                  subface,
   FullMatrix<double> &                matrix) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&source))
     {
       fe_system->get_subface_interpolation_matrix(fe_enr_other->get_fe_system(),
@@ -924,7 +924,7 @@ std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_vertex_dof_identities(
   const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
     {
       return fe_system->hp_vertex_dof_identities(fe_enr_other->get_fe_system());
@@ -942,7 +942,7 @@ std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_line_dof_identities(
   const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
     {
       return fe_system->hp_line_dof_identities(fe_enr_other->get_fe_system());
@@ -960,7 +960,7 @@ std::vector<std::pair<unsigned int, unsigned int>>
 FE_Enriched<dim, spacedim>::hp_quad_dof_identities(
   const FiniteElement<dim, spacedim> &fe_other) const
 {
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
     {
       return fe_system->hp_quad_dof_identities(fe_enr_other->get_fe_system());
@@ -993,7 +993,7 @@ FE_Enriched<dim, spacedim>::compare_for_domination(
   // continuous. In that case, throw an error
 
   // if it's also enriched, do domination based on each one's FESystem
-  if (const FE_Enriched<dim, spacedim> *fe_enr_other =
+  if (const auto *fe_enr_other =
         dynamic_cast<const FE_Enriched<dim, spacedim> *>(&fe_other))
     {
       return fe_system->compare_for_domination(fe_enr_other->get_fe_system(),

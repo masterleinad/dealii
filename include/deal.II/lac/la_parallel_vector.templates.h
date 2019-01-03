@@ -1231,7 +1231,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &down_V = dynamic_cast<const VectorType &>(V);
+      const auto &down_V = dynamic_cast<const VectorType &>(V);
 
       reinit(down_V, omit_zeroing_entries);
     }
@@ -1246,7 +1246,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -1270,7 +1270,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -1311,7 +1311,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertIsFinite(a);
       AssertDimension(local_size(), v.local_size());
@@ -1351,10 +1351,10 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
       Assert(dynamic_cast<const VectorType *>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &w = dynamic_cast<const VectorType &>(ww);
+      const auto &w = dynamic_cast<const VectorType &>(ww);
 
       AssertIsFinite(a);
       AssertIsFinite(b);
@@ -1419,7 +1419,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert((dynamic_cast<const VectorType *>(&vv) != nullptr),
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertIsFinite(x);
       AssertIsFinite(a);
@@ -1519,7 +1519,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertDimension(local_size(), v.local_size());
 
@@ -1544,7 +1544,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert(dynamic_cast<const VectorType *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       AssertIsFinite(a);
       AssertDimension(local_size(), v.local_size());
@@ -1626,7 +1626,7 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert((dynamic_cast<const VectorType *>(&vv) != nullptr),
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
 
       Number local_result = inner_product_local(v);
       if (partitioner->n_mpi_processes() > 1)
@@ -1835,10 +1835,10 @@ namespace LinearAlgebra
       using VectorType = Vector<Number, MemorySpace>;
       Assert((dynamic_cast<const VectorType *>(&vv) != nullptr),
              ExcVectorTypeNotCompatible());
-      const VectorType &v = dynamic_cast<const VectorType &>(vv);
+      const auto &v = dynamic_cast<const VectorType &>(vv);
       Assert((dynamic_cast<const VectorType *>(&ww) != nullptr),
              ExcVectorTypeNotCompatible());
-      const VectorType &w = dynamic_cast<const VectorType &>(ww);
+      const auto &w = dynamic_cast<const VectorType &>(ww);
 
       Number local_result = add_and_dot_local(a, v, w);
       if (partitioner->n_mpi_processes() > 1)

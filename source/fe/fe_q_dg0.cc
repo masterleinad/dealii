@@ -312,7 +312,7 @@ FE_Q_DG0<dim, spacedim>::compare_for_domination(
   // (if fe_other is not derived from FE_DGQ)
   // & cell domination
   // ----------------------------------------
-  if (const FE_Q_DG0<dim, spacedim> *fe_dg0_other =
+  if (const auto *fe_dg0_other =
         dynamic_cast<const FE_Q_DG0<dim, spacedim> *>(&fe_other))
     {
       if (this->degree < fe_dg0_other->degree)
@@ -322,7 +322,7 @@ FE_Q_DG0<dim, spacedim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())

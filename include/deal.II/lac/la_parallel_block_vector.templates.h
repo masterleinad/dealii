@@ -327,8 +327,7 @@ namespace LinearAlgebra
     {
       Assert(dynamic_cast<const BlockVector<Number> *>(&V) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &down_V =
-        dynamic_cast<const BlockVector<Number> &>(V);
+      const auto &down_V = dynamic_cast<const BlockVector<Number> &>(V);
       reinit(down_V, omit_zeroing_entries);
     }
 
@@ -361,8 +360,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).scale(v.block(block));
@@ -378,8 +376,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).equ(a, v.block(block));
@@ -409,8 +406,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block) += v.block(block);
@@ -427,8 +423,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block) -= v.block(block);
@@ -456,8 +451,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).add(a, v.block(block));
@@ -475,13 +469,11 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       Assert(dynamic_cast<const BlockVector<Number> *>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &w =
-        dynamic_cast<const BlockVector<Number> &>(ww);
+      const auto &w = dynamic_cast<const BlockVector<Number> &>(ww);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
@@ -499,8 +491,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
       for (unsigned int block = 0; block < this->n_blocks(); ++block)
         this->block(block).sadd(x, a, v.block(block));
@@ -593,8 +584,7 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       Number local_result = Number();
@@ -729,15 +719,13 @@ namespace LinearAlgebra
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&vv) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &v =
-        dynamic_cast<const BlockVector<Number> &>(vv);
+      const auto &v = dynamic_cast<const BlockVector<Number> &>(vv);
       AssertDimension(this->n_blocks(), v.n_blocks());
 
       // Downcast. Throws an exception if invalid.
       Assert(dynamic_cast<const BlockVector<Number> *>(&ww) != nullptr,
              ExcVectorTypeNotCompatible());
-      const BlockVector<Number> &w =
-        dynamic_cast<const BlockVector<Number> &>(ww);
+      const auto &w = dynamic_cast<const BlockVector<Number> &>(ww);
       AssertDimension(this->n_blocks(), w.n_blocks());
 
       Number local_result = Number();
@@ -908,7 +896,7 @@ namespace LinearAlgebra
       const BlockVector<Number> &V,
       const bool                 symmetric) const
     {
-      Number res = Number(0.);
+      auto res = Number(0.);
 
       const unsigned int m = this->n_blocks();
       const unsigned int n = V.n_blocks();

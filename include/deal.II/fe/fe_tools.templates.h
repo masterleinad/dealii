@@ -2568,7 +2568,7 @@ namespace FETools
             // so this properly returns
             // FE_Nothing()
             const Subscriptor *ptr = fe_name_map.find(name_part)->second.get();
-            const FETools::FEFactoryBase<dim, spacedim> *fef =
+            const auto *       fef =
               dynamic_cast<const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
             return fef->get(1);
           }
@@ -2594,7 +2594,7 @@ namespace FETools
                 name.erase(0, tmp.second + 1);
                 const Subscriptor *ptr =
                   fe_name_map.find(name_part)->second.get();
-                const FETools::FEFactoryBase<dim, spacedim> *fef =
+                const auto *fef =
                   dynamic_cast<const FETools::FEFactoryBase<dim, spacedim> *>(
                     ptr);
                 return fef->get(tmp.first);
@@ -2612,9 +2612,8 @@ namespace FETools
                     name.erase(0, tmp.second + 2);
                     const Subscriptor *ptr =
                       fe_name_map.find(name_part)->second.get();
-                    const FETools::FEFactoryBase<dim, spacedim> *fef =
-                      dynamic_cast<
-                        const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
+                    const auto *fef = dynamic_cast<
+                      const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
                     return fef->get(QGaussLobatto<1>(tmp.first));
                   }
                 else if (quadrature_name.compare("QGauss") == 0)
@@ -2625,9 +2624,8 @@ namespace FETools
                     name.erase(0, tmp.second + 2);
                     const Subscriptor *ptr =
                       fe_name_map.find(name_part)->second.get();
-                    const FETools::FEFactoryBase<dim, spacedim> *fef =
-                      dynamic_cast<
-                        const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
+                    const auto *fef = dynamic_cast<
+                      const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
                     return fef->get(QGauss<1>(tmp.first));
                   }
                 else if (quadrature_name.compare("QIterated") == 0)
@@ -2647,9 +2645,8 @@ namespace FETools
                     name.erase(0, tmp.second + 2);
                     const Subscriptor *ptr =
                       fe_name_map.find(name_part)->second.get();
-                    const FETools::FEFactoryBase<dim, spacedim> *fef =
-                      dynamic_cast<
-                        const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
+                    const auto *fef = dynamic_cast<
+                      const FETools::FEFactoryBase<dim, spacedim> *>(ptr);
                     return fef->get(QIterated<1>(QTrapez<1>(), tmp.first));
                   }
                 else

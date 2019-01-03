@@ -193,8 +193,7 @@ namespace internal
 
           // * find owners of the level dofs and insert into send_data
           // accordingly
-          for (typename std::vector<DoFPair>::iterator dofpair =
-                 send_data_temp.begin();
+          for (auto dofpair = send_data_temp.begin();
                dofpair != send_data_temp.end();
                ++dofpair)
             {
@@ -219,9 +218,7 @@ namespace internal
           // * send
           std::vector<MPI_Request> requests;
           {
-            for (std::set<types::subdomain_id>::iterator it = neighbors.begin();
-                 it != neighbors.end();
-                 ++it)
+            for (auto it = neighbors.begin(); it != neighbors.end(); ++it)
               {
                 requests.push_back(MPI_Request());
                 unsigned int          dest = *it;
@@ -817,8 +814,7 @@ namespace internal
           // the list (these are needed for the transfer from level to level+1
           // but not for the transfer from level-1 to level).
           if (level < n_levels - 1)
-            for (std::vector<std::pair<unsigned int, unsigned int>>::iterator
-                   i = parent_child_connect[level].begin();
+            for (auto i = parent_child_connect[level].begin();
                  i != parent_child_connect[level].end();
                  ++i)
               if (i->first >= tria.n_cells(level))

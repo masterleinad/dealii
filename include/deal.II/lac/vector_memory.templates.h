@@ -69,9 +69,7 @@ GrowingVectorMemory<VectorType>::Pool::initialize(const size_type size)
     {
       data = new std::vector<entry_type>(size);
 
-      for (typename std::vector<entry_type>::iterator i = data->begin();
-           i != data->end();
-           ++i)
+      for (auto i = data->begin(); i != data->end(); ++i)
         {
           i->first  = false;
           i->second = std_cxx14::make_unique<VectorType>();
@@ -120,9 +118,7 @@ GrowingVectorMemory<VectorType>::alloc()
   ++current_alloc;
   // see if there is a free vector
   // available in our list
-  for (typename std::vector<entry_type>::iterator i = get_pool().data->begin();
-       i != get_pool().data->end();
-       ++i)
+  for (auto i = get_pool().data->begin(); i != get_pool().data->end(); ++i)
     {
       if (i->first == false)
         {
@@ -146,9 +142,7 @@ GrowingVectorMemory<VectorType>::free(const VectorType *const v)
 {
   std::lock_guard<std::mutex> lock(mutex);
 
-  for (typename std::vector<entry_type>::iterator i = get_pool().data->begin();
-       i != get_pool().data->end();
-       ++i)
+  for (auto i = get_pool().data->begin(); i != get_pool().data->end(); ++i)
     {
       if (v == i->second.get())
         {

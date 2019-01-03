@@ -1427,8 +1427,7 @@ namespace internal
         const FiniteElement<DoFHandlerType::dimension,
                             DoFHandlerType::space_dimension> &fe =
           accessor.get_dof_handler().get_fe(fe_index);
-        std::vector<types::global_dof_index>::const_iterator next =
-          dof_indices.begin();
+        auto next = dof_indices.begin();
 
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<2>::vertices_per_cell;
@@ -1462,8 +1461,7 @@ namespace internal
         const FiniteElement<DoFHandlerType::dimension,
                             DoFHandlerType::space_dimension> &fe =
           accessor.get_dof_handler().get_fe(fe_index);
-        std::vector<types::global_dof_index>::const_iterator next =
-          dof_indices.begin();
+        auto next = dof_indices.begin();
 
         for (unsigned int vertex = 0;
              vertex < GeometryInfo<3>::vertices_per_cell;
@@ -1792,7 +1790,7 @@ namespace internal
                            accessor.get_fe(fe_index).dofs_per_vertex,
                          dofs_per_line =
                            accessor.get_fe(fe_index).dofs_per_line;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next = dof_indices.begin();
       for (unsigned int vertex = 0; vertex < 2; ++vertex)
         for (unsigned int d = 0; d < dofs_per_vertex; ++d)
           *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
@@ -1815,7 +1813,7 @@ namespace internal
                            accessor.get_fe(fe_index).dofs_per_line,
                          dofs_per_quad =
                            accessor.get_fe(fe_index).dofs_per_quad;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next = dof_indices.begin();
       for (unsigned int vertex = 0; vertex < 4; ++vertex)
         for (unsigned int d = 0; d < dofs_per_vertex; ++d)
           *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
@@ -1857,7 +1855,7 @@ namespace internal
                          dofs_per_quad =
                            accessor.get_fe(fe_index).dofs_per_quad,
                          dofs_per_hex = accessor.get_fe(fe_index).dofs_per_hex;
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next                       = dof_indices.begin();
       for (unsigned int vertex = 0; vertex < 8; ++vertex)
         for (unsigned int d = 0; d < dofs_per_vertex; ++d)
           *next++ = accessor.vertex_dof_index(vertex, d, fe_index);
@@ -1921,7 +1919,7 @@ namespace internal
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension> &fe =
         handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next = dof_indices.begin();
 
       for (unsigned int vertex = 0; vertex < GeometryInfo<1>::vertices_per_cell;
            ++vertex)
@@ -1949,7 +1947,7 @@ namespace internal
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension> &fe =
         handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next = dof_indices.begin();
 
       for (unsigned int vertex = 0; vertex < GeometryInfo<2>::vertices_per_cell;
            ++vertex)
@@ -1982,7 +1980,7 @@ namespace internal
       const FiniteElement<DoFHandlerType::dimension,
                           DoFHandlerType::space_dimension> &fe =
         handler.get_fe(fe_index);
-      std::vector<types::global_dof_index>::iterator next = dof_indices.begin();
+      auto next = dof_indices.begin();
 
       for (unsigned int vertex = 0; vertex < GeometryInfo<3>::vertices_per_cell;
            ++vertex)
@@ -2737,10 +2735,9 @@ namespace internal
                    ->cell_dof_indices_cache.size(),
                ExcInternalError());
 
-        std::vector<types::global_dof_index>::iterator next =
-          (accessor.dof_handler->levels[accessor.present_level]
-             ->cell_dof_indices_cache.begin() +
-           accessor.present_index * dofs_per_cell);
+        auto next = (accessor.dof_handler->levels[accessor.present_level]
+                       ->cell_dof_indices_cache.begin() +
+                     accessor.present_index * dofs_per_cell);
 
         for (unsigned int vertex = 0; vertex < 2; ++vertex)
           for (unsigned int d = 0; d < dofs_per_vertex; ++d)
@@ -2783,10 +2780,9 @@ namespace internal
                    ->cell_dof_indices_cache.size(),
                ExcInternalError());
 
-        std::vector<types::global_dof_index>::iterator next =
-          (accessor.dof_handler->levels[accessor.present_level]
-             ->cell_dof_indices_cache.begin() +
-           accessor.present_index * dofs_per_cell);
+        auto next = (accessor.dof_handler->levels[accessor.present_level]
+                       ->cell_dof_indices_cache.begin() +
+                     accessor.present_index * dofs_per_cell);
 
         for (unsigned int vertex = 0; vertex < 4; ++vertex)
           for (unsigned int d = 0; d < dofs_per_vertex; ++d)
@@ -2832,10 +2828,9 @@ namespace internal
                    ->cell_dof_indices_cache.size(),
                ExcInternalError());
 
-        std::vector<types::global_dof_index>::iterator next =
-          (accessor.dof_handler->levels[accessor.present_level]
-             ->cell_dof_indices_cache.begin() +
-           accessor.present_index * dofs_per_cell);
+        auto next = (accessor.dof_handler->levels[accessor.present_level]
+                       ->cell_dof_indices_cache.begin() +
+                     accessor.present_index * dofs_per_cell);
 
         for (unsigned int vertex = 0; vertex < 8; ++vertex)
           for (unsigned int d = 0; d < dofs_per_vertex; ++d)

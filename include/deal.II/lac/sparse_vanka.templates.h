@@ -346,8 +346,7 @@ SparseVanka<number>::apply_preconditioner(
                 // which itself couples with
                 // @p row) also couples with
                 // @p row.
-                const std::map<size_type, size_type>::const_iterator js =
-                  local_index.find(p->column());
+                const auto js = local_index.find(p->column());
                 // if not, then still use
                 // this dof to modify the rhs
                 //

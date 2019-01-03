@@ -107,7 +107,7 @@ BlockSparseMatrix<number>::reinit(const BlockSparsityPattern &sparsity)
   for (size_type r = 0; r < this->n_block_rows(); ++r)
     for (size_type c = 0; c < this->n_block_cols(); ++c)
       {
-        BlockType *p = new SparseMatrix<number>();
+        auto *p = new SparseMatrix<number>();
         p->reinit(sparsity.block(r, c));
         this->sub_objects[r][c] = p;
       }

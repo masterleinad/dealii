@@ -4041,8 +4041,8 @@ FEEvaluationBase<dim, n_components_, Number, is_face>::read_write_operation(
       return;
     }
 
-  const unsigned int *      dof_indices[n_vectorization];
-  VectorizedArray<Number> **values_dofs =
+  const unsigned int *dof_indices[n_vectorization];
+  auto **             values_dofs =
     const_cast<VectorizedArray<Number> **>(&this->values_dofs[0]);
 
   unsigned int        cells_copied[n_vectorization];
@@ -6690,7 +6690,7 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
         }
       // ok, did not find the numbers specified by the template arguments in
       // the given list. Suggest correct template arguments
-      const unsigned int proposed_n_q_points_1d = static_cast<unsigned int>(
+      const auto proposed_n_q_points_1d = static_cast<unsigned int>(
         std::pow(1.001 * this->n_quadrature_points, 1. / dim));
       message += "Wrong template arguments:\n";
       message += "    Did you mean FEEvaluation<dim,";
@@ -6965,7 +6965,7 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
           sizeof(VectorizedArray<Number>) ==
         0)
     {
-      const VectorizedArray<Number> *vec_values =
+      const auto *vec_values =
         reinterpret_cast<const VectorizedArray<Number> *>(
           input_vector.begin() +
           this->dof_info->dof_indices_contiguous
@@ -7084,16 +7084,15 @@ FEEvaluation<dim, fe_degree, n_q_points_1d, n_components_, Number>::
           sizeof(VectorizedArray<Number>) ==
         0)
     {
-      VectorizedArray<Number> *vec_values =
-        reinterpret_cast<VectorizedArray<Number> *>(
-          destination.begin() +
-          this->dof_info->dof_indices_contiguous
-            [internal::MatrixFreeFunctions::DoFInfo::dof_access_cell]
-            [this->cell * VectorizedArray<Number>::n_array_elements] +
-          this->dof_info
-              ->component_dof_indices_offset[this->active_fe_index]
-                                            [this->first_selected_component] *
-            VectorizedArray<Number>::n_array_elements);
+      auto *vec_values = reinterpret_cast<VectorizedArray<Number> *>(
+        destination.begin() +
+        this->dof_info->dof_indices_contiguous
+          [internal::MatrixFreeFunctions::DoFInfo::dof_access_cell]
+          [this->cell * VectorizedArray<Number>::n_array_elements] +
+        this->dof_info
+            ->component_dof_indices_offset[this->active_fe_index]
+                                          [this->first_selected_component] *
+          VectorizedArray<Number>::n_array_elements);
       SelectEvaluator<
         dim,
         fe_degree,

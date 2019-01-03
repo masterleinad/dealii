@@ -216,9 +216,9 @@ GridRefinement::refine_and_coarsen_fixed_number(
                                                    top_fraction,
                                                    bottom_fraction);
 
-  const int refine_cells =
+  const auto refine_cells =
     static_cast<int>(adjusted_fractions.first * criteria.size());
-  const int coarsen_cells =
+  const auto coarsen_cells =
     static_cast<int>(adjusted_fractions.second * criteria.size());
 
   if (refine_cells || coarsen_cells)

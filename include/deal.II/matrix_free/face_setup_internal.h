@@ -273,8 +273,7 @@ namespace internal
           // sort the cell ids related to each neighboring processor. This
           // algorithm is symmetric so every processor combination should
           // arrive here and no deadlock should be possible
-          for (std::map<types::subdomain_id, FaceIdentifier>::iterator it =
-                 inner_faces_at_proc_boundary.begin();
+          for (auto it = inner_faces_at_proc_boundary.begin();
                it != inner_faces_at_proc_boundary.end();
                ++it)
             {
@@ -292,7 +291,7 @@ namespace internal
               // looking at the length of the lists of faces
 #  if defined(DEAL_II_WITH_MPI) && defined(DEBUG)
               MPI_Comm comm = MPI_COMM_SELF;
-              if (const parallel::Triangulation<dim> *ptria =
+              if (const auto *ptria =
                     dynamic_cast<const parallel::Triangulation<dim> *>(
                       &triangulation))
                 comm = ptria->get_communicator();
@@ -717,10 +716,7 @@ namespace internal
 
       // step 2: append the ghost cells at the end of the locally owned
       // cells
-      for (std::set<std::pair<unsigned int, unsigned int>>::iterator it =
-             ghost_cells.begin();
-           it != ghost_cells.end();
-           ++it)
+      for (auto it = ghost_cells.begin(); it != ghost_cells.end(); ++it)
         cell_levels.push_back(*it);
 
       // step 3: clean up the cells close to the boundary

@@ -344,7 +344,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const unsigned int n_q_points = quadrature.size();
 
@@ -916,7 +916,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const unsigned int n_q_points = quadrature.size();
   // offset determines which data set
@@ -1540,7 +1540,7 @@ FE_PolyTensor<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const unsigned int n_q_points = quadrature.size();
 

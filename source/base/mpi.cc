@@ -366,8 +366,8 @@ namespace Utilities
                  MPI_Datatype *)
       {
         (void)len;
-        const MinMaxAvg *in_lhs    = static_cast<const MinMaxAvg *>(in_lhs_);
-        MinMaxAvg *      inout_rhs = static_cast<MinMaxAvg *>(inout_rhs_);
+        const auto *in_lhs    = static_cast<const MinMaxAvg *>(in_lhs_);
+        auto *      inout_rhs = static_cast<MinMaxAvg *>(inout_rhs_);
 
         Assert(*len == 1, ExcInternalError());
 

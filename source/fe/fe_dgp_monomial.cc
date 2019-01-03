@@ -196,7 +196,7 @@ FE_DGPMonomial<dim>::get_interpolation_matrix(
   const FiniteElement<dim> &source_fe,
   FullMatrix<double> &      interpolation_matrix) const
 {
-  const FE_DGPMonomial<dim> *source_dgp_monomial =
+  const auto *source_dgp_monomial =
     dynamic_cast<const FE_DGPMonomial<dim> *>(&source_fe);
 
   if (source_dgp_monomial)
@@ -406,7 +406,7 @@ FE_DGPMonomial<dim>::compare_for_domination(const FiniteElement<dim> &fe_other,
 
   // cell domination
   // ---------------
-  if (const FE_DGPMonomial<dim> *fe_monomial_other =
+  if (const auto *fe_monomial_other =
         dynamic_cast<const FE_DGPMonomial<dim> *>(&fe_other))
     {
       if (this->degree < fe_monomial_other->degree)
@@ -416,7 +416,7 @@ FE_DGPMonomial<dim>::compare_for_domination(const FiniteElement<dim> &fe_other,
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())

@@ -1144,15 +1144,13 @@ namespace FETools
       std::vector<CellData> &      received_cells) const
     {
       std::vector<std::vector<char>> sendbuffers(cells_to_send.size());
-      std::vector<std::vector<char>>::iterator buffer = sendbuffers.begin();
-      std::vector<MPI_Request>                 requests(cells_to_send.size());
-      std::vector<unsigned int>                destinations;
+      auto                           buffer = sendbuffers.begin();
+      std::vector<MPI_Request>       requests(cells_to_send.size());
+      std::vector<unsigned int>      destinations;
 
       // send data
       unsigned int idx = 0;
-      for (typename std::vector<CellData>::const_iterator it =
-             cells_to_send.begin();
-           it != cells_to_send.end();
+      for (auto it = cells_to_send.begin(); it != cells_to_send.end();
            ++it, ++idx)
         {
           destinations.push_back(it->receiver);
@@ -1255,7 +1253,7 @@ namespace FETools
       const CellData &             cell_data,
       const std::vector<CellData> &cells_list)
     {
-      typename std::vector<CellData>::const_iterator bound =
+      auto bound =
         std::lower_bound(cells_list.begin(), cells_list.end(), cell_data);
 
       if ((bound != cells_list.end()) && !(cell_data < *bound))
@@ -1272,7 +1270,7 @@ namespace FETools
       const CellData &       cell_data,
       std::vector<CellData> &cells_list)
     {
-      typename std::vector<CellData>::iterator bound =
+      auto bound =
         std::lower_bound(cells_list.begin(), cells_list.end(), cell_data);
 
       if ((bound == cells_list.end()) || (cell_data < *bound))
@@ -1335,8 +1333,7 @@ namespace FETools
 
               // ...and generate a vector of computed cells with correct
               // receivers, then delete this received need from the list
-              typename std::vector<CellData>::iterator recv =
-                received_needs.begin();
+              auto recv = received_needs.begin();
               while (recv != received_needs.end())
                 {
                   if (dealii::internal::p4est::quadrant_is_equal<dim>(
@@ -1568,10 +1565,9 @@ namespace FETools
     reinit_distributed(const DoFHandler<dim, spacedim> &dh,
                        TrilinosWrappers::MPI::Vector &  vector)
     {
-      const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
-        dynamic_cast<
-          const parallel::distributed::Triangulation<dim, spacedim> *>(
-          &dh.get_triangulation());
+      const auto *parallel_tria = dynamic_cast<
+        const parallel::distributed::Triangulation<dim, spacedim> *>(
+        &dh.get_triangulation());
       Assert(parallel_tria != nullptr, ExcNotImplemented());
 
       const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
@@ -1586,10 +1582,9 @@ namespace FETools
     reinit_distributed(const DoFHandler<dim, spacedim> &      dh,
                        LinearAlgebra::EpetraWrappers::Vector &vector)
     {
-      const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
-        dynamic_cast<
-          const parallel::distributed::Triangulation<dim, spacedim> *>(
-          &dh.get_triangulation());
+      const auto *parallel_tria = dynamic_cast<
+        const parallel::distributed::Triangulation<dim, spacedim> *>(
+        &dh.get_triangulation());
       Assert(parallel_tria != nullptr, ExcNotImplemented());
 
       const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
@@ -1603,10 +1598,9 @@ namespace FETools
     reinit_distributed(const DoFHandler<dim, spacedim> &           dh,
                        LinearAlgebra::distributed::Vector<Number> &vector)
     {
-      const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
-        dynamic_cast<
-          const parallel::distributed::Triangulation<dim, spacedim> *>(
-          &dh.get_triangulation());
+      const auto *parallel_tria = dynamic_cast<
+        const parallel::distributed::Triangulation<dim, spacedim> *>(
+        &dh.get_triangulation());
       Assert(parallel_tria != nullptr, ExcNotImplemented());
 
       const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
@@ -1648,10 +1642,9 @@ namespace FETools
     reinit_ghosted(const DoFHandler<dim, spacedim> &dh,
                    TrilinosWrappers::MPI::Vector &  vector)
     {
-      const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
-        dynamic_cast<
-          const parallel::distributed::Triangulation<dim, spacedim> *>(
-          &dh.get_triangulation());
+      const auto *parallel_tria = dynamic_cast<
+        const parallel::distributed::Triangulation<dim, spacedim> *>(
+        &dh.get_triangulation());
       Assert(parallel_tria != nullptr, ExcNotImplemented());
       const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
       IndexSet        locally_relevant_dofs;
@@ -1667,10 +1660,9 @@ namespace FETools
     reinit_ghosted(const DoFHandler<dim, spacedim> &           dh,
                    LinearAlgebra::distributed::Vector<Number> &vector)
     {
-      const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
-        dynamic_cast<
-          const parallel::distributed::Triangulation<dim, spacedim> *>(
-          &dh.get_triangulation());
+      const auto *parallel_tria = dynamic_cast<
+        const parallel::distributed::Triangulation<dim, spacedim> *>(
+        &dh.get_triangulation());
       Assert(parallel_tria != nullptr, ExcNotImplemented());
       const IndexSet &locally_owned_dofs = dh.locally_owned_dofs();
       IndexSet        locally_relevant_dofs;

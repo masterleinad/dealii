@@ -564,7 +564,7 @@ namespace MeshWorker
     {
       for (unsigned int k = 0; k < residuals.size(); ++k)
         {
-          VectorType *v = residuals.entry<VectorType *>(k);
+          auto *v = residuals.entry<VectorType *>(k);
           for (unsigned int i = 0; i != info.vector(k).n_blocks(); ++i)
             {
               const std::vector<types::global_dof_index> &ldi =
@@ -1276,8 +1276,8 @@ namespace MeshWorker
       AssertDimension(M.m(), indices.size());
       AssertDimension(M.n(), indices.size());
 
-      AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType *v         = residuals.entry<VectorType *>(index);
+      AnyData residuals = ResidualSimple<VectorType>::residuals;
+      auto *  v         = residuals.entry<VectorType *>(index);
 
       if (ResidualSimple<VectorType>::constraints == nullptr)
         {
@@ -1315,8 +1315,8 @@ namespace MeshWorker
       AssertDimension(M.m(), i1.size());
       AssertDimension(M.n(), i2.size());
 
-      AnyData     residuals = ResidualSimple<VectorType>::residuals;
-      VectorType *v         = residuals.entry<VectorType *>(index);
+      AnyData residuals = ResidualSimple<VectorType>::residuals;
+      auto *  v         = residuals.entry<VectorType *>(index);
 
       if (ResidualSimple<VectorType>::constraints == nullptr)
         {

@@ -1531,7 +1531,7 @@ AffineConstraints<number>::condense(SparseMatrix<number> &uncondensed,
                       // known conversion from 'complex<typename
                       // ProductType<float, double>::type>' to 'const
                       // complex<float>' for 3rd argument
-                      number v = static_cast<number>(entry->value());
+                      auto v = static_cast<number>(entry->value());
                       v *= lines[distribute[column]].entries[q].second;
                       uncondensed.add(
                         row, lines[distribute[column]].entries[q].first, v);
@@ -1577,7 +1577,7 @@ AffineConstraints<number>::condense(SparseMatrix<number> &uncondensed,
                       // no known conversion from 'complex<typename
                       // ProductType<float, double>::type>' to 'const
                       // complex<float>' for 3rd argument
-                      number v = static_cast<number>(entry->value());
+                      auto v = static_cast<number>(entry->value());
                       v *= lines[distribute[row]].entries[q].second;
                       uncondensed.add(lines[distribute[row]].entries[q].first,
                                       column,
@@ -1604,7 +1604,7 @@ AffineConstraints<number>::condense(SparseMatrix<number> &uncondensed,
                           // no known conversion from 'complex<typename
                           // ProductType<float, double>::type>' to 'const
                           // complex<float>' for 3rd argument
-                          number v = static_cast<number>(entry->value());
+                          auto v = static_cast<number>(entry->value());
                           v *= lines[distribute[row]].entries[p].second *
                                lines[distribute[column]].entries[q].second;
                           uncondensed.add(
@@ -2097,7 +2097,7 @@ namespace internal
   {
     Assert(!vec.has_ghost_elements(), ExcGhostsPresent());
 #  ifdef DEAL_II_WITH_MPI
-    const Epetra_MpiComm *mpi_comm =
+    const auto *mpi_comm =
       dynamic_cast<const Epetra_MpiComm *>(&vec.trilinos_vector().Comm());
 
     Assert(mpi_comm != nullptr, ExcInternalError());
@@ -2897,8 +2897,8 @@ namespace internals
   {
     AssertDimension(block_starts.size(), block_object.n_block_rows() + 1);
 
-    using row_iterator         = std::vector<Distributing>::iterator;
-    row_iterator block_indices = global_rows.total_row_indices.begin();
+    using row_iterator = std::vector<Distributing>::iterator;
+    auto block_indices = global_rows.total_row_indices.begin();
 
     const size_type num_blocks    = block_object.n_block_rows();
     const size_type n_active_rows = global_rows.size();
@@ -2907,7 +2907,7 @@ namespace internals
     block_starts[0] = 0;
     for (size_type i = 1; i < num_blocks; ++i)
       {
-        row_iterator first_block = Utilities::lower_bound(
+        auto first_block = Utilities::lower_bound(
           block_indices,
           global_rows.total_row_indices.begin() + n_active_rows,
           Distributing(block_object.get_row_indices().block_start(i)));
@@ -2933,8 +2933,8 @@ namespace internals
   {
     AssertDimension(block_starts.size(), block_object.n_block_rows() + 1);
 
-    using row_iterator       = std::vector<size_type>::iterator;
-    row_iterator col_indices = row_indices.begin();
+    using row_iterator = std::vector<size_type>::iterator;
+    auto col_indices   = row_indices.begin();
 
     const size_type num_blocks = block_object.n_block_rows();
 
@@ -2942,7 +2942,7 @@ namespace internals
     block_starts[0] = 0;
     for (size_type i = 1; i < num_blocks; ++i)
       {
-        row_iterator first_block =
+        auto first_block =
           Utilities::lower_bound(col_indices,
                                  row_indices.end(),
                                  block_object.get_row_indices().block_start(i));
@@ -3528,10 +3528,9 @@ AffineConstraints<number>::make_sorted_row_list(
           // keep the list sorted
           else
             {
-              std::vector<size_type>::iterator it =
-                Utilities::lower_bound(active_dofs.begin(),
-                                       active_dofs.end() - i + 1,
-                                       new_index);
+              auto it = Utilities::lower_bound(active_dofs.begin(),
+                                               active_dofs.end() - i + 1,
+                                               new_index);
               if (*it != new_index)
                 active_dofs.insert(it, new_index);
             }
@@ -3642,8 +3641,7 @@ AffineConstraints<number>::distribute_local_to_global(
     scratch_data->vector_values;
   vector_indices.resize(n_actual_dofs);
   vector_values.resize(n_actual_dofs);
-  SparseMatrix<number> *sparse_matrix =
-    dynamic_cast<SparseMatrix<number> *>(&global_matrix);
+  auto *sparse_matrix = dynamic_cast<SparseMatrix<number> *>(&global_matrix);
   if (use_dealii_matrix == false)
     {
       cols.resize(n_actual_dofs);
@@ -3833,9 +3831,8 @@ AffineConstraints<number>::distribute_local_to_global(
                 }
               else
                 {
-                  SparseMatrix<number> *sparse_matrix =
-                    dynamic_cast<SparseMatrix<number> *>(
-                      &global_matrix.block(block, block_col));
+                  auto *sparse_matrix = dynamic_cast<SparseMatrix<number> *>(
+                    &global_matrix.block(block, block_col));
                   Assert(sparse_matrix != nullptr, ExcInternalError());
                   internals::resolve_matrix_row(global_rows,
                                                 i,
@@ -4024,8 +4021,8 @@ AffineConstraints<number>::add_entries_local_to_global(
 
   for (size_type i = 0; i < n_actual_dofs; ++i)
     {
-      std::vector<size_type>::iterator col_ptr = cols.begin();
-      const size_type                  row     = global_rows.global_row(i);
+      auto            col_ptr = cols.begin();
+      const size_type row     = global_rows.global_row(i);
       internals::resolve_matrix_row(
         global_rows, i, 0, n_actual_dofs, dof_mask, col_ptr);
 
@@ -4151,8 +4148,7 @@ AffineConstraints<number>::add_entries_local_to_global(
               const size_type row = actual_dof_indices[i];
               Assert(row < sparsity_pattern.block(block, 0).n_rows(),
                      ExcInternalError());
-              std::vector<size_type>::iterator index_it =
-                actual_dof_indices.begin();
+              auto index_it = actual_dof_indices.begin();
               for (size_type block_col = 0; block_col < num_blocks; ++block_col)
                 {
                   const size_type next_block_col = block_starts[block_col + 1];
@@ -4212,7 +4208,7 @@ AffineConstraints<number>::add_entries_local_to_global(
             {
               const size_type begin_block = block_starts[block_col],
                               end_block   = block_starts[block_col + 1];
-              std::vector<size_type>::iterator col_ptr = cols.begin();
+              auto col_ptr                = cols.begin();
               internals::resolve_matrix_row(
                 global_rows, i, begin_block, end_block, dof_mask, col_ptr);
 

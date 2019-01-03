@@ -720,7 +720,7 @@ namespace Utilities
     // Let's see if we can cast from 'From' to 'To'. If so, do the cast,
     // and then release the pointer from the old
     // owner
-    if (To *cast = dynamic_cast<To *>(p.get()))
+    if (auto *cast = dynamic_cast<To *>(p.get()))
       {
         std::unique_ptr<To> result(cast);
         p.release();
@@ -1042,7 +1042,7 @@ namespace Utilities
            ExcMessage(
              "The given iterators do not satisfy the proper ordering."));
 
-    unsigned int len = static_cast<unsigned int>(last - first);
+    auto len = static_cast<unsigned int>(last - first);
 
     if (len == 0)
       return first;

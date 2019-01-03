@@ -31,7 +31,7 @@ BlockMatrixArray<number, BlockVectorType>::Entry::Entry(const Entry &e)
   , transpose(e.transpose)
   , matrix(e.matrix)
 {
-  Entry &e2 = const_cast<Entry &>(e);
+  auto &e2  = const_cast<Entry &>(e);
   e2.matrix = nullptr;
 }
 
@@ -111,8 +111,8 @@ BlockMatrixArray<number, BlockVectorType>::vmult_add(
     mem);
   typename BlockVectorType::BlockType &aux = *p_aux;
 
-  typename std::vector<Entry>::const_iterator m   = entries.begin();
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  auto m   = entries.begin();
+  auto end = entries.end();
 
   for (; m != end; ++m)
     {
@@ -151,8 +151,8 @@ BlockMatrixArray<number, BlockVectorType>::Tvmult_add(
   Assert(src.n_blocks() == block_rows,
          ExcDimensionMismatch(src.n_blocks(), block_rows));
 
-  typename std::vector<Entry>::const_iterator m   = entries.begin();
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  auto m   = entries.begin();
+  auto end = entries.end();
 
   typename VectorMemory<typename BlockVectorType::BlockType>::Pointer p_aux(
     mem);
@@ -200,7 +200,7 @@ BlockMatrixArray<number, BlockVectorType>::matrix_scalar_product(
   typename BlockVectorType::BlockType &aux = *p_aux;
 
   typename std::vector<Entry>::const_iterator m;
-  typename std::vector<Entry>::const_iterator end = entries.end();
+  auto                                        end = entries.end();
 
   number result = 0.;
 
@@ -284,12 +284,8 @@ BlockTrianglePrecondition<number, BlockVectorType>::do_row(
   size_type        row_num) const
 {
   GrowingVectorMemory<typename BlockVectorType::BlockType> mem;
-  typename std::vector<
-    typename BlockMatrixArray<number, BlockVectorType>::Entry>::const_iterator
-    m = this->entries.begin();
-  typename std::vector<
-    typename BlockMatrixArray<number, BlockVectorType>::Entry>::const_iterator
-    end = this->entries.end();
+  auto m   = this->entries.begin();
+  auto end = this->entries.end();
   std::vector<typename std::vector<
     typename BlockMatrixArray<number, BlockVectorType>::Entry>::const_iterator>
     diagonals;

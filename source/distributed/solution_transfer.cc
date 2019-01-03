@@ -183,9 +183,7 @@ namespace parallel
           std::ref(all_out)));
 
 
-      for (typename std::vector<VectorType *>::iterator it = all_out.begin();
-           it != all_out.end();
-           ++it)
+      for (auto it = all_out.begin(); it != all_out.end(); ++it)
         (*it)->compress(::dealii::VectorOperation::insert);
 
       input_vectors.clear();

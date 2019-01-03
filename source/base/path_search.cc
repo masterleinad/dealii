@@ -219,8 +219,7 @@ PathSearch::add_path(const std::string &path, Position pos)
     my_path_list.insert(my_path_list.begin(), path);
   else if (pos == after_none)
     {
-      std::vector<std::string>::iterator i =
-        std::find(my_path_list.begin(), my_path_list.end(), empty);
+      auto i = std::find(my_path_list.begin(), my_path_list.end(), empty);
       if (i != my_path_list.end())
         ++i;
       my_path_list.insert(i, path);
@@ -237,8 +236,7 @@ PathSearch::add_suffix(const std::string &suffix, Position pos)
     my_suffix_list.insert(my_suffix_list.begin(), suffix);
   else if (pos == after_none)
     {
-      std::vector<std::string>::iterator i =
-        std::find(my_suffix_list.begin(), my_suffix_list.end(), empty);
+      auto i = std::find(my_suffix_list.begin(), my_suffix_list.end(), empty);
       if (i != my_suffix_list.end())
         ++i;
       my_suffix_list.insert(i, suffix);

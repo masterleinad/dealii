@@ -151,7 +151,7 @@ FE_Q_Hierarchical<dim>::get_interpolation_matrix(
   FullMatrix<double> &      matrix) const
 {
   // support interpolation between FE_Q_Hierarchical only.
-  if (const FE_Q_Hierarchical<dim> *source_fe =
+  if (const auto *source_fe =
         dynamic_cast<const FE_Q_Hierarchical<dim> *>(&source))
     {
       // ok, source is a Q_Hierarchical element, so we will be able to do the
@@ -352,7 +352,7 @@ FE_Q_Hierarchical<dim>::compare_for_domination(
   // (if fe_other is not derived from FE_DGQ)
   // & cell domination
   // ----------------------------------------
-  if (const FE_Q_Hierarchical<dim> *fe_hierarchical_other =
+  if (const auto *fe_hierarchical_other =
         dynamic_cast<const FE_Q_Hierarchical<dim> *>(&fe_other))
     {
       if (this->degree < fe_hierarchical_other->degree)
@@ -362,7 +362,7 @@ FE_Q_Hierarchical<dim>::compare_for_domination(
       else
         return FiniteElementDomination::other_element_dominates;
     }
-  else if (const FE_Nothing<dim> *fe_nothing =
+  else if (const auto *fe_nothing =
              dynamic_cast<const FE_Nothing<dim> *>(&fe_other))
     {
       if (fe_nothing->is_dominating())
@@ -933,7 +933,7 @@ FE_Q_Hierarchical<dim>::get_face_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
   (void)source_fe;
 
@@ -1020,7 +1020,7 @@ FE_Q_Hierarchical<dim>::get_subface_interpolation_matrix(
 
   // ok, source is a Q_Hierarchical element, so
   // we will be able to do the work
-  const FE_Q_Hierarchical<dim> &source_fe =
+  const auto &source_fe =
     dynamic_cast<const FE_Q_Hierarchical<dim> &>(x_source_fe);
 
   // Make sure, that the element,

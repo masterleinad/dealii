@@ -81,9 +81,8 @@ namespace GridTools
     // processor without being true on all. however, we can ask for the
     // global number of active cells and use that
 #if defined(DEAL_II_WITH_P4EST) && defined(DEBUG)
-    if (const parallel::distributed::Triangulation<dim, spacedim> *p_tria =
-          dynamic_cast<
-            const parallel::distributed::Triangulation<dim, spacedim> *>(&tria))
+    if (const auto *p_tria = dynamic_cast<
+          const parallel::distributed::Triangulation<dim, spacedim> *>(&tria))
       Assert(p_tria->n_global_active_cells() == tria.n_cells(0),
              ExcNotImplemented());
 #endif
@@ -116,7 +115,7 @@ namespace GridTools
     const unsigned int                N  = boundary_vertices.size();
     for (unsigned int i = 0; i < N; ++i, ++pi)
       {
-        std::vector<bool>::const_iterator pj = pi + 1;
+        auto pj = pi + 1;
         for (unsigned int j = i + 1; j < N; ++j, ++pj)
           if ((*pi == true) && (*pj == true) &&
               ((vertices[i] - vertices[j]).norm_square() > max_distance_sqr))
@@ -173,7 +172,7 @@ namespace GridTools
     double global_volume = 0;
 
 #ifdef DEAL_II_WITH_MPI
-    if (const parallel::Triangulation<dim, spacedim> *p_tria =
+    if (const auto *p_tria =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
             &triangulation))
       global_volume =
@@ -983,9 +982,8 @@ namespace GridTools
       StaticMappingQ1<dim>::mapping, dof_handler, quadrature, S, coefficient);
 
     // set up the boundary values for the laplace problem
-    std::map<types::global_dof_index, double>                   fixed_dofs[dim];
-    typename std::map<unsigned int, Point<dim>>::const_iterator map_end =
-      new_points.end();
+    std::map<types::global_dof_index, double> fixed_dofs[dim];
+    auto                                      map_end = new_points.end();
 
     // fill these maps using the data given by new_points
     typename DoFHandler<dim>::cell_iterator cell = dof_handler.begin_active(),
@@ -1175,10 +1173,9 @@ namespace GridTools
 
     // If the triangulation is distributed, we need to
     // exchange the moved vertices across mpi processes
-    if (parallel::distributed::Triangulation<dim, spacedim>
-          *distributed_triangulation =
-            dynamic_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
-              &triangulation))
+    if (auto *distributed_triangulation =
+          dynamic_cast<parallel::distributed::Triangulation<dim, spacedim> *>(
+            &triangulation))
       {
         const std::vector<bool> locally_owned_vertices =
           get_locally_owned_vertices(triangulation);
@@ -1368,8 +1365,7 @@ namespace GridTools
 
     // At the beginning, the first used vertex is considered to be the closest
     // one.
-    std::vector<bool>::const_iterator first =
-      std::find(used.begin(), used.end(), true);
+    auto first = std::find(used.begin(), used.end(), true);
 
     // Assert that at least one vertex is actually used
     Assert(first != used.end(), ExcInternalError());
@@ -1617,9 +1613,7 @@ namespace GridTools
           const unsigned int n_neighbor_cells = vertex_to_cells[vertex].size();
           vertex_to_cell_centers[vertex].resize(n_neighbor_cells);
 
-          typename std::set<typename Triangulation<dim, spacedim>::
-                              active_cell_iterator>::iterator it =
-            vertex_to_cells[vertex].begin();
+          auto it = vertex_to_cells[vertex].begin();
           for (unsigned int cell = 0; cell < n_neighbor_cells; ++cell, ++it)
             {
               vertex_to_cell_centers[vertex][cell] =
@@ -2204,9 +2198,9 @@ namespace GridTools
                  ++i)
               {
                 types::subdomain_id lowest_subdomain_id = cell->subdomain_id();
-                typename std::set<active_cell_iterator>::iterator
-                  adjacent_cell = vertex_to_cell[cell->vertex_index(i)].begin(),
-                  end_adj_cell = vertex_to_cell[cell->vertex_index(i)].end();
+                auto adjacent_cell =
+                       vertex_to_cell[cell->vertex_index(i)].begin(),
+                     end_adj_cell = vertex_to_cell[cell->vertex_index(i)].end();
                 for (; adjacent_cell != end_adj_cell; ++adjacent_cell)
                   lowest_subdomain_id =
                     std::min(lowest_subdomain_id,
@@ -2323,9 +2317,8 @@ namespace GridTools
                       indices.begin() + triangulation.locally_owned_subdomain(),
                       types::global_vertex_index(0));
 
-    std::map<unsigned int, types::global_vertex_index>::iterator
-      global_index_it = local_to_global_vertex_index.begin(),
-      global_index_end = local_to_global_vertex_index.end();
+    auto global_index_it = local_to_global_vertex_index.begin(),
+         global_index_end = local_to_global_vertex_index.end();
     for (; global_index_it != global_index_end; ++global_index_it)
       global_index_it->second += shift;
 
@@ -2337,12 +2330,8 @@ namespace GridTools
     std::vector<std::vector<types::global_vertex_index>> vertices_send_buffers(
       vertices_to_send.size());
     std::vector<MPI_Request> first_requests(vertices_to_send.size());
-    typename std::map<types::subdomain_id,
-                      std::vector<std::tuple<types::global_vertex_index,
-                                             types::global_vertex_index,
-                                             std::string>>>::iterator
-      vert_to_send_it = vertices_to_send.begin(),
-      vert_to_send_end = vertices_to_send.end();
+    auto vert_to_send_it = vertices_to_send.begin(),
+         vert_to_send_end = vertices_to_send.end();
     for (unsigned int i = 0; vert_to_send_it != vert_to_send_end;
          ++vert_to_send_it, ++i)
       {
@@ -2375,9 +2364,8 @@ namespace GridTools
     // Receive the first message
     std::vector<std::vector<types::global_vertex_index>> vertices_recv_buffers(
       vertices_to_recv.size());
-    typename std::map<types::subdomain_id, std::set<unsigned int>>::iterator
-      vert_to_recv_it = vertices_to_recv.begin(),
-      vert_to_recv_end = vertices_to_recv.end();
+    auto vert_to_recv_it = vertices_to_recv.begin(),
+         vert_to_recv_end = vertices_to_recv.end();
     for (unsigned int i = 0; vert_to_recv_it != vert_to_recv_end;
          ++vert_to_recv_it, ++i)
       {
@@ -2476,17 +2464,15 @@ namespace GridTools
               &cellids_recv_buffers[i][max_cellid_size * j],
               &cellids_recv_buffers[i][max_cellid_size * j] + max_cellid_size);
             bool found = false;
-            typename std::set<active_cell_iterator>::iterator
-              cell_set_it = missing_vert_cells.begin(),
-              end_cell_set = missing_vert_cells.end();
+            auto cell_set_it = missing_vert_cells.begin(),
+                 end_cell_set = missing_vert_cells.end();
             for (; (found == false) && (cell_set_it != end_cell_set);
                  ++cell_set_it)
               {
-                typename std::set<active_cell_iterator>::iterator
-                  candidate_cell =
-                    vertex_to_cell[(*cell_set_it)->vertex_index(i)].begin(),
-                  end_cell =
-                    vertex_to_cell[(*cell_set_it)->vertex_index(i)].end();
+                auto candidate_cell =
+                       vertex_to_cell[(*cell_set_it)->vertex_index(i)].begin(),
+                     end_cell =
+                       vertex_to_cell[(*cell_set_it)->vertex_index(i)].end();
                 for (; candidate_cell != end_cell; ++candidate_cell)
                   {
                     std::string current_cellid =
@@ -2934,9 +2920,7 @@ namespace GridTools
             continue;
 
           unsigned int new_owner = cell->child(0)->subdomain_id();
-          for (std::map<unsigned int, unsigned int>::iterator it =
-                 map_cpu_n_cells.begin();
-               it != map_cpu_n_cells.end();
+          for (auto it = map_cpu_n_cells.begin(); it != map_cpu_n_cells.end();
                ++it)
             if (it->second > map_cpu_n_cells[new_owner])
               new_owner = it->first;
@@ -3023,9 +3007,9 @@ namespace GridTools
     // are owned by other processors -- either because the vertex is
     // on an artificial cell, or because it is on a ghost cell with
     // a smaller subdomain
-    if (const parallel::distributed::Triangulation<dim, spacedim> *tr =
-          dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>
-                         *>(&triangulation))
+    if (const auto *tr = dynamic_cast<
+          const parallel::distributed::Triangulation<dim, spacedim> *>(
+          &triangulation))
       for (typename dealii::internal::ActiveCellIterator<
              dim,
              spacedim,
@@ -3087,7 +3071,7 @@ namespace GridTools
     double global_min_diameter = 0;
 
 #ifdef DEAL_II_WITH_MPI
-    if (const parallel::Triangulation<dim, spacedim> *p_tria =
+    if (const auto *p_tria =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
             &triangulation))
       global_min_diameter =
@@ -3114,7 +3098,7 @@ namespace GridTools
     double global_max_diameter = 0;
 
 #ifdef DEAL_II_WITH_MPI
-    if (const parallel::Triangulation<dim, spacedim> *p_tria =
+    if (const auto *p_tria =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
             &triangulation))
       global_max_diameter =
@@ -3606,9 +3590,7 @@ namespace GridTools
     typename Triangulation<dim, spacedim>::DistortedCellList unfixable_subset;
 
     // loop over all cells that we have to fix up
-    for (typename std::list<
-           typename Triangulation<dim, spacedim>::cell_iterator>::const_iterator
-           cell_ptr = distorted_cells.distorted_cells.begin();
+    for (auto cell_ptr = distorted_cells.distorted_cells.begin();
          cell_ptr != distorted_cells.distorted_cells.end();
          ++cell_ptr)
       {
@@ -4248,11 +4230,9 @@ namespace GridTools
         else
           {
             // Check if it is in another cell already found
-            typename std::vector<typename Triangulation<dim, spacedim>::
-                                   active_cell_iterator>::iterator cells_it =
-              std::find(std::get<0>(cell_qpoint_map).begin(),
-                        std::get<0>(cell_qpoint_map).end() - 1,
-                        my_pair.first);
+            auto cells_it = std::find(std::get<0>(cell_qpoint_map).begin(),
+                                      std::get<0>(cell_qpoint_map).end() - 1,
+                                      my_pair.first);
 
             if (cells_it == std::get<0>(cell_qpoint_map).end() - 1)
               {

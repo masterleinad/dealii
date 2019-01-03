@@ -265,9 +265,7 @@ PathSearch::show(StreamType &out) const
 {
   out << "DEAL_II_" << cls << "PATH=\"";
   bool first = true;
-  for (std::vector<std::string>::iterator p = my_path_list.begin();
-       p != my_path_list.end();
-       ++p)
+  for (auto p = my_path_list.begin(); p != my_path_list.end(); ++p)
     {
       if (!first)
         out << ':';
@@ -275,9 +273,7 @@ PathSearch::show(StreamType &out) const
       first = false;
     }
   out << '"' << std::endl << " Suffixes";
-  for (std::vector<std::string>::iterator s = my_suffix_list.begin();
-       s != my_suffix_list.end();
-       ++s)
+  for (auto s = my_suffix_list.begin(); s != my_suffix_list.end(); ++s)
     out << " \"" << *s << '"';
   out << std::endl;
 }

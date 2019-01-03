@@ -839,7 +839,7 @@ BlockSparsityPatternBase<SparsityPatternType>::add_entries(
       counter_within_block.resize(this->n_block_cols());
     }
 
-  const size_type n_cols = static_cast<size_type>(end - begin);
+  const auto n_cols = static_cast<size_type>(end - begin);
 
   // Resize sub-arrays to n_cols. This
   // is a bit wasteful, but we resize

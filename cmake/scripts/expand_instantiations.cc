@@ -219,7 +219,7 @@ std::list<std::string>
 delete_empty_entries(const std::list<std::string> &list)
 {
   std::list<std::string> return_list;
-  for (std::list<std::string>::const_iterator i = list.begin(); i != list.end();
+  for (auto i = list.begin(); i != list.end();
        ++i)
     if (*i != "")
       return_list.push_back(*i);
@@ -469,7 +469,7 @@ process_instantiations()
       // process the header
       std::list<std::pair<std::string, std::string>> substitutions;
 
-      for (std::list<std::string>::const_iterator s =
+      for (auto s =
              substitutions_list.begin();
            s != substitutions_list.end();
            ++s)
@@ -486,7 +486,7 @@ process_instantiations()
           const std::list<std::string> names =
             split_string_list(names_and_type.front(), ',');
 
-          for (std::list<std::string>::const_iterator x = names.begin();
+          for (auto x = names.begin();
                x != names.end();
                ++x)
             substitutions.emplace_back(*x, names_and_type.back());

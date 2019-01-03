@@ -1503,13 +1503,12 @@ namespace TrilinosWrappers
     Assert(sizeof(TrilinosWrappers::types::int_type) == sizeof((*begin) * 2),
            ExcNotImplemented());
 
-    TrilinosWrappers::types::int_type *col_index_ptr =
-      reinterpret_cast<TrilinosWrappers::types::int_type *>(
-        const_cast<typename std::decay<decltype(*begin)>::type *>(&*begin));
+    auto *col_index_ptr = reinterpret_cast<TrilinosWrappers::types::int_type *>(
+      const_cast<typename std::decay<decltype(*begin)>::type *>(&*begin));
     // Check at least for the first index that the conversion actually works
     AssertDimension(*col_index_ptr, *begin);
     TrilinosWrappers::types::int_type trilinos_row_index = row;
-    const int                         n_cols = static_cast<int>(end - begin);
+    const auto                        n_cols = static_cast<int>(end - begin);
 
     int ierr;
     if (row_is_stored_locally(row))

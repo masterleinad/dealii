@@ -59,8 +59,7 @@ namespace GraphColoring
       // them in lockstep and see if we encounter an index that's
       // in both arrays. once we reach the end of either array,
       // we know that there is no intersection
-      std::vector<types::global_dof_index>::const_iterator p = indices1.begin(),
-                                                           q = indices2.begin();
+      auto p = indices1.begin(), q = indices2.begin();
       while ((p != indices1.end()) && (q != indices2.end()))
         {
           if (*p < *q)
@@ -369,7 +368,7 @@ namespace GraphColoring
                   std::vector<unsigned int>::iterator it;
                   it = std::max_element(colors_counter[i].begin(),
                                         colors_counter[i].end());
-                  unsigned int min_iterators(static_cast<unsigned int>(-1));
+                  auto         min_iterators(static_cast<unsigned int>(-1));
                   unsigned int pos(0);
                   // Find the color of coloring with the least number of colors
                   // among the colors that have not been used yet.
@@ -424,7 +423,7 @@ namespace GraphColoring
                       std::vector<unsigned int>::iterator it;
                       it = std::max_element(colors_counter[i].begin(),
                                             colors_counter[i].end());
-                      unsigned int min_iterators(static_cast<unsigned int>(-1));
+                      auto         min_iterators(static_cast<unsigned int>(-1));
                       unsigned int pos(0);
                       // Find the color of coloring with the least number of
                       // colors among the colors that have not been used yet.

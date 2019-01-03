@@ -641,7 +641,7 @@ SparseMatrix<number>::add(const size_type  row,
 
   for (size_type j = 0; j < n_cols; ++j)
     {
-      const number value = number(values[j]);
+      const auto value = number(values[j]);
       AssertIsFinite(value);
 
 #ifdef DEBUG
@@ -702,7 +702,7 @@ SparseMatrix<number>::set(const size_type  row,
     {
       for (size_type j = 0; j < n_cols; ++j)
         {
-          const number value = number(values[j]);
+          const auto value = number(values[j]);
           AssertIsFinite(value);
 
           if (value == number())
@@ -738,7 +738,7 @@ SparseMatrix<number>::set(const size_type  row,
       // same code as above, but now check for zeros
       for (size_type j = 0; j < n_cols; ++j)
         {
-          const number value = number(values[j]);
+          const auto value = number(values[j]);
           AssertIsFinite(value);
 
           if (index != next_row_index && my_cols[index] == col_indices[j])

@@ -277,15 +277,15 @@ namespace MeshWorker
         {
           if (separate_faces)
             {
-              BlockVector<double> *v1 = results.entry<BlockVector<double> *>(1);
-              const double         J  = info1.value(i) + info2.value(i);
+              auto *       v1 = results.entry<BlockVector<double> *>(1);
+              const double J  = info1.value(i) + info2.value(i);
               v1->block(i)(info1.face->user_index()) += J;
               if (info2.face != info1.face)
                 v1->block(i)(info2.face->user_index()) += J;
             }
           else
             {
-              BlockVector<double> *v0 = results.entry<BlockVector<double> *>(0);
+              auto *v0 = results.entry<BlockVector<double> *>(0);
               v0->block(i)(info1.cell->user_index()) += .5 * info1.value(i);
               v0->block(i)(info2.cell->user_index()) += .5 * info2.value(i);
             }

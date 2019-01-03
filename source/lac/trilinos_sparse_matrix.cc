@@ -2415,7 +2415,7 @@ namespace TrilinosWrappers
   {
 #  ifdef DEAL_II_WITH_MPI
 
-    const Epetra_MpiComm *mpi_comm =
+    const auto *mpi_comm =
       dynamic_cast<const Epetra_MpiComm *>(&matrix->RangeMap().Comm());
     Assert(mpi_comm != nullptr, ExcInternalError());
     return mpi_comm->Comm();
@@ -2549,7 +2549,7 @@ namespace TrilinosWrappers
             tril_dst,
             !matrix.trilinos_matrix().UseTranspose());
 
-          Epetra_CrsMatrix &tril_mtrx_non_const =
+          auto &tril_mtrx_non_const =
             const_cast<Epetra_CrsMatrix &>(matrix.trilinos_matrix());
           tril_mtrx_non_const.SetUseTranspose(
             !matrix.trilinos_matrix().UseTranspose());

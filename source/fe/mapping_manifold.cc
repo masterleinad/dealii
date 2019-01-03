@@ -510,7 +510,7 @@ MappingManifold<dim, spacedim>::fill_fe_values(
   // ensure that the following static_cast is really correct:
   Assert(dynamic_cast<const InternalData *>(&internal_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   const unsigned int n_q_points = quadrature.size();
 
@@ -874,10 +874,9 @@ namespace internal
                                MappingManifold<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingManifold<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingManifold<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingManifold<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -952,10 +951,9 @@ namespace internal
                                MappingManifold<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingManifold<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingManifold<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingManifold<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1054,10 +1052,9 @@ namespace internal
                                MappingManifold<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingManifold<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingManifold<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingManifold<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1223,10 +1220,9 @@ namespace internal
                                MappingManifold<dim, spacedim>::InternalData *>(
                   &mapping_data) != nullptr),
                ExcInternalError());
-        const typename dealii::MappingManifold<dim, spacedim>::InternalData
-          &data =
-            static_cast<const typename dealii::MappingManifold<dim, spacedim>::
-                          InternalData &>(mapping_data);
+        const auto &data =
+          static_cast<const typename dealii::MappingManifold<dim, spacedim>::
+                        InternalData &>(mapping_data);
 
         switch (mapping_type)
           {
@@ -1265,7 +1261,7 @@ MappingManifold<dim, spacedim>::fill_fe_face_values(
   // ensure that the following cast is really correct:
   Assert((dynamic_cast<const InternalData *>(&internal_data) != nullptr),
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   internal::MappingManifoldImplementation::do_fill_fe_face_values(
     *this,
@@ -1298,7 +1294,7 @@ MappingManifold<dim, spacedim>::fill_fe_subface_values(
   // ensure that the following cast is really correct:
   Assert((dynamic_cast<const InternalData *>(&internal_data) != nullptr),
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(internal_data);
+  const auto &data = static_cast<const InternalData &>(internal_data);
 
   internal::MappingManifoldImplementation::do_fill_fe_face_values(
     *this,
@@ -1390,7 +1386,7 @@ MappingManifold<dim, spacedim>::transform(
   AssertDimension(input.size(), output.size());
   Assert(dynamic_cast<const InternalData *>(&mapping_data) != nullptr,
          ExcInternalError());
-  const InternalData &data = static_cast<const InternalData &>(mapping_data);
+  const auto &data = static_cast<const InternalData &>(mapping_data);
 
   switch (mapping_type)
     {

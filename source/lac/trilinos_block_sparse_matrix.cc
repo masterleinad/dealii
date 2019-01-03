@@ -57,7 +57,7 @@ namespace TrilinosWrappers
     for (size_type r = 0; r < this->n_block_rows(); ++r)
       for (size_type c = 0; c < this->n_block_cols(); ++c)
         {
-          BlockType *p = new BlockType();
+          auto *p = new BlockType();
 
           Assert(this->sub_objects[r][c] == nullptr, ExcInternalError());
           this->sub_objects[r][c] = p;

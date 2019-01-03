@@ -1027,7 +1027,7 @@ namespace MatrixCreator
       copy_data.cell          = cell;
       copy_data.dofs_per_cell = fe.dofs_per_cell;
 
-      UpdateFlags update_flags =
+      auto update_flags =
         UpdateFlags(update_values | update_JxW_values | update_normal_vectors |
                     update_quadrature_points);
       FEFaceValues<dim, spacedim> fe_values(mapping, fe, q, update_flags);
@@ -1467,7 +1467,7 @@ namespace MatrixCreator
       cell->get_dof_indices(copy_data.dofs);
 
 
-      UpdateFlags update_flags =
+      auto update_flags =
         UpdateFlags(update_values | update_JxW_values | update_normal_vectors |
                     update_quadrature_points);
       hp::FEFaceValues<dim, spacedim> x_fe_values(mapping,
@@ -1756,10 +1756,8 @@ namespace MatrixCreator
               // for this purpose we seek the diagonal of the matrix, where
               // there must be an element belonging to the boundary. we take the
               // maximum diagonal entry.
-              types::global_dof_index max_element =
-                static_cast<types::global_dof_index>(0);
-              for (std::vector<types::global_dof_index>::const_iterator i =
-                     dof_to_boundary_mapping.begin();
+              auto max_element = static_cast<types::global_dof_index>(0);
+              for (auto i = dof_to_boundary_mapping.begin();
                    i != dof_to_boundary_mapping.end();
                    ++i)
                 if ((*i != numbers::invalid_dof_index) && (*i > max_element))

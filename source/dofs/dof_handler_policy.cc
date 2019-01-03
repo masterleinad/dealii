@@ -2443,8 +2443,7 @@ namespace internal
           // correct but also faster; note, however, that dof numbers
           // may be invalid_dof_index, namely when the appropriate
           // vertex/line/etc is unused
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.vertex_dofs.begin();
+          for (auto i = dof_handler.vertex_dofs.begin();
                i != dof_handler.vertex_dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -2478,8 +2477,7 @@ namespace internal
         {
           for (unsigned int level = 0; level < dof_handler.levels.size();
                ++level)
-            for (std::vector<types::global_dof_index>::iterator i =
-                   dof_handler.levels[level]->dof_object.dofs.begin();
+            for (auto i = dof_handler.levels[level]->dof_object.dofs.begin();
                  i != dof_handler.levels[level]->dof_object.dofs.end();
                  ++i)
               if (*i != numbers::invalid_dof_index)
@@ -2518,8 +2516,7 @@ namespace internal
           DoFHandler<2, spacedim> &                   dof_handler)
         {
           // treat dofs on lines
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->lines.dofs.begin();
+          for (auto i = dof_handler.faces->lines.dofs.begin();
                i != dof_handler.faces->lines.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -2538,8 +2535,7 @@ namespace internal
           DoFHandler<3, spacedim> &                   dof_handler)
         {
           // treat dofs on lines
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->lines.dofs.begin();
+          for (auto i = dof_handler.faces->lines.dofs.begin();
                i != dof_handler.faces->lines.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -2548,8 +2544,7 @@ namespace internal
                       new_numbers[indices_we_care_about.index_within_set(*i)]);
 
           // treat dofs on quads
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.faces->quads.dofs.begin();
+          for (auto i = dof_handler.faces->quads.dofs.begin();
                i != dof_handler.faces->quads.dofs.end();
                ++i)
             if (*i != numbers::invalid_dof_index)
@@ -3102,9 +3097,7 @@ namespace internal
           Assert(level < dof_handler.get_triangulation().n_levels(),
                  ExcInternalError());
 
-          for (typename std::vector<
-                 typename DoFHandler<dim, spacedim>::MGVertexDoFs>::iterator i =
-                 dof_handler.mg_vertex_dofs.begin();
+          for (auto i = dof_handler.mg_vertex_dofs.begin();
                i != dof_handler.mg_vertex_dofs.end();
                ++i)
             // if the present vertex lives on the current level
@@ -3150,8 +3143,7 @@ namespace internal
           DoFHandler<dim, spacedim> &dof_handler,
           const unsigned int         level)
         {
-          for (std::vector<types::global_dof_index>::iterator i =
-                 dof_handler.mg_levels[level]->dof_object.dofs.begin();
+          for (auto i = dof_handler.mg_levels[level]->dof_object.dofs.begin();
                i != dof_handler.mg_levels[level]->dof_object.dofs.end();
                ++i)
             {
@@ -4552,8 +4544,7 @@ namespace internal
           using cellmap_t =
             std::map<dealii::types::subdomain_id, CellDataTransferBuffer<dim>>;
           cellmap_t neighbor_cell_list;
-          for (std::set<dealii::types::subdomain_id>::iterator it =
-                 level_ghost_owners.begin();
+          for (auto it = level_ghost_owners.begin();
                it != level_ghost_owners.end();
                ++it)
             neighbor_cell_list.insert(
@@ -4583,7 +4574,7 @@ namespace internal
           std::vector<MPI_Request>       requests(level_ghost_owners.size());
 
           unsigned int idx = 0;
-          for (typename cellmap_t::iterator it = neighbor_cell_list.begin();
+          for (auto it = neighbor_cell_list.begin();
                it != neighbor_cell_list.end();
                ++it, ++idx)
             {
@@ -5373,10 +5364,7 @@ namespace internal
             // TODO: make this code simpler with the new constructors of
             // NumberCache make indices consecutive
             level_number_cache.n_locally_owned_dofs = 0;
-            for (std::vector<dealii::types::global_dof_index>::iterator it =
-                   renumbering.begin();
-                 it != renumbering.end();
-                 ++it)
+            for (auto it = renumbering.begin(); it != renumbering.end(); ++it)
               if (*it != numbers::invalid_dof_index)
                 *it = level_number_cache.n_locally_owned_dofs++;
 
@@ -5400,10 +5388,7 @@ namespace internal
               level_number_cache.n_locally_owned_dofs_per_processor.begin() +
                 triangulation->locally_owned_subdomain(),
               static_cast<dealii::types::global_dof_index>(0));
-            for (std::vector<dealii::types::global_dof_index>::iterator it =
-                   renumbering.begin();
-                 it != renumbering.end();
-                 ++it)
+            for (auto it = renumbering.begin(); it != renumbering.end(); ++it)
               if (*it != numbers::invalid_dof_index)
                 (*it) += shift;
 

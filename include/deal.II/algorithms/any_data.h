@@ -232,7 +232,7 @@ inline type
 AnyData::entry(const unsigned int i)
 {
   AssertIndexRange(i, size());
-  type *p = boost::any_cast<type>(&data[i]);
+  auto *p = boost::any_cast<type>(&data[i]);
   Assert(p != nullptr,
          ExcTypeMismatch(typeid(type).name(), data[i].type().name()));
   return *p;
@@ -244,7 +244,7 @@ inline const type
 AnyData::entry(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type *p = boost::any_cast<type>(&data[i]);
+  const auto *p = boost::any_cast<type>(&data[i]);
   if (p == nullptr)
     p = boost::any_cast<const type>(&data[i]);
   Assert(p != nullptr,
@@ -272,7 +272,7 @@ inline const type *
 AnyData::read_ptr(const unsigned int i) const
 {
   AssertIndexRange(i, size());
-  const type *const *p = boost::any_cast<type *>(&data[i]);
+  const auto *const *p = boost::any_cast<type *>(&data[i]);
   if (p == nullptr)
     p = boost::any_cast<const type *>(&data[i]);
   Assert(p != nullptr,
@@ -318,8 +318,7 @@ AnyData::name(const unsigned int i) const
 inline unsigned int
 AnyData::try_find(const std::string &n) const
 {
-  std::vector<std::string>::const_iterator it =
-    std::find(names.begin(), names.end(), n);
+  auto it = std::find(names.begin(), names.end(), n);
 
   if (it == names.end())
     return numbers::invalid_unsigned_int;
@@ -414,8 +413,7 @@ inline const type *
 AnyData::try_read(const std::string &n) const
 {
   // Try to find name
-  std::vector<std::string>::const_iterator it =
-    std::find(names.begin(), names.end(), n);
+  auto it = std::find(names.begin(), names.end(), n);
   // Return null pointer if not found
   if (it == names.end())
     return nullptr;

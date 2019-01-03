@@ -2315,7 +2315,7 @@ MatrixFree<dim, Number>::acquire_scratch_data() const
   using list_type =
     std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>;
   list_type &data = scratch_pad.get();
-  for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+  for (auto it = data.begin(); it != data.end(); ++it)
     if (it->first == false)
       {
         it->first = true;
@@ -2336,7 +2336,7 @@ MatrixFree<dim, Number>::release_scratch_data(
   using list_type =
     std::list<std::pair<bool, AlignedVector<VectorizedArray<Number>>>>;
   list_type &data = scratch_pad.get();
-  for (typename list_type::iterator it = data.begin(); it != data.end(); ++it)
+  for (auto it = data.begin(); it != data.end(); ++it)
     if (&it->second == scratch)
       {
         Assert(it->first == true, ExcInternalError());
@@ -2352,8 +2352,7 @@ template <int dim, typename Number>
 AlignedVector<Number> *
 MatrixFree<dim, Number>::acquire_scratch_data_non_threadsafe() const
 {
-  for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it =
-         scratch_pad_non_threadsafe.begin();
+  for (auto it = scratch_pad_non_threadsafe.begin();
        it != scratch_pad_non_threadsafe.end();
        ++it)
     if (it->first == false)
@@ -2373,8 +2372,7 @@ void
 MatrixFree<dim, Number>::release_scratch_data_non_threadsafe(
   const AlignedVector<Number> *scratch) const
 {
-  for (typename std::list<std::pair<bool, AlignedVector<Number>>>::iterator it =
-         scratch_pad_non_threadsafe.begin();
+  for (auto it = scratch_pad_non_threadsafe.begin();
        it != scratch_pad_non_threadsafe.end();
        ++it)
     if (&it->second == scratch)
@@ -2925,9 +2923,8 @@ namespace internal
             vec.zero_out_ghosts();
           else if (part.n_ghost_indices() > 0)
             {
-              for (std::vector<std::pair<unsigned int, unsigned int>>::
-                     const_iterator my_ghosts =
-                       part.ghost_indices_within_larger_ghost_set().begin();
+              for (auto my_ghosts =
+                     part.ghost_indices_within_larger_ghost_set().begin();
                    my_ghosts !=
                    part.ghost_indices_within_larger_ghost_set().end();
                    ++my_ghosts)

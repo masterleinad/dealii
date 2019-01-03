@@ -312,10 +312,7 @@ namespace internal
       &face_integrals)
   {
     // now copy locally computed elements into the global map
-    for (typename std::map<typename DoFHandlerType::face_iterator,
-                           std::vector<double>>::const_iterator p =
-           local_face_integrals.begin();
-         p != local_face_integrals.end();
+    for (auto p = local_face_integrals.begin(); p != local_face_integrals.end();
          ++p)
       {
         // double check that the element does not already exists in the

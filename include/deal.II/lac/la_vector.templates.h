@@ -68,7 +68,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage(
              "Cannot add two vectors with different numbers of elements"));
@@ -182,7 +182,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage(
              "Cannot add two vectors with different numbers of elements"));
@@ -208,7 +208,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage(
              "Cannot subtract two vectors with different numbers of elements"));
@@ -232,7 +232,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     Assert(down_V.size() == this->size(),
            ExcMessage("Cannot compute the scalar product "
                       "of two vectors with different numbers of elements"));
@@ -283,7 +283,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     AssertIsFinite(a);
     Assert(down_V.size() == this->size(),
            ExcMessage(
@@ -314,9 +314,9 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+    const auto &down_W = dynamic_cast<const Vector<Number> &>(W);
     AssertIsFinite(a);
     Assert(down_V.size() == this->size(),
            ExcMessage(
@@ -350,7 +350,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. It fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     internal::VectorOperations::Vectorization_sadd_xav<Number> vector_sadd_xav(
       this->values.get(), down_V.values.get(), a, s);
     internal::VectorOperations::parallel_for(vector_sadd_xav,
@@ -370,7 +370,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast scaling_factors. If fails, throws an exception.
-    const Vector<Number> &down_scaling_factors =
+    const auto &down_scaling_factors =
       dynamic_cast<const Vector<Number> &>(scaling_factors);
     Assert(down_scaling_factors.size() == this->size(),
            ExcMessage(
@@ -397,7 +397,7 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     internal::VectorOperations::Vectorization_equ_au<Number> vector_equ(
       this->values.get(), down_V.values.get(), a);
     internal::VectorOperations::parallel_for(vector_equ,
@@ -535,9 +535,9 @@ namespace LinearAlgebra
            ExcVectorTypeNotCompatible());
 
     // Downcast V. If fails, throws an exception.
-    const Vector<Number> &down_V = dynamic_cast<const Vector<Number> &>(V);
+    const auto &down_V = dynamic_cast<const Vector<Number> &>(V);
     // Downcast W. If fails, throws an exception.
-    const Vector<Number> &down_W = dynamic_cast<const Vector<Number> &>(W);
+    const auto &down_W = dynamic_cast<const Vector<Number> &>(W);
     AssertIsFinite(a);
     Assert(down_V.size() == this->size(),
            ExcMessage(

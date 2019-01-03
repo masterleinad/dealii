@@ -1707,7 +1707,7 @@ namespace Step32
     assemble_temperature_matrix();
 
     QGauss<dim> quadrature(parameters.temperature_degree + 2);
-    UpdateFlags update_flags =
+    auto        update_flags =
       UpdateFlags(update_values | update_quadrature_points | update_JxW_values);
     FEValues<dim> fe_values(mapping, temperature_fe, quadrature, update_flags);
 

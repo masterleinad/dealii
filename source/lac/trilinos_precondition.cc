@@ -120,8 +120,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       0));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -172,8 +171,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -225,8 +223,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -287,8 +284,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       0));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -355,8 +351,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -424,8 +419,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -483,8 +477,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -533,8 +526,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -586,8 +578,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -633,8 +624,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       additional_data.overlap));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -683,8 +673,7 @@ namespace TrilinosWrappers
     preconditioner =
       std::make_shared<Ifpack_Chebyshev>(&matrix.trilinos_matrix());
 
-    Ifpack_Chebyshev *ifpack =
-      dynamic_cast<Ifpack_Chebyshev *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Chebyshev *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));
@@ -739,8 +728,7 @@ namespace TrilinosWrappers
                       const_cast<Epetra_CrsMatrix *>(&matrix.trilinos_matrix()),
                       0));
 
-    Ifpack_Preconditioner *ifpack =
-      dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
+    auto *ifpack = dynamic_cast<Ifpack_Preconditioner *>(preconditioner.get());
     Assert(ifpack != nullptr,
            ExcMessage("Trilinos could not create this "
                       "preconditioner"));

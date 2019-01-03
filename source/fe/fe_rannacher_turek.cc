@@ -121,8 +121,7 @@ FE_RannacherTurek<dim>::convert_generalized_support_point_values_to_dof_values(
   const unsigned int q_points_per_face = this->weights.size();
   std::fill(nodal_values.begin(), nodal_values.end(), 0.0);
 
-  std::vector<Vector<double>>::const_iterator value =
-    support_point_values.begin();
+  auto value = support_point_values.begin();
   for (unsigned int face = 0; face < dealii::GeometryInfo<dim>::faces_per_cell;
        ++face)
     {

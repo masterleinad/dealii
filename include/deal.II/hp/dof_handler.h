@@ -1168,11 +1168,7 @@ namespace hp
     // extract the set of boundary ids and forget about the function object
     // pointers
     std::set<types::boundary_id> boundary_ids_only;
-    for (typename std::map<types::boundary_id,
-                           const Function<spacedim, number> *>::const_iterator
-           p = boundary_ids.begin();
-         p != boundary_ids.end();
-         ++p)
+    for (auto p = boundary_ids.begin(); p != boundary_ids.end(); ++p)
       boundary_ids_only.insert(p->first);
 
     // then just hand everything over to the other function that does the work

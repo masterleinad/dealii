@@ -3514,7 +3514,7 @@ CellAccessor<dim, spacedim>::is_locally_owned() const
   if (is_artificial())
     return false;
 
-  const parallel::Triangulation<dim, spacedim> *pt =
+  const auto *pt =
     dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
 
   if (pt == nullptr)
@@ -3534,7 +3534,7 @@ CellAccessor<dim, spacedim>::is_locally_owned_on_level() const
   return true;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
+  const auto *pt =
     dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
 
   if (pt == nullptr)
@@ -3559,7 +3559,7 @@ CellAccessor<dim, spacedim>::is_ghost() const
   return false;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
+  const auto *pt =
     dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
 
   if (pt == nullptr)
@@ -3582,7 +3582,7 @@ CellAccessor<dim, spacedim>::is_artificial() const
   return false;
 #else
 
-  const parallel::Triangulation<dim, spacedim> *pt =
+  const auto *pt =
     dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(this->tria);
 
   if (pt == nullptr)

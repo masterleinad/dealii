@@ -549,8 +549,7 @@ namespace DoFRenumbering
             std::vector<types::global_dof_index> translate_indices(
               my_new_indices.size());
             {
-              std::set<types::global_dof_index>::const_iterator
-                                      next_erased_index = erase_these_indices.begin();
+              auto next_erased_index = erase_these_indices.begin();
               types::global_dof_index next_new_index = 0;
               for (unsigned int i = 0; i < translate_indices.size(); ++i)
                 if ((next_erased_index != erase_these_indices.end()) &&
@@ -1394,7 +1393,7 @@ namespace DoFRenumbering
     // DoFs for all previous processes
     types::global_dof_index my_starting_index = 0;
 
-    if (const parallel::Triangulation<dim, spacedim> *tria =
+    if (const auto *tria =
           dynamic_cast<const parallel::Triangulation<dim, spacedim> *>(
             &dof_handler.get_triangulation()))
       {
@@ -1408,9 +1407,9 @@ namespace DoFRenumbering
                           types::global_dof_index(0));
       }
 
-    if (const parallel::distributed::Triangulation<dim, spacedim> *tria =
-          dynamic_cast<const parallel::distributed::Triangulation<dim, spacedim>
-                         *>(&dof_handler.get_triangulation()))
+    if (const auto *tria = dynamic_cast<
+          const parallel::distributed::Triangulation<dim, spacedim> *>(
+          &dof_handler.get_triangulation()))
       {
 #ifdef DEAL_II_WITH_P4EST
         // this is a distributed Triangulation. we need to traverse the coarse

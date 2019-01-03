@@ -2399,11 +2399,10 @@ namespace GridGenerator
     extrude_triangulation(tria_2, 5, 0.41, tria, true);
 
     // set up the new 3D manifolds
-    const types::manifold_id      cylindrical_manifold_id = 0;
-    const types::manifold_id      tfi_manifold_id         = 1;
-    const PolarManifold<2> *const m_ptr =
-      dynamic_cast<const PolarManifold<2> *>(
-        &tria_2.get_manifold(cylindrical_manifold_id));
+    const types::manifold_id cylindrical_manifold_id = 0;
+    const types::manifold_id tfi_manifold_id         = 1;
+    const auto *const        m_ptr = dynamic_cast<const PolarManifold<2> *>(
+      &tria_2.get_manifold(cylindrical_manifold_id));
     Assert(m_ptr != nullptr, ExcInternalError());
     const Point<3>     axial_point(m_ptr->center[0], m_ptr->center[1], 0.0);
     const Tensor<1, 3> direction{{0.0, 0.0, 1.0}};
@@ -5125,9 +5124,8 @@ namespace GridGenerator
   flatten_triangulation(const Triangulation<dim, spacedim1> &in_tria,
                         Triangulation<dim, spacedim2> &      out_tria)
   {
-    const parallel::distributed::Triangulation<dim, spacedim1> *pt =
-      dynamic_cast<
-        const parallel::distributed::Triangulation<dim, spacedim1> *>(&in_tria);
+    const auto *pt = dynamic_cast<
+      const parallel::distributed::Triangulation<dim, spacedim1> *>(&in_tria);
 
     (void)pt;
     Assert(

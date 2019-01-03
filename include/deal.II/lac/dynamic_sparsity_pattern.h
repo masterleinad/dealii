@@ -928,8 +928,7 @@ DynamicSparsityPattern::Line::add(const size_type j)
     }
 
   // do a binary search to find the place where to insert:
-  std::vector<size_type>::iterator it =
-    Utilities::lower_bound(entries.begin(), entries.end(), j);
+  auto it = Utilities::lower_bound(entries.begin(), entries.end(), j);
 
   // If this entry is a duplicate, exit immediately
   if (*it == j)

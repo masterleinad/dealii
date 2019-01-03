@@ -324,8 +324,7 @@ DerivativeForm<order, dim, spacedim, Number>::determinant() const
   Assert(order == 1, ExcMessage("Only for order == 1."));
   if (dim == spacedim)
     {
-      const Tensor<2, dim, Number> T =
-        static_cast<Tensor<2, dim, Number>>(*this);
+      const auto T = static_cast<Tensor<2, dim, Number>>(*this);
       return dealii::determinant(T);
     }
   else

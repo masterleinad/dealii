@@ -63,10 +63,9 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
       // the first entry. check whether the
       // first entry is a duplicate before
       // actually doing something.
-      ForwardIterator                  my_it = begin;
-      size_type                        col   = *my_it;
-      std::vector<size_type>::iterator it =
-        Utilities::lower_bound(entries.begin(), entries.end(), col);
+      ForwardIterator my_it = begin;
+      size_type       col   = *my_it;
+      auto it = Utilities::lower_bound(entries.begin(), entries.end(), col);
       while (*it == col)
         {
           ++my_it;
@@ -102,7 +101,7 @@ DynamicSparsityPattern::Line::add_entries(ForwardIterator begin,
              ExcInternalError());
 
       // now merge the two lists.
-      std::vector<size_type>::iterator it2 = it + (end - my_it);
+      auto it2 = it + (end - my_it);
 
       // as long as there are indices both in
       // the end of the entries list and in the
@@ -484,9 +483,7 @@ DynamicSparsityPattern::print(std::ostream &out) const
     {
       out << '[' << (rowset.size() == 0 ? row : rowset.nth_index_in_set(row));
 
-      for (std::vector<size_type>::const_iterator j =
-             lines[row].entries.begin();
-           j != lines[row].entries.end();
+      for (auto j = lines[row].entries.begin(); j != lines[row].entries.end();
            ++j)
         out << ',' << *j;
 
@@ -506,9 +503,7 @@ DynamicSparsityPattern::print_gnuplot(std::ostream &out) const
       const size_type rowindex =
         rowset.size() == 0 ? row : rowset.nth_index_in_set(row);
 
-      for (std::vector<size_type>::const_iterator j =
-             lines[row].entries.begin();
-           j != lines[row].entries.end();
+      for (auto j = lines[row].entries.begin(); j != lines[row].entries.end();
            ++j)
         // while matrix entries are usually
         // written (i,j), with i vertical and
@@ -533,9 +528,7 @@ DynamicSparsityPattern::bandwidth() const
       const size_type rowindex =
         rowset.size() == 0 ? row : rowset.nth_index_in_set(row);
 
-      for (std::vector<size_type>::const_iterator j =
-             lines[row].entries.begin();
-           j != lines[row].entries.end();
+      for (auto j = lines[row].entries.begin(); j != lines[row].entries.end();
            ++j)
         if (static_cast<size_type>(std::abs(static_cast<int>(rowindex - *j))) >
             b)

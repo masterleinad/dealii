@@ -604,12 +604,9 @@ namespace MeshWorker
     for (unsigned int i = 0; i < other.fevalv.size(); ++i)
       {
         const FEValuesBase<dim, sdim> &p = *other.fevalv[i];
-        const FEValues<dim, sdim> *    pc =
-          dynamic_cast<const FEValues<dim, sdim> *>(&p);
-        const FEFaceValues<dim, sdim> *pf =
-          dynamic_cast<const FEFaceValues<dim, sdim> *>(&p);
-        const FESubfaceValues<dim, sdim> *ps =
-          dynamic_cast<const FESubfaceValues<dim, sdim> *>(&p);
+        const auto *pc = dynamic_cast<const FEValues<dim, sdim> *>(&p);
+        const auto *pf = dynamic_cast<const FEFaceValues<dim, sdim> *>(&p);
+        const auto *ps = dynamic_cast<const FESubfaceValues<dim, sdim> *>(&p);
 
         if (pc != nullptr)
           fevalv[i] =
@@ -703,22 +700,19 @@ namespace MeshWorker
         if (info.sub_number != numbers::invalid_unsigned_int)
           {
             // This is a subface
-            FESubfaceValues<dim, spacedim> &fe =
-              dynamic_cast<FESubfaceValues<dim, spacedim> &>(febase);
+            auto &fe = dynamic_cast<FESubfaceValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell, info.face_number, info.sub_number);
           }
         else if (info.face_number != numbers::invalid_unsigned_int)
           {
             // This is a face
-            FEFaceValues<dim, spacedim> &fe =
-              dynamic_cast<FEFaceValues<dim, spacedim> &>(febase);
+            auto &fe = dynamic_cast<FEFaceValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell, info.face_number);
           }
         else
           {
             // This is a cell
-            FEValues<dim, spacedim> &fe =
-              dynamic_cast<FEValues<dim, spacedim> &>(febase);
+            auto &fe = dynamic_cast<FEValues<dim, spacedim> &>(febase);
             fe.reinit(info.cell);
           }
       }

@@ -216,7 +216,7 @@ namespace
     base64::base64_encodestate state;
     base64::base64_init_encodestate(&state);
 
-    char *encoded_data = new char[2 * data_size + 1];
+    auto *encoded_data = new char[2 * data_size + 1];
 
     const int encoded_length_data =
       base64::base64_encode_block(data, data_size, encoded_data, &state);
@@ -264,7 +264,7 @@ namespace
       {
         // allocate a buffer for compressing data and do so
         uLongf compressed_data_length = compressBound(data.size() * sizeof(T));
-        char * compressed_data        = new char[compressed_data_length];
+        auto * compressed_data        = new char[compressed_data_length];
         int    err =
           compress2(reinterpret_cast<Bytef *>(compressed_data),
                     &compressed_data_length,
@@ -421,10 +421,7 @@ namespace DataOutBase
 
       // loop over all patches
       unsigned int next_value = 0;
-      for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-             patches.begin();
-           patch != patches.end();
-           ++patch)
+      for (auto patch = patches.begin(); patch != patches.end(); ++patch)
         {
           const unsigned int n_subdivisions = patch->n_subdivisions;
           (void)n_subdivisions;
@@ -515,9 +512,7 @@ namespace DataOutBase
   {
     node_data.resize(existing_points.size() * node_dim);
 
-    for (Map3DPoint::const_iterator it = existing_points.begin();
-         it != existing_points.end();
-         ++it)
+    for (auto it = existing_points.begin(); it != existing_points.end(); ++it)
       {
         for (unsigned int d = 0; d < node_dim; ++d)
           node_data[node_dim * it->second + d] = it->first(d);
@@ -532,10 +527,7 @@ namespace DataOutBase
   {
     cell_data.resize(filtered_cells.size());
 
-    for (std::map<unsigned int, unsigned int>::const_iterator it =
-           filtered_cells.begin();
-         it != filtered_cells.end();
-         ++it)
+    for (auto it = filtered_cells.begin(); it != filtered_cells.end(); ++it)
       {
         cell_data[it->first] = it->second + local_node_offset;
       }
@@ -937,10 +929,7 @@ namespace
   {
     n_nodes = 0;
     n_cells = 0;
-    for (typename std::vector<DataOutBase::Patch<dim, spacedim>>::const_iterator
-           patch = patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         n_nodes += Utilities::fixed_power<dim>(patch->n_subdivisions + 1);
         n_cells += Utilities::fixed_power<dim>(patch->n_subdivisions);
@@ -2541,10 +2530,7 @@ namespace DataOutBase
     // We only need this point below, but it does not harm to declare it here.
     Point<spacedim> node;
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -2572,10 +2558,7 @@ namespace DataOutBase
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count                 = 0;
     unsigned int first_vertex_of_patch = 0;
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -2617,10 +2600,7 @@ namespace DataOutBase
     // Array to hold cell order in each dimension
     std::array<unsigned, dim> cell_order;
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -2668,10 +2648,7 @@ namespace DataOutBase
     Assert(dim <= 3, ExcNotImplemented());
     unsigned int count = 0;
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -3241,10 +3218,7 @@ namespace DataOutBase
             << GeometryInfo<dim>::faces_per_cell << " items " << n_cells
             << " data follows";
 
-        for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-               patches.begin();
-             patch != patches.end();
-             ++patch)
+        for (auto patch = patches.begin(); patch != patches.end(); ++patch)
           {
             const unsigned int n               = patch->n_subdivisions;
             const unsigned int n1              = (dim > 0) ? n : 1;
@@ -3510,10 +3484,7 @@ namespace DataOutBase
 
 
     // loop over all patches
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -3773,10 +3744,7 @@ namespace DataOutBase
     double hmin = patches[0].data(0, 0);
     double hmax = patches[0].data(0, 0);
 
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
 
@@ -3829,10 +3797,7 @@ namespace DataOutBase
       }
 
     // loop over all patches
-    for (typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -4129,10 +4094,7 @@ namespace DataOutBase
 
     // compute the cells for output and enter them into the set above note that
     // since dim==2, we have exactly four vertices per patch and per cell
-    for (typename std::vector<Patch<2, spacedim>>::const_iterator patch =
-           patches.begin();
-         patch != patches.end();
-         ++patch)
+    for (auto patch = patches.begin(); patch != patches.end(); ++patch)
       {
         const unsigned int n_subdivisions = patch->n_subdivisions;
         const unsigned int n              = n_subdivisions + 1;
@@ -4304,9 +4266,7 @@ namespace DataOutBase
     double y_min = cells.begin()->vertices[0](1);
     double y_max = y_min;
 
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       for (unsigned int vertex = 0; vertex < 4; ++vertex)
         {
           x_min = std::min(x_min, cell->vertices[vertex](0));
@@ -4367,9 +4327,7 @@ namespace DataOutBase
 
     // now we've got all the information we need. write the cells. note: due to
     // the ordering, we traverse the list of cells back-to-front
-    for (typename std::multiset<EpsCell2d>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       {
         if (flags.draw_cells)
           {
@@ -6341,8 +6299,7 @@ namespace DataOutBase
     // determine the bounding box in the model space
     double x_dimension, y_dimension, z_dimension;
 
-    typename std::vector<Patch<dim, spacedim>>::const_iterator patch =
-      patches.begin();
+    auto patch = patches.begin();
 
     unsigned int       n_subdivisions = patch->n_subdivisions;
     unsigned int       n              = n_subdivisions + 1;
@@ -6881,9 +6838,7 @@ namespace DataOutBase
     unsigned int triangle_counter = 0;
 
     // write the cells in the correct order
-    for (typename std::multiset<SvgCell>::const_iterator cell = cells.begin();
-         cell != cells.end();
-         ++cell)
+    for (auto cell = cells.begin(); cell != cells.end(); ++cell)
       {
         Point<3> points3d_triangle[3];
 
@@ -6932,8 +6887,8 @@ namespace DataOutBase
             unsigned int stop_g = 0;
             unsigned int stop_b = 0;
 
-            unsigned int start_i = static_cast<unsigned int>(start_h * 6.);
-            unsigned int stop_i  = static_cast<unsigned int>(stop_h * 6.);
+            auto start_i = static_cast<unsigned int>(start_h * 6.);
+            auto stop_i  = static_cast<unsigned int>(stop_h * 6.);
 
             double start_f = start_h * 6. - start_i;
             double start_q = 1. - start_f;
@@ -7156,9 +7111,9 @@ namespace DataOutBase
       {
         out << '\n' << " <!-- colorbar -->" << '\n';
 
-        unsigned int element_height = static_cast<unsigned int>(
+        auto element_height = static_cast<unsigned int>(
           ((height / 100.) * (71. - 2. * margin_in_percent)) / 4);
-        unsigned int element_width =
+        auto element_width =
           static_cast<unsigned int>(.5 + (height / 100.) * 2.5);
 
         additional_width = 0;
@@ -7179,8 +7134,8 @@ namespace DataOutBase
             unsigned int stop_g = 0;
             unsigned int stop_b = 0;
 
-            unsigned int start_i = static_cast<unsigned int>(start_h * 6.);
-            unsigned int stop_i  = static_cast<unsigned int>(stop_h * 6.);
+            auto start_i = static_cast<unsigned int>(start_h * 6.);
+            auto stop_i  = static_cast<unsigned int>(stop_h * 6.);
 
             double start_f = start_h * 6. - start_i;
             double start_q = 1. - start_f;
@@ -9070,10 +9025,7 @@ XDMFEntry::get_xdmf_content(const unsigned int indent_level) const
       ss << indent(indent_level + 1) << "</Topology>\n";
     }
 
-  for (std::map<std::string, unsigned int>::const_iterator it =
-         attribute_dims.begin();
-       it != attribute_dims.end();
-       ++it)
+  for (auto it = attribute_dims.begin(); it != attribute_dims.end(); ++it)
     {
       ss << indent(indent_level + 1) << "<Attribute Name=\"" << it->first
          << "\" AttributeType=\"" << (it->second > 1 ? "Vector" : "Scalar")

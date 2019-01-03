@@ -735,8 +735,7 @@ namespace Step30
   {
     // We want to evaluate the jump over faces of the flagged cells, so we
     // need some objects to evaluate values of the solution on faces.
-    UpdateFlags face_update_flags =
-      UpdateFlags(update_values | update_JxW_values);
+    auto face_update_flags = UpdateFlags(update_values | update_JxW_values);
 
     FEFaceValues<dim>    fe_v_face(mapping,
                                 fe,

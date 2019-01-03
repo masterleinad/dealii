@@ -1003,7 +1003,7 @@ namespace Utilities
       // see if the communicator is in fact a
       // parallel MPI communicator; if so,
       // return a duplicate of it
-      const Epetra_MpiComm *mpi_comm =
+      const auto *mpi_comm =
         dynamic_cast<const Epetra_MpiComm *>(&communicator);
       if (mpi_comm != nullptr)
         return new Epetra_MpiComm(
@@ -1028,7 +1028,7 @@ namespace Utilities
       // save the communicator, reset the map, and delete the communicator if
       // this whole thing was created as an MPI communicator
 #  ifdef DEAL_II_WITH_MPI
-      Epetra_MpiComm *mpi_comm = dynamic_cast<Epetra_MpiComm *>(&communicator);
+      auto *mpi_comm = dynamic_cast<Epetra_MpiComm *>(&communicator);
       if (mpi_comm != nullptr)
         {
           MPI_Comm comm  = mpi_comm->GetMpiComm();

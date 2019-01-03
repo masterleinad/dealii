@@ -99,11 +99,10 @@ namespace Utilities
       for (unsigned int i = 0; i < n_import_targets; i++)
         {
           // copy the data to be sent to the import_data field
-          std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-            my_imports = import_indices_data.begin() +
-                         import_indices_chunks_by_rank_data[i],
-            end_my_imports = import_indices_data.begin() +
-                             import_indices_chunks_by_rank_data[i + 1];
+          auto my_imports = import_indices_data.begin() +
+                            import_indices_chunks_by_rank_data[i],
+               end_my_imports = import_indices_data.begin() +
+                                import_indices_chunks_by_rank_data[i + 1];
           unsigned int index = 0;
           for (; my_imports != end_my_imports; ++my_imports)
             for (unsigned int j = my_imports->first; j < my_imports->second;
@@ -159,8 +158,7 @@ namespace Utilities
           unsigned int offset =
             n_ghost_indices_in_larger_set - n_ghost_indices();
           // must copy ghost data into extended ghost array
-          for (std::vector<std::pair<unsigned int, unsigned int>>::
-                 const_iterator my_ghosts = ghost_indices_subset_data.begin();
+          for (auto my_ghosts = ghost_indices_subset_data.begin();
                my_ghosts != ghost_indices_subset_data.end();
                ++my_ghosts)
             if (offset > my_ghosts->first)
@@ -264,11 +262,11 @@ namespace Utilities
           if (n_ghost_indices_in_larger_set > n_ghost_indices() &&
               ghost_array.size() == n_ghost_indices_in_larger_set)
             {
-              std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-                my_ghosts = ghost_indices_subset_data.begin() +
-                            ghost_indices_subset_chunks_by_rank_data[i],
-                end_my_ghosts = ghost_indices_subset_data.begin() +
-                                ghost_indices_subset_chunks_by_rank_data[i + 1];
+              auto my_ghosts = ghost_indices_subset_data.begin() +
+                               ghost_indices_subset_chunks_by_rank_data[i],
+                   end_my_ghosts =
+                     ghost_indices_subset_data.begin() +
+                     ghost_indices_subset_chunks_by_rank_data[i + 1];
               unsigned int offset = 0;
               for (; my_ghosts != end_my_ghosts; ++my_ghosts)
                 if (ghost_array_ptr + offset !=
@@ -433,8 +431,7 @@ namespace Utilities
           AssertThrowMPI(ierr);
 
           const Number *read_position = temporary_storage.data();
-          std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
-            my_imports = import_indices_data.begin();
+          auto          my_imports    = import_indices_data.begin();
 
           // If the operation is no insertion, add the imported data to the
           // local values. For insert, nothing is done here (but in debug mode

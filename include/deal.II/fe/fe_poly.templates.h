@@ -243,7 +243,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   const UpdateFlags flags(fe_data.update_each);
 
@@ -316,7 +316,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all
@@ -409,7 +409,7 @@ FE_Poly<PolynomialType, dim, spacedim>::fill_fe_subface_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != nullptr,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // offset determines which data set
   // to take (all data sets for all

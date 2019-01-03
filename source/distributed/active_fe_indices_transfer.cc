@@ -172,7 +172,7 @@ namespace parallel
       typename hp::DoFHandler<dim, spacedim>::cell_iterator cell(*cell_,
                                                                  dof_handler);
 
-      const unsigned int fe_index =
+      const auto fe_index =
         Utilities::unpack<unsigned int>(data_range.begin(),
                                         data_range.end(),
                                         /*allow_compression=*/false);

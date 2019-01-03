@@ -99,8 +99,7 @@ namespace GridTools
 
     // At the beginning, the first
     // used vertex is the closest one
-    std::vector<bool>::const_iterator first =
-      std::find(used.begin(), used.end(), true);
+    auto first = std::find(used.begin(), used.end(), true);
 
     // Assert that at least one vertex
     // is actually used
@@ -368,10 +367,7 @@ namespace GridTools
       // have not yet searched.
       std::set<cell_iterator> adjacent_cells_new;
 
-      typename std::set<cell_iterator>::const_iterator cell =
-                                                         adjacent_cells.begin(),
-                                                       endc =
-                                                         adjacent_cells.end();
+      auto cell = adjacent_cells.begin(), endc = adjacent_cells.end();
       for (; cell != endc; ++cell)
         {
           std::vector<cell_iterator> active_neighbors;
@@ -460,9 +456,7 @@ namespace GridTools
       unsigned int cells_searched = 0;
       while (!found && cells_searched < n_active_cells)
         {
-          typename std::set<active_cell_iterator>::const_iterator
-            cell = adjacent_cells.begin(),
-            endc = adjacent_cells.end();
+          auto cell = adjacent_cells.begin(), endc = adjacent_cells.end();
           for (; cell != endc; ++cell)
             {
               try
@@ -830,11 +824,7 @@ namespace GridTools
     contains_locally_owned_cells(
       const std::vector<typename MeshType::active_cell_iterator> &cells)
     {
-      for (typename std::vector<
-             typename MeshType::active_cell_iterator>::const_iterator it =
-             cells.begin();
-           it != cells.end();
-           ++it)
+      for (auto it = cells.begin(); it != cells.end(); ++it)
         {
           if ((*it)->is_locally_owned())
             return true;
@@ -847,11 +837,7 @@ namespace GridTools
     contains_artificial_cells(
       const std::vector<typename MeshType::active_cell_iterator> &cells)
     {
-      for (typename std::vector<
-             typename MeshType::active_cell_iterator>::const_iterator it =
-             cells.begin();
-           it != cells.end();
-           ++it)
+      for (auto it = cells.begin(); it != cells.end(); ++it)
         {
           if ((*it)->is_artificial())
             return true;
@@ -1163,7 +1149,7 @@ namespace GridTools
 
     // then traverse list as described
     // above
-    typename CellList::iterator cell_pair = cell_list.begin();
+    auto cell_pair = cell_list.begin();
     while (cell_pair != cell_list.end())
       {
         // if both cells in this pair
@@ -1316,9 +1302,7 @@ namespace GridTools
         unsigned int       cells_searched = 0;
         while (!found && cells_searched < n_cells)
           {
-            typename std::set<cell_iterator>::const_iterator
-              cell = adjacent_cells.begin(),
-              endc = adjacent_cells.end();
+            auto cell = adjacent_cells.begin(), endc = adjacent_cells.end();
             for (; cell != endc; ++cell)
               {
                 try
@@ -1690,12 +1674,8 @@ namespace GridTools
       }
 
 
-    typename std::map<
-      typename Triangulation<Container::dimension,
-                             Container::space_dimension>::cell_iterator,
-      typename Container::cell_iterator>::iterator
-      map_tmp_it  = patch_to_global_tria_map_tmp.begin(),
-      map_tmp_end = patch_to_global_tria_map_tmp.end();
+    auto map_tmp_it  = patch_to_global_tria_map_tmp.begin(),
+         map_tmp_end = patch_to_global_tria_map_tmp.end();
     // Now we just need to take the temporary map of pairs of type cell_iterator
     // "patch_to_global_tria_map_tmp" making pair of active_cell_iterators so
     // that filling out the final map "patch_to_global_tria_map"
@@ -2013,10 +1993,8 @@ namespace GridTools
              std::vector<typename DoFHandlerType::active_cell_iterator>>
       dof_to_cell_patches;
 
-    typename std::map<types::global_dof_index,
-                      std::set<typename DoFHandlerType::active_cell_iterator>>::
-      iterator it     = dof_to_set_of_cells_map.begin(),
-               it_end = dof_to_set_of_cells_map.end();
+    auto it     = dof_to_set_of_cells_map.begin(),
+         it_end = dof_to_set_of_cells_map.end();
     for (; it != it_end; ++it)
       dof_to_cell_patches[it->first].assign(it->second.begin(),
                                             it->second.end());
@@ -2053,9 +2031,9 @@ namespace GridTools
     std::bitset<3> orientation;
     using PairIterator =
       typename std::set<std::pair<CellIterator, unsigned int>>::const_iterator;
-    for (PairIterator it1 = pairs1.begin(); it1 != pairs1.end(); ++it1)
+    for (auto it1 = pairs1.begin(); it1 != pairs1.end(); ++it1)
       {
-        for (PairIterator it2 = pairs2.begin(); it2 != pairs2.end(); ++it2)
+        for (auto it2 = pairs2.begin(); it2 != pairs2.end(); ++it2)
           {
             const CellIterator cell1     = it1->first;
             const CellIterator cell2     = it2->first;
@@ -2403,9 +2381,7 @@ namespace GridTools
 
     for (unsigned int i = 0; i < GeometryInfo<dim>::vertices_per_face; ++i)
       {
-        for (std::set<unsigned int>::iterator it = face2_vertices.begin();
-             it != face2_vertices.end();
-             ++it)
+        for (auto it = face2_vertices.begin(); it != face2_vertices.end(); ++it)
           {
             if (orthogonal_equality(face1->vertex(i),
                                     face2->vertex(*it),

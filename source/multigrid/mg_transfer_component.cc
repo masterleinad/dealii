@@ -245,7 +245,7 @@ MGTransferSelect<number>::do_copy_to_mg(
 
       using IT = std::vector<
         std::pair<types::global_dof_index, unsigned int>>::const_iterator;
-      for (IT i = copy_to_and_from_indices[level].begin();
+      for (auto i = copy_to_and_from_indices[level].begin();
            i != copy_to_and_from_indices[level].end();
            ++i)
         dst[level](i->second) = src(i->first);
@@ -543,8 +543,8 @@ MGTransferComponentBase::build_matrices(const DoFHandler<dim, spacedim> &,
                             block_indices_coarse.local_to_global(iblock,
                                                                  column_number);
 
-                          std::set<types::global_dof_index>::const_iterator
-                            found_dof = boundary_indices[level].find(global_j);
+                          auto found_dof =
+                            boundary_indices[level].find(global_j);
 
                           const bool is_boundary_index =
                             (found_dof != boundary_indices[level].end());

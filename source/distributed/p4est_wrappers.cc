@@ -89,8 +89,7 @@ namespace internal
         auto *sides  = reinterpret_cast<
           typename dealii::internal::p4est::iter<dim>::corner_side *>(
           info->sides.array);
-        FindGhosts<dim, spacedim> *fg =
-          static_cast<FindGhosts<dim, spacedim> *>(user_data);
+        auto *      fg = static_cast<FindGhosts<dim, spacedim> *>(user_data);
         sc_array_t *subids = fg->subids;
         const dealii::parallel::distributed::Triangulation<dim, spacedim>
           *                          triangulation = fg->triangulation;
@@ -111,9 +110,8 @@ namespace internal
                                    *(sides[i].quad));
                 Assert(cell->is_ghost(),
                        ExcMessage("ghost quad did not find ghost cell"));
-                dealii::types::subdomain_id *subid =
-                  static_cast<dealii::types::subdomain_id *>(
-                    sc_array_push(subids));
+                auto *subid = static_cast<dealii::types::subdomain_id *>(
+                  sc_array_push(subids));
                 *subid = cell->subdomain_id();
               }
           }
@@ -189,7 +187,7 @@ namespace internal
                             cell_from_quad(triangulation,
                                            sides[i].treeid,
                                            *(sides[i].is.hanging.quad[j]));
-                        dealii::types::subdomain_id *subid =
+                        auto *subid =
                           static_cast<dealii::types::subdomain_id *>(
                             sc_array_push(subids));
                         *subid = cell->subdomain_id();
@@ -250,8 +248,7 @@ namespace internal
         auto *sides  = reinterpret_cast<
           typename dealii::internal::p4est::iter<dim>::face_side *>(
           info->sides.array);
-        FindGhosts<dim, spacedim> *fg =
-          static_cast<FindGhosts<dim, spacedim> *>(user_data);
+        auto *      fg = static_cast<FindGhosts<dim, spacedim> *>(user_data);
         sc_array_t *subids = fg->subids;
         const dealii::parallel::distributed::Triangulation<dim, spacedim>
           *                          triangulation = fg->triangulation;
@@ -275,7 +272,7 @@ namespace internal
                             cell_from_quad(triangulation,
                                            sides[i].treeid,
                                            *(sides[i].is.hanging.quad[j]));
-                        dealii::types::subdomain_id *subid =
+                        auto *subid =
                           static_cast<dealii::types::subdomain_id *>(
                             sc_array_push(subids));
                         *subid = cell->subdomain_id();

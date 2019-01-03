@@ -830,8 +830,8 @@ FilteredMatrix<VectorType>::apply_constraints(VectorType &v) const
   GrowingVectorMemory<VectorType>            mem;
   typename VectorMemory<VectorType>::Pointer tmp_vector(mem);
   tmp_vector->reinit(v);
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  auto       i = constraints.begin();
+  const auto e = constraints.end();
   for (; i != e; ++i)
     {
       AssertIsFinite(i->second);
@@ -858,8 +858,8 @@ FilteredMatrix<VectorType>::pre_filter(VectorType &v) const
 {
   // iterate over all constraints and
   // zero out value
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  auto       i = constraints.begin();
+  const auto e = constraints.end();
   for (; i != e; ++i)
     v(i->first) = 0;
 }
@@ -873,8 +873,8 @@ FilteredMatrix<VectorType>::post_filter(const VectorType &in,
 {
   // iterate over all constraints and
   // set value correctly
-  const_index_value_iterator       i = constraints.begin();
-  const const_index_value_iterator e = constraints.end();
+  auto       i = constraints.begin();
+  const auto e = constraints.end();
   for (; i != e; ++i)
     {
       AssertIsFinite(in(i->first));

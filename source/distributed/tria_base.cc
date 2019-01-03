@@ -74,7 +74,7 @@ namespace parallel
 #else
     dealii::Triangulation<dim, spacedim>::copy_triangulation(other_tria);
 
-    if (const dealii::parallel::Triangulation<dim, spacedim> *other_tria_x =
+    if (const auto *other_tria_x =
           dynamic_cast<const dealii::parallel::Triangulation<dim, spacedim> *>(
             &other_tria))
       {
@@ -264,8 +264,7 @@ namespace parallel
       unsigned int dummy       = 0;
       unsigned int req_counter = 0;
 
-      for (std::set<types::subdomain_id>::iterator it =
-             this->number_cache.level_ghost_owners.begin();
+      for (auto it = this->number_cache.level_ghost_owners.begin();
            it != this->number_cache.level_ghost_owners.end();
            ++it, ++req_counter)
         {
@@ -279,8 +278,7 @@ namespace parallel
           AssertThrowMPI(ierr);
         }
 
-      for (std::set<types::subdomain_id>::iterator it =
-             this->number_cache.level_ghost_owners.begin();
+      for (auto it = this->number_cache.level_ghost_owners.begin();
            it != this->number_cache.level_ghost_owners.end();
            ++it)
         {

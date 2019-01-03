@@ -1343,8 +1343,8 @@ FunctionManifold<dim, spacedim, chartdim>::FunctionManifold(
   , space_vars(space_vars)
   , finite_difference_step(h)
 {
-  FunctionParser<chartdim> *pf = new FunctionParser<chartdim>(spacedim, 0.0, h);
-  FunctionParser<spacedim> *pb = new FunctionParser<spacedim>(chartdim, 0.0, h);
+  auto *pf = new FunctionParser<chartdim>(spacedim, 0.0, h);
+  auto *pb = new FunctionParser<spacedim>(chartdim, 0.0, h);
   pf->initialize(chart_vars, push_forward_expression, const_map);
   pb->initialize(space_vars, pull_back_expression, const_map);
   push_forward_function = pf;

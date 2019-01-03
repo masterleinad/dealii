@@ -72,10 +72,9 @@ namespace Particles
   Particle<dim, spacedim>::Particle(const void *&       data,
                                     PropertyPool *const new_property_pool)
   {
-    const types::particle_index *id_data =
-      static_cast<const types::particle_index *>(data);
+    const auto *id_data = static_cast<const types::particle_index *>(data);
     id                  = *id_data++;
-    const double *pdata = reinterpret_cast<const double *>(id_data);
+    const auto *pdata   = reinterpret_cast<const double *>(id_data);
 
     for (unsigned int i = 0; i < spacedim; ++i)
       location(i) = *pdata++;
@@ -180,10 +179,10 @@ namespace Particles
   void
   Particle<dim, spacedim>::write_data(void *&data) const
   {
-    types::particle_index *id_data = static_cast<types::particle_index *>(data);
-    *id_data                       = id;
+    auto *id_data = static_cast<types::particle_index *>(data);
+    *id_data      = id;
     ++id_data;
-    double *pdata = reinterpret_cast<double *>(id_data);
+    auto *pdata = reinterpret_cast<double *>(id_data);
 
     // Write location data
     for (unsigned int i = 0; i < spacedim; ++i, ++pdata)

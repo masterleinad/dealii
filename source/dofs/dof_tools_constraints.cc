@@ -2259,10 +2259,9 @@ namespace DoFTools
 
       for (unsigned int i = 0; i < n_dofs_per_face; ++i)
         {
-          std::vector<unsigned int>::const_iterator comp_it =
-            std::find(first_vector_components.begin(),
-                      first_vector_components.end(),
-                      fe.face_system_to_component_index(i).first);
+          auto comp_it = std::find(first_vector_components.begin(),
+                                   first_vector_components.end(),
+                                   fe.face_system_to_component_index(i).first);
           if (comp_it != first_vector_components.end())
             {
               const unsigned int first_vector_component = *comp_it;
@@ -2885,11 +2884,10 @@ namespace DoFTools
             MPI_Comm communicator = MPI_COMM_SELF;
             try
               {
-                const typename dealii::parallel::Triangulation<dim, spacedim>
-                  &tria = dynamic_cast<const typename dealii::parallel::
-                                         Triangulation<dim, spacedim> &>(
-                    coarse_to_fine_grid_map.get_destination_grid()
-                      .get_triangulation());
+                const auto &tria = dynamic_cast<
+                  const typename dealii::parallel::Triangulation<dim, spacedim>
+                    &>(coarse_to_fine_grid_map.get_destination_grid()
+                         .get_triangulation());
                 communicator          = tria.get_communicator();
                 is_called_in_parallel = true;
               }

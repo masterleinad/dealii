@@ -279,10 +279,7 @@ namespace
         Assert(vertex_to_cell[v].size() == vertex_touch_count[v],
                ExcInternalError());
 
-        typename std::list<
-          std::pair<typename Triangulation<dim, spacedim>::active_cell_iterator,
-                    unsigned int>>::const_iterator p =
-          vertex_to_cell[v].begin();
+        auto p = vertex_to_cell[v].begin();
         for (unsigned int c = 0; c < vertex_touch_count[v]; ++c, ++p)
           {
             connectivity->corner_to_tree[connectivity->ctt_offset[v] + c] =
@@ -767,9 +764,8 @@ namespace
     typename internal::p4est::types<dim>::topidx    coarse_cell_index,
     typename internal::p4est::types<dim>::quadrant *quadrant)
   {
-    RefineAndCoarsenList<dim, spacedim> *this_object =
-      reinterpret_cast<RefineAndCoarsenList<dim, spacedim> *>(
-        forest->user_pointer);
+    auto *this_object = reinterpret_cast<RefineAndCoarsenList<dim, spacedim> *>(
+      forest->user_pointer);
 
     // if there are no more cells in our list the current cell can't be
     // flagged for refinement
@@ -817,9 +813,8 @@ namespace
     typename internal::p4est::types<dim>::topidx    coarse_cell_index,
     typename internal::p4est::types<dim>::quadrant *children[])
   {
-    RefineAndCoarsenList<dim, spacedim> *this_object =
-      reinterpret_cast<RefineAndCoarsenList<dim, spacedim> *>(
-        forest->user_pointer);
+    auto *this_object = reinterpret_cast<RefineAndCoarsenList<dim, spacedim> *>(
+      forest->user_pointer);
 
     // if there are no more cells in our list the current cell can't be
     // flagged for coarsening
@@ -931,7 +926,7 @@ namespace
     // since we know in which order p4est will walk through the cells
     // and have already built our weight lists in this order
 
-    PartitionWeights<dim, spacedim> *this_object =
+    auto *this_object =
       reinterpret_cast<PartitionWeights<dim, spacedim> *>(forest->user_pointer);
 
     Assert(this_object->current_pointer >=
@@ -2363,7 +2358,7 @@ namespace parallel
                 // The first 'vertex index' is the number of vertices.
                 // Additionally, we need to store the pointer to this
                 // vertex index with respect to the std::vector
-                const unsigned int *const vertex_index =
+                const auto *const vertex_index =
                   reinterpret_cast<const unsigned int *>(ptr);
                 first_indices[c] = vertex_indices.size();
                 vertex_indices.push_back(*vertex_index);
@@ -2466,11 +2461,9 @@ namespace parallel
               for (unsigned int v = 0; v < GeometryInfo<dim>::vertices_per_cell;
                    ++v)
                 {
-                  const std::map<unsigned int,
-                                 std::set<dealii::types::subdomain_id>>::
-                    const_iterator neighbor_subdomains_of_vertex =
-                      vertices_with_ghost_neighbors.find(
-                        dealii_cell->vertex_index(v));
+                  const auto neighbor_subdomains_of_vertex =
+                    vertices_with_ghost_neighbors.find(
+                      dealii_cell->vertex_index(v));
 
                   if (neighbor_subdomains_of_vertex !=
                       vertices_with_ghost_neighbors.end())
@@ -2497,10 +2490,7 @@ namespace parallel
                       }
 
                   if (vertex_indices.size() > 0)
-                    for (std::set<dealii::types::subdomain_id>::iterator it =
-                           send_to.begin();
-                         it != send_to.end();
-                         ++it)
+                    for (auto it = send_to.begin(); it != send_to.end(); ++it)
                       {
                         const dealii::types::subdomain_id subdomain = *it;
 
@@ -2763,10 +2753,8 @@ namespace parallel
       // clear all of the callback data, as explained in the documentation of
       // register_data_attach()
       {
-        dealii::parallel::distributed::Triangulation<dim, spacedim> *tria =
-          const_cast<
-            dealii::parallel::distributed::Triangulation<dim, spacedim> *>(
-            this);
+        auto *tria = const_cast<
+          dealii::parallel::distributed::Triangulation<dim, spacedim> *>(this);
 
         tria->cell_attached_data.n_attached_data_sets = 0;
         tria->cell_attached_data.pack_callbacks_fixed.clear();
@@ -2919,7 +2907,7 @@ namespace parallel
     {
       const unsigned int tree_index =
         coarse_cell_to_p4est_tree_permutation[dealii_coarse_cell_index];
-      typename dealii::internal::p4est::types<dim>::tree *tree =
+      auto *tree =
         static_cast<typename dealii::internal::p4est::types<dim>::tree *>(
           sc_array_index(parallel_forest->trees, tree_index));
 
@@ -4236,14 +4224,13 @@ namespace parallel
 
       // sending
       std::vector<std::vector<char>> sendbuffers(needs_to_get_cells.size());
-      std::vector<std::vector<char>>::iterator buffer = sendbuffers.begin();
-      std::vector<MPI_Request>  requests(needs_to_get_cells.size());
-      std::vector<unsigned int> destinations;
+      auto                           buffer = sendbuffers.begin();
+      std::vector<MPI_Request>       requests(needs_to_get_cells.size());
+      std::vector<unsigned int>      destinations;
 
       unsigned int idx = 0;
 
-      for (typename cellmap_t::iterator it = needs_to_get_cells.begin();
-           it != needs_to_get_cells.end();
+      for (auto it = needs_to_get_cells.begin(); it != needs_to_get_cells.end();
            ++it, ++buffer, ++idx)
         {
           const unsigned int num_cells = it->second.tree_index.size();
@@ -4808,10 +4795,9 @@ namespace parallel
                "Parallel distributed triangulations can only be copied, "
                "if they are not refined!"));
 
-      if (const dealii::parallel::distributed::Triangulation<dim, spacedim>
-            *other_tria_x =
-              dynamic_cast<const dealii::parallel::distributed::
-                             Triangulation<dim, spacedim> *>(&other_tria))
+      if (const auto *other_tria_x =
+            dynamic_cast<const dealii::parallel::distributed::
+                           Triangulation<dim, spacedim> *>(&other_tria))
         {
           coarse_cell_to_p4est_tree_permutation =
             other_tria_x->coarse_cell_to_p4est_tree_permutation;

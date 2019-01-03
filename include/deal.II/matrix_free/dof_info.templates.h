@@ -365,9 +365,7 @@ namespace internal
                                     vector_partitioner->local_range().first);
       const std::size_t  n_ghosts = ghost_dofs.size();
 #ifdef DEBUG
-      for (std::vector<unsigned int>::iterator dof = dof_indices.begin();
-           dof != dof_indices.end();
-           ++dof)
+      for (auto dof = dof_indices.begin(); dof != dof_indices.end(); ++dof)
         AssertIndexRange(*dof, n_owned + n_ghosts);
 #endif
 
@@ -469,7 +467,7 @@ namespace internal
       // set the ghost indices now. need to cast away constness here, but that
       // is uncritical since we reset the Partitioner in the same initialize
       // call as this call here.
-      Utilities::MPI::Partitioner *vec_part =
+      auto *vec_part =
         const_cast<Utilities::MPI::Partitioner *>(vector_partitioner.get());
       vec_part->set_ghost_indices(ghost_indices);
     }
@@ -1385,8 +1383,7 @@ namespace internal
             for (; it != end_cell; ++it)
               {
                 SparsityPattern::iterator sp = connectivity_dof.begin(*it);
-                std::vector<types::global_dof_index>::iterator insert_pos =
-                  row_entries.begin();
+                auto                      insert_pos = row_entries.begin();
                 for (; sp != connectivity_dof.end(*it); ++sp)
                   if (sp->column() != block)
                     row_entries.insert(renumbering[sp->column()], insert_pos);

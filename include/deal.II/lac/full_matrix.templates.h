@@ -253,7 +253,7 @@ FullMatrix<number>::residual(Vector<number2> &      dst,
   const size_type size_m = m(), size_n = n();
   for (size_type i = 0; i < size_m; ++i)
     {
-      number s = number(right(i));
+      auto s = number(right(i));
       for (size_type j = 0; j < size_n; ++j)
         s -= number(src(j)) * (*this)(i, j);
       dst(i) = s;
@@ -549,10 +549,10 @@ FullMatrix<number>::mmult(FullMatrix<number2> &      dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B^T A^T)^T, which is AB.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.n());
-        const types::blas_int n       = static_cast<types::blas_int>(this->m());
-        const types::blas_int k       = static_cast<types::blas_int>(this->n());
-        const char *          notrans = "n";
+        const auto  m       = static_cast<types::blas_int>(src.n());
+        const auto  n       = static_cast<types::blas_int>(this->m());
+        const auto  k       = static_cast<types::blas_int>(this->n());
+        const char *notrans = "n";
 
         const number alpha = 1.;
         const number beta  = (adding == true) ? 1. : 0.;
@@ -633,11 +633,11 @@ FullMatrix<number>::Tmmult(FullMatrix<number2> &      dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B^T A)^T, which is A^T B.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.n());
-        const types::blas_int n       = static_cast<types::blas_int>(this->n());
-        const types::blas_int k       = static_cast<types::blas_int>(this->m());
-        const char *          trans   = "t";
-        const char *          notrans = "n";
+        const auto  m       = static_cast<types::blas_int>(src.n());
+        const auto  n       = static_cast<types::blas_int>(this->n());
+        const auto  k       = static_cast<types::blas_int>(this->m());
+        const char *trans   = "t";
+        const char *notrans = "n";
 
         const number alpha = 1.;
         const number beta  = (adding == true) ? 1. : 0.;
@@ -738,11 +738,11 @@ FullMatrix<number>::mTmult(FullMatrix<number2> &      dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B A^T)^T, which is AB^T.
 
-        const types::blas_int m       = static_cast<types::blas_int>(src.m());
-        const types::blas_int n       = static_cast<types::blas_int>(this->m());
-        const types::blas_int k       = static_cast<types::blas_int>(this->n());
-        const char *          notrans = "n";
-        const char *          trans   = "t";
+        const auto  m       = static_cast<types::blas_int>(src.m());
+        const auto  n       = static_cast<types::blas_int>(this->m());
+        const auto  k       = static_cast<types::blas_int>(this->n());
+        const char *notrans = "n";
+        const char *trans   = "t";
 
         const number alpha = 1.;
         const number beta  = (adding == true) ? 1. : 0.;
@@ -841,10 +841,10 @@ FullMatrix<number>::TmTmult(FullMatrix<number2> &      dst,
         // transpose matrices, and read the result as if it were row-wise
         // again. In other words, we calculate (B A)^T, which is A^T B^T.
 
-        const types::blas_int m     = static_cast<types::blas_int>(src.m());
-        const types::blas_int n     = static_cast<types::blas_int>(this->n());
-        const types::blas_int k     = static_cast<types::blas_int>(this->m());
-        const char *          trans = "t";
+        const auto  m     = static_cast<types::blas_int>(src.m());
+        const auto  n     = static_cast<types::blas_int>(this->n());
+        const auto  k     = static_cast<types::blas_int>(this->m());
+        const char *trans = "t";
 
         const number alpha = 1.;
         const number beta  = (adding == true) ? 1. : 0.;
@@ -992,7 +992,7 @@ FullMatrix<number>::matrix_scalar_product(const Vector<number2> &u,
 
   for (size_type row = 0; row < n_rows; ++row)
     {
-      number2             s              = number2(0.);
+      auto                s              = number2(0.);
       const number *const val_end_of_row = val_ptr + n_cols;
       const number2 *     v_ptr          = v.begin();
       while (val_ptr != val_end_of_row)
@@ -1704,9 +1704,9 @@ FullMatrix<number>::copy_from(const Tensor<2, dim> &T,
   for (size_type i = 0; i < src_r_j - src_r_i + 1; i++)
     for (size_type j = 0; j < src_c_j - src_c_i + 1; j++)
       {
-        const unsigned int src_r_index = static_cast<unsigned int>(i + src_r_i);
-        const unsigned int src_c_index = static_cast<unsigned int>(j + src_c_i);
-        (*this)(i + dst_r, j + dst_c)  = number(T[src_r_index][src_c_index]);
+        const auto src_r_index        = static_cast<unsigned int>(i + src_r_i);
+        const auto src_c_index        = static_cast<unsigned int>(j + src_c_i);
+        (*this)(i + dst_r, j + dst_c) = number(T[src_r_index][src_c_index]);
       }
 }
 
@@ -1732,8 +1732,8 @@ void FullMatrix<number>::copy_to(Tensor<2, dim> &   T,
   for (size_type i = 0; i < src_r_j - src_r_i + 1; i++)
     for (size_type j = 0; j < src_c_j - src_c_i + 1; j++)
       {
-        const unsigned int dst_r_index = static_cast<unsigned int>(i + dst_r);
-        const unsigned int dst_c_index = static_cast<unsigned int>(j + dst_c);
+        const auto dst_r_index      = static_cast<unsigned int>(i + dst_r);
+        const auto dst_c_index      = static_cast<unsigned int>(j + dst_c);
         T[dst_r_index][dst_c_index] = double((*this)(i + src_r_i, j + src_c_i));
       }
 }
@@ -1851,7 +1851,7 @@ FullMatrix<number>::gauss_jordan()
         // we just got ((A^T)^{-1})^T, which is
         // A^{-1}.
 
-        const types::blas_int nn = static_cast<types::blas_int>(this->n());
+        const auto nn = static_cast<types::blas_int>(this->n());
 
         // workspace for permutations
         std::vector<types::blas_int> ipiv(nn);

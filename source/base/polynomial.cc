@@ -281,9 +281,7 @@ namespace Polynomials
                             const number         factor)
   {
     number f = 1.;
-    for (typename std::vector<number>::iterator c = coefficients.begin();
-         c != coefficients.end();
-         ++c)
+    for (auto c = coefficients.begin(); c != coefficients.end(); ++c)
       {
         *c *= f;
         f *= factor;
@@ -322,9 +320,7 @@ namespace Polynomials
   Polynomial<number>::multiply(std::vector<number> &coefficients,
                                const number         factor)
   {
-    for (typename std::vector<number>::iterator c = coefficients.begin();
-         c != coefficients.end();
-         ++c)
+    for (auto c = coefficients.begin(); c != coefficients.end(); ++c)
       *c *= factor;
   }
 
@@ -338,9 +334,7 @@ namespace Polynomials
       lagrange_weight *= s;
     else
       {
-        for (typename std::vector<number>::iterator c = coefficients.begin();
-             c != coefficients.end();
-             ++c)
+        for (auto c = coefficients.begin(); c != coefficients.end(); ++c)
           *c *= s;
       }
     return *this;

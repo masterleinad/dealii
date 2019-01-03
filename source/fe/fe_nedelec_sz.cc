@@ -1912,7 +1912,7 @@ FE_NedelecSZ<dim, spacedim>::fill_fe_values(
   // Convert to the correct internal data class for this FE class.
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != 0,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Now update the edge-based DoFs, which depend on the cell.
   // This will fill in the missing items in the InternalData
@@ -2036,7 +2036,7 @@ FE_NedelecSZ<dim, spacedim>::fill_fe_face_values(
   // possible
   Assert(dynamic_cast<const InternalData *>(&fe_internal) != 0,
          ExcInternalError());
-  const InternalData &fe_data = static_cast<const InternalData &>(fe_internal);
+  const auto &fe_data = static_cast<const InternalData &>(fe_internal);
 
   // Now update the edge-based DoFs, which depend on the cell.
   // This will fill in the missing items in the InternalData
