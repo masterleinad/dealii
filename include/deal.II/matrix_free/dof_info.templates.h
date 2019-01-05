@@ -365,8 +365,8 @@ namespace internal
                                     vector_partitioner->local_range().first);
       const std::size_t  n_ghosts = ghost_dofs.size();
 #ifdef DEBUG
-      for (auto dof = dof_indices.begin(); dof != dof_indices.end(); ++dof)
-        AssertIndexRange(*dof, n_owned + n_ghosts);
+      for (unsigned int dof_index : dof_indices)
+        AssertIndexRange(dof_index, n_owned + n_ghosts);
 #endif
 
       const unsigned int        n_components = start_components.back();
@@ -629,8 +629,8 @@ namespace internal
         (vector_partitioner->local_range().second -
          vector_partitioner->local_range().first) +
         vector_partitioner->ghost_indices().n_elements();
-      for (std::size_t i = 0; i < dof_indices.size(); ++i)
-        AssertIndexRange(dof_indices[i], index_range);
+      for (unsigned int dof_index : dof_indices)
+        AssertIndexRange(dof_index, index_range);
 
       // sanity check 2: for the constraint indicators, the first index should
       // be smaller than the number of indices in the row, and the second
@@ -1516,13 +1516,13 @@ namespace internal
         }
 
       AssertIndexRange(counter, local_size + 1);
-      for (std::size_t i = 0; i < renumbering.size(); ++i)
-        if (renumbering[i] == numbers::invalid_dof_index)
-          renumbering[i] = counter++;
+      for (unsigned int &dof_index : renumbering)
+        if (dof_index == numbers::invalid_dof_index)
+          dof_index = counter++;
 
       // transform indices to global index space
-      for (std::size_t i = 0; i < renumbering.size(); ++i)
-        renumbering[i] = vector_partitioner->local_to_global(renumbering[i]);
+      for (unsigned int &dof_index : renumbering)
+        dof_index = vector_partitioner->local_to_global(dof_index);
 
       AssertDimension(counter, renumbering.size());
     }
