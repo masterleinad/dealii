@@ -382,8 +382,8 @@ MatrixOut::build_patches(const Matrix &     matrix,
         // coordinates by the block
         // size, to get original
         // coordinates
-        for (unsigned int v = 0; v < 4; ++v)
-          patches[index].vertices[v] *= options.block_size;
+        for (auto &vertex : patches[index].vertices)
+          vertex *= options.block_size;
 
         patches[index].n_subdivisions = 1;
 
