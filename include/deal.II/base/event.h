@@ -177,8 +177,8 @@ namespace Algorithms
   {
     if (all_true)
       return true;
-    for (auto i = flags.begin(); i != flags.end(); ++i)
-      if (*i)
+    for (const auto flag : flags)
+      if (flag)
         return true;
     return false;
   }
@@ -208,8 +208,8 @@ namespace Algorithms
         // Test all flags separately
         // and return false if one is
         // not set
-        for (auto i = flags.begin(); i != flags.end(); ++i)
-          if (!*i)
+        for (const auto flag : flags)
+          if (!flag)
             return false;
         // All flags are set
         return true;
@@ -253,8 +253,8 @@ namespace Algorithms
     all_true = false;
     if (event.all_true)
       {
-        for (auto i = flags.begin(); i != flags.end(); ++i)
-          *i = false;
+        for (auto &&flag : flags)
+          flag = false;
         return *this;
       }
 

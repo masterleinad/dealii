@@ -278,9 +278,9 @@ Subscriptor::list_subscribers(StreamType &stream) const
 {
   std::lock_guard<std::mutex> lock(mutex);
 
-  for (auto it = counter_map.begin(); it != counter_map.end(); ++it)
-    stream << it->second << '/' << counter << " subscriptions from \""
-           << it->first << '\"' << std::endl;
+  for (auto &it : counter_map)
+    stream << it.second << '/' << counter << " subscriptions from \""
+           << it.first << '\"' << std::endl;
 }
 
 DEAL_II_NAMESPACE_CLOSE
