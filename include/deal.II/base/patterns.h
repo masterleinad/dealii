@@ -1436,7 +1436,7 @@ namespace Patterns
     static_assert(sizeof...(ps) > 0,
                   "The number of PatternTypes must be greater than zero!");
     auto pattern_pointers = {(static_cast<const PatternBase *>(&ps))...};
-    for (auto p : pattern_pointers)
+    for (const auto p : pattern_pointers)
       patterns.push_back(p->clone());
   }
 
