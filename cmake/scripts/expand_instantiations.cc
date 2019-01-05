@@ -167,7 +167,7 @@ read_whole_file(std::istream &in)
       whole_file += '\n';
     }
   // substitute tabs by spaces
-  std::replace(whole_file.begin(), whole_find.end(), '\t', ' ');
+  std::replace(whole_file.begin(), whole_file.end(), '\t', ' ');
   // substitute multiple spaces by single ones
   size_t position = whole_file.find("  ");
   while (position != std::string::npos)
