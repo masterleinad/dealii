@@ -158,11 +158,9 @@ namespace Utilities
           unsigned int offset =
             n_ghost_indices_in_larger_set - n_ghost_indices();
           // must copy ghost data into extended ghost array
-          for (auto my_ghosts = ghost_indices_subset_data.begin();
-               my_ghosts != ghost_indices_subset_data.end();
-               ++my_ghosts)
-            if (offset > my_ghosts->first)
-              for (unsigned int j = my_ghosts->first; j < my_ghosts->second;
+          for (const auto &my_ghosts : ghost_indices_subset_data)
+            if (offset > my_ghosts.first)
+              for (unsigned int j = my_ghosts.first; j < my_ghosts.second;
                    ++j, ++offset)
                 {
                   ghost_array[j]      = ghost_array[offset];
@@ -170,7 +168,7 @@ namespace Utilities
                 }
             else
               {
-                AssertDimension(offset, my_ghosts->first);
+                AssertDimension(offset, my_ghosts.first);
                 break;
               }
         }
