@@ -4257,7 +4257,7 @@ namespace DataOutBase
     double y_max = y_min;
 
     for (const auto &cell : cells)
-      for (auto vertex : cell.vertices)
+      for (const auto vertex : cell.vertices)
         {
           x_min = std::min(x_min, vertex(0));
           x_max = std::max(x_max, vertex(0));
@@ -5782,7 +5782,7 @@ namespace DataOutBase
     // when writing, first write out all vector data, then handle the scalar
     // data sets that have been left over
     std::vector<bool> data_set_written(n_data_sets, false);
-    for (auto range : nonscalar_data_ranges)
+    for (const auto range : nonscalar_data_ranges)
       {
         const auto first_component = std::get<0>(range);
         const auto last_component  = std::get<1>(range);
