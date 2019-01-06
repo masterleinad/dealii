@@ -545,15 +545,11 @@ namespace Particles
     const std::set<types::subdomain_id> ghost_owners =
       triangulation->ghost_owners();
 
-    for (auto ghost_domain_id = ghost_owners.begin();
-         ghost_domain_id != ghost_owners.end();
-         ++ghost_domain_id)
-      moved_particles[*ghost_domain_id].reserve(
+    for (unsigned int ghost_owner : ghost_owners)
+      moved_particles[ghost_owner].reserve(
         static_cast<vector_size>(particles_out_of_cell.size() * 0.25));
-    for (auto ghost_domain_id = ghost_owners.begin();
-         ghost_domain_id != ghost_owners.end();
-         ++ghost_domain_id)
-      moved_cells[*ghost_domain_id].reserve(
+    for (unsigned int ghost_owner : ghost_owners)
+      moved_cells[ghost_owner].reserve(
         static_cast<vector_size>(particles_out_of_cell.size() * 0.25));
 
     {
@@ -721,10 +717,8 @@ namespace Particles
 
     const std::set<types::subdomain_id> ghost_owners =
       triangulation->ghost_owners();
-    for (auto ghost_domain_id = ghost_owners.begin();
-         ghost_domain_id != ghost_owners.end();
-         ++ghost_domain_id)
-      ghost_particles_by_domain[*ghost_domain_id].reserve(
+    for (unsigned int ghost_owner : ghost_owners)
+      ghost_particles_by_domain[ghost_owner].reserve(
         static_cast<typename std::vector<particle_iterator>::size_type>(
           particles.size() * 0.25));
 
@@ -762,15 +756,13 @@ namespace Particles
                 const particle_iterator_range particle_range =
                   particles_in_cell(cell);
 
-                for (auto domain = cell_to_neighbor_subdomain.begin();
-                     domain != cell_to_neighbor_subdomain.end();
-                     ++domain)
+                for (unsigned int domain : cell_to_neighbor_subdomain)
                   {
                     for (typename particle_iterator_range::iterator particle =
                            particle_range.begin();
                          particle != particle_range.end();
                          ++particle)
-                      ghost_particles_by_domain[*domain].push_back(particle);
+                      ghost_particles_by_domain[domain].push_back(particle);
                   }
               }
           }

@@ -1135,10 +1135,9 @@ PointValueHistory<dim>::write_gnuplot(
                 {
                   AssertThrow(names.size() == n_stored,
                               ExcDimensionMismatch(names.size(), n_stored));
-                  for (unsigned int component = 0; component < names.size();
-                       component++)
+                  for (const auto &name : names)
                     {
-                      to_gnuplot << "<" << names[component] << "> ";
+                      to_gnuplot << "<" << name << "> ";
                     }
                 }
               else

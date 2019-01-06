@@ -1805,9 +1805,8 @@ namespace
         // weights are set outside and coincide with the flat manifold case)
 
         double weights_lines[GeometryInfo<3>::lines_per_cell];
-        for (unsigned int line = 0; line < GeometryInfo<3>::lines_per_cell;
-             ++line)
-          weights_lines[line] = 0;
+        for (double &weights_line : weights_lines)
+          weights_line = 0;
 
         // start with the contributions of the faces
         std::array<double, GeometryInfo<2>::vertices_per_cell>          weights;

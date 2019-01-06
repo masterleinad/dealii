@@ -40,8 +40,11 @@ namespace hp
   {
     Assert(codim <= dim, ExcImpossibleInDim(dim));
 
-    for (auto it = fes.cbegin(); it != fes.cend(); ++it)
-      AssertIndexRange(*it, finite_elements.size());
+    for (unsigned int fe : fes)
+      {
+        (void)fe;
+        AssertIndexRange(fe, finite_elements.size());
+      }
 
     // If the set of elements to be dominated contains only a single element X,
     // then by definition the dominating set contains this single element X
@@ -114,8 +117,11 @@ namespace hp
   {
     Assert(codim <= dim, ExcImpossibleInDim(dim));
 
-    for (auto it = fes.cbegin(); it != fes.cend(); ++it)
-      AssertIndexRange(*it, finite_elements.size());
+    for (unsigned int fe : fes)
+      {
+        (void)fe;
+        AssertIndexRange(fe, finite_elements.size());
+      }
 
     // If the set of elements to be dominated contains only a single element X,
     // then by definition the dominating set contains this single element

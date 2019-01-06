@@ -1332,7 +1332,6 @@ GridOut::write_xfig(const Triangulation<2> &tria,
   const int spacedim = 2;
 
   const unsigned int nv  = GeometryInfo<dim>::vertices_per_cell;
-  const unsigned int nf  = GeometryInfo<dim>::faces_per_cell;
   const unsigned int nvf = GeometryInfo<dim>::vertices_per_face;
 
   // The following text was copied
@@ -1463,10 +1462,9 @@ GridOut::write_xfig(const Triangulation<2> &tria,
       // Now write boundary edges
       static const unsigned int face_reorder[4] = {2, 1, 3, 0};
       if (xfig_flags.draw_boundary)
-        for (unsigned int f = 0; f < nf; ++f)
+        for (unsigned int f : face_reorder)
           {
-            Triangulation<dim, spacedim>::face_iterator face =
-              cell->face(face_reorder[f]);
+            Triangulation<dim, spacedim>::face_iterator face = cell->face(f);
             const types::boundary_id bi = face->boundary_id();
             if (bi != numbers::internal_face_boundary_id)
               {
@@ -1588,25 +1586,23 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
 
   // auxiliary array for the materials being used (material ids 255 max.)
   unsigned int materials[256];
-  for (unsigned int material_index = 0; material_index < 256; material_index++)
-    materials[material_index] = 0;
+  for (unsigned int &material : materials)
+    material = 0;
 
   // auxiliary array for the levels being used (level number 255 max.)
   unsigned int levels[256];
-  for (unsigned int level_index = 0; level_index < 256; level_index++)
-    levels[level_index] = 0;
+  for (unsigned int &level : levels)
+    level = 0;
 
   // auxiliary array for the subdomains being used (subdomain id 255 max.)
   unsigned int subdomains[256];
-  for (unsigned int subdomain_index = 0; subdomain_index < 256;
-       subdomain_index++)
-    subdomains[subdomain_index] = 0;
+  for (unsigned int &subdomain : subdomains)
+    subdomain = 0;
 
   // auxiliary array for the level subdomains being used
   int level_subdomains[256];
-  for (int level_subdomain_index = 0; level_subdomain_index < 256;
-       level_subdomain_index++)
-    level_subdomains[level_subdomain_index] = 0;
+  for (int &level_subdomain : level_subdomains)
+    level_subdomain = 0;
 
   // We use an active cell iterator to determine the
   // bounding box of the given triangulation and check
@@ -1643,32 +1639,30 @@ GridOut::write_svg(const Triangulation<2, 2> &tria, std::ostream &out) const
   y_dimension = y_max - y_min;
 
   // count the materials being used
-  for (unsigned int material_index = 0; material_index < 256; material_index++)
+  for (unsigned int material : materials)
     {
-      if (materials[material_index])
+      if (material)
         n_materials++;
     }
 
   // count the levels being used
-  for (unsigned int level_index = 0; level_index < 256; level_index++)
+  for (unsigned int level : levels)
     {
-      if (levels[level_index])
+      if (level)
         n_levels++;
     }
 
   // count the subdomains being used
-  for (unsigned int subdomain_index = 0; subdomain_index < 256;
-       subdomain_index++)
+  for (unsigned int subdomain : subdomains)
     {
-      if (subdomains[subdomain_index])
+      if (subdomain)
         n_subdomains++;
     }
 
   // count the level subdomains being used
-  for (int level_subdomain_index = 0; level_subdomain_index < 256;
-       level_subdomain_index++)
+  for (int level_subdomain : level_subdomains)
     {
-      if (level_subdomains[level_subdomain_index])
+      if (level_subdomain)
         n_level_subdomains++;
     }
 

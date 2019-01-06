@@ -171,7 +171,7 @@ IF (CMAKE_BUILD_TYPE MATCHES "Release")
   # immediately use it in an Assert. Hence, only ignore unused typedefs in Release
   # mode.
   #
-  ENABLE_IF_SUPPORTED(DEAL_II_CXX_FLAGS_RELEASE "-Wno-unused-local-typedefs")
+  #ENABLE_IF_SUPPORTED(DEAL_II_CXX_FLAGS_RELEASE "-Wno-unused-local-typedefs")
 ENDIF()
 
 

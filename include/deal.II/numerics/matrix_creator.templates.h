@@ -1757,11 +1757,9 @@ namespace MatrixCreator
               // there must be an element belonging to the boundary. we take the
               // maximum diagonal entry.
               auto max_element = static_cast<types::global_dof_index>(0);
-              for (auto i = dof_to_boundary_mapping.begin();
-                   i != dof_to_boundary_mapping.end();
-                   ++i)
-                if ((*i != numbers::invalid_dof_index) && (*i > max_element))
-                  max_element = *i;
+              for (unsigned int i : dof_to_boundary_mapping)
+                if ((i != numbers::invalid_dof_index) && (i > max_element))
+                  max_element = i;
               Assert(max_element == matrix.n() - 1, ExcInternalError());
 
               double max_diag_entry = 0;

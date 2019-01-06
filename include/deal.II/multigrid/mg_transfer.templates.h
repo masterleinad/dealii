@@ -209,10 +209,10 @@ namespace internal
               const T &src,
               V &      dst)
   {
-    // we should have i->second == i->first, therefore we can use the same
-    // function for both copying to mg as well as copying from mg
-    for (auto i = copy_indices.begin(); i != copy_indices.end(); ++i)
-      dst(i->first) = src(i->first);
+    // we should have copy_index.second == copy_index.first, therefore we can
+    // use the same function for both copying to mg as well as copying from mg
+    for (const auto &copy_index : copy_indices)
+      dst(copy_index.first) = src(copy_index.first);
     dst.compress(VectorOperation::insert);
   }
 
@@ -493,19 +493,15 @@ MGLevelGlobalTransfer<LinearAlgebra::distributed::Vector<Number>>::copy_to_mg(
       LinearAlgebra::distributed::Vector<Number> &dst_level = dst[level];
 
       // first copy local unknowns
-      for (auto i = this_copy_indices[level].begin();
-           i != this_copy_indices[level].end();
-           ++i)
-        dst_level.local_element(i->second) =
-          this_ghosted_global_vector.local_element(i->first);
+      for (const auto &i : this_copy_indices[level])
+        dst_level.local_element(i.second) =
+          this_ghosted_global_vector.local_element(i.first);
 
       // Do the same for the indices where the level index is local, but the
       // global index is not
-      for (auto i = this_copy_indices_level_mine[level].begin();
-           i != this_copy_indices_level_mine[level].end();
-           ++i)
-        dst_level.local_element(i->second) =
-          this_ghosted_global_vector.local_element(i->first);
+      for (const auto &i : this_copy_indices_level_mine[level])
+        dst_level.local_element(i.second) =
+          this_ghosted_global_vector.local_element(i.first);
 
       dst_level.compress(VectorOperation::insert);
     }

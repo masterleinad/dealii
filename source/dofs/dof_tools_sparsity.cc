@@ -341,11 +341,9 @@ namespace DoFTools
     if (sparsity.n_rows() != 0)
       {
         types::global_dof_index max_element = 0;
-        for (auto i = dof_to_boundary_mapping.begin();
-             i != dof_to_boundary_mapping.end();
-             ++i)
-          if ((*i != numbers::invalid_dof_index) && (*i > max_element))
-            max_element = *i;
+        for (unsigned int i : dof_to_boundary_mapping)
+          if ((i != numbers::invalid_dof_index) && (i > max_element))
+            max_element = i;
         AssertDimension(max_element, sparsity.n_rows() - 1);
       };
 #endif
@@ -444,11 +442,9 @@ namespace DoFTools
     if (sparsity.n_rows() != 0)
       {
         types::global_dof_index max_element = 0;
-        for (auto i = dof_to_boundary_mapping.begin();
-             i != dof_to_boundary_mapping.end();
-             ++i)
-          if ((*i != numbers::invalid_dof_index) && (*i > max_element))
-            max_element = *i;
+        for (unsigned int i : dof_to_boundary_mapping)
+          if ((i != numbers::invalid_dof_index) && (i > max_element))
+            max_element = i;
         AssertDimension(max_element, sparsity.n_rows() - 1);
       };
 #endif
