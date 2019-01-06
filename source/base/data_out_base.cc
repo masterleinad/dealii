@@ -5782,12 +5782,12 @@ namespace DataOutBase
     // when writing, first write out all vector data, then handle the scalar
     // data sets that have been left over
     std::vector<bool> data_set_written(n_data_sets, false);
-    for (const auto range : nonscalar_data_ranges)
+    for (const auto &range : nonscalar_data_ranges)
       {
-        const auto first_component = std::get<0>(range);
-        const auto last_component  = std::get<1>(range);
-        const auto name            = std::get<2>(range);
-        const bool is_tensor =
+        const auto  first_component = std::get<0>(range);
+        const auto  last_component  = std::get<1>(range);
+        const auto &name            = std::get<2>(range);
+        const bool  is_tensor =
           (std::get<3>(range) ==
            DataComponentInterpretation::component_is_part_of_tensor);
         const unsigned int n_components = (is_tensor ? 9 : 3);
