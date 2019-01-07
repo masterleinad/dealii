@@ -811,7 +811,7 @@ namespace internal
             ((n_active_cells - n_boundary_cells) / 2 / vectorization_length) *
             vectorization_length;
           unsigned int count = 0;
-          for (unsigned int cell : cells_close_to_boundary)
+          for (const unsigned int cell : cells_close_to_boundary)
             if (cell_marked[cell] == 0)
               {
                 cell_marked[cell] = count < n_second_slot ? 1 : 3;
@@ -835,7 +835,7 @@ namespace internal
       else
         std::fill(cell_marked.begin(), cell_marked.end(), 1);
 
-      for (unsigned char marker : cell_marked)
+      for (const unsigned char marker : cell_marked)
         {
           (void)marker;
           Assert(marker != 0, ExcInternalError());
@@ -858,7 +858,7 @@ namespace internal
           std::vector<unsigned int> used_categories_vector(
             used_categories.size());
           n_categories = 0;
-          for (auto &it : used_categories)
+          for (const auto &it : used_categories)
             used_categories_vector[n_categories++] = it;
           for (unsigned int i = 0; i < n_active_cells + n_ghost_cells; ++i)
             {
@@ -881,7 +881,7 @@ namespace internal
         {
           n_categories = 2;
           tight_category_map.resize(n_active_cells + n_ghost_cells, 1);
-          for (unsigned int cell : cells_close_to_boundary)
+          for (const unsigned int cell : cells_close_to_boundary)
             tight_category_map[cell] = 0;
         }
 
@@ -923,7 +923,7 @@ namespace internal
           // step 3: append cells according to categories
           for (unsigned int j = 0; j < n_categories; ++j)
             {
-              for (unsigned int cell : renumbering_category[j])
+              for (const unsigned int cell : renumbering_category[j])
                 renumbering[counter++] = cell;
               unsigned int remainder =
                 renumbering_category[j].size() % vectorization_length;
@@ -1544,9 +1544,10 @@ namespace internal
       irregular_cells.back() = 0;
       irregular_cells.resize(n_active_cells + n_ghost_slots);
 
-      const unsigned int max_fe_index =
-        *std::max_element(cell_active_fe_index.begin(),
-                          cell_active_fe_index.end());
+      unsigned int max_fe_index = 0;
+      for (const unsigned int fe_index : cell_active_fe_index)
+        max_fe_index = std::max(fe_index, max_fe_index);
+
       Assert(!hp_bool || cell_active_fe_index.size() == n_active_cells,
              ExcInternalError());
 
@@ -1605,17 +1606,14 @@ namespace internal
                 else
                   {
                     partition_counter = 0;
-                    for (unsigned int neighbor : neighbor_list)
+                    for (const unsigned int neighbor : neighbor_list)
                       {
                         Assert(cell_partition[neighbor] == part,
                                ExcInternalError());
                         Assert(cell_partition_l2[neighbor] == partition_l2 - 1,
                                ExcInternalError());
-                        DynamicSparsityPattern::iterator neighbor_it =
-                                                           connectivity.begin(
-                                                             j),
-                                                         end_it =
-                                                           connectivity.end(j);
+                        auto       neighbor_it = connectivity.begin(neighbor);
+                        const auto end_it      = connectivity.end(neighbor);
                         for (; neighbor_it != end_it; ++neighbor_it)
                           {
                             if (cell_partition[neighbor_it->column()] == part &&
@@ -1789,7 +1787,8 @@ namespace internal
                           cell = counter - partition_counter;
                           for (unsigned int j = 0; j < max_fe_index + 1; j++)
                             {
-                              for (unsigned int jj : renumbering_fe_index[j])
+                              for (const unsigned int jj :
+                                   renumbering_fe_index[j])
                                 renumbering[cell++] = jj;
                               if (renumbering_fe_index[j].size() %
                                     vectorization_length !=
@@ -2055,7 +2054,7 @@ namespace internal
 
               // Loop through the list of cells in previous partition and put
               // all their neighbors in current partition
-              for (unsigned int cell : neighbor_list)
+              for (const unsigned int cell : neighbor_list)
                 {
                   Assert(cell_partition[cell] == partition - 1,
                          ExcInternalError());
