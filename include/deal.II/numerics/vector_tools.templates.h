@@ -386,7 +386,7 @@ namespace VectorTools
       // Now loop over all locally owned, active cells.
       //
 
-      for (const auto cell : dof_handler.active_cell_iterators())
+      for (const auto &cell : dof_handler.active_cell_iterators())
         {
           // If this cell is not locally owned, do nothing.
           if (!cell->is_locally_owned())

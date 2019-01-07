@@ -1757,7 +1757,8 @@ namespace MatrixCreator
               // there must be an element belonging to the boundary. we take the
               // maximum diagonal entry.
               auto max_element = static_cast<types::global_dof_index>(0);
-              for (const unsigned int index : dof_to_boundary_mapping)
+              for (const types::global_dof_index index :
+                   dof_to_boundary_mapping)
                 if ((index != numbers::invalid_dof_index) &&
                     (index > max_element))
                   max_element = index;
