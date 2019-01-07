@@ -52,6 +52,8 @@ CHECKS="-*,
         modernize-use-emplace,
         modernize-deprecated-headers,
         modernize-use-using,
+        modernize-use-auto,
+        modernize-loop-convert,
         mpi-*,
         performance-*,
         -performance-inefficient-string-concatenation"
