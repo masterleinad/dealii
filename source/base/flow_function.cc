@@ -281,9 +281,9 @@ namespace Functions
     for (unsigned int d = 0; d < dim + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for (unsigned int d = 0; d < values.size(); ++d)
-      for (unsigned int k = 0; k < values[d].size(); ++k)
-        values[d][k] = 0.;
+    for (auto &point_values : values)
+      for (double &point_value : point_values)
+        point_value = 0.;
   }
 
   //----------------------------------------------------------------------//
@@ -437,14 +437,14 @@ namespace Functions
       {
         vector_values(points, values);
         for (unsigned int d = 0; d < dim; ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] *= -reaction;
+          for (double &point_value : values[d])
+            point_value *= -reaction;
       }
     else
       {
         for (unsigned int d = 0; d < dim; ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] = 0.;
+          for (double &point_value : values[d])
+            point_value = 0.;
       }
 
 
@@ -658,9 +658,9 @@ namespace Functions
     for (unsigned int d = 0; d < 2 + 1; ++d)
       Assert(values[d].size() == n, ExcDimensionMismatch(values[d].size(), n));
 
-    for (unsigned int d = 0; d < values.size(); ++d)
-      for (unsigned int k = 0; k < values[d].size(); ++k)
-        values[d][k] = 0.;
+    for (auto &point_values : values)
+      for (double &point_value : point_values)
+        point_value = 0.;
   }
 
 
@@ -771,9 +771,9 @@ namespace Functions
       }
     else
       {
-        for (unsigned int d = 0; d < values.size(); ++d)
-          for (unsigned int k = 0; k < values[d].size(); ++k)
-            values[d][k] = 0.;
+        for (auto &point_values : values)
+          for (double &point_value : point_values)
+            point_value = 0.;
       }
   }
 
