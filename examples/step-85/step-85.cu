@@ -18,7 +18,10 @@
  */
 
 // First include the necessary files from the deal.II libary.
+#include <deal.II/base/conditional_ostream.h>
 #include <deal.II/base/quadrature_lib.h>
+
+#include <deal.II/dofs/dof_tools.h>
 
 #include <deal.II/lac/affine_constraints.h>
 #include <deal.II/lac/solver_cg.h>
@@ -31,11 +34,15 @@
 #include <deal.II/grid/grid_generator.h>
 
 #include <deal.II/numerics/data_out.h>
+#include <deal.II/numerics/vector_tools.h>
 
 // This includes the data structures for the implementation of matrix-free
 // methods on GPU
 #include <deal.II/matrix_free/cuda_matrix_free.h>
 #include <deal.II/matrix_free/cuda_fe_evaluation.h>
+#include <deal.II/matrix_free/cuda_matrix_free.h>
+
+#include <fstream>
 
 namespace Step85
 {
@@ -45,16 +52,17 @@ namespace Step85
   class HelmholtzOperatorQuad
   {
   public:
-    __device__ void operator()(CUDA::FEEvaluation<dim, fe_degree> *fe_eval,
-                               const unsigned int q_point) const;
+    __device__ void
+    operator()(CUDAWrappers::FEEvaluation<dim, fe_degree> *fe_eval,
+               const unsigned int                          q) const;
   };
 
 
 
   template <int dim, int fe_degree>
-  __device__ void HelmholtzOperatorQuad::
-                  operator()(CUDA::FEEvaluation<dim, fe_degree> *fe_eval,
-             const unsigned int                  q_point) const
+  __device__ void HelmholtzOperatorQuad<dim, fe_degree>::
+                  operator()(CUDAWrappers::FEEvaluation<dim, fe_degree> *fe_eval,
+             const unsigned int                          q) const
   {
     fe_eval->submit_value(10. * fe_eval->get_value(q), q);
     fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
@@ -68,29 +76,29 @@ namespace Step85
   public:
     __device__ void operator()(
       const unsigned int                                          cell,
-      const typename CUDAWrappers::MatrixFree<dim, Number>::Data *gpu_data,
-      CUDAWrappers::SharedData<dim, Number> *                     shared_data,
-      const Number *                                              src,
-      Number *                                                    dst) const;
+      const typename CUDAWrappers::MatrixFree<dim, double>::Data *gpu_data,
+      CUDAWrappers::SharedData<dim, double> *                     shared_data,
+      const double *                                              src,
+      double *                                                    dst) const;
   };
 
 
 
   template <int dim, int fe_degree>
-  __device__ void LocalHelmholtzOperator<dim, fe_free>::operator()(
+  __device__ void LocalHelmholtzOperator<dim, fe_degree>::operator()(
     const unsigned int                                          cell,
-    const typename CUDAWrappers::MatrixFree<dim, Number>::Data *gpu_data,
-    CUDAWrappers::SharedData<dim, Number> *                     shared_data,
-    const Number *                                              src,
-    Number *                                                    dst) const
+    const typename CUDAWrappers::MatrixFree<dim, double>::Data *gpu_data,
+    CUDAWrappers::SharedData<dim, double> *                     shared_data,
+    const double *                                              src,
+    double *                                                    dst) const
   {
-    CUDAWrappers::FEEvaluation<dim, fe_degree, n_q_points_1d, 1, Number>
+    CUDAWrappers::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double>
       fe_eval(cell, gpu_data, shared_data);
     fe_eval.read_dof_values(src);
-    fe_eval.evaluate(false true);
+    fe_eval.evaluate(true, true);
     fe_eval.apply_quad_point_operations(
       HelmholtzOperatorQuad<dim, fe_degree>());
-    fe_eval.integrate(false, true);
+    fe_eval.integrate(true, true);
     fe_eval.distribute_local_to_global(dst);
   }
 
@@ -125,7 +133,7 @@ namespace Step85
     const AffineConstraints<double> &constraints)
   {
     MappingQGeneric<dim> mapping(fe_degree);
-    typename CUDAWrappers::MatrixFree<dim, Number>::AdditionalData
+    typename CUDAWrappers::MatrixFree<dim, double>::AdditionalData
       additional_data;
     additional_data.mapping_update_flags = update_values | update_gradients |
                                            update_JxW_values |
@@ -137,15 +145,15 @@ namespace Step85
 
 
   template <int dim, int fe_degree>
-  void HelmholtzOperator<dim, fe_degre>::vmult(
-    LinearAlgebra::distributed::VectorVector<double, MemorySpace::CUDA> &dst,
-    const LinearAlgebra::distributed::VectorVector<double, MemorySpace::CUDA>
-      &src) const
+  void HelmholtzOperator<dim, fe_degree>::vmult(
+    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> &      dst,
+    const LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> &src)
+    const
   {
-    dst = static_cast<Number>(0.);
+    dst = 0.;
     LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator();
-    data.cell_loop(helmholtz_operator, src, dst);
-    data.copy_constrained_values(src, dst);
+    mf_data.cell_loop(helmholtz_operator, src, dst);
+    mf_data.copy_constrained_values(src, dst);
   }
 
 
@@ -162,7 +170,7 @@ namespace Step85
   private:
     void setup_system();
     // TODO just do it on the host and then move to the GPU
-    // void assemble_rhs();
+    void assemble_rhs();
     void solve();
     void refine_grid();
     void output_results(const unsigned int cycle) const;
@@ -175,13 +183,14 @@ namespace Step85
     FE_Q<dim>       fe;
 
     IndexSet locally_owned_dofs;
-    IndexSet locally_relevant_dofs;
 
     AffineConstraints<double>                          constraints;
     std::unique_ptr<HelmholtzOperator<dim, fe_degree>> system_matrix;
 
     LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> solution;
     LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> system_rhs;
+
+    ConditionalOStream pcout;
   };
 
 
@@ -192,6 +201,7 @@ namespace Step85
     , triangulation(mpi_communicator)
     , dof_handler(triangulation)
     , fe(fe_degree)
+    , pcout(std::cout, Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
   {}
 
 
@@ -210,11 +220,8 @@ namespace Step85
     dof_handler.distribute_dofs(fe);
 
     locally_owned_dofs = dof_handler.locally_owned_dofs();
+    IndexSet locally_relevant_dofs;
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
-
-    locally_relevant_solution.reinit(locally_owned_dofs,
-                                     locally_relevant_dofs,
-                                     mpi_communicator);
     system_rhs.reinit(locally_owned_dofs, mpi_communicator);
 
     constraints.clear();
@@ -225,12 +232,94 @@ namespace Step85
                                              Functions::ZeroFunction<dim>(),
                                              constraints);
     constraints.close();
-    system_matrix.reset(new HelmholtzOperator(dof_handler, constraints));
+    system_matrix.reset(
+      new HelmholtzOperator<dim, fe_degree>(dof_handler, constraints));
 
-    solution.reinit(locally_owned_dofs);
-    system_rhs.reinit(locally_owned_dofs);
+    solution.reinit(locally_owned_dofs, mpi_communicator);
+    system_rhs.reinit(locally_owned_dofs, mpi_communicator);
   }
 
 
 
+  template <int dim, int fe_degree>
+  void HelmholtzProblem<dim, fe_degree>::assemble_rhs()
+  {
+    system_rhs.add(1.);
+  }
+
+
+
+  template <int dim, int fe_degree>
+  void HelmholtzProblem<dim, fe_degree>::solve()
+  {
+    PreconditionIdentity preconditioner;
+
+    SolverControl solver_control(100, 1e-12 * system_rhs.l2_norm());
+    SolverCG<LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>> cg(
+      solver_control);
+    cg.solve(system_matrix, solution, system_rhs, preconditioner);
+
+    constraints.distribute(solution);
+  }
+
+
+
+  template <int dim, int fe_degree>
+  void HelmholtzProblem<dim, fe_degree>::output_results(
+    const unsigned int cycle) const
+  {
+    DataOut<dim> data_out;
+
+    solution.update_ghost_values();
+    data_out.attach_dof_handler(dof_handler);
+    data_out.add_data_vector(solution, "solution");
+    data_out.build_patches();
+
+    std::ofstream output(
+      "solution-" + std::to_string(cycle) + "." +
+      std::to_string(Utilities::MPI::this_mpi_process(mpi_communicator)) +
+      ".vtu");
+    DataOutBase::VtkFlags flags;
+    flags.compression_level = DataOutBase::VtkFlags::best_speed;
+    data_out.set_flags(flags);
+    data_out.write_vtu(output);
+
+    if (Utilities::MPI::this_mpi_process(mpi_communicator) == 0)
+      {
+        std::vector<std::string> filenames;
+        for (unsigned int i = 0;
+             i < Utilities::MPI::n_mpi_processes(mpi_communicator);
+             ++i)
+          filenames.emplace_back("solution-" + std::to_string(cycle) + "." +
+                                 std::to_string(i) + ".vtu");
+
+        std::string master_name =
+          "solution-" + Utilities::to_string(cycle) + ".pvtu";
+        std::ofstream master_output(master_name);
+        data_out.write_pvtu_record(master_output, filenames);
+      }
+  }
+
+
+
+  template <int dim, int fe_degree>
+  void HelmholtzProblem<dim, fe_degree>::run()
+  {
+    for (unsigned int cycle = 0; cycle < 9 - dim; ++cycle)
+      {
+        pcout << "Cycle " << cycle << std::endl;
+
+        if (cycle == 0)
+          {
+            GridGenerator::hyper_cube(triangulation, 0., 1.);
+            triangulation.refine_global(3 - dim);
+          }
+        triangulation.refine_global(1);
+        setup_system();
+        assemble_rhs();
+        solve();
+        output_results(cycle);
+        pcout << std::endl;
+      }
+  }
 } // namespace Step85
