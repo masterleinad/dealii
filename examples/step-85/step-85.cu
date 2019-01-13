@@ -14,7 +14,7 @@
  * ---------------------------------------------------------------------
 
  *
- * Authors: Bruno Turcksin, Oak Ridge National Laboratory
+ * Authors: Bruno Turcksin, Oak Ridge National Laboratory, 2019
  */
 
 // First include the necessary files from the deal.II libary.
@@ -38,6 +38,7 @@
 
 // This includes the data structures for the implementation of matrix-free
 // methods on GPU
+#include <deal.II/base/cuda.h>
 #include <deal.II/matrix_free/cuda_matrix_free.h>
 #include <deal.II/matrix_free/cuda_fe_evaluation.h>
 #include <deal.II/matrix_free/cuda_matrix_free.h>
@@ -80,6 +81,12 @@ namespace Step85
       CUDAWrappers::SharedData<dim, double> *                     shared_data,
       const double *                                              src,
       double *                                                    dst) const;
+
+    static const unsigned int n_dofs_1d = fe_degree + 1;
+    static const unsigned int n_local_dofs =
+      dealii::Utilities::pow(fe_degree + 1, dim);
+    static const unsigned int n_q_points =
+      dealii::Utilities::pow(fe_degree + 1, dim);
   };
 
 
@@ -151,7 +158,7 @@ namespace Step85
     const
   {
     dst = 0.;
-    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator();
+    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator;
     mf_data.cell_loop(helmholtz_operator, src, dst);
     mf_data.copy_constrained_values(src, dst);
   }
@@ -183,12 +190,15 @@ namespace Step85
     FE_Q<dim>       fe;
 
     IndexSet locally_owned_dofs;
+    IndexSet locally_relevant_dofs;
 
     AffineConstraints<double>                          constraints;
-    std::unique_ptr<HelmholtzOperator<dim, fe_degree>> system_matrix;
+    std::unique_ptr<HelmholtzOperator<dim, fe_degree>> system_matrix_dev;
 
-    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> solution;
-    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> system_rhs;
+    LinearAlgebra::distributed::Vector<double, MemorySpace::Host> solution_host;
+    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA> solution_dev;
+    LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>
+      system_rhs_dev;
 
     ConditionalOStream pcout;
   };
@@ -220,9 +230,8 @@ namespace Step85
     dof_handler.distribute_dofs(fe);
 
     locally_owned_dofs = dof_handler.locally_owned_dofs();
-    IndexSet locally_relevant_dofs;
     DoFTools::extract_locally_relevant_dofs(dof_handler, locally_relevant_dofs);
-    system_rhs.reinit(locally_owned_dofs, mpi_communicator);
+    system_rhs_dev.reinit(locally_owned_dofs, mpi_communicator);
 
     constraints.clear();
     constraints.reinit(locally_relevant_dofs);
@@ -232,11 +241,12 @@ namespace Step85
                                              Functions::ZeroFunction<dim>(),
                                              constraints);
     constraints.close();
-    system_matrix.reset(
+    system_matrix_dev.reset(
       new HelmholtzOperator<dim, fe_degree>(dof_handler, constraints));
 
-    solution.reinit(locally_owned_dofs, mpi_communicator);
-    system_rhs.reinit(locally_owned_dofs, mpi_communicator);
+    solution_host.reinit(locally_owned_dofs, mpi_communicator);
+    solution_dev.reinit(locally_owned_dofs, mpi_communicator);
+    system_rhs_dev.reinit(locally_owned_dofs, mpi_communicator);
   }
 
 
@@ -244,7 +254,7 @@ namespace Step85
   template <int dim, int fe_degree>
   void HelmholtzProblem<dim, fe_degree>::assemble_rhs()
   {
-    system_rhs.add(1.);
+    system_rhs_dev.add(1.);
   }
 
 
@@ -254,12 +264,17 @@ namespace Step85
   {
     PreconditionIdentity preconditioner;
 
-    SolverControl solver_control(100, 1e-12 * system_rhs.l2_norm());
+    SolverControl solver_control(100, 1e-12 * system_rhs_dev.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>> cg(
       solver_control);
-    cg.solve(system_matrix, solution, system_rhs, preconditioner);
+    cg.solve(*system_matrix_dev, solution_dev, system_rhs_dev, preconditioner);
 
-    constraints.distribute(solution);
+    // Copy the solution from the device to the host
+    LinearAlgebra::ReadWriteVector<double> rw_vector(locally_owned_dofs);
+    rw_vector.import(solution_dev, VectorOperation::insert);
+    solution_host.import(rw_vector, VectorOperation::insert);
+
+    constraints.distribute(solution_host);
   }
 
 
@@ -270,9 +285,13 @@ namespace Step85
   {
     DataOut<dim> data_out;
 
-    solution.update_ghost_values();
+    LinearAlgebra::distributed::Vector<double, MemorySpace::Host>
+      ghost_solution_host(locally_owned_dofs,
+                          locally_relevant_dofs,
+                          mpi_communicator);
+    ghost_solution_host = solution_host;
     data_out.attach_dof_handler(dof_handler);
-    data_out.add_data_vector(solution, "solution");
+    data_out.add_data_vector(ghost_solution_host, "solution");
     data_out.build_patches();
 
     std::ofstream output(
@@ -323,3 +342,57 @@ namespace Step85
       }
   }
 } // namespace Step85
+
+int main(int argc, char *argv[])
+{
+  try
+    {
+      using namespace Step85;
+
+      Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
+
+      // By default, all the ranks will try to access the device 0.
+      // If we are running with MPI support it is better to address different
+      // graphic cards for different processes even if only one node is used.
+      // The choice below is based on the MPI proccess id. MPI needs to be
+      // initialized before using this function.
+      int         n_devices       = 0;
+      cudaError_t cuda_error_code = cudaGetDeviceCount(&n_devices);
+      AssertCuda(cuda_error_code);
+      const unsigned int my_id =
+        Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+      const int device_id = my_id % n_devices;
+      cuda_error_code     = cudaSetDevice(device_id);
+      AssertCuda(cuda_error_code);
+
+      HelmholtzProblem<3, 3> helmhotz_problem;
+      helmhotz_problem.run();
+    }
+  catch (std::exception &exc)
+    {
+      std::cerr << std::endl
+                << std::endl
+                << "----------------------------------------------------"
+                << std::endl;
+      std::cerr << "Exception on processing: " << std::endl
+                << exc.what() << std::endl
+                << "Aborting!" << std::endl
+                << "----------------------------------------------------"
+                << std::endl;
+      return 1;
+    }
+  catch (...)
+    {
+      std::cerr << std::endl
+                << std::endl
+                << "----------------------------------------------------"
+                << std::endl;
+      std::cerr << "Unknown exception!" << std::endl
+                << "Aborting!" << std::endl
+                << "----------------------------------------------------"
+                << std::endl;
+      return 1;
+    }
+
+  return 0;
+}
