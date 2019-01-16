@@ -35,7 +35,7 @@
 #  include <deal.II/lac/vector_memory.h>
 
 #  include <arkode/arkode.h>
-#  include <arkode/arkode_impl.h>
+//#  include <arkode/arkode_impl.h>
 #  include <nvector/nvector_serial.h>
 #  ifdef DEAL_II_WITH_MPI
 #    include <nvector/nvector_parallel.h>
