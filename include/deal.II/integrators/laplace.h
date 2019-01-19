@@ -131,7 +131,10 @@ namespace LocalIntegrators
       const unsigned int n_dofs = fe.dofs_per_cell;
       const unsigned int n_comp = fe.get_fe().n_components();
 
-      AssertVectorVectorDimension(input, n_comp, fe.n_quadrature_points);
+      AssertDimension(input.size(), n_comp);
+      for (unsigned int i = 0; i < n_comp; ++i)
+        AssertDimension(input[i].size(), fe.n_quadrature_points);
+
       Assert(result.size() == n_dofs,
              ExcDimensionMismatch(result.size(), n_dofs));
 
@@ -334,9 +337,16 @@ namespace LocalIntegrators
     {
       const unsigned int n_dofs = fe.dofs_per_cell;
       const unsigned int n_comp = fe.get_fe().n_components();
-      AssertVectorVectorDimension(input, n_comp, fe.n_quadrature_points);
-      AssertVectorVectorDimension(Dinput, n_comp, fe.n_quadrature_points);
-      AssertVectorVectorDimension(data, n_comp, fe.n_quadrature_points);
+
+      AssertDimension(input.size(), n_comp);
+      AssertDimension(Dinput.size(), n_comp);
+      AssertDimension(data.size(), n_comp);
+      for (unsigned int i = 0; i < n_comp; ++i)
+        {
+          AssertDimension(input[i].size(), fe.n_quadrature_points);
+          AssertDimension(Dinput[i].size(), fe.n_quadrature_points);
+          AssertDimension(data[i].size(), fe.n_quadrature_points);
+        }
 
       for (unsigned int k = 0; k < fe.n_quadrature_points; ++k)
         {
@@ -657,10 +667,17 @@ namespace LocalIntegrators
       const unsigned int n_comp = fe1.get_fe().n_components();
       const unsigned int n1     = fe1.dofs_per_cell;
 
-      AssertVectorVectorDimension(input1, n_comp, fe1.n_quadrature_points);
-      AssertVectorVectorDimension(Dinput1, n_comp, fe1.n_quadrature_points);
-      AssertVectorVectorDimension(input2, n_comp, fe2.n_quadrature_points);
-      AssertVectorVectorDimension(Dinput2, n_comp, fe2.n_quadrature_points);
+      AssertDimension(input1.size(), n_comp);
+      AssertDimension(Dinput1.size(), n_comp);
+      AssertDimension(input2.size(), n_comp);
+      AssertDimension(Dinput2.size(), n_comp);
+      for (unsigned int i = 0; i < n_comp; ++i)
+        {
+          AssertDimension(input1[i].size(), fe1.n_quadrature_points);
+          AssertDimension(Dinput1[i].size(), fe1.n_quadrature_points);
+          AssertDimension(input2[i].size(), fe2.n_quadrature_points);
+          AssertDimension(Dinput2[i].size(), fe2.n_quadrature_points);
+        }
 
       const double nui     = int_factor;
       const double nue     = (ext_factor < 0) ? int_factor : ext_factor;
