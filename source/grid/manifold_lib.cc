@@ -2117,6 +2117,30 @@ TransfiniteInterpolationManifold<dim, spacedim>::pull_back(
 
 
 
+namespace
+{
+  template <typename Container>
+  void
+  apply_permutation(Container &v, std::vector<unsigned int> &indices)
+  {
+    using std::swap; // to permit Koenig lookup
+    for (size_t i = 0; i < indices.size(); i++)
+      {
+        size_t current = i;
+        while (i != indices[current])
+          {
+            auto next = indices[current];
+            swap(v[current], v[next]);
+            indices[current] = current;
+            current          = next;
+          }
+        indices[current] = current;
+      }
+  }
+} // namespace
+
+
+
 template <int dim, int spacedim>
 std::array<unsigned int, 20>
 TransfiniteInterpolationManifold<dim, spacedim>::
@@ -2135,14 +2159,10 @@ TransfiniteInterpolationManifold<dim, spacedim>::
 
   // This computes the distance of the surrounding points transformed to the
   // unit cell from the unit cell.
-  typename Triangulation<dim, spacedim>::cell_iterator cell =
-                                                         triangulation->begin(
-                                                           level_coarse),
-                                                       endc =
-                                                         triangulation->end(
-                                                           level_coarse);
-  boost::container::small_vector<std::pair<double, unsigned int>, 200>
-    distances_and_cells;
+  boost::container::small_vector<double, 200>       distances;
+  boost::container::small_vector<unsigned int, 200> new_cells;
+  auto       cell = triangulation->begin(level_coarse);
+  const auto endc = triangulation->end(level_coarse);
   for (; cell != endc; ++cell)
     {
       // only consider cells where the current manifold is attached
@@ -2187,17 +2207,24 @@ TransfiniteInterpolationManifold<dim, spacedim>::
             cell->real_to_unit_cell_affine_approximation(points[i]);
           current_distance += GeometryInfo<dim>::distance_to_unit_cell(point);
         }
-      distances_and_cells.emplace_back(current_distance, cell->index());
+      distances.push_back(current_distance);
+      new_cells.push_back(cell->index());
     }
   // no coarse cell could be found -> transformation failed
-  AssertThrow(distances_and_cells.size() > 0,
+  AssertThrow(distances.size() > 0,
               (typename Mapping<dim, spacedim>::ExcTransformationFailed()));
-  std::sort(distances_and_cells.begin(), distances_and_cells.end());
+  std::vector<unsigned int> sorting_indices(distances.size());
+  std::iota(sorting_indices.begin(), sorting_indices.end(), 0);
+  std::sort(sorting_indices.begin(),
+            sorting_indices.end(),
+            [&](const unsigned int a, const unsigned int b) {
+              return (distances[a] < distances[b]);
+            });
+  apply_permutation(new_cells, sorting_indices);
   std::array<unsigned int, 20> cells;
   cells.fill(numbers::invalid_unsigned_int);
-  for (unsigned int i = 0; i < distances_and_cells.size() && i < cells.size();
-       ++i)
-    cells[i] = distances_and_cells[i].second;
+  for (unsigned int i = 0; i < new_cells.size() && i < cells.size(); ++i)
+    cells[i] = new_cells[i];
 
   return cells;
 }
