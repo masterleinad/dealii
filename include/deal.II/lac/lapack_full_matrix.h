@@ -279,16 +279,16 @@ public:
    *
    * @note The matrix is of dimension $m \times n$.
    */
-  size_type
-  m() const;
+  DEAL_II_NODISCARD size_type
+                    m() const;
 
   /**
    * Return the dimension of the domain space.
    *
    * @note The matrix is of dimension $m \times n$.
    */
-  size_type
-  n() const;
+  DEAL_II_NODISCARD size_type
+                    n() const;
 
   /**
    * Fill rectangular block.
@@ -851,8 +851,8 @@ public:
   /**
    * Retrieve eigenvalue after compute_eigenvalues() was called.
    */
-  std::complex<number>
-  eigenvalue(const size_type i) const;
+  DEAL_II_NODISCARD std::complex<number>
+                    eigenvalue(const size_type i) const;
 
   /**
    * Retrieve singular values after compute_svd() or compute_inverse_svd() was

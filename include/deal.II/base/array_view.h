@@ -199,39 +199,39 @@ public:
    * Return the size (in elements) of the view of memory this object
    * represents.
    */
-  std::size_t
-  size() const;
+  DEAL_II_NODISCARD std::size_t
+                    size() const;
 
   /**
    * Return a pointer to the underlying array serving as element storage.
    * In case the container is empty a nullptr is returned.
    */
-  value_type *
-  data() const noexcept;
+  DEAL_II_NODISCARD value_type *
+                    data() const noexcept;
 
   /**
    * Return an iterator pointing to the beginning of the array view.
    */
-  iterator
-  begin() const;
+  DEAL_II_NODISCARD iterator
+                    begin() const;
 
   /**
    * Return an iterator pointing to one past the end of the array view.
    */
-  iterator
-  end() const;
+  DEAL_II_NODISCARD iterator
+                    end() const;
 
   /**
    * Return a constant iterator pointing to the beginning of the array view.
    */
-  const_iterator
-  cbegin() const;
+  DEAL_II_NODISCARD const_iterator
+                    cbegin() const;
 
   /**
    * Return a constant iterator pointing to one past the end of the array view.
    */
-  const_iterator
-  cend() const;
+  DEAL_II_NODISCARD const_iterator
+                    cend() const;
 
   /**
    * Return a reference to the $i$th element of the range represented by the

@@ -154,15 +154,15 @@ public:
    * you called @p swap_out. If @p swap_out was not called, or if in between
    * @p kill_file was called, then the filename is an empty string.
    */
-  const std::string &
-  get_filename() const;
+  DEAL_II_NODISCARD const std::string &
+                          get_filename() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * @addtogroup Exceptions

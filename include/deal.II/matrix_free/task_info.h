@@ -410,8 +410,8 @@ namespace internal
       /**
        * Returns the memory consumption of the class.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Prints minimum, average, and maximal memory consumption over the MPI

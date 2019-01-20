@@ -114,21 +114,21 @@ public:
   /**
    * Return a human readable string representation of this CellId.
    */
-  std::string
-  to_string() const;
+  DEAL_II_NODISCARD std::string
+                    to_string() const;
 
   /**
    * Return a compact and fast binary representation of this CellId.
    */
   template <int dim>
-  binary_type
-  to_binary() const;
+  DEAL_II_NODISCARD binary_type
+                    to_binary() const;
 
   /**
    * Return a cell_iterator to the cell represented by this CellId.
    */
   template <int dim, int spacedim>
-  typename Triangulation<dim, spacedim>::cell_iterator
+  DEAL_II_NODISCARD typename Triangulation<dim, spacedim>::cell_iterator
   to_cell(const Triangulation<dim, spacedim> &tria) const;
 
   /**

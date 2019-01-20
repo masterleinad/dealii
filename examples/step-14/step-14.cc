@@ -356,8 +356,8 @@ namespace Step14
       virtual void solve_problem() = 0;
       virtual void postprocess(
         const Evaluation::EvaluationBase<dim> &postprocessor) const = 0;
-      virtual void         refine_grid()                            = 0;
-      virtual unsigned int n_dofs() const                           = 0;
+      virtual void                           refine_grid()          = 0;
+      DEAL_II_NODISCARD virtual unsigned int n_dofs() const         = 0;
 
       virtual void set_refinement_cycle(const unsigned int cycle);
 
@@ -1691,7 +1691,7 @@ namespace Step14
       virtual void postprocess(
         const Evaluation::EvaluationBase<dim> &postprocessor) const override;
 
-      virtual unsigned int n_dofs() const override;
+      DEAL_II_NODISCARD virtual unsigned int n_dofs() const override;
 
       virtual void refine_grid() override;
 

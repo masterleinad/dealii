@@ -152,15 +152,15 @@ namespace SparseMatrixIterators
     /**
      * Value of this matrix entry.
      */
-    number
-    value() const;
+    DEAL_II_NODISCARD number
+                      value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a constant reference.
      */
-    const MatrixType &
-    get_matrix() const;
+    DEAL_II_NODISCARD const MatrixType &
+                            get_matrix() const;
 
   private:
     /**
@@ -287,15 +287,15 @@ namespace SparseMatrixIterators
     /**
      * Value of this matrix entry, returned as a read- and writable reference.
      */
-    Reference
-    value() const;
+    DEAL_II_NODISCARD Reference
+                      value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a non-constant reference.
      */
-    MatrixType &
-    get_matrix() const;
+    DEAL_II_NODISCARD MatrixType &
+                      get_matrix() const;
 
   private:
     /**
@@ -681,36 +681,36 @@ public:
    * Return whether the object is empty. It is empty if either both dimensions
    * are zero or no SparsityPattern is associated.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
    * Return the dimension of the codomain (or range) space. Note that the
    * matrix is of dimension $m \times n$.
    */
-  size_type
-  m() const;
+  DEAL_II_NODISCARD size_type
+                    m() const;
 
   /**
    * Return the dimension of the domain space. Note that the matrix is of
    * dimension $m \times n$.
    */
-  size_type
-  n() const;
+  DEAL_II_NODISCARD size_type
+                    n() const;
 
   /**
    * Return the number of entries in a specific row.
    */
-  size_type
-  get_row_length(const size_type row) const;
+  DEAL_II_NODISCARD size_type
+                    get_row_length(const size_type row) const;
 
   /**
    * Return the number of nonzero elements of this matrix. Actually, it
    * returns the number of entries in the sparsity pattern; if any of the
    * entries should happen to be zero, it is counted anyway.
    */
-  std::size_t
-  n_nonzero_elements() const;
+  DEAL_II_NODISCARD std::size_t
+                    n_nonzero_elements() const;
 
   /**
    * Return the number of actually nonzero elements of this matrix. It is
@@ -721,8 +721,8 @@ public:
    * count all entries of the sparsity pattern but only the ones that are
    * nonzero (or whose absolute value is greater than threshold).
    */
-  std::size_t
-  n_actually_nonzero_elements(const double threshold = 0.) const;
+  DEAL_II_NODISCARD std::size_t
+                    n_actually_nonzero_elements(const double threshold = 0.) const;
 
   /**
    * Return a (constant) reference to the underlying sparsity pattern of this
@@ -732,15 +732,15 @@ public:
    * that it may change if you call any nonconstant function of objects which
    * operate on it.
    */
-  const SparsityPattern &
-  get_sparsity_pattern() const;
+  DEAL_II_NODISCARD const SparsityPattern &
+                          get_sparsity_pattern() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object. See MemoryConsumption.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Dummy function for compatibility with distributed, parallel matrices.
@@ -1283,8 +1283,8 @@ public:
    * $l_1$-norm for vectors, i.e.  $|Mv|_1\leq |M|_1 |v|_1$. (cf. Haemmerlin-
    * Hoffmann: Numerische Mathematik)
    */
-  real_type
-  l1_norm() const;
+  DEAL_II_NODISCARD real_type
+                    l1_norm() const;
 
   /**
    * Return the $l_\infty$-norm of the matrix, that is
@@ -1293,15 +1293,15 @@ public:
    * compatible to the $l_\infty$-norm of vectors, i.e.  $|Mv|_\infty \leq
    * |M|_\infty |v|_\infty$.  (cf. Haemmerlin-Hoffmann: Numerische Mathematik)
    */
-  real_type
-  linfty_norm() const;
+  DEAL_II_NODISCARD real_type
+                    linfty_norm() const;
 
   /**
    * Return the frobenius norm of the matrix, i.e. the square root of the sum
    * of squares of all entries in the matrix.
    */
-  real_type
-  frobenius_norm() const;
+  DEAL_II_NODISCARD real_type
+                    frobenius_norm() const;
   //@}
   /**
    * @name Preconditioning methods

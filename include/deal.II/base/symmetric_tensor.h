@@ -630,8 +630,8 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
-  begin_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          begin_raw() const;
 
   /**
    * Return a pointer to the element past the end of the underlying storage.
@@ -643,8 +643,8 @@ public:
    * Return a const pointer to the element past the end of the underlying
    * storage.
    */
-  const Number *
-  end_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          end_raw() const;
 
   /**
    * Assignment operator from symmetric tensors with different underlying scalar
@@ -803,8 +803,8 @@ public:
    * <tt>s.access_raw_entry(unrolled_index)</tt> does the same as
    * <tt>s[s.unrolled_to_component_indices(i)]</tt>, but more efficiently.
    */
-  const Number &
-  access_raw_entry(const unsigned int unrolled_index) const;
+  DEAL_II_NODISCARD const Number &
+                          access_raw_entry(const unsigned int unrolled_index) const;
 
   /**
    * Access to an element according to unrolled index. The function
@@ -823,7 +823,7 @@ public:
    * upper right as well as lower left entries, not just one of them, although
    * they are equal for symmetric tensors).
    */
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   norm() const;
 
   /**

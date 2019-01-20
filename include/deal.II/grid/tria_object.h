@@ -80,7 +80,7 @@ namespace internal
       /**
        * Return the index of the ith face object.
        */
-      int
+      DEAL_II_NODISCARD int
       face(const unsigned int i) const;
 
       /**

@@ -171,15 +171,15 @@ public:
    * Grant access to the object describing the distribution of row indices to
    * the individual blocks.
    */
-  const BlockIndices &
-  get_row_indices() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          get_row_indices() const;
 
   /**
    * Grant access to the object describing the distribution of column indices
    * to the individual blocks.
    */
-  const BlockIndices &
-  get_column_indices() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          get_column_indices() const;
 
   /**
    * This function compresses the sparsity structures that this object
@@ -191,14 +191,14 @@ public:
   /**
    * Return the number of blocks in a column.
    */
-  size_type
-  n_block_rows() const;
+  DEAL_II_NODISCARD size_type
+                    n_block_rows() const;
 
   /**
    * Return the number of blocks in a row.
    */
-  size_type
-  n_block_cols() const;
+  DEAL_II_NODISCARD size_type
+                    n_block_cols() const;
 
   /**
    * Return whether the object is empty. It is empty if no memory is
@@ -206,7 +206,7 @@ public:
    * function is just the concatenation of the respective call to all sub-
    * matrices.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
@@ -214,8 +214,8 @@ public:
    * number of entries per row accumulated over all blocks in a row, and the
    * maximum over all rows.
    */
-  size_type
-  max_entries_per_row() const;
+  DEAL_II_NODISCARD size_type
+                    max_entries_per_row() const;
 
   /**
    * Add a nonzero entry to the matrix. This function may only be called for
@@ -250,28 +250,28 @@ public:
    * Return number of rows of this matrix, which equals the dimension of the
    * image space. It is the sum of rows of the (block-)rows of sub-matrices.
    */
-  size_type
-  n_rows() const;
+  DEAL_II_NODISCARD size_type
+                    n_rows() const;
 
   /**
    * Return number of columns of this matrix, which equals the dimension of
    * the range space. It is the sum of columns of the (block-)columns of sub-
    * matrices.
    */
-  size_type
-  n_cols() const;
+  DEAL_II_NODISCARD size_type
+                    n_cols() const;
 
   /**
    * Check if a value at a certain position may be non-zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   exists(const size_type i, const size_type j) const;
 
   /**
    * Number of entries in a specific row, added up over all the blocks that
    * form this row.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   row_length(const size_type row) const;
 
   /**
@@ -285,8 +285,8 @@ public:
    * In the present context, it is the sum of the values as returned by the
    * sub-objects.
    */
-  size_type
-  n_nonzero_elements() const;
+  DEAL_II_NODISCARD size_type
+                    n_nonzero_elements() const;
 
   /**
    * Print the sparsity of the matrix. The output consists of one line per row
@@ -443,15 +443,15 @@ public:
    * Return whether the structure is compressed or not, i.e. whether all sub-
    * matrices are compressed.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_compressed() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Copy data from an object of type BlockDynamicSparsityPattern, i.e. resize
@@ -583,8 +583,8 @@ public:
    * Access to column number field. Return the column number of the @p index
    * th entry in row @p row.
    */
-  size_type
-  column_number(const size_type row, const unsigned int index) const;
+  DEAL_II_NODISCARD size_type
+                    column_number(const size_type row, const unsigned int index) const;
 
   /**
    * Allow the use of the reinit functions of the base class as well.

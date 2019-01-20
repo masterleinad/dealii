@@ -155,7 +155,7 @@ public:
    *
    * Consider using compute() instead.
    */
-  double
+  DEAL_II_NODISCARD double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -176,8 +176,8 @@ public:
    *
    * Consider using compute() instead.
    */
-  Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<1, dim>
+                    compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th polynomial
@@ -185,8 +185,8 @@ public:
    *
    * Consider using compute() instead.
    */
-  Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<2, dim>
+                    compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the number of polynomials spanning the space represented by this
@@ -194,7 +194,7 @@ public:
    * given, then the result of this function is <i>N</i> in 1d,
    * <i>N(N+1)/2</i> in 2d, and <i>N(N+1)(N+2)/6</i> in 3d.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
   /**
@@ -203,7 +203,7 @@ public:
    * vector. The latter value is never checked and therefore left to the
    * application.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   degree() const;
 
   /**
@@ -225,8 +225,8 @@ protected:
    *
    * In 1d and 2d, obviously only i and i,j are returned.
    */
-  std::array<unsigned int, dim>
-  compute_index(const unsigned int n) const;
+  DEAL_II_NODISCARD std::array<unsigned int, dim>
+                    compute_index(const unsigned int n) const;
 
 private:
   /**
@@ -254,14 +254,14 @@ private:
 /* -------------- declaration of explicit specializations --- */
 
 template <>
-std::array<unsigned int, 1>
-PolynomialSpace<1>::compute_index(const unsigned int n) const;
+DEAL_II_NODISCARD std::array<unsigned int, 1>
+                  PolynomialSpace<1>::compute_index(const unsigned int n) const;
 template <>
-std::array<unsigned int, 2>
-PolynomialSpace<2>::compute_index(const unsigned int n) const;
+DEAL_II_NODISCARD std::array<unsigned int, 2>
+                  PolynomialSpace<2>::compute_index(const unsigned int n) const;
 template <>
-std::array<unsigned int, 3>
-PolynomialSpace<3>::compute_index(const unsigned int n) const;
+DEAL_II_NODISCARD std::array<unsigned int, 3>
+                  PolynomialSpace<3>::compute_index(const unsigned int n) const;
 
 
 
@@ -321,8 +321,8 @@ PolynomialSpace<dim>::output_indices(StreamType &out) const
 
 template <int dim>
 template <int order>
-Tensor<order, dim>
-PolynomialSpace<dim>::compute_derivative(const unsigned int i,
+DEAL_II_NODISCARD Tensor<order, dim>
+                  PolynomialSpace<dim>::compute_derivative(const unsigned int i,
                                          const Point<dim> & p) const
 {
   const std::array<unsigned int, dim> indices = compute_index(i);

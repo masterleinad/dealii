@@ -362,8 +362,8 @@ public:
    * only intended for limited purposes inside the library and it makes
    * debugging much harder.
    */
-  const Accessor &
-  access_any() const;
+  DEAL_II_NODISCARD const Accessor &
+                          access_any() const;
 
   /*@}*/
 
@@ -466,8 +466,8 @@ public:
   /**
    * Return the state of the iterator.
    */
-  IteratorState::IteratorStates
-  state() const;
+  DEAL_II_NODISCARD IteratorState::IteratorStates
+                    state() const;
 
   /**
    * Print the iterator to a stream <code>out</code>. The format is
@@ -482,8 +482,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Mark the class as bidirectional iterator and declare some alias which

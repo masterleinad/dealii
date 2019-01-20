@@ -164,34 +164,34 @@ namespace LinearAlgebra
     /**
      * Return whether the vector contains only elements with value zero.
      */
-    virtual bool
+    DEAL_II_NODISCARD virtual bool
     all_zero() const = 0;
 
     /**
      * Return the mean value of all the entries of this vector.
      */
-    virtual value_type
+    DEAL_II_NODISCARD virtual value_type
     mean_value() const = 0;
 
     /**
      * Return the l<sub>1</sub> norm of the vector (i.e., the sum of the
      * absolute values of all entries among all processors).
      */
-    virtual real_type
+    DEAL_II_NODISCARD virtual real_type
     l1_norm() const = 0;
 
     /**
      * Return the l<sub>2</sub> norm of the vector (i.e., the square root of
      * the sum of the square of all entries among all processors).
      */
-    virtual real_type
+    DEAL_II_NODISCARD virtual real_type
     l2_norm() const = 0;
 
     /**
      * Return the maximum norm of the vector (i.e., the maximum absolute value
      * among all entries and among all processors).
      */
-    virtual real_type
+    DEAL_II_NODISCARD virtual real_type
     linfty_norm() const = 0;
 
     /**
@@ -229,7 +229,7 @@ namespace LinearAlgebra
      * Return the global size of the vector, equal to the sum of the number of
      * locally owned indices among all processors.
      */
-    virtual size_type
+    DEAL_II_NODISCARD virtual size_type
     size() const = 0;
 
     /**
@@ -243,7 +243,7 @@ namespace LinearAlgebra
      *  vec.locally_owned_elements() == complete_index_set(vec.size())
      * @endcode
      */
-    virtual dealii::IndexSet
+    DEAL_II_NODISCARD virtual dealii::IndexSet
     locally_owned_elements() const = 0;
 
     /**
@@ -258,7 +258,7 @@ namespace LinearAlgebra
     /**
      * Return the memory consumption of this class in bytes.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const = 0;
 
     /**

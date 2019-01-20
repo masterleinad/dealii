@@ -163,7 +163,7 @@ public:
    * Compute numerical difference quotients using the preset
    * #DifferenceFormula.
    */
-  virtual Tensor<1, dim>
+  DEAL_II_NODISCARD virtual Tensor<1, dim>
   gradient(const Point<dim> & p,
            const unsigned int component = 0) const override;
 

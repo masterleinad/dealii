@@ -267,7 +267,7 @@ namespace LinearAlgebra
     /**
      * Return whether the vector contains only elements with value zero.
      */
-    virtual bool
+    DEAL_II_NODISCARD virtual bool
     all_zero() const override;
 
     /**
@@ -326,7 +326,7 @@ namespace LinearAlgebra
      * Return the global size of the vector, equal to the sum of the number of
      * locally owned indices among all processors.
      */
-    virtual size_type
+    DEAL_II_NODISCARD virtual size_type
     size() const override;
 
     /**
@@ -340,7 +340,7 @@ namespace LinearAlgebra
      *  vec.locally_owned_elements() == complete_index_set(vec.size())
      * @endcode
      */
-    virtual dealii::IndexSet
+    DEAL_II_NODISCARD virtual dealii::IndexSet
     locally_owned_elements() const override;
 
     /**
@@ -377,7 +377,7 @@ namespace LinearAlgebra
     /**
      * Return the memory consumption of this class in bytes.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const override;
 
     /**

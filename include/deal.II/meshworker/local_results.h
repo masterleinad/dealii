@@ -217,7 +217,7 @@ namespace MeshWorker
      * This number is set to a nonzero value by Assembler::CellsAndFaces
      *
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_values() const;
 
     /**
@@ -226,25 +226,25 @@ namespace MeshWorker
      * This number is set to a nonzero value by Assembler::ResidualSimple and
      * Assembler::ResidualLocalBlocksToGlobalBlocks.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_vectors() const;
 
     /**
      * The number of matrices.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_matrices() const;
 
     /**
      * The number of quadrature points in quadrature_values().
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_quadrature_points() const;
 
     /**
      * The number of values in each quadrature point in quadrature_values().
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_quadrature_values() const;
 
     /**
@@ -379,8 +379,8 @@ namespace MeshWorker
     /**
      * The memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
   private:
     /**

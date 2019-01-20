@@ -146,21 +146,21 @@ public:
   MappingQGeneric(const MappingQGeneric<dim, spacedim> &mapping);
 
   // for documentation, see the Mapping base class
-  virtual std::unique_ptr<Mapping<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Mapping<dim, spacedim>>
   clone() const override;
 
   /**
    * Return the degree of the mapping, i.e. the value which was passed to the
    * constructor.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   get_degree() const;
 
   /**
    * Always returns @p true because the default implementation of functions in
    * this class preserves vertex locations.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   preserves_vertex_locations() const override;
 
   /**
@@ -537,7 +537,7 @@ public:
 
 
   // documentation can be found in Mapping::requires_update_flags()
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   // documentation can be found in Mapping::get_data()

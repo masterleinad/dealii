@@ -54,7 +54,7 @@ public:
   /**
    * Value of basis function @p i at @p p.
    */
-  double
+  DEAL_II_NODISCARD double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -69,14 +69,14 @@ public:
   /**
    * Gradient of basis function @p i at @p p.
    */
-  Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<1, dim>
+                    compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Gradient of gradient of basis function @p i at @p p.
    */
-  Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<2, dim>
+                    compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute values and derivatives of all basis functions at @p unit_point.
@@ -195,8 +195,8 @@ namespace internal
 // template functions
 template <int dim>
 template <int order>
-Tensor<order, dim>
-PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
+DEAL_II_NODISCARD Tensor<order, dim>
+                  PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
                                                    const Point<dim> & p) const
 {
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<

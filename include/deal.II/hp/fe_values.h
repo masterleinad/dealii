@@ -107,8 +107,8 @@ namespace internal
       /**
        * Get the underlying update flags.
        */
-      UpdateFlags
-      get_update_flags() const;
+      DEAL_II_NODISCARD UpdateFlags
+                        get_update_flags() const;
 
       /**
        * Return a reference to the @p FEValues object selected by the last

@@ -64,7 +64,7 @@ namespace parallel
     /**
      * Return MPI communicator used by this triangulation.
      */
-    virtual MPI_Comm
+    DEAL_II_NODISCARD virtual MPI_Comm
     get_communicator() const;
 
     /**
@@ -80,8 +80,8 @@ namespace parallel
      * indexed by locally_owned_subdomain() equals the result of
      * n_locally_owned_active_cells().
      */
-    const std::vector<unsigned int> &
-    n_locally_owned_active_cells_per_processor() const;
+    DEAL_II_NODISCARD const std::vector<unsigned int> &
+                            n_locally_owned_active_cells_per_processor() const;
 
 
     /**
@@ -102,7 +102,7 @@ namespace parallel
      * and
      * @ref GlossGhostCell).
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_locally_owned_active_cells() const;
 
     /**
@@ -110,13 +110,13 @@ namespace parallel
      * by each processor. This equals the overall number of active cells in
      * the triangulation.
      */
-    virtual types::global_dof_index
+    DEAL_II_NODISCARD virtual types::global_dof_index
     n_global_active_cells() const override;
 
     /**
      * Return the local memory consumption in bytes.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const override;
 
 
@@ -127,7 +127,7 @@ namespace parallel
      * the domain that are not very refined, but if other processors store
      * cells in more deeply refined parts of the domain.
      */
-    virtual unsigned int
+    DEAL_II_NODISCARD virtual unsigned int
     n_global_levels() const override;
 
     /**
@@ -136,8 +136,8 @@ namespace parallel
      * subdomain id are either owned by another processor or have children
      * that only exist on other processors.
      */
-    types::subdomain_id
-    locally_owned_subdomain() const override;
+    DEAL_II_NODISCARD types::subdomain_id
+                      locally_owned_subdomain() const override;
 
     /**
      * Return a set of MPI ranks of the processors that have at least one
@@ -147,8 +147,8 @@ namespace parallel
      * @note: If @p i is contained in the list of processor @p j, then @p j
      * will also be contained in the list of processor @p i.
      */
-    const std::set<types::subdomain_id> &
-    ghost_owners() const;
+    DEAL_II_NODISCARD const std::set<types::subdomain_id> &
+                            ghost_owners() const;
 
     /**
      * Return a set of MPI ranks of the processors that have at least one
@@ -159,14 +159,15 @@ namespace parallel
      * @note: If @p i is contained in the list of processor @p j, then @p j
      * will also be contained in the list of processor @p i.
      */
-    const std::set<types::subdomain_id> &
-    level_ghost_owners() const;
+    DEAL_II_NODISCARD const std::set<types::subdomain_id> &
+                            level_ghost_owners() const;
 
     /**
      * Return a map that, for each vertex, lists all the processors whose
      * subdomains are adjacent to that vertex.
      */
-    virtual std::map<unsigned int, std::set<dealii::types::subdomain_id>>
+    DEAL_II_NODISCARD virtual std::map<unsigned int,
+                                       std::set<dealii::types::subdomain_id>>
     compute_vertices_with_ghost_neighbors() const;
 
   protected:

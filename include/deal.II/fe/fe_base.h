@@ -356,39 +356,39 @@ public:
   /**
    * Number of dofs per vertex.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_vertex() const;
 
   /**
    * Number of dofs per line. Not including dofs on lower dimensional objects.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_line() const;
 
   /**
    * Number of dofs per quad. Not including dofs on lower dimensional objects.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_quad() const;
 
   /**
    * Number of dofs per hex. Not including dofs on lower dimensional objects.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_hex() const;
 
   /**
    * Number of dofs per face, accumulating degrees of freedom of all lower
    * dimensional objects.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_face() const;
 
   /**
    * Number of dofs per cell, accumulating degrees of freedom of all lower
    * dimensional objects.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_cell() const;
 
   /**
@@ -400,7 +400,7 @@ public:
    * associated with these objects.
    */
   template <int structdim>
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_dofs_per_object() const;
 
   /**
@@ -408,7 +408,7 @@ public:
    * @ref GlossComponent "the glossary"
    * for more information.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_components() const;
 
   /**
@@ -416,14 +416,14 @@ public:
    * @ref GlossBlock "the glossary"
    * for more information.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_blocks() const;
 
   /**
    * Detailed information on block sizes.
    */
-  const BlockIndices &
-  block_indices() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          block_indices() const;
 
   /**
    * Maximal polynomial degree of a shape function in a single coordinate
@@ -431,7 +431,7 @@ public:
    *
    * This function can be used to determine the optimal quadrature rule.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   tensor_degree() const;
 
   /**

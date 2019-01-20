@@ -296,7 +296,7 @@ public:
    * returns <tt>FE_DGPMonomial<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>p</tt> replaced by appropriate values.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   /**
@@ -353,7 +353,7 @@ public:
    * the degree of the element), as it has no hanging nodes (being a
    * discontinuous element).
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -415,7 +415,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -427,7 +427,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t
+  DEAL_II_NODISCARD virtual std::size_t
   memory_consumption() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>

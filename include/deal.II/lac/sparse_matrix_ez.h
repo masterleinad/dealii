@@ -195,20 +195,20 @@ public:
       /**
        * Row number of the element represented by this object.
        */
-      size_type
-      row() const;
+      DEAL_II_NODISCARD size_type
+                        row() const;
 
       /**
        * Index in row of the element represented by this object.
        */
-      unsigned short
+      DEAL_II_NODISCARD unsigned short
       index() const;
 
       /**
        * Column number of the element represented by this object.
        */
-      size_type
-      column() const;
+      DEAL_II_NODISCARD size_type
+                        column() const;
 
       /**
        * Value of this matrix entry.

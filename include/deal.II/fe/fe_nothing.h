@@ -94,18 +94,18 @@ public:
    */
   FE_Nothing(const unsigned int n_components = 1, const bool dominate = false);
 
-  virtual std::unique_ptr<FiniteElement<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 
   /**
    * Return a string that uniquely identifies a finite element. In this case
    * it is <code>FE_Nothing@<dim@></code>.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   // for documentation, see the FiniteElement base class
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
@@ -115,7 +115,7 @@ public:
    * practice.  All this function really does, therefore, is trigger an
    * exception.
    */
-  virtual double
+  DEAL_II_NODISCARD virtual double
   shape_value(const unsigned int i, const Point<dim> &p) const override;
 
   virtual void
@@ -209,7 +209,7 @@ public:
   hp_quad_dof_identities(
     const FiniteElement<dim, spacedim> &fe_other) const override;
 
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -255,7 +255,7 @@ public:
   /**
    * @return true if the FE dominates any other.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_dominating() const;
 
   /**

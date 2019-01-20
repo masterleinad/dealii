@@ -728,7 +728,7 @@ private:
      * Generate a copy of this object, i.e. of the actual type of this
      * pointer.
      */
-    virtual std::unique_ptr<PredicateBase>
+    DEAL_II_NODISCARD virtual std::unique_ptr<PredicateBase>
     clone() const = 0;
   };
 
@@ -760,7 +760,7 @@ private:
      * Generate a copy of this object, i.e. of the actual type of this
      * pointer.
      */
-    virtual std::unique_ptr<PredicateBase>
+    DEAL_II_NODISCARD virtual std::unique_ptr<PredicateBase>
     clone() const override;
 
   private:

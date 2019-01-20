@@ -87,20 +87,20 @@ namespace DynamicSparsityPatternIterators
     /**
      * Row number of the element represented by this object.
      */
-    size_type
-    row() const;
+    DEAL_II_NODISCARD size_type
+                      row() const;
 
     /**
      * Index within the current row of the element represented by this object.
      */
-    size_type
-    index() const;
+    DEAL_II_NODISCARD size_type
+                      index() const;
 
     /**
      * Column number of the element represented by this object.
      */
-    size_type
-    column() const;
+    DEAL_II_NODISCARD size_type
+                      column() const;
 
     /**
      * Comparison. True, if both iterators point to the same matrix position.
@@ -413,15 +413,15 @@ public:
    * Return whether the object is empty. It is empty if no memory is
    * allocated, which is the same as that both dimensions are zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
    * Return the maximum number of entries per row. Note that this number may
    * change as entries are added.
    */
-  size_type
-  max_entries_per_row() const;
+  DEAL_II_NODISCARD size_type
+                    max_entries_per_row() const;
 
   /**
    * Add a nonzero entry. If the entry already exists, this call does nothing.
@@ -443,7 +443,7 @@ public:
   /**
    * Check if a value at a certain position may be non-zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   exists(const size_type i, const size_type j) const;
 
   /**
@@ -501,37 +501,37 @@ public:
   /**
    * Return the number of rows, which equals the dimension of the image space.
    */
-  size_type
-  n_rows() const;
+  DEAL_II_NODISCARD size_type
+                    n_rows() const;
 
   /**
    * Return the number of columns, which equals the dimension of the range
    * space.
    */
-  size_type
-  n_cols() const;
+  DEAL_II_NODISCARD size_type
+                    n_cols() const;
 
   /**
    * Number of entries in a specific row. This function can only be called if
    * the given row is a member of the index set of rows that we want to store.
    */
-  size_type
-  row_length(const size_type row) const;
+  DEAL_II_NODISCARD size_type
+                    row_length(const size_type row) const;
 
   /**
    * Access to column number field.  Return the column number of the @p
    * indexth entry in @p row.
    */
-  size_type
-  column_number(const size_type row, const size_type index) const;
+  DEAL_II_NODISCARD size_type
+                    column_number(const size_type row, const size_type index) const;
 
   /**
    * Return index of column @p col in row @p row. If the column does not
    * exist in this sparsity pattern, the returned value will be
    * 'numbers::invalid_size_type'.
    */
-  size_type
-  column_index(const size_type row, const size_type col) const;
+  DEAL_II_NODISCARD size_type
+                    column_index(const size_type row, const size_type col) const;
 
   /**
    * @name Iterators
@@ -551,14 +551,14 @@ public:
    * that are not stored. In other words, they will look like empty rows, but
    * no exception will be generated when iterating over such rows.
    */
-  iterator
-  begin() const;
+  DEAL_II_NODISCARD iterator
+                    begin() const;
 
   /**
    * Final iterator.
    */
-  iterator
-  end() const;
+  DEAL_II_NODISCARD iterator
+                    end() const;
 
   /**
    * Iterator starting at the first entry of row <tt>r</tt>.
@@ -576,8 +576,8 @@ public:
    * that are not stored. In other words, they will look like empty rows, but
    * no exception will be generated when iterating over such rows.
    */
-  iterator
-  begin(const size_type r) const;
+  DEAL_II_NODISCARD iterator
+                    begin(const size_type r) const;
 
   /**
    * Final iterator of row <tt>r</tt>. It points to the first element past the
@@ -587,8 +587,8 @@ public:
    * particular the case if it is the end iterator for the last row of a
    * matrix.
    */
-  iterator
-  end(const size_type r) const;
+  DEAL_II_NODISCARD iterator
+                    end(const size_type r) const;
 
   // @}
 
@@ -597,23 +597,23 @@ public:
    * bandwidth is the maximum of $|i-j|$ for which the index pair $(i,j)$
    * represents a nonzero entry of the matrix.
    */
-  size_type
-  bandwidth() const;
+  DEAL_II_NODISCARD size_type
+                    bandwidth() const;
 
   /**
    * Return the number of nonzero elements allocated through this sparsity
    * pattern.
    */
-  size_type
-  n_nonzero_elements() const;
+  DEAL_II_NODISCARD size_type
+                    n_nonzero_elements() const;
 
   /**
    * Return the IndexSet that sets which rows are active on the current
    * processor. It corresponds to the IndexSet given to this class in the
    * constructor or in the reinit function.
    */
-  const IndexSet &
-  row_index_set() const;
+  DEAL_II_NODISCARD const IndexSet &
+                          row_index_set() const;
 
   /**
    * return whether this object stores only those entries that have been added
@@ -632,8 +632,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  size_type
-  memory_consumption() const;
+  DEAL_II_NODISCARD size_type
+                    memory_consumption() const;
 
 private:
   /**
@@ -691,8 +691,8 @@ private:
     /**
      * estimates memory consumption.
      */
-    size_type
-    memory_consumption() const;
+    DEAL_II_NODISCARD size_type
+                      memory_consumption() const;
   };
 
 

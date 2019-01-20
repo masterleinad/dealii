@@ -259,7 +259,7 @@ public:
    * returns <tt>FE_Q_DG0<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   // documentation inherited from the base class
@@ -286,7 +286,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -296,7 +296,7 @@ public:
    * mode is all ones for the usual FE_Q basis and the second one only using
    * the discontinuous part.
    */
-  virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
+  DEAL_II_NODISCARD virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
   get_constant_modes() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>

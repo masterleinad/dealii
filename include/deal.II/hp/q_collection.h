@@ -109,7 +109,7 @@ namespace hp
     /**
      * Return the number of quadrature pointers stored in this object.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     size() const;
 
     /**
@@ -118,15 +118,15 @@ namespace hp
      * the maximum amount of memory that may be used when re-sizing later on
      * to a articular quadrature formula from within this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_n_quadrature_points() const;
 
     /**
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Exception

@@ -498,8 +498,9 @@ namespace TensorAccessors
 
       using return_type = typename ValueType<T>::value_type;
 
-      inline DEAL_II_ALWAYS_INLINE typename ReferenceType<return_type>::type
-      apply(unsigned int j) const
+      DEAL_II_NODISCARD inline DEAL_II_ALWAYS_INLINE
+        typename ReferenceType<return_type>::type
+        apply(unsigned int j) const
       {
         return t_[j];
       }
@@ -535,7 +536,7 @@ namespace TensorAccessors
       using return_type =
         typename ValueType<typename S::return_type>::value_type;
 
-      inline typename ReferenceType<return_type>::type
+      DEAL_II_NODISCARD inline typename ReferenceType<return_type>::type
       apply(unsigned int j) const
       {
         return s_.apply(j)[i_];

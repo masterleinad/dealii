@@ -328,7 +328,7 @@ public:
    * component you want to have evaluated; it defaults to zero, i.e. the first
    * component.
    */
-  virtual double
+  DEAL_II_NODISCARD virtual double
   value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   /**
@@ -345,8 +345,8 @@ public:
    * Return an array of function expressions (one per component), used to
    * initialize this function.
    */
-  const std::vector<std::string> &
-  get_expressions() const;
+  DEAL_II_NODISCARD const std::vector<std::string> &
+                          get_expressions() const;
 
   /**
    * @addtogroup Exceptions

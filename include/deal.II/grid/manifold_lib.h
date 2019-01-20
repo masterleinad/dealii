@@ -76,7 +76,7 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -84,7 +84,7 @@ public:
    * coordinates associated with the point @p space_point. Only used when
    * spacedim = 2.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   pull_back(const Point<spacedim> &space_point) const override;
 
   /**
@@ -92,7 +92,7 @@ public:
    * Euclidean coordinates associated to the polar coordinates @p chart_point.
    * Only used when spacedim = 3.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   push_forward(const Point<spacedim> &chart_point) const override;
 
   /**
@@ -107,7 +107,7 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual DerivativeForm<1, spacedim, spacedim>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, spacedim, spacedim>
   push_forward_gradient(const Point<spacedim> &chart_point) const override;
 
   /**
@@ -231,7 +231,7 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -241,7 +241,7 @@ public:
    * radius so that the resulting one is the convex combination of the
    * starting radii.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim> &p1,
                          const Point<spacedim> &p2,
                          const double           w) const override;
@@ -250,7 +250,7 @@ public:
    * Compute the derivative of the get_intermediate_point() function
    * with parameter w equal to zero.
    */
-  virtual Tensor<1, spacedim>
+  DEAL_II_NODISCARD virtual Tensor<1, spacedim>
   get_tangent_vector(const Point<spacedim> &x1,
                      const Point<spacedim> &x2) const override;
 
@@ -294,7 +294,7 @@ public:
    * Return a point on the spherical manifold which is intermediate
    * with respect to the surrounding points.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &vertices,
                 const ArrayView<const double> &         weights) const override;
 
@@ -310,10 +310,10 @@ private:
    * average of the directions to find an estimated point. It returns a pair
    * of radius and direction from the center point to the candidate point.
    */
-  std::pair<double, Tensor<1, spacedim>>
-  guess_new_point(const ArrayView<const Tensor<1, spacedim>> &directions,
-                  const ArrayView<const double> &             distances,
-                  const ArrayView<const double> &             weights) const;
+  DEAL_II_NODISCARD std::pair<double, Tensor<1, spacedim>>
+                    guess_new_point(const ArrayView<const Tensor<1, spacedim>> &directions,
+                                    const ArrayView<const double> &             distances,
+                                    const ArrayView<const double> &             weights) const;
 
   /**
    * Return a point on the spherical manifold which is intermediate
@@ -330,11 +330,11 @@ private:
    * and in particular the implementation provided at
    * http://math.ucsd.edu/~sbuss/ResearchWeb/spheremean/
    */
-  Point<spacedim>
-  get_new_point(const ArrayView<const Tensor<1, spacedim>> &directions,
-                const ArrayView<const double> &             distances,
-                const ArrayView<const double> &             weights,
-                const Point<spacedim> &candidate_point) const;
+  DEAL_II_NODISCARD Point<spacedim>
+                    get_new_point(const ArrayView<const Tensor<1, spacedim>> &directions,
+                                  const ArrayView<const double> &             distances,
+                                  const ArrayView<const double> &             weights,
+                                  const Point<spacedim> &candidate_point) const;
 
   /**
    * Compute a new set of points that interpolate between the given points @p
@@ -402,7 +402,7 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -411,7 +411,7 @@ public:
    * $\phi$ the angle between the given point and the computed normal
    * direction, and $\lambda$ the axial position.
    */
-  virtual Point<3>
+  DEAL_II_NODISCARD virtual Point<3>
   pull_back(const Point<spacedim> &space_point) const override;
 
   /**
@@ -420,7 +420,7 @@ public:
    * axis, $\phi$ the angle between the given point and the computed normal
    * direction, and $\lambda$ the axial position.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   push_forward(const Point<3> &chart_point) const override;
 
   /**
@@ -429,14 +429,14 @@ public:
    * distance from the axis, $\phi$ the angle between the given point and the
    * computed normal direction, and $\lambda$ the axial position.
    */
-  virtual DerivativeForm<1, 3, spacedim>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, 3, spacedim>
   push_forward_gradient(const Point<3> &chart_point) const override;
 
   /**
    * Compute new points on the CylindricalManifold. See the documentation of
    * the base class for a detailed description of what this function does.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
                 const ArrayView<const double> &         weights) const override;
 
@@ -516,25 +516,25 @@ public:
                      const Tensor<1, spacedim> &major_axis_direction,
                      const double               eccentricity);
 
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
    * @copydoc ChartManifold::pull_back()
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   pull_back(const Point<spacedim> &space_point) const override;
 
   /**
    * @copydoc ChartManifold::push_forward()
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   push_forward(const Point<spacedim> &chart_point) const override;
 
   /**
    * @copydoc ChartManifold::push_forward_gradient()
    */
-  virtual DerivativeForm<1, spacedim, spacedim>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, spacedim, spacedim>
   push_forward_gradient(const Point<spacedim> &chart_point) const override;
 
 
@@ -635,7 +635,7 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -643,7 +643,7 @@ public:
    * push_forward_function to compute the push_forward of points in @p
    * chartdim space dimensions to @p spacedim space dimensions.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   push_forward(const Point<chartdim> &chart_point) const override;
 
   /**
@@ -666,7 +666,7 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual DerivativeForm<1, chartdim, spacedim>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, chartdim, spacedim>
   push_forward_gradient(const Point<chartdim> &chart_point) const override;
 
   /**
@@ -674,7 +674,7 @@ public:
    * pull_back_function to compute the pull_back of points in @p spacedim
    * space dimensions to @p chartdim space dimensions.
    */
-  virtual Point<chartdim>
+  DEAL_II_NODISCARD virtual Point<chartdim>
   pull_back(const Point<spacedim> &space_point) const override;
 
 private:
@@ -772,25 +772,25 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, 3>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, 3>>
   clone() const override;
 
   /**
    * Pull back operation.
    */
-  virtual Point<3>
+  DEAL_II_NODISCARD virtual Point<3>
   pull_back(const Point<3> &p) const override;
 
   /**
    * Push forward operation.
    */
-  virtual Point<3>
+  DEAL_II_NODISCARD virtual Point<3>
   push_forward(const Point<3> &chart_point) const override;
 
   /**
    * Gradient.
    */
-  virtual DerivativeForm<1, 3, 3>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, 3, 3>
   push_forward_gradient(const Point<3> &chart_point) const override;
 
 private:
@@ -954,7 +954,7 @@ public:
   /**
    * Make a clone of this Manifold object.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -987,7 +987,7 @@ public:
    * pushed forward to the real space according to the transfinite
    * interpolation.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
                 const ArrayView<const double> &         weights) const override;
 
@@ -1027,9 +1027,9 @@ private:
    * typically we only get two or three), so get an array with 20 entries of a
    * the indices <tt>cell->index()</tt>.
    */
-  std::array<unsigned int, 20>
-  get_possible_cells_around_points(
-    const ArrayView<const Point<spacedim>> &surrounding_points) const;
+  DEAL_II_NODISCARD std::array<unsigned int, 20>
+                    get_possible_cells_around_points(
+                      const ArrayView<const Point<spacedim>> &surrounding_points) const;
 
   /**
    * Finalizes the identification of the correct chart and populates @p

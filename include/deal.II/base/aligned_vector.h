@@ -198,8 +198,8 @@ public:
   /**
    * Return the last element of the vector (read-only access).
    */
-  const_reference
-  back() const;
+  DEAL_II_NODISCARD const_reference
+                    back() const;
 
   /**
    * Inserts several elements at the end of the vector given by a range of
@@ -241,21 +241,21 @@ public:
   /**
    * Return whether the vector is empty, i.e., its size is zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
    * Return the size of the vector.
    */
-  size_type
-  size() const;
+  DEAL_II_NODISCARD size_type
+                    size() const;
 
   /**
    * Return the capacity of the vector, i.e., the size this vector can hold
    * without reallocation. Note that capacity() >= size().
    */
-  size_type
-  capacity() const;
+  DEAL_II_NODISCARD size_type
+                    capacity() const;
 
   /**
    * Read-write access to entry @p index in the vector.
@@ -276,8 +276,8 @@ public:
   /**
    * Return a const pointer to the underlying data buffer.
    */
-  const_pointer
-  data() const;
+  DEAL_II_NODISCARD const_pointer
+                    data() const;
 
   /**
    * Return a read and write pointer to the beginning of the data array.
@@ -294,22 +294,22 @@ public:
   /**
    * Return a read-only pointer to the beginning of the data array.
    */
-  const_iterator
-  begin() const;
+  DEAL_II_NODISCARD const_iterator
+                    begin() const;
 
   /**
    * Return a read-only pointer to the end of the data array.
    */
-  const_iterator
-  end() const;
+  DEAL_II_NODISCARD const_iterator
+                    end() const;
 
   /**
    * Return the memory consumption of the allocated memory in this class. If
    * the underlying type @p T allocates memory by itself, this memory is not
    * counted.
    */
-  size_type
-  memory_consumption() const;
+  DEAL_II_NODISCARD size_type
+                    memory_consumption() const;
 
   /**
    * Write the data of this object to a stream for the purpose of
@@ -544,11 +544,11 @@ namespace internal
       if (std::is_trivial<T>::value == true &&
           std::is_same<T, long double>::value == false)
         {
-          const unsigned char zero[sizeof(T)] = {};
+          const std::array<unsigned char, sizeof(T)> zero = {};
           // cast element to (void*) to silence compiler warning for virtual
           // classes (they will never arrive here because they are
           // non-trivial).
-          if (std::memcmp(zero,
+          if (std::memcmp(zero.data(),
                           static_cast<const void *>(&element),
                           sizeof(T)) == 0)
             trivial_element = true;

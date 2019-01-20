@@ -72,7 +72,7 @@ namespace internal
          * the policies classes. The updated NumberCache is written to that
          * argument.
          */
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         distribute_dofs() const = 0;
 
         /**
@@ -80,7 +80,7 @@ namespace internal
          * associated with this policy object. Return a vector of number
          * caches for all of the levels.
          */
-        virtual std::vector<NumberCache>
+        DEAL_II_NODISCARD virtual std::vector<NumberCache>
         distribute_mg_dofs() const = 0;
 
         /**
@@ -88,7 +88,7 @@ namespace internal
          *
          * Return an updated NumberCache for the DoFHandler after renumbering.
          */
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_dofs(
           const std::vector<types::global_dof_index> &new_numbers) const = 0;
 
@@ -100,7 +100,7 @@ namespace internal
          * Return an updated NumberCache for the specified level of the
          * DoFHandler after renumbering.
          */
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_mg_dofs(
           const unsigned int                          level,
           const std::vector<types::global_dof_index> &new_numbers) const = 0;
@@ -124,20 +124,20 @@ namespace internal
         Sequential(DoFHandlerType &dof_handler);
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         distribute_dofs() const override;
 
         // documentation is inherited
-        virtual std::vector<NumberCache>
+        DEAL_II_NODISCARD virtual std::vector<NumberCache>
         distribute_mg_dofs() const override;
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
           const override;
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
                          const std::vector<types::global_dof_index>
                            &new_numbers) const override;
@@ -175,13 +175,13 @@ namespace internal
          * number_cache.n_locally_owned_dofs_per_processor[i] and
          * number_cache.locally_owned_dofs are updated consistently.
          */
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         distribute_dofs() const override;
 
         /**
          * This function is not yet implemented.
          */
-        virtual std::vector<NumberCache>
+        DEAL_II_NODISCARD virtual std::vector<NumberCache>
         distribute_mg_dofs() const override;
 
         /**
@@ -193,12 +193,12 @@ namespace internal
          * be utilized with renumbering functions implemented for the
          * parallel::distributed case.
          */
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
           const override;
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
                          const std::vector<types::global_dof_index>
                            &new_numbers) const override;
@@ -229,20 +229,20 @@ namespace internal
         ParallelDistributed(DoFHandlerType &dof_handler);
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         distribute_dofs() const override;
 
         // documentation is inherited
-        virtual std::vector<NumberCache>
+        DEAL_II_NODISCARD virtual std::vector<NumberCache>
         distribute_mg_dofs() const override;
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_dofs(const std::vector<types::global_dof_index> &new_numbers)
           const override;
 
         // documentation is inherited
-        virtual NumberCache
+        DEAL_II_NODISCARD virtual NumberCache
         renumber_mg_dofs(const unsigned int level,
                          const std::vector<types::global_dof_index>
                            &new_numbers) const override;

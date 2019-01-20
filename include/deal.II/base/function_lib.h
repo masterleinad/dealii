@@ -51,7 +51,7 @@ namespace Functions
   class SquareFunction : public Function<dim>
   {
   public:
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
     virtual void
     vector_value(const Point<dim> &p, Vector<double> &values) const override;
@@ -59,7 +59,7 @@ namespace Functions
     value_list(const std::vector<Point<dim>> &points,
                std::vector<double> &          values,
                const unsigned int             component = 0) const override;
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
     virtual void
@@ -69,7 +69,7 @@ namespace Functions
     gradient_list(const std::vector<Point<dim>> &points,
                   std::vector<Tensor<1, dim>> &  gradients,
                   const unsigned int             component = 0) const override;
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
     virtual void
@@ -91,7 +91,7 @@ namespace Functions
   class Q1WedgeFunction : public Function<dim>
   {
   public:
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     virtual void
@@ -103,7 +103,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<dim>> &points,
                       std::vector<Vector<double>> &  values) const override;
 
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -120,7 +120,7 @@ namespace Functions
     /**
      * Laplacian of the function at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -163,7 +163,7 @@ namespace Functions
     /**
      * The value at a single point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -177,7 +177,7 @@ namespace Functions
     /**
      * Gradient at a single point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -192,7 +192,7 @@ namespace Functions
     /**
      * Laplacian at a single point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -228,7 +228,7 @@ namespace Functions
      */
     CosineFunction(const unsigned int n_components = 1);
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     virtual void
@@ -240,7 +240,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<dim>> &points,
                       std::vector<Vector<double>> &  values) const override;
 
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -249,7 +249,7 @@ namespace Functions
                   std::vector<Tensor<1, dim>> &  gradients,
                   const unsigned int             component = 0) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -261,7 +261,7 @@ namespace Functions
     /**
      * Second derivatives at a single point.
      */
-    virtual SymmetricTensor<2, dim>
+    DEAL_II_NODISCARD virtual SymmetricTensor<2, dim>
     hessian(const Point<dim> & p,
             const unsigned int component = 0) const override;
 
@@ -296,7 +296,7 @@ namespace Functions
      */
     CosineGradFunction();
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component) const override;
     virtual void
     vector_value(const Point<dim> &p, Vector<double> &values) const override;
@@ -309,7 +309,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<dim>> &points,
                       std::vector<Vector<double>> &  values) const override;
 
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> &p, const unsigned int component) const override;
 
     virtual void
@@ -322,7 +322,7 @@ namespace Functions
       const std::vector<Point<dim>> &           points,
       std::vector<std::vector<Tensor<1, dim>>> &gradients) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> &p, const unsigned int component) const override;
   };
 
@@ -341,7 +341,7 @@ namespace Functions
     /**
      * The value at a single point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -355,7 +355,7 @@ namespace Functions
     /**
      * Gradient at a single point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -370,7 +370,7 @@ namespace Functions
     /**
      * Laplacian at a single point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -399,7 +399,7 @@ namespace Functions
   class LSingularityFunction : public Function<2>
   {
   public:
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<2> &p, const unsigned int component = 0) const override;
 
     virtual void
@@ -411,7 +411,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<2>> &points,
                       std::vector<Vector<double>> &values) const override;
 
-    virtual Tensor<1, 2>
+    DEAL_II_NODISCARD virtual Tensor<1, 2>
     gradient(const Point<2> &   p,
              const unsigned int component = 0) const override;
 
@@ -425,7 +425,7 @@ namespace Functions
       const std::vector<Point<2>> &,
       std::vector<std::vector<Tensor<1, 2>>> &) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<2> &   p,
               const unsigned int component = 0) const override;
 
@@ -453,7 +453,7 @@ namespace Functions
      * Default constructor setting the dimension to 2.
      */
     LSingularityGradFunction();
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<2> &p, const unsigned int component) const override;
 
     virtual void
@@ -465,7 +465,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<2>> &points,
                       std::vector<Vector<double>> &values) const override;
 
-    virtual Tensor<1, 2>
+    DEAL_II_NODISCARD virtual Tensor<1, 2>
     gradient(const Point<2> &p, const unsigned int component) const override;
 
     virtual void
@@ -478,7 +478,7 @@ namespace Functions
       const std::vector<Point<2>> &,
       std::vector<std::vector<Tensor<1, 2>>> &) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<2> &p, const unsigned int component) const override;
 
     virtual void
@@ -499,7 +499,7 @@ namespace Functions
   class SlitSingularityFunction : public Function<dim>
   {
   public:
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     virtual void
@@ -511,7 +511,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<dim>> &points,
                       std::vector<Vector<double>> &  values) const override;
 
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -525,7 +525,7 @@ namespace Functions
       const std::vector<Point<dim>> &,
       std::vector<std::vector<Tensor<1, dim>>> &) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -545,7 +545,7 @@ namespace Functions
   class SlitHyperSingularityFunction : public Function<2>
   {
   public:
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<2> &p, const unsigned int component = 0) const override;
 
     virtual void
@@ -557,7 +557,7 @@ namespace Functions
     vector_value_list(const std::vector<Point<2>> &points,
                       std::vector<Vector<double>> &values) const override;
 
-    virtual Tensor<1, 2>
+    DEAL_II_NODISCARD virtual Tensor<1, 2>
     gradient(const Point<2> &   p,
              const unsigned int component = 0) const override;
 
@@ -571,7 +571,7 @@ namespace Functions
       const std::vector<Point<2>> &,
       std::vector<std::vector<Tensor<1, 2>>> &) const override;
 
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<2> &   p,
               const unsigned int component = 0) const override;
 
@@ -611,7 +611,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -625,7 +625,7 @@ namespace Functions
     /**
      * Gradient at one point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -640,7 +640,7 @@ namespace Functions
     /**
      * Laplacian of the function at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -658,8 +658,8 @@ namespace Functions
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
   protected:
     /**
@@ -718,21 +718,21 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -773,21 +773,21 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -825,21 +825,21 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -880,21 +880,21 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
      * Return the gradient of the specified component of the function at the
      * given point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
     /**
      * Compute the Laplacian of a given component at point <tt>p</tt>.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     laplacian(const Point<dim> & p,
               const unsigned int component = 0) const override;
 
@@ -997,7 +997,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -1045,7 +1045,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -1094,7 +1094,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -1115,7 +1115,7 @@ namespace Functions
     /**
      * Function gradient at one point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
   };
@@ -1151,7 +1151,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -1174,7 +1174,7 @@ namespace Functions
     /**
      * Function gradient at one point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -1250,7 +1250,7 @@ namespace Functions
      * @return The interpolated value at this point. If the point lies outside
      * the set of coordinates, the function is extended by a constant.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**
@@ -1264,7 +1264,7 @@ namespace Functions
      * point. If the point lies outside the set of coordinates, the function
      * is extended by a constant and so its gradient is extended by 0.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 
@@ -1355,7 +1355,7 @@ namespace Functions
      * @return The interpolated value at this point. If the point lies outside
      * the set of coordinates, the function is extended by a constant.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   private:
@@ -1407,7 +1407,7 @@ namespace Functions
     /**
      * Function value at one point.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
 
@@ -1422,7 +1422,7 @@ namespace Functions
     /**
      * Function gradient at one point.
      */
-    virtual Tensor<1, dim>
+    DEAL_II_NODISCARD virtual Tensor<1, dim>
     gradient(const Point<dim> & p,
              const unsigned int component = 0) const override;
 

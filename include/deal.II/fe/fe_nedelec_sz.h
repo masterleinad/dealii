@@ -79,10 +79,10 @@ public:
    */
   FE_NedelecSZ(const unsigned int degree);
 
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>
@@ -138,16 +138,16 @@ public:
    * for the reference cell. Make sure, that #mapping_type is set by the
    * derived class, such that this function can operate correctly.
    */
-  UpdateFlags
-  update_once(const UpdateFlags flags) const;
+  DEAL_II_NODISCARD UpdateFlags
+                    update_once(const UpdateFlags flags) const;
 
   /**
    * Given <tt>flags</tt>, determines the values which must be computed in
    * each cell cell. Make sure, that #mapping_type is set by the derived
    * class, such that this function can operate correctly.
    */
-  UpdateFlags
-  update_each(const UpdateFlags flags) const;
+  DEAL_II_NODISCARD UpdateFlags
+                    update_each(const UpdateFlags flags) const;
 
 protected:
   /**
@@ -426,7 +426,7 @@ private:
   /**
    * Returns the number of DoFs in the basis set.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   compute_num_dofs(const unsigned int degree) const;
 
   /**

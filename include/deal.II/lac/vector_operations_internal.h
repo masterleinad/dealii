@@ -766,8 +766,8 @@ namespace internal
         return X[i] * Number(numbers::NumberTraits<Number2>::conjugate(Y[i]));
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x, y;
         x.load(X + i);
@@ -806,8 +806,8 @@ namespace internal
         return numbers::NumberTraits<Number>::abs_square(X[i]);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x;
         x.load(X + i);
@@ -833,8 +833,8 @@ namespace internal
         return numbers::NumberTraits<Number>::abs(X[i]);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x;
         x.load(X + i);
@@ -861,8 +861,8 @@ namespace internal
         return std::pow(numbers::NumberTraits<Number>::abs(X[i]), p);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x;
         x.load(X + i);
@@ -889,8 +889,8 @@ namespace internal
         return X[i];
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x;
         x.load(X + i);
@@ -923,8 +923,8 @@ namespace internal
         return X[i] * Number(numbers::NumberTraits<Number>::conjugate(W[i]));
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
+      DEAL_II_NODISCARD VectorizedArray<Number>
+                        do_vectorized(const size_type i) const
       {
         VectorizedArray<Number> x, w, v;
         x.load(X + i);

@@ -69,7 +69,7 @@ public:
    * returns <tt>FE_BDM<dim>(degree)</tt>, with @p dim and @p degree replaced
    * by appropriate values.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>

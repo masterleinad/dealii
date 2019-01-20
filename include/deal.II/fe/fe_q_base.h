@@ -96,7 +96,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -198,7 +198,7 @@ public:
    * freedom on the entire cell. The returned value will be between zero and
    * dofs_per_cell.
    */
-  virtual unsigned int
+  DEAL_II_NODISCARD virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
                      const bool         face_orientation = true,
@@ -225,7 +225,7 @@ public:
    * of the element), as it implements the complete set of functions necessary
    * for hp capability.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   hp_constraints_are_implemented() const override;
 
   /**

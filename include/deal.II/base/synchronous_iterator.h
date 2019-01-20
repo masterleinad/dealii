@@ -113,7 +113,7 @@ inline bool
 operator<(const SynchronousIterators<Iterators> &a,
           const SynchronousIterators<Iterators> &b)
 {
-  return std::get<0>(*a) < std::get<0>(*b);
+  return ::std::get<0>(*a) < ::std::get<0>(*b);
 }
 
 

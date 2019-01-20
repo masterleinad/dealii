@@ -29,6 +29,7 @@
 #   DEAL_II_HAVE_COMPLEX_OPERATOR_OVERLOADS
 #
 #   DEAL_II_FALLTHROUGH
+#   DEAL_II_NODISCARD
 #
 
 
@@ -222,6 +223,16 @@ IF(NOT DEFINED DEAL_II_WITH_CXX17 OR DEAL_II_WITH_CXX17)
   ENDIF()
 ENDIF()
 
+#
+# In case we detected C++17 support we can activate [[nodiscard]]
+# immmediately since we tested for it above and it adds warnings
+# instead of removing them.
+#
+IF(DEAL_II_HAVE_CXX17)
+    SET(DEAL_II_NODISCARD "[[nodiscard]]")
+ELSE()
+    SET(DEAL_II_NODISCARD " ")
+ENDIF()
 
 
 #

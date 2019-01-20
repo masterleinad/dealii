@@ -136,7 +136,7 @@ namespace Polynomials
      * coefficients provided by the constructor. Leading non-zero coefficients
      * are not treated separately.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     degree() const;
 
     /**

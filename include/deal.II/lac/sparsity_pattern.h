@@ -157,16 +157,16 @@ namespace SparsityPatternIterators
      * Row number of the element represented by this object. This function can
      * only be called for entries for which is_valid_entry() is true.
      */
-    size_type
-    row() const;
+    DEAL_II_NODISCARD size_type
+                      row() const;
 
     /**
      * Index within the current row of the element represented by this object.
      * This function can only be called for entries for which is_valid_entry()
      * is true.
      */
-    size_type
-    index() const;
+    DEAL_II_NODISCARD size_type
+                      index() const;
 
     /**
      * This function returns the how-many'th entry within the entire sparsity
@@ -177,15 +177,15 @@ namespace SparsityPatternIterators
      * This function can only be called for entries for which is_valid_entry()
      * is true.
      */
-    size_type
-    global_index() const;
+    DEAL_II_NODISCARD size_type
+                      global_index() const;
 
     /**
      * Column number of the element represented by this object. This function
      * can only be called for entries for which is_valid_entry() is true.
      */
-    size_type
-    column() const;
+    DEAL_II_NODISCARD size_type
+                      column() const;
 
     /**
      * Return whether the sparsity pattern entry pointed to by this iterator
@@ -196,7 +196,7 @@ namespace SparsityPatternIterators
      * pattern's lifetime, you will iterate over elements that are not valid.
      * If this is so, then this function will return false.
      */
-    bool
+    DEAL_II_NODISCARD bool
     is_valid_entry() const;
 
     /**
@@ -708,14 +708,14 @@ public:
    * Note the discussion in the general documentation of this class about the
    * order in which elements are accessed.
    */
-  iterator
-  begin() const;
+  DEAL_II_NODISCARD iterator
+                    begin() const;
 
   /**
    * Final iterator.
    */
-  iterator
-  end() const;
+  DEAL_II_NODISCARD iterator
+                    end() const;
 
   /**
    * Iterator starting at the first entry of row <tt>r</tt>.
@@ -728,8 +728,8 @@ public:
    * Note also the discussion in the general documentation of this class about
    * the order in which elements are accessed.
    */
-  iterator
-  begin(const size_type r) const;
+  DEAL_II_NODISCARD iterator
+                    begin(const size_type r) const;
 
   /**
    * Final iterator of row <tt>r</tt>. It points to the first element past the
@@ -739,8 +739,8 @@ public:
    * particular the case if it is the end iterator for the last row of a
    * matrix.
    */
-  iterator
-  end(const size_type r) const;
+  DEAL_II_NODISCARD iterator
+                    end(const size_type r) const;
 
 
   // @}
@@ -758,7 +758,7 @@ public:
    * Return whether the object is empty. It is empty if no memory is
    * allocated, which is the same as that both dimensions are zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
@@ -766,8 +766,8 @@ public:
    * equals the number given to the constructor, while after compression, it
    * equals the maximum number of entries actually allocated by the user.
    */
-  size_type
-  max_entries_per_row() const;
+  DEAL_II_NODISCARD size_type
+                    max_entries_per_row() const;
 
   /**
    * Compute the bandwidth of the matrix represented by this structure. The
@@ -778,8 +778,8 @@ public:
    * the bandwidth is $q$. The returned quantity is sometimes called "half
    * bandwidth" in the literature.
    */
-  size_type
-  bandwidth() const;
+  DEAL_II_NODISCARD size_type
+                    bandwidth() const;
 
   /**
    * Return the number of nonzero elements of this matrix. Actually, it
@@ -789,33 +789,33 @@ public:
    * This function may only be called if the matrix struct is compressed. It
    * does not make too much sense otherwise anyway.
    */
-  std::size_t
-  n_nonzero_elements() const;
+  DEAL_II_NODISCARD std::size_t
+                    n_nonzero_elements() const;
 
   /**
    * Return whether the structure is compressed or not.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_compressed() const;
 
   /**
    * Return number of rows of this matrix, which equals the dimension of the
    * image space.
    */
-  size_type
-  n_rows() const;
+  DEAL_II_NODISCARD size_type
+                    n_rows() const;
 
   /**
    * Return number of columns of this matrix, which equals the dimension of
    * the range space.
    */
-  size_type
-  n_cols() const;
+  DEAL_II_NODISCARD size_type
+                    n_cols() const;
 
   /**
    * Number of entries in a specific row.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   row_length(const size_type row) const;
 
   /**
@@ -830,15 +830,15 @@ public:
    * in cases where several kinds of sparsity patterns can be passed as
    * template arguments.
    */
-  bool
+  DEAL_II_NODISCARD bool
   stores_only_added_elements() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object. See MemoryConsumption.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   // @}
   /**
@@ -881,13 +881,13 @@ public:
    * If <tt>N</tt> is the number of rows of this matrix, then the complexity
    * of this function is <i>log(N)</i>.
    */
-  std::pair<size_type, size_type>
-  matrix_position(const std::size_t global_index) const;
+  DEAL_II_NODISCARD std::pair<size_type, size_type>
+                    matrix_position(const std::size_t global_index) const;
 
   /**
    * Check if a value at a certain position may be non-zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   exists(const size_type i, const size_type j) const;
 
   /**
@@ -897,8 +897,8 @@ public:
    * with respect to the total field, but only with respect to the row
    * <tt>j</tt>.
    */
-  size_type
-  row_position(const size_type i, const size_type j) const;
+  DEAL_II_NODISCARD size_type
+                    row_position(const size_type i, const size_type j) const;
 
   /**
    * Access to column number field.  Return the column number of the
@@ -910,8 +910,8 @@ public:
    * diagonal element), the entries are sorted by columns, i.e.
    * <tt>column_number(row,i)</tt> <tt><</tt> <tt>column_number(row,i+1)</tt>.
    */
-  size_type
-  column_number(const size_type row, const unsigned int index) const;
+  DEAL_II_NODISCARD size_type
+                    column_number(const size_type row, const unsigned int index) const;
 
 
   // @}

@@ -124,29 +124,29 @@ public:
   /**
    * Number of blocks in index field.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   size() const;
 
   /**
    * Return the total number of indices accumulated over all blocks, that is,
    * the dimension of the vector space of the block vector.
    */
-  size_type
-  total_size() const;
+  DEAL_II_NODISCARD size_type
+                    total_size() const;
 
   /**
    * The size of the @p ith block.
    */
-  size_type
-  block_size(const unsigned int i) const;
+  DEAL_II_NODISCARD size_type
+                    block_size(const unsigned int i) const;
 
   /**
    * String representation of the block sizes. The output is of the form
    * `[nb->b1,b2,b3|s]`, where `nb` is n_blocks(), `s` is total_size() and
    * `b1` etc. are the values returned by block_size() for each of the blocks.
    */
-  std::string
-  to_string() const;
+  DEAL_II_NODISCARD std::string
+                    to_string() const;
 
   //@}
 
@@ -165,20 +165,20 @@ public:
    * i. The first element of the pair is the block, the second the index
    * within it.
    */
-  std::pair<unsigned int, size_type>
-  global_to_local(const size_type i) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, size_type>
+                    global_to_local(const size_type i) const;
 
   /**
    * Return the global index of @p index in block @p block.
    */
-  size_type
-  local_to_global(const unsigned int block, const size_type index) const;
+  DEAL_II_NODISCARD size_type
+                    local_to_global(const unsigned int block, const size_type index) const;
 
   /**
    * The start index of the ith block.
    */
-  size_type
-  block_start(const unsigned int i) const;
+  DEAL_II_NODISCARD size_type
+                    block_start(const unsigned int i) const;
   //@}
 
   /**
@@ -211,8 +211,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 private:
   /**

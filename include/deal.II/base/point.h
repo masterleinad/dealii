@@ -254,7 +254,7 @@ public:
    * Tensor<rank,dim,Number>::norm_square() which returns the square of the
    * Frobenius norm.
    */
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   square() const;
 
   /**
@@ -262,14 +262,14 @@ public:
    * <tt>p</tt>, i.e. the <tt>l_2</tt> norm of the difference between the
    * vectors representing the two points.
    */
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   distance(const Point<dim, Number> &p) const;
 
   /**
    * Return the squared Euclidean distance of <tt>this</tt> point to the point
    * <tt>p</tt>.
    */
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   distance_square(const Point<dim, Number> &p) const;
 
   /**

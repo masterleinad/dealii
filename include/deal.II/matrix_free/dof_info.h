@@ -98,7 +98,7 @@ namespace internal
        * mode, this function always returns index 0. If an index is not found
        * in hp mode, it returns numbers::invalid_unsigned_int.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       fe_index_from_degree(const unsigned int first_selected_component,
                            const unsigned int fe_degree) const;
 
@@ -225,8 +225,8 @@ namespace internal
       /**
        * Return the memory consumption in bytes of this class.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Prints a detailed summary of memory consumption in the different

@@ -199,39 +199,39 @@ public:
   /**
    * Number of quadrature points.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   size() const;
 
   /**
    * Return the <tt>i</tt>th quadrature point.
    */
-  const Point<dim> &
-  point(const unsigned int i) const;
+  DEAL_II_NODISCARD const Point<dim> &
+                          point(const unsigned int i) const;
 
   /**
    * Return a reference to the whole array of quadrature points.
    */
-  const std::vector<Point<dim>> &
-  get_points() const;
+  DEAL_II_NODISCARD const std::vector<Point<dim>> &
+                          get_points() const;
 
   /**
    * Return the weight of the <tt>i</tt>th quadrature point.
    */
-  double
+  DEAL_II_NODISCARD double
   weight(const unsigned int i) const;
 
   /**
    * Return a reference to the whole array of weights.
    */
-  const std::vector<double> &
-  get_weights() const;
+  DEAL_II_NODISCARD const std::vector<double> &
+                          get_weights() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Write or read the data of this object to or from a stream for the purpose
@@ -246,7 +246,7 @@ public:
    * of one-dimensional formulas and the quadrature points are sorted
    * lexicographically.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_tensor_product() const;
 
   /**

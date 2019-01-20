@@ -424,8 +424,8 @@ namespace internal
        * Compute and return an estimate for the memory consumption (in bytes)
        * of this object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Store an array of weights times the Jacobi determinant at the
@@ -531,8 +531,8 @@ namespace internal
        * Compute and return an estimate for the memory consumption (in bytes)
        * of this object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Storage type for shape values. Each row in the matrix denotes the

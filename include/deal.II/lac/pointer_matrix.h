@@ -169,7 +169,7 @@ public:
   /**
    * Return whether the object is empty.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
@@ -397,7 +397,7 @@ public:
   /**
    * Return whether the object is empty.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**

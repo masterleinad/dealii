@@ -194,7 +194,7 @@ namespace Functions
      * component you want to have evaluated; it defaults to zero, i.e. the
      * first component.
      */
-    virtual double
+    DEAL_II_NODISCARD virtual double
     value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     /**

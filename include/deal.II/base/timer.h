@@ -148,9 +148,8 @@ public:
    * @deprecated Use Timer::get_last_lap_wall_time_data() instead, which
    * returns a reference to the same structure.
    */
-  DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
-  get_data() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED const Utilities::MPI::MinMaxAvg &
+                                             get_data() const;
 
   /**
    * Return a reference to the data structure containing basic statistics on
@@ -158,8 +157,8 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
-  get_last_lap_wall_time_data() const;
+  DEAL_II_NODISCARD const Utilities::MPI::MinMaxAvg &
+                          get_last_lap_wall_time_data() const;
 
   /**
    * Return a reference to the data structure containing basic statistics on
@@ -170,9 +169,8 @@ public:
    * @deprecated Use Timer::get_accumulated_wall_time_data() instead, which
    * returns a reference the same structure.
    */
-  DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
-  get_total_data() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED const Utilities::MPI::MinMaxAvg &
+                                             get_total_data() const;
 
   /**
    * Return a reference to the data structure containing basic statistics on
@@ -180,8 +178,8 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
-  get_accumulated_wall_time_data() const;
+  DEAL_II_NODISCARD const Utilities::MPI::MinMaxAvg &
+                          get_accumulated_wall_time_data() const;
 
   /**
    * Prints the data returned by get_data(), i.e. for the last lap,
@@ -267,14 +265,14 @@ public:
    * Return the current accumulated wall time (including the current lap, if
    * the timer is running) in seconds without stopping the timer.
    */
-  double
+  DEAL_II_NODISCARD double
   wall_time() const;
 
   /**
    * Return the wall time of the last lap in seconds. The timer is not stopped
    * by this function.
    */
-  double
+  DEAL_II_NODISCARD double
   last_wall_time() const;
 
   /**
@@ -285,14 +283,14 @@ public:
    * value is the sum of all accumulated CPU times over all processors in the
    * communicator.
    */
-  double
+  DEAL_II_NODISCARD double
   cpu_time() const;
 
   /**
    * Return the CPU time of the last lap in seconds. The timer is not stopped
    * by this function.
    */
-  double
+  DEAL_II_NODISCARD double
   last_cpu_time() const;
 
   /**
@@ -300,9 +298,8 @@ public:
    *
    * @deprecated Use last_wall_time() instead.
    */
-  DEAL_II_DEPRECATED
-  double
-  get_lap_time() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED double
+                    get_lap_time() const;
 
 private:
   /**
@@ -813,8 +810,8 @@ public:
   /**
    * Get a map with the collected data of the specified type for each subsection
    */
-  std::map<std::string, double>
-  get_summary_data(const OutputData kind) const;
+  DEAL_II_NODISCARD std::map<std::string, double>
+                    get_summary_data(const OutputData kind) const;
 
   /**
    * Print a formatted table that summarizes the time consumed in the various

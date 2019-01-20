@@ -361,7 +361,7 @@ public:
    *
    * Every derived class should implement this operation in a sensible manner.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const = 0;
 
   /**
@@ -386,7 +386,7 @@ public:
    * and `p2`. User classes can get away by simply implementing the
    * project_to_manifold() method.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim> &p1,
                          const Point<spacedim> &p2,
                          const double           w) const;
@@ -407,7 +407,7 @@ public:
    * arguments. For simple situations you may get away by implementing
    * only the project_to_manifold() function.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
                 const ArrayView<const double> &         weights) const;
 
@@ -448,7 +448,7 @@ public:
    * If your manifold is simple, you could implement this function only, and
    * the default behavior should work out of the box.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   project_to_manifold(
     const ArrayView<const Point<spacedim>> &surrounding_points,
     const Point<spacedim> &                 candidate) const;
@@ -578,7 +578,7 @@ public:
    * @param x2 The second point that describes the geodesic.
    * @return A "direction" vector tangential to the geodesic.
    */
-  virtual Tensor<1, spacedim>
+  DEAL_II_NODISCARD virtual Tensor<1, spacedim>
   get_tangent_vector(const Point<spacedim> &x1,
                      const Point<spacedim> &x2) const;
 
@@ -710,7 +710,7 @@ public:
   /**
    * Return a copy of this manifold.
    */
-  virtual std::unique_ptr<Manifold<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Manifold<dim, spacedim>>
   clone() const override;
 
   /**
@@ -734,7 +734,7 @@ public:
    * the manifold mid point, i.e., as long as the coarse mesh size is small
    * enough.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
                 const ArrayView<const double> &         weights) const override;
 
@@ -761,7 +761,7 @@ public:
    * get_new_point() function which are often very similar (if not identical) to
    * the one implemented in this class.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   project_to_manifold(const ArrayView<const Point<spacedim>> &points,
                       const Point<spacedim> &candidate) const override;
 
@@ -786,7 +786,7 @@ public:
    *   the domain as set in the constructor, to use the "shortest" connection
    *   between the points through the periodic boundary as necessary.
    */
-  virtual Tensor<1, spacedim>
+  DEAL_II_NODISCARD virtual Tensor<1, spacedim>
   get_tangent_vector(const Point<spacedim> &x1,
                      const Point<spacedim> &x2) const override;
 
@@ -819,8 +819,8 @@ public:
   /**
    * Return the periodicity of this Manifold.
    */
-  const Tensor<1, spacedim> &
-  get_periodicity() const;
+  DEAL_II_NODISCARD const Tensor<1, spacedim> &
+                          get_periodicity() const;
 
 private:
   /**
@@ -977,7 +977,7 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class for more information.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_intermediate_point(const Point<spacedim> &p1,
                          const Point<spacedim> &p2,
                          const double           w) const override;
@@ -986,7 +986,7 @@ public:
    * Refer to the general documentation of this class and the documentation of
    * the base class for more information.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   get_new_point(const ArrayView<const Point<spacedim>> &surrounding_points,
                 const ArrayView<const double> &         weights) const override;
 
@@ -1021,7 +1021,7 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual Point<chartdim>
+  DEAL_II_NODISCARD virtual Point<chartdim>
   pull_back(const Point<spacedim> &space_point) const = 0;
 
   /**
@@ -1030,7 +1030,7 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual Point<spacedim>
+  DEAL_II_NODISCARD virtual Point<spacedim>
   push_forward(const Point<chartdim> &chart_point) const = 0;
 
   /**
@@ -1049,7 +1049,7 @@ public:
    *
    * Refer to the general documentation of this class for more information.
    */
-  virtual DerivativeForm<1, chartdim, spacedim>
+  DEAL_II_NODISCARD virtual DerivativeForm<1, chartdim, spacedim>
   push_forward_gradient(const Point<chartdim> &chart_point) const;
 
   /**
@@ -1107,15 +1107,15 @@ public:
    * @param x2 The second point that describes the geodesic.
    * @return A "direction" vector tangential to the geodesic.
    */
-  virtual Tensor<1, spacedim>
+  DEAL_II_NODISCARD virtual Tensor<1, spacedim>
   get_tangent_vector(const Point<spacedim> &x1,
                      const Point<spacedim> &x2) const override;
 
   /**
    * Return the periodicity associated with the submanifold.
    */
-  const Tensor<1, chartdim> &
-  get_periodicity() const;
+  DEAL_II_NODISCARD const Tensor<1, chartdim> &
+                          get_periodicity() const;
 
 private:
   /**

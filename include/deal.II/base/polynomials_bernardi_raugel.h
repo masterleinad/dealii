@@ -96,7 +96,7 @@ public:
   /**
    * Return the number of Bernardi-Raugel polynomials.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
 
@@ -105,14 +105,14 @@ public:
    * Since the bubble functions are quadratic in at least one variable,
    * the degree of the Bernardi-Raugel polynomials is two.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   degree() const;
 
   /**
    * Return the name of the space, which is <tt>BernardiRaugel</tt>.
    */
-  std::string
-  name() const;
+  DEAL_II_NODISCARD std::string
+                    name() const;
 
   /**
    * Compute the value and derivatives of each Bernardi-

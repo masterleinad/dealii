@@ -82,20 +82,20 @@ namespace ChunkSparsityPatternIterators
      * Row number of the element represented by this object. This function can
      * only be called for entries for which is_valid_entry() is true.
      */
-    size_type
+    DEAL_II_NODISCARD size_type
     row() const;
 
     /**
      * Return the global index from the reduced sparsity pattern.
      */
-    std::size_t
-    reduced_index() const;
+    DEAL_II_NODISCARD std::size_t
+                      reduced_index() const;
 
     /**
      * Column number of the element represented by this object. This function
      * can only be called for entries for which is_valid_entry() is true.
      */
-    size_type
+    DEAL_II_NODISCARD size_type
     column() const;
 
     /**
@@ -107,7 +107,7 @@ namespace ChunkSparsityPatternIterators
      * pattern's lifetime, you will iterate over elements that are not valid.
      * If this is so, then this function will return false.
      */
-    bool
+    DEAL_II_NODISCARD bool
     is_valid_entry() const;
 
 

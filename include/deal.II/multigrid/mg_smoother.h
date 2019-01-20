@@ -263,8 +263,8 @@ namespace mg
     /**
      * Memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
   };
 } // namespace mg
 
@@ -408,8 +408,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 
 private:
@@ -568,8 +568,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 
 private:

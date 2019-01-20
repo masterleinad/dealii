@@ -63,7 +63,7 @@ public:
   MappingQ1();
 
   // for documentation, see the Mapping base class
-  virtual std::unique_ptr<Mapping<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Mapping<dim, spacedim>>
   clone() const override;
 };
 

@@ -193,7 +193,7 @@ namespace hp
     /**
      * Return the number of finite element objects stored in this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     size() const;
 
     /**
@@ -205,7 +205,7 @@ namespace hp
      * @ref GlossComponent "the glossary"
      * for more information.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_components() const;
 
     /**
@@ -224,56 +224,56 @@ namespace hp
      * they are the same, this function returns the result of
      * FiniteElement::n_blocks().
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_blocks() const;
 
     /**
      * Return the maximal number of degrees of freedom per vertex over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_vertex() const;
 
     /**
      * Return the maximal number of degrees of freedom per line over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_line() const;
 
     /**
      * Return the maximal number of degrees of freedom per quad over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_quad() const;
 
     /**
      * Return the maximal number of degrees of freedom per hex over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_hex() const;
 
     /**
      * Return the maximal number of degrees of freedom per face over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_face() const;
 
     /**
      * Return the maximal number of degrees of freedom per cell over all
      * elements of this collection.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_dofs_per_cell() const;
 
     /**
      * Return an estimate for the memory allocated for this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
 
     /**
@@ -293,7 +293,7 @@ namespace hp
      * But the get_face_interpolation_matrix might still fail to find an
      * interpolation matrix between these two elements.
      */
-    bool
+    DEAL_II_NODISCARD bool
     hp_constraints_are_implemented() const;
 
     /**
@@ -341,8 +341,8 @@ namespace hp
      * hp::FECollection::find_least_face_dominating_fe_in_collection(fes, 1)
      * instead.
      */
-    DEAL_II_DEPRECATED unsigned int
-    find_least_face_dominating_fe(const std::set<unsigned int> &fes) const;
+    DEAL_II_NODISCARD DEAL_II_DEPRECATED unsigned int
+                      find_least_face_dominating_fe(const std::set<unsigned int> &fes) const;
 
     /**
      * Try to find a least dominant finite element inside this FECollection
@@ -388,7 +388,7 @@ namespace hp
      * The @p codim parameter describes the codimension of of the investigated
      * subspace and specifies that it is subject to this comparison.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     find_least_dominating_fe_in_collection(const std::set<unsigned int> &fes,
                                            const unsigned int codim = 0) const;
 
@@ -420,7 +420,7 @@ namespace hp
      * The @p codim parameter describes the codimension of of the investigated
      * subspace and specifies that it is subject to this comparison.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     find_dominating_fe_in_subset(const std::set<unsigned int> &fes,
                                  const unsigned int            codim = 0) const;
 
@@ -494,8 +494,8 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * one that corresponds to the argument.
      */
-    ComponentMask
-    component_mask(const FEValuesExtractors::Scalar &scalar) const;
+    DEAL_II_NODISCARD ComponentMask
+                      component_mask(const FEValuesExtractors::Scalar &scalar) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -513,8 +513,8 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * ones that corresponds to the argument.
      */
-    ComponentMask
-    component_mask(const FEValuesExtractors::Vector &vector) const;
+    DEAL_II_NODISCARD ComponentMask
+                      component_mask(const FEValuesExtractors::Vector &vector) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -533,9 +533,9 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * ones that corresponds to the argument.
      */
-    ComponentMask
-    component_mask(
-      const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+    DEAL_II_NODISCARD ComponentMask
+                      component_mask(
+                        const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
 
     /**
      * Given a block mask (see
@@ -557,8 +557,8 @@ namespace hp
      * @return A mask that selects those components corresponding to the
      * selected blocks of the input argument.
      */
-    ComponentMask
-    component_mask(const BlockMask &block_mask) const;
+    DEAL_II_NODISCARD ComponentMask
+                      component_mask(const BlockMask &block_mask) const;
 
     /**
      * Return a block mask with as many elements as this object has blocks and
@@ -586,8 +586,8 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * one that corresponds to the argument.
      */
-    BlockMask
-    block_mask(const FEValuesExtractors::Scalar &scalar) const;
+    DEAL_II_NODISCARD BlockMask
+                      block_mask(const FEValuesExtractors::Scalar &scalar) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -611,8 +611,8 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * ones that corresponds to the argument.
      */
-    BlockMask
-    block_mask(const FEValuesExtractors::Vector &vector) const;
+    DEAL_II_NODISCARD BlockMask
+                      block_mask(const FEValuesExtractors::Vector &vector) const;
 
     /**
      * Return a component mask with as many elements as this object has vector
@@ -637,8 +637,8 @@ namespace hp
      * @return A component mask that is false in all components except for the
      * ones that corresponds to the argument.
      */
-    BlockMask
-    block_mask(const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+    DEAL_II_NODISCARD BlockMask
+                      block_mask(const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
 
     /**
      * Given a component mask (see
@@ -668,8 +668,8 @@ namespace hp
      * @return A mask that selects those blocks corresponding to the selected
      * blocks of the input argument.
      */
-    BlockMask
-    block_mask(const ComponentMask &component_mask) const;
+    DEAL_II_NODISCARD BlockMask
+                      block_mask(const ComponentMask &component_mask) const;
 
 
     /**

@@ -297,20 +297,20 @@ namespace internal
        * Return the length of one row, i.e. the number of elements
        * corresponding to the last index of the table object.
        */
-      size_type
-      size() const;
+      DEAL_II_NODISCARD size_type
+                        size() const;
 
       /**
        * Return an iterator to the first element of this row.
        */
-      iterator
-      begin() const;
+      DEAL_II_NODISCARD iterator
+                        begin() const;
 
       /**
        * Return an iterator to the element past the end of this row.
        */
-      iterator
-      end() const;
+      DEAL_II_NODISCARD iterator
+                        end() const;
 
     private:
       /**
@@ -538,7 +538,7 @@ public:
    * Return whether the object is empty, i.e. one of the directions is zero.
    * This is equivalent to <tt>n_elements()==0</tt>.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
@@ -622,8 +622,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Write or read the data of this object to or from a stream for the purpose
@@ -915,20 +915,20 @@ namespace MatrixTableIterators
      * Get a constant reference to the value of the element represented by
      * this accessor.
      */
-    const value_type &
-    value() const;
+    DEAL_II_NODISCARD const value_type &
+                            value() const;
 
     /**
      * Return the row of the current entry.
      */
-    size_type
-    row() const;
+    DEAL_II_NODISCARD size_type
+                      row() const;
 
     /**
      * Return the column of the current entry.
      */
-    size_type
-    column() const;
+    DEAL_II_NODISCARD size_type
+                      column() const;
 
   protected:
     /**
@@ -1040,8 +1040,8 @@ namespace MatrixTableIterators
      * Get a reference to the value of the element represented by
      * this accessor.
      */
-    value_type &
-    value() const;
+    DEAL_II_NODISCARD value_type &
+                      value() const;
   };
 
   /**

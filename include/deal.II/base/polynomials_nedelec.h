@@ -84,21 +84,21 @@ public:
   /**
    * Return the number of Nédélec polynomials.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
   /**
    * Return the degree of the Nédélec space, which is one less than the
    * highest polynomial degree.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   degree() const;
 
   /**
    * Return the name of the space, which is <tt>Nedelec</tt>.
    */
-  std::string
-  name() const;
+  DEAL_II_NODISCARD std::string
+                    name() const;
 
   /**
    * Return the number of polynomials in the space <tt>N(degree)</tt> without

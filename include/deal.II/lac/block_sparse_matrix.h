@@ -165,7 +165,7 @@ public:
    * Return whether the object is empty. It is empty if either both dimensions
    * are zero or no BlockSparsityPattern is associated.
    */
-  bool
+  DEAL_II_NODISCARD bool
   empty() const;
 
   /**
@@ -198,15 +198,15 @@ public:
    * that it may change if you call any nonconstant function of objects which
    * operate on it.
    */
-  const BlockSparsityPattern &
-  get_sparsity_pattern() const;
+  DEAL_II_NODISCARD const BlockSparsityPattern &
+                          get_sparsity_pattern() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
   //@}
 
   /**

@@ -559,7 +559,7 @@ namespace hp
      * module on
      * @ref Sparsity.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_couplings_between_dofs() const;
 
     /**
@@ -574,7 +574,7 @@ namespace hp
      * dynamic sparsity pattern classes instead (see
      * @ref Sparsity).
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     max_couplings_between_boundary_dofs() const;
 
     /**
@@ -755,22 +755,22 @@ namespace hp
      * also, of course, equals the number of shape functions that span this
      * space.
      */
-    types::global_dof_index
-    n_dofs() const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      n_dofs() const;
 
     /**
      * The number of multilevel dofs on given level. Since hp::DoFHandler does
      * not support multilevel methods yet, this function throws an exception
      * ExcNotImplemented() independent of its argument.
      */
-    types::global_dof_index
-    n_dofs(const unsigned int level) const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      n_dofs(const unsigned int level) const;
 
     /**
      * Return the number of degrees of freedom located on the boundary.
      */
-    types::global_dof_index
-    n_boundary_dofs() const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      n_boundary_dofs() const;
 
     /**
      * Return the number of degrees of freedom located on those parts of the
@@ -792,8 +792,8 @@ namespace hp
      * Return the number of degrees of freedom located on those parts of the
      * boundary which have a boundary indicator listed in the given set. The
      */
-    types::global_dof_index
-    n_boundary_dofs(const std::set<types::boundary_id> &boundary_ids) const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      n_boundary_dofs(const std::set<types::boundary_id> &boundary_ids) const;
 
     /**
      * Return the number of degrees of freedom that belong to this process.
@@ -812,16 +812,16 @@ namespace hp
      * cells owned by other processors may be theirs, and degrees of freedom on
      * ghost cells are also not necessarily included.
      */
-    types::global_dof_index
-    n_locally_owned_dofs() const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      n_locally_owned_dofs() const;
 
     /**
      * Return an IndexSet describing the set of locally owned DoFs as a subset
      * of 0..n_dofs(). The number of elements of this set equals
      * n_locally_owned_dofs().
      */
-    const IndexSet &
-    locally_owned_dofs() const;
+    DEAL_II_NODISCARD const IndexSet &
+                            locally_owned_dofs() const;
 
     /**
      * Return a vector that stores the locally owned DoFs of each processor.
@@ -836,8 +836,8 @@ namespace hp
      * processes but the Triangulation on which this DoFHandler builds
      * works only on one MPI process.)
      */
-    const std::vector<IndexSet> &
-    locally_owned_dofs_per_processor() const;
+    DEAL_II_NODISCARD const std::vector<IndexSet> &
+                            locally_owned_dofs_per_processor() const;
 
     /**
      * Return a vector that stores the number of degrees of freedom each
@@ -854,8 +854,8 @@ namespace hp
      * process, or that there are multiple MPI processes but the Triangulation
      * on which this DoFHandler builds works only on one MPI process.)
      */
-    const std::vector<types::global_dof_index> &
-    n_locally_owned_dofs_per_processor() const;
+    DEAL_II_NODISCARD const std::vector<types::global_dof_index> &
+                            n_locally_owned_dofs_per_processor() const;
 
     /**
      * Return an IndexSet describing the set of locally owned DoFs used for
@@ -863,8 +863,8 @@ namespace hp
      * multilevel methods yet, this function throws an exception
      * ExcNotImplemented() independent of its argument.
      */
-    const IndexSet &
-    locally_owned_mg_dofs(const unsigned int level) const;
+    DEAL_II_NODISCARD const IndexSet &
+                            locally_owned_mg_dofs(const unsigned int level) const;
 
     /**
      * Return a vector that stores the locally owned level DoFs of each
@@ -872,8 +872,8 @@ namespace hp
      * support multilevel methods yet, this function throws an exception
      * ExcNotImplemented() independent of its argument.
      */
-    const std::vector<IndexSet> &
-    locally_owned_mg_dofs_per_processor(const unsigned int level) const;
+    DEAL_II_NODISCARD const std::vector<IndexSet> &
+                            locally_owned_mg_dofs_per_processor(const unsigned int level) const;
 
     /**
      * Return a constant reference to the set of finite element objects that
@@ -914,7 +914,7 @@ namespace hp
      * accessed through a pointers to this base class, although the actual
      * object might be a derived class.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const;
 
     /**
@@ -1063,11 +1063,11 @@ namespace hp
     clear_space();
 
     template <int structdim>
-    types::global_dof_index
-    get_dof_index(const unsigned int obj_level,
-                  const unsigned int obj_index,
-                  const unsigned int fe_index,
-                  const unsigned int local_index) const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      get_dof_index(const unsigned int obj_level,
+                                    const unsigned int obj_index,
+                                    const unsigned int fe_index,
+                                    const unsigned int local_index) const;
 
     template <int structdim>
     void

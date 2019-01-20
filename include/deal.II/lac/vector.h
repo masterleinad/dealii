@@ -464,8 +464,8 @@ public:
    * with the same order of summation in every run, which gives fully
    * repeatable results from one run to another.
    */
-  real_type
-  norm_sqr() const;
+  DEAL_II_NODISCARD real_type
+                    norm_sqr() const;
 
   /**
    * Mean value of the elements of this vector.
@@ -484,8 +484,8 @@ public:
    * with the same order of summation in every run, which gives fully
    * repeatable results from one run to another.
    */
-  real_type
-  l1_norm() const;
+  DEAL_II_NODISCARD real_type
+                    l1_norm() const;
 
   /**
    * $l_2$-norm of the vector. The square root of the sum of the squares of
@@ -495,8 +495,8 @@ public:
    * with the same order of summation in every run, which gives fully
    * repeatable results from one run to another.
    */
-  real_type
-  l2_norm() const;
+  DEAL_II_NODISCARD real_type
+                    l2_norm() const;
 
   /**
    * $l_p$-norm of the vector. The pth root of the sum of the pth powers of
@@ -506,14 +506,14 @@ public:
    * with the same order of summation in every run, which gives fully
    * repeatable results from one run to another.
    */
-  real_type
-  lp_norm(const real_type p) const;
+  DEAL_II_NODISCARD real_type
+                    lp_norm(const real_type p) const;
 
   /**
    * Maximum absolute value of the elements.
    */
-  real_type
-  linfty_norm() const;
+  DEAL_II_NODISCARD real_type
+                    linfty_norm() const;
 
   /**
    * Performs a combined operation of a vector addition and a subsequent inner
@@ -932,7 +932,7 @@ public:
    * processor.  Since this is not a distributed vector the method always
    * returns true.
    */
-  bool
+  DEAL_II_NODISCARD bool
   in_local_range(const size_type global_index) const;
 
   /**
@@ -950,21 +950,21 @@ public:
    * Since the current data type does not support parallel data storage across
    * different processors, the returned index set is the complete index set.
    */
-  IndexSet
-  locally_owned_elements() const;
+  DEAL_II_NODISCARD IndexSet
+                    locally_owned_elements() const;
 
   /**
    * Return dimension of the vector.
    */
-  size_type
-  size() const;
+  DEAL_II_NODISCARD size_type
+                    size() const;
 
   /**
    * Return whether the vector contains only elements with value zero. This
    * function is mainly for internal consistency checks and should seldom be
    * used when not in debug mode since it uses quite some time.
    */
-  bool
+  DEAL_II_NODISCARD bool
   all_zero() const;
 
   /**
@@ -976,15 +976,15 @@ public:
    * class is a real type. If it is a complex type, then an exception is
    * thrown.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_non_negative() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
   //@}
 
 private:

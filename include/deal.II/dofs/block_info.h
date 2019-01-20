@@ -126,20 +126,20 @@ public:
   /**
    * Access the BlockIndices structure of the global system.
    */
-  const BlockIndices &
-  global() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          global() const;
 
   /**
    * Access BlockIndices for the local system on a cell.
    */
-  const BlockIndices &
-  local() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          local() const;
 
   /**
    * Access the BlockIndices structure of a level in the multilevel hierarchy.
    */
-  const BlockIndices &
-  level(unsigned int level) const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          level(unsigned int level) const;
 
   /**
    * Return the index after local renumbering.
@@ -150,19 +150,19 @@ public:
    * forth. The function then outputs the index in the standard local
    * numbering of DoFAccessor.
    */
-  types::global_dof_index
-  renumber(const unsigned int i) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    renumber(const unsigned int i) const;
 
   /**
    * The number of base elements.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_base_elements() const;
 
   /**
    * Return the base element of this index.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   base_element(const unsigned int i) const;
 
   /**
@@ -176,8 +176,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Read or write the data of this object to or from a stream for the purpose

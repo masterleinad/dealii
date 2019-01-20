@@ -1002,9 +1002,9 @@ namespace
   private:
     const double tolerance;
 
-    std::vector<double>
-    get_global_node_numbers(const int face_cell_no,
-                            const int face_cell_face_no) const;
+    DEAL_II_NODISCARD std::vector<double>
+                      get_global_node_numbers(const int face_cell_no,
+                                              const int face_cell_face_no) const;
 
     // NL: Stored as [ global node-id (int), x-coord, y-coord, z-coord ]
     std::vector<std::vector<double>> node_list;

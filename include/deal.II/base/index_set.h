@@ -506,33 +506,33 @@ public:
     /**
      * Number of elements in this interval.
      */
-    size_type
-    n_elements() const;
+    DEAL_II_NODISCARD size_type
+                      n_elements() const;
 
     /**
      * If true, we are pointing at a valid interval in the IndexSet.
      */
-    bool
+    DEAL_II_NODISCARD bool
     is_valid() const;
 
     /**
      * Return an iterator pointing at the first index in this interval.
      */
-    ElementIterator
-    begin() const;
+    DEAL_II_NODISCARD ElementIterator
+                      begin() const;
 
     /**
      * Return an iterator pointing directly after the last index in this
      * interval.
      */
-    ElementIterator
-    end() const;
+    DEAL_II_NODISCARD ElementIterator
+                      end() const;
 
     /**
      * Return the index of the last index in this interval.
      */
-    size_type
-    last() const;
+    DEAL_II_NODISCARD size_type
+                      last() const;
 
   private:
     /**
@@ -705,7 +705,7 @@ public:
     /**
      * Does this iterator point to an existing element?
      */
-    bool
+    DEAL_II_NODISCARD bool
     is_valid() const;
 
     /**
@@ -1130,8 +1130,7 @@ inline IndexSet::IntervalIterator::IntervalIterator(
 
 
 inline IndexSet::IntervalIterator::IntervalIterator()
-  : accessor(nullptr)
-{}
+  : accessor(nullptr){};
 
 
 

@@ -96,14 +96,14 @@ public:
   /**
    * Give read access to the renumber vector.
    */
-  const std::vector<unsigned int> &
-  get_numbering() const;
+  DEAL_II_NODISCARD const std::vector<unsigned int> &
+                          get_numbering() const;
 
   /**
    * Give read access to the inverse renumber vector.
    */
-  const std::vector<unsigned int> &
-  get_numbering_inverse() const;
+  DEAL_II_NODISCARD const std::vector<unsigned int> &
+                          get_numbering_inverse() const;
 
   /**
    * Compute the value and the first and second derivatives of each tensor
@@ -137,7 +137,7 @@ public:
    * <tt>values.size()==</tt>n() to get the point values of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  double
+  DEAL_II_NODISCARD double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -155,8 +155,8 @@ public:
    * @tparam order The derivative order.
    */
   template <int order>
-  Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<order, dim>
+                    compute_derivative(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -170,8 +170,8 @@ public:
    * <tt>grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<1, dim>
+                    compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th tensor
@@ -185,14 +185,14 @@ public:
    * <tt>grad_grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<2, dim>
+                    compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the number of tensor product polynomials. For <i>n</i> 1d
    * polynomials this is <i>n<sup>dim</sup></i>.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
 
@@ -311,7 +311,7 @@ public:
    * with <tt>values.size()==n_tensor_pols</tt> to get the point values of all
    * tensor polynomials all at once and in a much more efficient way.
    */
-  double
+  DEAL_II_NODISCARD double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -329,8 +329,8 @@ public:
    * @tparam order The derivative order.
    */
   template <int order>
-  Tensor<order, dim>
-  compute_derivative(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<order, dim>
+                    compute_derivative(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -344,8 +344,8 @@ public:
    * with <tt>grads.size()==n_tensor_pols</tt> to get the point value of all
    * tensor polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
-  compute_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<1, dim>
+                    compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Compute the second derivative (grad_grad) of the <tt>i</tt>th tensor
@@ -359,14 +359,14 @@ public:
    * with <tt>grad_grads.size()==n_tensor_pols</tt> to get the point value of
    * all tensor polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
-  compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
+  DEAL_II_NODISCARD Tensor<2, dim>
+                    compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the number of tensor product polynomials. It is the product of
    * the number of polynomials in each coordinate direction.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
 private:
@@ -455,8 +455,8 @@ TensorProductPolynomials<dim, PolynomialType>::get_numbering_inverse() const
 
 template <int dim, typename PolynomialType>
 template <int order>
-Tensor<order, dim>
-TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
+DEAL_II_NODISCARD Tensor<order, dim>
+                  TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
   const unsigned int i,
   const Point<dim> & p) const
 {

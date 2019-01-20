@@ -139,7 +139,7 @@ ExceptionBase::set_fields(const char *f,
   // reasons, as this requires loading libraries and can take in the
   // order of seconds on some machines.
 #ifdef DEAL_II_HAVE_GLIBC_STACKTRACE
-  n_stacktrace_frames = backtrace(raw_stacktrace, 25);
+  n_stacktrace_frames = backtrace(raw_stacktrace.data(), raw_stacktrace.size());
 #endif
 }
 
@@ -156,7 +156,8 @@ ExceptionBase::what() const noexcept
 
       // first delete old stacktrace if necessary
       free(stacktrace); // free(nullptr) is allowed
-      stacktrace = backtrace_symbols(raw_stacktrace, n_stacktrace_frames);
+      stacktrace =
+        backtrace_symbols(raw_stacktrace.data(), n_stacktrace_frames);
 #endif
 
       generate_message();
@@ -555,8 +556,8 @@ namespace deal_II_exceptions
     }
 #endif
 
-  } /*namespace internals*/
-} /*namespace deal_II_exceptions*/
+  } // namespace internals
+} // namespace deal_II_exceptions
 
 
 

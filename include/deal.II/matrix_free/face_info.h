@@ -108,8 +108,8 @@ namespace internal
       /**
        * Return the memory consumption of the present data structure.
        */
-      std::size_t
-      memory_consumption() const
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const
       {
         return sizeof(*this);
       }
@@ -139,8 +139,8 @@ namespace internal
       /**
        * Return the memory consumption of the present data structure.
        */
-      std::size_t
-      memory_consumption() const
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const
       {
         return sizeof(faces) +
                cell_and_face_to_plain_faces.memory_consumption() +

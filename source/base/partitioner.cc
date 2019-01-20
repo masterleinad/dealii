@@ -553,9 +553,8 @@ namespace Utilities
       return memory;
     }
 
-  } // end of namespace MPI
-
-} // end of namespace Utilities
+  } // namespace MPI
+} // namespace Utilities
 
 
 

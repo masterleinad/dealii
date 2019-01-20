@@ -135,8 +135,8 @@ namespace internal
       /**
        * Return the memory consumption of this class in bytes.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Encodes the type of element detected at construction. FEEvaluation

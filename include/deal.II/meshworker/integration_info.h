@@ -137,8 +137,8 @@ namespace MeshWorker
      * Return a reference to the FiniteElement that was used to initialize
      * this object.
      */
-    const FiniteElement<dim, spacedim> &
-    finite_element() const;
+    DEAL_II_NODISCARD const FiniteElement<dim, spacedim> &
+                            finite_element() const;
 
     /// This is true if we are assembling for multigrid
     bool multigrid;
@@ -148,16 +148,16 @@ namespace MeshWorker
      * element was used (without the BlockInfo argument). It throws an
      * exception, if applied to a vector of elements.
      */
-    const FEValuesBase<dim, spacedim> &
-    fe_values() const;
+    DEAL_II_NODISCARD const FEValuesBase<dim, spacedim> &
+                            fe_values() const;
 
     /// Access to finite elements
     /**
      * This access function must be used if the initialize() for a group of
      * elements was used (with a valid BlockInfo object).
      */
-    const FEValuesBase<dim, spacedim> &
-    fe_values(const unsigned int i) const;
+    DEAL_II_NODISCARD const FEValuesBase<dim, spacedim> &
+                            fe_values(const unsigned int i) const;
 
     /**
      * The vector containing the values of finite element functions in the
@@ -214,8 +214,8 @@ namespace MeshWorker
     /**
      * The memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
   private:
     /**
@@ -423,8 +423,8 @@ namespace MeshWorker
     /**
      * The memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * The set of update flags for boundary cell integration.

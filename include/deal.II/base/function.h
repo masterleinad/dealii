@@ -386,8 +386,8 @@ public:
    * This is not exact (but will usually be close) because calculating the
    * memory usage of trees (e.g., <tt>std::map</tt>) is difficult.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 };
 
 
@@ -469,8 +469,8 @@ namespace Functions
       std::vector<std::vector<Tensor<1, dim, RangeNumberType>>> &gradients)
       const override;
 
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
   protected:
     /**
@@ -611,8 +611,8 @@ public:
    * This is not exact (but will usually be close) because calculating the
    * memory usage of trees (e.g., <tt>std::map</tt>) is difficult.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 protected:
   /**

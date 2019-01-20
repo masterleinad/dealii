@@ -1086,8 +1086,8 @@ namespace internal
       /**
        * Return a payload configured for identity operations
        */
-      EmptyPayload
-      identity_payload() const
+      DEAL_II_NODISCARD EmptyPayload
+                        identity_payload() const
       {
         return *this;
       }
@@ -1096,8 +1096,8 @@ namespace internal
       /**
        * Return a payload configured for null operations
        */
-      EmptyPayload
-      null_payload() const
+      DEAL_II_NODISCARD EmptyPayload
+                        null_payload() const
       {
         return *this;
       }
@@ -1106,8 +1106,8 @@ namespace internal
       /**
        * Return a payload configured for transpose operations
        */
-      EmptyPayload
-      transpose_payload() const
+      DEAL_II_NODISCARD EmptyPayload
+                        transpose_payload() const
       {
         return *this;
       }

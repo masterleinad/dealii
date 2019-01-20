@@ -130,7 +130,7 @@ namespace TimeStepping
     /**
      * Purely virtual function that return Status.
      */
-    virtual const Status &
+    DEAL_II_NODISCARD virtual const Status &
     get_status() const = 0;
   };
 
@@ -301,8 +301,8 @@ namespace TimeStepping
     /**
      * Return the status of the current object.
      */
-    const Status &
-    get_status() const override;
+    DEAL_II_NODISCARD const Status &
+                            get_status() const override;
 
   private:
     /**
@@ -405,8 +405,8 @@ namespace TimeStepping
     /**
      * Return the status of the current object.
      */
-    const Status &
-    get_status() const override;
+    DEAL_II_NODISCARD const Status &
+                            get_status() const override;
 
   private:
     /**
@@ -584,8 +584,8 @@ namespace TimeStepping
     /**
      * Return the status of the current object.
      */
-    const Status &
-    get_status() const override;
+    DEAL_II_NODISCARD const Status &
+                            get_status() const override;
 
   private:
     /**

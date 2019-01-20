@@ -228,22 +228,22 @@ namespace internal
        * documentation of the internal::hp::DoFLevel class template for more
        * information.
        */
-      types::global_dof_index
-      get_dof_index(const unsigned int obj_index,
-                    const unsigned int fe_index,
-                    const unsigned int local_index) const;
+      DEAL_II_NODISCARD types::global_dof_index
+                        get_dof_index(const unsigned int obj_index,
+                                      const unsigned int fe_index,
+                                      const unsigned int local_index) const;
 
       /**
        * Return the fe_index of the active finite element on this object.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       active_fe_index(const unsigned int obj_index) const;
 
       /**
        * Check whether a given finite element index is used on the present
        * object or not.
        */
-      bool
+      DEAL_II_NODISCARD bool
       fe_index_is_active(const unsigned int obj_index,
                          const unsigned int fe_index) const;
 
@@ -265,16 +265,16 @@ namespace internal
        * @return A pointer to the first DoF index for the current cell. The
        * next dofs_per_cell indices are for the current cell.
        */
-      const types::global_dof_index *
-      get_cell_cache_start(const unsigned int obj_index,
-                           const unsigned int dofs_per_cell) const;
+      DEAL_II_NODISCARD const types::global_dof_index *
+                              get_cell_cache_start(const unsigned int obj_index,
+                                                   const unsigned int dofs_per_cell) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the

@@ -390,7 +390,7 @@ public:
   /**
    * Memory consumed by this class and all currently allocated vectors.
    */
-  virtual std::size_t
+  DEAL_II_NODISCARD virtual std::size_t
   memory_consumption() const;
 
 private:

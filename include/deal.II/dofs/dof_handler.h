@@ -553,7 +553,7 @@ public:
    * each multigrid level or in other words if distribute_mg_dofs() has been
    * called.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_level_dofs() const;
 
   /**
@@ -570,7 +570,7 @@ public:
    * cells on the current MPI process, but at least one process owns cells and
    * at least this one process has any degrees of freedom associated with it.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_active_dofs() const;
 
   /**
@@ -679,7 +679,7 @@ public:
    * module on
    * @ref Sparsity.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   max_couplings_between_dofs() const;
 
   /**
@@ -694,7 +694,7 @@ public:
    * sparsity pattern classes instead (see
    * @ref Sparsity).
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   max_couplings_between_boundary_dofs() const;
 
   /*--------------------------------------*/
@@ -936,8 +936,8 @@ public:
    * also, of course, equals the number of shape functions that span this
    * space.
    */
-  types::global_dof_index
-  n_dofs() const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    n_dofs() const;
 
   /**
    * The (global) number of multilevel degrees of freedom on a given level.
@@ -946,14 +946,14 @@ public:
    * numbers::invalid_dof_index. Else returns the number of degrees of freedom
    * on this level.
    */
-  types::global_dof_index
-  n_dofs(const unsigned int level) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    n_dofs(const unsigned int level) const;
 
   /**
    * Return the number of degrees of freedom located on the boundary.
    */
-  types::global_dof_index
-  n_boundary_dofs() const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    n_boundary_dofs() const;
 
   /**
    * Return the number of degrees of freedom located on those parts of the
@@ -975,8 +975,8 @@ public:
    * Return the number of degrees of freedom located on those parts of the
    * boundary which have a boundary indicator listed in the given set. The
    */
-  types::global_dof_index
-  n_boundary_dofs(const std::set<types::boundary_id> &boundary_ids) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    n_boundary_dofs(const std::set<types::boundary_id> &boundary_ids) const;
 
   /**
    * Access to an object informing of the block structure of the dof handler.
@@ -993,8 +993,8 @@ public:
    * structure on each cell can be generated in this object by calling
    * initialize_local_block_info().
    */
-  const BlockInfo &
-  block_info() const;
+  DEAL_II_NODISCARD const BlockInfo &
+                          block_info() const;
 
 
   /**
@@ -1016,7 +1016,7 @@ public:
    * cells owned by other processors may be theirs, and degrees of freedom on
    * ghost cells are also not necessarily included.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_locally_owned_dofs() const;
 
   /**
@@ -1024,15 +1024,15 @@ public:
    * of 0..n_dofs(). The number of elements of this set equals
    * n_locally_owned_dofs().
    */
-  const IndexSet &
-  locally_owned_dofs() const;
+  DEAL_II_NODISCARD const IndexSet &
+                          locally_owned_dofs() const;
 
   /**
    * Return an IndexSet describing the set of locally owned DoFs used for the
    * given multigrid level as a subset of 0..n_dofs(level).
    */
-  const IndexSet &
-  locally_owned_mg_dofs(const unsigned int level) const;
+  DEAL_II_NODISCARD const IndexSet &
+                          locally_owned_mg_dofs(const unsigned int level) const;
 
   /**
    * Return a vector that stores the locally owned DoFs of each processor. If
@@ -1046,8 +1046,8 @@ public:
    * MPI processes but the Triangulation on which this DoFHandler builds works
    * only on one MPI process.)
    */
-  const std::vector<IndexSet> &
-  locally_owned_dofs_per_processor() const;
+  DEAL_II_NODISCARD const std::vector<IndexSet> &
+                          locally_owned_dofs_per_processor() const;
 
   /**
    * Return a vector that stores the number of degrees of freedom each
@@ -1064,8 +1064,8 @@ public:
    * or that there are multiple MPI processes but the Triangulation on which
    * this DoFHandler builds works only on one MPI process.)
    */
-  const std::vector<types::global_dof_index> &
-  n_locally_owned_dofs_per_processor() const;
+  DEAL_II_NODISCARD const std::vector<types::global_dof_index> &
+                          n_locally_owned_dofs_per_processor() const;
 
   /**
    * Return a vector that stores the locally owned DoFs of each processor on
@@ -1078,8 +1078,8 @@ public:
    * MPI processes but the Triangulation on which this DoFHandler builds works
    * only on one MPI process.)
    */
-  const std::vector<IndexSet> &
-  locally_owned_mg_dofs_per_processor(const unsigned int level) const;
+  DEAL_II_NODISCARD const std::vector<IndexSet> &
+                          locally_owned_mg_dofs_per_processor(const unsigned int level) const;
 
   /**
    * Return a constant reference to the selected finite element object.
@@ -1112,7 +1112,7 @@ public:
    * accessed through a pointers to this base class, although the actual
    * object might be a derived class.
    */
-  virtual std::size_t
+  DEAL_II_NODISCARD virtual std::size_t
   memory_consumption() const;
 
   /**
@@ -1243,23 +1243,23 @@ private:
     /**
      * Return the coarsest level for which this structure stores data.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     get_coarsest_level() const;
 
     /**
      * Return the finest level for which this structure stores data.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     get_finest_level() const;
 
     /**
      * Return the index of the <code>dof_number</code>th degree of freedom for
      * the given level stored for the current vertex.
      */
-    types::global_dof_index
-    get_index(const unsigned int level,
-              const unsigned int dof_number,
-              const unsigned int dofs_per_vertex) const;
+    DEAL_II_NODISCARD types::global_dof_index
+                      get_index(const unsigned int level,
+                                const unsigned int dof_number,
+                                const unsigned int dofs_per_vertex) const;
 
     /**
      * Set the index of the <code>dof_number</code>th degree of freedom for
@@ -1307,11 +1307,11 @@ private:
   clear_mg_space();
 
   template <int structdim>
-  types::global_dof_index
-  get_dof_index(const unsigned int obj_level,
-                const unsigned int obj_index,
-                const unsigned int fe_index,
-                const unsigned int local_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    get_dof_index(const unsigned int obj_level,
+                                  const unsigned int obj_index,
+                                  const unsigned int fe_index,
+                                  const unsigned int local_index) const;
 
   template <int structdim>
   void

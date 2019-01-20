@@ -716,7 +716,7 @@ public:
     /**
      * Return an estimate (in bytes) or the memory consumption of this object.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const;
   };
 
@@ -805,7 +805,7 @@ public:
    * class, need to make copies of finite elements without knowing their exact
    * type. They do so through this function.
    */
-  virtual std::unique_ptr<FiniteElement<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const = 0;
 
   /**
@@ -818,7 +818,7 @@ public:
    * Systems of elements have their own naming convention, see the FESystem
    * class.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const = 0;
 
   /**
@@ -870,7 +870,7 @@ public:
    * The default implementation of this virtual function does exactly this,
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
-  virtual double
+  DEAL_II_NODISCARD virtual double
   shape_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -879,7 +879,7 @@ public:
    * this function should return the value of the @p component-th vector
    * component of the @p ith shape function at point @p p.
    */
-  virtual double
+  DEAL_II_NODISCARD virtual double
   shape_value_component(const unsigned int i,
                         const Point<dim> & p,
                         const unsigned int component) const;
@@ -905,7 +905,7 @@ public:
    * The default implementation of this virtual function does exactly this,
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
-  virtual Tensor<1, dim>
+  DEAL_II_NODISCARD virtual Tensor<1, dim>
   shape_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -914,7 +914,7 @@ public:
    * this function should return the gradient of the @p component-th vector
    * component of the @p ith shape function at point @p p.
    */
-  virtual Tensor<1, dim>
+  DEAL_II_NODISCARD virtual Tensor<1, dim>
   shape_grad_component(const unsigned int i,
                        const Point<dim> & p,
                        const unsigned int component) const;
@@ -940,7 +940,7 @@ public:
    * The default implementation of this virtual function does exactly this,
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
-  virtual Tensor<2, dim>
+  DEAL_II_NODISCARD virtual Tensor<2, dim>
   shape_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -949,7 +949,7 @@ public:
    * case, this function should return the gradient of the @p component-th
    * vector component of the @p ith shape function at point @p p.
    */
-  virtual Tensor<2, dim>
+  DEAL_II_NODISCARD virtual Tensor<2, dim>
   shape_grad_grad_component(const unsigned int i,
                             const Point<dim> & p,
                             const unsigned int component) const;
@@ -975,7 +975,7 @@ public:
    * The default implementation of this virtual function does exactly this,
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
-  virtual Tensor<3, dim>
+  DEAL_II_NODISCARD virtual Tensor<3, dim>
   shape_3rd_derivative(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -984,7 +984,7 @@ public:
    * that case, this function should return the gradient of the @p component-
    * th vector component of the @p ith shape function at point @p p.
    */
-  virtual Tensor<3, dim>
+  DEAL_II_NODISCARD virtual Tensor<3, dim>
   shape_3rd_derivative_component(const unsigned int i,
                                  const Point<dim> & p,
                                  const unsigned int component) const;
@@ -1010,7 +1010,7 @@ public:
    * The default implementation of this virtual function does exactly this,
    * i.e., it simply throws an exception of type ExcUnitShapeValuesDoNotExist.
    */
-  virtual Tensor<4, dim>
+  DEAL_II_NODISCARD virtual Tensor<4, dim>
   shape_4th_derivative(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -1019,7 +1019,7 @@ public:
    * that case, this function should return the gradient of the @p component-
    * th vector component of the @p ith shape function at point @p p.
    */
-  virtual Tensor<4, dim>
+  DEAL_II_NODISCARD virtual Tensor<4, dim>
   shape_4th_derivative_component(const unsigned int i,
                                  const Point<dim> & p,
                                  const unsigned int component) const;
@@ -1033,7 +1033,7 @@ public:
    * A default implementation is provided in this base class which always
    * returns @p true. This is the safe way to go.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const;
 
@@ -1118,7 +1118,7 @@ public:
    * however, one then still needs to cope with the lack of information this
    * just expresses.
    */
-  bool
+  DEAL_II_NODISCARD bool
   prolongation_is_implemented() const;
 
   /**
@@ -1136,7 +1136,7 @@ public:
    * however, one then still needs to cope with the lack of information this
    * just expresses.
    */
-  bool
+  DEAL_II_NODISCARD bool
   isotropic_prolongation_is_implemented() const;
 
   /**
@@ -1160,7 +1160,7 @@ public:
    * however, one then still needs to cope with the lack of information this
    * just expresses.
    */
-  bool
+  DEAL_II_NODISCARD bool
   restriction_is_implemented() const;
 
   /**
@@ -1178,7 +1178,7 @@ public:
    * however, one then still needs to cope with the lack of information this
    * just expresses.
    */
-  bool
+  DEAL_II_NODISCARD bool
   isotropic_restriction_is_implemented() const;
 
 
@@ -1190,7 +1190,7 @@ public:
    * The index must be between zero and the number of shape functions of this
    * element.
    */
-  bool
+  DEAL_II_NODISCARD bool
   restriction_is_additive(const unsigned int index) const;
 
   /**
@@ -1204,9 +1204,9 @@ public:
    * function to check up front whether this function will succeed or generate
    * the exception.
    */
-  const FullMatrix<double> &
-  constraints(const dealii::internal::SubfaceCase<dim> &subface_case =
-                dealii::internal::SubfaceCase<dim>::case_isotropic) const;
+  DEAL_II_NODISCARD const FullMatrix<double> &
+                          constraints(const dealii::internal::SubfaceCase<dim> &subface_case =
+                                        dealii::internal::SubfaceCase<dim>::case_isotropic) const;
 
   /**
    * Return whether this element implements its hanging node constraints. The
@@ -1223,7 +1223,7 @@ public:
    * however, one then still needs to cope with the lack of information this
    * just expresses.
    */
-  bool
+  DEAL_II_NODISCARD bool
   constraints_are_implemented(
     const dealii::internal::SubfaceCase<dim> &subface_case =
       dealii::internal::SubfaceCase<dim>::case_isotropic) const;
@@ -1250,7 +1250,7 @@ public:
    * assumption is that a finite element does not provide hp capable face
    * interpolation, and the default implementation therefore returns @p false.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   hp_constraints_are_implemented() const;
 
 
@@ -1458,8 +1458,8 @@ public:
    * @ref vector_valued
    * module.
    */
-  std::pair<unsigned int, unsigned int>
-  system_to_component_index(const unsigned int index) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, unsigned int>
+                    system_to_component_index(const unsigned int index) const;
 
   /**
    * Compute the shape function for the given vector component and index.
@@ -1470,7 +1470,7 @@ public:
    * This is the opposite operation from the system_to_component_index()
    * function.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   component_to_system_index(const unsigned int component,
                             const unsigned int index) const;
 
@@ -1483,8 +1483,8 @@ public:
    * all application codes only need to deal with cell indices, not face
    * indices. The function is mainly there for use inside the library.
    */
-  std::pair<unsigned int, unsigned int>
-  face_system_to_component_index(const unsigned int index) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, unsigned int>
+                    face_system_to_component_index(const unsigned int index) const;
 
   /**
    * For faces with non-standard face_orientation in 3D, the dofs on faces
@@ -1494,7 +1494,7 @@ public:
    * face_rotation. In 2D and 1D there is no need for permutation and
    * consequently an exception is thrown.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   adjust_quad_dof_index_for_face_orientation(const unsigned int index,
                                              const bool face_orientation,
                                              const bool face_flip,
@@ -1554,7 +1554,7 @@ public:
    * will need to be provided by a derived class that knows what degrees of
    * freedom actually represent.
    */
-  virtual unsigned int
+  DEAL_II_NODISCARD virtual unsigned int
   face_to_cell_index(const unsigned int face_dof_index,
                      const unsigned int face,
                      const bool         face_orientation = true,
@@ -1568,7 +1568,7 @@ public:
    * if the line has non-standard line_orientation. In 2D and 1D there is no
    * need for permutation, so the given index is simply returned.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   adjust_line_dof_index_for_line_orientation(const unsigned int index,
                                              const bool line_orientation) const;
 
@@ -1588,8 +1588,8 @@ public:
    * entry.  Elements for which this is true are called non-primitive (see
    * @ref GlossPrimitive).
    */
-  const ComponentMask &
-  get_nonzero_components(const unsigned int i) const;
+  DEAL_II_NODISCARD const ComponentMask &
+                          get_nonzero_components(const unsigned int i) const;
 
   /**
    * Return in how many vector components the @p ith shape function is non-
@@ -1601,7 +1601,7 @@ public:
    * shape functions couple the individual components, for example in order to
    * make them divergence-free.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_nonzero_components(const unsigned int i) const;
 
   /**
@@ -1612,7 +1612,7 @@ public:
    * Since this is an extremely common operation, the result is cached and
    * returned by this function.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_primitive() const;
 
   /**
@@ -1625,7 +1625,7 @@ public:
    * The result of the function is @p true if and only if the result of
    * <tt>n_nonzero_components(i)</tt> is equal to one.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_primitive(const unsigned int i) const;
 
   /**
@@ -1639,7 +1639,7 @@ public:
    * still one, although the number of components of the finite element is
    * equal to the multiplicity.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_base_elements() const;
 
   /**
@@ -1655,7 +1655,7 @@ public:
    * equal to one. See the documentation for the n_base_elements() function
    * for more details.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   element_multiplicity(const unsigned int index) const;
 
   /**
@@ -1767,6 +1767,7 @@ public:
    * (i.e. non-primitive) shape functions, in contrast to the
    * system_to_component_index() function.
    */
+  DEAL_II_NODISCARD
   std::pair<std::pair<unsigned int, unsigned int>, unsigned int>
   system_to_base_index(const unsigned int index) const;
 
@@ -1778,6 +1779,7 @@ public:
    * all application codes only need to deal with cell indices, not face
    * indices. The function is mainly there for use inside the library.
    */
+  DEAL_II_NODISCARD
   std::pair<std::pair<unsigned int, unsigned int>, unsigned int>
   face_system_to_base_index(const unsigned int index) const;
 
@@ -1785,8 +1787,8 @@ public:
    * Given a base element number, return the first block of a BlockVector it
    * would generate.
    */
-  types::global_dof_index
-  first_block_of_base(const unsigned int b) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    first_block_of_base(const unsigned int b) const;
 
   /**
    * For each vector component, return which base element implements this
@@ -1800,27 +1802,27 @@ public:
    * If this is a scalar finite element, then the return value is always equal
    * to a pair of zeros.
    */
-  std::pair<unsigned int, unsigned int>
-  component_to_base_index(const unsigned int component) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, unsigned int>
+                    component_to_base_index(const unsigned int component) const;
 
 
   /**
    * Return the base element for this block and the number of the copy of the
    * base element.
    */
-  std::pair<unsigned int, unsigned int>
-  block_to_base_index(const unsigned int block) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, unsigned int>
+                    block_to_base_index(const unsigned int block) const;
 
   /**
    * The vector block and the index inside the block for this shape function.
    */
-  std::pair<unsigned int, types::global_dof_index>
-  system_to_block_index(const unsigned int component) const;
+  DEAL_II_NODISCARD std::pair<unsigned int, types::global_dof_index>
+                    system_to_block_index(const unsigned int component) const;
 
   /**
    * The vector block for this component.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   component_to_block_index(const unsigned int component) const;
 
   //@}
@@ -1842,8 +1844,8 @@ public:
    * @return A component mask that is false in all components except for the
    * one that corresponds to the argument.
    */
-  ComponentMask
-  component_mask(const FEValuesExtractors::Scalar &scalar) const;
+  DEAL_II_NODISCARD ComponentMask
+                    component_mask(const FEValuesExtractors::Scalar &scalar) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1857,8 +1859,8 @@ public:
    * @return A component mask that is false in all components except for the
    * ones that corresponds to the argument.
    */
-  ComponentMask
-  component_mask(const FEValuesExtractors::Vector &vector) const;
+  DEAL_II_NODISCARD ComponentMask
+                    component_mask(const FEValuesExtractors::Vector &vector) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1873,9 +1875,9 @@ public:
    * @return A component mask that is false in all components except for the
    * ones that corresponds to the argument.
    */
-  ComponentMask
-  component_mask(
-    const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+  DEAL_II_NODISCARD ComponentMask
+                    component_mask(
+                      const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
 
   /**
    * Given a block mask (see
@@ -1891,8 +1893,8 @@ public:
    * @return A mask that selects those components corresponding to the
    * selected blocks of the input argument.
    */
-  ComponentMask
-  component_mask(const BlockMask &block_mask) const;
+  DEAL_II_NODISCARD ComponentMask
+                    component_mask(const BlockMask &block_mask) const;
 
   /**
    * Return a block mask with as many elements as this object has blocks and
@@ -1914,8 +1916,8 @@ public:
    * @return A component mask that is false in all components except for the
    * one that corresponds to the argument.
    */
-  BlockMask
-  block_mask(const FEValuesExtractors::Scalar &scalar) const;
+  DEAL_II_NODISCARD BlockMask
+                    block_mask(const FEValuesExtractors::Scalar &scalar) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1933,8 +1935,8 @@ public:
    * @return A component mask that is false in all components except for the
    * ones that corresponds to the argument.
    */
-  BlockMask
-  block_mask(const FEValuesExtractors::Vector &vector) const;
+  DEAL_II_NODISCARD BlockMask
+                    block_mask(const FEValuesExtractors::Vector &vector) const;
 
   /**
    * Return a component mask with as many elements as this object has vector
@@ -1953,8 +1955,8 @@ public:
    * @return A component mask that is false in all components except for the
    * ones that corresponds to the argument.
    */
-  BlockMask
-  block_mask(const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
+  DEAL_II_NODISCARD BlockMask
+                    block_mask(const FEValuesExtractors::SymmetricTensor<2> &sym_tensor) const;
 
   /**
    * Given a component mask (see
@@ -1978,8 +1980,8 @@ public:
    * @return A mask that selects those blocks corresponding to the selected
    * blocks of the input argument.
    */
-  BlockMask
-  block_mask(const ComponentMask &component_mask) const;
+  DEAL_II_NODISCARD BlockMask
+                    block_mask(const ComponentMask &component_mask) const;
 
   /**
    * Return a list of constant modes of the element. The number of rows in
@@ -2036,8 +2038,8 @@ public:
    * <code>FESystem(FE_Q(1),3)</code> for which each support point would
    * appear three times in the returned array.
    */
-  const std::vector<Point<dim>> &
-  get_unit_support_points() const;
+  DEAL_II_NODISCARD const std::vector<Point<dim>> &
+                          get_unit_support_points() const;
 
   /**
    * Return whether a finite element has defined support points. If the result
@@ -2056,7 +2058,7 @@ public:
    * has_support_points() is false, but an FESystem containing an FE_Nothing
    * among other elements will return true.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_support_points() const;
 
   /**
@@ -2071,7 +2073,7 @@ public:
    * way, you can still ask for certain support points, even if
    * get_unit_support_points() only returns an empty array.
    */
-  virtual Point<dim>
+  DEAL_II_NODISCARD virtual Point<dim>
   unit_support_point(const unsigned int index) const;
 
   /**
@@ -2100,8 +2102,8 @@ public:
    *
    * See the class documentation for details on support points.
    */
-  const std::vector<Point<dim - 1>> &
-  get_unit_face_support_points() const;
+  DEAL_II_NODISCARD const std::vector<Point<dim - 1>> &
+                          get_unit_face_support_points() const;
 
   /**
    * Return whether a finite element has defined support points on faces. If
@@ -2111,14 +2113,14 @@ public:
    * For more information, see the documentation for the has_support_points()
    * function.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_face_support_points() const;
 
   /**
    * The function corresponding to the unit_support_point() function, but for
    * faces. See there for more information.
    */
-  virtual Point<dim - 1>
+  DEAL_II_NODISCARD virtual Point<dim - 1>
   unit_face_support_point(const unsigned int index) const;
 
   /**
@@ -2133,8 +2135,8 @@ public:
    * @ref GlossGeneralizedSupport "glossary entry on generalized support points"
    * for more information.
    */
-  const std::vector<Point<dim>> &
-  get_generalized_support_points() const;
+  DEAL_II_NODISCARD const std::vector<Point<dim>> &
+                          get_generalized_support_points() const;
 
   /**
    * Return whether a finite element has defined generalized support
@@ -2145,7 +2147,7 @@ public:
    * @ref GlossGeneralizedSupport "glossary entry on generalized support points"
    * for more information.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_generalized_support_points() const;
 
   /**
@@ -2156,9 +2158,8 @@ public:
    * subset of generalized support points describing degrees of freedom for
    * a given face. Don't use this function
    */
-  DEAL_II_DEPRECATED
-  const std::vector<Point<dim - 1>> &
-  get_generalized_face_support_points() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED const std::vector<Point<dim - 1>> &
+                                             get_generalized_face_support_points() const;
 
   /**
    * Return whether a finite element has defined generalized support points on
@@ -2172,9 +2173,8 @@ public:
    * subset of generalized support points describing degrees of freedom for
    * a given face. Don't use this function
    */
-  DEAL_II_DEPRECATED
-  bool
-  has_generalized_face_support_points() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED bool
+                    has_generalized_face_support_points() const;
 
   /**
    * For a given degree of freedom, return whether it is logically associated
@@ -2219,8 +2219,8 @@ public:
    * GeometryPrimitive::vertex, which has a numeric value of zero (the
    * dimensionality of a vertex).
    */
-  GeometryPrimitive
-  get_associated_geometry_primitive(const unsigned int cell_dof_index) const;
+  DEAL_II_NODISCARD GeometryPrimitive
+                    get_associated_geometry_primitive(const unsigned int cell_dof_index) const;
 
 
   /**
@@ -2315,7 +2315,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t
+  DEAL_II_NODISCARD virtual std::size_t
   memory_consumption() const;
 
   /**
@@ -2643,8 +2643,8 @@ protected:
    * size these matrices should have when implemented, but the actual matrices
    * are empty.
    */
-  TableIndices<2>
-  interface_constraints_size() const;
+  DEAL_II_NODISCARD TableIndices<2>
+                    interface_constraints_size() const;
 
   /**
    * Given the pattern of nonzero components for each shape function, compute
@@ -2675,7 +2675,7 @@ protected:
    *
    * @see UpdateFlags
    */
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const = 0;
 
   /**

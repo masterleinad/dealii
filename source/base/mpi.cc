@@ -770,7 +770,7 @@ namespace Utilities
 
 
 #include "mpi.inst"
-  } // end of namespace MPI
-} // end of namespace Utilities
+  } // namespace MPI
+} // namespace Utilities
 
 DEAL_II_NAMESPACE_CLOSE

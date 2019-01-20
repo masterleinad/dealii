@@ -111,7 +111,7 @@ public:
    * would return true when calling represents_the_all_selected_mask()) then
    * return zero since no definite size is known.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   size() const;
 
   /**
@@ -138,7 +138,7 @@ public:
    * can represent a mask with an arbitrary number of blocks and will always
    * say that a block is selected.
    */
-  bool
+  DEAL_II_NODISCARD bool
   represents_n_blocks(const unsigned int n) const;
 
   /**
@@ -154,7 +154,7 @@ public:
    * represents_the_all_selected_mask() returns false) then the argument can
    * be omitted and the result of size() is taken.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_selected_blocks(const unsigned int overall_number_of_blocks =
                       numbers::invalid_unsigned_int) const;
 
@@ -164,7 +164,7 @@ public:
    *
    * The function throws an exception if no block is selected at all.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   first_selected_block(const unsigned int overall_number_of_blocks =
                          numbers::invalid_unsigned_int) const;
 
@@ -173,7 +173,7 @@ public:
    * corresponds to one in which all blocks are selected. If true, then the
    * size() function will return zero.
    */
-  bool
+  DEAL_II_NODISCARD bool
   represents_the_all_selected_mask() const;
 
   /**
@@ -205,8 +205,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 private:
   /**

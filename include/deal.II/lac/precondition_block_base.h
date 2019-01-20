@@ -121,25 +121,25 @@ public:
   /**
    * Does the matrix use only one diagonal block?
    */
-  bool
+  DEAL_II_NODISCARD bool
   same_diagonal() const;
 
   /**
    * Check, whether diagonal blocks (not their inverses) should be stored.
    */
-  bool
+  DEAL_II_NODISCARD bool
   store_diagonals() const;
 
   /**
    * Return true, if inverses are ready for use.
    */
-  bool
+  DEAL_II_NODISCARD bool
   inverses_ready() const;
 
   /**
    * The number of blocks.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   size() const;
 
   /**
@@ -181,20 +181,20 @@ public:
   /**
    * Access to the inverse diagonal blocks.
    */
-  const FullMatrix<number> &
-  inverse(size_type i) const;
+  DEAL_II_NODISCARD const FullMatrix<number> &
+                          inverse(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const Householder<number> &
-  inverse_householder(size_type i) const;
+  DEAL_II_NODISCARD const Householder<number> &
+                          inverse_householder(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const LAPACKFullMatrix<number> &
-  inverse_svd(size_type i) const;
+  DEAL_II_NODISCARD const LAPACKFullMatrix<number> &
+                          inverse_svd(size_type i) const;
 
   /**
    * Access to the diagonal blocks.
@@ -205,8 +205,8 @@ public:
   /**
    * Access to the diagonal blocks.
    */
-  const FullMatrix<number> &
-  diagonal(size_type i) const;
+  DEAL_II_NODISCARD const FullMatrix<number> &
+                          diagonal(size_type i) const;
 
   /**
    * Print some statistics about the inverses to @p deallog. Output depends on
@@ -220,8 +220,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * You are trying to access a diagonal block (not its inverse), but you

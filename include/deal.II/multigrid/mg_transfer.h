@@ -345,8 +345,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Print the copy index fields for debugging purposes.
@@ -766,8 +766,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Print all the matrices for debugging purposes.

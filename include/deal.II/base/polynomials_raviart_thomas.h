@@ -82,21 +82,21 @@ public:
   /**
    * Return the number of Raviart-Thomas polynomials.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n() const;
 
   /**
    * Return the degree of the Raviart-Thomas space, which is one less than
    * the highest polynomial degree.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   degree() const;
 
   /**
    * Return the name of the space, which is <tt>RaviartThomas</tt>.
    */
-  std::string
-  name() const;
+  DEAL_II_NODISCARD std::string
+                    name() const;
 
   /**
    * Return the number of polynomials in the space <tt>RT(degree)</tt> without

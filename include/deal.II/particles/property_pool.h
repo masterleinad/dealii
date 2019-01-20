@@ -91,7 +91,7 @@ namespace Particles
     /**
      * Return how many properties are stored per slot in the pool.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_properties_per_slot() const;
 
   private:

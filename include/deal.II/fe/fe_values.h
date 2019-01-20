@@ -278,8 +278,8 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
-    value(const unsigned int shape_function, const unsigned int q_point) const;
+    DEAL_II_NODISCARD value_type
+                      value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
      * Return the gradient (a tensor of rank 1) of the vector component
@@ -291,9 +291,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
-    gradient(const unsigned int shape_function,
-             const unsigned int q_point) const;
+    DEAL_II_NODISCARD gradient_type
+                      gradient(const unsigned int shape_function,
+                               const unsigned int q_point) const;
 
     /**
      * Return the Hessian (the tensor of rank 2 of all second derivatives) of
@@ -305,9 +305,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_hessians}
      */
-    hessian_type
-    hessian(const unsigned int shape_function,
-            const unsigned int q_point) const;
+    DEAL_II_NODISCARD hessian_type
+                      hessian(const unsigned int shape_function,
+                              const unsigned int q_point) const;
 
     /**
      * Return the tensor of rank 3 of all third derivatives of the vector
@@ -319,9 +319,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_third_derivatives}
      */
-    third_derivative_type
-    third_derivative(const unsigned int shape_function,
-                     const unsigned int q_point) const;
+    DEAL_II_NODISCARD third_derivative_type
+                      third_derivative(const unsigned int shape_function,
+                                       const unsigned int q_point) const;
 
     /**
      * Return the values of the selected scalar component of the finite
@@ -787,8 +787,8 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
-    value(const unsigned int shape_function, const unsigned int q_point) const;
+    DEAL_II_NODISCARD value_type
+                      value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
      * Return the gradient (a tensor of rank 2) of the vector component
@@ -803,9 +803,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
-    gradient(const unsigned int shape_function,
-             const unsigned int q_point) const;
+    DEAL_II_NODISCARD gradient_type
+                      gradient(const unsigned int shape_function,
+                               const unsigned int q_point) const;
 
     /**
      * Return the symmetric gradient (a symmetric tensor of rank 2) of the
@@ -822,9 +822,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    symmetric_gradient_type
-    symmetric_gradient(const unsigned int shape_function,
-                       const unsigned int q_point) const;
+    DEAL_II_NODISCARD symmetric_gradient_type
+                      symmetric_gradient(const unsigned int shape_function,
+                                         const unsigned int q_point) const;
 
     /**
      * Return the scalar divergence of the vector components selected by this
@@ -836,9 +836,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
-    divergence(const unsigned int shape_function,
-               const unsigned int q_point) const;
+    DEAL_II_NODISCARD divergence_type
+                      divergence(const unsigned int shape_function,
+                                 const unsigned int q_point) const;
 
     /**
      * Return the vector curl of the vector components selected by this view,
@@ -860,8 +860,8 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    curl_type
-    curl(const unsigned int shape_function, const unsigned int q_point) const;
+    DEAL_II_NODISCARD curl_type
+                      curl(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
      * Return the Hessian (the tensor of rank 2 of all second derivatives) of
@@ -873,9 +873,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_hessians}
      */
-    hessian_type
-    hessian(const unsigned int shape_function,
-            const unsigned int q_point) const;
+    DEAL_II_NODISCARD hessian_type
+                      hessian(const unsigned int shape_function,
+                              const unsigned int q_point) const;
 
     /**
      * Return the tensor of rank 3 of all third derivatives of the vector
@@ -887,9 +887,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_3rd_derivatives}
      */
-    third_derivative_type
-    third_derivative(const unsigned int shape_function,
-                     const unsigned int q_point) const;
+    DEAL_II_NODISCARD third_derivative_type
+                      third_derivative(const unsigned int shape_function,
+                                       const unsigned int q_point) const;
 
     /**
      * Return the values of the selected vector components of the finite
@@ -1384,8 +1384,8 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
-    value(const unsigned int shape_function, const unsigned int q_point) const;
+    DEAL_II_NODISCARD value_type
+                      value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
      * Return the vector divergence of the vector components selected by this
@@ -1400,9 +1400,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
-    divergence(const unsigned int shape_function,
-               const unsigned int q_point) const;
+    DEAL_II_NODISCARD divergence_type
+                      divergence(const unsigned int shape_function,
+                                 const unsigned int q_point) const;
 
     /**
      * Return the values of the selected vector components of the finite
@@ -1679,8 +1679,8 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
-    value(const unsigned int shape_function, const unsigned int q_point) const;
+    DEAL_II_NODISCARD value_type
+                      value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
      * Return the vector divergence of the vector components selected by this
@@ -1695,9 +1695,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
-    divergence(const unsigned int shape_function,
-               const unsigned int q_point) const;
+    DEAL_II_NODISCARD divergence_type
+                      divergence(const unsigned int shape_function,
+                                 const unsigned int q_point) const;
 
     /**
      * Return the gradient (3-rd order tensor) of the vector components selected
@@ -1712,9 +1712,9 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
-    gradient(const unsigned int shape_function,
-             const unsigned int q_point) const;
+    DEAL_II_NODISCARD gradient_type
+                      gradient(const unsigned int shape_function,
+                               const unsigned int q_point) const;
 
     /**
      * Return the values of the selected vector components of the finite
@@ -2087,7 +2087,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_values}
    */
-  const double &
+  DEAL_II_NODISCARD const double &
   shape_value(const unsigned int function_no,
               const unsigned int point_no) const;
 
@@ -2111,7 +2111,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_values}
    */
-  double
+  DEAL_II_NODISCARD double
   shape_value_component(const unsigned int function_no,
                         const unsigned int point_no,
                         const unsigned int component) const;
@@ -2141,9 +2141,9 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_gradients}
    */
-  const Tensor<1, spacedim> &
-  shape_grad(const unsigned int function_no,
-             const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const Tensor<1, spacedim> &
+                          shape_grad(const unsigned int function_no,
+                                     const unsigned int quadrature_point) const;
 
   /**
    * Return one vector component of the gradient of a shape function at a
@@ -2161,10 +2161,10 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_gradients}
    */
-  Tensor<1, spacedim>
-  shape_grad_component(const unsigned int function_no,
-                       const unsigned int point_no,
-                       const unsigned int component) const;
+  DEAL_II_NODISCARD Tensor<1, spacedim>
+                    shape_grad_component(const unsigned int function_no,
+                                         const unsigned int point_no,
+                                         const unsigned int component) const;
 
   /**
    * Second derivatives of the <tt>function_no</tt>th shape function at the
@@ -2185,9 +2185,9 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_hessians}
    */
-  const Tensor<2, spacedim> &
-  shape_hessian(const unsigned int function_no,
-                const unsigned int point_no) const;
+  DEAL_II_NODISCARD const Tensor<2, spacedim> &
+                          shape_hessian(const unsigned int function_no,
+                                        const unsigned int point_no) const;
 
   /**
    * Return one vector component of the hessian of a shape function at a
@@ -2205,10 +2205,10 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_hessians}
    */
-  Tensor<2, spacedim>
-  shape_hessian_component(const unsigned int function_no,
-                          const unsigned int point_no,
-                          const unsigned int component) const;
+  DEAL_II_NODISCARD Tensor<2, spacedim>
+                    shape_hessian_component(const unsigned int function_no,
+                                            const unsigned int point_no,
+                                            const unsigned int component) const;
 
   /**
    * Third derivatives of the <tt>function_no</tt>th shape function at the
@@ -2229,9 +2229,9 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_3rd_derivatives}
    */
-  const Tensor<3, spacedim> &
-  shape_3rd_derivative(const unsigned int function_no,
-                       const unsigned int point_no) const;
+  DEAL_II_NODISCARD const Tensor<3, spacedim> &
+                          shape_3rd_derivative(const unsigned int function_no,
+                                               const unsigned int point_no) const;
 
   /**
    * Return one vector component of the third derivative of a shape function
@@ -2249,10 +2249,10 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_3rd_derivatives}
    */
-  Tensor<3, spacedim>
-  shape_3rd_derivative_component(const unsigned int function_no,
-                                 const unsigned int point_no,
-                                 const unsigned int component) const;
+  DEAL_II_NODISCARD Tensor<3, spacedim>
+                    shape_3rd_derivative_component(const unsigned int function_no,
+                                                   const unsigned int point_no,
+                                                   const unsigned int component) const;
 
   //@}
   /// @name Access to values of global finite element fields
@@ -2849,16 +2849,16 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_quadrature_points}
    */
-  const Point<spacedim> &
-  quadrature_point(const unsigned int q) const;
+  DEAL_II_NODISCARD const Point<spacedim> &
+                          quadrature_point(const unsigned int q) const;
 
   /**
    * Return a reference to the vector of quadrature points in real space.
    *
    * @dealiiRequiresUpdateFlags{update_quadrature_points}
    */
-  const std::vector<Point<spacedim>> &
-  get_quadrature_points() const;
+  DEAL_II_NODISCARD const std::vector<Point<spacedim>> &
+                          get_quadrature_points() const;
 
   /**
    * Mapped quadrature weight. If this object refers to a volume evaluation
@@ -2875,14 +2875,14 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_JxW_values}
    */
-  double
+  DEAL_II_NODISCARD double
   JxW(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by JxW().
    */
-  const std::vector<double> &
-  get_JxW_values() const;
+  DEAL_II_NODISCARD const std::vector<double> &
+                          get_JxW_values() const;
 
   /**
    * Return the Jacobian of the transformation at the specified quadrature
@@ -2890,8 +2890,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobians}
    */
-  const DerivativeForm<1, dim, spacedim> &
-  jacobian(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const DerivativeForm<1, dim, spacedim> &
+                          jacobian(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2899,8 +2899,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobians}
    */
-  const std::vector<DerivativeForm<1, dim, spacedim>> &
-  get_jacobians() const;
+  DEAL_II_NODISCARD const std::vector<DerivativeForm<1, dim, spacedim>> &
+                          get_jacobians() const;
 
   /**
    * Return the second derivative of the transformation from unit to real
@@ -2909,8 +2909,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_grads}
    */
-  const DerivativeForm<2, dim, spacedim> &
-  jacobian_grad(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const DerivativeForm<2, dim, spacedim> &
+                          jacobian_grad(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2918,8 +2918,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_grads}
    */
-  const std::vector<DerivativeForm<2, dim, spacedim>> &
-  get_jacobian_grads() const;
+  DEAL_II_NODISCARD const std::vector<DerivativeForm<2, dim, spacedim>> &
+                          get_jacobian_grads() const;
 
   /**
    * Return the second derivative of the transformation from unit to real
@@ -2929,8 +2929,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_grads}
    */
-  const Tensor<3, spacedim> &
-  jacobian_pushed_forward_grad(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const Tensor<3, spacedim> &
+                          jacobian_pushed_forward_grad(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2938,8 +2938,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_grads}
    */
-  const std::vector<Tensor<3, spacedim>> &
-  get_jacobian_pushed_forward_grads() const;
+  DEAL_II_NODISCARD const std::vector<Tensor<3, spacedim>> &
+                          get_jacobian_pushed_forward_grads() const;
 
   /**
    * Return the third derivative of the transformation from unit to real cell,
@@ -2948,8 +2948,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_2nd_derivatives}
    */
-  const DerivativeForm<3, dim, spacedim> &
-  jacobian_2nd_derivative(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const DerivativeForm<3, dim, spacedim> &
+                          jacobian_2nd_derivative(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2957,8 +2957,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_2nd_derivatives}
    */
-  const std::vector<DerivativeForm<3, dim, spacedim>> &
-  get_jacobian_2nd_derivatives() const;
+  DEAL_II_NODISCARD const std::vector<DerivativeForm<3, dim, spacedim>> &
+                          get_jacobian_2nd_derivatives() const;
 
   /**
    * Return the third derivative of the transformation from unit to real cell,
@@ -2969,9 +2969,9 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const Tensor<4, spacedim> &
-  jacobian_pushed_forward_2nd_derivative(
-    const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const Tensor<4, spacedim> &
+                          jacobian_pushed_forward_2nd_derivative(
+                            const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2979,8 +2979,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const std::vector<Tensor<4, spacedim>> &
-  get_jacobian_pushed_forward_2nd_derivatives() const;
+  DEAL_II_NODISCARD const std::vector<Tensor<4, spacedim>> &
+                          get_jacobian_pushed_forward_2nd_derivatives() const;
 
   /**
    * Return the fourth derivative of the transformation from unit to real
@@ -2990,8 +2990,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_3rd_derivatives}
    */
-  const DerivativeForm<4, dim, spacedim> &
-  jacobian_3rd_derivative(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const DerivativeForm<4, dim, spacedim> &
+                          jacobian_3rd_derivative(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -2999,8 +2999,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_3rd_derivatives}
    */
-  const std::vector<DerivativeForm<4, dim, spacedim>> &
-  get_jacobian_3rd_derivatives() const;
+  DEAL_II_NODISCARD const std::vector<DerivativeForm<4, dim, spacedim>> &
+                          get_jacobian_3rd_derivatives() const;
 
   /**
    * Return the fourth derivative of the transformation from unit to real
@@ -3011,9 +3011,9 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_3rd_derivatives}
    */
-  const Tensor<5, spacedim> &
-  jacobian_pushed_forward_3rd_derivative(
-    const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const Tensor<5, spacedim> &
+                          jacobian_pushed_forward_3rd_derivative(
+                            const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -3021,8 +3021,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_jacobian_pushed_forward_2nd_derivatives}
    */
-  const std::vector<Tensor<5, spacedim>> &
-  get_jacobian_pushed_forward_3rd_derivatives() const;
+  DEAL_II_NODISCARD const std::vector<Tensor<5, spacedim>> &
+                          get_jacobian_pushed_forward_3rd_derivatives() const;
 
   /**
    * Return the inverse Jacobian of the transformation at the specified
@@ -3030,8 +3030,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_inverse_jacobians}
    */
-  const DerivativeForm<1, spacedim, dim> &
-  inverse_jacobian(const unsigned int quadrature_point) const;
+  DEAL_II_NODISCARD const DerivativeForm<1, spacedim, dim> &
+                          inverse_jacobian(const unsigned int quadrature_point) const;
 
   /**
    * Return a reference to the array holding the values returned by
@@ -3039,8 +3039,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_inverse_jacobians}
    */
-  const std::vector<DerivativeForm<1, spacedim, dim>> &
-  get_inverse_jacobians() const;
+  DEAL_II_NODISCARD const std::vector<DerivativeForm<1, spacedim, dim>> &
+                          get_inverse_jacobians() const;
 
   /**
    * For a face, return the outward normal vector to the cell at the
@@ -3055,8 +3055,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_normal_vectors}
    */
-  const Tensor<1, spacedim> &
-  normal_vector(const unsigned int i) const;
+  DEAL_II_NODISCARD const Tensor<1, spacedim> &
+                          normal_vector(const unsigned int i) const;
 
   /**
    * Return the normal vectors at the quadrature points. For a face, these are
@@ -3068,9 +3068,8 @@ public:
    * @deprecated Use get_normal_vectors() instead, which returns the exact
    * same thing.
    */
-  DEAL_II_DEPRECATED
-  const std::vector<Tensor<1, spacedim>> &
-  get_all_normal_vectors() const;
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED const std::vector<Tensor<1, spacedim>> &
+                                             get_all_normal_vectors() const;
 
   /**
    * Return the normal vectors at the quadrature points. For a face, these are
@@ -3079,8 +3078,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_normal_vectors}
    */
-  const std::vector<Tensor<1, spacedim>> &
-  get_normal_vectors() const;
+  DEAL_II_NODISCARD const std::vector<Tensor<1, spacedim>> &
+                          get_normal_vectors() const;
 
   //@}
 
@@ -3153,8 +3152,8 @@ public:
   /**
    * Return the update flags set for this object.
    */
-  UpdateFlags
-  get_update_flags() const;
+  DEAL_II_NODISCARD UpdateFlags
+                    get_update_flags() const;
 
   /**
    * Return a triangulation iterator to the current cell.
@@ -3167,15 +3166,15 @@ public:
    * re-use of some cell data (like local matrices for equations with constant
    * coefficients) if the result is <tt>CellSimilarity::translation</tt>.
    */
-  CellSimilarity::Similarity
-  get_cell_similarity() const;
+  DEAL_II_NODISCARD CellSimilarity::Similarity
+                    get_cell_similarity() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
   //@}
 
 
@@ -3376,8 +3375,8 @@ protected:
    * object already stored which flags need to be set to compute everything
    * the user wants, as expressed through the flags passed as argument.
    */
-  UpdateFlags
-  compute_update_flags(const UpdateFlags update_flags) const;
+  DEAL_II_NODISCARD UpdateFlags
+                    compute_update_flags(const UpdateFlags update_flags) const;
 
   /**
    * An enum variable that can store different states of the current cell in
@@ -3493,8 +3492,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Return a reference to this very object.
@@ -3581,8 +3580,8 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_boundary_forms}
    */
-  const Tensor<1, spacedim> &
-  boundary_form(const unsigned int i) const;
+  DEAL_II_NODISCARD const Tensor<1, spacedim> &
+                          boundary_form(const unsigned int i) const;
 
   /**
    * Return the list of outward normal vectors times the Jacobian of the
@@ -3590,14 +3589,14 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_boundary_forms}
    */
-  const std::vector<Tensor<1, spacedim>> &
-  get_boundary_forms() const;
+  DEAL_II_NODISCARD const std::vector<Tensor<1, spacedim>> &
+                          get_boundary_forms() const;
 
   /**
    * Return the index of the face selected the last time the reinit() function
    * was called.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   get_face_index() const;
 
   /**
@@ -3611,8 +3610,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 protected:
   /**

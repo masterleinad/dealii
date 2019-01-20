@@ -96,13 +96,13 @@ namespace Algorithms
      * Test whether all the flags set in the other Event are also set in this
      * one.
      */
-    bool
+    DEAL_II_NODISCARD bool
     test(const Event &event) const;
 
     /**
      * Return <tt>true</tt> if any event is set.
      */
-    bool
+    DEAL_II_NODISCARD bool
     any() const;
 
     /**

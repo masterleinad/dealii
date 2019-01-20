@@ -205,8 +205,8 @@ namespace Particles
      *
      * @return The location of this particle.
      */
-    const Point<spacedim> &
-    get_location() const;
+    DEAL_II_NODISCARD const Point<spacedim> &
+                            get_location() const;
 
     /**
      * Set the reference location of this particle.
@@ -220,14 +220,14 @@ namespace Particles
     /**
      * Return the reference location of this particle in its current cell.
      */
-    const Point<dim> &
-    get_reference_location() const;
+    DEAL_II_NODISCARD const Point<dim> &
+                            get_reference_location() const;
 
     /**
      * Return the ID number of this particle.
      */
-    types::particle_index
-    get_id() const;
+    DEAL_II_NODISCARD types::particle_index
+                      get_id() const;
 
     /**
      * Tell the particle where to store its properties (even if it does not
@@ -243,7 +243,7 @@ namespace Particles
      * Return whether this particle has a valid property pool and a valid
      * handle to properties.
      */
-    bool
+    DEAL_II_NODISCARD bool
     has_properties() const;
 
     /**
@@ -274,16 +274,16 @@ namespace Particles
      *
      * @return An ArrayView of the properties of this particle.
      */
-    const ArrayView<const double>
-    get_properties() const;
+    DEAL_II_NODISCARD const ArrayView<const double>
+                            get_properties() const;
 
     /**
      * Return the size in bytes this particle occupies if all of its data is
      * serialized (i.e. the number of bytes that is written by the write_data
      * function of this class).
      */
-    std::size_t
-    serialized_size_in_bytes() const;
+    DEAL_II_NODISCARD std::size_t
+                      serialized_size_in_bytes() const;
 
     /**
      * Write the data of this object to a stream for the purpose of

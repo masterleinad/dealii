@@ -92,16 +92,16 @@ namespace mg
     Tvmult_add(const unsigned int level,
                VectorType &       dst,
                const VectorType & src) const override;
-    virtual unsigned int
+    DEAL_II_NODISCARD virtual unsigned int
     get_minlevel() const override;
-    virtual unsigned int
+    DEAL_II_NODISCARD virtual unsigned int
     get_maxlevel() const override;
 
     /**
      * Memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
   private:
     MGLevelObject<LinearOperator<VectorType>> matrices;

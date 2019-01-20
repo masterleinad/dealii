@@ -163,8 +163,8 @@ namespace MeshWorker
                 const unsigned int    face_no,
                 const unsigned int    subface_no);
 
-    const BlockIndices &
-    local_indices() const;
+    DEAL_II_NODISCARD const BlockIndices &
+                            local_indices() const;
 
 
     /// The block structure of the system

@@ -89,7 +89,7 @@ namespace internal
        * Return size of data vector. It is used in the solver to store
        * the Arnoldi vectors.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       size() const;
 
 

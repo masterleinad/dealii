@@ -59,7 +59,7 @@ namespace LinearAlgebra
     /**
      * Return a constant reference to the underlying mpi communicator.
      */
-    virtual const MPI_Comm &
+    DEAL_II_NODISCARD virtual const MPI_Comm &
     get_mpi_communicator() const = 0;
   };
 

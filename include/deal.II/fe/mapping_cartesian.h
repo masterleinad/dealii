@@ -69,7 +69,7 @@ public:
    * Return @p true because MappingCartesian preserves vertex
    * locations.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   preserves_vertex_locations() const override;
 
   /**
@@ -187,7 +187,7 @@ private:
   };
 
   // documentation can be found in Mapping::requires_update_flags()
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   // documentation can be found in Mapping::get_data()

@@ -183,15 +183,15 @@ public:
    * Return @p true if file stream has already been attached,
    * @p false otherwise.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_file() const;
 
 
   /**
    * Return the prefix string.
    */
-  const std::string &
-  get_prefix() const;
+  DEAL_II_NODISCARD const std::string &
+                          get_prefix() const;
 
 
   /**
@@ -299,8 +299,8 @@ public:
    * This is not exact (but will usually be close) because calculating the
    * memory usage of trees (e.g., <tt>std::map</tt>) is difficult.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 private:
   /**
@@ -310,8 +310,8 @@ private:
    * that created this LogStream instance (usually, in the case of deallog,
    * the "main" thread).
    */
-  std::stack<std::string> &
-  get_prefixes() const;
+  DEAL_II_NODISCARD std::stack<std::string> &
+                    get_prefixes() const;
 
   /**
    * Stack of strings which are printed at the beginning of each line to allow

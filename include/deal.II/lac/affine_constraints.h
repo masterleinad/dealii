@@ -260,7 +260,7 @@ public:
    * allows storage of this line. Always returns true if not in the
    * distributed case.
    */
-  bool
+  DEAL_II_NODISCARD bool
   can_store_line(const size_type line_n) const;
 
   /**
@@ -269,8 +269,8 @@ public:
    * IndexSet, whereas otherwise it contains the global problem size and the
    * local range.
    */
-  const IndexSet &
-  get_local_lines() const;
+  DEAL_II_NODISCARD const IndexSet &
+                          get_local_lines() const;
 
   /**
    * This function copies the content of @p constraints_in with DoFs that are
@@ -474,8 +474,8 @@ public:
   /**
    * Return number of constraints stored in this matrix.
    */
-  size_type
-  n_constraints() const;
+  DEAL_II_NODISCARD size_type
+                    n_constraints() const;
 
   /**
    * Return whether the degree of freedom with number @p line_n is a
@@ -486,7 +486,7 @@ public:
    * sorted and we can do a binary search, while before close() was called, we
    * have to perform a linear search through all entries.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_constrained(const size_type line_n) const;
 
   /**
@@ -500,7 +500,7 @@ public:
    * of freedom, or if it is constrained to only one degree of freedom but
    * with a weight different from one.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_identity_constrained(const size_type line_n) const;
 
   /**
@@ -509,7 +509,7 @@ public:
    * <code>index1=index2</code> or constrains index2 so that
    * <code>index2=index1</code>.
    */
-  bool
+  DEAL_II_NODISCARD bool
   are_identity_constrained(const size_type line_n_1,
                            const size_type line_n_2) const;
 
@@ -523,14 +523,14 @@ public:
    * The name indicates that within the system matrix, references to a
    * constrained node are indirected to the nodes it is constrained to.
    */
-  size_type
-  max_constraint_indirections() const;
+  DEAL_II_NODISCARD size_type
+                    max_constraint_indirections() const;
 
   /**
    * Return <tt>true</tt> in case the dof is constrained and there is a non-
    * trivial inhomogeneous values set to the dof.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_inhomogeneously_constrained(const size_type index) const;
 
   /**
@@ -538,7 +538,7 @@ public:
    * homogeneous ones, and <tt>true</tt> if there is at least one
    * inhomogeneity.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_inhomogeneities() const;
 
   /**
@@ -597,8 +597,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Add the constraint indices associated to the indices in the given vector.
@@ -1234,8 +1234,8 @@ public:
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Support for boost:serialization.
@@ -1266,8 +1266,8 @@ public:
    * @return A range object for the half open range <code>[this->begin(),
    * this->end())</code> of line entries.
    */
-  const LineRange
-  get_lines() const;
+  DEAL_II_NODISCARD const LineRange
+                          get_lines() const;
 
   /**
    * Check if the current object is consistent on all processors
@@ -1473,8 +1473,8 @@ private:
    * Internal function to calculate the index of line @p line_n in the vector
    * lines_cache using local_lines.
    */
-  size_type
-  calculate_line_index(const size_type line_n) const;
+  DEAL_II_NODISCARD size_type
+                    calculate_line_index(const size_type line_n) const;
 
   /**
    * This function actually implements the local_to_global function for

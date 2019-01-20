@@ -425,7 +425,7 @@ public:
    * returns <tt>FE_DGQArbitraryNodes<dim>(degree)</tt>, with <tt>dim</tt> and
    * <tt>degree</tt> replaced by appropriate values.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   /**
@@ -470,7 +470,7 @@ public:
    * it returns one row where the first element (corresponding to the constant
    * mode) is set to true and all other elements are set to false.
    */
-  virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
+  DEAL_II_NODISCARD virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
   get_constant_modes() const override;
 
   /**
@@ -479,7 +479,7 @@ public:
    * <tt>degree</tt> replaced by the values given by the template parameter
    * and the argument passed to the constructor, respectively.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
@@ -522,7 +522,7 @@ public:
    * <tt>degree</tt> replaced by the values given by the template parameter
    * and the argument passed to the constructor, respectively.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>

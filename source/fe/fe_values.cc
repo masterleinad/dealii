@@ -2662,7 +2662,7 @@ public:
    * Return the number of degrees of freedom the DoF
    * handler object has to which the iterator belongs to.
    */
-  virtual types::global_dof_index
+  DEAL_II_NODISCARD virtual types::global_dof_index
   n_dofs_for_dof_handler() const = 0;
 
 #include "fe_values.decl.1.inst"
@@ -2709,7 +2709,7 @@ public:
    * Return the number of degrees of freedom the DoF handler object has to
    * which the iterator belongs to.
    */
-  virtual types::global_dof_index
+  DEAL_II_NODISCARD virtual types::global_dof_index
   n_dofs_for_dof_handler() const override;
 
 #include "fe_values.decl.2.inst"
@@ -2775,7 +2775,7 @@ public:
    * Implement the respective function of the base class. Since this is not
    * possible, we just raise an error.
    */
-  virtual types::global_dof_index
+  DEAL_II_NODISCARD virtual types::global_dof_index
   n_dofs_for_dof_handler() const override;
 
 #include "fe_values.decl.2.inst"
@@ -3125,6 +3125,8 @@ namespace internal
                      const dealii::Table<2, double> &shape_values,
                      std::vector<Number> &           values)
   {
+    static_assert(!std::is_integral<Number>::value, "");
+    static_assert(!std::is_integral<Number2>::value, "");
     // scalar finite elements, so shape_values.size() == dofs_per_cell
     const unsigned int dofs_per_cell = shape_values.n_rows();
     const unsigned int n_quadrature_points =
@@ -3593,6 +3595,7 @@ FEValuesBase<dim, spacedim>::get_function_values(
   internal::do_function_values(dof_values.begin(),
                                this->finite_element_output.shape_values,
                                values);
+  static_assert(!std::is_integral<Number>::value, "");
 }
 
 

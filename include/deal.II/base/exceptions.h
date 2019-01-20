@@ -18,6 +18,7 @@
 
 #include <deal.II/base/config.h>
 
+#include <array>
 #include <exception>
 #include <ostream>
 #include <string>
@@ -158,7 +159,7 @@ protected:
   /**
    * array of pointers that contains the raw stack trace
    */
-  void *raw_stacktrace[25];
+  std::array<void *, 25> raw_stacktrace;
 #endif
 
 private:
@@ -1319,7 +1320,7 @@ namespace deal_II_exceptions
           // something must have gone wrong in the error handling code for us
           // to get this far, so throw an exception.
           default:
-            throw ::dealii::StandardExceptions::ExcInternalError();
+            throw StandardExceptions::ExcInternalError();
         }
     }
 

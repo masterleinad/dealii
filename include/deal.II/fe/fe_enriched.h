@@ -311,13 +311,13 @@ public:
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
    * Return a string that identifies a finite element.
    */
-  virtual std::string
+  DEAL_II_NODISCARD virtual std::string
   get_name() const override;
 
   /**
@@ -382,7 +382,7 @@ public:
    * This function returns @p true if and only if all its base elements return @p true
    * for this function.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   hp_constraints_are_implemented() const override;
 
   /**

@@ -368,8 +368,8 @@ namespace MeshWorker
     /**
      * The memory used by this object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
   };
 
 

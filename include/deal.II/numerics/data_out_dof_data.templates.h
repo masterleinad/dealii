@@ -493,7 +493,7 @@ namespace internal
        * Assuming that the stored vector is a cell vector, extract the given
        * element from it.
        */
-      virtual double
+      DEAL_II_NODISCARD virtual double
       get_cell_data_value(
         const unsigned int       cell_number,
         const ComponentExtractor extract_component) const override;
@@ -576,7 +576,7 @@ namespace internal
        * Return whether the data represented by (a derived class of) this object
        * represents a complex-valued (as opposed to real-valued) information.
        */
-      virtual bool
+      DEAL_II_NODISCARD virtual bool
       is_complex_valued() const override;
 
       /**
@@ -589,7 +589,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      virtual std::size_t
+      DEAL_II_NODISCARD virtual std::size_t
       memory_consumption() const override;
 
     private:
@@ -722,6 +722,8 @@ namespace internal
       const ComponentExtractor                             extract_component,
       std::vector<double> &                                patch_values) const
     {
+      static_assert(!std::is_same<VectorType, IndexSet>::value, "");
+
       if (typeid(typename VectorType::value_type) == typeid(double))
         {
           Assert(extract_component == ComponentExtractor::real_part,
@@ -1204,6 +1206,7 @@ DataOut_DoFData<DoFHandlerType, patch_dim, patch_space_dim>::
          deduced_names.size(),
          DataComponentInterpretation::component_is_scalar));
 
+  static_assert(!std::is_same<VectorType, IndexSet>::value, "");
   // finally, add the data vector:
   auto new_entry = std_cxx14::make_unique<
     internal::DataOutImplementation::DataEntry<DoFHandlerType, VectorType>>(

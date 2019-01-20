@@ -392,22 +392,22 @@ namespace LinearAlgebra
      * stored is returned by n_elements() and is smaller or equal to the
      * number returned by the current function.
      */
-    size_type
-    size() const;
+    DEAL_II_NODISCARD size_type
+                      size() const;
 
     /**
      * This function returns the number of elements stored. It is smaller or
      * equal to the dimension of the vector space that is modeled by an object
      * of this kind. This dimension is return by size().
      */
-    size_type
-    n_elements() const;
+    DEAL_II_NODISCARD size_type
+                      n_elements() const;
 
     /**
      * Return the IndexSet that represents the indices of the elements stored.
      */
-    const IndexSet &
-    get_stored_elements() const;
+    DEAL_II_NODISCARD const IndexSet &
+                            get_stored_elements() const;
 
     /**
      * Make the @p ReadWriteVector class a bit like the <tt>vector<></tt>
@@ -605,8 +605,8 @@ namespace LinearAlgebra
     /**
      * Return the memory consumption of this class in bytes.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
     //@}
 
   protected:
@@ -644,7 +644,7 @@ namespace LinearAlgebra
     /**
      * Return the local position of @p global_index.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     global_to_local(const types::global_dof_index global_index) const
     {
       // the following will throw an exception if the global_index is not

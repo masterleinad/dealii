@@ -87,8 +87,8 @@ public:
   /**
    * Return the value of the time variable.
    */
-  Number
-  get_time() const;
+  DEAL_II_NODISCARD Number
+                    get_time() const;
 
   /**
    * Set the time to <tt>new_time</tt>, overwriting the old value.

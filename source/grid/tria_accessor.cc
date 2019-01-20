@@ -1907,7 +1907,7 @@ CellAccessor<3>::point_inside(const Point<3> &p) const
 // 3) then check if inside unit cell
 template <int dim, int spacedim>
 template <int dim_, int spacedim_>
-bool
+DEAL_II_NODISCARD bool
 CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_> &p) const
 {
   const TriaRawIterator<CellAccessor<dim_, spacedim_>> cell_iterator(*this);

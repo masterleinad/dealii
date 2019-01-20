@@ -544,21 +544,21 @@ public:
    * and global indices. The use of this function is highly deprecated and it
    * should vanish in one of the next versions
    */
-  const BlockIndices &
-  get_block_indices() const;
+  DEAL_II_NODISCARD const BlockIndices &
+                          get_block_indices() const;
 
   /**
    * Number of blocks.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_blocks() const;
 
   /**
    * Return dimension of the vector. This is the sum of the dimensions of all
    * components.
    */
-  std::size_t
-  size() const;
+  DEAL_II_NODISCARD std::size_t
+                    size() const;
 
   /**
    * Return an index set that describes which elements of this vector are
@@ -576,8 +576,8 @@ public:
    * elements of the individual blocks, shifted by their respective index
    * offsets.
    */
-  IndexSet
-  locally_owned_elements() const;
+  DEAL_II_NODISCARD IndexSet
+                    locally_owned_elements() const;
 
   /**
    * Return an iterator pointing to the first element.
@@ -794,7 +794,7 @@ public:
    * Return true if the given global index is in the local range of this
    * processor. Asks the corresponding block.
    */
-  bool
+  DEAL_II_NODISCARD bool
   in_local_range(const size_type global_index) const;
 
   /**
@@ -802,7 +802,7 @@ public:
    * function is mainly for internal consistency check and should seldom be
    * used when not in debug mode since it uses quite some time.
    */
-  bool
+  DEAL_II_NODISCARD bool
   all_zero() const;
 
   /**
@@ -810,7 +810,7 @@ public:
    * are zero or positive. This function is used, for example, to check
    * whether refinement indicators are really all positive (or zero).
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_non_negative() const;
 
   /**
@@ -956,8 +956,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 protected:
   /**

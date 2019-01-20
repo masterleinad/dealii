@@ -184,8 +184,8 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the
@@ -240,9 +240,9 @@ namespace internal
                     const unsigned int dimension,
                     const unsigned int space_dimension);
       void
-      monitor_memory(const unsigned int true_dimension) const;
-      std::size_t
-      memory_consumption() const;
+                        monitor_memory(const unsigned int true_dimension) const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the

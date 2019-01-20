@@ -315,7 +315,7 @@ public:
    *
    * This function is mainly used by the hp::MappingCollection class.
    */
-  virtual std::unique_ptr<Mapping<dim, spacedim>>
+  DEAL_II_NODISCARD virtual std::unique_ptr<Mapping<dim, spacedim>>
   clone() const = 0;
 
   /**
@@ -347,7 +347,7 @@ public:
    * MappingQ, MappingQGeneric, MappingCartesian, but @p false for
    * MappingQEulerian, MappingQ1Eulerian, and MappingFEField.
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   preserves_vertex_locations() const = 0;
 
   /**
@@ -578,7 +578,7 @@ public:
     /**
      * Return an estimate (in bytes) or the memory consumption of this object.
      */
-    virtual std::size_t
+    DEAL_II_NODISCARD virtual std::size_t
     memory_consumption() const;
   };
 
@@ -607,7 +607,7 @@ protected:
    *
    * @see UpdateFlags
    */
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const = 0;
 
   /**

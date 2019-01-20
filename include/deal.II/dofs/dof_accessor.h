@@ -320,8 +320,8 @@ public:
   /**
    * Return a handle on the DoFHandler object which we are using.
    */
-  const DoFHandlerType &
-  get_dof_handler() const;
+  DEAL_II_NODISCARD const DoFHandlerType &
+                          get_dof_handler() const;
 
   /**
    * Implement the copy operator needed for the iterator classes.
@@ -356,6 +356,7 @@ public:
   /**
    * Return an iterator pointing to the @p c-th child.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFAccessor<structdim, DoFHandlerType, level_dof_access>>
   child(const unsigned int c) const;
 
@@ -364,7 +365,7 @@ public:
    * a line itself, then the only valid index is @p i equals to zero, and the
    * function returns an iterator to itself.
    */
-  typename dealii::internal::DoFHandlerImplementation::
+  DEAL_II_NODISCARD typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType, level_dof_access>::line_iterator
     line(const unsigned int i) const;
 
@@ -373,7 +374,7 @@ public:
    * a quad itself, then the only valid index is @p i equals to zero, and the
    * function returns an iterator to itself.
    */
-  typename dealii::internal::DoFHandlerImplementation::
+  DEAL_II_NODISCARD typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType, level_dof_access>::quad_iterator
     quad(const unsigned int i) const;
 
@@ -465,23 +466,23 @@ public:
    * a cell object, there can only be a single set of degrees of freedom, and
    * fe_index has to match the result of active_fe_index().
    */
-  types::global_dof_index
-  vertex_dof_index(
-    const unsigned int vertex,
-    const unsigned int i,
-    const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    vertex_dof_index(
+                      const unsigned int vertex,
+                      const unsigned int i,
+                      const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
 
   /**
    * Return the global DoF index of the <code>i</code>th degree of freedom
    * associated with the <code>vertex</code>th vertex on level @p level. Also
    * see vertex_dof_index().
    */
-  types::global_dof_index
-  mg_vertex_dof_index(
-    const int          level,
-    const unsigned int vertex,
-    const unsigned int i,
-    const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    mg_vertex_dof_index(
+                      const int          level,
+                      const unsigned int vertex,
+                      const unsigned int i,
+                      const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
 
   /**
    * Index of the <i>i</i>th degree of freedom of this object.
@@ -510,16 +511,16 @@ public:
    * produce an exception because no degrees are defined in the interior of
    * the face.
    */
-  types::global_dof_index
-  dof_index(
-    const unsigned int i,
-    const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    dof_index(
+                      const unsigned int i,
+                      const unsigned int fe_index = DoFHandlerType::default_fe_index) const;
 
   /**
    * Return the dof_index on the given level. Also see dof_index.
    */
-  types::global_dof_index
-  mg_dof_index(const int level, const unsigned int i) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    mg_dof_index(const int level, const unsigned int i) const;
 
   /**
    * @}
@@ -542,7 +543,7 @@ public:
    * element or not. If it is an edge in 3d, the possible return value may be
    * one or any other value larger than that.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_active_fe_indices() const;
 
   /**
@@ -552,7 +553,7 @@ public:
    * n_active_fe_indices() active finite elements, and this function can be
    * queried for their indices.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   nth_active_fe_index(const unsigned int n) const;
 
   /**
@@ -561,8 +562,8 @@ public:
    * The size of the returned set equals the number of finite elements that
    * are active on this object.
    */
-  std::set<unsigned int>
-  get_active_fe_indices() const;
+  DEAL_II_NODISCARD std::set<unsigned int>
+                    get_active_fe_indices() const;
 
   /**
    * Return true if the finite element with given index is active on the
@@ -572,7 +573,7 @@ public:
    * dimensional objects, there may be more than one @p fe_index that are
    * active on any given object (see n_active_fe_indices()).
    */
-  bool
+  DEAL_II_NODISCARD bool
   fe_index_is_active(const unsigned int fe_index) const;
 
   /**
@@ -580,9 +581,9 @@ public:
    * given @p fe_index. @p fe_index must be used on this object, i.e.
    * <code>fe_index_is_active(fe_index)</code> must return true.
    */
-  const FiniteElement<DoFHandlerType::dimension,
-                      DoFHandlerType::space_dimension> &
-  get_fe(const unsigned int fe_index) const;
+  DEAL_II_NODISCARD const
+    FiniteElement<DoFHandlerType::dimension, DoFHandlerType::space_dimension> &
+    get_fe(const unsigned int fe_index) const;
 
   /**
    * @}
@@ -900,8 +901,8 @@ public:
   /**
    * Return a handle on the DoFHandler object which we are using.
    */
-  const DoFHandlerType<1, spacedim> &
-  get_dof_handler() const;
+  DEAL_II_NODISCARD const DoFHandlerType<1, spacedim> &
+                          get_dof_handler() const;
 
   /**
    * Implement the copy operator needed for the iterator classes.
@@ -930,6 +931,7 @@ public:
    * of the current object. The object is invalid because points (as
    * represented by the current class) do not have children.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFAccessor<0, DoFHandlerType<1, spacedim>, level_dof_access>>
   child(const unsigned int c) const;
 
@@ -939,7 +941,7 @@ public:
    * Since meshes with dimension 1 do not have quads this method just throws
    * an exception.
    */
-  typename dealii::internal::DoFHandlerImplementation::
+  DEAL_II_NODISCARD typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType<1, spacedim>, level_dof_access>::line_iterator
     line(const unsigned int i) const;
 
@@ -949,7 +951,7 @@ public:
    * Since meshes with dimension 1 do not have quads this method just throws
    * an exception.
    */
-  typename dealii::internal::DoFHandlerImplementation::
+  DEAL_II_NODISCARD typename dealii::internal::DoFHandlerImplementation::
     Iterators<DoFHandlerType<1, spacedim>, level_dof_access>::quad_iterator
     quad(const unsigned int i) const;
 
@@ -1029,11 +1031,11 @@ public:
    * a cell object, there can only be a single set of degrees of freedom, and
    * fe_index has to match the result of active_fe_index().
    */
-  types::global_dof_index
-  vertex_dof_index(
-    const unsigned int vertex,
-    const unsigned int i,
-    const unsigned int fe_index = AccessorData::default_fe_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    vertex_dof_index(
+                      const unsigned int vertex,
+                      const unsigned int i,
+                      const unsigned int fe_index = AccessorData::default_fe_index) const;
 
   /**
    * Index of the <i>i</i>th degree of freedom of this object.
@@ -1049,9 +1051,9 @@ public:
    * In order to specify which set of degrees of freedom to work on, the last
    * argument is used to disambiguate.
    */
-  types::global_dof_index
-  dof_index(const unsigned int i,
-            const unsigned int fe_index = AccessorData::default_fe_index) const;
+  DEAL_II_NODISCARD types::global_dof_index
+                    dof_index(const unsigned int i,
+                              const unsigned int fe_index = AccessorData::default_fe_index) const;
 
   /**
    * @}
@@ -1071,7 +1073,7 @@ public:
    * calculated, this method just raises an exception and only exists to
    * enable dimension-independent programming.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_active_fe_indices() const;
 
   /**
@@ -1081,7 +1083,7 @@ public:
    * calculated, this method just raises an exception and only exists to
    * enable dimension-independent programming.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   nth_active_fe_index(const unsigned int n) const;
 
   /**
@@ -1092,7 +1094,7 @@ public:
    * calculated, this method just raises an exception and only exists to
    * enable dimension-independent programming.
    */
-  bool
+  DEAL_II_NODISCARD bool
   fe_index_is_active(const unsigned int fe_index) const;
 
   /**
@@ -1100,9 +1102,10 @@ public:
    * given @p fe_index. @p fe_index must be used on this object, i.e.
    * <code>fe_index_is_active(fe_index)</code> must return true.
    */
-  const FiniteElement<DoFHandlerType<1, spacedim>::dimension,
-                      DoFHandlerType<1, spacedim>::space_dimension> &
-  get_fe(const unsigned int fe_index) const;
+  DEAL_II_NODISCARD const
+    FiniteElement<DoFHandlerType<1, spacedim>::dimension,
+                  DoFHandlerType<1, spacedim>::space_dimension> &
+    get_fe(const unsigned int fe_index) const;
 
   /**
    * @}
@@ -1447,6 +1450,7 @@ public:
    * CellAccessor returns a triangulation cell accessor without access to the
    * DoF data.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   parent() const;
 
@@ -1462,6 +1466,7 @@ public:
    * needed since the neighbor function of the base class returns a cell
    * accessor without access to the DoF data.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   neighbor(const unsigned int i) const;
 
@@ -1470,6 +1475,7 @@ public:
    * is needed since the neighbor function of the base class returns a cell
    * accessor without access to the DoF data.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   periodic_neighbor(const unsigned int i) const;
 
@@ -1478,6 +1484,7 @@ public:
    * This function is needed since the neighbor function of the base class
    * returns a cell accessor without access to the DoF data.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   neighbor_or_periodic_neighbor(const unsigned int i) const;
 
@@ -1486,6 +1493,7 @@ public:
    * since the child function of the base class returns a cell accessor
    * without access to the DoF data.
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   child(const unsigned int i) const;
 
@@ -1495,8 +1503,8 @@ public:
    * This function returns a DoFAccessor with <code>structdim == 0</code> in
    * 1D, a DoFAccessor::line in 2D, and a DoFAccessor::quad in 3d.
    */
-  face_iterator
-  face(const unsigned int i) const;
+  DEAL_II_NODISCARD face_iterator
+                    face(const unsigned int i) const;
 
   /**
    * Return the result of the @p neighbor_child_on_subface function of the
@@ -1504,6 +1512,7 @@ public:
    * function in the base class only returns an iterator with access to the
    * triangulation data).
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   neighbor_child_on_subface(const unsigned int face_no,
                             const unsigned int subface_no) const;
@@ -1514,6 +1523,7 @@ public:
    * data (the function in the base class only returns an iterator with access
    * to the triangulation data).
    */
+  DEAL_II_NODISCARD
   TriaIterator<DoFCellAccessor<DoFHandlerType, level_dof_access>>
   periodic_neighbor_child_on_subface(const unsigned int face_no,
                                      const unsigned int subface_no) const;
@@ -1882,9 +1892,9 @@ public:
    * associated with them without having any degrees of freedom. Consequently,
    * this function will produce an exception when called on non-active cells.
    */
-  const FiniteElement<DoFHandlerType::dimension,
-                      DoFHandlerType::space_dimension> &
-  get_fe() const;
+  DEAL_II_NODISCARD const
+    FiniteElement<DoFHandlerType::dimension, DoFHandlerType::space_dimension> &
+    get_fe() const;
 
   /**
    * Return the index inside the hp::FECollection of the FiniteElement used
@@ -1907,7 +1917,7 @@ public:
    * ghost cells, during the call to hp::DoFHandler::distribute_dofs().
    * See the documentation of hp::DoFHandler for more information.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   active_fe_index() const;
 
   /**

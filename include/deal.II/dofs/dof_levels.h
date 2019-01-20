@@ -91,16 +91,16 @@ namespace internal
        * @return A pointer to the first DoF index for the current cell. The
        * next dofs_per_cell indices are for the current cell.
        */
-      const types::global_dof_index *
-      get_cell_cache_start(const unsigned int obj_index,
-                           const unsigned int dofs_per_cell) const;
+      DEAL_II_NODISCARD const types::global_dof_index *
+                              get_cell_cache_start(const unsigned int obj_index,
+                                                   const unsigned int dofs_per_cell) const;
 
       /**
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the

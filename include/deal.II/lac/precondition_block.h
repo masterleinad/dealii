@@ -417,14 +417,14 @@ public:
       /**
        * Row number of the element represented by this object.
        */
-      size_type
-      row() const;
+      DEAL_II_NODISCARD size_type
+                        row() const;
 
       /**
        * Column number of the element represented by this object.
        */
-      size_type
-      column() const;
+      DEAL_II_NODISCARD size_type
+                        column() const;
 
       /**
        * Value of this matrix entry.

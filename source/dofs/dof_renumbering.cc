@@ -2015,7 +2015,7 @@ namespace DoFRenumbering
        * Comparison operator for dim>=2
        */
       template <class DHCellIterator, int xdim>
-      bool
+      DEAL_II_NODISCARD bool
       compare(const DHCellIterator &c1,
               const DHCellIterator &c2,
               std::integral_constant<int, xdim>) const
@@ -2033,7 +2033,7 @@ namespace DoFRenumbering
        * where this function makes no sense
        */
       template <class DHCellIterator>
-      bool
+      DEAL_II_NODISCARD bool
       compare(const DHCellIterator &,
               const DHCellIterator &,
               std::integral_constant<int, 1>) const

@@ -70,11 +70,11 @@ public:
    * Return the polynomial degree of this finite element, i.e. the value
    * passed to the constructor.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   get_degree() const;
 
   // for documentation, see the FiniteElement base class
-  virtual UpdateFlags
+  DEAL_II_NODISCARD virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
 protected:

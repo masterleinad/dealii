@@ -191,7 +191,7 @@ public:
    * This functionality only needs to be called if using MPI based vectors and
    * exists in other objects for compatibility.
    */
-  bool
+  DEAL_II_NODISCARD bool
   has_ghost_elements() const;
 
   /**

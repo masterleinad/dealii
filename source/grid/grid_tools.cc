@@ -3587,8 +3587,8 @@ namespace GridTools
             fix_up_object(cell->face(f));
           }
       }
-    } /* namespace FixUpDistortedChildCells */
-  }   /* namespace internal */
+    } // namespace FixUpDistortedChildCells
+  }   // namespace internal
 
 
   template <int dim, int spacedim>
@@ -4396,7 +4396,6 @@ namespace GridTools
 
   namespace internal
   {
-    // Functions are needed for distributed compute point locations
     namespace distributed_cptloc
     {
       // Hash function for cells; needed for unordered maps/multimaps

@@ -97,15 +97,15 @@ public:
    * Number of rows of this matrix. For the present matrix, the number of rows
    * and columns are equal, of course.
    */
-  size_type
-  m() const;
+  DEAL_II_NODISCARD size_type
+                    m() const;
 
   /**
    * Number of columns of this matrix. For the present matrix, the number of
    * rows and columns are equal, of course.
    */
-  size_type
-  n() const;
+  DEAL_II_NODISCARD size_type
+                    n() const;
 
   /**
    * Matrix-vector multiplication. For the present case, this of course

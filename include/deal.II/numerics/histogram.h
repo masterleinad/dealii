@@ -155,8 +155,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   /**
    * Exception.
@@ -196,8 +196,8 @@ private:
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Left bound of the interval.

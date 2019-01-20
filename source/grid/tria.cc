@@ -2613,8 +2613,8 @@ namespace internal
                               quad.face(0),
                               quad.face(2),
                               quad.face(
-                                3)), // face_orientation=false, face_flip=true,
-                                     // face_rotation=true
+                                3)), // face_orientation=false,
+                                     // face_flip=true, face_rotation=true
                   test_quad_5(quad.face(2),
                               quad.face(3),
                               quad.face(1),
@@ -2631,8 +2631,8 @@ namespace internal
                               quad.face(2),
                               quad.face(0),
                               quad.face(
-                                1)); // face_orientation=true,  face_flip=true,
-                                     // face_rotation=true
+                                1)); // face_orientation=true,
+                                     // face_flip=true, face_rotation=true
                 if (needed_quads.find(test_quad_1) == needed_quads.end() &&
                     needed_quads.find(test_quad_2) == needed_quads.end() &&
                     needed_quads.find(test_quad_3) == needed_quads.end() &&

@@ -83,8 +83,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 protected:
   /**
@@ -445,8 +445,8 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 private:
   /**

@@ -114,8 +114,7 @@ namespace MemorySpace
   struct MemorySpaceData<Number, Host>
   {
     MemorySpaceData()
-      : values(nullptr, &free)
-    {}
+      : values(nullptr, &free){};
 
     void
     copy_to(Number *begin, std::size_t n_elements)

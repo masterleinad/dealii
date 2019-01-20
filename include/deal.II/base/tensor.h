@@ -168,8 +168,8 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
-  begin_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          begin_raw() const;
 
   /**
    * Return a pointer to the element past the end of the underlying storage.
@@ -181,8 +181,8 @@ public:
    * Return a const pointer to the element past the end of the underlying
    * storage.
    */
-  const Number *
-  end_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          end_raw() const;
 
   /**
    * Return a reference to the encapsulated Number object. Since rank-0
@@ -303,8 +303,8 @@ public:
    * the absolute squares of all entries. For the present case of rank-1
    * tensors, this equals the usual <tt>l<sub>2</sub></tt> norm of the vector.
    */
-  real_type
-  norm() const;
+  DEAL_II_NODISCARD real_type
+                    norm() const;
 
   /**
    * Return the square of the Frobenius-norm of a tensor, i.e. the sum of the
@@ -312,8 +312,8 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV real_type
-                        norm_square() const;
+  DEAL_II_CUDA_HOST_DEV DEAL_II_NODISCARD real_type
+                                          norm_square() const;
 
   /**
    * Read or write the data of this object to or from a stream for the purpose
@@ -501,8 +501,8 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
-  begin_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          begin_raw() const;
 
   /**
    * Return a pointer to the element past the end of the underlying storage.
@@ -513,8 +513,8 @@ public:
   /**
    * Return a pointer to the element past the end of the underlying storage.
    */
-  const Number *
-  end_raw() const;
+  DEAL_II_NODISCARD const Number *
+                          end_raw() const;
 
   /**
    * Assignment operator from tensors with different underlying scalar type.
@@ -606,7 +606,7 @@ public:
    * tensors, this equals the usual <tt>l<sub>2</sub></tt> norm of the vector.
    */
 
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   norm() const;
 
   /**
@@ -615,8 +615,9 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV typename numbers::NumberTraits<Number>::real_type
-  norm_square() const;
+  DEAL_II_CUDA_HOST_DEV DEAL_II_NODISCARD
+    typename numbers::NumberTraits<Number>::real_type
+    norm_square() const;
 
   /**
    * Fill a vector with all tensor elements.

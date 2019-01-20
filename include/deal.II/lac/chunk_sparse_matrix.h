@@ -120,15 +120,15 @@ namespace ChunkSparseMatrixIterators
     /**
      * Value of this matrix entry.
      */
-    number
-    value() const;
+    DEAL_II_NODISCARD number
+                      value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a constant reference.
      */
-    const MatrixType &
-    get_matrix() const;
+    DEAL_II_NODISCARD const MatrixType &
+                            get_matrix() const;
 
   private:
     /**
@@ -253,15 +253,15 @@ namespace ChunkSparseMatrixIterators
     /**
      * Value of this matrix entry, returned as a read- and writable reference.
      */
-    Reference
-    value() const;
+    DEAL_II_NODISCARD Reference
+                      value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a non-constant reference.
      */
-    MatrixType &
-    get_matrix() const;
+    DEAL_II_NODISCARD MatrixType &
+                      get_matrix() const;
 
   private:
     /**

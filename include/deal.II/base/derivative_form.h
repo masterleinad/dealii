@@ -104,14 +104,14 @@ public:
    * Return the transpose of a rectangular DerivativeForm, that is to say
    * viewed as a two dimensional matrix.
    */
-  DerivativeForm<1, spacedim, dim, Number>
-  transpose() const;
+  DEAL_II_NODISCARD DerivativeForm<1, spacedim, dim, Number>
+                    transpose() const;
 
   /**
    * Compute the Frobenius norm of this form, i.e., the expression
    * $\sqrt{\sum_{ij} |DF_{ij}|^2}$.
    */
-  typename numbers::NumberTraits<Number>::real_type
+  DEAL_II_NODISCARD typename numbers::NumberTraits<Number>::real_type
   norm() const;
 
   /**
@@ -119,8 +119,8 @@ public:
    * transformation F. That is to say if $DF$ is square, it computes
    * $\det(DF)$, in case DF is not square returns $\sqrt{\det(DF^T * DF)}$.
    */
-  Number
-  determinant() const;
+  DEAL_II_NODISCARD Number
+                    determinant() const;
 
   /**
    * Assuming that the current object stores the Jacobian of a mapping
@@ -130,8 +130,8 @@ public:
    * {\mathbb R}^n \mapsto {\mathbb R}^n$), then this function
    * simplifies to computing $\nabla F^{-T}$.
    */
-  DerivativeForm<1, dim, spacedim, Number>
-  covariant_form() const;
+  DEAL_II_NODISCARD DerivativeForm<1, dim, spacedim, Number>
+                    covariant_form() const;
 
   /**
    * Determine an estimate for the memory consumption (in bytes) of this
@@ -151,14 +151,14 @@ private:
   /**
    * Auxiliary function that computes (*this) * $T^{T}$
    */
-  DerivativeForm<1, dim, spacedim, Number>
-  times_T_t(const Tensor<2, dim, Number> &T) const;
+  DEAL_II_NODISCARD DerivativeForm<1, dim, spacedim, Number>
+                    times_T_t(const Tensor<2, dim, Number> &T) const;
 
 
   /**
    * Array of tensors holding the subelements.
    */
-  Tensor<order, dim, Number> tensor[spacedim];
+  std::array<Tensor<order, dim, Number>, spacedim> tensor;
 };
 
 

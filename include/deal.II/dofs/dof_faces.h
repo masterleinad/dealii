@@ -91,8 +91,8 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the
@@ -122,8 +122,8 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the
@@ -158,8 +158,8 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Read or write the data of this object to or from a stream for the

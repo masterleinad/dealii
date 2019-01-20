@@ -99,14 +99,14 @@ public:
   /**
    * Return the condition of the object.
    */
-  bool
+  DEAL_II_NODISCARD bool
   is_active() const;
 
   /**
    * Return a reference to the stream currently in use.
    */
-  std::ostream &
-  get_stream() const;
+  DEAL_II_NODISCARD std::ostream &
+                    get_stream() const;
 
   /**
    * Output a constant something through this stream. This function must be @p

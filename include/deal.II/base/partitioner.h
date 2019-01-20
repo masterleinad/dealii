@@ -194,14 +194,14 @@ namespace Utilities
       /**
        * Return the global size.
        */
-      types::global_dof_index
-      size() const;
+      DEAL_II_NODISCARD types::global_dof_index
+                        size() const;
 
       /**
        * Return the local size, i.e. local_range().second minus
        * local_range().first.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       local_size() const;
 
       /**
@@ -210,14 +210,15 @@ namespace Utilities
        * consists of one single range of data, and is equivalent to the result
        * of local_range().
        */
-      const IndexSet &
-      locally_owned_range() const;
+      DEAL_II_NODISCARD const IndexSet &
+                              locally_owned_range() const;
 
       /**
        * Return the local range. The returned pair consists of the index of
        * the first element and the index of the element one past the last
        * locally owned one.
        */
+      DEAL_II_NODISCARD
       std::pair<types::global_dof_index, types::global_dof_index>
       local_range() const;
 
@@ -225,7 +226,7 @@ namespace Utilities
        * Return true if the given global index is in the local range of this
        * processor.
        */
-      bool
+      DEAL_II_NODISCARD bool
       in_local_range(const types::global_dof_index global_index) const;
 
       /**
@@ -237,7 +238,7 @@ namespace Utilities
        * local_size()-1, and the local index for ghosts is between
        * local_size() and local_size()+n_ghost_indices()-1.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       global_to_local(const types::global_dof_index global_index) const;
 
       /**
@@ -247,28 +248,28 @@ namespace Utilities
        * local_size()-1, and the local index for ghosts is between
        * local_size() and local_size()+n_ghost_indices()-1.
        */
-      types::global_dof_index
-      local_to_global(const unsigned int local_index) const;
+      DEAL_II_NODISCARD types::global_dof_index
+                        local_to_global(const unsigned int local_index) const;
 
       /**
        * Return whether the given global index is a ghost index on the
        * present processor. Returns false for indices that are owned locally
        * and for indices not present at all.
        */
-      bool
+      DEAL_II_NODISCARD bool
       is_ghost_entry(const types::global_dof_index global_index) const;
 
       /**
        * Return an IndexSet representation of all ghost indices.
        */
-      const IndexSet &
-      ghost_indices() const;
+      DEAL_II_NODISCARD const IndexSet &
+                              ghost_indices() const;
 
       /**
        * Return the number of ghost indices. Same as
        * ghost_indices().n_elements(), but cached for simpler access.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       n_ghost_indices() const;
 
       /**
@@ -307,7 +308,7 @@ namespace Utilities
        * Number of import indices, i.e., indices that are ghosts on other
        * processors and we will receive data from.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       n_import_indices() const;
 
       /**
@@ -331,7 +332,7 @@ namespace Utilities
        * not compatible, only these processors will return @p false, whereas
        * the other processors will return @p true.
        */
-      bool
+      DEAL_II_NODISCARD bool
       is_compatible(const Partitioner &part) const;
 
       /**
@@ -347,34 +348,33 @@ namespace Utilities
        * only in a context where all processors call it the same number of
        * times.
        */
-      bool
+      DEAL_II_NODISCARD bool
       is_globally_compatible(const Partitioner &part) const;
 
       /**
        * Return the MPI ID of the calling processor. Cached to have simple
        * access.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       this_mpi_process() const;
 
       /**
        * Return the total number of MPI processor participating in the given
        * partitioner. Cached to have simple access.
        */
-      unsigned int
+      DEAL_II_NODISCARD unsigned int
       n_mpi_processes() const;
 
       /**
        * Return the MPI communicator underlying the partitioner object.
        */
-      DEAL_II_DEPRECATED
-      const MPI_Comm &
-      get_communicator() const;
+      DEAL_II_NODISCARD DEAL_II_DEPRECATED const MPI_Comm &
+                                                 get_communicator() const;
 
       /**
        * Return the MPI communicator underlying the partitioner object.
        */
-      virtual const MPI_Comm &
+      DEAL_II_NODISCARD virtual const MPI_Comm &
       get_mpi_communicator() const override;
 
       /**
@@ -382,7 +382,7 @@ namespace Utilities
        * ghost_indices argument. Only true if a reinit call or constructor
        * provided that argument.
        */
-      bool
+      DEAL_II_NODISCARD bool
       ghost_indices_initialized() const;
 
 #ifdef DEAL_II_WITH_MPI
@@ -544,8 +544,8 @@ namespace Utilities
       /**
        * Compute the memory consumption of this structure.
        */
-      std::size_t
-      memory_consumption() const;
+      DEAL_II_NODISCARD std::size_t
+                        memory_consumption() const;
 
       /**
        * Exception

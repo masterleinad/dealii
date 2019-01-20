@@ -1020,7 +1020,6 @@ namespace DerivativeApproximation
     }
 
   } // namespace internal
-
 } // namespace DerivativeApproximation
 
 

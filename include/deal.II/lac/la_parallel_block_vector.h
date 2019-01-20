@@ -354,7 +354,7 @@ namespace LinearAlgebra
       /**
        * Return if this Vector contains ghost elements.
        */
-      bool
+      DEAL_II_NODISCARD bool
       has_ghost_elements() const;
 
       /**
@@ -403,7 +403,7 @@ namespace LinearAlgebra
        * This function is mainly for internal consistency checks and should
        * seldom be used when not in debug mode since it uses quite some time.
        */
-      virtual bool
+      DEAL_II_NODISCARD virtual bool
       all_zero() const override;
 
       /**
@@ -416,8 +416,8 @@ namespace LinearAlgebra
        * $l_p$-norm of the vector. The pth root of the sum of the pth powers
        * of the absolute values of the elements.
        */
-      real_type
-      lp_norm(const real_type p) const;
+      DEAL_II_NODISCARD real_type
+                        lp_norm(const real_type p) const;
 
       /**
        * Swap the contents of this vector and the other vector <tt>v</tt>. One
@@ -614,27 +614,27 @@ namespace LinearAlgebra
        * Return the l<sub>1</sub> norm of the vector (i.e., the sum of the
        * absolute values of all entries among all processors).
        */
-      virtual real_type
+      DEAL_II_NODISCARD virtual real_type
       l1_norm() const override;
 
       /**
        * Return the $l_2$ norm of the vector (i.e., the square root of
        * the sum of the square of all entries among all processors).
        */
-      virtual real_type
+      DEAL_II_NODISCARD virtual real_type
       l2_norm() const override;
 
       /**
        * Return the square of the $l_2$ norm of the vector.
        */
-      real_type
-      norm_sqr() const;
+      DEAL_II_NODISCARD real_type
+                        norm_sqr() const;
 
       /**
        * Return the maximum norm of the vector (i.e., the maximum absolute value
        * among all entries and among all processors).
        */
-      virtual real_type
+      DEAL_II_NODISCARD virtual real_type
       linfty_norm() const override;
 
       /**
@@ -666,7 +666,7 @@ namespace LinearAlgebra
        * Return the global size of the vector, equal to the sum of the number of
        * locally owned indices among all processors.
        */
-      virtual size_type
+      DEAL_II_NODISCARD virtual size_type
       size() const override;
 
       /**
@@ -680,7 +680,7 @@ namespace LinearAlgebra
        *  vec.locally_owned_elements() == complete_index_set(vec.size())
        * @endcode
        */
-      virtual dealii::IndexSet
+      DEAL_II_NODISCARD virtual dealii::IndexSet
       locally_owned_elements() const override;
 
       /**
@@ -695,7 +695,7 @@ namespace LinearAlgebra
       /**
        * Return the memory consumption of this class in bytes.
        */
-      virtual std::size_t
+      DEAL_II_NODISCARD virtual std::size_t
       memory_consumption() const override;
       //@}
 

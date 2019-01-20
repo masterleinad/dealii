@@ -118,7 +118,6 @@ namespace Threads
      * is copied from the object given as argument.
      */
     Mutex(const Mutex &)
-      : std::mutex()
     {}
 
 
@@ -139,8 +138,7 @@ namespace Threads
      * @deprecated This function is deprecated. Use the
      * std::mutex::lock() function of the base class instead.
      */
-    DEAL_II_DEPRECATED
-    inline void
+    DEAL_II_DEPRECATED inline void
     acquire()
     {
       this->lock();
@@ -921,7 +919,7 @@ namespace Threads
      * Return true if this object has had a thread associated with it, either
      * by using the non-default constructor or by assignment.
      */
-    bool
+    DEAL_II_NODISCARD bool
     valid() const
     {
       return static_cast<bool>(thread_descriptor);
@@ -1562,7 +1560,7 @@ namespace Threads
      * returns true, it will continue to return true until the task object it
      * reports on is assigned to from another object.
      */
-    bool
+    DEAL_II_NODISCARD bool
     joinable() const
     {
       return (task_descriptor !=

@@ -469,14 +469,16 @@ namespace internal
                         n_face_slots +=
                           (1 + // the active_fe_index
                            dof_handler.get_fe(cell->active_fe_index())
-                             .template n_dofs_per_object<
-                               dim - 1>() // actual DoF indices
-                           + 1            // the second active_fe_index
+                             .template n_dofs_per_object<dim - 1>() // actual
+                                                                    // DoF
+                                                                    // indices
+                           + 1 // the second active_fe_index
                            + dof_handler
                                .get_fe(cell->neighbor(face)->active_fe_index())
-                               .template n_dofs_per_object<
-                                 dim - 1>() // actual DoF indices
-                           + 1);            // stop marker
+                               .template n_dofs_per_object<dim - 1>() // actual
+                                                                      // DoF
+                                                                      // indices
+                           + 1); // stop marker
 
                       // mark this face as visited
                       cell->face(face)->set_user_flag();
@@ -560,9 +562,10 @@ namespace internal
                           next_free_face_slot +=
                             1 // the active_fe_index
                             + dof_handler.get_fe(cell->active_fe_index())
-                                .template n_dofs_per_object<
-                                  dim - 1>() // actual DoF indices
-                            + 1;             // the end marker
+                                .template n_dofs_per_object<dim -
+                                                            1>() // actual DoF
+                                                                 // indices
+                            + 1; // the end marker
                         }
                       else
                         {
@@ -623,13 +626,15 @@ namespace internal
                           next_free_face_slot +=
                             (1 // first active_fe_index
                              + dof_handler.get_fe(active_fe_indices[0])
-                                 .template n_dofs_per_object<
-                                   dim - 1>() // actual DoF indices
-                             + 1              // second active_fe_index
+                                 .template n_dofs_per_object<dim -
+                                                             1>() // actual DoF
+                                                                  // indices
+                             + 1 // second active_fe_index
                              + dof_handler.get_fe(active_fe_indices[1])
-                                 .template n_dofs_per_object<
-                                   dim - 1>() // actual DoF indices
-                             + 1);            // end marker
+                                 .template n_dofs_per_object<dim -
+                                                             1>() // actual DoF
+                                                                  // indices
+                             + 1);                                // end marker
                         }
 
                       // mark this face as visited

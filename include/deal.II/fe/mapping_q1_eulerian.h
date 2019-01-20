@@ -134,7 +134,7 @@ public:
    * preserve vertex locations (unless the translation vector happens to
    * provide for zero displacements at vertex locations).
    */
-  virtual bool
+  DEAL_II_NODISCARD virtual bool
   preserves_vertex_locations() const override;
 
   /**

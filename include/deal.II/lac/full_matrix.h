@@ -366,22 +366,22 @@ public:
    * Number of rows of this matrix.  Note that the matrix is of dimension <i>m
    * x n</i>.
    */
-  size_type
-  m() const;
+  DEAL_II_NODISCARD size_type
+                    m() const;
 
   /**
    * Number of columns of this matrix.  Note that the matrix is of dimension
    * <i>m x n</i>.
    */
-  size_type
-  n() const;
+  DEAL_II_NODISCARD size_type
+                    n() const;
 
   /**
    * Return whether the matrix contains only elements with value zero. This
    * function is mainly for internal consistency checks and should seldom be
    * used when not in debug mode since it uses quite some time.
    */
-  bool
+  DEAL_II_NODISCARD bool
   all_zero() const;
 
   /**
@@ -421,15 +421,15 @@ public:
    * Return the <i>l<sub>1</sub></i>-norm of the matrix, where $||M||_1 =
    * \max_j \sum_i |M_{ij}|$ (maximum of the sums over columns).
    */
-  real_type
-  l1_norm() const;
+  DEAL_II_NODISCARD real_type
+                    l1_norm() const;
 
   /**
    * Return the $l_\infty$-norm of the matrix, where $||M||_\infty = \max_i
    * \sum_j |M_{ij}|$ (maximum of the sums over rows).
    */
-  real_type
-  linfty_norm() const;
+  DEAL_II_NODISCARD real_type
+                    linfty_norm() const;
 
   /**
    * Compute the Frobenius norm of the matrix.  Return value is the root of
@@ -438,8 +438,8 @@ public:
    * @note For the timid among us: this norm is not the norm compatible with
    * the <i>l<sub>2</sub></i>-norm of the vector space.
    */
-  real_type
-  frobenius_norm() const;
+  DEAL_II_NODISCARD real_type
+                    frobenius_norm() const;
 
   /**
    * Compute the relative norm of the skew-symmetric part. The return value is
@@ -449,8 +449,8 @@ public:
    * Main purpose of this function is to check, if a matrix is symmetric
    * within a certain accuracy, or not.
    */
-  real_type
-  relative_symmetry_norm2() const;
+  DEAL_II_NODISCARD real_type
+                    relative_symmetry_norm2() const;
 
   /**
    * Compute the determinant of a matrix.  This is only implemented for one,
@@ -515,8 +515,8 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
   //@}
   ///@name Iterator functions

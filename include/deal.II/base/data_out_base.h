@@ -341,8 +341,8 @@ namespace DataOutBase
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Swap the current object's contents with those of the given argument.
@@ -488,8 +488,8 @@ namespace DataOutBase
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Swap the current object's contents with those of the given argument.
@@ -560,8 +560,8 @@ namespace DataOutBase
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
   };
 
 
@@ -722,8 +722,8 @@ namespace DataOutBase
      * Return an estimate for the memory consumption, in bytes, of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
 
     /**
      * Exception to raise when there are not enough specified dimension
@@ -936,7 +936,7 @@ namespace DataOutBase
        * Return <tt>true</tt> if the color represented by the three color
        * values is a grey scale, i.e. all components are equal.
        */
-      bool
+      DEAL_II_NODISCARD bool
       is_grey() const;
     };
 
@@ -1082,8 +1082,8 @@ namespace DataOutBase
      * Return an estimate for the memory consumption, in bytes, of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
   };
 
   /**
@@ -1310,8 +1310,8 @@ namespace DataOutBase
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
-    memory_consumption() const;
+    DEAL_II_NODISCARD std::size_t
+                      memory_consumption() const;
   };
 
   /**
@@ -1399,41 +1399,41 @@ namespace DataOutBase
     /**
      * Get the name of the data set indicated by the set number.
      */
-    std::string
-    get_data_set_name(const unsigned int set_num) const;
+    DEAL_II_NODISCARD std::string
+                      get_data_set_name(const unsigned int set_num) const;
 
     /**
      * Get the dimensionality of the data set indicated by the set number.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     get_data_set_dim(const unsigned int set_num) const;
 
     /**
      * Get the raw double valued data of the data set indicated by the set
      * number.
      */
-    const double *
+    DEAL_II_NODISCARD const double *
     get_data_set(const unsigned int set_num) const;
 
     /**
      * Return the number of nodes in this DataOutFilter. This may be smaller
      * than the original number of nodes if filtering is enabled.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_nodes() const;
 
     /**
      * Return the number of filtered cells in this DataOutFilter. Cells are
      * not filtered so this will be the original number of cells.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_cells() const;
 
     /**
      * Return the number of filtered data sets in this DataOutFilter. Data
      * sets are not filtered so this will be the original number of data sets.
      */
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     n_data_sets() const;
 
     /**
@@ -3180,9 +3180,9 @@ public:
    * the correct suffix for the format that was set through
    * set_default_format() or parse_parameters() before calling this function.
    */
-  std::string
-  default_suffix(const DataOutBase::OutputFormat output_format =
-                   DataOutBase::default_format) const;
+  DEAL_II_NODISCARD std::string
+                    default_suffix(const DataOutBase::OutputFormat output_format =
+                                     DataOutBase::default_format) const;
 
   /**
    * Declare parameters for all output formats by declaring subsections within
@@ -3216,8 +3216,8 @@ public:
    * This is not exact (but will usually be close) because calculating the
    * memory usage of trees (e.g., <tt>std::map</tt>) is difficult.
    */
-  std::size_t
-  memory_consumption() const;
+  DEAL_II_NODISCARD std::size_t
+                    memory_consumption() const;
 
 protected:
   /**
@@ -3227,14 +3227,15 @@ protected:
    * this function to allow the output functions to know what they shall
    * print.
    */
-  virtual const std::vector<DataOutBase::Patch<dim, spacedim>> &
-  get_patches() const = 0;
+  DEAL_II_NODISCARD virtual const std::vector<DataOutBase::Patch<dim, spacedim>>
+    &
+    get_patches() const = 0;
 
   /**
    * Abstract virtual function through which the names of data sets are
    * obtained by the output functions of the base class.
    */
-  virtual std::vector<std::string>
+  DEAL_II_NODISCARD virtual std::vector<std::string>
   get_dataset_names() const = 0;
 
   /**
@@ -3244,8 +3245,8 @@ protected:
    *
    * @deprecated Use get_nonscalar_data_ranges instead.
    */
-  DEAL_II_DEPRECATED
-  virtual std::vector<std::tuple<unsigned int, unsigned int, std::string>>
+  DEAL_II_NODISCARD DEAL_II_DEPRECATED virtual std::vector<
+    std::tuple<unsigned int, unsigned int, std::string>>
   get_vector_data_ranges() const;
 
   /**
@@ -3266,7 +3267,7 @@ protected:
    * string, meaning that all data is to be considered a collection of scalar
    * fields.
    */
-  virtual std::vector<
+  DEAL_II_NODISCARD virtual std::vector<
     std::tuple<unsigned int,
                unsigned int,
                std::string,
@@ -3481,7 +3482,8 @@ protected:
    * It returns the patches as read the last time a stream was given to the
    * read() function.
    */
-  virtual const std::vector<dealii::DataOutBase::Patch<dim, spacedim>> &
+  DEAL_II_NODISCARD virtual const std::vector<
+    dealii::DataOutBase::Patch<dim, spacedim>> &
   get_patches() const override;
 
   /**
@@ -3490,7 +3492,7 @@ protected:
    *
    * Return the names of the variables as read the last time we read a file.
    */
-  virtual std::vector<std::string>
+  DEAL_II_NODISCARD virtual std::vector<std::string>
   get_dataset_names() const override;
 
   /**
@@ -3511,7 +3513,7 @@ protected:
    * string, meaning that all data is to be considered a collection of scalar
    * fields.
    */
-  virtual std::vector<
+  DEAL_II_NODISCARD virtual std::vector<
     std::tuple<unsigned int,
                unsigned int,
                std::string,
@@ -3609,8 +3611,8 @@ public:
    * Get the XDMF content associated with this entry.
    * If the entry is not valid, this returns an empty string.
    */
-  std::string
-  get_xdmf_content(const unsigned int indent_level) const;
+  DEAL_II_NODISCARD std::string
+                    get_xdmf_content(const unsigned int indent_level) const;
 
 private:
   /**

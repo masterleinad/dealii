@@ -138,7 +138,7 @@ public:
    * use this class for reference counted lifetime determination where the
    * last one to unsubscribe also deletes the object.
    */
-  unsigned int
+  DEAL_II_NODISCARD unsigned int
   n_subscriptions() const;
 
   /**

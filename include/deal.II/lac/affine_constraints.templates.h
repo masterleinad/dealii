@@ -2419,14 +2419,14 @@ namespace internals
       individual_size[index]               = my_length + 1;
     }
 
-    size_type
-    get_size(const size_type index) const
+    DEAL_II_NODISCARD size_type
+                      get_size(const size_type index) const
     {
       return individual_size[index];
     }
 
-    const std::pair<size_type, number> *
-    get_entry(const size_type index) const
+    DEAL_II_NODISCARD const std::pair<size_type, number> *
+                            get_entry(const size_type index) const
     {
       return &data[index * row_length];
     }
@@ -2513,16 +2513,16 @@ namespace internals
     // return all kind of information on the constraints
 
     // returns the number of global indices in the struct
-    size_type
-    size() const
+    DEAL_II_NODISCARD size_type
+                      size() const
     {
       return n_active_rows;
     }
 
     // returns the number of constraints that are associated to the
     // counter_index-th entry in the list
-    size_type
-    size(const size_type counter_index) const
+    DEAL_II_NODISCARD size_type
+                      size(const size_type counter_index) const
     {
       return (total_row_indices[counter_index].constraint_position ==
                   numbers::invalid_size_type ?
@@ -2532,8 +2532,8 @@ namespace internals
     }
 
     // returns the global row of the counter_index-th entry in the list
-    size_type
-    global_row(const size_type counter_index) const
+    DEAL_II_NODISCARD size_type
+                      global_row(const size_type counter_index) const
     {
       return total_row_indices[counter_index].global_row;
     }
@@ -2548,8 +2548,8 @@ namespace internals
     // returns the local row in the cell matrix associated with the
     // counter_index-th entry in the list. Returns invalid_size_type for
     // constrained rows
-    size_type
-    local_row(const size_type counter_index) const
+    DEAL_II_NODISCARD size_type
+                      local_row(const size_type counter_index) const
     {
       return total_row_indices[counter_index].local_row;
     }
@@ -2564,9 +2564,9 @@ namespace internals
     // returns the local row in the cell matrix associated with the
     // counter_index-th entry in the list in the index_in_constraint-th
     // position of constraints
-    size_type
-    local_row(const size_type counter_index,
-              const size_type index_in_constraint) const
+    DEAL_II_NODISCARD size_type
+                      local_row(const size_type counter_index,
+                                const size_type index_in_constraint) const
     {
       return (data_cache.get_entry(total_row_indices[counter_index]
                                      .constraint_position)[index_in_constraint])
@@ -2575,9 +2575,9 @@ namespace internals
 
     // returns the value of the constraint in the counter_index-th entry in
     // the list in the index_in_constraint-th position of constraints
-    number
-    constraint_value(const size_type counter_index,
-                     const size_type index_in_constraint) const
+    DEAL_II_NODISCARD number
+                      constraint_value(const size_type counter_index,
+                                       const size_type index_in_constraint) const
     {
       return (data_cache.get_entry(total_row_indices[counter_index]
                                      .constraint_position)[index_in_constraint])
@@ -2586,7 +2586,7 @@ namespace internals
 
     // returns whether there is one row with indirect contributions (i.e.,
     // there has been at least one constraint with non-trivial ConstraintLine)
-    bool
+    DEAL_II_NODISCARD bool
     have_indirect_rows() const
     {
       return data_cache.individual_size.empty() == false;
@@ -2605,16 +2605,16 @@ namespace internals
     // returns the number of constrained dofs in the structure. Constrained
     // dofs do not contribute directly to the matrix, but are needed in order
     // to set matrix diagonals and resolve inhomogeneities
-    size_type
-    n_constraints() const
+    DEAL_II_NODISCARD size_type
+                      n_constraints() const
     {
       return total_row_indices.size() - n_active_rows;
     }
 
     // returns the number of constrained dofs in the structure that have an
     // inhomogeneity
-    size_type
-    n_inhomogeneities() const
+    DEAL_II_NODISCARD size_type
+                      n_inhomogeneities() const
     {
       return n_inhomogeneous_rows;
     }
@@ -2634,8 +2634,8 @@ namespace internals
 
     // the local row where constraint number i was detected, to find that row
     // easily when the GlobalRowsToLocal has been set up
-    size_type
-    constraint_origin(size_type i) const
+    DEAL_II_NODISCARD size_type
+                      constraint_origin(size_type i) const
     {
       return total_row_indices[n_active_rows + i].local_row;
     }

@@ -210,7 +210,7 @@ namespace MemoryConsumption
    */
   template <typename T, int N>
   inline std::size_t
-  memory_consumption(const T (&v)[N]);
+  memory_consumption(const T (&v)[N]); // NOLINT
 
   /**
    * Specialization of the determination of the memory consumption of a
@@ -364,7 +364,7 @@ namespace MemoryConsumption
 
   template <typename T, int N>
   std::size_t
-  memory_consumption(const T (&v)[N])
+  memory_consumption(const T (&v)[N]) // NOLINT
   {
     std::size_t mem = 0;
     for (unsigned int i = 0; i < N; ++i)

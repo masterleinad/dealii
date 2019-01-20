@@ -2693,7 +2693,7 @@ namespace internal
      * whose partitioner is compatible with the Partitioner in this component.
      */
     template <typename VectorType>
-    unsigned int
+    DEAL_II_NODISCARD unsigned int
     find_vector_in_mf(const VectorType &vec,
                       const bool        check_global_compatibility = true) const
     {
@@ -2721,7 +2721,7 @@ namespace internal
      * Get partitioner for the given @p mf_component taking into
      * account vector_face_access set in constructor.
      */
-    const Utilities::MPI::Partitioner &
+    DEAL_II_NODISCARD const Utilities::MPI::Partitioner &
     get_partitioner(const unsigned int mf_component) const
     {
       AssertDimension(matrix_free.get_dof_info(mf_component)
