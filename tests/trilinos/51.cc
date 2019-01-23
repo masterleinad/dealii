@@ -43,7 +43,7 @@ test(TrilinosWrappers::MPI::Vector &v)
   // make sure they're equal
   deallog << v * w << ' ' << v.l2_norm() * w.l2_norm() << ' '
           << v * w - v.l2_norm() * w.l2_norm() << std::endl;
-  const double eps = std::is_same<TrilinosScalar,double>::value ? 1e-14 : 1e-5;
+  const double eps = std::is_same<TrilinosScalar, double>::value ? 1e-14 : 1e-5;
   Assert(std::fabs(v * w - v.l2_norm() * w.l2_norm()) < eps * (v * w),
          ExcInternalError());
 

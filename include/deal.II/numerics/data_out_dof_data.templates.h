@@ -865,7 +865,7 @@ namespace internal
       std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>
         &patch_hessians_system) const
     {
-      if (std::is_same<typename VectorType::value_type,double>::value)
+      if (std::is_same<typename VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "

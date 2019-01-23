@@ -29,9 +29,11 @@ template <typename T, typename U, typename CompareType>
 void
 check()
 {
-  AssertThrow(std::is_same<typename ProductType<T, U>::type,CompareType>::value,
-              ExcInternalError());
-  AssertThrow(std::is_same<typename ProductType<T, U>::type,T(>::value * U()),
+  AssertThrow(
+    std::is_same<typename ProductType<T, U>::type, CompareType>::value,
+    ExcInternalError());
+  AssertThrow(std::is_same < typename ProductType<T, U>::type,
+              T(> ::value * U()),
               ExcInternalError());
 }
 

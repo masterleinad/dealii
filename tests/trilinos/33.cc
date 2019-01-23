@@ -40,7 +40,7 @@ test(TrilinosWrappers::MPI::Vector &v)
   v.compress(VectorOperation::insert);
 
   // then check the norm
-  const double eps = std::is_same<TrilinosScalar,double>::value ? 1e-14 : 1e-5;
+  const double eps = std::is_same<TrilinosScalar, double>::value ? 1e-14 : 1e-5;
   const double true_value = std::pow(sum, static_cast<TrilinosScalar>(1. / 3.));
   AssertThrow(std::fabs(v.lp_norm(3) - true_value) < eps * true_value,
               ExcInternalError());

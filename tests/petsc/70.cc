@@ -27,9 +27,9 @@ main()
 {
   initlog();
 
-  if (std::is_same<PetscScalar,double>::value)
+  if (std::is_same<PetscScalar, double>::value)
     deallog << "double" << std::endl;
-  else if (std::is_same<PetscScalar,float>::value)
+  else if (std::is_same<PetscScalar, float>::value)
     deallog << "float" << std::endl;
   else
     Assert(false, ExcNotImplemented());

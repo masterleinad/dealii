@@ -988,7 +988,8 @@ operator==(const FiniteElement<dim, spacedim> &f) const
 {
   // Compare fields in roughly increasing order of how expensive the
   // comparison is
-  return ((std::is_same<*this,f>::value) && (this->get_name() == f.get_name()) &&
+  return ((std::is_same<*this, f>::value) &&
+          (this->get_name() == f.get_name()) &&
           (static_cast<const FiniteElementData<dim> &>(*this) ==
            static_cast<const FiniteElementData<dim> &>(f)) &&
           (interface_constraints == f.interface_constraints));
