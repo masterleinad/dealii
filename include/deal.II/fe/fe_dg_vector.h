@@ -48,8 +48,6 @@ DEAL_II_NAMESPACE_OPEN
  * must coincide.
  *
  * @ingroup febase
- * @author Guido Kanschat
- * @date 2010
  */
 template <class PolynomialType, int dim, int spacedim = dim>
 class FE_DGVector : public FE_PolyTensor<PolynomialType, dim, spacedim>
@@ -136,8 +134,6 @@ private:
  * A vector-valued DG element based on the polynomials space of FE_Nedelec.
  *
  * @ingroup fe
- * @author Guido Kanschat
- * @date 2011
  */
 template <int dim, int spacedim = dim>
 class FE_DGNedelec : public FE_DGVector<PolynomialsNedelec<dim>, dim, spacedim>
@@ -165,8 +161,6 @@ public:
  * FE_RaviartThomas.
  *
  * @ingroup fe
- * @author Guido Kanschat
- * @date 2011
  */
 template <int dim, int spacedim = dim>
 class FE_DGRaviartThomas
@@ -193,8 +187,6 @@ public:
  * A vector-valued DG element based on the polynomials space of FE_BDM.
  *
  * @ingroup fe
- * @author Guido Kanschat
- * @date 2011
  */
 template <int dim, int spacedim = dim>
 class FE_DGBDM : public FE_DGVector<PolynomialsBDM<dim>, dim, spacedim>

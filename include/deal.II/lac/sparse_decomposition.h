@@ -102,7 +102,6 @@ DEAL_II_NAMESPACE_OPEN
  * diagonal strengthening on a per row basis, it may override the
  * get_strengthen_diagonal() method.
  *
- * @author Stephen "Cheffo" Kolaroff, 2002, based on SparseILU implementation
  * by Wolfgang Bangerth; unified interface: Ralf Hartmann, 2003; extension for
  * full compatibility with LinearOperator class: Jean-Paul Pelteret, 2015
  */

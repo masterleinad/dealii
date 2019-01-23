@@ -137,8 +137,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @see PolynomialsBDM, PolynomialsRaviartThomas
  * @ingroup febase
- * @author Guido Kanschat
- * @date 2005
  */
 template <class PolynomialType, int dim, int spacedim = dim>
 class FE_PolyTensor : public FiniteElement<dim, spacedim>

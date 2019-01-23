@@ -88,7 +88,6 @@ class Tensor<-1, dim, Number>
  * as argument.
  *
  * @ingroup geomprimitives
- * @author Wolfgang Bangerth, 2009, Matthias Maier, 2015
  */
 template <int dim, typename Number>
 class Tensor<0, dim, Number>
@@ -391,7 +390,6 @@ private:
  * as argument.
  *
  * @ingroup geomprimitives
- * @author Wolfgang Bangerth, 1998-2005, Matthias Maier, 2015
  */
 template <int rank_, int dim, typename Number>
 class Tensor
@@ -1735,7 +1733,6 @@ inline DEAL_II_ALWAYS_INLINE
  * is returned as an unwrapped number type.
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015
  */
 template <int rank_1,
           int rank_2,
@@ -1790,7 +1787,6 @@ inline DEAL_II_ALWAYS_INLINE
  * is returned as an unwrapped number type.
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015
  */
 template <int index_1,
           int index_2,
@@ -1862,7 +1858,6 @@ inline DEAL_II_ALWAYS_INLINE
  * is returned as an unwrapped number type.
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015
  */
 template <int index_1,
           int index_2,
@@ -1952,7 +1947,6 @@ inline
  * @f]
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015
  */
 template <int rank, int dim, typename Number, typename OtherNumber>
 inline DEAL_II_ALWAYS_INLINE typename ProductType<Number, OtherNumber>::type
@@ -1981,7 +1975,6 @@ scalar_product(const Tensor<rank, dim, Number> &     left,
  * SymmetricTensor.
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015, Jean-Paul Pelteret 2017
  */
 template <template <int, int, typename> class TensorT1,
           template <int, int, typename> class TensorT2,
@@ -2014,7 +2007,6 @@ contract3(const TensorT1<rank_1, dim, T1> &         left,
  * @f]
  *
  * @relatesalso Tensor
- * @author Matthias Maier, 2015
  */
 template <int rank_1,
           int rank_2,
@@ -2051,7 +2043,6 @@ inline DEAL_II_ALWAYS_INLINE
  * (e.g. from the <tt>dim==2</tt> case in the switch).
  *
  * @relatesalso Tensor
- * @author Guido Kanschat, 2001
  */
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
@@ -2076,7 +2067,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
  * case in the switch).
  *
  * @relatesalso Tensor
- * @author Guido Kanschat, 2001
  */
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
@@ -2106,7 +2096,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<1, dim, Number>
  * Compute the determinant of a tensor or rank 2.
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2009
  */
 template <int dim, typename Number>
 inline Number
@@ -2149,7 +2138,6 @@ determinant(const Tensor<2, 1, Number> &t)
  * diagonal entries.
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2001
  */
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE Number
@@ -2169,7 +2157,6 @@ inline DEAL_II_ALWAYS_INLINE Number
  * than by reference as a parameter.
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2000
  */
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
@@ -2263,7 +2250,6 @@ invert(const Tensor<2, 3, Number> &t)
  * Return the transpose of the given tensor.
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2002
  */
 template <int dim, typename Number>
 inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, Number>
@@ -2295,7 +2281,6 @@ inline DEAL_II_ALWAYS_INLINE Tensor<2, dim, Number>
  * @note This requires that the tensor is invertible.
  *
  * @relatesalso Tensor
- * @author Jean-Paul Pelteret, 2016
  */
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
@@ -2317,7 +2302,6 @@ adjugate(const Tensor<2, dim, Number> &t)
  * @note This requires that the tensor is invertible.
  *
  * @relatesalso Tensor
- * @author Jean-Paul Pelteret, 2016
  */
 template <int dim, typename Number>
 inline Tensor<2, dim, Number>
@@ -2332,7 +2316,6 @@ cofactor(const Tensor<2, dim, Number> &t)
  * \sum_i |t_{ij}|$ (maximum of the sums over columns).
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2012
  */
 template <int dim, typename Number>
 inline Number
@@ -2358,7 +2341,6 @@ l1_norm(const Tensor<2, dim, Number> &t)
  * = \max_i \sum_j |t_{ij}|$ (maximum of the sums over rows).
  *
  * @relatesalso Tensor
- * @author Wolfgang Bangerth, 2012
  */
 template <int dim, typename Number>
 inline Number

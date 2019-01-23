@@ -34,7 +34,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @todo This polynomial space is implemented in 2D only.
  *
- * @author Bärbel Janssen, 2007
  */
 
 class PolynomialsAdini

@@ -128,7 +128,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @ingroup SLEPcWrappers
  *
- * @author Toby D. Young 2008, 2009, 2010, 2011, 2013; and Rickard Armiento
  * 2008; and Denis Davydov 2015.
  *
  * @note Various tweaks and enhancements contributed by Eloy Romero and Jose
@@ -388,7 +387,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2008
    */
   class SolverKrylovSchur : public SolverBase
   {
@@ -422,7 +420,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2008, 2011
    */
   class SolverArnoldi : public SolverBase
   {
@@ -467,7 +464,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2009; and Denis Davydov 2015;
    */
   class SolverLanczos : public SolverBase
   {
@@ -513,7 +509,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2010
    */
   class SolverPower : public SolverBase
   {
@@ -547,7 +542,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2010; Denis Davydov 2015
    */
   class SolverGeneralizedDavidson : public SolverBase
   {
@@ -592,7 +586,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2013
    */
   class SolverJacobiDavidson : public SolverBase
   {
@@ -627,7 +620,6 @@ namespace SLEPcWrappers
    *
    * @ingroup SLEPcWrappers
    *
-   * @author Toby D. Young 2013
    */
   class SolverLAPACK : public SolverBase
   {

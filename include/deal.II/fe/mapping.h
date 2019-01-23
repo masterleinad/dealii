@@ -295,7 +295,6 @@ enum MappingType
  * by Ronald H. W. Hoppe, University of Houston, Chapter 7.
  *
  * @ingroup mapping
- * @author Guido Kanschat, Ralf Hartmann 2000, 2001
  */
 template <int dim, int spacedim = dim>
 class Mapping : public Subscriptor

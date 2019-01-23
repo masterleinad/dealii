@@ -42,7 +42,6 @@ namespace MeshWorker
      *
      *
      * @ingroup MeshWorker
-     * @author Guido Kanschat, 2009
      */
     template <typename number = double>
     class Functional
@@ -100,7 +99,6 @@ namespace MeshWorker
      * appropriately before using this class.
      *
      * @ingroup MeshWorker
-     * @author Guido Kanschat, 2009
      */
     template <typename number = double>
     class CellsAndFaces

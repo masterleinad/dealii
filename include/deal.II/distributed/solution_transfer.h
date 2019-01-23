@@ -265,7 +265,6 @@ namespace parallel
      * dealii::SolutionTransfer. See there for an extended discussion.
      *
      * @ingroup distributed
-     * @author Timo Heister, 2009-2011
      */
     template <int dim,
               typename VectorType,

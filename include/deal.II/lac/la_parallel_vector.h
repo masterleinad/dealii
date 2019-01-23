@@ -218,7 +218,6 @@ namespace LinearAlgebra
      * </code>
      * @see CUDAWrappers
      *
-     * @author Katharina Kormann, Martin Kronbichler, Bruno Turcksin 2010, 2011,
      * 2016, 2018
      */
     template <typename Number, typename MemorySpace = MemorySpace::Host>
@@ -1824,7 +1823,6 @@ namespace LinearAlgebra
  * exchanges the data of the two vectors.
  *
  * @relatesalso Vector
- * @author Katharina Kormann, Martin Kronbichler, 2011
  */
 template <typename Number, typename MemorySpace>
 inline void
@@ -1838,7 +1836,6 @@ swap(LinearAlgebra::distributed::Vector<Number, MemorySpace> &u,
 /**
  * Declare dealii::LinearAlgebra::Vector< Number > as distributed vector.
  *
- * @author Uwe Koecher, 2017
  */
 template <typename Number, typename MemorySpace>
 struct is_serial_vector<LinearAlgebra::distributed::Vector<Number, MemorySpace>>

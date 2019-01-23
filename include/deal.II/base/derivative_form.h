@@ -50,7 +50,6 @@ DEAL_II_NAMESPACE_OPEN
  * DerivativeForm@<1,dim,spacedim,Number@>,
  * DerivativeForm@<2,dim,spacedim,Number@> and so on.
  *
- * @author Sebastian Pauletti, 2011, Luca Heltai, 2015
  */
 template <int order, int dim, int spacedim, typename Number = double>
 class DerivativeForm
@@ -383,7 +382,6 @@ DerivativeForm<order, dim, spacedim, Number>::memory_consumption()
  * $DF * T$, if @p T is DerivativeForm<1,dim,rank> it computes $T*DF^{T}$.
  *
  * @relatesalso DerivativeForm
- * @author Sebastian Pauletti, 2011
  */
 template <int spacedim, int dim, typename Number>
 inline Tensor<1, spacedim, Number>
@@ -402,7 +400,6 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number> &DF,
  * Similar to previous apply_transformation. It computes $T*DF^{T}$.
  *
  * @relatesalso DerivativeForm
- * @author Sebastian Pauletti, 2011
  */
 // rank=2
 template <int spacedim, int dim, typename Number>
@@ -421,7 +418,6 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number> &DF,
  * Similar to previous apply_transformation. It computes $DF2*DF1^{T}$
  *
  * @relatesalso DerivativeForm
- * @author Sebastian Pauletti, 2011
  */
 template <int spacedim, int dim, typename Number>
 inline Tensor<2, spacedim, Number>
@@ -442,7 +438,6 @@ apply_transformation(const DerivativeForm<1, dim, spacedim, Number> &DF1,
  * reasons.
  *
  * @relatesalso DerivativeForm
- * @author Sebastian Pauletti, 2011
  */
 template <int dim, int spacedim, typename Number>
 inline DerivativeForm<1, spacedim, dim, Number>

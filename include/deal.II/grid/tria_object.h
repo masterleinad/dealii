@@ -35,7 +35,6 @@ namespace internal
      * by the (global) indices of their faces, which are cells of dimension
      * <tt>structdim-1</tt> or vertices if <tt>structdim=1</tt>.
      *
-     * @author Guido Kanschat, 2007
      */
     template <int structdim>
     class TriaObject

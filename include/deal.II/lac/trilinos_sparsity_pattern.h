@@ -67,8 +67,6 @@ namespace TrilinosWrappers
      * pattern itself.
      *
      * @ingroup TrilinosWrappers
-     * @author Wolfgang Bangerth, Martin Kronbichler, Guido Kanschat
-     * @date 2004, 2008, 2012
      */
     class Accessor
     {
@@ -270,7 +268,6 @@ namespace TrilinosWrappers
    *
    * @ingroup TrilinosWrappers
    * @ingroup Sparsity
-   * @author Martin Kronbichler, 2008
    */
   class SparsityPattern : public Subscriptor
   {

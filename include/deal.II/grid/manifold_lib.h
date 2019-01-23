@@ -57,7 +57,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @ingroup manifold
  *
- * @author Luca Heltai, Mauro Bardelloni, 2014-2016
  */
 template <int dim, int spacedim = dim>
 class PolarManifold : public ChartManifold<dim, spacedim, spacedim>
@@ -217,7 +216,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Mauro Bardelloni, Luca Heltai, Daniel Arndt, 2016, 2017
  */
 template <int dim, int spacedim = dim>
 class SphericalManifold : public Manifold<dim, spacedim>
@@ -373,7 +371,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Luca Heltai, Daniel Arndt, 2014, 2017
  */
 template <int dim, int spacedim = dim>
 class CylindricalManifold : public ChartManifold<dim, spacedim, 3>
@@ -492,7 +489,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Stefano Dominici, 2018
  */
 template <int dim, int spacedim = dim>
 class EllipticalManifold : public ChartManifold<dim, spacedim, spacedim>
@@ -577,7 +573,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Luca Heltai, 2014
  */
 template <int dim, int spacedim = dim, int chartdim = dim>
 class FunctionManifold : public ChartManifold<dim, spacedim, chartdim>
@@ -751,7 +746,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Timo Heister, 2016
  */
 template <int dim>
 class TorusManifold : public ChartManifold<dim, 3, 3>
@@ -933,7 +927,6 @@ private:
  *
  * @ingroup manifold
  *
- * @author Martin Kronbichler, Luca Heltai, 2017
  */
 template <int dim, int spacedim = dim>
 class TransfiniteInterpolationManifold : public Manifold<dim, spacedim>

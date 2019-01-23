@@ -241,7 +241,6 @@ namespace parallel
      * triangulation is actually refined.
      *
      *
-     * @author Wolfgang Bangerth, Timo Heister 2008, 2009, 2010, 2011
      * @ingroup distributed
      */
     template <int dim, int spacedim = dim>

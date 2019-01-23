@@ -222,8 +222,6 @@ class TriaActiveIterator;
  * @ref Triangulation
  * @ingroup grid
  * @ingroup Iterators
- * @author Wolfgang Bangerth, 1998
- * @author documentation update Guido Kanschat, 2004
  */
 template <typename Accessor>
 class TriaRawIterator
@@ -1214,7 +1212,6 @@ inline TriaActiveIterator<Accessor>::TriaActiveIterator(
  * given by the pair <tt>(level,index)</tt>, where @p index is an index
  * relative to the level in which the object is that is pointed to.
  *
- * @author Wolfgang Bangerth, 1998
  */
 template <typename Accessor>
 inline std::ostream &
@@ -1231,7 +1228,6 @@ operator<<(std::ostream &out, const TriaRawIterator<Accessor> &i)
  * given by the pair <tt>(level,index)</tt>, where @p index is an index
  * relative to the level in which the object is that is pointed to.
  *
- * @author Wolfgang Bangerth, 1998
  */
 template <typename Accessor>
 inline std::ostream &
@@ -1248,7 +1244,6 @@ operator<<(std::ostream &out, const TriaIterator<Accessor> &i)
  * given by the pair <tt>(level,index)</tt>, where @p index is an index
  * relative to the level in which the object is that is pointed to.
  *
- * @author Wolfgang Bangerth, 1998
  */
 template <typename Accessor>
 inline std::ostream &

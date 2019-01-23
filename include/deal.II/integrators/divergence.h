@@ -40,8 +40,6 @@ namespace LocalIntegrators
    * trace.
    *
    * @ingroup Integrators
-   * @author Guido Kanschat
-   * @date 2010
    */
   namespace Divergence
   {
@@ -51,8 +49,6 @@ namespace LocalIntegrators
      * divergence operator and the trial space should be at least
      * <b>H</b><sup>div</sup>. The test functions may be discontinuous.
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim>
     void
@@ -93,8 +89,6 @@ namespace LocalIntegrators
      * The function cell_matrix() is the Frechet derivative of this function
      * with respect to the test functions.
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim, typename number>
     void
@@ -130,8 +124,6 @@ namespace LocalIntegrators
      * @todo Verify: The function cell_matrix() is the Frechet derivative of
      * this function with respect to the test functions.
      *
-     * @author Guido Kanschat
-     * @date 2013
      */
     template <int dim, typename number>
     void
@@ -165,8 +157,6 @@ namespace LocalIntegrators
      * This is the strong gradient and the trial space should be at least in
      * <i>H</i><sup>1</sup>. The test functions can be discontinuous.
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim>
     void
@@ -208,8 +198,6 @@ namespace LocalIntegrators
      * The function gradient_matrix() is the Frechet derivative of this
      * function with respect to the test functions.
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim, typename number>
     void
@@ -244,8 +232,6 @@ namespace LocalIntegrators
      * @todo Verify: The function gradient_matrix() is the Frechet derivative
      * of this function with respect to the test functions.
      *
-     * @author Guido Kanschat
-     * @date 2013
      */
     template <int dim, typename number>
     void
@@ -276,8 +262,6 @@ namespace LocalIntegrators
      * component of the vector valued trial space and the test space.
      * @f[ \int_F (\mathbf u\cdot \mathbf n) v \,ds @f]
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim>
     void
@@ -312,8 +296,6 @@ namespace LocalIntegrators
      * \int_F (\mathbf u\cdot \mathbf n) v \,ds
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim, typename number>
     void
@@ -348,8 +330,6 @@ namespace LocalIntegrators
      * \int_F u (\mathbf v\cdot \mathbf n) \,ds
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2013
      */
     template <int dim, typename number>
     void
@@ -385,8 +365,6 @@ namespace LocalIntegrators
      * \frac{v_1+v_2}{2} \,ds
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim>
     void
@@ -487,8 +465,6 @@ namespace LocalIntegrators
      * \,ds
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2011
      */
     template <int dim>
     void
@@ -545,8 +521,6 @@ namespace LocalIntegrators
      * number of quadrature points. The number of components of the finite
      * element has to be equal to the space dimension.
      *
-     * @author Guido Kanschat
-     * @date 2013
      */
     template <int dim>
     double

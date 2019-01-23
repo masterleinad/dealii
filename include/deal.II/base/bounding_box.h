@@ -91,7 +91,6 @@ enum class NeighborType
  * @endcode
  * Notice the sides are always parallel to the respective axis.
  *
- * @author Giovanni Alzetta, 2017.
  */
 template <int spacedim, typename Number = double>
 class BoundingBox

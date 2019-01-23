@@ -53,7 +53,6 @@ class SparseMatrix;
  * can construct such a filter by using mean_value_filter, or
  * block_diagonal_operator (with a mean_value_filter block), respectively.
  *
- * @author Guido Kanschat, 2002, 2003
  */
 class DEAL_II_DEPRECATED MeanValueFilter : public Subscriptor
 {

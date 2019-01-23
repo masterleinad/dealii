@@ -37,8 +37,6 @@ namespace LocalIntegrators
    * @brief Local integrators related to the Laplacian and its DG formulations
    *
    * @ingroup Integrators
-   * @author Guido Kanschat
-   * @date 2010
    */
   namespace Laplace
   {
@@ -49,8 +47,6 @@ namespace LocalIntegrators
      * The FiniteElement in <tt>fe</tt> may be scalar or vector valued. In the
      * latter case, the Laplacian is applied to each component separately.
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -158,8 +154,6 @@ namespace LocalIntegrators
      * Here, $\gamma$ is the <tt>penalty</tt> parameter suitably computed with
      * compute_penalty().
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -202,8 +196,6 @@ namespace LocalIntegrators
      * Here, $\gamma$ is the <tt>penalty</tt> parameter suitably computed with
      * compute_penalty().
      *
-     * @author Guido Kanschat
-     * @date 2017
      */
     template <int dim>
     void
@@ -268,8 +260,6 @@ namespace LocalIntegrators
      * respectively. <i>g</i> is the inhomogeneous boundary value in the
      * argument <tt>data</tt>. $\gamma$ is the usual penalty parameter.
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -318,8 +308,6 @@ namespace LocalIntegrators
      * respectively. <i>g</i> is the inhomogeneous boundary value in the
      * argument <tt>data</tt>. $\gamma$ is the usual penalty parameter.
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -373,8 +361,6 @@ namespace LocalIntegrators
      * same on both sides. If factors differ, note that the penalty parameter
      * has to be computed accordingly.
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -449,8 +435,6 @@ namespace LocalIntegrators
      *
      * @warning This function is still under development!
      *
-     * @author Bärbel Janssen, Guido Kanschat
-     * @date 2013, 2017
      */
     template <int dim>
     void
@@ -564,8 +548,6 @@ namespace LocalIntegrators
      * n]\{\nabla v\} \Bigr) \; ds.
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2012
      */
     template <int dim>
     void
@@ -634,8 +616,6 @@ namespace LocalIntegrators
      * - [\mathbf u\otimes \mathbf n]\{\nabla \mathbf v\} \Bigr) \; ds.
      * @f]
      *
-     * @author Guido Kanschat
-     * @date 2012
      */
     template <int dim>
     void
@@ -714,8 +694,6 @@ namespace LocalIntegrators
      * <i>Z<sub>i</sub></i> and <i>h<sub>i</sub></i> is the length of
      * <i>Z<sub>i</sub></i> orthogonal to the current face.
      *
-     * @author Guido Kanschat
-     * @date 2010
      */
     template <int dim, int spacedim, typename number>
     double

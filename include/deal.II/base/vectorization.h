@@ -167,7 +167,6 @@ struct EnableIfScalar<VectorizedArray<Number>>
  * similar to std::vector otherwise but always makes sure that data is
  * correctly aligned.
  *
- * @author Katharina Kormann, Martin Kronbichler, 2010, 2011
  */
 template <typename Number>
 class VectorizedArray

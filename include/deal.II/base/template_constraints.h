@@ -168,7 +168,6 @@ struct constraint_and_return_value;
  *
  * @deprecated Use std::enable_if instead.
  *
- * @author Wolfgang Bangerth, 2003
  */
 template <typename T>
 struct DEAL_II_DEPRECATED constraint_and_return_value<true, T>
@@ -235,7 +234,6 @@ struct DEAL_II_DEPRECATED constraint_and_return_value<true, T>
  * }
  * @endcode
  *
- * @author Wolfgang Bangerth, 2008
  */
 template <typename T>
 struct identity
@@ -261,7 +259,6 @@ struct identity
  * the types of its two arguments are different, and returns <tt>p1 == p2</tt>
  * otherwise.
  *
- * @author Wolfgang Bangerth, 2004
  */
 struct PointerComparison
 {
@@ -369,7 +366,6 @@ namespace internal
    *
    * @deprecated Use std::integral_constant<int, N> instead.
    *
-   * @author Wolfgang Bangerth, 2006
    */
   template <int N>
   struct DEAL_II_DEPRECATED int2type
@@ -381,7 +377,6 @@ namespace internal
    *
    * @deprecated Use std::integral_constant<bool, B> instead.
    *
-   * @author Wolfgang Bangerth, 2009
    */
   template <bool B>
   struct DEAL_II_DEPRECATED bool2type
@@ -428,7 +423,6 @@ namespace internal
    * stripped) types and that the ProductType class be used to determine the
    * result of operating with (potentially) qualified types.
    *
-   * @author Wolfgang Bangerth, Jean-Paul Pelteret, 2017
    */
   template <typename T, typename U>
   struct ProductTypeImpl
@@ -486,7 +480,6 @@ namespace internal
  * used for the result of computing the product of unknowns and the values,
  * gradients, or other properties of shape functions.
  *
- * @author Wolfgang Bangerth, 2015, 2017
  */
 template <typename T, typename U>
 struct ProductType
@@ -598,7 +591,6 @@ namespace internal
  * multiply for different types of arguments, without resulting in ambiguous
  * call errors by the compiler.
  *
- * @author Wolfgang Bangerth, Matthias Maier, 2015 - 2017
  */
 template <typename T>
 struct EnableIfScalar;

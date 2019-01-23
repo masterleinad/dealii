@@ -67,7 +67,6 @@ class VectorizedArray;
  * the run-time information stored in the matrices passed to the reinit()
  * function is used.
  *
- * @author Martin Kronbichler and Julius Witte, 2017
  */
 template <int dim, typename Number, int size = -1>
 class TensorProductMatrixSymmetricSumBase
@@ -219,7 +218,6 @@ private:
  * the run-time information stored in the matrices passed to the reinit()
  * function is used.
  *
- * @author Martin Kronbichler and Julius Witte, 2017
  */
 template <int dim, typename Number, int size = -1>
 class TensorProductMatrixSymmetricSum
@@ -313,7 +311,6 @@ private:
  * the main documentation of the generic
  * TensorProductMatrixSymmetricSum class.
  *
- * @author Martin Kronbichler and Julius Witte, 2017
  */
 template <int dim, typename Number, int size>
 class TensorProductMatrixSymmetricSum<dim, VectorizedArray<Number>, size>

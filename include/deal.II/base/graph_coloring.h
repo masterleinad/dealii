@@ -105,7 +105,6 @@ namespace GraphColoring
      * corresponds to the iterators pointing to objects that are in the same
      * partition (i.e., the same zone).
      *
-     * @author Martin Kronbichler, Bruno Turcksin
      */
     template <typename Iterator>
     std::vector<std::vector<Iterator>>
@@ -535,7 +534,6 @@ namespace GraphColoring
    * partition (have the same color) and consequently do not conflict. The
    * elements of different sets may conflict.
    *
-   * @author Martin Kronbichler, Bruno Turcksin
    */
   template <typename Iterator>
   std::vector<std::vector<Iterator>>

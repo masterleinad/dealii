@@ -211,7 +211,6 @@ namespace internal
      * Since the vectors all have the same interface, this is no big problem,
      * as they can all use the same general templatized code.
      *
-     * @author Wolfgang Bangerth, 2004
      */
     template <typename DoFHandlerType>
     class DataEntryBase
@@ -589,7 +588,6 @@ namespace internal
  * value as the second one.
  *
  * @ingroup output
- * @author Wolfgang Bangerth, 1999
  */
 template <typename DoFHandlerType,
           int patch_dim,

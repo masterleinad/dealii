@@ -73,8 +73,6 @@ DEAL_II_NAMESPACE_OPEN
  * constructor.
  *
  * @ingroup fe
- * @author Patrick Esser
- * @date 2015
  */
 template <int dim>
 class FE_RannacherTurek : public FE_Poly<PolynomialsRannacherTurek<dim>, dim>

@@ -128,7 +128,6 @@ namespace parallel
      * matching code snippets in both cases.
      *
      * @ingroup distributed
-     * @author Marc Fehling, 2018
      */
     template <int dim, int spacedim = dim>
     class ActiveFEIndicesTransfer

@@ -39,7 +39,6 @@ DEAL_II_NAMESPACE_OPEN
  * defined by $B = (X-L)X^{-1}(X-L^T)$, where $X$ is a diagonal matrix defined
  * by the condition $\text{rowsum}(A) = \text{rowsum}(B)$.
  *
- * @author Stephen "Cheffo" Kolaroff, 2002, unified interface: Ralf Hartmann
  * 2003; extension for full compatibility with LinearOperator class: Jean-Paul
  * Pelteret, 2015.
  */

@@ -62,7 +62,6 @@ class Point;
  * in various contexts when writing applications.
  *
  * @ingroup utilities
- * @author Wolfgang Bangerth, 2005
  */
 namespace Utilities
 {
@@ -525,7 +524,6 @@ namespace Utilities
    * recommended for reasons of performance to ensure that its capacity is
    * sufficient.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T>
   size_t
@@ -541,7 +539,6 @@ namespace Utilities
    * can be compressed. This can be triggered with the parameter
    * @p allow_compression, and is only of effect if ZLIB is enabled.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T>
   std::vector<char>
@@ -577,7 +574,6 @@ namespace Utilities
    *  Consequently, there is a separate unpack() function for arrays, see
    *  below.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T>
   T
@@ -591,7 +587,6 @@ namespace Utilities
    * read from could have been previously compressed with ZLIB, and
    * is only of effect if ZLIB is enabled.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T>
   T
@@ -631,7 +626,6 @@ namespace Utilities
    *  to explicitly specify the template arguments since they can be
    *  deduced from the second argument.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T, int N>
   void
@@ -647,7 +641,6 @@ namespace Utilities
    * read from could have been previously compressed with ZLIB, and
    * is only of effect if ZLIB is enabled.
    *
-   * @author Timo Heister, Wolfgang Bangerth, 2017.
    */
   template <typename T, int N>
   void

@@ -42,7 +42,6 @@ namespace Differentiation
      * @tparam T An arbitrary type resulting from the application of
      *         the SFINAE idiom to selectively specialize this class.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename ScalarType,
               enum NumberTypes ADNumberTypeCode,
@@ -63,7 +62,6 @@ namespace Differentiation
      * @tparam T An arbitrary type resulting from the application of
      *         the SFINAE idiom to selectively specialize this class.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename ADNumberType, typename T = void>
     struct ADNumberTraits;
@@ -105,7 +103,6 @@ namespace Differentiation
        *
        * @endcode
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename ScalarType,
                 enum NumberTypes ADNumberTypeCode,
@@ -142,7 +139,6 @@ namespace Differentiation
        * @tparam T An arbitrary type resulting from the application of
        *         the SFINAE idiom to selectively specialize this class.
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename ADNumberType, typename T = void>
       struct Marking;
@@ -177,7 +173,6 @@ namespace Differentiation
        * @tparam T An arbitrary type resulting from the application of
        *         the SFINAE idiom to selectively specialize this class.
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename ADNumberType, typename T = void>
       struct ExtractData;
@@ -195,7 +190,6 @@ namespace Differentiation
        * @tparam T An arbitrary type resulting from the application of
        *         the SFINAE idiom to selectively specialize this class.
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename ADNumberTrait, typename T = void>
       struct HasRequiredADInfo;
@@ -215,7 +209,6 @@ namespace Differentiation
        * specific to each type of AD number. This requires some specialist
        * intervention to get at this data.
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename T>
       struct NumberType;
@@ -225,7 +218,6 @@ namespace Differentiation
        * A small struct to remove the @p std::complex wrapper
        * around a number.
        *
-       * @author Jean-Paul Pelteret, 2017
        */
       template <typename Number>
       struct RemoveComplexWrapper;
@@ -239,7 +231,6 @@ namespace Differentiation
      * considered to have the necessary characteristics to fulfill this
      * condition.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename NumberType>
     struct is_ad_number;
@@ -251,7 +242,6 @@ namespace Differentiation
      * considered to have the necessary characteristics to fulfill this
      * condition.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename NumberType, typename = void>
     struct is_taped_ad_number;
@@ -263,7 +253,6 @@ namespace Differentiation
      * considered to have the necessary characteristics to fulfill this
      * condition.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename NumberType, typename = void>
     struct is_tapeless_ad_number;
@@ -275,7 +264,6 @@ namespace Differentiation
      * considered to have the necessary characteristics to fulfill this
      * condition.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename NumberType, typename = void>
     struct is_real_valued_ad_number;
@@ -287,7 +275,6 @@ namespace Differentiation
      * considered to have the necessary characteristics to fulfill this
      * condition.
      *
-     * @author Jean-Paul Pelteret, 2017
      */
     template <typename NumberType, typename = void>
     struct is_complex_valued_ad_number;

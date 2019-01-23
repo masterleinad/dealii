@@ -43,7 +43,6 @@ namespace internal
      * This general template is only provided to enable a specialization
      * below.
      *
-     * @author Tobias Leicht, 2006
      */
 
     template <int dim>

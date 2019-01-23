@@ -151,7 +151,6 @@ null_operator(const LinearOperator<Range, Domain, Payload> &);
  * for linear operators have been provided within the respective
  * TrilinosWrappers (and, in the future, PETScWrappers) namespaces.
  *
- * @author Luca Heltai, Matthias Maier, 2015; Jean-Paul Pelteret, 2016
  *
  * @ingroup LAOperators
  */
@@ -631,7 +630,6 @@ operator*(const LinearOperator<Range, Intermediate, Payload> & first_op,
  *
  * Return the transpose linear operations of @p op.
  *
- * @author  Matthias Maier, 2015
  *
  * @ingroup LAOperators
  */
@@ -669,7 +667,6 @@ transpose_operator(const LinearOperator<Range, Domain, Payload> &op)
  * of the @p solver object will be modified upon invocation of
  * <code>vmult</code> or <code>Tvmult</code>.
  *
- * @author Luca Heltai, Matthias Maier, Jean-Paul Pelteret, 2015
  *
  * @ingroup LAOperators
  */
@@ -955,7 +952,6 @@ namespace internal
      * SparseMatrix. To use Trilinos and PETSc sparse matrix classes it is
      * necessary to initialize a LinearOperator with their associated Payload.
      *
-     * @author Jean-Paul Pelteret, Matthias Maier, 2016
      *
      * @ingroup LAOperators
      */
@@ -1254,7 +1250,6 @@ namespace internal
  * <code>vmult</code> and <code>Tvmult</code> (requiring intermediate
  * storage).
  *
- * @author Matthias Maier, 2015
  *
  * @ingroup LAOperators
  */
@@ -1279,7 +1274,6 @@ linear_operator(const Matrix &matrix)
  * This variant can, for example, be used to encapsulate preconditioners (that
  * typically do not expose any information about the underlying matrix).
  *
- * @author Matthias Maier, 2015
  *
  * @ingroup LAOperators
  */
@@ -1338,7 +1332,6 @@ linear_operator(const OperatorExemplar &operator_exemplar, const Matrix &matrix)
  * This variant can, for example, be used to encapsulate preconditioners (that
  * typically do not expose any information about the underlying matrix).
  *
- * @author Matthias Maier, 2017
  *
  * @ingroup LAOperators
  */

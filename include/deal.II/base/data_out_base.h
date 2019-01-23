@@ -210,7 +210,6 @@ class XDMFEntry;
  * </ul>
  *
  * @ingroup output
- * @author Wolfgang Bangerth, Guido Kanschat 1999, 2000, 2001, 2002, 2005,
  * 2006.
  */
 namespace DataOutBase
@@ -237,7 +236,6 @@ namespace DataOutBase
    *
    * @ingroup output
    *
-   * @author Wolfgang Bangerth, Guido Kanschat
    */
   template <int dim, int spacedim = dim>
   struct Patch
@@ -387,7 +385,6 @@ namespace DataOutBase
    * points have no natural neighbors across their non-existent faces, nor
    * can they reasonably be subdivided.
    *
-   * @author Wolfgang Bangerth, 2017.
    */
   template <int spacedim>
   struct Patch<0, spacedim>
@@ -2389,7 +2386,6 @@ namespace DataOutBase
    * <code>.pvtu</code> file that references multiple parts of a parallel
    * computation.
    *
-   * @author Marco Engelhard, 2012
    */
   void
   write_pvd_record(
@@ -2869,7 +2865,6 @@ namespace DataOutBase
  * name can be obtained by <tt>default_suffix</tt> without arguments.
  *
  * @ingroup output
- * @author Wolfgang Bangerth, 1999, Denis Davydov, 2018
  */
 template <int dim, int spacedim = dim>
 class DataOutInterface
@@ -3404,7 +3399,6 @@ private:
  * was used for writing.
  *
  * @ingroup input output
- * @author Wolfgang Bangerth, 2005
  */
 template <int dim, int spacedim = dim>
 class DataOutReader : public DataOutInterface<dim, spacedim>
@@ -3678,7 +3672,6 @@ namespace DataOutBase
    * data structure. It may later be converted into regular formats for a
    * number of graphics programs.
    *
-   * @author Wolfgang Bangerth, 2005
    */
   template <int dim, int spacedim>
   std::ostream &
@@ -3692,7 +3685,6 @@ namespace DataOutBase
    * data structure, using the format in which it was written using the
    * operator<<.
    *
-   * @author Wolfgang Bangerth, 2005
    */
   template <int dim, int spacedim>
   std::istream &

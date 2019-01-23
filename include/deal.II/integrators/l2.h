@@ -37,8 +37,6 @@ namespace LocalIntegrators
    * @brief Local integrators related to <i>L<sup>2</sup></i>-inner products.
    *
    * @ingroup Integrators
-   * @author Guido Kanschat
-   * @date 2010
    */
   namespace L2
   {
@@ -50,8 +48,6 @@ namespace LocalIntegrators
      * integrals \f[ \int_F uv\,ds \quad \text{or} \quad \int_F \mathbf u\cdot
      * \mathbf v\,ds \f]
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void
@@ -100,8 +96,6 @@ namespace LocalIntegrators
      * The size of the vector <tt>weights</tt> must be equal to the number of
      * quadrature points in the finite element.
      *
-     * @author Guido Kanschat
-     * @date 2014
      */
     template <int dim>
     void
@@ -146,8 +140,6 @@ namespace LocalIntegrators
      *
      * \f[ \int_Z fv\,dx \quad \text{or} \quad \int_F fv\,ds \f]
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim, typename number>
     void
@@ -171,8 +163,6 @@ namespace LocalIntegrators
      * hand side. \f[ \int_Z \mathbf f\cdot \mathbf v\,dx \quad \text{or}
      * \quad \int_F \mathbf f\cdot \mathbf v\,ds \f]
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim, typename number>
     void
@@ -203,8 +193,6 @@ namespace LocalIntegrators
      * Using appropriate weights, this term can be used to penalize violation
      * of conformity in <i>H<sup>1</sup></i>.
      *
-     * @author Guido Kanschat
-     * @date 2008, 2009, 2010
      */
     template <int dim>
     void

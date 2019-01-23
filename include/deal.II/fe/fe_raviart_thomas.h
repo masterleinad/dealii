@@ -99,7 +99,6 @@ DEAL_II_NAMESPACE_OPEN
  * RT<sub>0</sub>).
  *
  *
- * @author Guido Kanschat, 2005, based on previous work by Wolfgang Bangerth.
  */
 template <int dim>
 class FE_RaviartThomas
@@ -243,7 +242,6 @@ private:
  * FiniteElementData<dim>::degree is higher by one than the constructor
  * argument!
  *
- * @author Guido Kanschat, 2005, Zhu Liang, 2008
  */
 template <int dim>
 class FE_RaviartThomasNodal

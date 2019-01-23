@@ -357,7 +357,6 @@ class Triangulation;
  * @endcode
  *
  *
- * @author Wolfgang Bangerth, 1999
  */
 class TimeDependent
 {
@@ -659,7 +658,6 @@ private:
  * following grids, and some functions to be called before a new loop over all
  * time steps is started.
  *
- * @author Wolfgang Bangerth, 1999
  */
 class TimeStepBase : public Subscriptor
 {
@@ -956,7 +954,6 @@ private:
  * but some compilers choked on some aspects, so we put them into a namespace
  * of their own.
  *
- * @author Wolfgang Bangerth, 2001
  */
 namespace TimeStepBase_Tria_Flags
 {
@@ -1306,7 +1303,6 @@ namespace TimeStepBase_Tria_Flags
  * the behaviour of the function -- see the description of the flags for
  * further information.
  *
- * @author Wolfgang Bangerth, 1999; large parts taken from the wave program,
  * by Wolfgang Bangerth 1998
  */
 template <int dim>

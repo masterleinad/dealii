@@ -55,7 +55,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @deprecated The usage of this class is deprecated.
  *
- * @author Wolfgang Bangerth, 1999, 2000
  */
 template <typename number>
 class DEAL_II_DEPRECATED SwappableVector : public Vector<number>

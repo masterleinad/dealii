@@ -61,7 +61,6 @@ namespace internal
      *
      * @ingroup matrixfree
      *
-     * @author Katharina Kormann and Martin Kronbichler, 2010, 2011, 2018
      */
     struct DoFInfo
     {

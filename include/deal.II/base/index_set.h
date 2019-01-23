@@ -66,7 +66,6 @@ DEAL_II_NAMESPACE_OPEN
  * in the
  * @ref distributed_paper "Distributed Computing paper".
  *
- * @author Wolfgang Bangerth, 2009
  */
 class IndexSet
 {

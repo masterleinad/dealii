@@ -900,9 +900,7 @@ namespace GridOutFlags
  *
  * @ingroup grid
  * @ingroup output
- * @author Wolfgang Bangerth, Guido Kanschat, Luca Heltai, Stefan Nauber,
  * Christian Wülker
- * @date 1999 - 2013
  */
 class GridOut
 {
@@ -1181,7 +1179,6 @@ public:
    * The companion GridIn::read_vtk function can be used to read VTK files
    * generated with this method.
    *
-   * @author Luca Heltai, 2018
    */
   template <int dim, int spacedim>
   void

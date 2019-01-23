@@ -107,7 +107,6 @@ class DoFHandler;
  * @endcode
  *
  * @ingroup output
- * @author Wolfgang Bangerth, 1999
  */
 template <int dim,
           int spacedim            = dim,

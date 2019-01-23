@@ -57,7 +57,6 @@ class BlockMatrixArray;
  *
  * @deprecated Use LinearOperator instead
  *
- * @author Guido Kanschat, 2000, 2001, 2002
  */
 template <typename VectorType>
 class DEAL_II_DEPRECATED PointerMatrixBase : public Subscriptor
@@ -122,7 +121,6 @@ public:
  *
  * @deprecated Use LinearOperator instead
  *
- * @author Guido Kanschat 2000, 2001, 2002
  */
 template <typename MatrixType, typename VectorType>
 class DEAL_II_DEPRECATED PointerMatrix : public PointerMatrixBase<VectorType>
@@ -226,7 +224,6 @@ private:
  *
  * @deprecated Use LinearOperator instead
  *
- * @author Guido Kanschat 2006
  */
 template <typename MatrixType, typename VectorType>
 class DEAL_II_DEPRECATED PointerMatrixAux : public PointerMatrixBase<VectorType>
@@ -349,7 +346,6 @@ private:
  *
  * @deprecated Use LinearOperator instead
  *
- * @author Guido Kanschat, 2006
  */
 template <typename number>
 class DEAL_II_DEPRECATED PointerMatrixVector

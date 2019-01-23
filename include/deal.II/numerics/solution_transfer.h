@@ -326,7 +326,6 @@ DEAL_II_NAMESPACE_OPEN
  * transferring the solution.
  *
  * @ingroup numerics
- * @author Ralf Hartmann, 1999, Oliver Kayser-Herold and Wolfgang Bangerth,
  * 2006, Wolfgang Bangerth 2014
  */
 template <int dim,

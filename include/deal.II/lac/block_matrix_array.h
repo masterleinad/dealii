@@ -110,8 +110,6 @@ DEAL_II_NAMESPACE_OPEN
  *
  * @see
  * @ref GlossBlockLA "Block (linear algebra)"
- * @author Guido Kanschat
- * @date 2000-2005, 2010
  */
 template <typename number          = double,
           typename BlockVectorType = BlockVector<number>>
@@ -274,7 +272,6 @@ protected:
    * optional transposition must be stored. This structure encapsulates all of
    * them.
    *
-   * @author Guido Kanschat, 2000, 2001
    */
   class Entry
   {
@@ -414,7 +411,6 @@ private:
  * block_forward_substitution, which build on BlockLinearOperator.
  *
  * @ingroup Preconditioners
- * @author Guido Kanschat, 2001, 2005
  */
 template <typename number          = double,
           typename BlockVectorType = BlockVector<number>>

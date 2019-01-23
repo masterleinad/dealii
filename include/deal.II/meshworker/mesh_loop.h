@@ -113,7 +113,6 @@ namespace MeshWorker
    * WorkStream namespace and its members.
    *
    * @ingroup MeshWorker
-   * @author Luca Heltai and Timo Heister, 2017
    */
   template <class CellIteratorType, class ScratchData, class CopyData>
   void

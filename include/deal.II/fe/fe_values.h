@@ -1251,7 +1251,6 @@ namespace FEValuesViews
    *
    * @ingroup feaccess vector_valued
    *
-   * @author Andrew McBride, 2009
    */
   template <int dim, int spacedim>
   class SymmetricTensor<2, dim, spacedim>
@@ -1540,7 +1539,6 @@ namespace FEValuesViews
    *
    * @ingroup feaccess vector_valued
    *
-   * @author Denis Davydov, 2013, 2018
    */
   template <int dim, int spacedim>
   class Tensor<2, dim, spacedim>
@@ -2003,7 +2001,6 @@ namespace internal
  *
  *
  * @ingroup feaccess
- * @author Wolfgang Bangerth, 1998, 2003, Guido Kanschat, 2001
  */
 template <int dim, int spacedim>
 class FEValuesBase : public Subscriptor
@@ -3253,7 +3250,6 @@ protected:
    * This way, the use of virtual functions is restricted to only this class,
    * and other users of iterators do not have to bear the negative effects.
    *
-   * @author Wolfgang Bangerth, 2003
    */
   class CellIteratorBase;
 
@@ -3426,7 +3422,6 @@ private:
  * see this class.
  *
  * @ingroup feaccess
- * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2001
  */
 template <int dim, int spacedim = dim>
 class FEValues : public FEValuesBase<dim, spacedim>
@@ -3545,7 +3540,6 @@ private:
  * See FEValuesBase
  *
  * @ingroup feaccess
- * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
 template <int dim, int spacedim = dim>
 class FEFaceValuesBase : public FEValuesBase<dim, spacedim>
@@ -3642,7 +3636,6 @@ protected:
  * either of the neighboring cells.
  *
  * @ingroup feaccess
- * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
 template <int dim, int spacedim = dim>
 class FEFaceValues : public FEFaceValuesBase<dim, spacedim>
@@ -3757,7 +3750,6 @@ private:
  * number corresponds to the number of the child of the neighboring face.
  *
  * @ingroup feaccess
- * @author Wolfgang Bangerth, 1998, Guido Kanschat, 2000, 2001
  */
 template <int dim, int spacedim = dim>
 class FESubfaceValues : public FEFaceValuesBase<dim, spacedim>

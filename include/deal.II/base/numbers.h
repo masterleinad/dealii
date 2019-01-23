@@ -326,7 +326,6 @@ namespace numbers
    * linear algebra classes such as vectors and matrices that work for both
    * real and complex numbers.
    *
-   * @author Wolfgang Bangerth, 2007
    */
   template <typename number>
   struct NumberTraits
@@ -378,7 +377,6 @@ namespace numbers
    * Specialization of the general NumberTraits class that provides the
    * relevant information if the underlying data type is std::complex<T>.
    *
-   * @author Wolfgang Bangerth, 2007
    */
   template <typename number>
   struct NumberTraits<std::complex<number>>

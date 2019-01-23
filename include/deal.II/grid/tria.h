@@ -300,7 +300,6 @@ namespace internal
      * to the number of lines etc is a rather frequent operation, this was not
      * an optimal solution.
      *
-     * @author Wolfgang Bangerth, 1999
      */
     template <int dim>
     struct NumberCache
@@ -317,7 +316,6 @@ namespace internal
      * to the number of lines etc is a rather frequent operation, this was not
      * an optimal solution.
      *
-     * @author Wolfgang Bangerth, 1999
      */
     template <>
     struct NumberCache<1>
@@ -381,7 +379,6 @@ namespace internal
      * to the number of lines etc is a rather frequent operation, this was not
      * an optimal solution.
      *
-     * @author Wolfgang Bangerth, 1999
      */
     template <>
     struct NumberCache<2> : public NumberCache<1>
@@ -441,7 +438,6 @@ namespace internal
      * number of lines etc is a rather frequent operation, this was not an
      * optimal solution.
      *
-     * @author Wolfgang Bangerth, 1999
      */
     template <>
     struct NumberCache<3> : public NumberCache<2>
@@ -1271,7 +1267,6 @@ namespace internal
  * data stored in the triangulation.
  *
  * @ingroup grid aniso
- * @author Wolfgang Bangerth, 1998; Ralf Hartmann, 2005
  */
 template <int dim, int spacedim = dim>
 class Triangulation : public Subscriptor

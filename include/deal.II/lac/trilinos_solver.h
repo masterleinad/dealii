@@ -60,7 +60,6 @@ namespace TrilinosWrappers
    * ParameterList) and is similar to the deal.II class SolverSelector.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2008, 2009; extension for full compatibility
    * with LinearOperator class: Jean-Paul Pelteret, 2015
    */
   class SolverBase
@@ -358,7 +357,6 @@ namespace TrilinosWrappers
    * An implementation of the solver interface using the Trilinos CG solver.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2008
    */
   class SolverCG : public SolverBase
   {
@@ -397,7 +395,6 @@ namespace TrilinosWrappers
    * An implementation of the solver interface using the Trilinos CGS solver.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2008
    */
   class SolverCGS : public SolverBase
   {
@@ -435,7 +432,6 @@ namespace TrilinosWrappers
    * An implementation of the solver interface using the Trilinos GMRES
    * solver.
    *
-   * @author Martin Kronbichler, 2008
    */
   class SolverGMRES : public SolverBase
   {
@@ -477,7 +473,6 @@ namespace TrilinosWrappers
    * solver.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2008
    */
   class SolverBicgstab : public SolverBase
   {
@@ -517,7 +512,6 @@ namespace TrilinosWrappers
    * solver.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2008
    */
   class SolverTFQMR : public SolverBase
   {
@@ -563,7 +557,6 @@ namespace TrilinosWrappers
    * linked to from the deal.II ReadMe file.
    *
    * @ingroup TrilinosWrappers
-   * @author Martin Kronbichler, 2009, Uwe K&ouml;cher, 2014
    */
   class SolverDirect
   {

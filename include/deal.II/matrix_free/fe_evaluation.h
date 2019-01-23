@@ -85,7 +85,6 @@ class FEEvaluation;
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010-2018
  */
 template <int dim, int n_components_, typename Number, bool is_face = false>
 class FEEvaluationBase
@@ -1126,7 +1125,6 @@ private:
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
 template <int dim, int n_components_, typename Number, bool is_face>
 class FEEvaluationAccess
@@ -1192,7 +1190,6 @@ protected:
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
 template <int dim, typename Number, bool is_face>
 class FEEvaluationAccess<dim, 1, Number, is_face>
@@ -1324,7 +1321,6 @@ protected:
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
 template <int dim, typename Number, bool is_face>
 class FEEvaluationAccess<dim, dim, Number, is_face>
@@ -1478,7 +1474,6 @@ protected:
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010, 2011, Shiva
  * Rudraraju, 2014
  */
 template <typename Number, bool is_face>
@@ -2159,7 +2154,6 @@ protected:
  *
  * @ingroup matrixfree
  *
- * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
  */
 template <int dim,
           int fe_degree,
@@ -2562,7 +2556,6 @@ private:
  *
  * @tparam Number Number format, usually @p double or @p float
  *
- * @author Katharina Kormann and Martin Kronbichler, 2018
  */
 template <int dim,
           int fe_degree,

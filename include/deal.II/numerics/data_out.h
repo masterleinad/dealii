@@ -154,7 +154,6 @@ namespace internal
  * class consequently only a single template argument.
  *
  * @ingroup output
- * @author Wolfgang Bangerth, 1999
  */
 template <int dim, typename DoFHandlerType = DoFHandler<dim>>
 class DataOut : public DataOut_DoFData<DoFHandlerType,

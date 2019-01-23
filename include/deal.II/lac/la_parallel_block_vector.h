@@ -76,7 +76,6 @@ namespace LinearAlgebra
      *
      * @see
      * @ref GlossBlockLA "Block (linear algebra)"
-     * @author Katharina Kormann, Martin Kronbichler, 2011
      */
     template <typename Number>
     class BlockVector : public BlockVectorBase<Vector<Number>>,
@@ -731,7 +730,6 @@ namespace LinearAlgebra
  * exchanges the data of the two vectors.
  *
  * @relatesalso BlockVector
- * @author Katharina Kormann, Martin Kronbichler, 2011
  */
 template <typename Number>
 inline void
@@ -745,7 +743,6 @@ swap(LinearAlgebra::distributed::BlockVector<Number> &u,
 /**
  * Declare dealii::LinearAlgebra::BlockVector< Number > as distributed vector.
  *
- * @author Uwe Koecher, 2017
  */
 template <typename Number>
 struct is_serial_vector<LinearAlgebra::distributed::BlockVector<Number>>

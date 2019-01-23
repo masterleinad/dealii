@@ -59,8 +59,6 @@ namespace DynamicSparsityPatternIterators
    * sparsity pattern). It does not allow modifying the sparsity pattern
    * itself.
    *
-   * @author Wolfgang Bangerth
-   * @date 2015
    */
   class Accessor
   {
@@ -317,7 +315,6 @@ namespace DynamicSparsityPatternIterators
  * sp.copy_from (dynamic_pattern);
  * @endcode
  *
- * @author Timo Heister, 2008
  */
 class DynamicSparsityPattern : public Subscriptor
 {

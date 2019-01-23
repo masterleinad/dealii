@@ -214,7 +214,6 @@ class Vector;
  *
  *
  * @ingroup functions
- * @author Luca Heltai, Timo Heister 2005, 2014
  */
 template <int dim>
 class FunctionParser : public AutoDerivativeFunction<dim>

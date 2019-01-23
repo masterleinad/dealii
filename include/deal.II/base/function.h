@@ -142,7 +142,6 @@ class TensorFunction;
  *   argument.
  *
  * @ingroup functions
- * @author Wolfgang Bangerth, 1998, 1999, Luca Heltai 2014
  */
 template <int dim, typename RangeNumberType = double>
 class Function : public FunctionTime<
@@ -398,7 +397,6 @@ namespace Functions
    * constructor.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 1998, 1999, Lei Qiao, 2015
    */
   template <int dim, typename RangeNumberType = double>
   class ConstantFunction : public Function<dim, RangeNumberType>
@@ -491,7 +489,6 @@ namespace Functions
    * conditions, or zero initial conditions.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 1998, 1999
    */
   template <int dim, typename RangeNumberType = double>
   class ZeroFunction : public ConstantFunction<dim, RangeNumberType>
@@ -538,7 +535,6 @@ using ZeroFunction DEAL_II_DEPRECATED =
  * See the step-20 tutorial program for a detailed explanation and a use case.
  *
  * @ingroup functions
- * @author Guido Kanschat, 2000, Wolfgang Bangerth 2006
  */
 template <int dim, typename RangeNumberType = double>
 class ComponentSelectFunction : public ConstantFunction<dim, RangeNumberType>
@@ -704,7 +700,6 @@ protected:
  * @endcode
  * The savings in work to write this are apparent.
  *
- * @author Wolfgang Bangerth, 2011
  */
 template <int dim, typename RangeNumberType = double>
 class ScalarFunctionFromFunctionObject : public Function<dim, RangeNumberType>
@@ -770,7 +765,6 @@ private:
  * obviously easily extended to functions that are non-constant in their one
  * component.
  *
- * @author Wolfgang Bangerth, 2011
  */
 template <int dim, typename RangeNumberType = double>
 class VectorFunctionFromScalarFunctionObject
@@ -858,7 +852,6 @@ private:
  * where the <code>dim</code> components of the tensor function are placed
  * into the first <code>dim</code> components of the function object.
  *
- * @author Spencer Patty, 2013
  */
 template <int dim, typename RangeNumberType = double>
 class VectorFunctionFromTensorFunction : public Function<dim, RangeNumberType>

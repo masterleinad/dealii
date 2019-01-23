@@ -46,7 +46,6 @@ class Vector;
  * vector operations.
  *
  * @ingroup Matrix1
- * @author Guido Kanschat, 2005, 2006
  */
 template <typename number>
 class TridiagonalMatrix

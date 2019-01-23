@@ -89,7 +89,6 @@ namespace NonMatching
    * See the tutorial program step-60 for an example on how to use this
    * function.
    *
-   * @author Luca Heltai, 2018
    */
   template <int dim0,
             int dim1,
@@ -116,7 +115,6 @@ namespace NonMatching
    * space_mapping cannot be specified, since it is taken from the @p cache
    * parameter.
    *
-   * @author Luca Heltai, 2018
    */
   template <int dim0,
             int dim1,
@@ -181,7 +179,6 @@ namespace NonMatching
    * See the tutorial program step-60 for an example on how to use this
    * function.
    *
-   * @author Luca Heltai, 2018
    */
   template <int dim0, int dim1, int spacedim, typename Matrix>
   void
@@ -205,7 +202,6 @@ namespace NonMatching
    * space_mapping cannot specified, since it is taken from the @p cache
    * parameter.
    *
-   * @author Luca Heltai, 2018
    */
   template <int dim0, int dim1, int spacedim, typename Matrix>
   void

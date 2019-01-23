@@ -96,7 +96,6 @@ DEAL_II_NAMESPACE_OPEN
  * for more information.
  *
  *
- * @author Oliver Kayser-Herold, 2006, based on previous work by Guido
  * Kanschat and Wolfgang Bangerth
  */
 template <int dim>

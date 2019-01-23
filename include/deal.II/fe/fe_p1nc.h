@@ -267,7 +267,6 @@ DEAL_II_NAMESPACE_OPEN
  * }
  * @endcode
  *
- * @author Jaeryun Yim, 2015, 2016.
  */
 class FE_P1NC : public FiniteElement<2, 2>
 {

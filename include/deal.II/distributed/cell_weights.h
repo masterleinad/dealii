@@ -75,7 +75,6 @@ namespace parallel
    * the previous one.
    *
    * @ingroup distributed
-   * @author Marc Fehling, 2018
    */
   template <int dim, int spacedim = dim>
   class CellWeights

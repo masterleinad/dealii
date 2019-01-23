@@ -126,8 +126,6 @@ namespace SparsityPatternIterators
    * sparsity pattern). It does not allow modifying the sparsity pattern
    * itself.
    *
-   * @author Wolfgang Bangerth
-   * @date 2004
    */
   class Accessor
   {
@@ -323,7 +321,6 @@ namespace SparsityPatternIterators
  * documentation module
  * @ref Sparsity.
  *
- * @author Wolfgang Bangerth, Guido Kanschat and others
  */
 class SparsityPattern : public Subscriptor
 {

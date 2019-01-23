@@ -45,7 +45,6 @@ namespace Functions
    * Together with the function, its derivatives and Laplacian are defined.
    *
    * @ingroup functions
-   * @author: Guido Kanschat, 1999
    */
   template <int dim>
   class SquareFunction : public Function<dim>
@@ -85,7 +84,6 @@ namespace Functions
    * function serves as an example for a vanishing Laplacian.
    *
    * @ingroup functions
-   * @author: Guido Kanschat, 2000
    */
   template <int dim>
   class Q1WedgeFunction : public Function<dim>
@@ -148,7 +146,6 @@ namespace Functions
    * Together with the function, its derivatives and Laplacian are defined.
    *
    * @ingroup functions
-   * @author: Guido Kanschat, 1999
    */
   template <int dim>
   class PillowFunction : public Function<dim>
@@ -216,7 +213,6 @@ namespace Functions
    * $\cos(\pi/2 x_i)$.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 1999
    */
   template <int dim>
   class CosineFunction : public Function<dim>
@@ -285,7 +281,6 @@ namespace Functions
    * operators without bothering about boundary terms.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2010
    */
   template <int dim>
   class CosineGradFunction : public Function<dim>
@@ -332,7 +327,6 @@ namespace Functions
    * Product of exponential functions in each coordinate direction.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 1999
    */
   template <int dim>
   class ExpFunction : public Function<dim>
@@ -393,8 +387,6 @@ namespace Functions
    * used with GridGenerator::hyper_L().
    *
    * @ingroup functions
-   * @author Guido Kanschat
-   * @date 1999
    */
   class LSingularityFunction : public Function<2>
   {
@@ -444,7 +436,6 @@ namespace Functions
    * with vanishing curl and divergence.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2010
    */
   class LSingularityGradFunction : public Function<2>
   {
@@ -493,7 +484,6 @@ namespace Functions
    * Singularity on the slit domain in 2D and 3D.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 1999, 2006
    */
   template <int dim>
   class SlitSingularityFunction : public Function<dim>
@@ -540,7 +530,6 @@ namespace Functions
    * Singularity on the slit domain with one Neumann boundary in 2D.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2002
    */
   class SlitHyperSingularityFunction : public Function<2>
   {
@@ -596,7 +585,6 @@ namespace Functions
    * Together with the function, its derivatives and Laplacian are defined.
    *
    * @ingroup functions
-   * @author: Guido Kanschat, 2000
    */
   template <int dim>
   class JumpFunction : public Function<dim>
@@ -700,7 +688,6 @@ namespace Functions
    * Fourier cosine decomposition.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 2001
    */
   template <int dim>
   class FourierCosineFunction : public Function<dim>
@@ -755,7 +742,6 @@ namespace Functions
    * Fourier sine decomposition.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 2001
    */
   template <int dim>
   class FourierSineFunction : public Function<dim>
@@ -806,7 +792,6 @@ namespace Functions
    * $f(x) = \sum_j w_j sin(\sum_i k_i x_i) = Im(\sum_j w_j \exp(i k.x))$.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 2001
    */
   template <int dim>
   class FourierSineSum : public Function<dim>
@@ -861,7 +846,6 @@ namespace Functions
    * \exp(i k.x))$.
    *
    * @ingroup functions
-   * @author Wolfgang Bangerth, 2001
    */
   template <int dim>
   class FourierCosineSum : public Function<dim>
@@ -913,7 +897,6 @@ namespace Functions
    * number of the non-zero component, if the function is vector-valued.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2002
    */
   template <int dim>
   class CutOffFunctionBase : public Function<dim>
@@ -976,7 +959,6 @@ namespace Functions
    * valued, it can be restricted to a single component.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2001, 2002
    */
   template <int dim>
   class CutOffFunctionLinfty : public CutOffFunctionBase<dim>
@@ -1024,7 +1006,6 @@ namespace Functions
    * component.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2001, 2002
    */
   template <int dim>
   class CutOffFunctionW1 : public CutOffFunctionBase<dim>
@@ -1073,7 +1054,6 @@ namespace Functions
    * can be restricted to a single component.
    *
    * @ingroup functions
-   * @author Guido Kanschat, 2001, 2002
    */
   template <int dim>
   class CutOffFunctionCinfty : public CutOffFunctionBase<dim>
@@ -1133,7 +1113,6 @@ namespace Functions
    * exponents are of course equally valid. Exponents can't be real when the
    * bases are negative numbers.
    *
-   * @author Wolfgang Bangerth, 2006
    */
   template <int dim>
   class Monomial : public Function<dim>
@@ -1217,7 +1196,6 @@ namespace Functions
    * @note The use of the related class InterpolatedUniformGridData is
    * discussed in step-53.
    *
-   * @author Wolfgang Bangerth, 2013
    */
   template <int dim>
   class InterpolatedTensorProductGridData : public Function<dim>
@@ -1320,7 +1298,6 @@ namespace Functions
    *
    * @note The use of this class is discussed in step-53.
    *
-   * @author Wolfgang Bangerth, 2013
    */
   template <int dim>
   class InterpolatedUniformGridData : public Function<dim>
@@ -1386,7 +1363,6 @@ namespace Functions
    * takes a Table<2,double> to describe the set of exponents and a
    * Vector<double> to describe the set of coefficients.
    *
-   * @author Ángel Rodríguez, 2015
    */
   template <int dim>
   class Polynomial : public Function<dim>

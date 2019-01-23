@@ -111,7 +111,6 @@ DEAL_II_NAMESPACE_OPEN
  * class.
  *
  * @ingroup CPP11
- * @author Wolfgang Bangerth, 2014
  */
 template <typename Iterator>
 class IteratorRange

@@ -61,7 +61,6 @@ namespace Utilities
      *
      * @note The function is implemented for real valued numbers only.
      *
-     * @author Denis Davydov, 2017
      */
     template <typename NumberType>
     std::array<NumberType, 3>
@@ -93,7 +92,6 @@ namespace Utilities
      *
      * @note The function is implemented for real valued numbers only.
      *
-     * @author Denis Davydov, 2017
      */
     template <typename NumberType>
     std::array<NumberType, 3>
@@ -134,7 +132,6 @@ namespace Utilities
      * several steps of SolverCG with
      * SolverCG<VectorType>::connect_eigenvalues_slot().
      *
-     * @author Denis Davydov, 2017
      */
     template <typename OperatorType, typename VectorType>
     double
@@ -191,7 +188,6 @@ namespace Utilities
      * <code>std::numeric_limits<double>::infinity()</code>, no normalization
      * will be performed.
      *
-     * @author Denis Davydov, 2017
      */
     template <typename OperatorType, typename VectorType>
     void

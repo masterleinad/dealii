@@ -114,7 +114,6 @@ struct CPUClock
  * exceed the wall times.
  *
  * @ingroup utilities
- * @author G. Kanschat, W. Bangerth, M. Kronbichler, D. Wells
  */
 class Timer
 {
@@ -575,7 +574,6 @@ private:
  * step-40, and step-42 tutorial programs for this kind of usage of this class.
  *
  * @ingroup utilities
- * @author M. Kronbichler, 2009.
  */
 class TimerOutput
 {

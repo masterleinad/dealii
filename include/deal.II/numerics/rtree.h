@@ -124,7 +124,6 @@ DEAL_II_NAMESPACE_OPEN
  * // Returns the 3 closest points to the Segment defined above.
  * @endcode
  *
- * @author Luca Heltai, 2018.
  */
 template <typename LeafType,
           typename IndexType = boost::geometry::index::linear<16>>
@@ -138,7 +137,6 @@ using RTree = boost::geometry::index::rtree<LeafType, IndexType>;
  * arguments, and we only need to specify the @p IndexType if the default is not
  * adequate.
  *
- * @author Luca Heltai, 2018.
  */
 template <typename IndexType = boost::geometry::index::linear<16>,
           typename LeafTypeIterator>
@@ -153,7 +151,6 @@ pack_rtree(const LeafTypeIterator &begin, const LeafTypeIterator &end);
  * arguments, and we only need to specify the @p IndexType if the default is not
  * adequate.
  *
- * @author Luca Heltai, 2018.
  */
 template <typename IndexType = boost::geometry::index::linear<16>,
           typename ContainerType>

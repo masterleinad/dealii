@@ -114,8 +114,6 @@ namespace GridGenerator
    * @note Implemented for <tt>Triangulation@<2,2@></tt>,
    * <tt>Triangulation@<3,3@></tt>.
    *
-   * @author Guido Kanschat
-   * @date 2015
    */
   template <int dim>
   void
@@ -301,8 +299,6 @@ namespace GridGenerator
    * calling this function.
    *
    * @param holes Positive number of holes in each of the dim directions.
-   * @author Guido Kanschat
-   * @date 2015
    */
   template <int dim, int spacedim>
   void
@@ -350,7 +346,6 @@ namespace GridGenerator
    * indicators for the surfaces in the y-direction are 2 and 3, and the ones
    * for the z-direction are 5 and 6. The hole boundary has indicator 4.
    *
-   * @author Denis Davydov, 2018
    */
   template <int dim>
   void
@@ -474,7 +469,6 @@ namespace GridGenerator
    * @ref GlossColorization "the glossary entry on colorization"). In 1d the
    * indicators are always colorized, see hyper_rectangle().
    *
-   * @author Bruno Turcksin
    */
   template <int dim>
   void
@@ -775,7 +769,6 @@ namespace GridGenerator
    *
    * @note The triangulation passed as argument needs to be empty when calling this function.
    *
-   * @author Markus B&uuml;rg, 2009
    */
   template <int dim>
   void
@@ -810,8 +803,6 @@ namespace GridGenerator
    * @image html hyper_cross_2d.png
    * @image html hyper_cross_3d.png
    *
-   * @author Guido Kanschat
-   * @date 2015
    */
   template <int dim, int spacedim>
   void
@@ -1455,7 +1446,6 @@ namespace GridGenerator
    * manifold objects are copied (nor are any manifold ids set) by this
    * function.
    *
-   * @author Weixiong Zheng, 2018
    */
   void
   extrude_triangulation(
@@ -1494,7 +1484,6 @@ namespace GridGenerator
    * manifold objects are copied by this function: you must attach new
    * manifold objects to @p out_tria.
    *
-   * @author Luca Heltai, 2014
    */
   template <int dim, int spacedim1, int spacedim2>
   void

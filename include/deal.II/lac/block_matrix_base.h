@@ -49,7 +49,6 @@ class MatrixIterator;
 /**
  * Namespace in which iterators in block matrices are implemented.
  *
- * @author Wolfgang Bangerth, 2004
  */
 namespace BlockMatrixIterators
 {
@@ -348,7 +347,6 @@ namespace BlockMatrixIterators
  *
  * @see
  * @ref GlossBlockLA "Block (linear algebra)"
- * @author Wolfgang Bangerth, 2000, 2004
  */
 template <typename MatrixType>
 class BlockMatrixBase : public Subscriptor

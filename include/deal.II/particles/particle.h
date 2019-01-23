@@ -94,7 +94,6 @@ namespace Particles
    * manager.
    *
    * @ingroup Particle
-   * @author Rene Gassmoeller, 2017
    *
    */
   template <int dim, int spacedim = dim>

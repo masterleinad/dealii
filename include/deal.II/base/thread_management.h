@@ -81,7 +81,6 @@ namespace Threads
    * not used yet, its corresponding mutex should also remain in its
    * original state.
    *
-   * @author Wolfgang Bangerth, 2002, 2003, 2009
    */
   class Mutex : public std::mutex
   {
@@ -167,7 +166,6 @@ namespace Threads
    *
    * @deprecated Use std::condition_variable instead.
    *
-   * @author Wolfgang Bangerth, 2003
    */
   class DEAL_II_DEPRECATED ConditionVariable
   {
@@ -232,7 +230,6 @@ namespace Threads
    * @deprecated This class is deprecated. It is easily possible to implement
    *   its functionality with the facilities provided by C++11.
    *
-   * @author Wolfgang Bangerth, 2002
    */
   class DEAL_II_DEPRECATED PosixThreadBarrier
   {
@@ -386,7 +383,6 @@ namespace Threads
    * subsystem are implemented. The members of this namespace are not meant
    * for public use.
    *
-   * @author Wolfgang Bangerth, 2003
    */
   namespace internal
   {
@@ -823,7 +819,6 @@ namespace Threads
    * the function you are calling on a new thread has no return value, you can
    * omit the template argument.
    *
-   * @author Wolfgang Bangerth, 2003, 2009
    * @ingroup threads
    * @ingroup threads
    */
@@ -1139,7 +1134,6 @@ namespace Threads
    * for them all together. The thread objects need to have the same return
    * value for the called function.
    *
-   * @author Wolfgang Bangerth, 2003
    * @ingroup threads
    */
   template <typename RT = void>
@@ -1245,7 +1239,6 @@ namespace Threads
      * the task description needs to include a way to store the function and
      * its arguments that shall be run on the task.
      *
-     * @author Wolfgang Bangerth, 2009
      */
     template <typename RT>
     struct TaskDescriptor
@@ -1496,7 +1489,6 @@ namespace Threads
    * words, a Task object should never passed on to another task for calling
    * the join() method.
    *
-   * @author Wolfgang Bangerth, 2009
    * @ingroup threads
    */
   template <typename RT = void>
@@ -1819,7 +1811,6 @@ namespace Threads
    * other words, a Task object should never passed on to another task for
    * calling the join() method.
    *
-   * @author Wolfgang Bangerth, 2003
    * @ingroup tasks
    */
   template <typename RT = void>

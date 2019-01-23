@@ -227,7 +227,6 @@ namespace TrilinosWrappers
  * latter may be useful if you want to create many right hand side vectors.
  *
  * @ingroup numerics
- * @author Wolfgang Bangerth, 1998, Ralf Hartmann, 2001
  */
 namespace MatrixCreator
 {
@@ -814,7 +813,6 @@ namespace MatrixCreator
  * no hanging nodes and even then doesn't always work fully satisfactorily.
  *
  * @ingroup numerics
- * @author Wolfgang Bangerth, 1998, 2000, 2004, 2005
  */
 namespace MatrixTools
 {

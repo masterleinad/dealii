@@ -91,7 +91,6 @@ namespace internal
      *
      * @ingroup matrixfree
      *
-     * @author Katharina Kormann and Martin Kronbichler, 2010, 2011
      */
     template <typename Number>
     struct ShapeInfo

@@ -53,7 +53,6 @@ namespace internal
      * @ref Iterators
      * module for more information.
      *
-     * @author Wolfgang Bangerth, Oliver Kayser-Herold, Guido Kanschat, 1998,
      * 2003, 2008, 2010
      */
     template <template <int, int> class DoFHandlerType, int spacedim, bool lda>
@@ -99,7 +98,6 @@ namespace internal
      * @ref Iterators
      * module for more information.
      *
-     * @author Wolfgang Bangerth, Oliver Kayser-Herold, Guido Kanschat, 1998,
      * 2003, 2008, 2010
      */
     template <template <int, int> class DoFHandlerType, int spacedim, bool lda>
@@ -143,7 +141,6 @@ namespace internal
      * @ref Iterators
      * module for more information.
      *
-     * @author Wolfgang Bangerth, Oliver Kayser-Herold, Guido Kanschat, 1998,
      * 2003, 2008, 2010
      */
     template <template <int, int> class DoFHandlerType, int spacedim, bool lda>

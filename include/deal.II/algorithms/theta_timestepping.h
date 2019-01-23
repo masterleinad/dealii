@@ -184,8 +184,6 @@ namespace Algorithms
    * he matrix.
    *
    * @until vmult @until }
-   * @author Guido Kanschat
-   * @date 2010
    */
   template <typename VectorType>
   class ThetaTimestepping : public OperatorBase

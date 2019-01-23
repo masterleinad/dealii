@@ -34,7 +34,6 @@ namespace LinearAlgebra
    * different vectors. This is similar to the way SparseMatrix and
    * SparsityPattern works.
    *
-   * @author Bruno Turcksin, 2015.
    */
   class CommunicationPatternBase
   {

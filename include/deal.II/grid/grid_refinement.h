@@ -47,7 +47,6 @@ class Vector;
  * Nochetto, Rannacher, Stevenson, and others.
  *
  * @ingroup grid
- * @author Wolfgang Bangerth, Thomas Richter, Guido Kanschat 1998, 2000, 2009
  */
 namespace GridRefinement
 {

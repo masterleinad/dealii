@@ -85,9 +85,7 @@ class VectorizedArray;
  * free to implement them and send them to us for inclusion.
  *
  * @ingroup memory
- * @author Wolfgang Bangerth, documentation updated by Guido Kanschat, David
  * Wells
- * @date 2000, 2015
  */
 namespace MemoryConsumption
 {

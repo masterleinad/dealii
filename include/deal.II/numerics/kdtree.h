@@ -56,7 +56,6 @@ DEAL_II_NAMESPACE_OPEN
  * > case, the hyperplane would be set by the $x$-value of the point, and its
  * > normal would be the unit $x$-axis.
  *
- * @author Luca Heltai, 2017.
  */
 template <int dim>
 class KDTree

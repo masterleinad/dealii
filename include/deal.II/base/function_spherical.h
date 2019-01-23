@@ -38,7 +38,6 @@ namespace Functions
    *
    * @note This function is currently only implemented for dim==3 .
    *
-   * @author Denis Davydov, 2017
    */
   template <int dim>
   class Spherical : public Function<dim>

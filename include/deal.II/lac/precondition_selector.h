@@ -92,7 +92,6 @@ class SparseMatrix;
  * started (that is several times e.g. in a nonlinear iteration) this
  * preselected solver and preconditioner is called.
  *
- * @author Ralf Hartmann, 1999; extension for full compatibility with
  * LinearOperator class: Jean-Paul Pelteret, 2015
  */
 template <typename MatrixType = SparseMatrix<double>,

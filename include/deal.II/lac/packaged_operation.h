@@ -93,7 +93,6 @@ class PackagedOperation;
  *   y -= residual;
  * @endcode
  *
- * @author Matthias Maier, 2015
  *
  * @ingroup LAOperators
  */
