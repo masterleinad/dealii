@@ -665,7 +665,7 @@ namespace internal
       const ComponentExtractor                             extract_component,
       std::vector<dealii::Vector<double>> &patch_values_system) const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -722,7 +722,7 @@ namespace internal
       const ComponentExtractor                             extract_component,
       std::vector<double> &                                patch_values) const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -759,7 +759,7 @@ namespace internal
       std::vector<std::vector<Tensor<1, DoFHandlerType::space_dimension>>>
         &patch_gradients_system) const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -821,7 +821,7 @@ namespace internal
       std::vector<Tensor<1, DoFHandlerType::space_dimension>> &patch_gradients)
       const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -865,7 +865,7 @@ namespace internal
       std::vector<std::vector<Tensor<2, DoFHandlerType::space_dimension>>>
         &patch_hessians_system) const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<typename VectorType::value_type,double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "
@@ -927,7 +927,7 @@ namespace internal
       std::vector<Tensor<2, DoFHandlerType::space_dimension>> &patch_hessians)
       const
     {
-      if (typeid(typename VectorType::value_type) == typeid(double))
+      if (std::is_same<VectorType::value_type, double>::value)
         {
           Assert(extract_component == ComponentExtractor::real_part,
                  ExcMessage("You cannot extract anything other than the real "

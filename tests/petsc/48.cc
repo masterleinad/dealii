@@ -44,7 +44,7 @@ test(PETScWrappers::MPI::Vector &v,
   v.ratio(w, x);
 
   // make sure we get the expected result
-  const double eps = typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
+  const double eps = std::is_same<PetscScalar,double>::value ? 1e-14 : 1e-5;
   for (unsigned int i = 0; i < v.size(); ++i)
     {
       AssertThrow(w(i) == i + 1., ExcInternalError());

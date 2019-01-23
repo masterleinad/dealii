@@ -27,9 +27,9 @@ main()
 {
   initlog();
 
-  if (typeid(PetscScalar) == typeid(double))
+  if (std::is_same<PetscScalar,double>::value)
     deallog << "double" << std::endl;
-  else if (typeid(PetscScalar) == typeid(float))
+  else if (std::is_same<PetscScalar,float>::value)
     deallog << "float" << std::endl;
   else
     Assert(false, ExcNotImplemented());

@@ -29,9 +29,9 @@ template <typename T, typename U, typename CompareType>
 void
 check()
 {
-  AssertThrow(typeid(typename ProductType<T, U>::type) == typeid(CompareType),
+  AssertThrow(std::is_same<typename ProductType<T, U>::type,CompareType>::value,
               ExcInternalError());
-  AssertThrow(typeid(typename ProductType<T, U>::type) == typeid(T() * U()),
+  AssertThrow(std::is_same<typename ProductType<T, U>::type,T(>::value * U()),
               ExcInternalError());
 }
 

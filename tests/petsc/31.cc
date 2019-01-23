@@ -38,7 +38,7 @@ test(PETScWrappers::MPI::Vector &v)
   v.compress(VectorOperation::insert);
 
   // then check the norm
-  const double eps = typeid(PetscScalar) == typeid(double) ? 1e-14 : 1e-5;
+  const double eps = std::is_same<PetscScalar,double>::value ? 1e-14 : 1e-5;
   AssertThrow(std::fabs(v.norm_sqr() - norm) < eps * norm, ExcInternalError());
 
   deallog << "OK" << std::endl;

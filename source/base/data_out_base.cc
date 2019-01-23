@@ -8331,27 +8331,28 @@ DataOutInterface<dim, spacedim>::set_flags(const FlagType &flags)
 {
   // The price for not writing ten duplicates of this function is some loss in
   // type safety.
-  if (typeid(flags) == typeid(dx_flags))
+  if (std::is_same<FlagType, DataOutBase::DXFlags>::value)
     dx_flags = *reinterpret_cast<const DataOutBase::DXFlags *>(&flags);
-  else if (typeid(flags) == typeid(ucd_flags))
+  else if (std::is_same<FlagType, DataOutBase::UcdFlags>::value)
     ucd_flags = *reinterpret_cast<const DataOutBase::UcdFlags *>(&flags);
-  else if (typeid(flags) == typeid(povray_flags))
+  else if (std::is_same<FlagType, DataOutBase::PovrayFlags>::value)
     povray_flags = *reinterpret_cast<const DataOutBase::PovrayFlags *>(&flags);
-  else if (typeid(flags) == typeid(eps_flags))
+  else if (std::is_same<FlagType, DataOutBase::EpsFlags>::value)
     eps_flags = *reinterpret_cast<const DataOutBase::EpsFlags *>(&flags);
-  else if (typeid(flags) == typeid(gmv_flags))
+  else if (std::is_same<FlagType, DataOutBase::GmvFlags>::value)
     gmv_flags = *reinterpret_cast<const DataOutBase::GmvFlags *>(&flags);
-  else if (typeid(flags) == typeid(tecplot_flags))
+  else if (std::is_same<FlagType, DataOutBase::TecPlotFlags>::value)
     tecplot_flags =
       *reinterpret_cast<const DataOutBase::TecplotFlags *>(&flags);
-  else if (typeid(flags) == typeid(vtk_flags))
+  else if (std::is_same<FlagType, DataOutBase::VtkFlags>::value)
     vtk_flags = *reinterpret_cast<const DataOutBase::VtkFlags *>(&flags);
-  else if (typeid(flags) == typeid(svg_flags))
+  else if (std::is_same<FlagType, DataOutBase::SvgFlags>::value)
     svg_flags = *reinterpret_cast<const DataOutBase::SvgFlags *>(&flags);
-  else if (typeid(flags) == typeid(gnuplot_flags))
+  else if (std::is_same<FlagType, DataOutBase::GnuplotFlags>::value)
     gnuplot_flags =
       *reinterpret_cast<const DataOutBase::GnuplotFlags *>(&flags);
-  else if (typeid(flags) == typeid(deal_II_intermediate_flags))
+  else if (std::is_same<FlagType,
+                        DataOutBase::Deal_II_IntermediateFlags>::value)
     deal_II_intermediate_flags =
       *reinterpret_cast<const DataOutBase::Deal_II_IntermediateFlags *>(&flags);
   else

@@ -4513,7 +4513,7 @@ namespace
     // see if the existing pointer is non-null and if the type of
     // the old object pointed to matches that of the one we'd
     // like to create
-    if (present_cell.get() && (typeid(*present_cell.get()) == typeid(Type)))
+    if (present_cell.get() && (std::is_same<*present_cell.get(,Type>::value))
       {
         // call destructor of the old object
         static_cast<const Type *>(present_cell.get())->~Type();

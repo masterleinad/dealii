@@ -33,9 +33,9 @@ main(int argc, char **argv)
     argc, argv, testing_max_num_threads());
 
 
-  if (typeid(TrilinosScalar) == typeid(double))
+  if (std::is_same<TrilinosScalar,double>::value)
     deallog << "double" << std::endl;
-  else if (typeid(TrilinosScalar) == typeid(float))
+  else if (std::is_same<TrilinosScalar,float>::value)
     deallog << "float" << std::endl;
   else
     Assert(false, ExcNotImplemented());

@@ -801,7 +801,7 @@ namespace CUDAWrappers
     std::shared_ptr<const MPI_Comm>  comm,
     const AdditionalData             additional_data)
   {
-    if (typeid(Number) == typeid(double))
+    if (std::is_same<Number,double>::value)
       cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte);
 
     const UpdateFlags &update_flags = additional_data.mapping_update_flags;
