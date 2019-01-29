@@ -18,6 +18,9 @@
 #define dealii_cuda_tensor_product_kernels_h
 
 #include <deal.II/base/config.h>
+#include <deal.II/base/utilities.h>
+// We need this for global_shape_values
+#include <deal.II/matrix_free/cuda_matrix_free.templates.h>
 
 #ifdef DEAL_II_COMPILER_CUDA_AWARE
 
