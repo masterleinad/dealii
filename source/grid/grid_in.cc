@@ -2430,15 +2430,16 @@ GridIn<3>::read_netcdf(const std::string &filename)
 
   std::vector<int> bmarker(n_bquads);
   bmarker_var->get(&*bmarker.begin(), n_bquads);
-  // we only handle boundary
-  // indicators that fit into an
-  // types::boundary_id. Also, we don't
-  // take numbers::internal_face_boundary_id
-  // as it denotes an internal face
+  // we only handle boundary indicators that fit into types::boundary_id. Also,
+  // we don't take numbers::internal_face_boundary_id as it denotes an internal
+  // face
   for (const int id : bmarker)
-    Assert(0 <= id && static_cast<types::boundary_id>(id) !=
-                        numbers::internal_face_boundary_id,
-           ExcIO());
+    {
+      (void)id;
+      Assert(0 <= id && static_cast<types::boundary_id>(id) !=
+                          numbers::internal_face_boundary_id,
+             ExcIO());
+    }
 
   // finally we setup the boundary
   // information
