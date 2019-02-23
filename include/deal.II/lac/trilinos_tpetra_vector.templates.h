@@ -204,17 +204,12 @@ namespace LinearAlgebra
       Tpetra::Vector<Number, int, types::global_dof_index> source_vector(
         tpetra_export.getSourceMap());
 
-      source_vector.template sync<Kokkos::HostSpace>();
       auto x_2d = source_vector.template getLocalView<Kokkos::HostSpace>();
       auto x_1d = Kokkos::subview(x_2d, Kokkos::ALL(), 0);
-      source_vector.template modify<Kokkos::HostSpace>();
       const size_t localLength = source_vector.getLocalLength();
       auto         values_it   = V.begin();
       for (size_t k = 0; k < localLength; ++k)
         x_1d(k) = *values_it++;
-      source_vector.template sync<
-        typename Tpetra::Vector<Number, int, types::global_dof_index>::
-          device_type::memory_space>();
       if (operation == VectorOperation::insert)
         vector->doExport(source_vector, tpetra_export, Tpetra::REPLACE);
       else if (operation == VectorOperation::add)
@@ -325,7 +320,6 @@ namespace LinearAlgebra
     {
       AssertIsFinite(a);
 
-      vector->template sync<Kokkos::HostSpace>();
       auto vector_2d = vector->template getLocalView<Kokkos::HostSpace>();
       auto vector_1d = Kokkos::subview(vector_2d, Kokkos::ALL(), 0);
       vector->template modify<Kokkos::HostSpace>();
@@ -334,9 +328,6 @@ namespace LinearAlgebra
         {
           vector_1d(k) += a;
         }
-      vector->template sync<
-        typename Tpetra::Vector<Number, int, types::global_dof_index>::
-          device_type::memory_space>();
     }
 
 
@@ -628,7 +619,6 @@ namespace LinearAlgebra
       else
         out.setf(std::ios::fixed, std::ios::floatfield);
 
-      vector->template sync<Kokkos::HostSpace>();
       auto vector_2d = vector->template getLocalView<Kokkos::HostSpace>();
       auto vector_1d = Kokkos::subview(vector_2d, Kokkos::ALL(), 0);
       const size_t local_length = vector->getLocalLength();
