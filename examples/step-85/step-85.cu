@@ -84,9 +84,9 @@ namespace Step85
 
     static const unsigned int n_dofs_1d = fe_degree + 1;
     static const unsigned int n_local_dofs =
-      dealii::Utilities::pow(fe_degree + 1, dim);
+     Utilities::pow(fe_degree + 1, dim);
     static const unsigned int n_q_points =
-      dealii::Utilities::pow(fe_degree + 1, dim);
+     Utilities::pow(fe_degree + 1, dim);
   };
 
 
