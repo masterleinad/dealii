@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------------------
  *
- * Copyright (C) 2018 by the deal.II authors
+ * Copyright (C) 2019 by the deal.II authors
  *
  * This file is part of the deal.II library.
  *
@@ -82,11 +82,9 @@ namespace Step85
       const double *                                              src,
       double *                                                    dst) const;
 
-    static const unsigned int n_dofs_1d = fe_degree + 1;
-    static const unsigned int n_local_dofs =
-     Utilities::pow(fe_degree + 1, dim);
-    static const unsigned int n_q_points =
-     Utilities::pow(fe_degree + 1, dim);
+    static const unsigned int n_dofs_1d    = fe_degree + 1;
+    static const unsigned int n_local_dofs = Utilities::pow(fe_degree + 1, dim);
+    static const unsigned int n_q_points   = Utilities::pow(fe_degree + 1, dim);
   };
 
 
@@ -264,7 +262,8 @@ namespace Step85
   {
     PreconditionIdentity preconditioner;
 
-    SolverControl solver_control(100, 1e-12 * system_rhs_dev.l2_norm());
+    SolverControl solver_control(dof_handler.n_dofs(),
+                                 1e-12 * system_rhs_dev.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>> cg(
       solver_control);
     cg.solve(*system_matrix_dev, solution_dev, system_rhs_dev, preconditioner);
