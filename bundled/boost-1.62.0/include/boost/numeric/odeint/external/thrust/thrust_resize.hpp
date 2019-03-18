@@ -170,7 +170,7 @@ namespace boost { namespace numeric { namespace odeint {
 } } }
 #endif // TBB_VERSION_MAJOR
 
-#ifdef __CUDACC__
+#ifdef __HIPCC__
 #include <thrust/system/cuda/vector.h>
 namespace boost { namespace numeric { namespace odeint {
     ODEINT_THRUST_VECTOR_IS_RESIZEABLE( thrust::cuda::vector )
@@ -178,7 +178,7 @@ namespace boost { namespace numeric { namespace odeint {
     ODEINT_THRUST_SAME_SIZE_IMPL( thrust::cuda::vector )
     ODEINT_THRUST_COPY_IMPL( thrust::cuda::vector )
 } } }
-#endif // __CUDACC__
+#endif // __HIPCC__
 
 #endif // THRUST_VERSION >= 100600
 

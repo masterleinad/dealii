@@ -83,8 +83,8 @@ namespace Utilities
     inline void
     malloc(T *&pointer, const unsigned int n_elements)
     {
-      cudaError_t cuda_error_code =
-        cudaMalloc(&pointer, n_elements * sizeof(T));
+      hipError_t cuda_error_code =
+        hipMalloc(&pointer, n_elements * sizeof(T));
       AssertCuda(cuda_error_code);
     }
 
@@ -95,7 +95,7 @@ namespace Utilities
     inline void
     free(T *&pointer)
     {
-      cudaError_t cuda_error_code = cudaFree(pointer);
+      hipError_t cuda_error_code = hipFree(pointer);
       AssertCuda(cuda_error_code);
       pointer = nullptr;
     }
@@ -119,7 +119,7 @@ namespace Utilities
     void
     delete_device_data(Number *device_ptr) noexcept
     {
-      const cudaError_t error_code = cudaFree(device_ptr);
+      const hipError_t error_code = hipFree(device_ptr);
       AssertNothrowCuda(error_code);
     }
 
@@ -130,10 +130,10 @@ namespace Utilities
     inline void
     copy_to_host(const T *pointer_dev, std::vector<T> &vector_host)
     {
-      cudaError_t cuda_error_code = cudaMemcpy(vector_host.data(),
+      hipError_t cuda_error_code = hipMemcpy(vector_host.data(),
                                                pointer_dev,
                                                vector_host.size() * sizeof(T),
-                                               cudaMemcpyDeviceToHost);
+                                               hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
     }
 
@@ -145,10 +145,10 @@ namespace Utilities
     inline void
     copy_to_dev(const std::vector<T> &vector_host, T *pointer_dev)
     {
-      cudaError_t cuda_error_code = cudaMemcpy(pointer_dev,
+      hipError_t cuda_error_code = hipMemcpy(pointer_dev,
                                                vector_host.data(),
                                                vector_host.size() * sizeof(T),
-                                               cudaMemcpyHostToDevice);
+                                               hipMemcpyHostToDevice);
       AssertCuda(cuda_error_code);
     }
   } // namespace CUDA

@@ -38,7 +38,7 @@
 
 #include <boost/numeric/odeint/stepper/bulirsch_stoer.hpp>
 
-#ifndef __CUDACC__
+#ifndef __HIPCC__
 /* Bulirsch Stoer with Dense Output does not compile with nvcc
  * because of the binomial library used there which relies on unsupported SSE functions
  */

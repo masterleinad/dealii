@@ -160,22 +160,22 @@ namespace MemorySpace
     void
     copy_to(Number *begin, std::size_t n_elements)
     {
-      const cudaError_t cuda_error_code =
-        cudaMemcpy(begin,
+      const hipError_t cuda_error_code =
+        hipMemcpy(begin,
                    values_dev.get(),
                    n_elements * sizeof(Number),
-                   cudaMemcpyDeviceToHost);
+                   hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
     }
 
     void
     copy_from(Number *begin, std::size_t n_elements)
     {
-      const cudaError_t cuda_error_code =
-        cudaMemcpy(values_dev.get(),
+      const hipError_t cuda_error_code =
+        hipMemcpy(values_dev.get(),
                    begin,
                    n_elements * sizeof(Number),
-                   cudaMemcpyHostToDevice);
+                   hipMemcpyHostToDevice);
       AssertCuda(cuda_error_code);
     }
 

@@ -1118,7 +1118,7 @@ namespace StandardExceptions
    * This exception is raised if an error happened in a CUDA kernel.
    *
    * The constructor takes a single <tt>char*</tt>, the output of
-   * cudaGetErrorString.
+   * hipGetErrorString.
    */
   DeclException1(ExcCudaError, const char *, << arg1);
   /**
@@ -1356,7 +1356,7 @@ namespace deal_II_exceptions
 #ifdef DEAL_II_WITH_CUDA
     /**
      * Return a string given an error code. This is similar to the
-     * cudaGetErrorString function but there is no equivalent function for
+     * hipGetErrorString function but there is no equivalent function for
      * cuSPARSE.
      */
     std::string
@@ -1364,7 +1364,7 @@ namespace deal_II_exceptions
 
     /**
      * Return a string given an error code. This is similar to the
-     * cudaGetErrorString function but there is no equivalent function for
+     * hipGetErrorString function but there is no equivalent function for
      * cuSOLVER.
      */
     std::string
@@ -1701,7 +1701,7 @@ namespace internal
 #ifdef DEAL_II_WITH_CUDA
 /**
  * An assertion that checks that the error code produced by calling a CUDA
- * routine is equal to cudaSuccess.
+ * routine is equal to hipSuccess.
  *
  * @note This and similar macro names are examples of preprocessor definitions
  * in the deal.II library that are not prefixed by a string that likely makes
@@ -1719,8 +1719,8 @@ namespace internal
  */
 #  ifdef DEBUG
 #    define AssertCuda(error_code)      \
-      Assert(error_code == cudaSuccess, \
-             dealii::ExcCudaError(cudaGetErrorString(error_code)))
+      Assert(error_code == hipSuccess, \
+             dealii::ExcCudaError(hipGetErrorString(error_code)))
 #  else
 #    define AssertCuda(error_code) \
       {                            \
@@ -1747,8 +1747,8 @@ namespace internal
  */
 #  ifdef DEBUG
 #    define AssertNothrowCuda(error_code)      \
-      AssertNothrow(error_code == cudaSuccess, \
-                    dealii::ExcCudaError(cudaGetErrorString(error_code)))
+      AssertNothrow(error_code == hipSuccess, \
+                    dealii::ExcCudaError(hipGetErrorString(error_code)))
 #  else
 #    define AssertNothrowCuda(error_code) \
       {                                   \

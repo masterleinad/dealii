@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2017 by the deal.II authors
@@ -40,26 +41,26 @@ main()
   // Copy input data to device.
   double *    device_x;
   double *    device_y;
-  cudaError_t cuda_error = cudaMalloc(&device_x, n * sizeof(double));
+  hipError_t cuda_error = hipMalloc(&device_x, n * sizeof(double));
   AssertCuda(cuda_error);
-  cuda_error = cudaMalloc(&device_y, n * sizeof(double));
+  cuda_error = hipMalloc(&device_y, n * sizeof(double));
   AssertCuda(cuda_error);
-  cuda_error = cudaMemcpy(device_x,
+  cuda_error = hipMemcpy(device_x,
                           host_x.data(),
                           n * sizeof(double),
-                          cudaMemcpyHostToDevice);
+                          hipMemcpyHostToDevice);
   AssertCuda(cuda_error);
 
   // Launch the kernel.
-  double_value<<<1, n>>>(device_x, device_y);
+  hipLaunchKernelGGL((double_value), dim3(1), dim3(n), 0, 0, device_x, device_y);
 
   // Copy output data to host.
-  cuda_error = cudaDeviceSynchronize();
+  cuda_error = hipDeviceSynchronize();
   AssertCuda(cuda_error);
-  cuda_error = cudaMemcpy(host_y.data(),
+  cuda_error = hipMemcpy(host_y.data(),
                           device_y,
                           n * sizeof(double),
-                          cudaMemcpyDeviceToHost);
+                          hipMemcpyDeviceToHost);
   AssertCuda(cuda_error);
 
   // Print the results and test
@@ -70,7 +71,7 @@ main()
                   ExcInternalError());
     }
 
-  cuda_error = cudaDeviceReset();
+  cuda_error = hipDeviceReset();
   AssertCuda(cuda_error);
   return 0;
 }

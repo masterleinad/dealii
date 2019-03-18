@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2018 by the deal.II authors
@@ -297,28 +298,28 @@ namespace CUDAWrappers
 
     // Copy the elements to the gpu
     val_dev.reset(Utilities::CUDA::allocate_device_data<Number>(nnz));
-    cudaError_t error_code = cudaMemcpy(val_dev.get(),
+    hipError_t error_code = hipMemcpy(val_dev.get(),
                                         &val[0],
                                         nnz * sizeof(Number),
-                                        cudaMemcpyHostToDevice);
+                                        hipMemcpyHostToDevice);
     AssertCuda(error_code);
 
     // Copy the column indices to the gpu
     column_index_dev.reset(Utilities::CUDA::allocate_device_data<int>(nnz));
     AssertCuda(error_code);
-    error_code = cudaMemcpy(column_index_dev.get(),
+    error_code = hipMemcpy(column_index_dev.get(),
                             &column_index[0],
                             nnz * sizeof(int),
-                            cudaMemcpyHostToDevice);
+                            hipMemcpyHostToDevice);
     AssertCuda(error_code);
 
     // Copy the row pointer to the gpu
     row_ptr_dev.reset(Utilities::CUDA::allocate_device_data<int>(row_ptr_size));
     AssertCuda(error_code);
-    error_code = cudaMemcpy(row_ptr_dev.get(),
+    error_code = hipMemcpy(row_ptr_dev.get(),
                             &row_ptr[0],
                             row_ptr_size * sizeof(int),
-                            cudaMemcpyHostToDevice);
+                            hipMemcpyHostToDevice);
     AssertCuda(error_code);
 
     // Create the matrix descriptor
@@ -340,13 +341,12 @@ namespace CUDAWrappers
   {
     AssertIsFinite(factor);
     const int n_blocks = 1 + (nnz - 1) / block_size;
-    internal::scale<Number>
-      <<<n_blocks, block_size>>>(val_dev.get(), factor, nnz);
+    internal::hipLaunchKernelGGL((scale<Number>), dim3(n_blocks), dim3(block_size), 0, 0, val_dev.get(), factor, nnz);
 
     // Check that the kernel was launched correctly
-    AssertCuda(cudaGetLastError());
+    AssertCuda(hipGetLastError());
     // Check that there was no problem during the execution of the kernel
-    AssertCuda(cudaDeviceSynchronize());
+    AssertCuda(hipDeviceSynchronize());
 
     return *this;
   }
@@ -360,13 +360,12 @@ namespace CUDAWrappers
     AssertIsFinite(factor);
     Assert(factor != Number(0.), ExcZero());
     const int n_blocks = 1 + (nnz - 1) / block_size;
-    internal::scale<Number>
-      <<<n_blocks, block_size>>>(val_dev.get(), 1. / factor, nnz);
+    internal::hipLaunchKernelGGL((scale<Number>), dim3(n_blocks), dim3(block_size), 0, 0, val_dev.get(), 1. / factor, nnz);
 
     // Check that the kernel was launched correctly
-    AssertCuda(cudaGetLastError());
+    AssertCuda(hipGetLastError());
     // Check that there was no problem during the execution of the kernel
-    AssertCuda(cudaDeviceSynchronize());
+    AssertCuda(hipDeviceSynchronize());
 
     return *this;
   }
@@ -509,16 +508,15 @@ namespace CUDAWrappers
   {
     LinearAlgebra::CUDAWrappers::Vector<real_type> column_sums(n_cols);
     const int n_blocks = 1 + (nnz - 1) / block_size;
-    internal::l1_norm<Number>
-      <<<n_blocks, block_size>>>(n_rows,
+    internal::hipLaunchKernelGGL((l1_norm<Number>), dim3(n_blocks), dim3(block_size), 0, 0, n_rows,
                                  val_dev.get(),
                                  column_index_dev.get(),
                                  row_ptr_dev.get(),
                                  column_sums.get_values());
     // Check that the kernel was launched correctly
-    AssertCuda(cudaGetLastError());
+    AssertCuda(hipGetLastError());
     // Check that there was no problem during the execution of the kernel
-    AssertCuda(cudaDeviceSynchronize());
+    AssertCuda(hipDeviceSynchronize());
 
     return column_sums.linfty_norm();
   }
@@ -531,16 +529,15 @@ namespace CUDAWrappers
   {
     LinearAlgebra::CUDAWrappers::Vector<real_type> row_sums(n_rows);
     const int n_blocks = 1 + (nnz - 1) / block_size;
-    internal::linfty_norm<Number>
-      <<<n_blocks, block_size>>>(n_rows,
+    internal::hipLaunchKernelGGL((linfty_norm<Number>), dim3(n_blocks), dim3(block_size), 0, 0, n_rows,
                                  val_dev.get(),
                                  column_index_dev.get(),
                                  row_ptr_dev.get(),
                                  row_sums.get_values());
     // Check that the kernel was launched correctly
-    AssertCuda(cudaGetLastError());
+    AssertCuda(hipGetLastError());
     // Check that there was no problem during the execution of the kernel
-    AssertCuda(cudaDeviceSynchronize());
+    AssertCuda(hipDeviceSynchronize());
 
     return row_sums.linfty_norm();
   }
@@ -552,10 +549,10 @@ namespace CUDAWrappers
   SparseMatrix<Number>::frobenius_norm() const
   {
     LinearAlgebra::CUDAWrappers::Vector<real_type> matrix_values(nnz);
-    cudaError_t cuda_error = cudaMemcpy(matrix_values.get_values(),
+    hipError_t cuda_error = hipMemcpy(matrix_values.get_values(),
                                         val_dev.get(),
                                         nnz * sizeof(Number),
-                                        cudaMemcpyDeviceToDevice);
+                                        hipMemcpyDeviceToDevice);
 
     return matrix_values.l2_norm();
   }

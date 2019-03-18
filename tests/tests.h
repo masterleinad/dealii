@@ -607,10 +607,10 @@ init_cuda(const bool use_mpi = false)
   const unsigned int my_id =
     use_mpi ? Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) : 0;
   int         n_devices       = 0;
-  cudaError_t cuda_error_code = cudaGetDeviceCount(&n_devices);
+  hipError_t cuda_error_code = hipGetDeviceCount(&n_devices);
   AssertCuda(cuda_error_code);
   const int device_id = my_id % n_devices;
-  cuda_error_code     = cudaSetDevice(device_id);
+  cuda_error_code     = hipSetDevice(device_id);
   AssertCuda(cuda_error_code);
 
   // In principle, we should be able to distribute the load better by
@@ -626,7 +626,7 @@ init_cuda(const bool use_mpi = false)
       use_mpi ? Utilities::MPI::this_mpi_process(MPI_COMM_WORLD) : 0;
     int         device_id       = 0;
     int         n_devices       = 0;
-    cudaError_t cuda_error_code = cudaGetDeviceCount(&n_devices);
+    hipError_t cuda_error_code = hipGetDeviceCount(&n_devices);
     AssertCuda(cuda_error_code);
     if (my_id == 0)
       {
@@ -638,7 +638,7 @@ init_cuda(const bool use_mpi = false)
       MPI_Bcast(&device_id, 1, MPI_INT, 0, MPI_COMM_WORLD);
   #  endif
     device_id       = (device_id + my_id) % n_devices;
-    cuda_error_code = cudaSetDevice(device_id);
+    cuda_error_code = hipSetDevice(device_id);
     AssertCuda(cuda_error_code);
   */
 }

@@ -349,22 +349,22 @@ namespace CUDAWrappers
 
 #ifdef DEBUG
       int         info = 0;
-      cudaError_t cuda_error_code_debug =
-        cudaMemcpy(&info, info_dev, sizeof(int), cudaMemcpyDeviceToHost);
+      hipError_t cuda_error_code_debug =
+        hipMemcpy(&info, info_dev, sizeof(int), hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code_debug);
       Assert(info == 0,
              ExcMessage("There was a problem during the LU factorization"));
 #endif
 
       // Solve Ax = b
-      cudaError_t cuda_error_code =
-        cudaMemcpy(x_dev, b_dev, m * sizeof(Number), cudaMemcpyDeviceToDevice);
+      hipError_t cuda_error_code =
+        hipMemcpy(x_dev, b_dev, m * sizeof(Number), hipMemcpyDeviceToDevice);
       AssertCuda(cuda_error_code);
       cusolverDngetrs(
         cusolver_dn_handle, m, dense_matrix_dev, pivot_dev, x_dev, info_dev);
 #ifdef DEBUG
       cuda_error_code =
-        cudaMemcpy(&info, info_dev, sizeof(int), cudaMemcpyDeviceToHost);
+        hipMemcpy(&info, info_dev, sizeof(int), hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
       Assert(info == 0, ExcMessage("There was a problem during the LU solve"));
 #endif

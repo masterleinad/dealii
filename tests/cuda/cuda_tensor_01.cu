@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2016 by the deal.II authors
@@ -68,25 +69,25 @@ test_gpu()
   Tensor<2, dim> *   t_dev;
 
   // Allocate objects on the device
-  cudaError_t cuda_error = cudaMalloc(&t_dev, sizeof(Tensor<2, dim>));
+  hipError_t cuda_error = hipMalloc(&t_dev, sizeof(Tensor<2, dim>));
   AssertCuda(cuda_error);
-  cuda_error = cudaMalloc(&norm_dev, sizeof(double));
+  cuda_error = hipMalloc(&norm_dev, sizeof(double));
   AssertCuda(cuda_error);
 
   // Launch the kernels.
   dim3 block_dim(dim, dim);
-  init_kernel<<<1, block_dim>>>(t_dev, dim);
-  norm_kernel<<<1, 1>>>(t_dev, norm_dev);
+  hipLaunchKernelGGL((init_kernel), dim3(1), dim3(block_dim), 0, 0, t_dev, dim);
+  hipLaunchKernelGGL((norm_kernel), dim3(1), dim3(1), 0, 0, t_dev, norm_dev);
 
   // Copy the result to the device
   cuda_error =
-    cudaMemcpy(&norm_host, norm_dev, sizeof(double), cudaMemcpyDeviceToHost);
+    hipMemcpy(&norm_host, norm_dev, sizeof(double), hipMemcpyDeviceToHost);
   AssertCuda(cuda_error);
 
   // Free memory
-  cuda_error = cudaFree(t_dev);
+  cuda_error = hipFree(t_dev);
   AssertCuda(cuda_error);
-  cuda_error = cudaFree(norm_dev);
+  cuda_error = hipFree(norm_dev);
   AssertCuda(cuda_error);
 
   // Output result

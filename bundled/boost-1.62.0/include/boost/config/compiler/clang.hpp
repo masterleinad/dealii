@@ -78,7 +78,7 @@
 // Similarly __SIZEOF_INT128__ is defined when targetting msvc
 // compatibility even though the required support functions are absent.
 //
-#if defined(__CUDACC__)
+#if defined(__HIPCC__)
 #  if defined(BOOST_GCC_CXX11)
 #    define BOOST_NVCC_CXX11
 #  else

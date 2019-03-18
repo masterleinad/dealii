@@ -45,7 +45,7 @@
 #define BOOST_ATOMIC_DETAIL_MEMCMP std::memcmp
 #endif
 
-#if defined(__CUDACC__)
+#if defined(__HIPCC__)
 // nvcc does not support alternatives in asm statement constraints
 #define BOOST_ATOMIC_DETAIL_NO_ASM_CONSTRAINT_ALTERNATIVES
 // nvcc does not support condition code register ("cc") clobber in asm statements

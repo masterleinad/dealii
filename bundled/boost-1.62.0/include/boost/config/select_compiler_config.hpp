@@ -13,7 +13,7 @@
 // locate which compiler we are using and define
 // BOOST_COMPILER_CONFIG as needed: 
 
-#if defined __CUDACC__
+#if defined __HIPCC__
 //  NVIDIA CUDA C++ compiler for GPU
 #   include "boost/config/compiler/nvcc.hpp"
 
@@ -39,7 +39,7 @@
 //  Intel
 #   define BOOST_COMPILER_CONFIG "boost/config/compiler/intel.hpp"
 
-#elif defined __clang__ && !defined(__CUDACC__) && !defined(__ibmxl__)
+#elif defined __clang__ && !defined(__HIPCC__) && !defined(__ibmxl__)
 // when using clang and cuda at same time, you want to appear as gcc
 //  Clang C++ emulates GCC, so it has to appear early.
 #   define BOOST_COMPILER_CONFIG "boost/config/compiler/clang.hpp"

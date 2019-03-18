@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2017 - 2018 by the deal.II authors
@@ -168,8 +169,8 @@ test()
 
   if (rank == 1)
     {
-      set_value<<<1, 1>>>(ghost.get(), 1, 10);
-      set_value<<<1, 1>>>(ghost.get(), 2, 20);
+      hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, ghost.get(), 1, 10);
+      hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, ghost.get(), 2, 20);
     }
 
   deallog << "compress(add)" << std::endl;

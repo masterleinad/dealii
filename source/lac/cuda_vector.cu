@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2016 by the deal.II authors
@@ -52,10 +53,10 @@ namespace LinearAlgebra
       , n_elements(V.n_elements)
     {
       // Copy the values.
-      const cudaError_t error_code = cudaMemcpy(val.get(),
+      const hipError_t error_code = hipMemcpy(val.get(),
                                                 V.val.get(),
                                                 n_elements * sizeof(Number),
-                                                cudaMemcpyDeviceToDevice);
+                                                hipMemcpyDeviceToDevice);
       AssertCuda(error_code);
     }
 
@@ -71,10 +72,10 @@ namespace LinearAlgebra
         n_elements = V.n_elements;
 
       // Copy the values.
-      const cudaError_t error_code = cudaMemcpy(val.get(),
+      const hipError_t error_code = hipMemcpy(val.get(),
                                                 V.val.get(),
                                                 n_elements * sizeof(Number),
-                                                cudaMemcpyDeviceToDevice);
+                                                hipMemcpyDeviceToDevice);
       AssertCuda(error_code);
 
       return *this;
@@ -105,8 +106,8 @@ namespace LinearAlgebra
       // If necessary set the elements to zero
       if (omit_zeroing_entries == false)
         {
-          const cudaError_t error_code =
-            cudaMemset(val.get(), 0, n * sizeof(Number));
+          const hipError_t error_code =
+            hipMemset(val.get(), 0, n * sizeof(Number));
           AssertCuda(error_code);
         }
       n_elements = n;
@@ -132,36 +133,35 @@ namespace LinearAlgebra
     {
       if (operation == VectorOperation::insert)
         {
-          const cudaError_t error_code = cudaMemcpy(val.get(),
+          const hipError_t error_code = hipMemcpy(val.get(),
                                                     V.begin(),
                                                     n_elements * sizeof(Number),
-                                                    cudaMemcpyHostToDevice);
+                                                    hipMemcpyHostToDevice);
           AssertCuda(error_code);
         }
       else if (operation == VectorOperation::add)
         {
           // Create a temporary vector on the device
           Number *    tmp;
-          cudaError_t error_code =
-            cudaMalloc(&tmp, n_elements * sizeof(Number));
+          hipError_t error_code =
+            hipMalloc(&tmp, n_elements * sizeof(Number));
           AssertCuda(error_code);
 
           // Copy the vector from the host to the temporary vector on the device
-          error_code = cudaMemcpy(tmp,
+          error_code = hipMemcpy(tmp,
                                   V.begin(),
                                   n_elements * sizeof(Number),
-                                  cudaMemcpyHostToDevice);
+                                  hipMemcpyHostToDevice);
           AssertCuda(error_code);
 
           // Add the two vectors
           const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
 
-          kernel::vector_bin_op<Number, kernel::Binop_Addition>
-            <<<n_blocks, block_size>>>(val.get(), tmp, n_elements);
+          kernel::hipLaunchKernelGGL((vector_bin_op<Number, kernel::Binop_Addition>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), tmp, n_elements);
           // Check that the kernel was launched correctly
-          AssertCuda(cudaGetLastError());
+          AssertCuda(hipGetLastError());
           // Check that there was no problem during the execution of the kernel
-          AssertCuda(cudaDeviceSynchronize());
+          AssertCuda(hipDeviceSynchronize());
 
           // Delete the temporary vector
           Utilities::CUDA::free(tmp);
@@ -179,8 +179,8 @@ namespace LinearAlgebra
       Assert(s == Number(), ExcMessage("Only 0 can be assigned to a vector."));
       (void)s;
 
-      const cudaError_t error_code =
-        cudaMemset(val.get(), 0, n_elements * sizeof(Number));
+      const hipError_t error_code =
+        hipMemset(val.get(), 0, n_elements * sizeof(Number));
       AssertCuda(error_code);
 
       return *this;
@@ -194,13 +194,12 @@ namespace LinearAlgebra
     {
       AssertIsFinite(factor);
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::vec_scale<Number>
-        <<<n_blocks, block_size>>>(val.get(), factor, n_elements);
+      kernel::hipLaunchKernelGGL((vec_scale<Number>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), factor, n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
 
       return *this;
     }
@@ -214,13 +213,12 @@ namespace LinearAlgebra
       AssertIsFinite(factor);
       Assert(factor != Number(0.), ExcZero());
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::vec_scale<Number>
-        <<<n_blocks, block_size>>>(val.get(), 1. / factor, n_elements);
+      kernel::hipLaunchKernelGGL((vec_scale<Number>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), 1. / factor, n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
 
       return *this;
     }
@@ -243,13 +241,12 @@ namespace LinearAlgebra
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
 
-      kernel::vector_bin_op<Number, kernel::Binop_Addition>
-        <<<n_blocks, block_size>>>(val.get(), down_V.val.get(), n_elements);
+      kernel::hipLaunchKernelGGL((vector_bin_op<Number, kernel::Binop_Addition>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), down_V.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
 
       return *this;
     }
@@ -272,13 +269,12 @@ namespace LinearAlgebra
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
 
-      kernel::vector_bin_op<Number, kernel::Binop_Subtraction>
-        <<<n_blocks, block_size>>>(val.get(), down_V.val.get(), n_elements);
+      kernel::hipLaunchKernelGGL((vector_bin_op<Number, kernel::Binop_Subtraction>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), down_V.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
 
       return *this;
     }
@@ -299,14 +295,13 @@ namespace LinearAlgebra
                "Cannot add two vectors with different numbers of elements"));
 
       Number *    result_device;
-      cudaError_t error_code =
-        cudaMalloc(&result_device, n_elements * sizeof(Number));
+      hipError_t error_code =
+        hipMalloc(&result_device, n_elements * sizeof(Number));
       AssertCuda(error_code);
-      error_code = cudaMemset(result_device, Number(), sizeof(Number));
+      error_code = hipMemset(result_device, Number(), sizeof(Number));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::double_vector_reduction<Number, kernel::DotProduct<Number>>
-        <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+      kernel::hipLaunchKernelGGL((double_vector_reduction<Number, kernel::DotProduct<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                   val.get(),
                                                   down_V.val.get(),
                                                   static_cast<unsigned int>(
@@ -314,10 +309,10 @@ namespace LinearAlgebra
 
       // Copy the result back to the host
       Number result;
-      error_code = cudaMemcpy(&result,
+      error_code = hipMemcpy(&result,
                               result_device,
                               sizeof(Number),
-                              cudaMemcpyDeviceToHost);
+                              hipMemcpyDeviceToHost);
       AssertCuda(error_code);
       // Free the memory on the device
       Utilities::CUDA::free(result_device);
@@ -333,13 +328,12 @@ namespace LinearAlgebra
     {
       AssertIsFinite(a);
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::vec_add<Number>
-        <<<n_blocks, block_size>>>(val.get(), a, n_elements);
+      kernel::hipLaunchKernelGGL((vec_add<Number>), dim3(n_blocks), dim3(block_size), 0, 0, val.get(), a, n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -361,13 +355,13 @@ namespace LinearAlgebra
                "Cannot add two vectors with different numbers of elements."));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::add_aV<Number><<<dim3(n_blocks, 1), dim3(block_size)>>>(
+      kernel::hipLaunchKernelGGL((add_aV<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
         val.get(), a, down_V.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -403,13 +397,13 @@ namespace LinearAlgebra
                "Cannot add two vectors with different numbers of elements."));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::add_aVbW<Number><<<dim3(n_blocks, 1), dim3(block_size)>>>(
+      kernel::hipLaunchKernelGGL((add_aVbW<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
         val.get(), a, down_V.val.get(), b, down_W.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -434,13 +428,13 @@ namespace LinearAlgebra
                "Cannot add two vectors with different numbers of elements."));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::sadd<Number><<<dim3(n_blocks, 1), dim3(block_size)>>>(
+      kernel::hipLaunchKernelGGL((sadd<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
         s, val.get(), a, down_V.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -461,13 +455,13 @@ namespace LinearAlgebra
                "Cannot scale two vectors with different numbers of elements."));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::scale<Number><<<dim3(n_blocks, 1), dim3(block_size)>>>(
+      kernel::hipLaunchKernelGGL((scale<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
         val.get(), down_scaling_factors.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -490,13 +484,13 @@ namespace LinearAlgebra
           "Cannot assign two vectors with different numbers of elements."));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::equ<Number><<<dim3(n_blocks, 1), dim3(block_size)>>>(
+      kernel::hipLaunchKernelGGL((equ<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
         val.get(), a, down_V.val.get(), n_elements);
 
       // Check that the kernel was launched correctly
-      AssertCuda(cudaGetLastError());
+      AssertCuda(hipGetLastError());
       // Check that there was no problem during the execution of the kernel
-      AssertCuda(cudaDeviceSynchronize());
+      AssertCuda(hipDeviceSynchronize());
     }
 
 
@@ -515,22 +509,21 @@ namespace LinearAlgebra
     Vector<Number>::mean_value() const
     {
       Number *    result_device;
-      cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+      hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
-      error_code = cudaMemset(result_device, Number(), sizeof(Number));
+      error_code = hipMemset(result_device, Number(), sizeof(Number));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::reduction<Number, kernel::ElemSum<Number>>
-        <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+      kernel::hipLaunchKernelGGL((reduction<Number, kernel::ElemSum<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                   val.get(),
                                                   n_elements);
 
       // Copy the result back to the host
       Number result;
-      error_code = cudaMemcpy(&result,
+      error_code = hipMemcpy(&result,
                               result_device,
                               sizeof(Number),
-                              cudaMemcpyDeviceToHost);
+                              hipMemcpyDeviceToHost);
       AssertCuda(error_code);
       // Free the memory on the device
       Utilities::CUDA::free(result_device);
@@ -546,22 +539,21 @@ namespace LinearAlgebra
     Vector<Number>::l1_norm() const
     {
       Number *    result_device;
-      cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+      hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
-      error_code = cudaMemset(result_device, Number(), sizeof(Number));
+      error_code = hipMemset(result_device, Number(), sizeof(Number));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::reduction<Number, kernel::L1Norm<Number>>
-        <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+      kernel::hipLaunchKernelGGL((reduction<Number, kernel::L1Norm<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                   val.get(),
                                                   n_elements);
 
       // Copy the result back to the host
       Number result;
-      error_code = cudaMemcpy(&result,
+      error_code = hipMemcpy(&result,
                               result_device,
                               sizeof(Number),
-                              cudaMemcpyDeviceToHost);
+                              hipMemcpyDeviceToHost);
       AssertCuda(error_code);
       // Free the memory on the device
       Utilities::CUDA::free(result_device);
@@ -594,22 +586,21 @@ namespace LinearAlgebra
     Vector<Number>::linfty_norm() const
     {
       Number *    result_device;
-      cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+      hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
-      error_code = cudaMemset(result_device, Number(), sizeof(Number));
+      error_code = hipMemset(result_device, Number(), sizeof(Number));
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::reduction<Number, kernel::LInfty<Number>>
-        <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+      kernel::hipLaunchKernelGGL((reduction<Number, kernel::LInfty<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                   val.get(),
                                                   n_elements);
 
       // Copy the result back to the host
       Number result;
-      error_code = cudaMemcpy(&result,
+      error_code = hipMemcpy(&result,
                               result_device,
                               sizeof(Number),
-                              cudaMemcpyDeviceToHost);
+                              hipMemcpyDeviceToHost);
       AssertCuda(error_code);
       // Free the memory on the device
       Utilities::CUDA::free(result_device);
@@ -642,14 +633,13 @@ namespace LinearAlgebra
              ExcMessage("Vector W has the wrong size."));
 
       Number *    result_device;
-      cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+      hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
       AssertCuda(error_code);
-      error_code = cudaMemset(result_device, 0., sizeof(Number));
+      error_code = hipMemset(result_device, 0., sizeof(Number));
       AssertCuda(error_code);
 
       const int n_blocks = 1 + (n_elements - 1) / (chunk_size * block_size);
-      kernel::add_and_dot<Number>
-        <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+      kernel::hipLaunchKernelGGL((add_and_dot<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                   val.get(),
                                                   down_V.val.get(),
                                                   down_W.val.get(),
@@ -657,10 +647,10 @@ namespace LinearAlgebra
                                                   n_elements);
 
       Number result;
-      error_code = cudaMemcpy(&result,
+      error_code = hipMemcpy(&result,
                               result_device,
                               sizeof(Number),
-                              cudaMemcpyDeviceToHost);
+                              hipMemcpyDeviceToHost);
       Utilities::CUDA::free(result_device);
 
       return result;

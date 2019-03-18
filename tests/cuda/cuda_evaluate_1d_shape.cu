@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2016 by the deal.II authors
@@ -96,25 +97,24 @@ test()
 
   unsigned int size_shape_values = M * N * sizeof(double);
 
-  cudaError_t cuda_error =
-    cudaMemcpyToSymbol(CUDAWrappers::internal::global_shape_values,
+  hipError_t cuda_error =
+    hipMemcpyToSymbol(HIP_SYMBOL(CUDAWrappers)::internal::global_shape_values,
                        shape_host.begin(),
                        size_shape_values,
                        0,
-                       cudaMemcpyHostToDevice);
+                       hipMemcpyHostToDevice);
   AssertCuda(cuda_error);
 
   cuda_error =
-    cudaMemcpyToSymbol(CUDAWrappers::internal::global_shape_gradients,
+    hipMemcpyToSymbol(HIP_SYMBOL(CUDAWrappers)::internal::global_shape_gradients,
                        shape_host.begin(),
                        size_shape_values,
                        0,
-                       cudaMemcpyHostToDevice);
+                       hipMemcpyHostToDevice);
   AssertCuda(cuda_error);
 
   // Launch the kernel
-  evaluate_tensor_product<M, N, type, add, false>
-    <<<1, M>>>(y_dev.get_values(), x_dev.get_values());
+  hipLaunchKernelGGL((evaluate_tensor_product<M, N, type, add, false>), dim3(1), dim3(M), 0, 0, y_dev.get_values(), x_dev.get_values());
 
   // Check the results on the host
   y_host.import(y_dev, VectorOperation::insert);
@@ -142,8 +142,7 @@ test()
   x_dev.import(x_host, VectorOperation::insert);
 
   // Launch the kernel
-  evaluate_tensor_product<M, N, type, add, true>
-    <<<1, M>>>(x_dev.get_values(), y_dev.get_values());
+  hipLaunchKernelGGL((evaluate_tensor_product<M, N, type, add, true>), dim3(1), dim3(M), 0, 0, x_dev.get_values(), y_dev.get_values());
 
   // Check the results on the host
   x_host.import(x_dev, VectorOperation::insert);

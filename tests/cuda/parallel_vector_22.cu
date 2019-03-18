@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2018 by the deal.II authors
@@ -69,10 +70,10 @@ test()
   const auto &partitioner = v.get_partitioner();
 
   // set local values
-  set_value<<<1, 1>>>(v.get_values(),
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(),
                       partitioner->global_to_local(myid * 2),
                       myid * 2.0);
-  set_value<<<1, 1>>>(v.get_values(),
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(),
                       partitioner->global_to_local(myid * 2 + 1),
                       myid * 2.0 + 1.0);
   v.compress(VectorOperation::add);
@@ -91,7 +92,7 @@ test()
 
   // set ghost dof on owning processor and maximize
   if (myid != 0)
-    set_value<<<1, 1>>>(v.get_values(),
+    hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(),
                         partitioner->global_to_local(1),
                         7. * myid);
   v.compress(VectorOperation::max);
@@ -121,7 +122,7 @@ test()
   // set ghost dof on non-owning processors and minimize
   v.zero_out_ghosts();
   if (myid == 0)
-    set_value<<<1, 1>>>(v.get_values(), partitioner->global_to_local(1), -1.);
+    hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(), partitioner->global_to_local(1), -1.);
   v.compress(VectorOperation::min);
   v.update_ghost_values();
 
@@ -135,7 +136,7 @@ test()
   v.zero_out_ghosts();
   v = 1.0;
   if (myid == 0)
-    set_value<<<1, 1>>>(v.get_values(), partitioner->global_to_local(1), -1.);
+    hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(), partitioner->global_to_local(1), -1.);
 
   // maximize
   v.compress(VectorOperation::max);
@@ -152,7 +153,7 @@ test()
   // maximum is -1:
   v.zero_out_ghosts();
   v = 1.0;
-  set_value<<<1, 1>>>(v.get_values(), partitioner->global_to_local(1), -1.);
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(), partitioner->global_to_local(1), -1.);
   v.compress(VectorOperation::max);
   v.update_ghost_values();
   deallog << myid << ":"
@@ -164,7 +165,7 @@ test()
   // than zero
   v.zero_out_ghosts();
   v = -1.0;
-  set_value<<<1, 1>>>(v.get_values(), partitioner->global_to_local(1), -1.);
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, v.get_values(), partitioner->global_to_local(1), -1.);
   v.compress(VectorOperation::max);
   deallog << myid << ":"
           << "ghost entry after first max: "

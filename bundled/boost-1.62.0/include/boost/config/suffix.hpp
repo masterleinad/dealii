@@ -603,7 +603,7 @@ namespace std{ using ::type_info; }
 #    define BOOST_NOINLINE __declspec(noinline)
 #  elif defined(__GNUC__) && __GNUC__ > 3
      // Clang also defines __GNUC__ (as 4)
-#    if defined(__CUDACC__)
+#    if defined(__HIPCC__)
        // nvcc doesn't always parse __noinline__, 
        // see: https://svn.boost.org/trac/boost/ticket/9392
 #      define BOOST_NOINLINE __attribute__ ((noinline))

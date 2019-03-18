@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2018 by the deal.II authors
@@ -56,7 +57,7 @@ test()
   v2.reinit(v, true);
 
   // set locally owned range of v2 manually
-  set<<<1, v2.local_size()>>>(v2.get_values());
+  hipLaunchKernelGGL((set), dim3(1), dim3(v2.local_size()), 0, 0, v2.get_values());
 
   // add entries to ghost values
   // Because of limitation in import, the IndexSet of the ReadWriteVector needs

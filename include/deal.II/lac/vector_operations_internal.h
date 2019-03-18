@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2016 - 2018 by the deal.II authors
@@ -1997,10 +1998,10 @@ namespace internal
                                                ::dealii::MemorySpace::CUDA>
           &data)
       {
-        cudaError_t cuda_error_code = cudaMemcpy(data.values_dev.get(),
+        hipError_t cuda_error_code = hipMemcpy(data.values_dev.get(),
                                                  v_data.values_dev.get(),
                                                  size * sizeof(Number),
-                                                 cudaMemcpyDeviceToDevice);
+                                                 hipMemcpyDeviceToDevice);
         AssertCuda(cuda_error_code);
       }
 
@@ -2013,13 +2014,12 @@ namespace internal
             &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::set<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), s, size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((set<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(), s, size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2033,16 +2033,15 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((add_aV<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(),
                                      1.,
                                      v_data.values_dev.get(),
                                      size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2056,16 +2055,15 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((add_aV<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(),
                                      -1.,
                                      v_data.values_dev.get(),
                                      size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2078,13 +2076,12 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_add<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), a, size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((vec_add<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(), a, size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2099,16 +2096,15 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((add_aV<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(),
                                      a,
                                      v_data.values_dev.get(),
                                      size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2126,8 +2122,7 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aVbW<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((add_aVbW<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, data.values_dev.get(),
                                                     a,
                                                     v_data.values_dev.get(),
                                                     b,
@@ -2135,9 +2130,9 @@ namespace internal
                                                     size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2152,14 +2147,13 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((sadd<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
             x, data.values_dev.get(), 1., v_data.values_dev.get(), size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2175,14 +2169,13 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((sadd<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, 
             x, data.values_dev.get(), a, v_data.values_dev.get(), size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2201,8 +2194,7 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(x,
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((sadd<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, x,
                                                     data.values_dev.get(),
                                                     a,
                                                     v_data.values_dev.get(),
@@ -2211,9 +2203,9 @@ namespace internal
                                                     size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2226,13 +2218,12 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_scale<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), factor, size);
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((vec_scale<Number>), dim3(n_blocks), dim3(block_size), 0, 0, data.values_dev.get(), factor, size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2246,15 +2237,14 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::scale<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((scale<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, data.values_dev.get(),
                                                     v_data.values_dev.get(),
                                                     size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2269,16 +2259,15 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((equ<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, data.values_dev.get(),
                                                     a,
                                                     v_data.values_dev.get(),
                                                     size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static void
@@ -2296,8 +2285,7 @@ namespace internal
           &data)
       {
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((equ<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, data.values_dev.get(),
                                                     a,
                                                     v_data.values_dev.get(),
                                                     b,
@@ -2305,9 +2293,9 @@ namespace internal
                                                     size);
 
         // Check that the kernel was launched correctly
-        AssertCuda(cudaGetLastError());
+        AssertCuda(hipGetLastError());
         // Check that there was no problem during the execution of the kernel
-        AssertCuda(cudaDeviceSynchronize());
+        AssertCuda(hipDeviceSynchronize());
       }
 
       static Number
@@ -2320,16 +2308,15 @@ namespace internal
             &data)
       {
         Number *    result_device;
-        cudaError_t error_code =
-          cudaMalloc(&result_device, size * sizeof(Number));
+        hipError_t error_code =
+          hipMalloc(&result_device, size * sizeof(Number));
         AssertCuda(error_code);
-        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+        error_code = hipMemset(result_device, Number(), sizeof(Number));
 
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::double_vector_reduction<
           Number,
-          ::dealii::LinearAlgebra::CUDAWrappers::kernel::DotProduct<Number>>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((DotProduct<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                     data.values_dev.get(),
                                                     v_data.values_dev.get(),
                                                     static_cast<unsigned int>(
@@ -2337,13 +2324,13 @@ namespace internal
 
         // Copy the result back to the host
         Number result;
-        error_code = cudaMemcpy(&result,
+        error_code = hipMemcpy(&result,
                                 result_device,
                                 sizeof(Number),
-                                cudaMemcpyDeviceToHost);
+                                hipMemcpyDeviceToHost);
         AssertCuda(error_code);
         // Free the memory on the device
-        error_code = cudaFree(result_device);
+        error_code = hipFree(result_device);
         AssertCuda(error_code);
 
         AssertIsFinite(result);
@@ -2372,27 +2359,26 @@ namespace internal
           MemorySpaceData<Number, ::dealii::MemorySpace::CUDA> &data)
       {
         Number *    result_device;
-        cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+        hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
         AssertCuda(error_code);
-        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+        error_code = hipMemset(result_device, Number(), sizeof(Number));
 
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
           Number,
-          ::dealii::LinearAlgebra::CUDAWrappers::kernel::ElemSum<Number>>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((ElemSum<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                     data.values_dev.get(),
                                                     size);
 
         // Copy the result back to the host
         Number result;
-        error_code = cudaMemcpy(&result,
+        error_code = hipMemcpy(&result,
                                 result_device,
                                 sizeof(Number),
-                                cudaMemcpyDeviceToHost);
+                                hipMemcpyDeviceToHost);
         AssertCuda(error_code);
         // Free the memory on the device
-        error_code = cudaFree(result_device);
+        error_code = hipFree(result_device);
         AssertCuda(error_code);
 
         return result;
@@ -2409,26 +2395,25 @@ namespace internal
           &data)
       {
         Number *    result_device;
-        cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+        hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
         AssertCuda(error_code);
-        error_code = cudaMemset(result_device, Number(), sizeof(Number));
+        error_code = hipMemset(result_device, Number(), sizeof(Number));
 
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
           Number,
-          ::dealii::LinearAlgebra::CUDAWrappers::kernel::L1Norm<Number>>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((L1Norm<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, result_device,
                                                     data.values_dev.get(),
                                                     size);
 
         // Copy the result back to the host
-        error_code = cudaMemcpy(&sum,
+        error_code = hipMemcpy(&sum,
                                 result_device,
                                 sizeof(Number),
-                                cudaMemcpyDeviceToHost);
+                                hipMemcpyDeviceToHost);
         AssertCuda(error_code);
         // Free the memory on the device
-        error_code = cudaFree(result_device);
+        error_code = hipFree(result_device);
         AssertCuda(error_code);
       }
 
@@ -2459,14 +2444,13 @@ namespace internal
           &data)
       {
         Number *    res_d;
-        cudaError_t error_code = cudaMalloc(&res_d, sizeof(Number));
+        hipError_t error_code = hipMalloc(&res_d, sizeof(Number));
         AssertCuda(error_code);
-        error_code = cudaMemset(res_d, 0., sizeof(Number));
+        error_code = hipMemset(res_d, 0., sizeof(Number));
         AssertCuda(error_code);
 
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
-        ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_and_dot<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(res_d,
+        ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((add_and_dot<Number>), dim3(dim3(n_blocks), dim3(1)), dim3(block_size), 0, res_d,
                                                     data.values_dev.get(),
                                                     v_data.values_dev.get(),
                                                     w_data.values_dev.get(),
@@ -2475,9 +2459,9 @@ namespace internal
 
         Number res;
         error_code =
-          cudaMemcpy(&res, res_d, sizeof(Number), cudaMemcpyDeviceToHost);
+          hipMemcpy(&res, res_d, sizeof(Number), hipMemcpyDeviceToHost);
         AssertCuda(error_code);
-        error_code = cudaFree(res_d);
+        error_code = hipFree(res_d);
 
         return res;
       }

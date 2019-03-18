@@ -175,10 +175,10 @@ namespace LinearAlgebra
           communication_pattern);
 
         const unsigned int n_elements = communication_pattern->local_size();
-        cudaError_t        cuda_error_code = cudaMemcpy(tmp_vector.begin(),
+        hipError_t        cuda_error_code = hipMemcpy(tmp_vector.begin(),
                                                  values,
                                                  n_elements * sizeof(Number),
-                                                 cudaMemcpyDeviceToHost);
+                                                 hipMemcpyDeviceToHost);
         AssertCuda(cuda_error_code);
         tmp_vector.update_ghost_values();
 
@@ -681,20 +681,20 @@ namespace LinearAlgebra
     const unsigned int n_elements = stored_elements.n_elements();
     if (operation == VectorOperation::insert)
       {
-        cudaError_t error_code = cudaMemcpy(values.get(),
+        hipError_t error_code = hipMemcpy(values.get(),
                                             cuda_vec.get_values(),
                                             n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+                                            hipMemcpyDeviceToHost);
         AssertCuda(error_code);
       }
     else if (operation == VectorOperation::add)
       {
         // Copy the vector from the device to a temporary vector on the host
         std::vector<Number> tmp(n_elements);
-        cudaError_t         error_code = cudaMemcpy(tmp.data(),
+        hipError_t         error_code = hipMemcpy(tmp.data(),
                                             cuda_vec.get_values(),
                                             n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+                                            hipMemcpyDeviceToHost);
         AssertCuda(error_code);
 
         // Add the two vectors
@@ -705,10 +705,10 @@ namespace LinearAlgebra
       {
         // Copy the vector from the device to a temporary vector on the host
         std::vector<Number> tmp(n_elements);
-        cudaError_t         error_code = cudaMemcpy(tmp.data(),
+        hipError_t         error_code = hipMemcpy(tmp.data(),
                                             cuda_vec.get_values(),
                                             n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+                                            hipMemcpyDeviceToHost);
         AssertCuda(error_code);
 
         // To ensure that this code also compiles with complex
@@ -723,10 +723,10 @@ namespace LinearAlgebra
       {
         // Copy the vector from the device to a temporary vector on the host
         std::vector<Number> tmp(n_elements);
-        cudaError_t         error_code = cudaMemcpy(tmp.data(),
+        hipError_t         error_code = hipMemcpy(tmp.data(),
                                             cuda_vec.get_values(),
                                             n_elements * sizeof(Number),
-                                            cudaMemcpyDeviceToHost);
+                                            hipMemcpyDeviceToHost);
         AssertCuda(error_code);
 
         for (unsigned int i = 0; i < n_elements; ++i)

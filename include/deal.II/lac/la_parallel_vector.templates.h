@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2011 - 2018 by the deal.II authors
@@ -289,18 +290,17 @@ namespace LinearAlgebra
           // Move the data to the device
           Number *V_dev;
           ::dealii::Utilities::CUDA::malloc(V_dev, n_elements);
-          cudaError_t cuda_error_code = cudaMemcpy(V_dev,
+          hipError_t cuda_error_code = hipMemcpy(V_dev,
                                                    V.begin(),
                                                    n_elements * sizeof(Number),
-                                                   cudaMemcpyHostToDevice);
+                                                   hipMemcpyHostToDevice);
           AssertCuda(cuda_error_code);
 
           // Set the values in tmp_vector
           const int n_blocks =
             1 + (n_elements - 1) / (::dealii::CUDAWrappers::chunk_size *
                                     ::dealii::CUDAWrappers::block_size);
-          ::dealii::LinearAlgebra::CUDAWrappers::kernel::set_permutated<Number>
-            <<<n_blocks, ::dealii::CUDAWrappers::block_size>>>(
+          ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((set_permutated<Number>), dim3(n_blocks), dim3(::dealii::CUDAWrappers::block_size), 0, 0, 
               tmp_vector.begin(), V_dev, indices_dev, n_elements);
 
           tmp_vector.compress(operation);
@@ -347,27 +347,26 @@ namespace LinearAlgebra
                         "RealType should be the same type as Number");
 
           Number *    result_device;
-          cudaError_t error_code = cudaMalloc(&result_device, sizeof(Number));
+          hipError_t error_code = hipMalloc(&result_device, sizeof(Number));
           AssertCuda(error_code);
-          error_code = cudaMemset(result_device, Number(), sizeof(Number));
+          error_code = hipMemset(result_device, Number(), sizeof(Number));
 
           const int n_blocks =
             1 + (size - 1) / (::dealii::CUDAWrappers::chunk_size *
                               ::dealii::CUDAWrappers::block_size);
           ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
             Number,
-            ::dealii::LinearAlgebra::CUDAWrappers::kernel::LInfty<Number>>
-            <<<dim3(n_blocks, 1), dim3(::dealii::CUDAWrappers::block_size)>>>(
+            ::dealii::LinearAlgebra::CUDAWrappers::kernel::hipLaunchKernelGGL((LInfty<Number>>), dim3(dim3(n_blocks), dim3(1)), dim3(::dealii::CUDAWrappers::block_size), 0, 
               result_device, data.values_dev.get(), size);
 
           // Copy the result back to the host
-          error_code = cudaMemcpy(&result,
+          error_code = hipMemcpy(&result,
                                   result_device,
                                   sizeof(Number),
-                                  cudaMemcpyDeviceToHost);
+                                  hipMemcpyDeviceToHost);
           AssertCuda(error_code);
           // Free the memory on the device
-          error_code = cudaFree(result_device);
+          error_code = hipFree(result_device);
           AssertCuda(error_code);
         }
       };
@@ -860,8 +859,8 @@ namespace LinearAlgebra
 #ifdef DEAL_II_COMPILER_CUDA_AWARE
       if (data.values_dev != nullptr)
         {
-          const cudaError_t cuda_error_code =
-            cudaMemset(data.values_dev.get() + partitioner->local_size(),
+          const hipError_t cuda_error_code =
+            hipMemset(data.values_dev.get() + partitioner->local_size(),
                        0,
                        partitioner->n_ghost_indices() * sizeof(Number));
           AssertCuda(cuda_error_code);
@@ -932,10 +931,10 @@ namespace LinearAlgebra
 
       data.values.reset(new_val);
 
-      cudaError_t cuda_error_code = cudaMemcpy(data.values.get(),
+      hipError_t cuda_error_code = hipMemcpy(data.values.get(),
                                                data.values_dev.get(),
                                                allocated_size * sizeof(Number),
-                                               cudaMemcpyDeviceToHost);
+                                               hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
 #  endif
 
@@ -1017,11 +1016,11 @@ namespace LinearAlgebra
       // move the data back to the device.
       if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
         {
-          cudaError_t cuda_error_code =
-            cudaMemcpy(data.values_dev.get(),
+          hipError_t cuda_error_code =
+            hipMemcpy(data.values_dev.get(),
                        data.values.get(),
                        allocated_size * sizeof(Number),
-                       cudaMemcpyHostToDevice);
+                       hipMemcpyHostToDevice);
           AssertCuda(cuda_error_code);
 
           data.values.reset();
@@ -1092,10 +1091,10 @@ namespace LinearAlgebra
 
       data.values.reset(new_val);
 
-      cudaError_t cuda_error_code = cudaMemcpy(data.values.get(),
+      hipError_t cuda_error_code = hipMemcpy(data.values.get(),
                                                data.values_dev.get(),
                                                allocated_size * sizeof(Number),
-                                               cudaMemcpyDeviceToHost);
+                                               hipMemcpyDeviceToHost);
       AssertCuda(cuda_error_code);
 #  endif
 
@@ -1168,11 +1167,11 @@ namespace LinearAlgebra
       // move the data back to the device.
       if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
         {
-          cudaError_t cuda_error_code =
-            cudaMemcpy(data.values_dev.get() + partitioner->local_size(),
+          hipError_t cuda_error_code =
+            hipMemcpy(data.values_dev.get() + partitioner->local_size(),
                        data.values.get() + partitioner->local_size(),
                        partitioner->n_ghost_indices() * sizeof(Number),
-                       cudaMemcpyHostToDevice);
+                       hipMemcpyHostToDevice);
           AssertCuda(cuda_error_code);
 
           data.values.reset();

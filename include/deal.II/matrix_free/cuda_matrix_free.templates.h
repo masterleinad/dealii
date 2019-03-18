@@ -33,7 +33,7 @@
 #  include <deal.II/matrix_free/cuda_hanging_nodes_internal.h>
 #  include <deal.II/matrix_free/shape_info.h>
 
-#  include <cuda_runtime_api.h>
+#  include <hip/hip_runtime_api.h>
 
 #  include <functional>
 
@@ -102,14 +102,14 @@ namespace CUDAWrappers
                    const ArrayView<const Number1, MemorySpace::Host> array_host,
                    const unsigned int                                n)
     {
-      cudaError_t error_code = cudaMalloc(array_device, n * sizeof(Number1));
+      hipError_t error_code = hipMalloc(array_device, n * sizeof(Number1));
       AssertCuda(error_code);
       AssertDimension(array_host.size(), n);
 
-      error_code = cudaMemcpy(*array_device,
+      error_code = hipMemcpy(*array_device,
                               array_host.data(),
                               n * sizeof(Number1),
-                              cudaMemcpyHostToDevice);
+                              hipMemcpyHostToDevice);
       AssertCuda(error_code);
     }
 
@@ -633,7 +633,7 @@ namespace CUDAWrappers
       {
         if (q_points[i] != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(q_points[i]);
+            hipError_t cuda_error = hipFree(q_points[i]);
             AssertCuda(cuda_error);
             q_points[i] = nullptr;
           }
@@ -643,7 +643,7 @@ namespace CUDAWrappers
       {
         if (local_to_global[i] != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(local_to_global[i]);
+            hipError_t cuda_error = hipFree(local_to_global[i]);
             AssertCuda(cuda_error);
             local_to_global[i] = nullptr;
           }
@@ -653,7 +653,7 @@ namespace CUDAWrappers
       {
         if (inv_jacobian[i] != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(inv_jacobian[i]);
+            hipError_t cuda_error = hipFree(inv_jacobian[i]);
             AssertCuda(cuda_error);
             inv_jacobian[i] = nullptr;
           }
@@ -663,7 +663,7 @@ namespace CUDAWrappers
       {
         if (JxW[i] != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(JxW[i]);
+            hipError_t cuda_error = hipFree(JxW[i]);
             AssertCuda(cuda_error);
             JxW[i] = nullptr;
           }
@@ -673,7 +673,7 @@ namespace CUDAWrappers
       {
         if (constraint_mask[i] != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(constraint_mask[i]);
+            hipError_t cuda_error = hipFree(constraint_mask[i]);
             AssertCuda(cuda_error);
             constraint_mask[i] = nullptr;
           }
@@ -688,7 +688,7 @@ namespace CUDAWrappers
 
     if (constrained_dofs != nullptr)
       {
-        cudaError_t cuda_error = cudaFree(constrained_dofs);
+        hipError_t cuda_error = hipFree(constrained_dofs);
         AssertCuda(cuda_error);
         constrained_dofs = nullptr;
       }
@@ -760,8 +760,7 @@ namespace CUDAWrappers
   MatrixFree<dim, Number>::evaluate_coefficients(Functor func) const
   {
     for (unsigned int i = 0; i < n_colors; ++i)
-      internal::evaluate_coeff<dim, Number, Functor>
-        <<<grid_dim[i], block_dim[i]>>>(func, get_data(i));
+      internal::hipLaunchKernelGGL((evaluate_coeff<dim, Number, Functor>), dim3(grid_dim[i]), dim3(block_dim[i]), 0, 0, func, get_data(i));
   }
 
 
@@ -802,7 +801,7 @@ namespace CUDAWrappers
     const AdditionalData             additional_data)
   {
     if (typeid(Number) == typeid(double))
-      cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte);
+      hipDeviceSetSharedMemConfig(hipSharedMemBankSizeEightByte);
 
     const UpdateFlags &update_flags = additional_data.mapping_update_flags;
 
@@ -838,20 +837,20 @@ namespace CUDAWrappers
 
     unsigned int size_shape_values = n_dofs_1d * n_q_points_1d * sizeof(Number);
 
-    cudaError_t cuda_error = cudaMemcpyToSymbol(internal::global_shape_values,
+    hipError_t cuda_error = hipMemcpyToSymbol(HIP_SYMBOL(internal)::global_shape_values,
                                                 &shape_info.shape_values[0],
                                                 size_shape_values,
                                                 0,
-                                                cudaMemcpyHostToDevice);
+                                                hipMemcpyHostToDevice);
     AssertCuda(cuda_error);
 
     if (update_flags & update_gradients)
       {
-        cuda_error = cudaMemcpyToSymbol(internal::global_shape_gradients,
+        cuda_error = hipMemcpyToSymbol(HIP_SYMBOL(internal)::global_shape_gradients,
                                         &shape_info.shape_gradients[0],
                                         size_shape_values,
                                         0,
-                                        cudaMemcpyHostToDevice);
+                                        hipMemcpyHostToDevice);
         AssertCuda(cuda_error);
       }
 
@@ -953,16 +952,16 @@ namespace CUDAWrappers
               }
           }
 
-        cuda_error = cudaMalloc(&constrained_dofs,
+        cuda_error = hipMalloc(&constrained_dofs,
                                 n_constrained_dofs *
                                   sizeof(dealii::types::global_dof_index));
         AssertCuda(cuda_error);
 
-        cuda_error = cudaMemcpy(constrained_dofs,
+        cuda_error = hipMemcpy(constrained_dofs,
                                 constrained_dofs_host.data(),
                                 n_constrained_dofs *
                                   sizeof(dealii::types::global_dof_index),
-                                cudaMemcpyHostToDevice);
+                                hipMemcpyHostToDevice);
         AssertCuda(cuda_error);
       }
   }
@@ -978,8 +977,7 @@ namespace CUDAWrappers
   {
     // Execute the loop on the cells
     for (unsigned int i = 0; i < n_colors; ++i)
-      internal::apply_kernel_shmem<dim, Number, Functor>
-        <<<grid_dim[i], block_dim[i]>>>(func,
+      internal::hipLaunchKernelGGL((apply_kernel_shmem<dim, Number, Functor>), dim3(grid_dim[i]), dim3(block_dim[i]), 0, 0, func,
                                         get_data(i),
                                         src.get_values(),
                                         dst.get_values());
@@ -1004,8 +1002,7 @@ namespace CUDAWrappers
 
     // Execute the loop on the cells
     for (unsigned int i = 0; i < n_colors; ++i)
-      internal::apply_kernel_shmem<dim, Number, Functor>
-        <<<grid_dim[i], block_dim[i]>>>(func,
+      internal::hipLaunchKernelGGL((apply_kernel_shmem<dim, Number, Functor>), dim3(grid_dim[i]), dim3(block_dim[i]), 0, 0, func,
                                         get_data(i),
                                         ghosted_src.get_values(),
                                         ghosted_dst.get_values());
@@ -1038,8 +1035,7 @@ namespace CUDAWrappers
   {
     Assert(src.size() == dst.size(),
            ExcMessage("src and dst vectors have different size."));
-    internal::copy_constrained_dofs<Number>
-      <<<constraint_grid_dim, constraint_block_dim>>>(constrained_dofs,
+    internal::hipLaunchKernelGGL((copy_constrained_dofs<Number>), dim3(constraint_grid_dim), dim3(constraint_block_dim), 0, 0, constrained_dofs,
                                                       n_constrained_dofs,
                                                       src.size(),
                                                       src.get_values(),
@@ -1056,8 +1052,7 @@ namespace CUDAWrappers
   {
     Assert(src.size() == dst.size(),
            ExcMessage("src and dst vectors have different local size."));
-    internal::copy_constrained_dofs<Number>
-      <<<constraint_grid_dim, constraint_block_dim>>>(constrained_dofs,
+    internal::hipLaunchKernelGGL((copy_constrained_dofs<Number>), dim3(constraint_grid_dim), dim3(constraint_block_dim), 0, 0, constrained_dofs,
                                                       n_constrained_dofs,
                                                       src.local_size(),
                                                       src.get_values(),
@@ -1083,8 +1078,7 @@ namespace CUDAWrappers
   MatrixFree<dim, Number>::serial_set_constrained_values(const Number val,
                                                          VectorType & dst) const
   {
-    internal::set_constrained_dofs<Number>
-      <<<constraint_grid_dim, constraint_block_dim>>>(constrained_dofs,
+    internal::hipLaunchKernelGGL((set_constrained_dofs<Number>), dim3(constraint_grid_dim), dim3(constraint_block_dim), 0, 0, constrained_dofs,
                                                       n_constrained_dofs,
                                                       dst.size(),
                                                       val,
@@ -1099,8 +1093,7 @@ namespace CUDAWrappers
     const Number                                                   val,
     LinearAlgebra::distributed::Vector<Number, MemorySpace::CUDA> &dst) const
   {
-    internal::set_constrained_dofs<Number>
-      <<<constraint_grid_dim, constraint_block_dim>>>(constrained_dofs,
+    internal::hipLaunchKernelGGL((set_constrained_dofs<Number>), dim3(constraint_grid_dim), dim3(constraint_block_dim), 0, 0, constrained_dofs,
                                                       n_constrained_dofs,
                                                       dst.local_size(),
                                                       val,

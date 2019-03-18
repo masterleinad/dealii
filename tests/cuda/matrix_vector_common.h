@@ -112,7 +112,7 @@ do_test(const DoFHandler<dim> &          dof,
 
   in_device.import(in, VectorOperation::insert);
   mf.vmult(out_device, in_device);
-  cudaDeviceSynchronize();
+  hipDeviceSynchronize();
   out.import(out_device, VectorOperation::insert);
 
   // assemble sparse matrix with (\nabla v, \nabla u) + (v, 10 * u)

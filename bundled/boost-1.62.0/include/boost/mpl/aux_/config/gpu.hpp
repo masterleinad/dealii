@@ -22,7 +22,7 @@
 
 #endif
 
-#if defined __CUDACC__
+#if defined __HIPCC__
 
 #    define BOOST_MPL_CFG_GPU 1
 

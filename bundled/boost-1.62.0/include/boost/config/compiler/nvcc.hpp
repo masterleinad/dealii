@@ -38,7 +38,7 @@
 #  define BOOST_NO_CXX11_CONSTEXPR
 #endif
 
-#ifdef __CUDACC__
+#ifdef __HIPCC__
 //
 // When compiing .cu files, there's a bunch of stuff that doesn't work with msvc:
 //

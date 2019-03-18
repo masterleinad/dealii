@@ -514,7 +514,7 @@ template<> struct assert_intrinsic_wchar_t<unsigned short> {};
 #  define BOOST_HAS_STDINT_H
 #endif
 
-#if defined(__CUDACC__)
+#if defined(__HIPCC__)
 #  if defined(BOOST_GCC_CXX11)
 #    define BOOST_NVCC_CXX11
 #  else

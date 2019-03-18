@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2018 by the deal.II authors
@@ -76,7 +77,7 @@ test()
     {
       unsigned int local_index = partitioner->global_to_local(1);
       double *     values_dev  = v.get_values();
-      set_value<<<1, 1>>>(values_dev, local_index, 7);
+      hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev, local_index, 7);
     }
 
   unsigned int        allocated_size = local_relevant.n_elements();
@@ -118,7 +119,7 @@ test()
     {
       unsigned int local_index = partitioner->global_to_local(1);
       double *     values_dev  = v.get_values();
-      set_value<<<1, 1>>>(values_dev, local_index, 2);
+      hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev, local_index, 2);
     }
   if (myid > 0)
     {

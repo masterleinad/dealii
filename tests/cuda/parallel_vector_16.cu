@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2011 - 2017 by the deal.II authors
@@ -68,7 +69,7 @@ test()
   for (types::global_dof_index i = 0; i < local_size; ++i)
     {
       double *values_dev = v.get_values();
-      set_value<<<1, 1>>>(values_dev, i, min_index + myid * local_size + i);
+      hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev, i, min_index + myid * local_size + i);
     }
 
   deallog << "vector norm: " << v.l2_norm() << std::endl;
@@ -81,16 +82,16 @@ test()
   v.zero_out_ghosts();
   double *    values_dev  = v.get_values();
   const auto &partitioner = v.get_partitioner();
-  set_value<<<1, 1>>>(values_dev,
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev,
                       partitioner->global_to_local(min_index + 38),
                       min_index);
-  set_value<<<1, 1>>>(values_dev,
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev,
                       partitioner->global_to_local(min_index + 39),
                       min_index * 2);
-  set_value<<<1, 1>>>(values_dev,
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev,
                       partitioner->global_to_local(min_index + 41),
                       min_index + 7);
-  set_value<<<1, 1>>>(values_dev,
+  hipLaunchKernelGGL((set_value), dim3(1), dim3(1), 0, 0, values_dev,
                       partitioner->global_to_local(min_index + 42),
                       -static_cast<double>(min_index));
   v.compress(VectorOperation::add);

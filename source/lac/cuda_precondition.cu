@@ -1296,10 +1296,10 @@ namespace CUDAWrappers
     // create a copy of the matrix entries since the algorithm works in-place.
     P_val_dev.reset(
       Utilities::CUDA::allocate_device_data<Number>(n_nonzero_elements));
-    cudaError_t cuda_status = cudaMemcpy(P_val_dev.get(),
+    hipError_t cuda_status = hipMemcpy(P_val_dev.get(),
                                          A_val_dev,
                                          n_nonzero_elements * sizeof(Number),
-                                         cudaMemcpyDeviceToDevice);
+                                         hipMemcpyDeviceToDevice);
 
     P_column_index_dev                 = std::get<1>(cusparse_matrix);
     P_row_ptr_dev                      = std::get<2>(cusparse_matrix);
@@ -1617,10 +1617,10 @@ namespace CUDAWrappers
     // create a copy of the matrix entries since the algorithm works in-place.
     P_val_dev.reset(
       Utilities::CUDA::allocate_device_data<Number>(n_nonzero_elements));
-    cudaError_t cuda_status = cudaMemcpy(P_val_dev.get(),
+    hipError_t cuda_status = hipMemcpy(P_val_dev.get(),
                                          A_val_dev,
                                          n_nonzero_elements * sizeof(Number),
-                                         cudaMemcpyDeviceToDevice);
+                                         hipMemcpyDeviceToDevice);
 
     P_column_index_dev                 = std::get<1>(cusparse_matrix);
     P_row_ptr_dev                      = std::get<2>(cusparse_matrix);

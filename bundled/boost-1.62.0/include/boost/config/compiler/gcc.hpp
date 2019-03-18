@@ -17,7 +17,7 @@
 // Define BOOST_GCC so we know this is "real" GCC and not some pretender:
 //
 #define BOOST_GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
-#if !defined(__CUDACC__)
+#if !defined(__HIPCC__)
 #define BOOST_GCC BOOST_GCC_VERSION
 #endif
 
@@ -141,7 +141,7 @@
 // Only re-enable this for nvcc if you're absolutely sure
 // of the circumstances under which it's supported:
 //
-#if defined(__CUDACC__)
+#if defined(__HIPCC__)
 #  if defined(BOOST_GCC_CXX11)
 #    define BOOST_NVCC_CXX11
 #  else

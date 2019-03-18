@@ -1,3 +1,4 @@
+#include "hip/hip_runtime.h"
 // ---------------------------------------------------------------------
 //
 // Copyright (C) 2017 - 2018 by the deal.II authors
@@ -159,7 +160,7 @@ namespace Utilities
                       (::dealii::CUDAWrappers::chunk_size *
                        ::dealii::CUDAWrappers::block_size);
               ::dealii::LinearAlgebra::CUDAWrappers::kernel::
-                gather<<<n_blocks, ::dealii::CUDAWrappers::block_size>>>(
+                hipLaunchKernelGGL((gather), dim3(n_blocks), dim3(::dealii::CUDAWrappers::block_size), 0, 0, 
                   temp_array_ptr,
                   locally_owned_array.data(),
                   import_indices_plain_dev[i].first.get(),
@@ -257,14 +258,14 @@ namespace Utilities
                   else
                     {
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE)
-                      cudaError_t cuda_error =
-                        cudaMemcpy(ghost_array.data() + ghost_range.first,
+                      hipError_t cuda_error =
+                        hipMemcpy(ghost_array.data() + ghost_range.first,
                                    ghost_array.data() + offset,
                                    chunk_size * sizeof(Number),
-                                   cudaMemcpyDeviceToDevice);
+                                   hipMemcpyDeviceToDevice);
                       AssertCuda(cuda_error);
                       cuda_error =
-                        cudaMemset(ghost_array.data() +
+                        hipMemset(ghost_array.data() +
                                      std::max(ghost_range.second, offset),
                                    0,
                                    (offset + chunk_size -
@@ -403,13 +404,13 @@ namespace Utilities
                       else
                         {
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE)
-                          cudaError_t cuda_error =
-                            cudaMemcpy(ghost_array_ptr + offset,
+                          hipError_t cuda_error =
+                            hipMemcpy(ghost_array_ptr + offset,
                                        ghost_array.data() + my_ghosts->first,
                                        chunk_size * sizeof(Number),
-                                       cudaMemcpyDeviceToDevice);
+                                       hipMemcpyDeviceToDevice);
                           AssertCuda(cuda_error);
-                          cuda_error = cudaMemset(
+                          cuda_error = hipMemset(
                             std::max(ghost_array.data() + my_ghosts->first,
                                      ghost_array_ptr + offset + chunk_size),
                             0,
@@ -689,11 +690,11 @@ namespace Utilities
               {
                 const auto chunk_size =
                   import_range.second - import_range.first;
-                const cudaError_t cuda_error_code =
-                  cudaMemcpy(locally_owned_array.data() + import_range.first,
+                const hipError_t cuda_error_code =
+                  hipMemcpy(locally_owned_array.data() + import_range.first,
                              read_position,
                              chunk_size * sizeof(Number),
-                             cudaMemcpyDeviceToDevice);
+                             hipMemcpyDeviceToDevice);
                 AssertCuda(cuda_error_code);
                 read_position += chunk_size;
               }
@@ -724,7 +725,7 @@ namespace Utilities
           if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
             {
               Assert(std::is_trivial<Number>::value, ExcNotImplemented());
-              cudaMemset(ghost_array.data(),
+              hipMemset(ghost_array.data(),
                          0,
                          sizeof(Number) * n_ghost_indices());
             }

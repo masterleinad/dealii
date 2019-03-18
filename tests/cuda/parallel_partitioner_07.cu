@@ -131,11 +131,11 @@ test()
       Utilities::CUDA::delete_device_data<unsigned int>);
     ArrayView<unsigned int, MemorySpace::CUDA> ghosts_view(
       ghosts.get(), ghost_array_view.size());
-    const cudaError_t cuda_error =
-      cudaMemcpy(ghosts.get(),
+    const hipError_t cuda_error =
+      hipMemcpy(ghosts.get(),
                  ghost_array_view.data(),
                  ghost_array_view.size() * sizeof(unsigned int),
-                 cudaMemcpyDeviceToDevice);
+                 hipMemcpyDeviceToDevice);
     AssertCuda(cuda_error);
 
     v.import_from_ghosted_array_start<unsigned int, MemorySpace::CUDA>(
@@ -155,8 +155,8 @@ test()
   print_cuda_view(locally_owned_array_view);
 
   // send only the array in w
-  cudaError_t cuda_error =
-    cudaMemset(locally_owned_array_view.data(),
+  hipError_t cuda_error =
+    hipMemset(locally_owned_array_view.data(),
                0,
                locally_owned_array_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);
@@ -170,11 +170,11 @@ test()
       Utilities::CUDA::delete_device_data<unsigned int>);
     ArrayView<unsigned int, MemorySpace::CUDA> ghosts_view(
       ghosts.get(), ghost_array_view.size());
-    const cudaError_t cuda_error =
-      cudaMemcpy(ghosts.get(),
+    const hipError_t cuda_error =
+      hipMemcpy(ghosts.get(),
                  ghost_array_view.data(),
                  ghost_array_view.size() * sizeof(unsigned int),
-                 cudaMemcpyDeviceToDevice);
+                 hipMemcpyDeviceToDevice);
     AssertCuda(cuda_error);
 
     w.import_from_ghosted_array_start<unsigned int, MemorySpace::CUDA>(
@@ -196,7 +196,7 @@ test()
 
   // send only the array in x
   cuda_error =
-    cudaMemset(locally_owned_array_view.data(),
+    hipMemset(locally_owned_array_view.data(),
                0,
                locally_owned_array_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);
@@ -210,11 +210,11 @@ test()
       Utilities::CUDA::delete_device_data<unsigned int>);
     ArrayView<unsigned int, MemorySpace::CUDA> ghosts_view(
       ghosts.get(), ghost_array_view.size());
-    const cudaError_t cuda_error =
-      cudaMemcpy(ghosts.get(),
+    const hipError_t cuda_error =
+      hipMemcpy(ghosts.get(),
                  ghost_array_view.data(),
                  ghost_array_view.size() * sizeof(unsigned int),
-                 cudaMemcpyDeviceToDevice);
+                 hipMemcpyDeviceToDevice);
     AssertCuda(cuda_error);
 
     x.import_from_ghosted_array_start<unsigned int, MemorySpace::CUDA>(

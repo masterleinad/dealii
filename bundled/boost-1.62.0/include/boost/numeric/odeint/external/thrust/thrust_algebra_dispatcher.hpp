@@ -90,7 +90,7 @@ namespace boost { namespace numeric { namespace odeint {
 #endif // TBB_VERSION_MAJOR
 
 // specialization for thrust cuda vector
-#ifdef __CUDACC__
+#ifdef __HIPCC__
 #include <thrust/system/cuda/vector.h>
 namespace boost { namespace numeric { namespace odeint {
     template< class T , class A >
@@ -99,7 +99,7 @@ namespace boost { namespace numeric { namespace odeint {
         typedef thrust_algebra algebra_type;
     };
 } } }
-#endif // __CUDACC__
+#endif // __HIPCC__
 
 #endif // THRUST_VERSION >= 100600
 

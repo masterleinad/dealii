@@ -212,9 +212,9 @@ namespace LinearAlgebra
      * have multiple GPUs on one node, we need each process to access a
      * different GPU. If each node has the same number of GPUs, this can be done
      * as follows:
-     * <code> int n_devices = 0; cudaGetDeviceCount(&n_devices); int
+     * <code> int n_devices = 0; hipGetDeviceCount(&n_devices); int
      * device_id = my_rank % n_devices;
-     * cudaSetDevice(device_id);
+     * hipSetDevice(device_id);
      * </code>
      * @see CUDAWrappers
      *

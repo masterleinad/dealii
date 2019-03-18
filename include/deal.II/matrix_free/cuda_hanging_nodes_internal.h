@@ -155,8 +155,8 @@ namespace CUDAWrappers
           for (unsigned int j = 0; j < fe_q.dofs_per_face; ++j)
             mapped_matrix(i, j) = interpolation_matrix(mapping[i], mapping[j]);
 
-        cudaError_t error_code =
-          cudaMemcpyToSymbol(internal::constraint_weights,
+        hipError_t error_code =
+          hipMemcpyToSymbol(HIP_SYMBOL(internal)::constraint_weights,
                              &mapped_matrix[0][0],
                              sizeof(double) * fe_q.dofs_per_face *
                                fe_q.dofs_per_face);

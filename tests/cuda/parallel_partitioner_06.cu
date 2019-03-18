@@ -141,8 +141,8 @@ test()
   print_cuda_view(ghosts_view);
 
   // send only the array in w
-  cudaError_t cuda_error =
-    cudaMemset(ghosts_view.data(),
+  hipError_t cuda_error =
+    hipMemset(ghosts_view.data(),
                0,
                ghosts_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);
@@ -178,7 +178,7 @@ test()
   deallog << "Ghosts on reduced 1: ";
   print_cuda_view(ghosts_view);
 
-  cuda_error = cudaMemset(ghosts_view.data(),
+  cuda_error = hipMemset(ghosts_view.data(),
                           0,
                           ghosts_view.size() * sizeof(unsigned int));
   AssertCuda(cuda_error);

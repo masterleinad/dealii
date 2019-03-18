@@ -55,7 +55,7 @@
 #include <boost/type_traits/has_multiplies.hpp>
 #include <boost/type_traits/has_multiplies_assign.hpp>
 #include <boost/type_traits/has_negate.hpp>
-#if !defined(__BORLANDC__) && !defined(__CUDACC__)
+#if !defined(__BORLANDC__) && !defined(__HIPCC__)
 #include <boost/type_traits/has_new_operator.hpp>
 #endif
 #include <boost/type_traits/has_not_equal_to.hpp>

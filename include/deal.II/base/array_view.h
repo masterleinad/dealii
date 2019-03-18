@@ -282,9 +282,9 @@ namespace internal
                     "the only possible memory space is 'MemorySpace::Host'!");
       return true;
 #else
-      cudaPointerAttributes attributes;
-      const cudaError_t cuda_error = cudaPointerGetAttributes(&attributes, ptr);
-      if (cuda_error != cudaErrorInvalidValue)
+      hipPointerAttribute_t attributes;
+      const hipError_t cuda_error = hipPointerGetAttributes(&attributes, ptr);
+      if (cuda_error != hipErrorInvalidValue)
         {
           AssertCuda(cuda_error);
           if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
@@ -295,7 +295,7 @@ namespace internal
       else
         {
           // ignore and reset the error since host pointers produce an error
-          cudaGetLastError();
+          hipGetLastError();
           return std::is_same<MemorySpaceType, MemorySpace::Host>::value;
         }
 #endif
