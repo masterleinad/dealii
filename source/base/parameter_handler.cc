@@ -39,9 +39,9 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-ParameterHandler::ParameterHandler()
+/*ParameterHandler::ParameterHandler()
   : entries(new boost::property_tree::ptree())
-{}
+{}*/
 
 
 namespace
@@ -248,7 +248,6 @@ namespace
     return static_cast<bool>(p.get_optional<std::string>("alias"));
   }
 } // namespace
-
 
 
 std::string
@@ -476,7 +475,7 @@ namespace
   // (i.e. we have just read an XML file that has entries that weren't
   // declared in the ParameterHandler object); if so, copy the value of these
   // nodes into the destination object
-  void
+   void
   read_xml_recursively(
     const boost::property_tree::ptree &source,
     const std::string &                current_path,
@@ -521,7 +520,7 @@ namespace
             // this node might have sub-nodes in addition to "value", such as
             // "default_value", "documentation", etc. we might at some point
             // in the future want to make sure that if they exist that they
-            // match the ones in the 'destination' tree
+            // match the ones in the 'destination' tree*/
           }
         else if (p->second.get_optional<std::string>("alias"))
           {
@@ -545,7 +544,7 @@ namespace
 } // namespace
 
 
-
+/*
 void
 ParameterHandler::parse_input_from_xml(std::istream &in)
 {
@@ -1542,7 +1541,7 @@ ParameterHandler::recursively_print_parameters(
           }
       }
 }
-
+*/
 
 
 // Print a section in the desired style. The styles are separated into
@@ -1550,7 +1549,7 @@ ParameterHandler::recursively_print_parameters(
 //
 // If bit 7 (128) is set, comments are not printed.
 // If bit 6 (64) is set, default values after change are not printed.
-void
+/*void
 ParameterHandler::print_parameters_section(
   std::ostream &     out,
   const OutputStyle  style,
@@ -2016,7 +2015,7 @@ ParameterHandler::print_parameters_section(
       default:
         Assert(false, ExcNotImplemented());
     }
-}
+}*/
 
 
 
@@ -2068,7 +2067,7 @@ ParameterHandler::log_parameters_section(LogStream &out)
 }
 
 
-
+/*
 void
 ParameterHandler::scan_line(std::string        line,
                             const std::string &input_filename,
@@ -2260,7 +2259,7 @@ ParameterHandler::scan_line(std::string        line,
                              "'set', 'include', 'subsection', or 'end' "
                              "statement."));
     }
-}
+}*/
 
 
 

@@ -1460,7 +1460,7 @@ public:
   void
   load(Archive &ar, const unsigned int version);
 
-  BOOST_SERIALIZATION_SPLIT_MEMBER()
+//  BOOST_SERIALIZATION_SPLIT_MEMBER()
 
   /**
    * Test for equality.
@@ -2142,7 +2142,7 @@ private:
 
 
 // ---------------------- inline and template functions --------------------
-template <class Archive>
+/*template <class Archive>
 inline void
 ParameterHandler::save(Archive &ar, const unsigned int) const
 {
@@ -2177,10 +2177,10 @@ ParameterHandler::load(Archive &ar, const unsigned int)
   patterns.clear();
   for (const auto &description : descriptions)
     patterns.push_back(Patterns::pattern_factory(description));
-}
+}*/
 
 
-template <class ParameterType>
+/*template <class ParameterType>
 void
 ParameterHandler::add_parameter(const std::string &          entry,
                                 ParameterType &              parameter,
@@ -2206,7 +2206,7 @@ ParameterHandler::add_parameter(const std::string &          entry,
       val, patterns[pattern_index]->clone());
   };
   add_action(entry, action);
-}
+}*/
 
 DEAL_II_NAMESPACE_CLOSE
 
