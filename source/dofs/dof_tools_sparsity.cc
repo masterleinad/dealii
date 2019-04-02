@@ -214,7 +214,7 @@ namespace DoFTools
   make_sparsity_pattern(const DoFHandlerType &dof_row,
                         const DoFHandlerType &dof_col,
                         SparsityPatternType & sparsity,
-			 const ConstraintMatrix    &constraints,
+			 const AffineConstraints<number> &constraints,
                          const bool                 keep_constrained_dofs)
   {
     const types::global_dof_index n_dofs_row = dof_row.n_dofs();
