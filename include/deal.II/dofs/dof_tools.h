@@ -659,13 +659,16 @@ namespace DoFTools
    * whereas the ones that correspond to columns come from the second
    * DoFHandler.
    */
-  template <typename DoFHandlerType, typename SparsityPatternType>
+  template <typename DoFHandlerType,
+            typename SparsityPatternType,
+            typename number = double>
   void
-  make_sparsity_pattern(const DoFHandlerType 		&dof_row,
-                        const DoFHandlerType 		&dof_col,
-                        SparsityPatternType 		& sparsity,
-			const AffineConstraints<number> &constraints = AffineConstraints<number>(),
-  			const bool                       keep_constrained_dofs = true);
+  make_sparsity_pattern(
+    const DoFHandlerType &           dof_row,
+    const DoFHandlerType &           dof_col,
+    SparsityPatternType &            sparsity,
+    const AffineConstraints<number> &constraints = AffineConstraints<number>(),
+    const bool                       keep_constrained_dofs = true);
 
   /**
    * Compute which entries of a matrix built on the given @p dof_handler may

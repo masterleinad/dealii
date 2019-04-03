@@ -209,13 +209,15 @@ namespace DoFTools
 
 
 
-  template <typename DoFHandlerType, typename SparsityPatternType>
+  template <typename DoFHandlerType,
+            typename SparsityPatternType,
+            typename number>
   void
-  make_sparsity_pattern(const DoFHandlerType &dof_row,
-                        const DoFHandlerType &dof_col,
-                        SparsityPatternType & sparsity,
-			 const AffineConstraints<number> &constraints,
-                         const bool                 keep_constrained_dofs)
+  make_sparsity_pattern(const DoFHandlerType &           dof_row,
+                        const DoFHandlerType &           dof_col,
+                        SparsityPatternType &            sparsity,
+                        const AffineConstraints<number> &constraints,
+                        const bool                       keep_constrained_dofs)
   {
     const types::global_dof_index n_dofs_row = dof_row.n_dofs();
     const types::global_dof_index n_dofs_col = dof_col.n_dofs();
@@ -294,10 +296,10 @@ namespace DoFTools
             cell_row->get_dof_indices(local_dof_indices_row);
             cell_col->get_dof_indices(local_dof_indices_col);
             for (unsigned int i = 0; i < dofs_per_cell_row; ++i)
-                constraints.add_entries_local_to_global (local_dof_indices_row,
-						   local_dof_indices_col,
-                                                   sparsity,
-                                                   keep_constrained_dofs);
+              constraints.add_entries_local_to_global(local_dof_indices_row,
+                                                      local_dof_indices_col,
+                                                      sparsity,
+                                                      keep_constrained_dofs);
           }
         else if (cell_row->has_children())
           {
@@ -319,10 +321,11 @@ namespace DoFTools
                 cell_row_child->get_dof_indices(local_dof_indices_row);
                 cell_col->get_dof_indices(local_dof_indices_col);
                 for (unsigned int r = 0; r < dofs_per_cell_row; ++r)
-                     constraints.add_entries_local_to_global (local_dof_indices_row,
-						   local_dof_indices_col,
-                                                   sparsity,
-                                                   keep_constrained_dofs);
+                  constraints.add_entries_local_to_global(
+                    local_dof_indices_row,
+                    local_dof_indices_col,
+                    sparsity,
+                    keep_constrained_dofs);
               }
           }
         else
@@ -345,10 +348,11 @@ namespace DoFTools
                 cell_row->get_dof_indices(local_dof_indices_row);
                 cell_col_child->get_dof_indices(local_dof_indices_col);
                 for (unsigned int r = 0; r < dofs_per_cell_row; ++r)
-                   constraints.add_entries_local_to_global (local_dof_indices_row,
-						   local_dof_indices_col,
-                                                   sparsity,
-                                                   keep_constrained_dofs);
+                  constraints.add_entries_local_to_global(
+                    local_dof_indices_row,
+                    local_dof_indices_col,
+                    sparsity,
+                    keep_constrained_dofs);
               }
           }
       }
