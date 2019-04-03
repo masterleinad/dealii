@@ -84,7 +84,7 @@ namespace Particles
     /**
      * Internal alias of cell level/index pair.
      */
-    using LevelInd = std::pair<int, int>;
+    using LevelIndex = std::pair<int, int>;
   } // namespace internal
 
   /**

@@ -232,8 +232,7 @@ namespace Particles
   ParticleHandler<dim, spacedim>::particles_in_cell(
     const typename Triangulation<dim, spacedim>::active_cell_iterator &cell)
   {
-    const internal::LevelInd level_index =
-      std::make_pair<int, int>(cell->level(), cell->index());
+    const internal::LevelIndex level_index(cell->level(), cell->index());
 
     if (cell->is_ghost())
       {
@@ -267,10 +266,10 @@ namespace Particles
     const Particle<dim, spacedim> &                                    particle,
     const typename Triangulation<dim, spacedim>::active_cell_iterator &cell)
   {
-    typename std::multimap<internal::LevelInd,
+    typename std::multimap<internal::LevelIndex,
                            Particle<dim, spacedim>>::iterator it =
       particles.insert(
-        std::make_pair(internal::LevelInd(cell->level(), cell->index()),
+        std::make_pair(internal::LevelIndex(cell->level(), cell->index()),
                        particle));
 
     particle_iterator particle_it(particles, it);
@@ -296,8 +295,8 @@ namespace Particles
          ++particle)
       particles.insert(
         particles.end(),
-        std::make_pair(internal::LevelInd(particle->first->level(),
-                                          particle->first->index()),
+        std::make_pair(internal::LevelIndex(particle->first->level(),
+                                            particle->first->index()),
                        particle->second));
 
     update_cached_numbers();
@@ -348,7 +347,7 @@ namespace Particles
       particles.find(std::make_pair(cells[0]->level(), cells[0]->index()));
     for (unsigned int i = 0; i < cells.size(); ++i)
       {
-        internal::LevelInd current_cell(cells[i]->level(), cells[i]->index());
+        internal::LevelIndex current_cell(cells[i]->level(), cells[i]->index());
         for (unsigned int p = 0; p < local_positions[i].size(); ++p)
           {
             hint = particles.insert(
@@ -408,8 +407,7 @@ namespace Particles
     const typename Triangulation<dim, spacedim>::active_cell_iterator &cell)
     const
   {
-    const internal::LevelInd found_cell =
-      std::make_pair<int, int>(cell->level(), cell->index());
+    const internal::LevelIndex found_cell(cell->level(), cell->index());
 
     if (cell->is_locally_owned())
       return particles.count(found_cell);
@@ -520,7 +518,7 @@ namespace Particles
     // sorted_particles vector, particles that moved to another domain are
     // collected in the moved_particles_domain vector. Particles that left
     // the mesh completely are ignored and removed.
-    std::vector<std::pair<internal::LevelInd, Particle<dim, spacedim>>>
+    std::vector<std::pair<internal::LevelIndex, Particle<dim, spacedim>>>
       sorted_particles;
     std::map<types::subdomain_id, std::vector<particle_iterator>>
       moved_particles;
@@ -662,8 +660,8 @@ namespace Particles
           if (current_cell->is_locally_owned())
             {
               sorted_particles.push_back(
-                std::make_pair(internal::LevelInd(current_cell->level(),
-                                                  current_cell->index()),
+                std::make_pair(internal::LevelIndex(current_cell->level(),
+                                                    current_cell->index()),
                                (*it)->particle->second));
             }
           else
@@ -676,7 +674,7 @@ namespace Particles
 
     // Sort the updated particles. This pre-sort speeds up inserting
     // them into particles to O(N) complexity.
-    std::multimap<internal::LevelInd, Particle<dim, spacedim>>
+    std::multimap<internal::LevelIndex, Particle<dim, spacedim>>
       sorted_particles_map;
 
     // Exchange particles between processors if we have more than one process
@@ -775,7 +773,7 @@ namespace Particles
   ParticleHandler<dim, spacedim>::send_recv_particles(
     const std::map<types::subdomain_id, std::vector<particle_iterator>>
       &particles_to_send,
-    std::multimap<internal::LevelInd, Particle<dim, spacedim>>
+    std::multimap<internal::LevelIndex, Particle<dim, spacedim>>
       &received_particles,
     const std::map<
       types::subdomain_id,
@@ -967,10 +965,10 @@ namespace Particles
         const typename Triangulation<dim, spacedim>::active_cell_iterator cell =
           id.to_cell(*triangulation);
 
-        typename std::multimap<internal::LevelInd,
+        typename std::multimap<internal::LevelIndex,
                                Particle<dim, spacedim>>::iterator
           recv_particle = received_particles.insert(std::make_pair(
-            internal::LevelInd(cell->level(), cell->index()),
+            internal::LevelIndex(cell->level(), cell->index()),
             Particle<dim, spacedim>(recv_data_it, property_pool.get())));
 
         if (load_callback)
@@ -1110,9 +1108,9 @@ namespace Particles
           {
             unsigned int n_particles = 0;
 
-            const internal::LevelInd level_index = {cell->level(),
-                                                    cell->index()};
-            const auto               particles_in_cell =
+            const internal::LevelIndex level_index = {cell->level(),
+                                                      cell->index()};
+            const auto                 particles_in_cell =
               (cell->is_ghost() ? ghost_particles.equal_range(level_index) :
                                   particles.equal_range(level_index));
 
@@ -1123,7 +1121,7 @@ namespace Particles
               particles_in_cell.first,
               particles_in_cell.second,
               [&stored_particles_on_cell](
-                const std::pair<internal::LevelInd, Particle<dim, spacedim>>
+                const std::pair<internal::LevelIndex, Particle<dim, spacedim>>
                   &particle) {
                 stored_particles_on_cell.push_back(particle.second);
               });
@@ -1154,10 +1152,10 @@ namespace Particles
                  ++child_index)
               {
                 const typename Triangulation<dim, spacedim>::cell_iterator
-                                         child       = cell->child(child_index);
-                const internal::LevelInd level_index = {child->level(),
-                                                        child->index()};
-                const auto               particles_in_cell =
+                                           child = cell->child(child_index);
+                const internal::LevelIndex level_index = {child->level(),
+                                                          child->index()};
+                const auto                 particles_in_cell =
                   (child->is_ghost() ?
                      ghost_particles.equal_range(level_index) :
                      particles.equal_range(level_index));
@@ -1166,8 +1164,8 @@ namespace Particles
                   particles_in_cell.first,
                   particles_in_cell.second,
                   [&stored_particles_on_cell](
-                    const std::pair<internal::LevelInd, Particle<dim, spacedim>>
-                      &particle) {
+                    const std::pair<internal::LevelIndex,
+                                    Particle<dim, spacedim>> &particle) {
                     stored_particles_on_cell.push_back(particle.second);
                   });
               }
@@ -1240,7 +1238,7 @@ namespace Particles
 
         case parallel::distributed::Triangulation<dim, spacedim>::CELL_COARSEN:
           {
-            typename std::multimap<internal::LevelInd,
+            typename std::multimap<internal::LevelIndex,
                                    Particle<dim, spacedim>>::iterator
               position_hint = particles.end();
             for (auto &particle : loaded_particles_on_cell)
@@ -1277,7 +1275,7 @@ namespace Particles
         case parallel::distributed::Triangulation<dim, spacedim>::CELL_REFINE:
           {
             std::vector<
-              typename std::multimap<internal::LevelInd,
+              typename std::multimap<internal::LevelIndex,
                                      Particle<dim, spacedim>>::iterator>
               position_hints(GeometryInfo<dim>::max_children_per_cell);
             for (unsigned int child_index = 0;
