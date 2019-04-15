@@ -23,15 +23,15 @@
 
 #include <deal.II/dofs/dof_tools.h>
 
-#include <deal.II/lac/affine_constraints.h>
-#include <deal.II/lac/solver_cg.h>
-#include <deal.II/lac/la_parallel_vector.h>
-#include <deal.II/lac/precondition.h>
-
 #include <deal.II/fe/fe_q.h>
 
-#include <deal.II/grid/tria.h>
 #include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/tria.h>
+
+#include <deal.II/lac/affine_constraints.h>
+#include <deal.II/lac/la_parallel_vector.h>
+#include <deal.II/lac/precondition.h>
+#include <deal.II/lac/solver_cg.h>
 
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
@@ -39,9 +39,10 @@
 // This includes the data structures for the implementation of matrix-free
 // methods on GPU
 #include <deal.II/base/cuda.h>
-#include <deal.II/matrix_free/cuda_matrix_free.h>
+
 #include <deal.II/matrix_free/cuda_fe_evaluation.h>
 #include <deal.II/matrix_free/cuda_matrix_free.h>
+#include <deal.II/matrix_free/operators.h>
 
 #include <fstream>
 
@@ -50,12 +51,66 @@ namespace Step85
   using namespace dealii;
 
   template <int dim, int fe_degree>
+  class VaryingCoefficientFunctor
+  {
+  public:
+    VaryingCoefficientFunctor(double *coefficient)
+      : coef(coefficient)
+    {}
+
+    __device__ void operator()(
+      const unsigned int                                          cell,
+      const typename CUDAWrappers::MatrixFree<dim, double>::Data *gpu_data);
+
+    static const unsigned int n_dofs_1d = fe_degree + 1;
+    static const unsigned int n_local_dofs =
+      dealii::Utilities::pow(n_dofs_1d, dim);
+    static const unsigned int n_q_points =
+      dealii::Utilities::pow(n_dofs_1d, dim);
+
+  private:
+    double *coef;
+  };
+
+
+
+  template <int dim, int fe_degree>
+  __device__ void VaryingCoefficientFunctor<dim, fe_degree>::operator()(
+    const unsigned int                                          cell,
+    const typename CUDAWrappers::MatrixFree<dim, double>::Data *gpu_data)
+  {
+    const unsigned int pos = CUDAWrappers::local_q_point_id<dim, double>(
+      cell, gpu_data, n_dofs_1d, n_q_points);
+    const auto q_point =
+      CUDAWrappers::get_quadrature_point<dim, double>(cell,
+                                                      gpu_data,
+                                                      n_dofs_1d);
+
+    double p_square = 0.;
+    for (unsigned int i = 0; i < dim; ++i)
+      {
+        double coord = q_point[i];
+        p_square += coord * coord;
+      }
+    coef[pos] = 10. / (0.05 + 2. * p_square);
+  }
+
+
+
+  template <int dim, int fe_degree>
   class HelmholtzOperatorQuad
   {
   public:
+    __device__ HelmholtzOperatorQuad(double coef)
+      : coef(coef)
+    {}
+
     __device__ void
     operator()(CUDAWrappers::FEEvaluation<dim, fe_degree> *fe_eval,
                const unsigned int                          q) const;
+
+  private:
+    double coef;
   };
 
 
@@ -65,7 +120,7 @@ namespace Step85
                   operator()(CUDAWrappers::FEEvaluation<dim, fe_degree> *fe_eval,
              const unsigned int                          q) const
   {
-    fe_eval->submit_value(10. * fe_eval->get_value(q), q);
+    fe_eval->submit_value(coef * fe_eval->get_value(q), q);
     fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
   }
 
@@ -75,6 +130,10 @@ namespace Step85
   class LocalHelmholtzOperator
   {
   public:
+    LocalHelmholtzOperator(double *coefficient)
+      : coef(coefficient)
+    {}
+
     __device__ void operator()(
       const unsigned int                                          cell,
       const typename CUDAWrappers::MatrixFree<dim, double>::Data *gpu_data,
@@ -85,6 +144,9 @@ namespace Step85
     static const unsigned int n_dofs_1d    = fe_degree + 1;
     static const unsigned int n_local_dofs = Utilities::pow(fe_degree + 1, dim);
     static const unsigned int n_q_points   = Utilities::pow(fe_degree + 1, dim);
+
+  private:
+    double *coef;
   };
 
 
@@ -97,12 +159,15 @@ namespace Step85
     const double *                                              src,
     double *                                                    dst) const
   {
+    const unsigned int pos = CUDAWrappers::local_q_point_id<dim, double>(
+      cell, gpu_data, n_dofs_1d, n_q_points);
+
     CUDAWrappers::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double>
       fe_eval(cell, gpu_data, shared_data);
     fe_eval.read_dof_values(src);
     fe_eval.evaluate(true, true);
     fe_eval.apply_quad_point_operations(
-      HelmholtzOperatorQuad<dim, fe_degree>());
+      HelmholtzOperatorQuad<dim, fe_degree>(coef[pos]));
     fe_eval.integrate(true, true);
     fe_eval.distribute_local_to_global(dst);
   }
@@ -127,7 +192,8 @@ namespace Step85
             &src) const;
 
   private:
-    CUDAWrappers::MatrixFree<dim, double> mf_data;
+    CUDAWrappers::MatrixFree<dim, double>       mf_data;
+    LinearAlgebra::CUDAWrappers::Vector<double> coef;
   };
 
 
@@ -145,6 +211,10 @@ namespace Step85
                                            update_quadrature_points;
     const QGauss<1> quad(fe_degree + 1);
     mf_data.reinit(mapping, dof_handler, constraints, quad, additional_data);
+
+    coef.reinit(dof_handler.locally_owned_dofs().n_elements());
+    VaryingCoefficientFunctor<dim, fe_degree> functor(coef.get_values());
+    mf_data.evaluate_coefficients(functor);
   }
 
 
@@ -156,7 +226,8 @@ namespace Step85
     const
   {
     dst = 0.;
-    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator;
+    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator(
+      coef.get_values());
     mf_data.cell_loop(helmholtz_operator, src, dst);
     mf_data.copy_constrained_values(src, dst);
   }
@@ -174,10 +245,11 @@ namespace Step85
 
   private:
     void setup_system();
-    // TODO just do it on the host and then move to the GPU
+
     void assemble_rhs();
+
     void solve();
-    void refine_grid();
+
     void output_results(const unsigned int cycle) const;
 
     MPI_Comm mpi_communicator;
@@ -252,7 +324,51 @@ namespace Step85
   template <int dim, int fe_degree>
   void HelmholtzProblem<dim, fe_degree>::assemble_rhs()
   {
-    system_rhs_dev.add(1.);
+    LinearAlgebra::distributed::Vector<double, MemorySpace::Host>
+                      system_rhs_host(locally_owned_dofs, mpi_communicator);
+    const QGauss<dim> quadrature_formula(fe_degree + 1);
+
+    FEValues<dim> fe_values(fe,
+                            quadrature_formula,
+                            update_values | update_quadrature_points |
+                              update_JxW_values);
+
+    const unsigned int dofs_per_cell = fe.dofs_per_cell;
+    const unsigned int n_q_points    = quadrature_formula.size();
+
+    Vector<double> cell_rhs(dofs_per_cell);
+
+    std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
+
+    typename DoFHandler<dim>::active_cell_iterator cell =
+                                                     dof_handler.begin_active(),
+                                                   endc = dof_handler.end();
+    for (; cell != endc; ++cell)
+      {
+        cell_rhs = 0;
+
+        fe_values.reinit(cell);
+
+        for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+          {
+            for (unsigned int i = 0; i < dofs_per_cell; ++i)
+              cell_rhs(i) += (fe_values.shape_value(i, q_index) * 1.0 *
+                              fe_values.JxW(q_index));
+          }
+
+        // Finally, transfer the contributions from
+        // @p cell_rhs into the global objects.
+        // Set the constraints to zero this is necessary for CG to converge (the
+        // other solution is modify vmult so that the src vector set the
+        // contrained dof to zero.
+        cell->get_dof_indices(local_dof_indices);
+        constraints.distribute_local_to_global(cell_rhs,
+                                               local_dof_indices,
+                                               system_rhs_host);
+      }
+    LinearAlgebra::ReadWriteVector<double> rw_vector(locally_owned_dofs);
+    rw_vector.import(system_rhs_host, VectorOperation::insert);
+    system_rhs_dev.import(rw_vector, VectorOperation::insert);
   }
 
 
@@ -262,7 +378,7 @@ namespace Step85
   {
     PreconditionIdentity preconditioner;
 
-    SolverControl solver_control(dof_handler.n_dofs(),
+    SolverControl solver_control(system_rhs_dev.size(),
                                  1e-12 * system_rhs_dev.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>> cg(
       solver_control);
@@ -274,6 +390,8 @@ namespace Step85
     solution_host.import(rw_vector, VectorOperation::insert);
 
     constraints.distribute(solution_host);
+
+    std::cout << "solution norm: " << solution_host.l2_norm() << std::endl;
   }
 
 
@@ -323,7 +441,7 @@ namespace Step85
   template <int dim, int fe_degree>
   void HelmholtzProblem<dim, fe_degree>::run()
   {
-    for (unsigned int cycle = 0; cycle < 9 - dim; ++cycle)
+    for (unsigned int cycle = 0; cycle < 5 - dim; ++cycle)
       {
         pcout << "Cycle " << cycle << std::endl;
 
