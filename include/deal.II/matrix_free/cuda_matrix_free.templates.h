@@ -866,6 +866,9 @@ namespace CUDAWrappers
       return internal::get_conflict_indices<dim, Number>(filter, constraints);
     };
 
+    if (begin == end)
+      return;
+
     std::vector<std::vector<CellFilter>> graph =
       GraphColoring::make_graph_coloring(begin, end, fun);
     n_colors = graph.size();

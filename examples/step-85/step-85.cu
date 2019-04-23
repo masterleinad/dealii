@@ -389,33 +389,31 @@ namespace Step85
 
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell =
-                                                     dof_handler.begin_active(),
-                                                   endc = dof_handler.end();
-    for (; cell != endc; ++cell)
-      {
-        cell_rhs = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      if (cell->is_locally_owned())
+        {
+          cell_rhs = 0;
 
-        fe_values.reinit(cell);
+          fe_values.reinit(cell);
 
-        for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
-          {
-            for (unsigned int i = 0; i < dofs_per_cell; ++i)
-              cell_rhs(i) += (fe_values.shape_value(i, q_index) * 1.0 *
-                              fe_values.JxW(q_index));
-          }
+          for (unsigned int q_index = 0; q_index < n_q_points; ++q_index)
+            {
+              for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                cell_rhs(i) += (fe_values.shape_value(i, q_index) * 1.0 *
+                                fe_values.JxW(q_index));
+            }
 
-        // Finally, transfer the contributions from @p cell_rhs into the global
-        // objects. Set the constraints to zero. This is necessary for CG to
-        // converge since the ansatz and solution space have these degrees of
-        // freedom constrained as well.
-        // The other solution is modifying vmult() so that the source
-        // vector sets the contrained dof to zero.
-        cell->get_dof_indices(local_dof_indices);
-        constraints.distribute_local_to_global(cell_rhs,
-                                               local_dof_indices,
-                                               system_rhs_host);
-      }
+          // Finally, transfer the contributions from @p cell_rhs into the global
+          // objects. Set the constraints to zero. This is necessary for CG to
+          // converge since the ansatz and solution space have these degrees of
+          // freedom constrained as well.
+          // The other solution is modifying vmult() so that the source
+          // vector sets the contrained dof to zero.
+          cell->get_dof_indices(local_dof_indices);
+          constraints.distribute_local_to_global(cell_rhs,
+                                                 local_dof_indices,
+                                                 system_rhs_host);
+        }
     LinearAlgebra::ReadWriteVector<double> rw_vector(locally_owned_dofs);
     rw_vector.import(system_rhs_host, VectorOperation::insert);
     system_rhs_dev.import(rw_vector, VectorOperation::insert);
