@@ -2364,6 +2364,7 @@ namespace internal
           cudaMalloc(&result_device, size * sizeof(Number));
         AssertCuda(error_code);
         error_code = cudaMemset(result_device, Number(), sizeof(Number));
+        AssertCuda(error_code);
 
         const int n_blocks = 1 + (size - 1) / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::double_vector_reduction<
@@ -2374,6 +2375,13 @@ namespace internal
                                                     v_data.values_dev.get(),
                                                     static_cast<unsigned int>(
                                                       size));
+
+#  ifdef DEBUG
+        // Check that the kernel was launched correctly
+        AssertCuda(cudaGetLastError());
+        // Check that there was no problem during the execution of the kernel
+        AssertCuda(cudaDeviceSynchronize());
+#  endif
 
         // Copy the result back to the host
         Number result;
