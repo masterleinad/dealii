@@ -54,7 +54,7 @@ namespace Step85
 
   // Define a class that implements the varying coefficients we want to use in
   // the Helmholtzoperator.
-  // Later, we wan't to pass an object of this type to a
+  // Later, we want to pass an object of this type to a
   // CUDAWrappers::MatrixFree<dim, double> object that expects the class to have
   // an operator that fills the values provided in the constructor for a given
   // cell.
@@ -65,11 +65,6 @@ namespace Step85
     VaryingCoefficientFunctor(double *coefficient)
       : coef(coefficient)
     {}
-
-    // Later, we wan't to pass an object of this type to a
-    // CUDAWrappers::MatrixFree object that expects the class to have an
-    // operator that fills the values provided in the constructor for a given
-    // cell.
 
     __device__ void operator()(
       const unsigned int                                          cell,
@@ -149,7 +144,7 @@ namespace Step85
 
 
   // Finally, we need to define a class that implements the whole operator
-  // evaluation that corresponds to matrix-vector product in matr0x-based
+  // evaluation that corresponds to matrix-vector product in matrix-based
   // approaches. It corresponds
   template <int dim, int fe_degree>
   class LocalHelmholtzOperator
@@ -167,8 +162,8 @@ namespace Step85
       double *                                                    dst) const;
 
     // Again, the CUDAWrappers::MatrixFree object doesn't know about the number
-    // of degrees of freedoms and the number of degrees of freedoms so we need
-    // to store these for index calculations in he call operator.
+    // of degrees of freedom and the number of quadrature points so we need
+    // to store these for index calculations in the call operator.
     static const unsigned int n_dofs_1d    = fe_degree + 1;
     static const unsigned int n_local_dofs = Utilities::pow(fe_degree + 1, dim);
     static const unsigned int n_q_points   = Utilities::pow(fe_degree + 1, dim);
@@ -246,8 +241,8 @@ namespace Step85
   }
 
 
-  // When applying the Helmholtz operator, we have to be carefull to handle
-  // boundary conditions correctly. Since the local operator doesn't knaow about
+  // When applying the Helmholtz operator, we have to be careful to handle
+  // boundary conditions correctly. Since the local operator doesn't know about
   // constraints, we have to copy the correct values from the source to the
   // destination vector afterwards.
   template <int dim, int fe_degree>
