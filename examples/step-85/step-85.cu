@@ -369,7 +369,7 @@ namespace Step85
   void HelmholtzProblem<dim, fe_degree>::assemble_rhs()
   {
     LinearAlgebra::distributed::Vector<double, MemorySpace::Host>
-                      system_rhs_host(locally_owned_dofs, mpi_communicator);
+                      system_rhs_host(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
     const QGauss<dim> quadrature_formula(fe_degree + 1);
 
     FEValues<dim> fe_values(fe,
@@ -443,6 +443,8 @@ namespace Step85
 
     std::cout << "solution norm: " << ghost_solution_host.l2_norm()
               << std::endl;
+
+    ghost_solution_host.update_ghost_values();
   }
 
   // The output results function is as usual since we have already copied the
