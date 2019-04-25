@@ -6,5 +6,5 @@
 Currently, there is no preconditioner used at all. This is mainly since 
 constructing an efficient matrix-free preconditioner is non-trivial.
 However, simple choices just requiring the diagonal of the corresponding matrix
-are good candidates. In particular, one could extend the tutorial to use multigird 
+are good candidates. In particular, one could extend the tutorial to use multigrid 
 with Chebyshev smoothers similar to step-37.
