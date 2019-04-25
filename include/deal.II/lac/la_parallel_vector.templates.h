@@ -352,8 +352,9 @@ namespace LinearAlgebra
           error_code = cudaMemset(result_device, Number(), sizeof(Number));
 
           const int n_blocks =
-            1 + (size - 1) / (::dealii::CUDAWrappers::chunk_size *
-                              ::dealii::CUDAWrappers::block_size);
+            (size == 0) ? 1 :
+                          1 + (size - 1) / (::dealii::CUDAWrappers::chunk_size *
+                                            ::dealii::CUDAWrappers::block_size);
           ::dealii::LinearAlgebra::CUDAWrappers::kernel::reduction<
             Number,
             ::dealii::LinearAlgebra::CUDAWrappers::kernel::LInfty<Number>>
