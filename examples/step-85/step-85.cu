@@ -138,7 +138,7 @@ namespace Step85
                   operator()(CUDAWrappers::FEEvaluation<dim, fe_degree> *fe_eval,
              const unsigned int                          q) const
   {
-    fe_eval->submit_value(coef * fe_eval->get_value(q), q);
+    fe_eval->submit_value(/*coef **/ fe_eval->get_value(q), q);
     fe_eval->submit_gradient(fe_eval->get_gradient(q), q);
   }
 
@@ -369,7 +369,9 @@ namespace Step85
   void HelmholtzProblem<dim, fe_degree>::assemble_rhs()
   {
     LinearAlgebra::distributed::Vector<double, MemorySpace::Host>
-                      system_rhs_host(locally_owned_dofs, locally_relevant_dofs, mpi_communicator);
+                      system_rhs_host(locally_owned_dofs,
+                      locally_relevant_dofs,
+                      mpi_communicator);
     const QGauss<dim> quadrature_formula(fe_degree + 1);
 
     FEValues<dim> fe_values(fe,
@@ -412,8 +414,8 @@ namespace Step85
     system_rhs_host.compress(VectorOperation::add);
 
     // We can't directly copy the values from the host to the device but need to
-    // use an intermediate object of type LinearAlgebra::ReadWriteVector to construct the correct
-    // communication pattern.
+    // use an intermediate object of type LinearAlgebra::ReadWriteVector to
+    // construct the correct communication pattern.
     LinearAlgebra::ReadWriteVector<double> rw_vector(locally_owned_dofs);
     rw_vector.import(system_rhs_host, VectorOperation::insert);
     system_rhs_dev.import(rw_vector, VectorOperation::insert);
@@ -502,7 +504,7 @@ namespace Step85
         if (cycle == 0)
           {
             GridGenerator::hyper_cube(triangulation, 0., 1.);
-            triangulation.refine_global(3 - dim);
+            triangulation.refine_global(4 - dim);
           }
         triangulation.refine_global(1);
         setup_system();
