@@ -409,6 +409,11 @@ namespace Step85
                                                  local_dof_indices,
                                                  system_rhs_host);
         }
+    system_rhs_host.compress(VectorOperation::add);
+
+    // We can't directly copy the values from the host to the device but need to
+    // use an intermediate object of type LinearAlgebra::ReadWriteVector to construct the correct
+    // communication pattern.
     LinearAlgebra::ReadWriteVector<double> rw_vector(locally_owned_dofs);
     rw_vector.import(system_rhs_host, VectorOperation::insert);
     system_rhs_dev.import(rw_vector, VectorOperation::insert);
