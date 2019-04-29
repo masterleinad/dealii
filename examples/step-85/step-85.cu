@@ -235,7 +235,12 @@ namespace Step85
     const QGauss<1> quad(fe_degree + 1);
     mf_data.reinit(mapping, dof_handler, constraints, quad, additional_data);
 
-    coef.reinit(dof_handler.locally_owned_dofs().n_elements());
+    // We need to store the value of the coefficient for each quadrature point
+    // in every locally owned cells.
+    const unsigned int n_owned_cells =
+      std::distance<decltype(dof_handler.begin_active())>(
+        dof_handler.begin_active(), dof_handler.end());
+    coef.reinit(Utilities::pow(fe_degree + 1, dim) * n_owned_cells);
     VaryingCoefficientFunctor<dim, fe_degree> functor(coef.get_values());
     mf_data.evaluate_coefficients(functor);
   }
