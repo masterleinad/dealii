@@ -180,8 +180,23 @@ public:
    */
   static const unsigned int n_array_elements = 1;
 
-  // POD means that there should be no user-defined constructors, destructors
-  // and copy functions (the standard is somewhat relaxed in C++2011, though).
+  // POD means that there should be no user-defined copy constructors or
+  // destructors (the standard is somewhat relaxed in C++2011, though). We need
+  // to define default constructor and conversion constructor (from Number) in
+  // order to properly and idiomatically construct
+  // Tensor<rank,dim,VectorizedArray<Number>>
+
+  /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from scalar
+   */
+  explicit constexpr VectorizedArray(const Number scalar)
+    : data{scalar}
+  {}
 
   /**
    * This function assigns a scalar to this class.
@@ -379,7 +394,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it is
    * declared public.
    */
-  Number data;
+  Number data{0.};
 
 private:
   /**
@@ -591,6 +606,18 @@ public:
   static const unsigned int n_array_elements = 8;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a double
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const double x)
+    : data{_mm512_set1_pd(x)}
+  {}
+
+  /**
    * This function can be used to set all data fields to a given scalar.
    */
   DEAL_II_ALWAYS_INLINE
@@ -782,7 +809,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m512d data;
+  __m512d data{0.};
 
 private:
   /**
@@ -1001,6 +1028,18 @@ public:
   static const unsigned int n_array_elements = 16;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a float
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const float x)
+    : data{_mm512_set1_ps(x)}
+  {}
+
+  /**
    * This function can be used to set all data fields to a given scalar.
    */
   DEAL_II_ALWAYS_INLINE
@@ -1192,7 +1231,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m512 data;
+  __m512 data{0.};
 
 private:
   /**
@@ -1444,6 +1483,18 @@ public:
   static const unsigned int n_array_elements = 4;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a double
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const double x)
+    : data{_mm256_set1_pd(x)}
+  {}
+
+  /**
    * This function can be used to set all data fields to a given scalar.
    */
   DEAL_II_ALWAYS_INLINE
@@ -1630,7 +1681,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m256d data;
+  __m256d data{0.};
 
 private:
   /**
@@ -1824,6 +1875,18 @@ public:
   static const unsigned int n_array_elements = 8;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a float
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const float x)
+    : data{_mm256_set1_ps(x)}
+  {}
+
+  /**
    * This function can be used to set all data fields to a given scalar.
    */
   DEAL_II_ALWAYS_INLINE
@@ -2010,7 +2073,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m256 data;
+  __m256 data{0.};
 
 private:
   /**
@@ -2232,6 +2295,18 @@ public:
   static const unsigned int n_array_elements = 2;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a double
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const double x)
+    : data(_mm_set1_pd(x))
+  {}
+
+  /**
    * This function can be used to set all data fields to a given scalar.
    */
   DEAL_II_ALWAYS_INLINE
@@ -2403,7 +2478,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m128d data;
+  __m128d data{0.};
 
 private:
   /**
@@ -2568,6 +2643,18 @@ public:
    * This gives the number of vectors collected in this class.
    */
   static const unsigned int n_array_elements = 4;
+
+  /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a float
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const float x)
+    : data(_mm_set1_ps(x))
+  {}
 
   /**
    * This function can be used to set all data fields to a given scalar.
@@ -2742,7 +2829,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m128 data;
+  __m128 data{0.};
 
 private:
   /**
@@ -2930,6 +3017,18 @@ public:
   static const unsigned int n_array_elements = 2;
 
   /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a double
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const double x)
+    : data{vec_splats(x)}
+  {}
+
+  /**
    * This function assigns a scalar to this class.
    */
   DEAL_II_ALWAYS_INLINE
@@ -3059,7 +3158,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __vector double data;
+  __vector double data{0.};
 
 private:
   /**
@@ -3141,6 +3240,18 @@ public:
    * This gives the number of vectors collected in this class.
    */
   static const unsigned int n_array_elements = 4;
+
+  /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * Conversion constructor from a float
+   */
+  DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const float x)
+    : data{vec_splats(x)}
+  {}
 
   /**
    * This function assigns a scalar to this class.
@@ -3272,7 +3383,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __vector float data;
+  __vector float data{0.};
 
 private:
   /**

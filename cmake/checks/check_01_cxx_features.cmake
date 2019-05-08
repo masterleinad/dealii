@@ -20,6 +20,7 @@
 #
 #   DEAL_II_WITH_CXX14
 #   DEAL_II_WITH_CXX17
+#   DEAL_II_CONSTEXPR
 #
 #   DEAL_II_HAVE_ATTRIBUTE_FALLTHROUGH
 #   DEAL_II_HAVE_CXX11_IS_TRIVIALLY_COPYABLE
@@ -500,6 +501,16 @@ OPTION(DEAL_II_WITH_CXX17
   )
 LIST(APPEND DEAL_II_FEATURES CXX17)
 SET(FEATURE_CXX17_PROCESSED TRUE)
+
+#
+# The macro DEAL_II_CONSTEXPR allows using c++ constexpr features in a portable way
+#
+IF (DEAL_II_WITH_CXX14)
+  MESSAGE(STATUS "Enabling CXX14 constexpr features")
+  SET(DEAL_II_CONSTEXPR "constexpr")
+ELSE()
+  SET(DEAL_II_CONSTEXPR " ")
+ENDIF()
 
 #
 # Bail out if user requested support for a certain C++ version (e.g.,
