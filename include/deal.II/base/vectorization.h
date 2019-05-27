@@ -178,36 +178,9 @@ public:
    * case, there is only one element. Specializations use SIMD intrinsics and
    * can work on multiple elements at the same time.
    */
-  static const unsigned int n_array_elements = 1;
+  static constexpr unsigned int n_array_elements = 1;
 
-  // POD means that there should be no user-defined copy constructors or
-  // destructors (the standard is somewhat relaxed in C++2011, though). We need
-  // to define default constructor and conversion constructor (from Number) in
-  // order to properly and idiomatically construct
-  // Tensor<rank,dim,VectorizedArray<Number>>
-
-  /**
-   * Default constructor
-   */
-  VectorizedArray() = default;
-
-  /**
-   * Conversion constructor from scalar
-   */
-  explicit constexpr VectorizedArray(const Number scalar)
-    : data{scalar}
-  {}
-
-  /**
-   * This function assigns a scalar to this class.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray &
-  operator=(const Number scalar)
-  {
-    data = scalar;
-    return *this;
-  }
+  // This is a POD class and does not need any constructors
 
   /**
    * Access operator (only valid with component 0)
@@ -466,9 +439,9 @@ private:
   std::min(const VectorizedArray<Number2> &, const VectorizedArray<Number2> &);
 };
 
-// We need to have a separate declaration for static const members
+// We need to have a separate declaration for static constexpr members
 template <typename Number>
-const unsigned int VectorizedArray<Number>::n_array_elements;
+constexpr unsigned int VectorizedArray<Number>::n_array_elements;
 
 
 
@@ -603,7 +576,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 8;
+  static constexpr unsigned int n_array_elements = 8;
 
   /**
    * Default constructor
@@ -1025,7 +998,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 16;
+  static constexpr unsigned int n_array_elements = 16;
 
   /**
    * Default constructor
@@ -1480,7 +1453,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 4;
+  static constexpr unsigned int n_array_elements = 4;
 
   /**
    * Default constructor
@@ -1872,7 +1845,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 8;
+  static constexpr unsigned int n_array_elements = 8;
 
   /**
    * Default constructor
@@ -2292,7 +2265,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 2;
+  static constexpr unsigned int n_array_elements = 2;
 
   /**
    * Default constructor
@@ -2642,7 +2615,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 4;
+  static constexpr unsigned int n_array_elements = 4;
 
   /**
    * Default constructor
@@ -3014,7 +2987,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 2;
+  static constexpr unsigned int n_array_elements = 2;
 
   /**
    * Default constructor
@@ -3239,7 +3212,7 @@ public:
   /**
    * This gives the number of vectors collected in this class.
    */
-  static const unsigned int n_array_elements = 4;
+  static constexpr unsigned int n_array_elements = 4;
 
   /**
    * Default constructor

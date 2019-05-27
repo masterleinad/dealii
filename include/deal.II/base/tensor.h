@@ -1049,7 +1049,7 @@ Tensor<0, dim, Number>::serialize(Archive &ar, const unsigned int)
 
 template <int rank_, int dim, typename Number>
 template <typename ArrayLike, std::size_t... indices>
-constexpr Tensor<rank_, dim, Number>::Tensor(
+DEAL_II_ALWAYS_INLINE constexpr Tensor<rank_, dim, Number>::Tensor(
   const ArrayLike &initializer,
   std_cxx14::index_sequence<indices...>)
   : values{Tensor<rank_ - 1, dim, Number>(initializer[indices])...}
@@ -1060,14 +1060,15 @@ constexpr Tensor<rank_, dim, Number>::Tensor(
 
 
 template <int rank_, int dim, typename Number>
-constexpr Tensor<rank_, dim, Number>::Tensor(const array_type &initializer)
+DEAL_II_ALWAYS_INLINE constexpr Tensor<rank_, dim, Number>::Tensor(
+  const array_type &initializer)
   : Tensor(initializer, std_cxx14::make_index_sequence<dim>{})
 {}
 
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
-constexpr Tensor<rank_, dim, Number>::Tensor(
+DEAL_II_ALWAYS_INLINE constexpr Tensor<rank_, dim, Number>::Tensor(
   const Tensor<rank_, dim, OtherNumber> &initializer)
   : Tensor(initializer, std_cxx14::make_index_sequence<dim>{})
 {}
@@ -1075,7 +1076,7 @@ constexpr Tensor<rank_, dim, Number>::Tensor(
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
-constexpr Tensor<rank_, dim, Number>::Tensor(
+DEAL_II_ALWAYS_INLINE constexpr Tensor<rank_, dim, Number>::Tensor(
   const Tensor<1, dim, Tensor<rank_ - 1, dim, OtherNumber>> &initializer)
   : Tensor(initializer, std_cxx14::make_index_sequence<dim>{})
 {}
@@ -1083,7 +1084,7 @@ constexpr Tensor<rank_, dim, Number>::Tensor(
 
 template <int rank_, int dim, typename Number>
 template <typename OtherNumber>
-constexpr Tensor<rank_, dim, Number>::
+DEAL_II_ALWAYS_INLINE constexpr Tensor<rank_, dim, Number>::
 operator Tensor<1, dim, Tensor<rank_ - 1, dim, OtherNumber>>() const
 {
   return Tensor<1, dim, Tensor<rank_ - 1, dim, Number>>(values);
@@ -1116,10 +1117,10 @@ namespace internal
     };
 
     template <typename ArrayElementType>
-    DEAL_II_CONSTEXPR ArrayElementType &
-                      subscript(ArrayElementType *,
-                                const unsigned int,
-                                std::integral_constant<int, 0>)
+    DEAL_II_CONSTEXPR inline ArrayElementType &
+    subscript(ArrayElementType *,
+              const unsigned int,
+              std::integral_constant<int, 0>)
     {
       Assert(
         false,
@@ -1142,8 +1143,11 @@ DEAL_II_CONSTEXPR inline DEAL_II_ALWAYS_INLINE     DEAL_II_CUDA_HOST_DEV
 
 
 template <int rank_, int dim, typename Number>
-constexpr DEAL_II_CUDA_HOST_DEV const typename Tensor<rank_, dim, Number>::
-  value_type &Tensor<rank_, dim, Number>::operator[](const unsigned int i) const
+DEAL_II_ALWAYS_INLINE constexpr DEAL_II_CUDA_HOST_DEV const typename Tensor<
+  rank_,
+  dim,
+  Number>::value_type &Tensor<rank_, dim, Number>::
+                       operator[](const unsigned int i) const
 {
   return dealii::internal::TensorSubscriptor::subscript(
     values, i, std::integral_constant<int, dim>());
@@ -1537,7 +1541,7 @@ operator<<(std::ostream &out, const Tensor<0, dim, Number> &p)
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename Other>
-constexpr typename ProductType<Other, Number>::type
+constexpr DEAL_II_ALWAYS_INLINE typename ProductType<Other, Number>::type
 operator*(const Other &object, const Tensor<0, dim, Number> &t)
 {
   return object * static_cast<const Number &>(t);
@@ -1554,7 +1558,7 @@ operator*(const Other &object, const Tensor<0, dim, Number> &t)
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename Other>
-constexpr typename ProductType<Number, Other>::type
+constexpr DEAL_II_ALWAYS_INLINE typename ProductType<Number, Other>::type
 operator*(const Tensor<0, dim, Number> &t, const Other &object)
 {
   return static_cast<const Number &>(t) * object;
@@ -1571,7 +1575,7 @@ operator*(const Tensor<0, dim, Number> &t, const Other &object)
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename OtherNumber>
-constexpr typename ProductType<Number, OtherNumber>::type
+constexpr DEAL_II_ALWAYS_INLINE typename ProductType<Number, OtherNumber>::type
 operator*(const Tensor<0, dim, Number> &     src1,
           const Tensor<0, dim, OtherNumber> &src2)
 {
@@ -1586,12 +1590,12 @@ operator*(const Tensor<0, dim, Number> &     src1,
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename OtherNumber>
-constexpr Tensor<
-  0,
-  dim,
-  typename ProductType<Number,
-                       typename EnableIfScalar<OtherNumber>::type>::type>
-operator/(const Tensor<0, dim, Number> &t, const OtherNumber &factor)
+constexpr DEAL_II_ALWAYS_INLINE
+  Tensor<0,
+         dim,
+         typename ProductType<Number,
+                              typename EnableIfScalar<OtherNumber>::type>::type>
+  operator/(const Tensor<0, dim, Number> &t, const OtherNumber &factor)
 {
   return static_cast<const Number &>(t) / factor;
 }
@@ -1603,8 +1607,10 @@ operator/(const Tensor<0, dim, Number> &t, const OtherNumber &factor)
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename OtherNumber>
-constexpr Tensor<0, dim, typename ProductType<Number, OtherNumber>::type>
-operator+(const Tensor<0, dim, Number> &p, const Tensor<0, dim, OtherNumber> &q)
+constexpr DEAL_II_ALWAYS_INLINE
+  Tensor<0, dim, typename ProductType<Number, OtherNumber>::type>
+  operator+(const Tensor<0, dim, Number> &     p,
+            const Tensor<0, dim, OtherNumber> &q)
 {
   return static_cast<const Number &>(p) + static_cast<const OtherNumber &>(q);
 }
@@ -1616,8 +1622,10 @@ operator+(const Tensor<0, dim, Number> &p, const Tensor<0, dim, OtherNumber> &q)
  * @relatesalso Tensor<0,dim,Number>
  */
 template <int dim, typename Number, typename OtherNumber>
-constexpr Tensor<0, dim, typename ProductType<Number, OtherNumber>::type>
-operator-(const Tensor<0, dim, Number> &p, const Tensor<0, dim, OtherNumber> &q)
+constexpr DEAL_II_ALWAYS_INLINE
+  Tensor<0, dim, typename ProductType<Number, OtherNumber>::type>
+  operator-(const Tensor<0, dim, Number> &     p,
+            const Tensor<0, dim, OtherNumber> &q)
 {
   return static_cast<const Number &>(p) - static_cast<const OtherNumber &>(q);
 }
@@ -1660,11 +1668,12 @@ DEAL_II_CONSTEXPR inline DEAL_II_ALWAYS_INLINE
  * @relatesalso Tensor
  */
 template <int rank, int dim, typename Number, typename OtherNumber>
-constexpr Tensor<rank,
-                 dim,
-                 typename ProductType<typename EnableIfScalar<Number>::type,
-                                      OtherNumber>::type>
-operator*(const Number &factor, const Tensor<rank, dim, OtherNumber> &t)
+constexpr DEAL_II_ALWAYS_INLINE
+  Tensor<rank,
+         dim,
+         typename ProductType<typename EnableIfScalar<Number>::type,
+                              OtherNumber>::type>
+  operator*(const Number &factor, const Tensor<rank, dim, OtherNumber> &t)
 {
   // simply forward to the operator above
   return t * factor;
