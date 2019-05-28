@@ -188,8 +188,8 @@ namespace TensorAccessors
    * @author Matthias Maier, 2015
    */
   template <int index, int rank, typename T>
-  constexpr internal::ReorderedIndexView<index, rank, T>
-  reordered_index_view(T &t)
+  constexpr DEAL_II_ALWAYS_INLINE internal::ReorderedIndexView<index, rank, T>
+                                  reordered_index_view(T &t)
   {
     static_assert(0 <= index && index < rank,
                   "The specified index must lie within the range [0,rank)");
@@ -421,7 +421,8 @@ namespace TensorAccessors
                                             typename ValueType<T>::value_type>;
 
       // Recurse by applying index j directly:
-      constexpr value_type operator[](unsigned int j) const
+      constexpr DEAL_II_ALWAYS_INLINE value_type
+                                      operator[](unsigned int j) const
       {
         return value_type(t_[j]);
       }
@@ -451,7 +452,8 @@ namespace TensorAccessors
 
       using value_type = StoreIndex<rank - 1, internal::Identity<T>>;
 
-      constexpr value_type operator[](unsigned int j) const
+      constexpr DEAL_II_ALWAYS_INLINE value_type
+                                      operator[](unsigned int j) const
       {
         return value_type(Identity<T>(t_), j);
       }
@@ -474,7 +476,8 @@ namespace TensorAccessors
       using value_type =
         typename ReferenceType<typename ValueType<T>::value_type>::type;
 
-      constexpr value_type operator[](unsigned int j) const
+      constexpr DEAL_II_ALWAYS_INLINE value_type
+                                      operator[](unsigned int j) const
       {
         return t_[j];
       }
@@ -498,7 +501,7 @@ namespace TensorAccessors
 
       using return_type = typename ValueType<T>::value_type;
 
-      constexpr typename ReferenceType<return_type>::type
+      constexpr DEAL_II_ALWAYS_INLINE typename ReferenceType<return_type>::type
       apply(unsigned int j) const
       {
         return t_[j];
@@ -527,7 +530,8 @@ namespace TensorAccessors
 
       using value_type = StoreIndex<rank - 1, StoreIndex<rank, S>>;
 
-      constexpr value_type operator[](unsigned int j) const
+      constexpr DEAL_II_ALWAYS_INLINE value_type
+                                      operator[](unsigned int j) const
       {
         return value_type(*this, j);
       }
@@ -563,7 +567,8 @@ namespace TensorAccessors
         typename ValueType<typename S::return_type>::value_type;
       using value_type = return_type;
 
-      constexpr return_type &operator[](unsigned int j) const
+      constexpr DEAL_II_ALWAYS_INLINE return_type &
+                                      operator[](unsigned int j) const
       {
         return s_.apply(j)[i_];
       }
@@ -726,7 +731,7 @@ namespace TensorAccessors
     {
     public:
       template <typename T1, typename T2, typename T3>
-      constexpr static T1
+      constexpr DEAL_II_ALWAYS_INLINE static T1
       contract2(const T2 &left, const T3 &right)
       {
         return left * right;
