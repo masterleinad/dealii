@@ -180,7 +180,21 @@ public:
    */
   static constexpr unsigned int n_array_elements = 1;
 
-  // This is a POD class and does not need any constructors
+  /**
+   * Default constructor
+   */
+  VectorizedArray() = default;
+
+  /**
+   * This function assigns a scalar to this class.
+   */
+  DEAL_II_ALWAYS_INLINE
+  VectorizedArray &
+  operator=(const Number scalar)
+  {
+    data = scalar;
+    return *this;
+  }
 
   /**
    * Access operator (only valid with component 0)
@@ -367,7 +381,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it is
    * declared public.
    */
-  Number data{0.};
+  Number data = 0.;
 
 private:
   /**
@@ -782,7 +796,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m512d data{0.};
+  __m512d data = _mm512_set1_pd(0.);
 
 private:
   /**
@@ -1204,7 +1218,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m512 data{0.};
+  __m512 data = _mm512_set1_ps(0.);
 
 private:
   /**
@@ -1654,7 +1668,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m256d data{0.};
+  __m256d data = _mm256_set1_pd(0.);
 
 private:
   /**
@@ -2046,7 +2060,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m256 data{0.};
+  __m256 data = _mm256_set1_ps(0.);
 
 private:
   /**
@@ -2276,7 +2290,7 @@ public:
    * Conversion constructor from a double
    */
   DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const double x)
-    : data(_mm_set1_pd(x))
+    : data{_mm_set1_pd(x)}
   {}
 
   /**
@@ -2451,7 +2465,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m128d data{0.};
+  __m128d data = _mm_set1_pd(0.);
 
 private:
   /**
@@ -2626,13 +2640,12 @@ public:
    * Conversion constructor from a float
    */
   DEAL_II_ALWAYS_INLINE explicit VectorizedArray(const float x)
-    : data(_mm_set1_ps(x))
+    : data{_mm_set1_ps(x)}
   {}
 
   /**
    * This function can be used to set all data fields to a given scalar.
    */
-
   DEAL_II_ALWAYS_INLINE
   VectorizedArray &
   operator=(const float x)
@@ -2802,7 +2815,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __m128 data{0.};
+  __m128 data = _mm_set1_ps(0.);
 
 private:
   /**
@@ -3131,7 +3144,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __vector double data{0.};
+  __vector double data = vec_splats(0.);
 
 private:
   /**
@@ -3356,7 +3369,7 @@ public:
    * Actual data field. Since this class represents a POD data type, it
    * remains public.
    */
-  __vector float data{0.};
+  __vector float data = vec_splats(0.);
 
 private:
   /**
