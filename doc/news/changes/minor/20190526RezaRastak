@@ -1,0 +1,3 @@
+New: Tensor<rank, dim, Number> can be constructed and manipulated in consexpr setting (if supported by the compiler)
+<br>
+(Reza Rastak, 2019/05/26)

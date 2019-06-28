@@ -18,8 +18,13 @@
 DEAL_II_NAMESPACE_OPEN
 
 #if DEAL_II_COMPILER_VECTORIZATION_LEVEL >= 1 && !defined(DEAL_II_MSVC)
-const unsigned int VectorizedArray<double>::n_array_elements;
-const unsigned int VectorizedArray<float>::n_array_elements;
+constexpr unsigned int VectorizedArray<double>::n_array_elements;
+constexpr unsigned int VectorizedArray<float>::n_array_elements;
+static_assert(
+  std::is_standard_layout<VectorizedArray<double>>::value,
+  "VectorizedArray<double> must has standard (C compatible) layout");
+static_assert(std::is_standard_layout<VectorizedArray<float>>::value,
+              "VectorizedArray<float> must has standard (C compatible) layout");
 #endif
 
 DEAL_II_NAMESPACE_CLOSE
