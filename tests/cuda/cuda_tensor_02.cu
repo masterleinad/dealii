@@ -20,39 +20,76 @@
 #include "../tests.h"
 
 template <int rank, int dim, typename Number>
-__global__ void multiplication_kernel(Tensor<rank, dim, Number> *t, Tensor<rank, dim, Number> *t1, Tensor<rank, dim, Number> *t2)
+__global__ void
+summation_kernel(Tensor<rank, dim, Number> *t,
+                 Tensor<rank, dim, Number> *t1,
+                 Tensor<rank, dim, Number> *t2)
 {
-if (threadIdx.x == 0)
-{
-t1 = *t*2.;
-t2 = 2.*t;
-t *= 2.
-}
+  if (threadIdx.x == 0)
+    {
+      *t2 += *t;
+      *t2 += Tensor<rank, dim, double>{};
+      *t1 = *t1 + *t;
+      *t1 = *t1 + Tensor<rank, dim, double>{};
+    }
 }
 
 template <int rank, int dim, typename Number>
-__global__ void division_kernel(Tensor<rank, dim, Number> *t, Tensor<rank, dim, Number> *t1)
+__global__ void
+subtraction_kernel(Tensor<rank, dim, Number> *t,
+                   Tensor<rank, dim, Number> *t1,
+                   Tensor<rank, dim, Number> *t2)
 {
-if (threadIdx.x == 0)
-{
-t1 = *t/2.;
-t /= 2.
+  if (threadIdx.x == 0)
+    {
+      *t2 -= *t;
+      *t2 -= Tensor<rank, dim, double>{};
+      *t1 = *t1 - *t;
+      *t1 = *t1 - Tensor<rank, dim, double>{};
+    }
 }
+
+template <int rank, int dim, typename Number>
+__global__ void
+multiplication_kernel(Tensor<rank, dim, Number> *t,
+                      Tensor<rank, dim, Number> *t1,
+                      Tensor<rank, dim, Number> *t2)
+{
+  if (threadIdx.x == 0)
+    {
+      *t1 = *t * 2.;
+      *t2 = 2. * *t;
+      *t *= 2.;
+    }
+}
+
+template <int rank, int dim, typename Number>
+__global__ void
+division_kernel(Tensor<rank, dim, Number> *t,
+                Tensor<rank, dim, Number> *t1,
+                Tensor<rank, dim, Number> *t2)
+{
+  if (threadIdx.x == 0)
+    {
+      *t1 = *t / 2.;
+      *t /= 2.;
+      *t2 = *t1;
+    }
 }
 
 template <int dim, typename Number>
 __global__ void init_kernel(Tensor<0, dim, Number> *t)
-{ 
-if (threadIdx.x == 0)
-*t = 1.;
+{
+  if (threadIdx.x == 0)
+    *t = 1.;
 }
 
 template <int dim, typename Number>
 __global__ void init_kernel(Tensor<1, dim, Number> *t)
-{ 
+{
   const unsigned int i = threadIdx.x;
   if (i < dim)
-      (*t)[i] = i + 1.;
+    (*t)[i] = i + 1.;
 }
 
 template <int dim, typename Number>
@@ -61,7 +98,7 @@ __global__ void init_kernel(Tensor<2, dim, Number> *t)
   const unsigned int i = threadIdx.y;
   const unsigned int j = threadIdx.x;
   if ((i < dim) && (j < dim))
-      (*t)[i][j] = j + i * dim + 1.;
+    (*t)[i][j] = j + i * dim + 1.;
 }
 
 
@@ -71,62 +108,116 @@ test_gpu()
 {
   const double tolerance = 1.e-8;
 
-  Tensor<rank, dim, Number> *   t_dev;
-  Tensor<rank, dim, Number> *   t1_dev;
-  Tensor<rank, dim, Number> *   t2_dev;
+  Tensor<rank, dim, Number> *t_dev;
+  Tensor<rank, dim, Number> *t1_dev;
+  Tensor<rank, dim, Number> *t2_dev;
 
-  Tensor<rank, dim, Number>   t_host;
-  Tensor<rank, dim, Number>   t1_host;
-  Tensor<rank, dim, Number>   t2_host;
+  Tensor<rank, dim, Number> t_host;
+  Tensor<rank, dim, Number> t1_host;
+  Tensor<rank, dim, Number> t2_host;
 
-  Tensor<rank, dim, Number> reference_host; 
+  Tensor<rank, dim, Number> reference_host;
 
   // Allocate objects on the device
-  cudaError_t cuda_error = cudaMalloc(&t_dev, sizeof(Tensor<rank, dim, Number>));
+  cudaError_t cuda_error =
+    cudaMalloc(&t_dev, sizeof(Tensor<rank, dim, Number>));
   AssertCuda(cuda_error);
-  cudaError_t cuda_error = cudaMalloc(&t1_dev, sizeof(Tensor<rank, dim, Number>));
+  cuda_error = cudaMalloc(&t1_dev, sizeof(Tensor<rank, dim, Number>));
   AssertCuda(cuda_error);
-  cudaError_t cuda_error = cudaMalloc(&t2_dev, sizeof(Tensor<rank, dim, NUmber>));
+  cuda_error = cudaMalloc(&t2_dev, sizeof(Tensor<rank, dim, Number>));
   AssertCuda(cuda_error);
 
   // Initialize
   dim3 block_dim(dim, dim);
   init_kernel<<<1, block_dim>>>(t_dev);
-cuda_error =
-    cudaMemcpy(&reference_host, t_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
+  cuda_error = cudaMemcpy(&reference_host,
+                          t_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error);
 
-// Test multiplication.
+  // Test multiplication.
   multiplication_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
-  cuda_error =
-    cudaMemcpy(&t_host, t_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
+  summation_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
+  subtraction_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
+
+  cuda_error = cudaMemcpy(&t_host,
+                          t_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error);
-  cuda_error =
-    cudaMemcpy(&t1_host, t1_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
-  cuda_error =
-    cudaMemcpy(&t2_host, t2_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
+  cuda_error = cudaMemcpy(&t1_host,
+                          t1_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
+  cuda_error = cudaMemcpy(&t2_host,
+                          t2_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
 
-reference_host *=2;
-AssertThrow((t_host-reference_host).norm()< tolerance, ExcInternalError());
-AssertThrow((t1_host-reference_host).norm()< tolerance, ExcInternalError());
-AssertThrow((t2_host-reference_host).norm()< tolerance, ExcInternalError());
+  reference_host *= 2;
+  AssertThrow((t_host - reference_host).norm() < tolerance, ExcInternalError());
+  AssertThrow((t1_host - reference_host).norm() < tolerance,
+              ExcInternalError());
+  AssertThrow((t2_host - reference_host).norm() < tolerance,
+              ExcInternalError());
 
-deallog << "multiplication OK" << std::endl;
+  deallog << "multiplication OK" << std::endl;
 
-// Test division.
-  devision_kernel<<<1, 1>>>(t_dev, t1_dev);
-  cuda_error =
-    cudaMemcpy(&t_host, t_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
+  // Test division.
+  division_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
+  cuda_error = cudaMemcpy(&t_host,
+                          t_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error);
-  cuda_error =
-    cudaMemcpy(&t1_host, t1_dev, sizeof(Tensor<rank, dim, Number>), cudaMemcpyDeviceToHost);
+  cuda_error = cudaMemcpy(&t1_host,
+                          t1_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
 
-reference_host /=2.;
-AssertThrow((t_host-reference_host).norm()< tolerance, ExcInternalError());
-AssertThrow((t1_host-reference_host).norm()< tolerance, ExcInternalError());
-AssertThrow((t2_host-reference_host).norm()< tolerance, ExcInternalError());
+  reference_host /= 2.;
+  AssertThrow((t_host - reference_host).norm() < tolerance, ExcInternalError());
+  AssertThrow((t1_host - reference_host).norm() < tolerance,
+              ExcInternalError());
 
-deallog << "division OK" << std::endl;
+  deallog << "division OK" << std::endl;
+
+  // Test summation
+  summation_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
+  cuda_error = cudaMemcpy(&t1_host,
+                          t1_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
+  AssertCuda(cuda_error);
+  cuda_error = cudaMemcpy(&t2_host,
+                          t2_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
+  reference_host *= 2.;
+  AssertThrow((t1_host - reference_host).norm() < tolerance,
+              ExcInternalError());
+  AssertThrow((t2_host - reference_host).norm() < tolerance,
+              ExcInternalError());
+
+
+  // Test subtraction
+  subtraction_kernel<<<1, 1>>>(t_dev, t1_dev, t2_dev);
+  cuda_error = cudaMemcpy(&t1_host,
+                          t1_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
+  AssertCuda(cuda_error);
+  cuda_error = cudaMemcpy(&t2_host,
+                          t2_dev,
+                          sizeof(Tensor<rank, dim, Number>),
+                          cudaMemcpyDeviceToHost);
+
+  reference_host /= 2.;
+  AssertThrow((t1_host - reference_host).norm() < tolerance,
+              ExcInternalError());
+  AssertThrow((t2_host - reference_host).norm() < tolerance,
+              ExcInternalError());
 
   // Free memory
   cuda_error = cudaFree(t_dev);
@@ -140,14 +231,14 @@ deallog << "division OK" << std::endl;
 int
 main()
 {
-initlog();
+  initlog();
 
   init_cuda();
 
-  test_gpu<0,3,double>();
-  test_gpu<1,3,double>();
-  test_gpu<2,3,double>();
-  test_gpu<0,3,float>();
-  test_gpu<1,3,float>();
-  test_gpu<2,3,float>();
+  test_gpu<0, 3, double>();
+  test_gpu<1, 3, double>();
+  test_gpu<2, 3, double>();
+  test_gpu<0, 3, float>();
+  test_gpu<1, 3, float>();
+  test_gpu<2, 3, float>();
 }

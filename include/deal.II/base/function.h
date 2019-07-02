@@ -213,8 +213,8 @@ public:
    * component you want to have evaluated; it defaults to zero, i.e. the first
    * component.
    */
-  virtual RangeNumberType
-  value(const Point<dim> &p, const unsigned int component = 0) const;
+  virtual DEAL_II_CUDA_HOST_DEV RangeNumberType
+                                value(const Point<dim> &p, const unsigned int component = 0) const;
 
   /**
    * Return all components of a vector-valued function at a given point.
@@ -432,8 +432,8 @@ namespace Functions
     ConstantFunction(const RangeNumberType *begin_ptr,
                      const unsigned int     n_components);
 
-    virtual RangeNumberType
-    value(const Point<dim> &p, const unsigned int component = 0) const override;
+    virtual DEAL_II_CUDA_HOST_DEV RangeNumberType
+                                  value(const Point<dim> &p, const unsigned int component = 0) const override;
 
     virtual void
     vector_value(const Point<dim> &       p,
@@ -724,7 +724,7 @@ public:
    * the function given to the constructor produces for this point.
    */
   virtual RangeNumberType
-  value(const Point<dim> &p, const unsigned int component = 0) const override;
+  DEAL_II_CUDA_HOST_DEV value(const Point<dim> &p, const unsigned int component = 0) const override;
 
 private:
   /**
@@ -802,7 +802,7 @@ public:
    * the function given to the constructor produces for this point.
    */
   virtual RangeNumberType
-  value(const Point<dim> &p, const unsigned int component = 0) const override;
+  DEAL_II_CUDA_HOST_DEV value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   /**
    * Return all components of a vector-valued function at a given point.
@@ -917,7 +917,7 @@ public:
    * component.
    */
   virtual RangeNumberType
-  value(const Point<dim> &p, const unsigned int component = 0) const override;
+  DEAL_II_CUDA_HOST_DEV value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   /**
    * Return the gradient of the function at the given point. Unless there is
@@ -1037,7 +1037,7 @@ public:
    * Return a single component of a vector-valued function at a given point.
    */
   virtual RangeNumberType
-  value(const Point<dim> &p, const unsigned int component = 0) const override;
+  DEAL_II_CUDA_HOST_DEV value(const Point<dim> &p, const unsigned int component = 0) const override;
 
   /**
    * Return all components of a vector-valued function at a given point.

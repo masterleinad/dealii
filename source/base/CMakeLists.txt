@@ -98,6 +98,7 @@ IF(DEAL_II_WITH_CUDA)
   SET(_separate_src
     ${_separate_src}
     cuda.cu
+    function.cu
     partitioner.cu
   )
 ENDIF()

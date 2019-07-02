@@ -33,12 +33,18 @@ test_cpu()
     for (unsigned int j = 0; j < dim; ++j)
       t[i][j] = a[i][j];
 
-
+  Tensor<2, dim> t_copy;
+  std::memcpy(&t_copy, &t, 9);
   deallog.push("values");
   for (unsigned int i = 0; i < dim; ++i)
     for (unsigned int j = 0; j < dim; ++j)
-      deallog << t[i][j] << std::endl;
+      deallog << t_copy[i][j] << std::endl;
   deallog.pop();
+
+  Vector<double> unrolled(9);
+  t_copy.unroll(unrolled);
+  for (unsigned int i = 0; i < unrolled.size(); ++i)
+    std::cout << unrolled(i) << std::endl;
 
   deallog.push("norm_square");
   deallog << t.norm_square() << std::endl;
@@ -50,7 +56,20 @@ __global__ void init_kernel(Tensor<2, 3> *t, const unsigned int N)
   const unsigned int i = threadIdx.y;
   const unsigned int j = threadIdx.x;
   if ((i < N) && (j < N))
-    (*t)[i][j] = j + i * N + 1.;
+    {
+      (*t)[i][j] = j + i * N + 1.;
+      printf("%f\n", (*t)[i][j]);
+    }
+}
+
+template <int rank, int dim>
+__global__ void
+unroll_kernel(Tensor<rank, dim> *t, double *unrolled)
+{
+  const unsigned int     i    = threadIdx.x;
+  constexpr unsigned int size = Utilities::pow(rank, dim);
+  if (i < size)
+    unrolled[i] = t[t->unrolled_to_component_indices(i)];
 }
 
 __global__ void norm_kernel(Tensor<2, 3> *t, double *norm)
@@ -78,10 +97,23 @@ test_gpu()
   init_kernel<<<1, block_dim>>>(t_dev, dim);
   norm_kernel<<<1, 1>>>(t_dev, norm_dev);
 
-  // Copy the result to the device
+  // Copy the result to the host
   cuda_error =
     cudaMemcpy(&norm_host, norm_dev, sizeof(double), cudaMemcpyDeviceToHost);
   AssertCuda(cuda_error);
+
+  double *unrolled_dev;
+  cuda_error = cudaMalloc(unrolled_dev, dim * dim * sizeof(double));
+  AssertCuda(cuda_error);
+  unroll_kernel<<<1, dim * dim>>>(&t_dev, unrolled_dev);
+  std::vector<double> unrolled(dim * dim);
+  cuda_error = cudaMemcpy(&t, t_dev, sizeof(double), cudaMemcpyDeviceToHost);
+  for (unsigned int i = 0; i < dim; ++i)
+    for (unsigned int j = 0; j < dim; ++j)
+      {
+        deallog << t[i][j] << std::endl;
+      }
+
 
   // Free memory
   cuda_error = cudaFree(t_dev);

@@ -59,11 +59,13 @@ Function<dim, RangeNumberType>::operator=(const Function &f)
 
 
 template <int dim, typename RangeNumberType>
-RangeNumberType
-Function<dim, RangeNumberType>::value(const Point<dim> &,
+DEAL_II_CUDA_HOST_DEV RangeNumberType
+                      Function<dim, RangeNumberType>::value(const Point<dim> &,
                                       const unsigned int) const
 {
+#ifndef __CUDA_ARCH__
   Assert(false, ExcPureFunctionCalled());
+#endif
   return 0;
 }
 
