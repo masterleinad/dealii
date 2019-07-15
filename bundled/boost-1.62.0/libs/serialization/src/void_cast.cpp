@@ -88,13 +88,13 @@ class void_caster_shortcut : public void_caster
         void const * const t
     ) const;
     virtual void const *
-    upcast(void const * const t) const override{
+    upcast(void const * const t) const{
         if(m_includes_virtual_base)
             return vbc_upcast(t);
         return static_cast<const char *> ( t ) - m_difference;
     }
     virtual void const *
-    downcast(void const * const t) const override{
+    downcast(void const * const t) const{
         if(m_includes_virtual_base)
             return vbc_downcast(t);
         return static_cast<const char *> ( t ) + m_difference;
@@ -102,7 +102,7 @@ class void_caster_shortcut : public void_caster
     virtual bool is_shortcut() const {
         return true;
     }
-    virtual bool has_virtual_base() const override {
+    virtual bool has_virtual_base() const {
         return m_includes_virtual_base;
     }
 public:
@@ -118,7 +118,7 @@ public:
     {
         recursive_register(includes_virtual_base);
     }
-    virtual ~void_caster_shortcut() override{
+    virtual ~void_caster_shortcut(){
         recursive_unregister();
     }
 };
@@ -188,16 +188,16 @@ void_caster_shortcut::vbc_upcast(
 class void_caster_argument : public void_caster
 {
     virtual void const *
-    upcast(void const * const /*t*/) const override {
+    upcast(void const * const /*t*/) const {
         BOOST_ASSERT(false);
         return NULL;
     }
     virtual void const *
-    downcast( void const * const /*t*/) const override {
+    downcast( void const * const /*t*/) const {
         BOOST_ASSERT(false);
         return NULL;
     }
-    virtual bool has_virtual_base() const override {
+    virtual bool has_virtual_base() const {
         BOOST_ASSERT(false);
         return false;
     }
@@ -208,7 +208,7 @@ public:
     ) :
         void_caster(derived, base)
     {}
-    virtual ~void_caster_argument() override{};
+    virtual ~void_caster_argument(){};
 };
 
 #ifdef BOOST_MSVC
@@ -276,6 +276,10 @@ void_caster::recursive_register(bool includes_virtual_base) const {
 
 BOOST_SERIALIZATION_DECL void
 void_caster::recursive_unregister() const {
+    // note: it's been discovered that at least one platform is not guaranteed
+    // to destroy singletons reverse order of construction.  So we can't
+    // use a runtime assert here.  Leave this in a reminder not to do this!
+    // BOOST_ASSERT(! void_caster_registry::is_destroyed());
     if(void_caster_registry::is_destroyed())
         return;
 
