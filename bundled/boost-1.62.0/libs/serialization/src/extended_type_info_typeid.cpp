@@ -125,11 +125,11 @@ extended_type_info_typeid_0::type_unregister()
 class extended_type_info_typeid_arg : 
     public extended_type_info_typeid_0
 {
-    virtual void * construct(unsigned int /*count*/, ...) const{
+    virtual void * construct(unsigned int /*count*/, ...) const override {
         BOOST_ASSERT(false);
         return NULL;
     }
-    virtual void destroy(void const * const /*p*/) const {
+    virtual void destroy(void const * const /*p*/) const override {
         BOOST_ASSERT(false);
     }
 public:

@@ -94,8 +94,8 @@ protected:
     // Declared in linked_streambuf.
     void set_next(streambuf_type* next);
     void close_impl(BOOST_IOS::openmode m);
-    const boost::core::typeinfo& component_type() const { return BOOST_CORE_TYPEID(T); }
-    void* component_impl() { return component(); }
+    const boost::core::typeinfo& component_type() const override { return BOOST_CORE_TYPEID(T); }
+    void* component_impl() override { return component(); }
 private:
 
     //----------Accessor functions--------------------------------------------//

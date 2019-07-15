@@ -242,7 +242,7 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             }
 
             virtual abstract_parser<ScannerT, AttrT>*
-            clone() const
+            clone() const override
             {
                 return new concrete_parser(p);
             }

@@ -88,21 +88,21 @@ class void_caster_shortcut : public void_caster
         void const * const t
     ) const;
     virtual void const *
-    upcast(void const * const t) const{
+    upcast(void const * const t) const override{
         if(m_includes_virtual_base)
             return vbc_upcast(t);
         return static_cast<const char *> ( t ) - m_difference;
     }
     virtual void const *
-    downcast(void const * const t) const{
+    downcast(void const * const t) const override{
         if(m_includes_virtual_base)
             return vbc_downcast(t);
         return static_cast<const char *> ( t ) + m_difference;
     }
-    virtual bool is_shortcut() const {
+    virtual bool is_shortcut() const{
         return true;
     }
-    virtual bool has_virtual_base() const {
+    virtual bool has_virtual_base() const override{
         return m_includes_virtual_base;
     }
 public:
@@ -188,16 +188,16 @@ void_caster_shortcut::vbc_upcast(
 class void_caster_argument : public void_caster
 {
     virtual void const *
-    upcast(void const * const /*t*/) const {
+    upcast(void const * const /*t*/) const override {
         BOOST_ASSERT(false);
         return NULL;
     }
     virtual void const *
-    downcast( void const * const /*t*/) const {
+    downcast( void const * const /*t*/) const override {
         BOOST_ASSERT(false);
         return NULL;
     }
-    virtual bool has_virtual_base() const {
+    virtual bool has_virtual_base() const override {
         BOOST_ASSERT(false);
         return false;
     }

@@ -120,7 +120,7 @@ template<class Archive, class T>
 class iserializer : public basic_iserializer
 {
 private:
-    virtual void destroy(/*const*/ void *address) const {
+    virtual void destroy(/*const*/ void *address) const override{
         boost::serialization::access::destroy(static_cast<T *>(address));
     }
 public:
