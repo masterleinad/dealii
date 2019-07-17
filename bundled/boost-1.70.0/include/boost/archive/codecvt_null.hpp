@@ -67,7 +67,7 @@ class BOOST_WARCHIVE_DECL codecvt_null<wchar_t> :
     public std::codecvt<wchar_t, char, std::mbstate_t>
 {
     virtual std::codecvt_base::result
-    do_out (
+    do_out(
         std::mbstate_t & state,
         const wchar_t * first1,
         const wchar_t * last1,
