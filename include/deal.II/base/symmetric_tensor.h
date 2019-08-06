@@ -1281,9 +1281,9 @@ namespace internal
         //
         // B.vec = t.data * mult * A.vec
         //
-        // where mult is a 3x3 matrix with entries [[1,0,0],[0,1,0],[0,0,2]]
-        // to capture the fact that we need to add up both the c_ij12*a_12 and
-        // the c_ij21*a_21 terms.
+        // where mult is a 3x3 matrix with entries [[1,0,0],[0,1,0],[0,0,2]] to
+        // capture the fact that we need to add up both the c_ij12*a_12 and the
+        // c_ij21*a_21 terms.
         //
         // In addition, in this scheme, the identity tensor has the matrix
         // representation mult^-1.
@@ -1292,10 +1292,10 @@ namespace internal
         //
         // inv.data = mult^-1 * t.data^-1 * mult^-1
         //
-        // in order to compute it, let's first compute the inverse of t.data
-        // and put it into tmp.data; at the end of the function we then scale
-        // the last row and column of the inverse by 1/2, corresponding to the
-        // left and right multiplication with mult^-1.
+        // in order to compute it, let's first compute the inverse of t.data and
+        // put it into tmp.data; at the end of the function we then scale the
+        // last row and column of the inverse by 1/2, corresponding to the left
+        // and right multiplication with mult^-1.
         const Number t4  = t.data[0][0] * t.data[1][1],
                      t6  = t.data[0][0] * t.data[1][2],
                      t8  = t.data[0][1] * t.data[1][0],
@@ -1344,9 +1344,9 @@ namespace internal
         // This function follows the exact same scheme as the 2d case, except
         // that hardcoding the inverse of a 6x6 matrix is pretty wasteful.
         // Instead, we use the Gauss-Jordan algorithm implemented for
-        // FullMatrix. For historical reasons the following code is copied
-        // from there, with the tangential benefit that we do not need to copy
-        // the tensor entries to and from the FullMatrix.
+        // FullMatrix. For historical reasons the following code is copied from
+        // there, with the tangential benefit that we do not need to copy the
+        // tensor entries to and from the FullMatrix.
         const unsigned int N = 6;
 
         // First get an estimate of the size of the elements of this matrix,
@@ -1742,12 +1742,12 @@ DEAL_II_CONSTEXPR inline typename internal::SymmetricTensorAccessors::
 // into a separate namespace
 namespace internal
 {
-  // The variables within this struct will be referenced in the next
-  // functions. It is a workaround that allows returning a reference to a
-  // static variable while allowing constexpr evaluation of the function. It
-  // has to be defined outside the function because constexpr functions cannot
-  // define static variables. A similar struct has also been defined in
-  // tensor.h
+  // The variables within this struct will be referenced in the next functions.
+  // It is a workaround that allows returning a reference to a static variable
+  // while allowing constexpr evaluation of the function.
+  // It has to be defined outside the function because constexpr functions
+  // cannot define static variables.
+  // A similar struct has also been defined in tensor.h
   template <typename Type>
   struct Uninitialized
   {
@@ -2439,8 +2439,7 @@ SymmetricTensor<rank_, dim, Number>::serialize(Archive &ar, const unsigned int)
 
 #endif // DOXYGEN
 
-/* ----------------- Non-member functions operating on tensors. ------------
- */
+/* ----------------- Non-member functions operating on tensors. ------------ */
 
 
 /**
@@ -2495,8 +2494,8 @@ DEAL_II_CONSTEXPR inline DEAL_II_ALWAYS_INLINE
 
 /**
  * Addition of a SymmetricTensor and a general Tensor of equal rank. The
- * result is a general Tensor that has a number type that is compatible with
- * the operation.
+ * result is a general Tensor that has a number type that is compatible with the
+ * operation.
  *
  * @relatesalso SymmetricTensor
  */
@@ -2512,8 +2511,8 @@ constexpr DEAL_II_ALWAYS_INLINE
 
 /**
  * Addition of a general Tensor with a SymmetricTensor of equal rank. The
- * result is a general Tensor that has a number type that is compatible with
- * the operation.
+ * result is a general Tensor that has a number type that is compatible with the
+ * operation.
  *
  * @relatesalso SymmetricTensor
  */
@@ -2529,8 +2528,8 @@ constexpr DEAL_II_ALWAYS_INLINE
 
 /**
  * Subtraction of a general Tensor from a SymmetricTensor of equal rank. The
- * result is a general Tensor that has a number type that is compatible with
- * the operation.
+ * result is a general Tensor that has a number type that is compatible with the
+ * operation.
  *
  * @relatesalso SymmetricTensor
  */
@@ -2546,8 +2545,8 @@ constexpr DEAL_II_ALWAYS_INLINE
 
 /**
  * Subtraction of a SymmetricTensor from a general Tensor of equal rank. The
- * result is a general Tensor that has a number type that is compatible with
- * the operation.
+ * result is a general Tensor that has a number type that is compatible with the
+ * operation.
  *
  * @relatesalso SymmetricTensor
  */
@@ -2752,12 +2751,12 @@ eigenvalues(const SymmetricTensor<2, 1, Number> &T);
  * 4\textrm{det}(T)}}{2}$.
  *
  * @warning The algorithm employed here determines the eigenvalues by
- * computing the roots of the characteristic polynomial. In the case that
- * there exists a common root (the eigenvalues are equal), the computation is
+ * computing the roots of the characteristic polynomial. In the case that there
+ * exists a common root (the eigenvalues are equal), the computation is
  * <a href="https://scicomp.stackexchange.com/q/23686">subject to round-off
- * errors</a> of order $\sqrt{\epsilon}$. As an alternative, the
- * eigenvectors() function provides a more robust, but costly, method to
- * compute the eigenvalues of a symmetric tensor.
+ * errors</a> of order $\sqrt{\epsilon}$. As an alternative, the eigenvectors()
+ * function provides a more robust, but costly, method to compute the
+ * eigenvalues of a symmetric tensor.
  *
  * @relatesalso SymmetricTensor
  * @author Jean-Paul Pelteret, 2017
@@ -2775,17 +2774,17 @@ eigenvalues(const SymmetricTensor<2, 2, Number> &T);
  * For 3x3 tensors, the eigenvalues of tensor $T$ are the roots of
  * <a
  * href="https://en.wikipedia.org/wiki/Eigenvalue_algorithm#3.C3.973_matrices">the
- * characteristic polynomial</a> $0 = \lambda^{3} - \lambda^{2}\textrm{tr}(T)
- * - \frac{1}{2} \lambda (\textrm{tr}(T^{2}) - [\textrm{tr}(T)]^{2}) -
+ * characteristic polynomial</a> $0 = \lambda^{3} - \lambda^{2}\textrm{tr}(T) -
+ * \frac{1}{2} \lambda (\textrm{tr}(T^{2}) - [\textrm{tr}(T)]^{2}) -
  * \textrm{det}(T)$.
  *
  * @warning The algorithm employed here determines the eigenvalues by
- * computing the roots of the characteristic polynomial. In the case that
- * there exists a common root (the eigenvalues are equal), the computation is
+ * computing the roots of the characteristic polynomial. In the case that there
+ * exists a common root (the eigenvalues are equal), the computation is
  * <a href="https://scicomp.stackexchange.com/q/23686">subject to round-off
- * errors</a> of order $\sqrt{\epsilon}$. As an alternative, the
- * eigenvectors() function provides a more robust, but costly, method to
- * compute the eigenvalues of a symmetric tensor.
+ * errors</a> of order $\sqrt{\epsilon}$. As an alternative, the eigenvectors()
+ * function provides a more robust, but costly, method to compute the
+ * eigenvalues of a symmetric tensor.
  *
  * @relatesalso SymmetricTensor
  * @author Jean-Paul Pelteret, 2017
@@ -2821,8 +2820,7 @@ namespace internal
      * {https://www.mpi-hd.mpg.de/personalhomes/globes/3x3/index.html}
      * }
      * @endcode
-     * and is based off of the generic algorithm presented in section 11.3.2
-     * of
+     * and is based off of the generic algorithm presented in section 11.3.2 of
      * @code{.bib}
      * @book{Press2007,
      *   title   = {Numerical recipes 3rd edition: The art of scientific
@@ -2871,8 +2869,7 @@ namespace internal
      * {https://www.mpi-hd.mpg.de/personalhomes/globes/3x3/index.html}
      * }
      * @endcode
-     * and is based off of the generic algorithm presented in section 11.4.3
-     * of
+     * and is based off of the generic algorithm presented in section 11.4.3 of
      * @code{.bib}
      * @book{Press2007,
      *   title   = {Numerical recipes 3rd edition: The art of scientific
@@ -2919,8 +2916,7 @@ namespace internal
      * {https://www.mpi-hd.mpg.de/personalhomes/globes/3x3/index.html}
      * }
      * @endcode
-     * and is based off of the generic algorithm presented in section 11.4.3
-     * of
+     * and is based off of the generic algorithm presented in section 11.4.3 of
      * @code{.bib}
      * @book{Press2007,
      *   title   = {Numerical recipes 3rd edition: The art of scientific
@@ -2948,9 +2944,9 @@ namespace internal
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric 2x2 tensor using the characteristic equation to compute
-     * eigenvalues and an analytical approach based on the cross-product for
-     * the eigenvectors. If the computations are deemed too inaccurate then
-     * the method falls back to ql_implicit_shifts.
+     * eigenvalues and an analytical approach based on the cross-product for the
+     * eigenvectors. If the computations are deemed too inaccurate then the
+     * method falls back to ql_implicit_shifts.
      *
      * @param[in] A The tensor of which the eigenvectors and eigenvalues are
      * to be computed.
@@ -2969,9 +2965,9 @@ namespace internal
     /**
      * Compute the eigenvalues and eigenvectors of a real-valued rank-2
      * symmetric 3x3 tensor using the characteristic equation to compute
-     * eigenvalues and an analytical approach based on the cross-product for
-     * the eigenvectors. If the computations are deemed too inaccurate then
-     * the method falls back to ql_implicit_shifts. The specialized algorithm
+     * eigenvalues and an analytical approach based on the cross-product for the
+     * eigenvectors. If the computations are deemed too inaccurate then the
+     * method falls back to ql_implicit_shifts. The specialized algorithm
      * implemented here is given in
      * @code{.bib}
      * @article{Kopp2008,
@@ -3064,8 +3060,8 @@ enum struct SymmetricTensorEigenvectorMethod
    * for the eigenvectors. If the computations are deemed too inaccurate then
    * the method falls back to ql_implicit_shifts.
    *
-   * This method potentially offers the quickest computation if the
-   * pathological case is not encountered.
+   * This method potentially offers the quickest computation if the pathological
+   * case is not encountered.
    */
   hybrid,
   /**

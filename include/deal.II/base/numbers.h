@@ -487,7 +487,7 @@ namespace numbers
     /**
      * Return the absolute value of a number.
      */
-    static constexpr real_type
+    static real_type
     abs(const number &x);
   };
 
@@ -621,7 +621,7 @@ namespace numbers
 
 
   template <typename number>
-  constexpr typename NumberTraits<number>::real_type
+  typename NumberTraits<number>::real_type
   NumberTraits<number>::abs(const number &x)
   {
     return std::abs(x);
