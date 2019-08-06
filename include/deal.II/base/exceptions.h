@@ -1289,7 +1289,7 @@ namespace deal_II_exceptions
      * @ref ExceptionBase
      */
     template <class ExceptionType>
-    [[noreturn]] void
+    [[noreturn]] DEAL_II_CONSTEXPR void
     issue_error_noreturn(ExceptionHandling handling,
                          const char *      file,
                          int               line,
