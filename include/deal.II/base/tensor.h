@@ -45,6 +45,13 @@ template <int rank_, int dim, typename Number = double>
 class Tensor;
 template <typename Number>
 class Vector;
+namespace Differentiation
+{
+  namespace SD
+  {
+    class Expression;
+  }
+} // namespace Differentiation
 #endif
 
 #ifndef DOXYGEN
