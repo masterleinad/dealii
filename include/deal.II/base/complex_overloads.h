@@ -30,6 +30,14 @@ template <typename T, typename U>
 struct ProductType;
 #endif
 
+namespace Differentiation
+{
+  namespace SD
+  {
+    class Expression;
+  }
+} // namespace Differentiation
+
 #ifndef DEAL_II_HAVE_COMPLEX_OPERATOR_OVERLOADS
 /**
  * Provide an <tt>operator*</tt> that operates on mixed complex floating point
@@ -72,9 +80,11 @@ operator/(const std::complex<T> &left, const std::complex<U> &right)
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-inline
-  typename ProductType<std::complex<T>, typename EnableIfScalar<U>::type>::type
-  operator*(const std::complex<T> &left, const U &right)
+inline typename std::enable_if<
+  !std::is_same<U, Differentiation::SD::Expression>::value,
+  typename ProductType<std::complex<T>,
+                       typename EnableIfScalar<U>::type>::type>::type
+operator*(const std::complex<T> &left, const U &right)
 {
   using result_type = typename ProductType<std::complex<T>, U>::type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
@@ -89,9 +99,11 @@ inline
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-inline
-  typename ProductType<std::complex<T>, typename EnableIfScalar<U>::type>::type
-  operator/(const std::complex<T> &left, const U &right)
+inline typename std::enable_if<
+  !std::is_same<U, Differentiation::SD::Expression>::value,
+  typename ProductType<std::complex<T>,
+                       typename EnableIfScalar<U>::type>::type>::type
+operator/(const std::complex<T> &left, const U &right)
 {
   using result_type = typename ProductType<std::complex<T>, U>::type;
   return static_cast<result_type>(left) / static_cast<result_type>(right);
@@ -106,9 +118,11 @@ inline
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-inline
-  typename ProductType<typename EnableIfScalar<T>::type, std::complex<U>>::type
-  operator*(const T &left, const std::complex<U> &right)
+inline typename std::enable_if<
+  !std::is_same<T, Differentiation::SD::Expression>::value,
+  typename ProductType<typename EnableIfScalar<T>::type,
+                       std::complex<U>>::type>::type
+operator*(const T &left, const std::complex<U> &right)
 {
   using result_type = typename ProductType<std::complex<T>, U>::type;
   return static_cast<result_type>(left) * static_cast<result_type>(right);
@@ -123,9 +137,11 @@ inline
  * @relatesalso ProductType
  */
 template <typename T, typename U>
-inline
-  typename ProductType<typename EnableIfScalar<T>::type, std::complex<U>>::type
-  operator/(const T &left, const std::complex<U> &right)
+inline typename std::enable_if<
+  !std::is_same<T, Differentiation::SD::Expression>::value,
+  typename ProductType<typename EnableIfScalar<T>::type,
+                       std::complex<U>>::type>::type
+operator/(const T &left, const std::complex<U> &right)
 {
   using result_type = typename ProductType<std::complex<T>, U>::type;
   return static_cast<result_type>(left) / static_cast<result_type>(right);
