@@ -1,0 +1,4 @@
+Fixed: Divisions and multiplications involving an object of type std::complex
+and an object of type Differentiation::SD::Expression are not ambiguous anymore.
+<br>
+(Daniel Arndt, 2019/08/19)
