@@ -252,7 +252,7 @@ namespace Step26
   // by setting $\theta=1/2$.
   template <int dim>
   HeatEquation<dim>::HeatEquation()
-    : fe(FE_Q<dim>(1), FE_Q<dim>(2))
+    : fe(FE_Q<dim>(2), FE_Nothing<dim>(1))
     , dof_handler(triangulation)
     , time(0.0)
     , time_step(1. / 500)
@@ -286,6 +286,25 @@ namespace Step26
               << "Number of degrees of freedom: " << dof_handler.n_dofs()
               << std::endl
               << std::endl;
+
+/*    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
+          if (!cell->at_boundary(face_no))
+            {
+              const auto neighbor = cell->neighbor(face_no);
+              Assert(neighbor->active(), ExcInternalError());
+              if (neighbor->active_fe_index() == 1 &&
+                  cell->active_fe_index() == 0)
+                cell->face(face_no)->get_dof_indices(face_dofs);
+            }
+
+        for (const auto index : face_dofs)
+          constraints.add_line(index);
+      }*/
 
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -424,10 +443,6 @@ namespace Step26
          triangulation.active_cell_iterators_on_level(min_grid_level))
       cell->clear_coarsen_flag();
 
-    if (solve_all)
-      for (const auto &cell : dof_handler.active_cell_iterators())
-        cell->set_active_fe_index(0);
-
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
     // <code>triangulation.end()</code> we may as well have called
@@ -471,6 +486,11 @@ namespace Step26
     // continuous. This is necessary since SolutionTransfer only operates on
     // cells locally, without regard to the neighborhoof.
     triangulation.execute_coarsening_and_refinement();
+
+         if (solve_all)
+      for (const auto &cell : dof_handler.active_cell_iterators())
+        cell->set_active_fe_index(0);
+
     setup_system();
 
     solution_trans.interpolate(previous_solution, solution);
@@ -660,7 +680,7 @@ namespace Step26
             refine_mesh(initial_global_refinement,
                         initial_global_refinement +
                           n_adaptive_pre_refinement_steps,
-                        time > .25);
+                        time > .15);
             tmp.reinit(solution.size());
             forcing_terms.reinit(solution.size());
           }
