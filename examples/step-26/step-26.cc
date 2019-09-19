@@ -62,6 +62,26 @@ namespace Step26
 
 
   template <int dim>
+  class Filter : public Function<dim>
+  {
+  public:
+    Filter(const double time)
+      : Function<dim>(1)
+      , _time(time)
+    {}
+
+    virtual double value(const Point<dim> &p,
+                         const unsigned int /*comp*/) const override
+    {
+      return (_time > 0.5 || (p[0] < 0.5 && p[1] < 0.5));
+    }
+
+  private:
+    double _time;
+  };
+
+
+  template <int dim>
   class DataOutSkip : public DataOut<dim, hp::DoFHandler<dim>>
   {
   public:
@@ -132,12 +152,12 @@ namespace Step26
     void run();
 
   private:
-    void setup_system();
+    void setup_system(const double);
     void solve_time_step();
     void output_results() const;
     void refine_mesh(const unsigned int min_grid_level,
                      const unsigned int max_grid_level,
-                     const bool         solve_all);
+                     const double       time);
 
     Triangulation<dim>    triangulation;
     hp::FECollection<dim> fe;
@@ -275,7 +295,7 @@ namespace Step26
   // condense the constraints in run() after combining the matrices for the
   // current time-step.
   template <int dim>
-  void HeatEquation<dim>::setup_system()
+  void HeatEquation<dim>::setup_system(const double time)
   {
     dof_handler.distribute_dofs(fe);
 
@@ -287,24 +307,24 @@ namespace Step26
               << std::endl
               << std::endl;
 
-/*    for (const auto &cell : dof_handler.active_cell_iterators())
-      {
-        std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
-        for (unsigned int face_no = 0;
-             face_no < GeometryInfo<dim>::faces_per_cell;
-             ++face_no)
-          if (!cell->at_boundary(face_no))
-            {
-              const auto neighbor = cell->neighbor(face_no);
-              Assert(neighbor->active(), ExcInternalError());
-              if (neighbor->active_fe_index() == 1 &&
-                  cell->active_fe_index() == 0)
-                cell->face(face_no)->get_dof_indices(face_dofs);
-            }
+    /*    for (const auto &cell : dof_handler.active_cell_iterators())
+          {
+            std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
+            for (unsigned int face_no = 0;
+                 face_no < GeometryInfo<dim>::faces_per_cell;
+                 ++face_no)
+              if (!cell->at_boundary(face_no))
+                {
+                  const auto neighbor = cell->neighbor(face_no);
+                  Assert(neighbor->active(), ExcInternalError());
+                  if (neighbor->active_fe_index() == 1 &&
+                      cell->active_fe_index() == 0)
+                    cell->face(face_no)->get_dof_indices(face_dofs);
+                }
 
-        for (const auto index : face_dofs)
-          constraints.add_line(index);
-      }*/
+            for (const auto index : face_dofs)
+              constraints.add_line(index);
+          }*/
 
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -325,14 +345,16 @@ namespace Step26
                                      Quadrature<dim>(1));
     hp::MappingCollection<dim> mappings(MappingQGeneric<dim>(fe[0].degree));
 
+    // Filter<dim> filter(time);
+
     MatrixCreator::create_mass_matrix(mappings,
                                       dof_handler,
                                       quadratures,
-                                      mass_matrix);
+                                      mass_matrix /*,&filter*/);
     MatrixCreator::create_laplace_matrix(mappings,
                                          dof_handler,
                                          quadratures,
-                                         laplace_matrix);
+                                         laplace_matrix /*,&filter*/);
 
     solution.reinit(dof_handler.n_dofs());
     old_solution.reinit(dof_handler.n_dofs());
@@ -417,31 +439,33 @@ namespace Step26
   template <int dim>
   void HeatEquation<dim>::refine_mesh(const unsigned int min_grid_level,
                                       const unsigned int max_grid_level,
-                                      const bool         solve_all)
+                                      const double       time)
   {
-    Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
+    const bool solve_all = time > 0.25;
+    /*    Vector<float>
+       estimated_error_per_cell(triangulation.n_active_cells());
 
-    KellyErrorEstimator<dim>::estimate(
-      MappingQGeneric<dim>(fe[0].degree),
-      dof_handler,
-      hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
-                               Quadrature<dim - 1>(1)),
-      std::map<types::boundary_id, const Function<dim> *>(),
-      solution,
-      estimated_error_per_cell);
+        KellyErrorEstimator<dim>::estimate(
+          MappingQGeneric<dim>(fe[0].degree),
+          dof_handler,
+          hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
+                                   Quadrature<dim - 1>(1)),
+          std::map<types::boundary_id, const Function<dim> *>(),
+          solution,
+          estimated_error_per_cell);
 
-    GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
-                                                      estimated_error_per_cell,
-                                                      0.6,
-                                                      0.4);
+        GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
+                                                          estimated_error_per_cell,
+                                                          0.6,
+                                                          0.4);
 
-    if (triangulation.n_levels() > max_grid_level)
-      for (const auto &cell :
-           triangulation.active_cell_iterators_on_level(max_grid_level))
-        cell->clear_refine_flag();
-    for (const auto &cell :
-         triangulation.active_cell_iterators_on_level(min_grid_level))
-      cell->clear_coarsen_flag();
+        if (triangulation.n_levels() > max_grid_level)
+          for (const auto &cell :
+               triangulation.active_cell_iterators_on_level(max_grid_level))
+            cell->clear_refine_flag();
+        for (const auto &cell :
+             triangulation.active_cell_iterators_on_level(min_grid_level))
+          cell->clear_coarsen_flag();*/
 
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
@@ -487,11 +511,11 @@ namespace Step26
     // cells locally, without regard to the neighborhoof.
     triangulation.execute_coarsening_and_refinement();
 
-         if (solve_all)
+    if (solve_all)
       for (const auto &cell : dof_handler.active_cell_iterators())
         cell->set_active_fe_index(0);
 
-    setup_system();
+    setup_system(time);
 
     solution_trans.interpolate(previous_solution, solution);
     constraints.distribute(solution);
@@ -541,7 +565,7 @@ namespace Step26
       else
         cell->set_active_fe_index(0);
 
-    setup_system();
+    setup_system(0.);
 
     unsigned int pre_refinement_step = 0;
 
@@ -665,7 +689,7 @@ namespace Step26
             refine_mesh(initial_global_refinement,
                         initial_global_refinement +
                           n_adaptive_pre_refinement_steps,
-                        false);
+                        0);
             ++pre_refinement_step;
 
             tmp.reinit(solution.size());
@@ -680,7 +704,7 @@ namespace Step26
             refine_mesh(initial_global_refinement,
                         initial_global_refinement +
                           n_adaptive_pre_refinement_steps,
-                        time > .15);
+                        time);
             tmp.reinit(solution.size());
             forcing_terms.reinit(solution.size());
           }
