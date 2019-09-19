@@ -125,11 +125,9 @@ test()
   GridGenerator::hyper_cube(tr, -1, 1);
   tr.refine_global(3);
 
-  const hp::FECollection<dim> fe(FE_Q<dim>(1),
-                                 FE_Q<dim>(2),
-                                 FE_Q<dim>(3),
-                                 FE_Q<dim>(4));
-  hp::DoFHandler<dim>         dof_handler(tr);
+  const hp::FECollection<dim> fe(
+    FE_Nothing<dim>(), FE_Q<dim>(1), FE_Q<dim>(2), FE_Q<dim>(3), FE_Q<dim>(4));
+  hp::DoFHandler<dim> dof_handler(tr);
 
   // set DoF indices as described at the top of the file
   for (auto &cell : dof_handler.active_cell_iterators())
@@ -169,7 +167,8 @@ test()
   x_rel = interpolated;
 
   // Create a sufficiently high order quadrature formula
-  hp::QCollection<dim> quadrature(QGauss<dim>(3),
+  hp::QCollection<dim> quadrature(Quadrature<dim>(),
+                                  QGauss<dim>(3),
                                   QGauss<dim>(4),
                                   QGauss<dim>(5),
                                   QGauss<dim>(6));

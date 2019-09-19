@@ -42,6 +42,7 @@
 #include <deal.II/dofs/dof_tools.h>
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_values.h>
+#include <deal.II/fe/fe_nothing.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 #include <deal.II/numerics/error_estimator.h>
@@ -57,6 +58,53 @@
 namespace Step26
 {
   using namespace dealii;
+
+
+
+  template <int dim>
+  class DataOutSkip : public DataOut<dim, hp::DoFHandler<dim>>
+  {
+  public:
+    using Base = DataOut<dim, hp::DoFHandler<dim>>;
+
+    DataOutSkip(const hp::DoFHandler<dim> &dof_handler)
+      : _dof_handler(dof_handler)
+    {}
+
+    virtual typename Base::cell_iterator first_cell() override
+    {
+      typename hp::DoFHandler<dim>::active_cell_iterator cell =
+        this->dofs->begin_active();
+      while ((cell != this->dofs->end()) && (cell->active_fe_index() == 1))
+        ++cell;
+
+      Assert(cell->active_fe_index() == 0, ExcInternalError());
+
+      return cell;
+    }
+
+    virtual typename Base::cell_iterator
+    next_cell(const typename Base::cell_iterator &old_cell) override
+    {
+      if (old_cell == this->dofs->end())
+        return old_cell;
+
+      typename hp::DoFHandler<dim>::active_cell_iterator cell =
+        _dof_handler.begin_active();
+      while (static_cast<typename Base::cell_iterator>(cell) != old_cell)
+        ++cell;
+      Assert(cell != this->dofs->end(), ExcInternalError());
+      ++cell;
+
+      while ((cell != this->dofs->end()) && (cell->active_fe_index() == 1))
+        ++cell;
+
+      return cell;
+    }
+
+  private:
+    const hp::DoFHandler<dim> &_dof_handler;
+  };
 
 
   // @sect3{The <code>HeatEquation</code> class}
@@ -88,11 +136,12 @@ namespace Step26
     void solve_time_step();
     void output_results() const;
     void refine_mesh(const unsigned int min_grid_level,
-                     const unsigned int max_grid_level);
+                     const unsigned int max_grid_level,
+                     const bool         solve_all);
 
-    Triangulation<dim> triangulation;
-    FE_Q<dim>          fe;
-    DoFHandler<dim>    dof_handler;
+    Triangulation<dim>    triangulation;
+    hp::FECollection<dim> fe;
+    hp::DoFHandler<dim>   dof_handler;
 
     AffineConstraints<double> constraints;
 
@@ -203,7 +252,7 @@ namespace Step26
   // by setting $\theta=1/2$.
   template <int dim>
   HeatEquation<dim>::HeatEquation()
-    : fe(1)
+    : fe(FE_Q<dim>(1), FE_Q<dim>(2))
     , dof_handler(triangulation)
     , time(0.0)
     , time_step(1. / 500)
@@ -215,7 +264,7 @@ namespace Step26
 
   // @sect4{<code>HeatEquation::setup_system</code>}
   //
-  // The next function is the one that sets up the DoFHandler object,
+  // The next function is the one that sets up the hp::DoFHandler object,
   // computes the constraints, and sets the linear algebra objects
   // to their correct sizes. We also compute the mass and Laplace
   // matrix here by simply calling two functions in the library.
@@ -253,11 +302,17 @@ namespace Step26
     laplace_matrix.reinit(sparsity_pattern);
     system_matrix.reinit(sparsity_pattern);
 
-    MatrixCreator::create_mass_matrix(dof_handler,
-                                      QGauss<dim>(fe.degree + 1),
+    hp::QCollection<dim>       quadratures(QGauss<dim>(fe[0].degree + 1),
+                                     Quadrature<dim>(1));
+    hp::MappingCollection<dim> mappings(MappingQGeneric<dim>(fe[0].degree));
+
+    MatrixCreator::create_mass_matrix(mappings,
+                                      dof_handler,
+                                      quadratures,
                                       mass_matrix);
-    MatrixCreator::create_laplace_matrix(dof_handler,
-                                         QGauss<dim>(fe.degree + 1),
+    MatrixCreator::create_laplace_matrix(mappings,
+                                         dof_handler,
+                                         quadratures,
                                          laplace_matrix);
 
     solution.reinit(dof_handler.n_dofs());
@@ -276,8 +331,8 @@ namespace Step26
     SolverControl solver_control(1000, 1e-8 * system_rhs.l2_norm());
     SolverCG<>    cg(solver_control);
 
-    PreconditionSSOR<> preconditioner;
-    preconditioner.initialize(system_matrix, 1.0);
+    PreconditionIdentity preconditioner;
+    //    preconditioner.initialize(system_matrix, 1.0);
 
     cg.solve(system_matrix, solution, system_rhs, preconditioner);
 
@@ -295,12 +350,20 @@ namespace Step26
   template <int dim>
   void HeatEquation<dim>::output_results() const
   {
-    DataOut<dim> data_out;
+    DataOutSkip<dim> data_out(dof_handler);
 
     data_out.attach_dof_handler(dof_handler);
     data_out.add_data_vector(solution, "U");
 
-    data_out.build_patches();
+    Vector<float> subdomain(triangulation.n_active_cells());
+    unsigned int  cell_no = 0;
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        subdomain(cell_no++) = cell->active_fe_index();
+      }
+    data_out.add_data_vector(subdomain, "subdomain");
+
+    data_out.build_patches(fe[0].degree);
 
     const std::string filename =
       "solution-" + Utilities::int_to_string(timestep_number, 3) + ".vtk";
@@ -334,13 +397,16 @@ namespace Step26
   // cells:
   template <int dim>
   void HeatEquation<dim>::refine_mesh(const unsigned int min_grid_level,
-                                      const unsigned int max_grid_level)
+                                      const unsigned int max_grid_level,
+                                      const bool         solve_all)
   {
     Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
     KellyErrorEstimator<dim>::estimate(
+      MappingQGeneric<dim>(fe[0].degree),
       dof_handler,
-      QGauss<dim - 1>(fe.degree + 1),
+      hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
+                               Quadrature<dim - 1>(1)),
       std::map<types::boundary_id, const Function<dim> *>(),
       solution,
       estimated_error_per_cell);
@@ -357,6 +423,11 @@ namespace Step26
     for (const auto &cell :
          triangulation.active_cell_iterators_on_level(min_grid_level))
       cell->clear_coarsen_flag();
+
+    if (solve_all)
+      for (const auto &cell : dof_handler.active_cell_iterators())
+        cell->set_active_fe_index(0);
+
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
     // <code>triangulation.end()</code> we may as well have called
@@ -382,7 +453,8 @@ namespace Step26
     // Consequently, we initialize a SolutionTransfer object by attaching
     // it to the old DoF handler. We then prepare the triangulation and the
     // data vector for refinement (in this order).
-    SolutionTransfer<dim> solution_trans(dof_handler);
+    SolutionTransfer<dim, Vector<double>, hp::DoFHandler<dim>> solution_trans(
+      dof_handler);
 
     Vector<double> previous_solution;
     previous_solution = solution;
@@ -441,8 +513,13 @@ namespace Step26
     const unsigned int initial_global_refinement       = 2;
     const unsigned int n_adaptive_pre_refinement_steps = 4;
 
-    GridGenerator::hyper_L(triangulation);
+    GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(initial_global_refinement);
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      if (cell->center()[0] > .5 && cell->center()[1] > .5)
+        cell->set_active_fe_index(1);
+      else
+        cell->set_active_fe_index(0);
 
     setup_system();
 
@@ -490,10 +567,13 @@ namespace Step26
         // vectors $F$, where we set the time of the right hand side
         // (source) function before we evaluate it. The result of this
         // all ends up in the forcing_terms variable:
-        RightHandSide<dim> rhs_function;
+        RightHandSide<dim>   rhs_function;
+        hp::QCollection<dim> quadratures(QGauss<dim>(fe[0].degree + 1),
+                                         Quadrature<dim>(1));
+
         rhs_function.set_time(time);
         VectorTools::create_right_hand_side(dof_handler,
-                                            QGauss<dim>(fe.degree + 1),
+                                            quadratures,
                                             rhs_function,
                                             tmp);
         forcing_terms = tmp;
@@ -501,7 +581,7 @@ namespace Step26
 
         rhs_function.set_time(time - time_step);
         VectorTools::create_right_hand_side(dof_handler,
-                                            QGauss<dim>(fe.degree + 1),
+                                            quadratures,
                                             rhs_function,
                                             tmp);
 
@@ -531,7 +611,9 @@ namespace Step26
           boundary_values_function.set_time(time);
 
           std::map<types::global_dof_index, double> boundary_values;
-          VectorTools::interpolate_boundary_values(dof_handler,
+          VectorTools::interpolate_boundary_values(MappingQGeneric<dim>(
+                                                     fe[0].degree),
+                                                   dof_handler,
                                                    0,
                                                    boundary_values_function,
                                                    boundary_values);
@@ -562,7 +644,8 @@ namespace Step26
           {
             refine_mesh(initial_global_refinement,
                         initial_global_refinement +
-                          n_adaptive_pre_refinement_steps);
+                          n_adaptive_pre_refinement_steps,
+                        false);
             ++pre_refinement_step;
 
             tmp.reinit(solution.size());
@@ -576,12 +659,18 @@ namespace Step26
           {
             refine_mesh(initial_global_refinement,
                         initial_global_refinement +
-                          n_adaptive_pre_refinement_steps);
+                          n_adaptive_pre_refinement_steps,
+                        time > .25);
             tmp.reinit(solution.size());
             forcing_terms.reinit(solution.size());
           }
 
         old_solution = solution;
+      }
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        if (cell->active_fe_index() != 0)
+          std::cout << cell->center() << std::endl;
       }
   }
 } // namespace Step26
