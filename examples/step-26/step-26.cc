@@ -307,24 +307,27 @@ namespace Step26
               << std::endl
               << std::endl;
 
-    /*    for (const auto &cell : dof_handler.active_cell_iterators())
-          {
-            std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
-            for (unsigned int face_no = 0;
-                 face_no < GeometryInfo<dim>::faces_per_cell;
-                 ++face_no)
-              if (!cell->at_boundary(face_no))
-                {
-                  const auto neighbor = cell->neighbor(face_no);
-                  Assert(neighbor->active(), ExcInternalError());
-                  if (neighbor->active_fe_index() == 1 &&
-                      cell->active_fe_index() == 0)
-                    cell->face(face_no)->get_dof_indices(face_dofs);
-                }
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
+        for (unsigned int face_no = 0;
+             face_no < GeometryInfo<dim>::faces_per_cell;
+             ++face_no)
+          if (!cell->at_boundary(face_no))
+            {
+              const auto neighbor = cell->neighbor(face_no);
+              Assert(neighbor->active(), ExcInternalError());
+              if (neighbor->active_fe_index() == 1 &&
+                  cell->active_fe_index() == 0)
+	      {
+		std::cout << cell->face(face_no)->center() << std::endl;
+                cell->face(face_no)->get_dof_indices(face_dofs);
+	      }
+            }
 
-            for (const auto index : face_dofs)
-              constraints.add_line(index);
-          }*/
+        for (const auto index : face_dofs)
+          constraints.add_line(index);
+      }
 
     constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
