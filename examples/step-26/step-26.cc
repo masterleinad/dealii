@@ -73,7 +73,7 @@ namespace Step26
     virtual double value(const Point<dim> &p,
                          const unsigned int /*comp*/) const override
     {
-      return (_time > 0.5 || (p[0] < 0.5 && p[1] < 0.5));
+      return (_time > 0.5 || (p[0] < 0.5 && p[1] > 0.5));
     }
 
   private:
@@ -272,7 +272,7 @@ namespace Step26
   // by setting $\theta=1/2$.
   template <int dim>
   HeatEquation<dim>::HeatEquation()
-    : fe(FE_Q<dim>(2), FE_Nothing<dim>(1))
+    : fe(FE_Q<dim>(2), FE_Q<dim>(1))
     , dof_handler(triangulation)
     , time(0.0)
     , time_step(1. / 500)
@@ -308,27 +308,35 @@ namespace Step26
               << std::endl;
 
     constraints.clear();
+
+    for (const auto &cell : dof_handler.cell_iterators())
+      if (time < .25 && cell->center()[0] > .5 && cell->center()[1] < .5)
+        cell->set_material_id(1);
+      else
+        cell->set_material_id(0);
+
     for (const auto &cell : dof_handler.active_cell_iterators())
       {
         std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
         for (unsigned int face_no = 0;
              face_no < GeometryInfo<dim>::faces_per_cell;
              ++face_no)
-          if (!cell->at_boundary(face_no))
-            {
-              const auto neighbor = cell->neighbor(face_no);
-              Assert(neighbor->active(), ExcInternalError());
-              if (neighbor->active_fe_index() == 1 &&
-                  cell->active_fe_index() == 0)
-                {
-                  std::cout << cell->face(face_no)->center() << std::endl;
-                  cell->face(face_no)->get_dof_indices(face_dofs, 0);
-                }
-            }
+          {
+            if (!cell->at_boundary(face_no))
+              {
+                const auto neighbor = cell->neighbor(face_no);
 
-        for (const auto index : face_dofs)
-          constraints.add_line(index);
+                if (neighbor->material_id() == 1 && cell->material_id() == 0)
+                  {
+                    cell->face(face_no)->get_dof_indices(face_dofs, 0);
+                    for (const auto index : face_dofs)
+                      constraints.add_line(index);
+                  }
+              }
+          }
       }
+
+
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     constraints.close();
 
@@ -394,6 +402,7 @@ namespace Step26
   void HeatEquation<dim>::output_results() const
   {
     DataOutSkip<dim> data_out(dof_handler);
+    // DataOut<dim, hp::DoFHandler<dim>> data_out;
 
     data_out.attach_dof_handler(dof_handler);
     data_out.add_data_vector(solution, "U");
@@ -443,31 +452,30 @@ namespace Step26
                                       const unsigned int max_grid_level,
                                       const double       time)
   {
-    const bool solve_all = time > 0.25;
-    /*    Vector<float>
-       estimated_error_per_cell(triangulation.n_active_cells());
+    const bool    solve_all = time > 0.25;
+    Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
 
-        KellyErrorEstimator<dim>::estimate(
-          MappingQGeneric<dim>(fe[0].degree),
-          dof_handler,
-          hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
-                                   Quadrature<dim - 1>(1)),
-          std::map<types::boundary_id, const Function<dim> *>(),
-          solution,
-          estimated_error_per_cell);
+    KellyErrorEstimator<dim>::estimate(
+      MappingQGeneric<dim>(fe[0].degree),
+      dof_handler,
+      hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
+                               Quadrature<dim - 1>(1)),
+      std::map<types::boundary_id, const Function<dim> *>(),
+      solution,
+      estimated_error_per_cell);
 
-        GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
-                                                          estimated_error_per_cell,
-                                                          0.6,
-                                                          0.4);
+    GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
+                                                      estimated_error_per_cell,
+                                                      0.6,
+                                                      0.4);
 
-        if (triangulation.n_levels() > max_grid_level)
-          for (const auto &cell :
-               triangulation.active_cell_iterators_on_level(max_grid_level))
-            cell->clear_refine_flag();
-        for (const auto &cell :
-             triangulation.active_cell_iterators_on_level(min_grid_level))
-          cell->clear_coarsen_flag();*/
+    if (triangulation.n_levels() > max_grid_level)
+      for (const auto &cell :
+           triangulation.active_cell_iterators_on_level(max_grid_level))
+        cell->clear_refine_flag();
+    for (const auto &cell :
+         triangulation.active_cell_iterators_on_level(min_grid_level))
+      cell->clear_coarsen_flag();
 
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
@@ -562,7 +570,7 @@ namespace Step26
     GridGenerator::hyper_cube(triangulation);
     triangulation.refine_global(initial_global_refinement);
     for (const auto &cell : dof_handler.active_cell_iterators())
-      if (cell->center()[0] > .5 && cell->center()[1] > .5)
+      if (cell->center()[0] > .5 && cell->center()[1] < .5)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);
@@ -720,9 +728,9 @@ namespace Step26
       }
   }
 } // namespace Step26
-// Now that you have seen what the function does, let us come back to the issue
-// of the <code>goto</code>. In essence, what the code does is
-// something like this:
+// Now that you have seen what the function does, let us come back to the
+// issue of the <code>goto</code>. In essence, what the code does is something
+// like this:
 // @code
 //   void run ()
 //   {
