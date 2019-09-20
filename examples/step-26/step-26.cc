@@ -307,6 +307,7 @@ namespace Step26
               << std::endl
               << std::endl;
 
+    constraints.clear();
     for (const auto &cell : dof_handler.active_cell_iterators())
       {
         std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
@@ -319,17 +320,15 @@ namespace Step26
               Assert(neighbor->active(), ExcInternalError());
               if (neighbor->active_fe_index() == 1 &&
                   cell->active_fe_index() == 0)
-	      {
-		std::cout << cell->face(face_no)->center() << std::endl;
-                cell->face(face_no)->get_dof_indices(face_dofs);
-	      }
+                {
+                  std::cout << cell->face(face_no)->center() << std::endl;
+                  cell->face(face_no)->get_dof_indices(face_dofs, 0);
+                }
             }
 
         for (const auto index : face_dofs)
           constraints.add_line(index);
       }
-
-    constraints.clear();
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
     constraints.close();
 
