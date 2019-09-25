@@ -216,19 +216,18 @@ namespace Step26
     const double time = this->get_time();
 
     if (time < .25)
-      {
-        if (p(1) < .5)
-          return .5;
-        return 0;
-      }
-    if (time > .28125 && time < .3125 && p(1) > .5 && p(0) > 0.75)
+          return 1;
+
+    if(time > .46875 && p(1) > .75)
+	    return 1;
+/*    if (time > .28125 && time < .3125 && p(1) > .5 && p(0) > 0.75)
       return 1;
     if (time > .34375 && time < .375 && p(1) > .5 && p(0) > 0.5 && p(0) < .75)
       return 1;
     if (time > .40625 && time < .4375 && p(1) > .5 && p(0) > 0.25 && p(0) < 0.5)
       return 1;
     if (time > .46875 && time < 0.5 && p(1) > .5 && p(0) > 0. && p(0) < 0.25)
-      return 1;
+      return 1;*/
 
     return 0;
     /*
@@ -314,7 +313,7 @@ namespace Step26
   // by setting $\theta=1/2$.
   template <int dim>
   HeatEquation<dim>::HeatEquation()
-    : fe(FE_Q<dim>(2), FE_Q<dim>(1)) // FE_Nothing<dim>())//FE_Q<dim>(1))
+    : fe(FE_Q<dim>(2), FE_Nothing<dim>())//FE_Q<dim>(1))
     , dof_handler(triangulation)
     , time(0.0)
     , time_step(1. / 500)
@@ -492,12 +491,12 @@ namespace Step26
   // loops that limit refinement and coarsening to an allowable range of
   // cells:
   template <int dim>
-  void HeatEquation<dim>::refine_mesh(const unsigned int /*min_grid_level*/,
-                                      const unsigned int /*max_grid_level*/,
+  void HeatEquation<dim>::refine_mesh(const unsigned int min_grid_level,
+                                      const unsigned int max_grid_level,
                                       const double time)
   {
     // const bool    solve_all = time > 0.25;
-    /*    Vector<float>
+        Vector<float>
        estimated_error_per_cell(triangulation.n_active_cells());
 
         KellyErrorEstimator<dim>::estimate(
@@ -507,7 +506,7 @@ namespace Step26
                                    Quadrature<dim - 1>(1)),
           std::map<types::boundary_id, const Function<dim> *>(),
           solution,
-          estimated_error_per_cell);
+          estimated_error_per_cell, ComponentMask(), nullptr, numbers::invalid_unsigned_int, numbers::invalid_subdomain_id, 0);
 
         GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
                                                           estimated_error_per_cell,
@@ -520,7 +519,7 @@ namespace Step26
             cell->clear_refine_flag();
         for (const auto &cell :
              triangulation.active_cell_iterators_on_level(min_grid_level))
-          cell->clear_coarsen_flag();*/
+          cell->clear_coarsen_flag();
 
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
@@ -568,15 +567,15 @@ namespace Step26
 
     for (const auto &cell : dof_handler.active_cell_iterators())
       {
-        if (time > 0.25 && (cell->center()[1] > .5 && cell->center()[0] > 0.75))
+        if (time > 0.25 && (cell->center()[1] > .75 && cell->center()[0] > 0.75))
           cell->set_active_fe_index(0);
         if (time > 0.3125 &&
-            (cell->center()[1] > .5 && cell->center()[0] > 0.5))
+            (cell->center()[1] > .75 && cell->center()[0] > 0.5))
           cell->set_active_fe_index(0);
         if (time > 0.375 &&
-            (cell->center()[1] > .5 && cell->center()[0] > 0.25))
+            (cell->center()[1] > .75 && cell->center()[0] > 0.25))
           cell->set_active_fe_index(0);
-        if (time > 0.4375 && (cell->center()[1] > .5 && cell->center()[0] > 0.))
+        if (time > 0.4375 && (cell->center()[1] > .75 && cell->center()[0] > 0.))
           cell->set_active_fe_index(0);
       }
 
@@ -630,7 +629,7 @@ namespace Step26
     GridGenerator::hyper_cube(triangulation, 0., 1., true);
     triangulation.refine_global(initial_global_refinement);
     for (const auto &cell : dof_handler.active_cell_iterators())
-      if (cell->center()[1] >= .5)
+      if (cell->center()[1] >= .75)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);
