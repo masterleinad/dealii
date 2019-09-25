@@ -73,7 +73,7 @@ namespace Step26
     virtual double value(const Point<dim> &p,
                          const unsigned int /*comp*/) const override
     {
-      return (_time > 0.5 || (p[0] < 0.5 && p[1] > 0.5));
+      return (_time >= 0.5 || (p[0] < 0.5 && p[1] >= 0.5));
     }
 
   private:
@@ -109,11 +109,8 @@ namespace Step26
       if (old_cell == this->dofs->end())
         return old_cell;
 
-      typename hp::DoFHandler<dim>::active_cell_iterator cell =
-        _dof_handler.begin_active();
-      while (static_cast<typename Base::cell_iterator>(cell) != old_cell)
-        ++cell;
-      Assert(cell != this->dofs->end(), ExcInternalError());
+      typename hp::DoFHandler<dim>::active_cell_iterator cell(
+        this->triangulation, old_cell->level(), old_cell->index(), this->dofs);
       ++cell;
 
       while ((cell != this->dofs->end()) && (cell->active_fe_index() == 1))
@@ -154,7 +151,7 @@ namespace Step26
   private:
     void setup_system(const double);
     void solve_time_step();
-    void output_results() const;
+    void output_results(int debug_add = 0) const;
     void refine_mesh(const unsigned int min_grid_level,
                      const unsigned int max_grid_level,
                      const double       time);
@@ -216,27 +213,72 @@ namespace Step26
     (void)component;
     AssertIndexRange(component, 1);
     Assert(dim == 2, ExcNotImplemented());
-
     const double time = this->get_time();
-    const double point_within_period =
-      (time / period - std::floor(time / period));
 
-    if ((point_within_period >= 0.0) && (point_within_period <= 0.2))
+    if (time < .25)
       {
-        if ((p[0] > 0.5) && (p[1] > -0.5))
-          return 1;
-        else
-          return 0;
+        if (p(1) < .5)
+          return .5;
+        return 0;
       }
-    else if ((point_within_period >= 0.5) && (point_within_period <= 0.7))
-      {
-        if ((p[0] > -0.5) && (p[1] > 0.5))
+    if (time > .28125 && time < .3125 && p(1) > .5 && p(0) > 0.75)
+      return 1;
+    if (time > .34375 && time < .375 && p(1) > .5 && p(0) > 0.5 && p(0) < .75)
+      return 1;
+    if (time > .40625 && time < .4375 && p(1) > .5 && p(0) > 0.25 && p(0) < 0.5)
+      return 1;
+    if (time > .46875 && time < 0.5 && p(1) > .5 && p(0) > 0. && p(0) < 0.25)
+      return 1;
+
+    return 0;
+    /*
+        const double time = this->get_time();
+        const double min = time*2;
+        const double max = time*2+0.1;
+
+        if (p(1) > min && p(1) < max)
           return 1;
+        return 0;*/
+    /*    if (time < .125)
+        {
+         if (p(0) < .5 && p(1) < .5)
+           return 1;
+        }
+        else if (time < .25)
+        {
+          if (p(0) >= .5 && p(1) <= .5)
+            return 1;
+        }
+        else if (time < .375)
+        {
+          if (p(0) < .5 && p(1) >= .5)
+            return 1;
+        }
         else
-          return 0;
-      }
-    else
-      return 0;
+        {
+           if (p(0) >= .5 && p(1) >= .5)
+          return 1;
+        }
+        return 0;    */
+    /*    const double point_within_period =
+          (time / period - std::floor(time / period));
+
+        if ((point_within_period >= 0.0) && (point_within_period <= 0.2))
+          {
+            if ((p[0] > 0.5) && (p[1] > -0.5))
+              return 1;
+            else
+              return 0;
+          }
+        else if ((point_within_period >= 0.5) && (point_within_period <= 0.7))
+          {
+            if ((p[0] > -0.5) && (p[1] > 0.5))
+              return 1;
+            else
+              return 0;
+          }
+        else
+          return 0;*/
   }
 
 
@@ -272,12 +314,12 @@ namespace Step26
   // by setting $\theta=1/2$.
   template <int dim>
   HeatEquation<dim>::HeatEquation()
-    : fe(FE_Q<dim>(2), FE_Q<dim>(1))
+    : fe(FE_Q<dim>(2), FE_Q<dim>(1)) // FE_Nothing<dim>())//FE_Q<dim>(1))
     , dof_handler(triangulation)
     , time(0.0)
     , time_step(1. / 500)
     , timestep_number(0)
-    , theta(0.5)
+    , theta(1.)
   {}
 
 
@@ -295,7 +337,7 @@ namespace Step26
   // condense the constraints in run() after combining the matrices for the
   // current time-step.
   template <int dim>
-  void HeatEquation<dim>::setup_system(const double time)
+  void HeatEquation<dim>::setup_system(const double /*time*/)
   {
     dof_handler.distribute_dofs(fe);
 
@@ -309,32 +351,33 @@ namespace Step26
 
     constraints.clear();
 
-    for (const auto &cell : dof_handler.cell_iterators())
-      if (time < .25 && cell->center()[0] > .5 && cell->center()[1] < .5)
-        cell->set_material_id(1);
-      else
-        cell->set_material_id(0);
+    /*    for (const auto &cell : dof_handler.cell_iterators())
+          if (time < .25 && cell->center()[1] >= .5)
+            cell->set_material_id(1);
+          else
+            cell->set_material_id(0);
 
-    for (const auto &cell : dof_handler.active_cell_iterators())
-      {
-        std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
-        for (unsigned int face_no = 0;
-             face_no < GeometryInfo<dim>::faces_per_cell;
-             ++face_no)
+        for (const auto &cell : dof_handler.active_cell_iterators())
           {
-            if (!cell->at_boundary(face_no))
+            std::vector<types::global_dof_index> face_dofs(fe[0].dofs_per_face);
+            for (unsigned int face_no = 0;
+                 face_no < GeometryInfo<dim>::faces_per_cell;
+                 ++face_no)
               {
-                const auto neighbor = cell->neighbor(face_no);
-
-                if (neighbor->material_id() == 1 && cell->material_id() == 0)
+                if (!cell->at_boundary(face_no))
                   {
-                    cell->face(face_no)->get_dof_indices(face_dofs, 0);
-                    for (const auto index : face_dofs)
-                      constraints.add_line(index);
+                    const auto neighbor = cell->neighbor(face_no);
+
+                    if (neighbor->material_id() == 1 && cell->material_id() ==
+       0)
+                      {
+                        cell->face(face_no)->get_dof_indices(face_dofs, 0);
+                        for (const auto index : face_dofs)
+                          constraints.add_line(index);
+                      }
                   }
               }
-          }
-      }
+          }*/
 
 
     DoFTools::make_hanging_node_constraints(dof_handler, constraints);
@@ -399,7 +442,7 @@ namespace Step26
   //
   // Neither is there anything new in generating graphical output:
   template <int dim>
-  void HeatEquation<dim>::output_results() const
+  void HeatEquation<dim>::output_results(const int debug) const
   {
     DataOutSkip<dim> data_out(dof_handler);
     // DataOut<dim, hp::DoFHandler<dim>> data_out;
@@ -418,7 +461,8 @@ namespace Step26
     data_out.build_patches(fe[0].degree);
 
     const std::string filename =
-      "solution-" + Utilities::int_to_string(timestep_number, 3) + ".vtk";
+      "solution-" + Utilities::int_to_string(timestep_number * 10 - debug, 6) +
+      ".vtk";
     std::ofstream output(filename);
     data_out.write_vtk(output);
   }
@@ -448,34 +492,35 @@ namespace Step26
   // loops that limit refinement and coarsening to an allowable range of
   // cells:
   template <int dim>
-  void HeatEquation<dim>::refine_mesh(const unsigned int min_grid_level,
-                                      const unsigned int max_grid_level,
-                                      const double       time)
+  void HeatEquation<dim>::refine_mesh(const unsigned int /*min_grid_level*/,
+                                      const unsigned int /*max_grid_level*/,
+                                      const double time)
   {
-    const bool    solve_all = time > 0.25;
-    Vector<float> estimated_error_per_cell(triangulation.n_active_cells());
+    // const bool    solve_all = time > 0.25;
+    /*    Vector<float>
+       estimated_error_per_cell(triangulation.n_active_cells());
 
-    KellyErrorEstimator<dim>::estimate(
-      MappingQGeneric<dim>(fe[0].degree),
-      dof_handler,
-      hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
-                               Quadrature<dim - 1>(1)),
-      std::map<types::boundary_id, const Function<dim> *>(),
-      solution,
-      estimated_error_per_cell);
+        KellyErrorEstimator<dim>::estimate(
+          MappingQGeneric<dim>(fe[0].degree),
+          dof_handler,
+          hp::QCollection<dim - 1>(QGauss<dim - 1>(fe[0].degree + 1),
+                                   Quadrature<dim - 1>(1)),
+          std::map<types::boundary_id, const Function<dim> *>(),
+          solution,
+          estimated_error_per_cell);
 
-    GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
-                                                      estimated_error_per_cell,
-                                                      0.6,
-                                                      0.4);
+        GridRefinement::refine_and_coarsen_fixed_fraction(triangulation,
+                                                          estimated_error_per_cell,
+                                                          0.6,
+                                                          0.4);
 
-    if (triangulation.n_levels() > max_grid_level)
-      for (const auto &cell :
-           triangulation.active_cell_iterators_on_level(max_grid_level))
-        cell->clear_refine_flag();
-    for (const auto &cell :
-         triangulation.active_cell_iterators_on_level(min_grid_level))
-      cell->clear_coarsen_flag();
+        if (triangulation.n_levels() > max_grid_level)
+          for (const auto &cell :
+               triangulation.active_cell_iterators_on_level(max_grid_level))
+            cell->clear_refine_flag();
+        for (const auto &cell :
+             triangulation.active_cell_iterators_on_level(min_grid_level))
+          cell->clear_coarsen_flag();*/
 
     // These two loops above are slightly different but this is easily
     // explained. In the first loop, instead of calling
@@ -521,14 +566,29 @@ namespace Step26
     // cells locally, without regard to the neighborhoof.
     triangulation.execute_coarsening_and_refinement();
 
-    if (solve_all)
-      for (const auto &cell : dof_handler.active_cell_iterators())
-        cell->set_active_fe_index(0);
+    for (const auto &cell : dof_handler.active_cell_iterators())
+      {
+        if (time > 0.25 && (cell->center()[1] > .5 && cell->center()[0] > 0.75))
+          cell->set_active_fe_index(0);
+        if (time > 0.3125 &&
+            (cell->center()[1] > .5 && cell->center()[0] > 0.5))
+          cell->set_active_fe_index(0);
+        if (time > 0.375 &&
+            (cell->center()[1] > .5 && cell->center()[0] > 0.25))
+          cell->set_active_fe_index(0);
+        if (time > 0.4375 && (cell->center()[1] > .5 && cell->center()[0] > 0.))
+          cell->set_active_fe_index(0);
+      }
 
     setup_system(time);
 
     solution_trans.interpolate(previous_solution, solution);
     constraints.distribute(solution);
+
+    /*if (solve_all)
+    {
+      output_results(5);
+    }*/
   }
 
 
@@ -564,13 +624,13 @@ namespace Step26
   template <int dim>
   void HeatEquation<dim>::run()
   {
-    const unsigned int initial_global_refinement       = 2;
+    const unsigned int initial_global_refinement       = 5;
     const unsigned int n_adaptive_pre_refinement_steps = 4;
 
-    GridGenerator::hyper_cube(triangulation);
+    GridGenerator::hyper_cube(triangulation, 0., 1., true);
     triangulation.refine_global(initial_global_refinement);
     for (const auto &cell : dof_handler.active_cell_iterators())
-      if (cell->center()[0] > .5 && cell->center()[1] < .5)
+      if (cell->center()[1] >= .5)
         cell->set_active_fe_index(1);
       else
         cell->set_active_fe_index(0);
@@ -601,7 +661,7 @@ namespace Step26
     // Recall that it contains the term $MU^{n-1}-(1-\theta)k_n AU^{n-1}$.
     // We put these terms into the variable system_rhs, with the
     // help of a temporary vector:
-    while (time <= 0.5)
+    while (time <= 0.75)
       {
         time += time_step;
         ++timestep_number;
@@ -668,7 +728,7 @@ namespace Step26
           VectorTools::interpolate_boundary_values(MappingQGeneric<dim>(
                                                      fe[0].degree),
                                                    dof_handler,
-                                                   0,
+                                                   2,
                                                    boundary_values_function,
                                                    boundary_values);
 
@@ -721,11 +781,11 @@ namespace Step26
 
         old_solution = solution;
       }
-    for (const auto &cell : dof_handler.active_cell_iterators())
-      {
-        if (cell->active_fe_index() != 0)
-          std::cout << cell->center() << std::endl;
-      }
+    /*    for (const auto &cell : dof_handler.active_cell_iterators())
+          {
+            if (cell->active_fe_index() != 0)
+              std::cout << cell->center() << std::endl;
+          }*/
   }
 } // namespace Step26
 // Now that you have seen what the function does, let us come back to the
