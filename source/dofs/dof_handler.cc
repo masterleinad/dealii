@@ -35,6 +35,7 @@
 
 #include <algorithm>
 #include <set>
+#include <unordered_set>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -1096,36 +1097,55 @@ template <int dim, int spacedim>
 types::global_dof_index
 DoFHandler<dim, spacedim>::n_boundary_dofs() const
 {
-  std::set<int> boundary_dofs;
+  const FiniteElement<dim, spacedim> &fe            = get_fe();
+  const unsigned int                  dofs_per_cell = fe.n_dofs_per_cell();
+  const unsigned int                  dofs_per_face = fe.n_dofs_per_face();
+  std::vector<dealii::types::global_dof_index> dof_indices(dofs_per_cell);
 
-  const unsigned int                   dofs_per_face = get_fe().dofs_per_face;
-  std::vector<types::global_dof_index> dofs_on_face(dofs_per_face);
+  IndexSet locally_owned_dofs_grid = locally_owned_dofs();
 
-  // loop over all faces of all cells
-  // and see whether they are at a
-  // boundary. note (i) that we visit
-  // interior faces twice (which we
-  // don't care about) but exterior
-  // faces only once as is
-  // appropriate, and (ii) that we
-  // need not take special care of
-  // single lines (using
-  // @p{cell->has_boundary_lines}),
-  // since we do not support
-  // boundaries of dimension dim-2,
-  // and so every boundary line is
-  // also part of a boundary face.
-  active_cell_iterator cell = begin_active(), endc = end();
+  // Use unordered sets which uses hashmap.
+  // Has an average complexity of O(1) (worst case O(n)) for finding and
+  // inserting Overall algorithm average will be O(n), worst case O(n^2)
+  std::unordered_set<unsigned int> locally_owned_dofs(
+    locally_owned_dofs_grid.begin(), locally_owned_dofs_grid.end());
+  std::unordered_set<unsigned int> boundary_dof_indices;
+  active_cell_iterator             cell = begin_active(), endc = end();
   for (; cell != endc; ++cell)
-    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if (cell->at_boundary(f))
-        {
-          cell->face(f)->get_dof_indices(dofs_on_face);
-          for (unsigned int i = 0; i < dofs_per_face; ++i)
-            boundary_dofs.insert(dofs_on_face[i]);
-        }
+    {
+      if (!cell->is_locally_owned() || !cell->at_boundary())
+        continue;
 
-  return boundary_dofs.size();
+      cell->get_dof_indices(dof_indices);
+
+      for (unsigned int iface = 0;
+           iface < dealii::GeometryInfo<dim>::faces_per_cell;
+           ++iface)
+        {
+          const auto face = cell->face(iface);
+          if (!face->at_boundary())
+            continue;
+
+          for (unsigned int idof_face = 0; idof_face < dofs_per_face;
+               ++idof_face)
+            {
+              unsigned int idof_cell = fe.face_to_cell_index(idof_face, iface);
+              const unsigned int global_idof_index = dof_indices[idof_cell];
+
+              // If dof is not already in our hashmap, then insert it into our
+              // set of surface indices. However, do not add if it is not
+              // locally owned, it will get picked up by another processor
+              if ((boundary_dof_indices.find(global_idof_index) ==
+                   boundary_dof_indices.end()) &&
+                  (locally_owned_dofs.find(global_idof_index) !=
+                   locally_owned_dofs.end()))
+                {
+                  boundary_dof_indices.insert(global_idof_index);
+                }
+            }
+        }
+    }
+  return boundary_dof_indices.size();
 }
 
 
@@ -1139,28 +1159,61 @@ DoFHandler<dim, spacedim>::n_boundary_dofs(
            boundary_ids.end(),
          ExcInvalidBoundaryIndicator());
 
-  std::set<types::global_dof_index> boundary_dofs;
+  const FiniteElement<dim, spacedim> &fe            = get_fe();
+  const unsigned int                  dofs_per_cell = fe.n_dofs_per_cell();
+  const unsigned int                  dofs_per_face = fe.n_dofs_per_face();
+  std::vector<dealii::types::global_dof_index> dof_indices(dofs_per_cell);
 
-  const unsigned int                   dofs_per_face = get_fe().dofs_per_face;
-  std::vector<types::global_dof_index> dofs_on_face(dofs_per_face);
+  IndexSet locally_owned_dofs_grid = locally_owned_dofs();
 
-  // same as in the previous
-  // function, but with a different
-  // check for the boundary indicator
-  active_cell_iterator cell = begin_active(), endc = end();
+  // Use unordered sets which uses hashmap.
+  // Has an average complexity of O(1) (worst case O(n)) for finding and
+  // inserting Overall algorithm average will be O(n), worst case O(n^2)
+  std::unordered_set<unsigned int> locally_owned_dofs(
+    locally_owned_dofs_grid.begin(), locally_owned_dofs_grid.end());
+  std::unordered_set<unsigned int> boundary_dof_indices;
+  active_cell_iterator             cell = begin_active(), endc = end();
   for (; cell != endc; ++cell)
-    for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
-      if (cell->at_boundary(f) &&
-          (std::find(boundary_ids.begin(),
-                     boundary_ids.end(),
-                     cell->face(f)->boundary_id()) != boundary_ids.end()))
-        {
-          cell->face(f)->get_dof_indices(dofs_on_face);
-          for (unsigned int i = 0; i < dofs_per_face; ++i)
-            boundary_dofs.insert(dofs_on_face[i]);
-        }
+    {
+      if (!cell->is_locally_owned() || !cell->at_boundary())
+        continue;
 
-  return boundary_dofs.size();
+      cell->get_dof_indices(dof_indices);
+
+      for (unsigned int iface = 0;
+           iface < dealii::GeometryInfo<dim>::faces_per_cell;
+           ++iface)
+        {
+          const auto face = cell->face(iface);
+          if (!face->at_boundary())
+            continue;
+
+          const unsigned int boundary_id = face->boundary_id();
+          if (std::find(boundary_ids.begin(),
+                        boundary_ids.end(),
+                        boundary_id) == boundary_ids.end())
+            continue;
+
+          for (unsigned int idof_face = 0; idof_face < dofs_per_face;
+               ++idof_face)
+            {
+              unsigned int idof_cell = fe.face_to_cell_index(idof_face, iface);
+              const unsigned int global_idof_index = dof_indices[idof_cell];
+
+              // If dof is not already in our hashmap, then insert it into our
+              // set of surface indices. However, do not add if it is not
+              // locally owned, it will get picked up by another processor
+              if ((boundary_dof_indices.find(global_idof_index) ==
+                   boundary_dof_indices.end()) &&
+                  (locally_owned_dofs.find(global_idof_index) !=
+                   locally_owned_dofs.end()))
+                {
+                  boundary_dof_indices.insert(global_idof_index);
+                }
+            }
+        }
+    }
+  return boundary_dof_indices.size();
 }
 
 
