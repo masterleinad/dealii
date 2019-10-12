@@ -1111,7 +1111,7 @@ DoFHandler<dim, spacedim>::n_boundary_dofs() const
     locally_owned_dofs_grid.begin(), locally_owned_dofs_grid.end());
   std::unordered_set<unsigned int> boundary_dof_indices;
   active_cell_iterator             cell = begin_active(), endc = end();
-  for (; cell != endc; ++cell)
+  for (const auto& cell: this->active_cell_iterators())
     {
       if (!cell->is_locally_owned() || !cell->at_boundary())
         continue;
