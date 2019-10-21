@@ -105,18 +105,21 @@ namespace CUDAWrappers
         const ParallelizationScheme parallelization_scheme = parallel_in_elem,
         const UpdateFlags           mapping_update_flags   = update_gradients |
                                                  update_JxW_values,
-        const bool use_coloring = false,
-        const bool n_colors     = 1)
+        const bool         use_coloring     = false,
+        const bool         n_colors         = 1,
+        const unsigned int level_mg_handler = numbers::invalid_unsigned_int)
         : parallelization_scheme(parallelization_scheme)
         , mapping_update_flags(mapping_update_flags)
         , use_coloring(use_coloring)
         , n_colors(n_colors)
+        , level_mg_handler(level_mg_handler)
       {}
 
       /**
        * Number of colors created by the graph coloring algorithm.
        */
       unsigned int n_colors;
+
       /**
        * Parallelization scheme used, parallelization over degrees of freedom or
        * over cells.
@@ -139,6 +142,16 @@ namespace CUDAWrappers
        * newer architectures.
        */
       bool use_coloring;
+
+      /**
+       * This option can be used to define whether we work on a certain level of
+       * the mesh, and not the active cells. If set to invalid_unsigned_int
+       * (which is the default value), the active cells are gone through,
+       * otherwise the level given by this parameter. Note that if you specify
+       * to work on a level, its dofs must be distributed by using
+       * <code>dof_handler.distribute_mg_dofs(fe);</code>.
+       */
+      unsigned int level_mg_handler;
     };
 
     /**
@@ -441,6 +454,8 @@ namespace CUDAWrappers
      */
     bool use_coloring;
 
+    unsigned int level_mg_handler;
+
     /**
      * Total number of degrees of freedom.
      */
@@ -480,7 +495,7 @@ namespace CUDAWrappers
      * Vector of pointers to the quadrature points associated to the cells of
      * each color.
      */
-    std::vector<point_type *> q_points;
+    std::vector<point_type *> q_points_for_color;
 
     /**
      * Map the position in the local vector to the position in the global

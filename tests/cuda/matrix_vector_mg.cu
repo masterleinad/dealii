@@ -20,16 +20,20 @@
 // matrix for MG DoFHandler on a hyperball mesh with no hanging nodes but
 // homogeneous Dirichlet conditions
 
-#include "../tests.h"
-
-std::ofstream logfile("output");
-
 #include <deal.II/base/function.h>
+
+#include <deal.II/grid/grid_generator.h>
+#include <deal.II/grid/manifold_lib.h>
+
+#include <deal.II/lac/la_vector.h>
 
 #include <deal.II/multigrid/mg_matrix.h>
 #include <deal.II/multigrid/mg_tools.h>
 
-#include "matrix_vector_common.h"
+#include <deal.II/numerics/vector_tools.h>
+
+#include "../tests.h"
+#include "matrix_vector_mf.h"
 
 
 
@@ -41,9 +45,7 @@ test()
   Triangulation<dim>           tria(
     Triangulation<dim>::limit_level_difference_at_vertices);
   GridGenerator::hyper_ball(tria);
-  typename Triangulation<dim>::active_cell_iterator cell = tria.begin_active(),
-                                                    endc = tria.end();
-  for (; cell != endc; ++cell)
+  for (const auto &cell : tria.active_cell_iterators())
     for (unsigned int f = 0; f < GeometryInfo<dim>::faces_per_cell; ++f)
       if (cell->at_boundary(f))
         cell->face(f)->set_all_manifold_ids(0);
@@ -70,8 +72,13 @@ test()
   // set up MatrixFree
   MappingQGeneric<dim> mapping(fe_degree);
   QGauss<1>            quad(fe_degree + 1);
-  CUDAWrappers::MatrixFree<dim>      mf_data;
-  mf_data.reinit(mapping, dof, constraints, quad);
+  typename CUDAWrappers::MatrixFree<dim, double>::AdditionalData
+    additional_data;
+  additional_data.mapping_update_flags = update_values | update_gradients |
+                                         update_JxW_values |
+                                         update_quadrature_points;
+  CUDAWrappers::MatrixFree<dim> mf_data;
+  mf_data.reinit(mapping, dof, constraints, quad, additional_data);
   SparsityPattern      sparsity;
   SparseMatrix<double> system_matrix;
   {
@@ -86,7 +93,7 @@ test()
 
   // setup MG levels
   const unsigned int                       nlevels = tria.n_levels();
-  typedef CUDAWrappers::MatrixFree<dim>                  MatrixFreeTestType;
+  typedef CUDAWrappers::MatrixFree<dim>    MatrixFreeTestType;
   MGLevelObject<MatrixFreeTestType>        mg_matrices;
   MGLevelObject<AffineConstraints<double>> mg_constraints;
   MGLevelObject<SparsityPattern>           mg_sparsities;
@@ -109,6 +116,9 @@ test()
         mg_constraints[level].add_line(*bc_it);
       mg_constraints[level].close();
       typename CUDAWrappers::MatrixFree<dim>::AdditionalData data;
+      data.mapping_update_flags = update_values | update_gradients |
+                                         update_JxW_values |
+                                         update_quadrature_points;
       data.level_mg_handler = level;
       mg_matrices[level].reinit(
         mapping, dof, mg_constraints[level], quad, data);
@@ -132,9 +142,7 @@ test()
     FullMatrix<double> cell_matrix(dofs_per_cell, dofs_per_cell);
     std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
 
-    typename DoFHandler<dim>::active_cell_iterator cell = dof.begin_active(),
-                                                   endc = dof.end();
-    for (; cell != endc; ++cell)
+    for (const auto &cell : dof.active_cell_iterators())
       {
         cell_matrix = 0;
         fe_values.reinit(cell);
@@ -181,46 +189,112 @@ test()
 
   // fill a right hand side vector with random
   // numbers in unconstrained degrees of freedom
-  Vector<double> src(dof.n_dofs());
-  Vector<double> result_spmv(src), result_mf(src);
+  LinearAlgebra::CUDAWrappers::Vector<double> src(dof.n_dofs());
+  Vector<double>                              in_host(dof.n_dofs());
+  LinearAlgebra::CUDAWrappers::Vector<double> result_mf(src);
+  Vector<double>                              result_spmv(in_host);
 
+  LinearAlgebra::ReadWriteVector<double> rw_in(dof.n_dofs());
   for (unsigned int i = 0; i < dof.n_dofs(); ++i)
     {
       if (constraints.is_constrained(i) == false)
-        src(i) = random_value<double>();
+        {
+          rw_in(i)   = random_value<double>();
+          in_host(i) = rw_in(i);
+        }
     }
+  src.import(rw_in, VectorOperation::insert);
 
   // now perform matrix-vector product and check
   // its correctness
-  system_matrix.vmult(result_spmv, src);
-  MatrixFreeTest<dim, fe_degree, double> mf(mf_data);
+  system_matrix.vmult(result_spmv, in_host);
+
+  const unsigned int coef_size =
+    tria.n_active_cells() * std::pow(fe_degree + 1, dim);
+  MatrixFreeTest<dim,
+                 fe_degree,
+                 double,
+                 LinearAlgebra::CUDAWrappers::Vector<double>>
+    mf(mf_data, coef_size);
+
   mf.vmult(result_mf, src);
 
-  result_mf -= result_spmv;
-  const double diff_norm = result_mf.linfty_norm();
+  LinearAlgebra::ReadWriteVector<double> rw_out(dof.n_dofs());
+  rw_out.import(result_mf, VectorOperation::insert);
+  for (unsigned int i = 0; i < result_spmv.size(); ++i)
+    result_spmv(i) -= rw_out(i);
+  const double diff_norm = result_spmv.linfty_norm();
   deallog << "Norm of difference active: " << diff_norm << std::endl;
 
   for (unsigned int level = 0; level < nlevels; ++level)
     {
-      Vector<double> src(dof.n_dofs(level));
-      Vector<double> result_spmv(src), result_mf(src);
+      LinearAlgebra::CUDAWrappers::Vector<double> level_src(dof.n_dofs(level));
+      Vector<double> level_in_host(dof.n_dofs(level));
+      LinearAlgebra::CUDAWrappers::Vector<double> level_result_mf(level_src);
+      Vector<double> level_result_spmv(level_in_host);
 
+      LinearAlgebra::ReadWriteVector<double> level_rw_in(dof.n_dofs());
       for (unsigned int i = 0; i < dof.n_dofs(level); ++i)
         {
           if (mg_constraints[level].is_constrained(i) == false)
-            src(i) = random_value<double>();
+            {
+              level_rw_in(i)   = random_value<double>();
+              level_in_host(i) = level_rw_in(i);
+            }
         }
+      level_src.import(level_rw_in, VectorOperation::insert);
 
       // now perform matrix-vector product and check
       // its correctness
-      mg_ref_matrices[level].vmult(result_spmv, src);
-      MatrixFreeTest<dim, fe_degree, double> mf_lev(mg_matrices[level]);
-      mf_lev.vmult(result_mf, src);
+      mg_ref_matrices[level].vmult(level_result_spmv, level_in_host);
+      const unsigned int level_coef_size =
+        tria.n_active_cells(level) * std::pow(fe_degree + 1, dim);
+      MatrixFreeTest<dim,
+                     fe_degree,
+                     double,
+                     LinearAlgebra::CUDAWrappers::Vector<double>>
+        mf_lev(mg_matrices[level], level_coef_size);
+      mf_lev.vmult(level_result_mf, level_src);
 
-      result_mf -= result_spmv;
-      const double diff_norm = result_mf.linfty_norm();
+      LinearAlgebra::ReadWriteVector<double> level_rw_out(dof.n_dofs(level));
+      for (unsigned int i = 0; i < level_result_spmv.size(); ++i)
+        level_result_spmv(i) -= level_rw_out(i);
+      const double diff_norm = level_result_spmv.linfty_norm();
       deallog << "Norm of difference MG level " << level << ": " << diff_norm
               << std::endl;
     }
   deallog << std::endl;
+}
+
+int
+main(int argc, char **argv)
+{
+  Utilities::MPI::MPI_InitFinalize mpi_initialization(
+    argc, argv, testing_max_num_threads());
+
+  unsigned int myid = Utilities::MPI::this_mpi_process(MPI_COMM_WORLD);
+  deallog.push(Utilities::int_to_string(myid));
+
+  init_cuda(true);
+
+  if (myid == 0)
+    {
+      initlog();
+      deallog << std::setprecision(4);
+
+      deallog.push("2d");
+      test<2, 1>();
+      deallog.pop();
+
+      deallog.push("3d");
+      test<3, 1>();
+      test<3, 2>();
+      deallog.pop();
+    }
+  else
+    {
+      test<2, 1>();
+      test<3, 1>();
+      test<3, 2>();
+    }
 }

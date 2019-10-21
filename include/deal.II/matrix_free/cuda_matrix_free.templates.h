@@ -220,7 +220,7 @@ namespace CUDAWrappers
       data->row_start.resize(n_colors);
 
       if (update_flags & update_quadrature_points)
-        data->q_points.resize(n_colors);
+        data->q_points_for_color.resize(n_colors);
 
       if (update_flags & update_JxW_values)
         data->JxW.resize(n_colors);
@@ -290,7 +290,7 @@ namespace CUDAWrappers
       const unsigned int                                        cell_id,
       const std::shared_ptr<const Utilities::MPI::Partitioner> &partitioner)
     {
-      cell->get_dof_indices(local_dof_indices);
+      cell->get_active_or_mg_dof_indices(local_dof_indices);
       // When using MPI, we need to transform the local_dof_indices, which
       // contains global dof indices, to get local (to the current MPI process)
       // dof indices.
@@ -366,7 +366,7 @@ namespace CUDAWrappers
               MatrixFree<dim, Number>::parallel_over_elem)
             transpose_in_place(q_points_host, n_cells, padding_length);
 
-          alloc_and_copy(&data->q_points[color],
+          alloc_and_copy(&data->q_points_for_color[color],
                          ArrayView<const Point<dim, Number>>(
                            q_points_host.data(), q_points_host.size()),
                          n_cells * padding_length);
@@ -586,7 +586,7 @@ namespace CUDAWrappers
   MatrixFree<dim, Number>::get_data(unsigned int color) const
   {
     Data data_copy;
-    data_copy.q_points        = q_points[color];
+    data_copy.q_points        = q_points_for_color[color];
     data_copy.local_to_global = local_to_global[color];
     data_copy.inv_jacobian    = inv_jacobian[color];
     data_copy.JxW             = JxW[color];
@@ -605,13 +605,13 @@ namespace CUDAWrappers
   void
   MatrixFree<dim, Number>::free()
   {
-    for (unsigned int i = 0; i < q_points.size(); ++i)
+    for (auto &q_points : q_points_for_color)
       {
-        if (q_points[i] != nullptr)
+        if (q_points != nullptr)
           {
-            cudaError_t cuda_error = cudaFree(q_points[i]);
+            cudaError_t cuda_error = cudaFree(q_points);
             AssertCuda(cuda_error);
-            q_points[i] = nullptr;
+            q_points = nullptr;
           }
       }
 
@@ -656,7 +656,7 @@ namespace CUDAWrappers
       }
 
 
-    q_points.clear();
+    q_points_for_color.clear();
     local_to_global.clear();
     inv_jacobian.clear();
     JxW.clear();
@@ -815,7 +815,15 @@ namespace CUDAWrappers
     // TODO: only free if we actually need arrays of different length
     free();
 
-    n_dofs = dof_handler.n_dofs();
+    level_mg_handler = additional_data.level_mg_handler;
+    if (level_mg_handler != numbers::invalid_unsigned_int)
+      {
+        n_dofs = dof_handler.n_dofs(level_mg_handler);
+      }
+    else
+      {
+        n_dofs = dof_handler.n_dofs();
+      }
 
     const FiniteElement<dim> &fe = dof_handler.get_fe();
 
@@ -880,41 +888,84 @@ namespace CUDAWrappers
     // Create a graph coloring
     using CellFilter =
       FilteredIterator<typename DoFHandler<dim>::active_cell_iterator>;
-    CellFilter begin(IteratorFilters::LocallyOwnedCell(),
-                     dof_handler.begin_active());
-    CellFilter end(IteratorFilters::LocallyOwnedCell(), dof_handler.end());
     std::vector<std::vector<CellFilter>> graph;
-
-    if (begin != end)
+    if (level_mg_handler == numbers::invalid_unsigned_int)
       {
-        if (additional_data.use_coloring)
+        CellFilter begin(IteratorFilters::LocallyOwnedCell(),
+                         dof_handler.begin_active());
+        CellFilter end(IteratorFilters::LocallyOwnedCell(), dof_handler.end());
+
+        if (begin != end)
           {
-            const auto fun = [&](const CellFilter &filter) {
-              return internal::get_conflict_indices<dim, Number>(filter,
-                                                                 constraints);
-            };
-            graph = GraphColoring::make_graph_coloring(begin, end, fun);
+            if (additional_data.use_coloring)
+              {
+                const auto fun = [&](const CellFilter &filter) {
+                  return internal::get_conflict_indices<dim, Number>(
+                    filter, constraints);
+                };
+                graph = GraphColoring::make_graph_coloring(begin, end, fun);
+              }
+            else
+              {
+                // If we are not using coloring, all the cells belong to the
+                // same color.
+                graph.resize(1, std::vector<CellFilter>());
+                for (auto cell = begin; cell != end; ++cell)
+                  graph[0].emplace_back(cell);
+              }
           }
-        else
-          {
-            // If we are not using coloring, all the cells belong to the same
-            // color.
-            graph.resize(1, std::vector<CellFilter>());
-            for (auto cell = begin; cell != end; ++cell)
-              graph[0].emplace_back(cell);
-          }
+        n_colors = graph.size();
       }
-    n_colors = graph.size();
+    else
+      {
+        CellFilter begin(IteratorFilters::LocallyOwnedCell(),
+                         dof_handler.begin_active(level_mg_handler));
+        CellFilter end(IteratorFilters::LocallyOwnedCell(),
+                       dof_handler.end_active(level_mg_handler));
+
+        if (begin != end)
+          {
+            if (additional_data.use_coloring)
+              {
+                const auto fun = [&](const CellFilter &filter) {
+                  return internal::get_conflict_indices<dim, Number>(
+                    filter, constraints);
+                };
+                graph = GraphColoring::make_graph_coloring(begin, end, fun);
+              }
+            else
+              {
+                // If we are not using coloring, all the cells belong to the
+                // same color.
+                graph.resize(1, std::vector<CellFilter>());
+                for (auto cell = begin; cell != end; ++cell)
+                  graph[0].emplace_back(cell);
+              }
+          }
+        n_colors = graph.size();
+      }
 
     helper.setup_color_arrays(n_colors);
 
     IndexSet locally_relevant_dofs;
     if (comm)
       {
-        DoFTools::extract_locally_relevant_dofs(dof_handler,
-                                                locally_relevant_dofs);
-        partitioner = std::make_shared<Utilities::MPI::Partitioner>(
-          dof_handler.locally_owned_dofs(), locally_relevant_dofs, *comm);
+        if (level_mg_handler == numbers::invalid_unsigned_int)
+          {
+            DoFTools::extract_locally_relevant_dofs(dof_handler,
+                                                    locally_relevant_dofs);
+            partitioner = std::make_shared<Utilities::MPI::Partitioner>(
+              dof_handler.locally_owned_dofs(), locally_relevant_dofs, *comm);
+          }
+        else
+          {
+            DoFTools::extract_locally_relevant_level_dofs(
+              dof_handler, level_mg_handler, locally_relevant_dofs);
+            partitioner = std::make_shared<Utilities::MPI::Partitioner>(
+              dof_handler.locally_owned_mg_dofs(level_mg_handler),
+              locally_relevant_dofs,
+              *comm);
+          }
       }
     for (unsigned int i = 0; i < n_colors; ++i)
       {
