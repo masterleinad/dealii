@@ -1094,6 +1094,7 @@ template <int dim, typename RangeNumberType>
 inline Function<dim, RangeNumberType>::~Function() = default;
 #endif
 
+#include <deal.II/base/function.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

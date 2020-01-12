@@ -249,6 +249,9 @@ namespace Particles
   } // namespace Generators
 } // namespace Particles
 
+// clang-format off
+#include <deal.II/particles/generators.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

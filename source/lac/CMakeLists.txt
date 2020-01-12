@@ -36,7 +36,6 @@ SET(_unity_include_src
   precondition_block_ez.cc
   relaxation_block.cc
   read_write_vector.cc
-  solver.cc
   solver_bicgstab.cc
   solver_control.cc
   sparse_decomposition.cc
@@ -84,7 +83,6 @@ SET(_inst
   relaxation_block.inst.in
   read_write_vector.inst.in
   scalapack.inst.in
-  solver.inst.in
   sparse_matrix_ez.inst.in
   sparse_matrix.inst.in
   vector.inst.in

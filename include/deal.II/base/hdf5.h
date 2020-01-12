@@ -1115,6 +1115,8 @@ namespace HDF5
   };
 } // namespace HDF5
 
+#  include <deal.II/base/hdf5.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 

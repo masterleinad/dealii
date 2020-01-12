@@ -354,7 +354,7 @@ TensorFunctionParser<rank, dim, Number>::default_variable_names()
   return "";
 }
 
-
+#include <deal.II/base/tensor_function_parser.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

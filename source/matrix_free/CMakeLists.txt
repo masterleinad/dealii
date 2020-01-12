@@ -16,14 +16,12 @@
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
 SET(_src
-  evaluation_selector.cc
   mapping_info.cc
   matrix_free.cc
   task_info.cc
   )
 
 SET(_inst
-  evaluation_selector.inst.in
   mapping_info.inst.in
   matrix_free.inst.in
   )

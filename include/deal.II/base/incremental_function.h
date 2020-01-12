@@ -22,6 +22,7 @@
 #include <deal.II/base/function.h>
 #include <deal.II/base/thread_management.h>
 
+#include <deal.II/lac/vector.h>
 DEAL_II_NAMESPACE_OPEN
 
 // Forward declaration
@@ -125,6 +126,7 @@ namespace Functions
 
 } // namespace Functions
 
+#include <deal.II/base/incremental_function.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

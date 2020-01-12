@@ -660,6 +660,7 @@ namespace TimeStepping
      */
     Status status;
   };
+
 } // namespace TimeStepping
 
 DEAL_II_NAMESPACE_CLOSE

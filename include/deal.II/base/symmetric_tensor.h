@@ -4044,6 +4044,7 @@ operator<<(std::ostream &out, const SymmetricTensor<4, dim, Number> &t)
   return out << tt;
 }
 
+#include <deal.II/base/symmetric_tensor.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

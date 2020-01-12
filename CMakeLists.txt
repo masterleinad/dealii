@@ -55,7 +55,7 @@ LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules/)
 #
 # Load all macros:
 #
-FILE(GLOB _macro_files "cmake/macros/*.cmake")
+FILE(GLOB _macro_files "cmake/macros/macro*.cmake")
 MESSAGE(STATUS "Include ${CMAKE_SOURCE_DIR}/cmake/setup_external_macros.cmake")
 INCLUDE(${CMAKE_SOURCE_DIR}/cmake/setup_external_macros.cmake)
 FOREACH(_file ${_macro_files})

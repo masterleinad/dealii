@@ -417,6 +417,9 @@ namespace Particles
   }
 } // namespace Particles
 
+// clang-format off
+#include <deal.II/particles/particle.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

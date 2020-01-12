@@ -74,6 +74,8 @@ namespace GeometricUtilities
     Point<dim>
     from_spherical(const std::array<double, dim> &scoord);
 
+#include <deal.II/base/geometric_utilities.inst.extern>
+
   } // namespace Coordinates
 } // namespace GeometricUtilities
 

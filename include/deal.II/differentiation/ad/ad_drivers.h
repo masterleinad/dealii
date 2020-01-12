@@ -1406,6 +1406,15 @@ namespace Differentiation
 
 #endif // DOXYGEN
 
+/* --- Explicit instantiations --- */
+#include <deal.II/differentiation/ad/ad_drivers.inst.extern>
+#ifdef DEAL_II_WITH_ADOLC
+#  include <deal.II/differentiation/ad/ad_drivers.inst1.extern>
+#endif
+#ifdef DEAL_II_TRILINOS_WITH_SACADO
+#  include <deal.II/differentiation/ad/ad_drivers.inst2.extern>
+#endif
+
 DEAL_II_NAMESPACE_CLOSE
 
 

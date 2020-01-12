@@ -200,6 +200,7 @@ public:
   ZeroTensorFunction(const time_type initial_time = 0.0);
 };
 
+#include <deal.II/base/tensor_function.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

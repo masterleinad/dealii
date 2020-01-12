@@ -227,6 +227,7 @@ PolynomialsRannacherTurek<dim>::name() const
   return "RannacherTurek";
 }
 
+#include <deal.II/base/polynomials_rannacher_turek.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

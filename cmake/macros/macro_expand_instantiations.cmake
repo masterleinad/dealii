@@ -45,6 +45,8 @@ MACRO(EXPAND_INSTANTIATIONS _target _inst_in_files)
       SET(_dependency)
     ENDIF()
 
+    MESSAGE(STATUS "BLA BLA ${CMAKE_CURRENT_BINARY_DIR}/${_inst_file}")
+
     # create a .inst.tmp file first and only move to the correct name if the
     # first call succeeds. Otherwise we might be generating an incomplete
     # .inst file
@@ -61,6 +63,9 @@ MACRO(EXPAND_INSTANTIATIONS _target _inst_in_files)
       ARGS -E rename
            ${CMAKE_CURRENT_BINARY_DIR}/${_inst_file}.tmp
            ${CMAKE_CURRENT_BINARY_DIR}/${_inst_file}
+      COMMAND ${CMAKE_COMMAND}	   
+           -D INPUT=${CMAKE_CURRENT_BINARY_DIR}/${_inst_file}
+           -P ${PROJECT_SOURCE_DIR}/cmake/macros/create_external_instantiations.cmake
       )
 
     LIST(APPEND _inst_targets ${CMAKE_CURRENT_BINARY_DIR}/${_inst_file})

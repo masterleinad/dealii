@@ -211,7 +211,7 @@ main()
       deallog << " Functions::StokesCosine<2>" << std::endl;
       Functions::StokesCosine<2> f(1.);
       Functions::StokesCosine<2> g = f;
-      g = f;
+      g                            = f;
       check_function(f, 4, deallog.get_file_stream());
     }
 

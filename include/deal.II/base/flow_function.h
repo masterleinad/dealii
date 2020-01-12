@@ -54,6 +54,20 @@ namespace Functions
      */
     FlowFunction();
 
+    FlowFunction(const FlowFunction &other_function)
+      : Function<dim>(other_function)
+    {
+      mean_pressure = other_function.mean_pressure;
+    }
+
+    const FlowFunction &
+    operator=(const FlowFunction &other_function)
+    {
+      Function<dim>::operator=(other_function);
+      mean_pressure          = other_function.mean_pressure;
+      return *this;
+    }
+
     /**
      * Virtual destructor.
      */

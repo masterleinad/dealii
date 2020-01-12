@@ -16,7 +16,6 @@
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
 SET(_unity_include_src
-  mg_base.cc
   mg_level_global_transfer.cc
   mg_transfer_block.cc
   mg_transfer_component.cc
@@ -40,7 +39,6 @@ SETUP_SOURCE_LIST("${_unity_include_src}"
   )
 
 SET(_inst
-  mg_base.inst.in
   mg_level_global_transfer.inst.in
   mg_tools.inst.in
   mg_transfer_block.inst.in

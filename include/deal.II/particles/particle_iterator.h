@@ -141,6 +141,9 @@ namespace Particles
   };
 } // namespace Particles
 
+// clang-format off
+#include <deal.II/particles/particle_iterator.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

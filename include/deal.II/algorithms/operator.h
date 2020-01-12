@@ -174,6 +174,8 @@ namespace Algorithms
   }
 } // namespace Algorithms
 
+//#include <deal.II/algorithms/operator.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

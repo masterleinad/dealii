@@ -289,6 +289,20 @@ public:
 
 /*@}*/
 
+#ifndef DOXYGEN
+
+template <typename VectorType>
+inline void
+MGSmootherBase<VectorType>::apply(const unsigned int level,
+                                  VectorType &       u,
+                                  const VectorType & rhs) const
+{
+  u = typename VectorType::value_type(0.);
+  smooth(level, u, rhs);
+}
+
+#endif
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

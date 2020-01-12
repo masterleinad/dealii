@@ -3771,6 +3771,7 @@ namespace DataOutBase
   operator>>(std::istream &in, Patch<dim, spacedim> &patch);
 } // namespace DataOutBase
 
+#include <deal.II/base/data_out_base.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

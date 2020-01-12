@@ -373,7 +373,8 @@ private:
                   const CurvedCellRegion              curved_cell_region);
 };
 
-
+// clang-format off
+#include <deal.II/numerics/data_out.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

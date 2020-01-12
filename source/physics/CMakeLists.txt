@@ -18,17 +18,8 @@ ADD_SUBDIRECTORY("elasticity")
 
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_CURRENT_BINARY_DIR})
 
-SET(_src
-  transformations.cc
-  )
-
-SET(_inst
-  transformations.inst.in
-  )
-
 FILE(GLOB _header
   ${CMAKE_SOURCE_DIR}/include/deal.II/physics/*.h
   )
 
-DEAL_II_ADD_LIBRARY(obj_physics OBJECT ${_src} ${_header} ${_inst})
-EXPAND_INSTANTIATIONS(obj_physics "${_inst}")
+DEAL_II_ADD_LIBRARY(obj_physics OBJECT "" ${_header} "")

@@ -2694,6 +2694,8 @@ linfty_norm(const Tensor<2, dim, adouble> &t)
 
 #endif // DOXYGEN
 
+#include <deal.II/base/tensor.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

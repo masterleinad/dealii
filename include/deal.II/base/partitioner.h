@@ -972,6 +972,8 @@ namespace Utilities
 
 } // end of namespace Utilities
 
+#include <deal.II/base/partitioner.cuda.inst.extern>
+#include <deal.II/base/partitioner.inst.extern>
 
 DEAL_II_NAMESPACE_CLOSE
 

@@ -244,6 +244,10 @@ BoundingBox<spacedim, Number>::serialize(Archive &ar,
 }
 
 #endif // DOXYGEN
+
+// clang-format off
+#include <deal.II/base/bounding_box.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

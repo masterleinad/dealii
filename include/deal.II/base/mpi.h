@@ -1764,9 +1764,11 @@ namespace Utilities
 #  endif
 
 #endif
+
+#include <deal.II/base/mpi.inst.extern>
+
   } // end of namespace MPI
 } // end of namespace Utilities
-
 
 DEAL_II_NAMESPACE_CLOSE
 

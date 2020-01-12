@@ -128,6 +128,9 @@ FunctionTime<Number>::get_time() const
 }
 
 #endif
+
+#include <deal.II/base/function_time.inst.extern>
+
 DEAL_II_NAMESPACE_CLOSE
 
 #endif

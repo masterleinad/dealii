@@ -137,7 +137,7 @@ struct basic_mapped_file_params
         { }
 
     // Assignment operator
-    basic_mapped_file_params& operator=(const basic_mapped_file_params& other) = default;
+    basic_mapped_file_params& operator=(const basic_mapped_file_params&) = default;
 
     // Templated copy constructor
     template<typename PathT>
@@ -187,7 +187,7 @@ public:
                                  boost::intmax_t offset = 0 );
 
     // Copy Constructor
-    mapped_file_source(const mapped_file_source& other);
+    mapped_file_source(const mapped_file_source&);
 
     //--------------Stream interface------------------------------------------//
 
@@ -270,7 +270,7 @@ public:
                           stream_offset offset = 0 );
 
     // Copy Constructor
-    mapped_file(const mapped_file& other);
+    mapped_file(const mapped_file&);
 
     //--------------Conversion to mapped_file_source (deprecated)-------------//
 
@@ -373,7 +373,7 @@ public:
                                mapmode flags = readwrite );
 
     // Copy Constructor
-    mapped_file_sink(const mapped_file_sink& other);
+    mapped_file_sink(const mapped_file_sink&);
 
     // open overload taking a parameters object
     template<typename Path>

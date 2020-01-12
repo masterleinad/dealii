@@ -274,7 +274,7 @@ for (deal_II_dimension : OUTPUT_DIMENSIONS;
         const TecplotFlags &flags,
         std::ostream &      out);
 
-#  if deal_II_space_dimension > 1
+#  if deal_II_space_dimension > 1 && deal_II_dimension == 2
       template void
       write_svg(
         const std::vector<Patch<deal_II_dimension, deal_II_space_dimension>>
