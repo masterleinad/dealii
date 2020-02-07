@@ -16,7 +16,6 @@
 #
 # Make sure that the tests are picked up by a global CTest call
 #
-FILE(APPEND ${CMAKE_BINARY_DIR}/CTestTestfile.cmake "SUBDIRS(contrib/python-bindings/tests)\n")
 ENABLE_TESTING()
 
 FILE(GLOB _tests "${CMAKE_CURRENT_SOURCE_DIR}/*.py")

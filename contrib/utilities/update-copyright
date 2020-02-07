@@ -27,8 +27,6 @@ fi
 
 files="
   $(echo contrib/*/*.{py,sh} \
-         contrib/python-bindings/CMakeLists.txt \
-         contrib/python-bindings/*/*.{h,cc,py} \
          contrib/utilities/{update-copyright,indent} \
          doc/doxygen/*/*.{h,h.in} \
          doc/doxygen/scripts/{create_anchors,filter,intro2toc,program*,*.pl} \

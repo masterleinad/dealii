@@ -162,8 +162,6 @@ IF(DEAL_II_HAVE_TESTS_DIRECTORY)
   ADD_SUBDIRECTORY(tests)
 ENDIF()
 
-ADD_SUBDIRECTORY(contrib/python-bindings) # has to be included after tests
-
 #
 # And finally, print the configuration:
 #
