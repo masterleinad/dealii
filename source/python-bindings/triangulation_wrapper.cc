@@ -21,11 +21,11 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/tria.h>
 
+#include <deal.II/python-bindings/cell_accessor_wrapper.h>
+#include <deal.II/python-bindings/triangulation_wrapper.h>
+
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-
-#include <cell_accessor_wrapper.h>
-#include <triangulation_wrapper.h>
 
 #include <fstream>
 

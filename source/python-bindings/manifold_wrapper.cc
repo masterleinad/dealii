@@ -17,8 +17,8 @@
 
 #include <deal.II/grid/manifold_lib.h>
 
-#include <manifold_wrapper.h>
-#include <point_wrapper.h>
+#include <deal.II/python-bindings/manifold_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
 
 DEAL_II_NAMESPACE_OPEN
 

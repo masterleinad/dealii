@@ -13,7 +13,7 @@
 //
 // ---------------------------------------------------------------------
 
-#include <point_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
 
 DEAL_II_NAMESPACE_OPEN
 

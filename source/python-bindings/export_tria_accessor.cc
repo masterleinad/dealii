@@ -13,10 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/tria_accessor_wrapper.h>
+#include <deal.II/python-bindings/triangulation_wrapper.h>
 
-#include <tria_accessor_wrapper.h>
-#include <triangulation_wrapper.h>
+#include <boost/python.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 

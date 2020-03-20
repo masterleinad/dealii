@@ -13,9 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/manifold_wrapper.h>
 
-#include <manifold_wrapper.h>
+#include <boost/python.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 

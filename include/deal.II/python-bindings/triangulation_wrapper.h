@@ -18,11 +18,11 @@
 
 #include <deal.II/base/config.h>
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/manifold_wrapper.h>
+#include <deal.II/python-bindings/mapping_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
 
-#include <manifold_wrapper.h>
-#include <mapping_wrapper.h>
-#include <point_wrapper.h>
+#include <boost/python.hpp>
 
 #include <string>
 #include <vector>

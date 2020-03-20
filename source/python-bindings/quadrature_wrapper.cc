@@ -15,7 +15,7 @@
 
 #include <deal.II/base/quadrature_lib.h>
 
-#include <quadrature_wrapper.h>
+#include <deal.II/python-bindings/quadrature_wrapper.h>
 
 DEAL_II_NAMESPACE_OPEN
 

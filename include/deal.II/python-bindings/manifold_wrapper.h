@@ -22,10 +22,10 @@
 
 #include <deal.II/lac/vector.h>
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/function_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
 
-#include <function_wrapper.h>
-#include <point_wrapper.h>
+#include <boost/python.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 

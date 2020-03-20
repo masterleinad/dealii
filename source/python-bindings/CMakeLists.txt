@@ -17,7 +17,7 @@ IF(DEAL_II_COMPONENT_PYTHON_BINDINGS)
   #
   # Find Python:
   #
-  INCLUDE(FindPythonInterp)
+  #INCLUDE(FindPythonInterp)
   INCLUDE(FindPythonLibs)
 
   IF(FEATURE_BOOST_BUNDLED_CONFIGURED)
@@ -46,18 +46,20 @@ IF(DEAL_II_COMPONENT_PYTHON_BINDINGS)
       )
   ENDIF()
 
-  INCLUDE_DIRECTORIES(
-    ${CMAKE_BINARY_DIR}/include/
-    ${CMAKE_SOURCE_DIR}/include/
-    ${DEAL_II_BUNDLED_INCLUDE_DIRS}
-    SYSTEM
-    ${DEAL_II_INCLUDE_DIRS}
-    )
+  #  INCLUDE_DIRECTORIES(
+  #  ${CMAKE_BINARY_DIR}/include/
+  #  ${CMAKE_SOURCE_DIR}/include/
+  #  ${DEAL_II_BUNDLED_INCLUDE_DIRS}
+  #  SYSTEM
+  #  ${DEAL_II_INCLUDE_DIRS}
+  #  )
 
   #
   # Build a variant of the wrapper library for all configured build types in
   # DEAL_II_BUILD_TYPES (usually PyDealIIDebug and PyDealIIRelease)
   #
+
+  INCLUDE_DIRECTORIES(SYSTEM ${PYTHON_INCLUDE_DIRS})
 
   SET(_src
     wrappers.cc

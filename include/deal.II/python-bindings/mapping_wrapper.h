@@ -20,10 +20,10 @@
 
 #include <deal.II/fe/mapping_q_generic.h>
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/cell_accessor_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
 
-#include <cell_accessor_wrapper.h>
-#include <point_wrapper.h>
+#include <boost/python.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 

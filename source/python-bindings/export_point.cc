@@ -16,9 +16,9 @@
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/point.h>
 
-#include <boost/python.hpp>
+#include <deal.II/python-bindings/point_wrapper.h>
 
-#include <point_wrapper.h>
+#include <boost/python.hpp>
 
 // clang complains about explicitly assigning boost::python::self to itself
 // below. However, this is the correct way to define the python bindings.

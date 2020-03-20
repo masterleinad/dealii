@@ -13,10 +13,10 @@
 //
 // ---------------------------------------------------------------------
 
-#include <cell_accessor_wrapper.h>
-#include <mapping_wrapper.h>
-#include <point_wrapper.h>
-#include <triangulation_wrapper.h>
+#include <deal.II/python-bindings/cell_accessor_wrapper.h>
+#include <deal.II/python-bindings/mapping_wrapper.h>
+#include <deal.II/python-bindings/point_wrapper.h>
+#include <deal.II/python-bindings/triangulation_wrapper.h>
 
 DEAL_II_NAMESPACE_OPEN
 
