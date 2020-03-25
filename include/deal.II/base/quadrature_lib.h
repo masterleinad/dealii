@@ -803,6 +803,7 @@ public:
 
 /*@}*/
 
+#ifndef DOXYGEN
 /* -------------- declaration of explicit specializations ------------- */
 
 template <>
@@ -841,7 +842,7 @@ QGaussOneOverR<2>::QGaussOneOverR(const unsigned int n,
 template <>
 QTelles<1>::QTelles(const Quadrature<1> &base_quad,
                     const Point<1> &     singularity);
-
+#endif // DOXYGEN
 
 
 DEAL_II_NAMESPACE_CLOSE
