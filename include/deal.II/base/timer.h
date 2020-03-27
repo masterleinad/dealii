@@ -141,18 +141,6 @@ public:
   Timer(MPI_Comm mpi_communicator, const bool sync_lap_times = false);
 
   /**
-   * Return a reference to the data structure with global timing information
-   * for the last lap. This structure does not contain meaningful values until
-   * Timer::stop() has been called.
-   *
-   * @deprecated Use Timer::get_last_lap_wall_time_data() instead, which
-   * returns a reference to the same structure.
-   */
-  DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
-  get_data() const;
-
-  /**
    * Return a reference to the data structure containing basic statistics on
    * the last lap's wall time measured across all MPI processes in the given
    * communicator. This structure does not contain meaningful values until
@@ -160,19 +148,6 @@ public:
    */
   const Utilities::MPI::MinMaxAvg &
   get_last_lap_wall_time_data() const;
-
-  /**
-   * Return a reference to the data structure containing basic statistics on
-   * the accumulated wall time measured across all MPI processes in the given
-   * communicator. This structure does not contain meaningful values until
-   * Timer::stop() has been called.
-   *
-   * @deprecated Use Timer::get_accumulated_wall_time_data() instead, which
-   * returns a reference the same structure.
-   */
-  DEAL_II_DEPRECATED
-  const Utilities::MPI::MinMaxAvg &
-  get_total_data() const;
 
   /**
    * Return a reference to the data structure containing basic statistics on
@@ -254,16 +229,6 @@ public:
   restart();
 
   /**
-   * Access to the current CPU time without stopping the timer. The elapsed
-   * time is returned in units of seconds.
-   *
-   * @deprecated Use cpu_time() instead.
-   */
-  DEAL_II_DEPRECATED
-  double
-  operator()() const;
-
-  /**
    * Return the current accumulated wall time (including the current lap, if
    * the timer is running) in seconds without stopping the timer.
    */
@@ -294,15 +259,6 @@ public:
    */
   double
   last_cpu_time() const;
-
-  /**
-   * Return the wall time taken between the last start()/stop() call.
-   *
-   * @deprecated Use last_wall_time() instead.
-   */
-  DEAL_II_DEPRECATED
-  double
-  get_lap_time() const;
 
 private:
   /**
@@ -982,25 +938,9 @@ Timer::restart()
 
 
 inline const Utilities::MPI::MinMaxAvg &
-Timer::get_data() const
-{
-  return last_lap_wall_time_data;
-}
-
-
-
-inline const Utilities::MPI::MinMaxAvg &
 Timer::get_last_lap_wall_time_data() const
 {
   return last_lap_wall_time_data;
-}
-
-
-
-inline const Utilities::MPI::MinMaxAvg &
-Timer::get_total_data() const
-{
-  return accumulated_wall_time_data;
 }
 
 
