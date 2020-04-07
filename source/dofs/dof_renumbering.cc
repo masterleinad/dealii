@@ -1994,11 +1994,10 @@ namespace DoFRenumbering
        * Comparison operator for dim>=2
        */
       template <class DHCellIterator, int xdim>
-      bool
+      [[nodiscard]] bool
       compare(const DHCellIterator &c1,
               const DHCellIterator &c2,
-              std::integral_constant<int, xdim>) const
-      {
+              std::integral_constant<int, xdim>) const {
         const Tensor<1, dim> v1 = c1->center() - center;
         const Tensor<1, dim> v2 = c2->center() - center;
         const double         s1 = std::atan2(v1[0], v1[1]);
@@ -2012,11 +2011,9 @@ namespace DoFRenumbering
        * where this function makes no sense
        */
       template <class DHCellIterator>
-      bool
-      compare(const DHCellIterator &,
-              const DHCellIterator &,
-              std::integral_constant<int, 1>) const
-      {
+      [[nodiscard]] bool compare(const DHCellIterator &,
+                                 const DHCellIterator &,
+                                 std::integral_constant<int, 1>) const {
         Assert(dim >= 2,
                ExcMessage("This operation only makes sense for dim>=2."));
         return false;

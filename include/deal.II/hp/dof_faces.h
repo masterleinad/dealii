@@ -194,7 +194,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -254,7 +254,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -286,7 +286,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -323,7 +323,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -387,7 +387,7 @@ namespace internal
 
     template <int structdim>
     template <int dim, int spacedim>
-    inline types::global_dof_index
+    [[nodiscard]] inline types::global_dof_index
     DoFIndicesOnFacesOrEdges<structdim>::get_dof_index(
       const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
       const unsigned int                           obj_index,
@@ -496,7 +496,7 @@ namespace internal
 
     template <int structdim>
     template <int dim, int spacedim>
-    inline unsigned int
+    [[nodiscard]] inline unsigned int
     DoFIndicesOnFacesOrEdges<structdim>::n_active_fe_indices(
       const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
       const unsigned int                           obj_index) const
@@ -539,7 +539,7 @@ namespace internal
 
     template <int structdim>
     template <int dim, int spacedim>
-    inline types::global_dof_index
+    [[nodiscard]] inline types::global_dof_index
     DoFIndicesOnFacesOrEdges<structdim>::nth_active_fe_index(
       const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
       const unsigned int /*obj_level*/,
@@ -592,7 +592,7 @@ namespace internal
 
     template <int structdim>
     template <int dim, int spacedim>
-    inline bool
+    [[nodiscard]] inline bool
     DoFIndicesOnFacesOrEdges<structdim>::fe_index_is_active(
       const dealii::hp::DoFHandler<dim, spacedim> &dof_handler,
       const unsigned int                           obj_index,

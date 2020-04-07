@@ -84,56 +84,53 @@ QGauss<1>::QGauss(const unsigned int n)
     }
 }
 
-namespace internal
+namespace internal::QGaussLobatto
 {
-  namespace QGaussLobatto
+  /**
+   * Evaluate the Gamma function $ \Gamma(n) = (n-1)! $.
+   * @param n  point of evaluation (integer).
+   */
+  long double
+  gamma(const unsigned int n)
   {
-    /**
-     * Evaluate the Gamma function $ \Gamma(n) = (n-1)! $.
-     * @param n  point of evaluation (integer).
-     */
-    long double
-    gamma(const unsigned int n)
-    {
-      long double result = n - 1;
-      for (int i = n - 2; i > 1; --i)
-        result *= i;
-      return result;
-    }
+    long double result = n - 1;
+    for (int i = n - 2; i > 1; --i)
+      result *= i;
+    return result;
+  }
 
 
 
-    /**
-     * Compute Legendre-Gauss-Lobatto quadrature weights. The quadrature points
-     * and weights are related to Jacobi polynomial specified by @p alpha, @p
-     * beta. @p x denotes the quadrature points.
-     *
-     * @return Vector containing weights.
-     */
-    std::vector<long double>
-    compute_quadrature_weights(const std::vector<long double> &x,
-                               const int                       alpha,
-                               const int                       beta)
-    {
-      const unsigned int       q = x.size();
-      std::vector<long double> w(q);
+  /**
+   * Compute Legendre-Gauss-Lobatto quadrature weights. The quadrature points
+   * and weights are related to Jacobi polynomial specified by @p alpha, @p
+   * beta. @p x denotes the quadrature points.
+   *
+   * @return Vector containing weights.
+   */
+  std::vector<long double>
+  compute_quadrature_weights(const std::vector<long double> &x,
+                             const int                       alpha,
+                             const int                       beta)
+  {
+    const unsigned int       q = x.size();
+    std::vector<long double> w(q);
 
-      const long double factor =
-        std::pow(2., alpha + beta + 1) * gamma(alpha + q) * gamma(beta + q) /
-        ((q - 1) * gamma(q) * gamma(alpha + beta + q + 1));
-      for (unsigned int i = 0; i < q; ++i)
-        {
-          const long double s =
-            Polynomials::jacobi_polynomial_value(q - 1, alpha, beta, x[i]);
-          w[i] = factor / (s * s);
-        }
-      w[0] *= (beta + 1);
-      w[q - 1] *= (alpha + 1);
+    const long double factor =
+      std::pow(2., alpha + beta + 1) * gamma(alpha + q) * gamma(beta + q) /
+      ((q - 1) * gamma(q) * gamma(alpha + beta + q + 1));
+    for (unsigned int i = 0; i < q; ++i)
+      {
+        const long double s =
+          Polynomials::jacobi_polynomial_value(q - 1, alpha, beta, x[i]);
+        w[i] = factor / (s * s);
+      }
+    w[0] *= (beta + 1);
+    w[q - 1] *= (alpha + 1);
 
-      return w;
-    }
-  } // namespace QGaussLobatto
-} // namespace internal
+    return w;
+  }
+} // namespace internal::QGaussLobatto
 
 
 
@@ -952,50 +949,47 @@ QTelles<1>::QTelles(const Quadrature<1> &base_quad, const Point<1> &singularity)
     }
 }
 
-namespace internal
+namespace internal::QGaussChebyshev
 {
-  namespace QGaussChebyshev
+  /**
+   * Computes the points of the quadrature formula.
+   */
+  std::vector<double>
+  get_quadrature_points(const unsigned int n)
   {
-    /**
-     * Computes the points of the quadrature formula.
-     */
-    std::vector<double>
-    get_quadrature_points(const unsigned int n)
-    {
-      std::vector<double> points(n);
-      // n point quadrature: index from 0 to n-1
-      for (unsigned short i = 0; i < n; ++i)
-        // would be cos((2i+1)Pi/(2N+2))
-        // put + Pi so we start from the smallest point
-        // then map from [-1,1] to [0,1]
-        points[i] =
-          1. / 2. *
-          (1. + std::cos(numbers::PI *
-                         (1. + double(2 * i + 1) / double(2 * (n - 1) + 2))));
+    std::vector<double> points(n);
+    // n point quadrature: index from 0 to n-1
+    for (unsigned short i = 0; i < n; ++i)
+      // would be cos((2i+1)Pi/(2N+2))
+      // put + Pi so we start from the smallest point
+      // then map from [-1,1] to [0,1]
+      points[i] =
+        1. / 2. *
+        (1. + std::cos(numbers::PI *
+                       (1. + double(2 * i + 1) / double(2 * (n - 1) + 2))));
 
-      return points;
-    }
+    return points;
+  }
 
 
 
-    /**
-     * Computes the weights of the quadrature formula.
-     */
-    std::vector<double>
-    get_quadrature_weights(const unsigned int n)
-    {
-      std::vector<double> weights(n);
+  /**
+   * Computes the weights of the quadrature formula.
+   */
+  std::vector<double>
+  get_quadrature_weights(const unsigned int n)
+  {
+    std::vector<double> weights(n);
 
-      for (unsigned short i = 0; i < n; ++i)
-        {
-          // same weights as on [-1,1]
-          weights[i] = numbers::PI / double(n);
-        }
+    for (unsigned short i = 0; i < n; ++i)
+      {
+        // same weights as on [-1,1]
+        weights[i] = numbers::PI / double(n);
+      }
 
-      return weights;
-    }
-  } // namespace QGaussChebyshev
-} // namespace internal
+    return weights;
+  }
+} // namespace internal::QGaussChebyshev
 
 
 template <>
@@ -1020,78 +1014,73 @@ QGaussChebyshev<dim>::QGaussChebyshev(const unsigned int n)
 {}
 
 
-namespace internal
+namespace internal::QGaussRadauChebyshev
 {
-  namespace QGaussRadauChebyshev
+  // Computes the points of the quadrature formula.
+  std::vector<double>
+  get_quadrature_points(const unsigned int                          n,
+                        ::dealii::QGaussRadauChebyshev<1>::EndPoint ep)
   {
-    // Computes the points of the quadrature formula.
-    std::vector<double>
-    get_quadrature_points(const unsigned int                          n,
-                          ::dealii::QGaussRadauChebyshev<1>::EndPoint ep)
-    {
-      std::vector<double> points(n);
-      // n point quadrature: index from 0 to n-1
-      for (unsigned short i = 0; i < n; ++i)
-        // would be -cos(2i Pi/(2N+1))
-        // put + Pi so we start from the smallest point
-        // then map from [-1,1] to [0,1]
-        switch (ep)
-          {
-            case ::dealii::QGaussRadauChebyshev<1>::left:
-              {
-                points[i] =
-                  1. / 2. *
-                  (1. -
-                   std::cos(numbers::PI *
-                            (1 + 2 * double(i) / (2 * double(n - 1) + 1.))));
-                break;
-              }
-
-            case ::dealii::QGaussRadauChebyshev<1>::right:
-              {
-                points[i] =
-                  1. / 2. *
-                  (1. - std::cos(numbers::PI * (2 * double(n - 1 - i) /
-                                                (2 * double(n - 1) + 1.))));
-                break;
-              }
-
-            default:
-              Assert(
-                false,
-                ExcMessage(
-                  "This constructor can only be called with either "
-                  "QGaussRadauChebyshev::left or QGaussRadauChebyshev::right as "
-                  "second argument."));
-          }
-
-      return points;
-    }
-
-
-
-    // Computes the weights of the quadrature formula.
-    std::vector<double>
-    get_quadrature_weights(const unsigned int                          n,
-                           ::dealii::QGaussRadauChebyshev<1>::EndPoint ep)
-    {
-      std::vector<double> weights(n);
-
-      for (unsigned short i = 0; i < n; ++i)
+    std::vector<double> points(n);
+    // n point quadrature: index from 0 to n-1
+    for (unsigned short i = 0; i < n; ++i)
+      // would be -cos(2i Pi/(2N+1))
+      // put + Pi so we start from the smallest point
+      // then map from [-1,1] to [0,1]
+      switch (ep)
         {
-          // same weights as on [-1,1]
-          weights[i] = 2. * numbers::PI / double(2 * (n - 1) + 1.);
-          if (ep == ::dealii::QGaussRadauChebyshev<1>::left && i == 0)
-            weights[i] /= 2.;
-          else if (ep == ::dealii::QGaussRadauChebyshev<1>::right &&
-                   i == (n - 1))
-            weights[i] /= 2.;
+          case ::dealii::QGaussRadauChebyshev<1>::left:
+            {
+              points[i] =
+                1. / 2. *
+                (1. - std::cos(numbers::PI *
+                               (1 + 2 * double(i) / (2 * double(n - 1) + 1.))));
+              break;
+            }
+
+          case ::dealii::QGaussRadauChebyshev<1>::right:
+            {
+              points[i] =
+                1. / 2. *
+                (1. - std::cos(numbers::PI * (2 * double(n - 1 - i) /
+                                              (2 * double(n - 1) + 1.))));
+              break;
+            }
+
+          default:
+            Assert(
+              false,
+              ExcMessage(
+                "This constructor can only be called with either "
+                "QGaussRadauChebyshev::left or QGaussRadauChebyshev::right as "
+                "second argument."));
         }
 
-      return weights;
-    }
-  } // namespace QGaussRadauChebyshev
-} // namespace internal
+    return points;
+  }
+
+
+
+  // Computes the weights of the quadrature formula.
+  std::vector<double>
+  get_quadrature_weights(const unsigned int                          n,
+                         ::dealii::QGaussRadauChebyshev<1>::EndPoint ep)
+  {
+    std::vector<double> weights(n);
+
+    for (unsigned short i = 0; i < n; ++i)
+      {
+        // same weights as on [-1,1]
+        weights[i] = 2. * numbers::PI / double(2 * (n - 1) + 1.);
+        if (ep == ::dealii::QGaussRadauChebyshev<1>::left && i == 0)
+          weights[i] /= 2.;
+        else if (ep == ::dealii::QGaussRadauChebyshev<1>::right && i == (n - 1))
+          weights[i] /= 2.;
+      }
+
+    return weights;
+  }
+} // namespace internal::QGaussRadauChebyshev
 
 
 template <>
@@ -1124,45 +1113,42 @@ QGaussRadauChebyshev<dim>::QGaussRadauChebyshev(const unsigned int n,
 
 
 
-namespace internal
+namespace internal::QGaussLobattoChebyshev
 {
-  namespace QGaussLobattoChebyshev
+  // Computes the points of the quadrature formula.
+  std::vector<double>
+  get_quadrature_points(const unsigned int n)
   {
-    // Computes the points of the quadrature formula.
-    std::vector<double>
-    get_quadrature_points(const unsigned int n)
-    {
-      std::vector<double> points(n);
-      // n point quadrature: index from 0 to n-1
-      for (unsigned short i = 0; i < n; ++i)
-        // would be cos(i Pi/N)
-        // put + Pi so we start from the smallest point
-        // then map from [-1,1] to [0,1]
-        points[i] =
-          1. / 2. *
-          (1. + std::cos(numbers::PI * (1 + double(i) / double(n - 1))));
+    std::vector<double> points(n);
+    // n point quadrature: index from 0 to n-1
+    for (unsigned short i = 0; i < n; ++i)
+      // would be cos(i Pi/N)
+      // put + Pi so we start from the smallest point
+      // then map from [-1,1] to [0,1]
+      points[i] =
+        1. / 2. *
+        (1. + std::cos(numbers::PI * (1 + double(i) / double(n - 1))));
 
-      return points;
-    }
+    return points;
+  }
 
-    // Computes the weights of the quadrature formula.
-    std::vector<double>
-    get_quadrature_weights(const unsigned int n)
-    {
-      std::vector<double> weights(n);
+  // Computes the weights of the quadrature formula.
+  std::vector<double>
+  get_quadrature_weights(const unsigned int n)
+  {
+    std::vector<double> weights(n);
 
-      for (unsigned short i = 0; i < n; ++i)
-        {
-          // same weights as on [-1,1]
-          weights[i] = numbers::PI / double((n - 1));
-          if (i == 0 || i == (n - 1))
-            weights[i] /= 2.;
-        }
+    for (unsigned short i = 0; i < n; ++i)
+      {
+        // same weights as on [-1,1]
+        weights[i] = numbers::PI / double((n - 1));
+        if (i == 0 || i == (n - 1))
+          weights[i] /= 2.;
+      }
 
-      return weights;
-    }
-  } // namespace QGaussLobattoChebyshev
-} // namespace internal
+    return weights;
+  }
+} // namespace internal::QGaussLobattoChebyshev
 
 
 

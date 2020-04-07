@@ -97,14 +97,14 @@ public:
    * Number of rows of this matrix. For the present matrix, the number of rows
    * and columns are equal, of course.
    */
-  size_type
+  [[nodiscard]] size_type
   m() const;
 
   /**
    * Number of columns of this matrix. For the present matrix, the number of
    * rows and columns are equal, of course.
    */
-  size_type
+  [[nodiscard]] size_type
   n() const;
 
   /**

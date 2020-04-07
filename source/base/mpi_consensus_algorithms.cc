@@ -17,39 +17,33 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace Utilities
+namespace Utilities::MPI::ConsensusAlgorithms
 {
-  namespace MPI
-  {
-    namespace ConsensusAlgorithms
-    {
-      template class Process<unsigned int, unsigned int>;
+  template class Process<unsigned int, unsigned int>;
 
-      template class NBX<unsigned int, unsigned int>;
+  template class NBX<unsigned int, unsigned int>;
 
-      template class PEX<unsigned int, unsigned int>;
+  template class PEX<unsigned int, unsigned int>;
 
-      template class Selector<unsigned int, unsigned int>;
+  template class Selector<unsigned int, unsigned int>;
 
 
-      template class Process<
-        std::pair<types::global_dof_index, types::global_dof_index>,
-        unsigned int>;
+  template class Process<
+    std::pair<types::global_dof_index, types::global_dof_index>,
+    unsigned int>;
 
-      template class Selector<
-        std::pair<types::global_dof_index, types::global_dof_index>,
-        unsigned int>;
+  template class Selector<
+    std::pair<types::global_dof_index, types::global_dof_index>,
+    unsigned int>;
 
-      template class NBX<
-        std::pair<types::global_dof_index, types::global_dof_index>,
-        unsigned int>;
+  template class NBX<
+    std::pair<types::global_dof_index, types::global_dof_index>,
+    unsigned int>;
 
-      template class PEX<
-        std::pair<types::global_dof_index, types::global_dof_index>,
-        unsigned int>;
+  template class PEX<
+    std::pair<types::global_dof_index, types::global_dof_index>,
+    unsigned int>;
 
-    } // namespace ConsensusAlgorithms
-  }   // end of namespace MPI
-} // end of namespace Utilities
+} // namespace Utilities::MPI::ConsensusAlgorithms
 
 DEAL_II_NAMESPACE_CLOSE

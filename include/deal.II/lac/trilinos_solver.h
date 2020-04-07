@@ -281,7 +281,7 @@ namespace TrilinosWrappers
     /**
      * Access to object that controls convergence.
      */
-    SolverControl &
+    [[nodiscard]] SolverControl &
     control() const;
 
     /**
@@ -681,7 +681,7 @@ namespace TrilinosWrappers
     /**
      * Access to object that controls convergence.
      */
-    SolverControl &
+    [[nodiscard]] SolverControl &
     control() const;
 
     /**

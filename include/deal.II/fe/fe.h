@@ -717,7 +717,7 @@ public:
     /**
      * Return an estimate (in bytes) for the memory consumption of this object.
      */
-    virtual std::size_t
+    [[nodiscard]] virtual std::size_t
     memory_consumption() const;
   };
 

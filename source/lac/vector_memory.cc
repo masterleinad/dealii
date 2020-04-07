@@ -31,24 +31,21 @@ DEAL_II_NAMESPACE_OPEN
 
 #include "vector_memory.inst"
 
-namespace internal
+namespace internal::GrowingVectorMemoryImplementation
 {
-  namespace GrowingVectorMemoryImplementation
-  {
 #ifdef DEAL_II_WITH_CUDA
-    void
-    release_all_unused_cuda_memory();
+  void
+  release_all_unused_cuda_memory();
 #endif
 
-    void
-    release_all_unused_memory()
-    {
+  void
+  release_all_unused_memory()
+  {
 #include "vector_memory_release.inst"
 #ifdef DEAL_II_WITH_CUDA
-      release_all_unused_cuda_memory();
+    release_all_unused_cuda_memory();
 #endif
-    }
-  } // namespace GrowingVectorMemoryImplementation
-} // namespace internal
+  }
+} // namespace internal::GrowingVectorMemoryImplementation
 
 DEAL_II_NAMESPACE_CLOSE

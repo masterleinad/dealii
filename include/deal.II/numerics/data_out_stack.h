@@ -263,7 +263,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**
@@ -369,7 +369,7 @@ private:
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual std::vector<std::string>
+  [[nodiscard]] virtual std::vector<std::string>
   get_dataset_names() const override;
 };
 

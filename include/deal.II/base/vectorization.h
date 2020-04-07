@@ -276,17 +276,15 @@ public:
    * @return An iterator pointing to the beginning of the underlying data (`const`
    * version).
    */
-  VectorizedArrayIterator<const T>
-  begin() const
-  {
+  [[nodiscard]] VectorizedArrayIterator<const T>
+  begin() const {
     return VectorizedArrayIterator<const T>(static_cast<const T &>(*this), 0);
   }
 
   /**
    * @return An iterator pointing to the end of the underlying data.
    */
-  VectorizedArrayIterator<T>
-  end()
+  VectorizedArrayIterator<T> end()
   {
     return VectorizedArrayIterator<T>(static_cast<T &>(*this), width);
   }
@@ -295,9 +293,8 @@ public:
    * @return An iterator pointing to the end of the underlying data (`const`
    * version).
    */
-  VectorizedArrayIterator<const T>
-  end() const
-  {
+  [[nodiscard]] VectorizedArrayIterator<const T>
+  end() const {
     return VectorizedArrayIterator<const T>(static_cast<const T &>(*this),
                                             width);
   }
@@ -635,22 +632,18 @@ private:
    * Return the square root of this field. Not for use in user code. Use
    * sqrt(x) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_sqrt() const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_sqrt() const {
     VectorizedArray res;
     res.data = std::sqrt(data);
     return res;
   }
 
-  /**
-   * Return the absolute value of this field. Not for use in user code. Use
-   * abs(x) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_abs() const
+    /**
+     * Return the absolute value of this field. Not for use in user code. Use
+     * abs(x) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray get_abs() const
   {
     VectorizedArray res;
     res.data = std::fabs(data);
@@ -661,22 +654,19 @@ private:
    * Return the component-wise maximum of this field and another one. Not for
    * use in user code. Use max(x,y) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_max(const VectorizedArray &other) const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_max(const VectorizedArray &other) const {
     VectorizedArray res;
     res.data = std::max(data, other.data);
     return res;
   }
 
-  /**
-   * Return the component-wise minimum of this field and another one. Not for
-   * use in user code. Use min(x,y) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_min(const VectorizedArray &other) const
+    /**
+     * Return the component-wise minimum of this field and another one. Not for
+     * use in user code. Use min(x,y) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+    get_min(const VectorizedArray &other) const
   {
     VectorizedArray res;
     res.data = std::min(data, other.data);
@@ -3412,22 +3402,18 @@ private:
    * Return the square root of this field. Not for use in user code. Use
    * sqrt(x) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_sqrt() const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_sqrt() const {
     VectorizedArray res;
     res.data = _mm_sqrt_pd(data);
     return res;
   }
 
-  /**
-   * Return the absolute value of this field. Not for use in user code. Use
-   * abs(x) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_abs() const
+    /**
+     * Return the absolute value of this field. Not for use in user code. Use
+     * abs(x) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray get_abs() const
   {
     // to compute the absolute value, perform
     // bitwise andnot with -0. This will leave all
@@ -3443,22 +3429,19 @@ private:
    * Return the component-wise maximum of this field and another one. Not for
    * use in user code. Use max(x,y) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_max(const VectorizedArray &other) const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_max(const VectorizedArray &other) const {
     VectorizedArray res;
     res.data = _mm_max_pd(data, other.data);
     return res;
   }
 
-  /**
-   * Return the component-wise minimum of this field and another one. Not for
-   * use in user code. Use min(x,y) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_min(const VectorizedArray &other) const
+    /**
+     * Return the component-wise minimum of this field and another one. Not for
+     * use in user code. Use min(x,y) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+    get_min(const VectorizedArray &other) const
   {
     VectorizedArray res;
     res.data = _mm_min_pd(data, other.data);
@@ -3856,22 +3839,18 @@ private:
    * Return the square root of this field. Not for use in user code. Use
    * sqrt(x) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_sqrt() const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_sqrt() const {
     VectorizedArray res;
     res.data = _mm_sqrt_ps(data);
     return res;
   }
 
-  /**
-   * Return the absolute value of this field. Not for use in user code. Use
-   * abs(x) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_abs() const
+    /**
+     * Return the absolute value of this field. Not for use in user code. Use
+     * abs(x) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray get_abs() const
   {
     // to compute the absolute value, perform bitwise andnot with -0. This
     // will leave all value and exponent bits unchanged but force the sign
@@ -3886,22 +3865,19 @@ private:
    * Return the component-wise maximum of this field and another one. Not for
    * use in user code. Use max(x,y) instead.
    */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_max(const VectorizedArray &other) const
-  {
+  [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+                                      get_max(const VectorizedArray &other) const {
     VectorizedArray res;
     res.data = _mm_max_ps(data, other.data);
     return res;
   }
 
-  /**
-   * Return the component-wise minimum of this field and another one. Not for
-   * use in user code. Use min(x,y) instead.
-   */
-  DEAL_II_ALWAYS_INLINE
-  VectorizedArray
-  get_min(const VectorizedArray &other) const
+    /**
+     * Return the component-wise minimum of this field and another one. Not for
+     * use in user code. Use min(x,y) instead.
+     */
+    [[nodiscard]] DEAL_II_ALWAYS_INLINE VectorizedArray
+    get_min(const VectorizedArray &other) const
   {
     VectorizedArray res;
     res.data = _mm_min_ps(data, other.data);

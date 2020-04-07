@@ -222,7 +222,7 @@ struct SubCellData
    * when @p dim equals one, and whether the @p boundary_quads
    * vector is empty when @p dim equals two.
    */
-  bool
+  [[nodiscard]] bool
   check_consistency(const unsigned int dim) const;
 };
 

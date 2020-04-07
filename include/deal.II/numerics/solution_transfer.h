@@ -441,7 +441,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**
@@ -550,10 +550,8 @@ private:
       const unsigned int active_fe_index_in = 0)
       : indices_ptr(nullptr)
       , dof_values_ptr(dof_values_ptr_in)
-      , active_fe_index(active_fe_index_in)
-    {}
-    std::size_t
-    memory_consumption() const;
+      , active_fe_index(active_fe_index_in){}[[nodiscard]] std::size_t
+      memory_consumption() const;
 
     std::vector<types::global_dof_index> *                indices_ptr;
     std::vector<Vector<typename VectorType::value_type>> *dof_values_ptr;

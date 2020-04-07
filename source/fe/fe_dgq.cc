@@ -38,23 +38,20 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::FE_DGQ
 {
-  namespace FE_DGQ
+  namespace
   {
-    namespace
+    std::vector<Point<1>>
+    get_QGaussLobatto_points(const unsigned int degree)
     {
-      std::vector<Point<1>>
-      get_QGaussLobatto_points(const unsigned int degree)
-      {
-        if (degree > 0)
-          return QGaussLobatto<1>(degree + 1).get_points();
-        else
-          return std::vector<Point<1>>(1, Point<1>(0.5));
-      }
-    } // namespace
-  }   // namespace FE_DGQ
-} // namespace internal
+      if (degree > 0)
+        return QGaussLobatto<1>(degree + 1).get_points();
+      else
+        return std::vector<Point<1>>(1, Point<1>(0.5));
+    }
+  } // namespace
+} // namespace internal::FE_DGQ
 
 
 

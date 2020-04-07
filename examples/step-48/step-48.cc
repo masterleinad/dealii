@@ -500,8 +500,9 @@ namespace Step48
     data_out.add_data_vector(solution, "solution");
     data_out.build_patches();
 
-    data_out.write_vtu_with_pvtu_record(
-      "./", "solution", timestep_number, MPI_COMM_WORLD, 3);
+    const std::string pvtu_master_filename =
+      data_out.write_vtu_with_pvtu_record(
+        "./", "solution", timestep_number, MPI_COMM_WORLD, 3);
   }
 
 

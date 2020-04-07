@@ -30,29 +30,26 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace internal
+namespace internal::FE_Q_Hierarchical
 {
-  namespace FE_Q_Hierarchical
+  namespace
   {
-    namespace
+    /**
+     * A function which maps  in[i] to i,i.e. output[in[i]] = i;
+     */
+    inline std::vector<unsigned int>
+    invert_numbering(const std::vector<unsigned int> &in)
     {
-      /**
-       * A function which maps  in[i] to i,i.e. output[in[i]] = i;
-       */
-      inline std::vector<unsigned int>
-      invert_numbering(const std::vector<unsigned int> &in)
-      {
-        std::vector<unsigned int> out(in.size());
-        for (unsigned int i = 0; i < in.size(); ++i)
-          {
-            AssertIndexRange(in[i], out.size());
-            out[in[i]] = i;
-          }
-        return out;
-      }
-    } // namespace
-  }   // namespace FE_Q_Hierarchical
-} // namespace internal
+      std::vector<unsigned int> out(in.size());
+      for (unsigned int i = 0; i < in.size(); ++i)
+        {
+          AssertIndexRange(in[i], out.size());
+          out[in[i]] = i;
+        }
+      return out;
+    }
+  } // namespace
+} // namespace internal::FE_Q_Hierarchical
 
 
 

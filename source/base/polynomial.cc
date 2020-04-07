@@ -708,21 +708,18 @@ namespace Polynomials
 
   // ------------------ class LagrangeEquidistant --------------- //
 
-  namespace internal
+  namespace internal::LagrangeEquidistantImplementation
   {
-    namespace LagrangeEquidistantImplementation
+    std::vector<Point<1>>
+    generate_equidistant_unit_points(const unsigned int n)
     {
-      std::vector<Point<1>>
-      generate_equidistant_unit_points(const unsigned int n)
-      {
-        std::vector<Point<1>> points(n + 1);
-        const double          one_over_n = 1. / n;
-        for (unsigned int k = 0; k <= n; ++k)
-          points[k](0) = static_cast<double>(k) * one_over_n;
-        return points;
-      }
-    } // namespace LagrangeEquidistantImplementation
-  }   // namespace internal
+      std::vector<Point<1>> points(n + 1);
+      const double          one_over_n = 1. / n;
+      for (unsigned int k = 0; k <= n; ++k)
+        points[k](0) = static_cast<double>(k) * one_over_n;
+      return points;
+    }
+  } // namespace internal::LagrangeEquidistantImplementation
 
 
 

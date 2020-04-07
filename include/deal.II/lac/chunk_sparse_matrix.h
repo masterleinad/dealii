@@ -123,14 +123,14 @@ namespace ChunkSparseMatrixIterators
     /**
      * Value of this matrix entry.
      */
-    number
+    [[nodiscard]] number
     value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a constant reference.
      */
-    const MatrixType &
+    [[nodiscard]] const MatrixType &
     get_matrix() const;
 
   private:
@@ -254,14 +254,14 @@ namespace ChunkSparseMatrixIterators
     /**
      * Value of this matrix entry, returned as a read- and writable reference.
      */
-    Reference
+    [[nodiscard]] Reference
     value() const;
 
     /**
      * Return a reference to the matrix into which this accessor points. Note
      * that in the present case, this is a non-constant reference.
      */
-    MatrixType &
+    [[nodiscard]] MatrixType &
     get_matrix() const;
 
   private:

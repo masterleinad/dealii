@@ -93,10 +93,10 @@ public:
    */
   FE_NedelecSZ(const unsigned int order);
 
-  virtual UpdateFlags
+  [[nodiscard]] virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>
@@ -424,7 +424,7 @@ private:
   /**
    * Returns the number of DoFs in the basis set.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   compute_num_dofs(const unsigned int degree) const;
 
   /**

@@ -94,7 +94,7 @@ public:
   FE_RannacherTurek(const unsigned int order                 = 0,
                     const unsigned int n_face_support_points = 2);
 
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>

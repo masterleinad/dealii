@@ -105,7 +105,7 @@ namespace hp
     /**
      * Get the underlying update flags.
      */
-    UpdateFlags
+    [[nodiscard]] UpdateFlags
     get_update_flags() const;
 
     /**

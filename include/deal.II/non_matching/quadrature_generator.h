@@ -94,27 +94,27 @@ namespace NonMatching
         /**
          * Return the lower bound of the hypercube in @p direction.
          */
-        double
+        [[nodiscard]] double
         lower_bound(const unsigned int direction) const;
 
         /**
          * Return the upper bound of the hypercube in @p direction.
          */
-        double
+        [[nodiscard]] double
         upper_bound(const unsigned int direction) const;
 
         /**
          * Return the bounds of the hypercube in @p direction, as a one-dimensional
          * hypercube.
          */
-        Hypercube<1>
+        [[nodiscard]] Hypercube<1>
         bounds(const unsigned int direction) const;
 
         /**
          * Returns the cross section of the hypercube orthogonal to @p direction.
          * This is a hypercube in one dimension lower.
          */
-        Hypercube<dim - 1>
+        [[nodiscard]] Hypercube<dim - 1>
         cross_section(const unsigned int direction) const;
 
         /**
@@ -126,26 +126,26 @@ namespace NonMatching
         /**
          * Returns the length of the side of the hypercube.
          */
-        double
+        [[nodiscard]] double
         side_length() const;
 
         /**
          * Returns the volume of the hypercube.
          */
-        double
+        [[nodiscard]] double
         volume() const;
 
         /**
          * Returns the indexth vertex of the hypercube.
          */
-        Point<dim>
+        [[nodiscard]] Point<dim>
         vertex(const unsigned int index) const;
 
         /**
          * Returns the indexth child of the hypercube. Child is meant in the
          * same way as for a cell.
          */
-        Hypercube<dim>
+        [[nodiscard]] Hypercube<dim>
         child(const unsigned int index) const;
 
       private:
@@ -211,15 +211,15 @@ namespace NonMatching
       /* -------------- declaration of explicit specializations ------------- */
 
       template <>
-      Hypercube<-1>
+      [[nodiscard]] Hypercube<-1>
       Hypercube<0>::cross_section(const unsigned int) const;
 
       template <>
-      Point<0>
+      [[nodiscard]] Point<0>
       Hypercube<0>::vertex(const unsigned int) const;
 
       template <>
-      Hypercube<0>
+      [[nodiscard]] Hypercube<0>
       Hypercube<0>::child(const unsigned int) const;
 
     } // namespace QuadratureGeneratorImplementation

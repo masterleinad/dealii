@@ -19,31 +19,28 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace internal
+namespace internal::hp
 {
-  namespace hp
+  // ---------------------- DoFObjects ----------------------------
+
+  template <int structdim>
+  std::size_t
+  DoFIndicesOnFacesOrEdges<structdim>::memory_consumption() const
   {
-    // ---------------------- DoFObjects ----------------------------
-
-    template <int structdim>
-    std::size_t
-    DoFIndicesOnFacesOrEdges<structdim>::memory_consumption() const
-    {
-      return (MemoryConsumption::memory_consumption(dofs) +
-              MemoryConsumption::memory_consumption(dof_offsets));
-    }
+    return (MemoryConsumption::memory_consumption(dofs) +
+            MemoryConsumption::memory_consumption(dof_offsets));
+  }
 
 
-    // explicit instantiations
-    template std::size_t
-    DoFIndicesOnFacesOrEdges<1>::memory_consumption() const;
+  // explicit instantiations
+  template std::size_t
+  DoFIndicesOnFacesOrEdges<1>::memory_consumption() const;
 
-    template std::size_t
-    DoFIndicesOnFacesOrEdges<2>::memory_consumption() const;
+  template std::size_t
+  DoFIndicesOnFacesOrEdges<2>::memory_consumption() const;
 
-    template std::size_t
-    DoFIndicesOnFacesOrEdges<3>::memory_consumption() const;
-  } // namespace hp
-} // namespace internal
+  template std::size_t
+  DoFIndicesOnFacesOrEdges<3>::memory_consumption() const;
+} // namespace internal::hp
 
 DEAL_II_NAMESPACE_CLOSE

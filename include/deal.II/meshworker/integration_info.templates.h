@@ -40,13 +40,13 @@ namespace MeshWorker
     values.resize(global_data->n_values());
     // For all selected finite
     // element functions
-    for (unsigned int i = 0; i < values.size(); ++i)
+    for (auto &value : values)
       {
-        values[i].resize(n_components);
+        value.resize(n_components);
         // For all components
-        for (unsigned int j = 0; j < values[i].size(); ++j)
+        for (auto &j : value)
           {
-            values[i][j].resize(nqp);
+            j.resize(nqp);
           }
       }
 

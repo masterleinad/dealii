@@ -110,11 +110,8 @@ namespace internal
       /**
        * Return the memory consumption of the present data structure.
        */
-      std::size_t
-      memory_consumption() const
-      {
-        return sizeof(*this);
-      }
+      [[nodiscard]] std::size_t
+      memory_consumption() const { return sizeof(*this); }
     };
 
 

@@ -1131,9 +1131,8 @@ namespace GridGenerator
          * It is a bijective function mapping from [0,1] onto [0,1] where values
          * near 1 are made tighter.
          */
-        double
-        bias_alpha(double alpha) const
-        {
+        [[nodiscard]] double
+        bias_alpha(double alpha) const {
           return std::tanh(bias_factor * alpha) / std::tanh(bias_factor);
         }
       };

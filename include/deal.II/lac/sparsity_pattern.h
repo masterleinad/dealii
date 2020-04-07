@@ -160,7 +160,7 @@ namespace SparsityPatternIterators
      * Row number of the element represented by this object. This function can
      * only be called for entries for which is_valid_entry() is true.
      */
-    size_type
+    [[nodiscard]] size_type
     row() const;
 
     /**
@@ -168,7 +168,7 @@ namespace SparsityPatternIterators
      * This function can only be called for entries for which is_valid_entry()
      * is true.
      */
-    size_type
+    [[nodiscard]] size_type
     index() const;
 
     /**
@@ -180,14 +180,14 @@ namespace SparsityPatternIterators
      * This function can only be called for entries for which is_valid_entry()
      * is true.
      */
-    size_type
+    [[nodiscard]] size_type
     global_index() const;
 
     /**
      * Column number of the element represented by this object. This function
      * can only be called for entries for which is_valid_entry() is true.
      */
-    size_type
+    [[nodiscard]] size_type
     column() const;
 
     /**
@@ -199,7 +199,7 @@ namespace SparsityPatternIterators
      * pattern's lifetime, you will iterate over elements that are not valid.
      * If this is so, then this function will return false.
      */
-    bool
+    [[nodiscard]] bool
     is_valid_entry() const;
 
     /**

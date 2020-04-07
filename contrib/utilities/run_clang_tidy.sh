@@ -60,7 +60,7 @@ cmake --build . --target expand_all_instantiations || (echo "make expand_all_ins
 # finally run it:
 # pipe away stderr (just contains nonsensical "x warnings generated")
 # pipe output to output.txt
-run-clang-tidy.py -p . -quiet -header-filter="$SRC/include/*" 2>error.txt >output.txt
+run-clang-tidy.py -p . -quiet -header-filter="$SRC/include/*" -fix 2>error.txt >output.txt
 
 if grep -E -q '(warning|error): ' output.txt; then
     grep -E '(warning|error): ' output.txt

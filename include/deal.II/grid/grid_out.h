@@ -1462,7 +1462,7 @@ public:
    * Default suffix for the default output format selected through
    * ParameterHandler.
    */
-  std::string
+  [[nodiscard]] std::string
   default_suffix() const;
 
   /**
@@ -1505,7 +1505,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**
@@ -1840,23 +1840,23 @@ private:
    * there for more information.
    */
   template <int dim, int spacedim>
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_faces(const Triangulation<dim, spacedim> &tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_faces(const Triangulation<1, 1> &tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_faces(const Triangulation<1, 2> &tria) const;
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_faces(const Triangulation<1, 3> &tria) const;
 
   /**
@@ -1872,36 +1872,36 @@ private:
    * there for more information.
    */
   template <int dim, int spacedim>
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<dim, spacedim> &tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<1, 1> &tria) const;
 
   /**
    * Declaration of the specialization of above function for 1d, 2sd. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<1, 2> &tria) const;
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<1, 3> &tria) const;
 
   /**
    * Declaration of the specialization of above function for 2d. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<2, 2> &tria) const;
   /**
    * Declaration of the specialization of above function for 2d, 3sd. Simply
    * returns zero.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_boundary_lines(const Triangulation<2, 3> &tria) const;
 };
 

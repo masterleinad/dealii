@@ -32,213 +32,209 @@ DEAL_II_NAMESPACE_OPEN
 
 using namespace LAPACKSupport;
 
-namespace internal
+namespace internal::LAPACKFullMatrixImplementation
 {
-  namespace LAPACKFullMatrixImplementation
+  // ZGEEV/CGEEV and DGEEV/SGEEV need different work arrays and different
+  // output arrays for eigenvalues. This makes working with generic scalar
+  // types a bit difficult. To get around this, geev_helper has the same
+  // signature for real and complex arguments, but it ignores some
+  // parameters when called with a real type and ignores different
+  // parameters when called with a complex type.
+  template <typename T>
+  void
+  geev_helper(const char            vl,
+              const char            vr,
+              AlignedVector<T> &    matrix,
+              const types::blas_int n_rows,
+              std::vector<T> &      real_part_eigenvalues,
+              std::vector<T> &      imag_part_eigenvalues,
+              std::vector<T> &      left_eigenvectors,
+              std::vector<T> &      right_eigenvectors,
+              std::vector<T> &      real_work,
+              std::vector<T> & /*complex_work*/,
+              const types::blas_int work_flag,
+              types::blas_int &     info)
   {
-    // ZGEEV/CGEEV and DGEEV/SGEEV need different work arrays and different
-    // output arrays for eigenvalues. This makes working with generic scalar
-    // types a bit difficult. To get around this, geev_helper has the same
-    // signature for real and complex arguments, but it ignores some
-    // parameters when called with a real type and ignores different
-    // parameters when called with a complex type.
-    template <typename T>
-    void
-    geev_helper(const char            vl,
-                const char            vr,
-                AlignedVector<T> &    matrix,
-                const types::blas_int n_rows,
-                std::vector<T> &      real_part_eigenvalues,
-                std::vector<T> &      imag_part_eigenvalues,
-                std::vector<T> &      left_eigenvectors,
-                std::vector<T> &      right_eigenvectors,
-                std::vector<T> &      real_work,
-                std::vector<T> & /*complex_work*/,
-                const types::blas_int work_flag,
-                types::blas_int &     info)
-    {
-      static_assert(std::is_same<T, double>::value ||
-                      std::is_same<T, float>::value,
-                    "Only implemented for double and float");
-      Assert(matrix.size() == static_cast<std::size_t>(n_rows * n_rows),
+    static_assert(std::is_same<T, double>::value ||
+                    std::is_same<T, float>::value,
+                  "Only implemented for double and float");
+    Assert(matrix.size() == static_cast<std::size_t>(n_rows * n_rows),
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(n_rows) <= real_part_eigenvalues.size(),
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(n_rows) <= imag_part_eigenvalues.size(),
+           ExcInternalError());
+    if (vl == 'V')
+      Assert(static_cast<std::size_t>(n_rows * n_rows) <=
+               left_eigenvectors.size(),
              ExcInternalError());
-      Assert(static_cast<std::size_t>(n_rows) <= real_part_eigenvalues.size(),
+    if (vr == 'V')
+      Assert(static_cast<std::size_t>(n_rows * n_rows) <=
+               right_eigenvectors.size(),
              ExcInternalError());
-      Assert(static_cast<std::size_t>(n_rows) <= imag_part_eigenvalues.size(),
-             ExcInternalError());
-      if (vl == 'V')
-        Assert(static_cast<std::size_t>(n_rows * n_rows) <=
-                 left_eigenvectors.size(),
-               ExcInternalError());
-      if (vr == 'V')
-        Assert(static_cast<std::size_t>(n_rows * n_rows) <=
-                 right_eigenvectors.size(),
-               ExcInternalError());
-      Assert(work_flag == -1 ||
-               static_cast<std::size_t>(2 * n_rows) <= real_work.size(),
-             ExcInternalError());
-      Assert(work_flag == -1 || std::max<long int>(1, 3 * n_rows) <= work_flag,
-             ExcInternalError());
-      geev(&vl,
-           &vr,
-           &n_rows,
-           matrix.data(),
-           &n_rows,
-           real_part_eigenvalues.data(),
-           imag_part_eigenvalues.data(),
-           left_eigenvectors.data(),
-           &n_rows,
-           right_eigenvectors.data(),
-           &n_rows,
-           real_work.data(),
-           &work_flag,
-           &info);
-    }
+    Assert(work_flag == -1 ||
+             static_cast<std::size_t>(2 * n_rows) <= real_work.size(),
+           ExcInternalError());
+    Assert(work_flag == -1 || std::max<long int>(1, 3 * n_rows) <= work_flag,
+           ExcInternalError());
+    geev(&vl,
+         &vr,
+         &n_rows,
+         matrix.data(),
+         &n_rows,
+         real_part_eigenvalues.data(),
+         imag_part_eigenvalues.data(),
+         left_eigenvectors.data(),
+         &n_rows,
+         right_eigenvectors.data(),
+         &n_rows,
+         real_work.data(),
+         &work_flag,
+         &info);
+  }
 
-    template <typename T>
-    void
-    geev_helper(const char                      vl,
-                const char                      vr,
-                AlignedVector<std::complex<T>> &matrix,
-                const types::blas_int           n_rows,
-                std::vector<T> & /*real_part_eigenvalues*/,
-                std::vector<std::complex<T>> &eigenvalues,
-                std::vector<std::complex<T>> &left_eigenvectors,
-                std::vector<std::complex<T>> &right_eigenvectors,
-                std::vector<std::complex<T>> &complex_work,
-                std::vector<T> &              real_work,
-                const types::blas_int         work_flag,
-                types::blas_int &             info)
-    {
-      static_assert(
-        std::is_same<T, double>::value || std::is_same<T, float>::value,
-        "Only implemented for std::complex<double> and std::complex<float>");
-      Assert(matrix.size() == static_cast<std::size_t>(n_rows * n_rows),
+  template <typename T>
+  void
+  geev_helper(const char                      vl,
+              const char                      vr,
+              AlignedVector<std::complex<T>> &matrix,
+              const types::blas_int           n_rows,
+              std::vector<T> & /*real_part_eigenvalues*/,
+              std::vector<std::complex<T>> &eigenvalues,
+              std::vector<std::complex<T>> &left_eigenvectors,
+              std::vector<std::complex<T>> &right_eigenvectors,
+              std::vector<std::complex<T>> &complex_work,
+              std::vector<T> &              real_work,
+              const types::blas_int         work_flag,
+              types::blas_int &             info)
+  {
+    static_assert(
+      std::is_same<T, double>::value || std::is_same<T, float>::value,
+      "Only implemented for std::complex<double> and std::complex<float>");
+    Assert(matrix.size() == static_cast<std::size_t>(n_rows * n_rows),
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(n_rows) <= eigenvalues.size(),
+           ExcInternalError());
+    if (vl == 'V')
+      Assert(static_cast<std::size_t>(n_rows * n_rows) <=
+               left_eigenvectors.size(),
              ExcInternalError());
-      Assert(static_cast<std::size_t>(n_rows) <= eigenvalues.size(),
+    if (vr == 'V')
+      Assert(static_cast<std::size_t>(n_rows * n_rows) <=
+               right_eigenvectors.size(),
              ExcInternalError());
-      if (vl == 'V')
-        Assert(static_cast<std::size_t>(n_rows * n_rows) <=
-                 left_eigenvectors.size(),
-               ExcInternalError());
-      if (vr == 'V')
-        Assert(static_cast<std::size_t>(n_rows * n_rows) <=
-                 right_eigenvectors.size(),
-               ExcInternalError());
-      Assert(std::max<std::size_t>(1, work_flag) <= real_work.size(),
-             ExcInternalError());
-      Assert(work_flag == -1 ||
-               std::max<long int>(1, 2 * n_rows) <= (work_flag),
-             ExcInternalError());
+    Assert(std::max<std::size_t>(1, work_flag) <= real_work.size(),
+           ExcInternalError());
+    Assert(work_flag == -1 || std::max<long int>(1, 2 * n_rows) <= (work_flag),
+           ExcInternalError());
 
-      geev(&vl,
-           &vr,
-           &n_rows,
-           matrix.data(),
-           &n_rows,
-           eigenvalues.data(),
-           left_eigenvectors.data(),
-           &n_rows,
-           right_eigenvectors.data(),
-           &n_rows,
-           complex_work.data(),
-           &work_flag,
-           real_work.data(),
-           &info);
-    }
+    geev(&vl,
+         &vr,
+         &n_rows,
+         matrix.data(),
+         &n_rows,
+         eigenvalues.data(),
+         left_eigenvectors.data(),
+         &n_rows,
+         right_eigenvectors.data(),
+         &n_rows,
+         complex_work.data(),
+         &work_flag,
+         real_work.data(),
+         &info);
+  }
 
 
 
-    template <typename T>
-    void
-    gesdd_helper(const char            job,
-                 const types::blas_int n_rows,
-                 const types::blas_int n_cols,
-                 AlignedVector<T> &    matrix,
-                 std::vector<T> &      singular_values,
-                 AlignedVector<T> &    left_vectors,
-                 AlignedVector<T> &    right_vectors,
-                 std::vector<T> &      real_work,
-                 std::vector<T> & /*complex work*/,
-                 std::vector<types::blas_int> &integer_work,
-                 const types::blas_int         work_flag,
-                 types::blas_int &             info)
-    {
-      Assert(job == 'A' || job == 'S' || job == 'O' || job == 'N',
-             ExcInternalError());
-      Assert(static_cast<std::size_t>(n_rows * n_cols) == matrix.size(),
-             ExcInternalError());
-      Assert(std::min<std::size_t>(n_rows, n_cols) <= singular_values.size(),
-             ExcInternalError());
-      Assert(8 * std::min<std::size_t>(n_rows, n_cols) <= integer_work.size(),
-             ExcInternalError());
-      Assert(work_flag == -1 ||
-               static_cast<std::size_t>(work_flag) <= real_work.size(),
-             ExcInternalError());
-      gesdd(&job,
-            &n_rows,
-            &n_cols,
-            matrix.data(),
-            &n_rows,
-            singular_values.data(),
-            left_vectors.data(),
-            &n_rows,
-            right_vectors.data(),
-            &n_cols,
-            real_work.data(),
-            &work_flag,
-            integer_work.data(),
-            &info);
-    }
+  template <typename T>
+  void
+  gesdd_helper(const char            job,
+               const types::blas_int n_rows,
+               const types::blas_int n_cols,
+               AlignedVector<T> &    matrix,
+               std::vector<T> &      singular_values,
+               AlignedVector<T> &    left_vectors,
+               AlignedVector<T> &    right_vectors,
+               std::vector<T> &      real_work,
+               std::vector<T> & /*complex work*/,
+               std::vector<types::blas_int> &integer_work,
+               const types::blas_int         work_flag,
+               types::blas_int &             info)
+  {
+    Assert(job == 'A' || job == 'S' || job == 'O' || job == 'N',
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(n_rows * n_cols) == matrix.size(),
+           ExcInternalError());
+    Assert(std::min<std::size_t>(n_rows, n_cols) <= singular_values.size(),
+           ExcInternalError());
+    Assert(8 * std::min<std::size_t>(n_rows, n_cols) <= integer_work.size(),
+           ExcInternalError());
+    Assert(work_flag == -1 ||
+             static_cast<std::size_t>(work_flag) <= real_work.size(),
+           ExcInternalError());
+    gesdd(&job,
+          &n_rows,
+          &n_cols,
+          matrix.data(),
+          &n_rows,
+          singular_values.data(),
+          left_vectors.data(),
+          &n_rows,
+          right_vectors.data(),
+          &n_cols,
+          real_work.data(),
+          &work_flag,
+          integer_work.data(),
+          &info);
+  }
 
 
 
-    template <typename T>
-    void
-    gesdd_helper(const char                      job,
-                 const types::blas_int           n_rows,
-                 const types::blas_int           n_cols,
-                 AlignedVector<std::complex<T>> &matrix,
-                 std::vector<T> &                singular_values,
-                 AlignedVector<std::complex<T>> &left_vectors,
-                 AlignedVector<std::complex<T>> &right_vectors,
-                 std::vector<std::complex<T>> &  work,
-                 std::vector<T> &                real_work,
-                 std::vector<types::blas_int> &  integer_work,
-                 const types::blas_int &         work_flag,
-                 types::blas_int &               info)
-    {
-      Assert(job == 'A' || job == 'S' || job == 'O' || job == 'N',
-             ExcInternalError());
-      Assert(static_cast<std::size_t>(n_rows * n_cols) == matrix.size(),
-             ExcInternalError());
-      Assert(static_cast<std::size_t>(std::min(n_rows, n_cols)) <=
-               singular_values.size(),
-             ExcInternalError());
-      Assert(8 * std::min<std::size_t>(n_rows, n_cols) <= integer_work.size(),
-             ExcInternalError());
-      Assert(work_flag == -1 ||
-               static_cast<std::size_t>(work_flag) <= real_work.size(),
-             ExcInternalError());
+  template <typename T>
+  void
+  gesdd_helper(const char                      job,
+               const types::blas_int           n_rows,
+               const types::blas_int           n_cols,
+               AlignedVector<std::complex<T>> &matrix,
+               std::vector<T> &                singular_values,
+               AlignedVector<std::complex<T>> &left_vectors,
+               AlignedVector<std::complex<T>> &right_vectors,
+               std::vector<std::complex<T>> &  work,
+               std::vector<T> &                real_work,
+               std::vector<types::blas_int> &  integer_work,
+               const types::blas_int &         work_flag,
+               types::blas_int &               info)
+  {
+    Assert(job == 'A' || job == 'S' || job == 'O' || job == 'N',
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(n_rows * n_cols) == matrix.size(),
+           ExcInternalError());
+    Assert(static_cast<std::size_t>(std::min(n_rows, n_cols)) <=
+             singular_values.size(),
+           ExcInternalError());
+    Assert(8 * std::min<std::size_t>(n_rows, n_cols) <= integer_work.size(),
+           ExcInternalError());
+    Assert(work_flag == -1 ||
+             static_cast<std::size_t>(work_flag) <= real_work.size(),
+           ExcInternalError());
 
-      gesdd(&job,
-            &n_rows,
-            &n_cols,
-            matrix.data(),
-            &n_rows,
-            singular_values.data(),
-            left_vectors.data(),
-            &n_rows,
-            right_vectors.data(),
-            &n_cols,
-            work.data(),
-            &work_flag,
-            real_work.data(),
-            integer_work.data(),
-            &info);
-    }
-  } // namespace LAPACKFullMatrixImplementation
-} // namespace internal
+    gesdd(&job,
+          &n_rows,
+          &n_cols,
+          matrix.data(),
+          &n_rows,
+          singular_values.data(),
+          left_vectors.data(),
+          &n_rows,
+          right_vectors.data(),
+          &n_cols,
+          work.data(),
+          &work_flag,
+          real_work.data(),
+          integer_work.data(),
+          &info);
+  }
+} // namespace internal::LAPACKFullMatrixImplementation
 
 template <typename number>
 LAPACKFullMatrix<number>::LAPACKFullMatrix(const size_type n)

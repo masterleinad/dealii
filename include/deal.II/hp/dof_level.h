@@ -237,7 +237,7 @@ namespace internal
        * documentation of the internal::hp::DoFLevel class template for more
        * information.
        */
-      types::global_dof_index
+      [[nodiscard]] types::global_dof_index
       get_dof_index(const unsigned int obj_index,
                     const unsigned int fe_index,
                     const unsigned int local_index) const;
@@ -245,14 +245,14 @@ namespace internal
       /**
        * Return the fe_index of the active finite element on this object.
        */
-      unsigned int
+      [[nodiscard]] unsigned int
       active_fe_index(const unsigned int obj_index) const;
 
       /**
        * Check whether a given finite element index is used on the present
        * object or not.
        */
-      bool
+      [[nodiscard]] bool
       fe_index_is_active(const unsigned int obj_index,
                          const unsigned int fe_index) const;
 
@@ -267,7 +267,7 @@ namespace internal
        * Return the fe_index of the future finite element on this object. If no
        * future_fe_index has been specified, return the active_fe_index instead.
        */
-      unsigned int
+      [[nodiscard]] unsigned int
       future_fe_index(const unsigned int obj_index) const;
 
       /**
@@ -280,7 +280,7 @@ namespace internal
       /**
        * Return whether a future fe index has been set on this object.
        */
-      bool
+      [[nodiscard]] bool
       future_fe_index_set(const unsigned int obj_index) const;
 
       /**
@@ -300,7 +300,7 @@ namespace internal
        * @return A pointer to the first DoF index for the current cell. The
        * next dofs_per_cell indices are for the current cell.
        */
-      const types::global_dof_index *
+      [[nodiscard]] const types::global_dof_index *
       get_cell_cache_start(const unsigned int obj_index,
                            const unsigned int dofs_per_cell) const;
 
@@ -308,7 +308,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**

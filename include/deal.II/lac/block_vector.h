@@ -194,7 +194,7 @@ public:
    * This functionality only needs to be called if using MPI based vectors and
    * exists in other objects for compatibility.
    */
-  bool
+  [[nodiscard]] bool
   has_ghost_elements() const;
 
   /**

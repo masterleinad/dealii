@@ -413,7 +413,7 @@ namespace internal
       /**
        * Returns the memory consumption of the class.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**

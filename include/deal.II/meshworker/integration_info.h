@@ -137,7 +137,7 @@ namespace MeshWorker
      * Return a reference to the FiniteElement that was used to initialize
      * this object.
      */
-    const FiniteElement<dim, spacedim> &
+    [[nodiscard]] const FiniteElement<dim, spacedim> &
     finite_element() const;
 
     /// This is true if we are assembling for multigrid
@@ -148,7 +148,7 @@ namespace MeshWorker
      * element was used (without the BlockInfo argument). It throws an
      * exception, if applied to a vector of elements.
      */
-    const FEValuesBase<dim, spacedim> &
+    [[nodiscard]] const FEValuesBase<dim, spacedim> &
     fe_values() const;
 
     /// Access to finite elements
@@ -156,7 +156,7 @@ namespace MeshWorker
      * This access function must be used if the initialize() for a group of
      * elements was used (with a valid BlockInfo object).
      */
-    const FEValuesBase<dim, spacedim> &
+    [[nodiscard]] const FEValuesBase<dim, spacedim> &
     fe_values(const unsigned int i) const;
 
     /**
@@ -214,7 +214,7 @@ namespace MeshWorker
     /**
      * The memory used by this object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
 
   private:

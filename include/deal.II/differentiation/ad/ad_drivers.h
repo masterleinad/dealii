@@ -162,21 +162,21 @@ namespace Differentiation
        * Return whether or not this class is tracking calculations performed
        * with its marked independent variables.
        */
-      bool
+      [[nodiscard]] bool
       is_recording() const;
 
       /**
        * Return the tape number which is currently activated for recording or
        * reading.
        */
-      typename Types<ADNumberType>::tape_index
+      [[nodiscard]] typename Types<ADNumberType>::tape_index
       active_tape_index() const;
 
       /**
        * Return whether or not a tape number has already been used
        * or registered.
        */
-      bool
+      [[nodiscard]] bool
       is_registered_tape(
         const typename Types<ADNumberType>::tape_index tape_index) const;
 
@@ -184,7 +184,7 @@ namespace Differentiation
        * Return whether or not the numerical values of all independent
        * variables are recorded in the tape buffer.
        */
-      bool
+      [[nodiscard]] bool
       keep_independent_values() const;
 
       /**
@@ -255,7 +255,7 @@ namespace Differentiation
       /**
        * Return a list of registered tape indices.
        */
-      std::vector<typename Types<ADNumberType>::tape_index>
+      [[nodiscard]] std::vector<typename Types<ADNumberType>::tape_index>
       get_registered_tape_indices() const;
 
       /**
@@ -312,7 +312,7 @@ namespace Differentiation
        * Numbers<ADNumberType>::invalid_tape_index and less than
        * Numbers<ADNumberType>::max_tape_index.
        */
-      bool
+      [[nodiscard]] bool
       requires_retaping(
         const typename Types<ADNumberType>::tape_index tape_index) const;
 
@@ -349,7 +349,7 @@ namespace Differentiation
        * evaluation point in order to resolve the new code branch. This function
        * can be used to find out whether this is so.
        */
-      bool
+      [[nodiscard]] bool
       last_action_requires_retaping() const;
 
       /**
@@ -407,7 +407,7 @@ namespace Differentiation
        *
        * @return The scalar value of the function.
        */
-      ScalarType
+      [[nodiscard]] ScalarType
       value(const typename Types<ADNumberType>::tape_index active_tape_index,
             const std::vector<ScalarType> &independent_variables) const;
 
@@ -575,7 +575,7 @@ namespace Differentiation
        * Query a flag as to whether or not dependent variables can be marked
        * within the current phase of operations.
        */
-      bool
+      [[nodiscard]] bool
       is_dependent_variable_marking_allowed() const;
 
       //@}
@@ -593,7 +593,7 @@ namespace Differentiation
        *
        * @return The scalar value of the function.
        */
-      ScalarType
+      [[nodiscard]] ScalarType
       value(const std::vector<ADNumberType> &dependent_variables) const;
 
       /**
@@ -986,13 +986,13 @@ namespace Differentiation
        */
       //@{
 
-      bool
+      [[nodiscard]] bool
       is_recording() const;
 
       typename Types<ADNumberType>::tape_index
       active_tape_index() const;
 
-      bool
+      [[nodiscard]] bool
       keep_independent_values() const;
 
       bool
@@ -1021,7 +1021,7 @@ namespace Differentiation
       bool
       requires_retaping(const typename Types<ADNumberType>::tape_index) const;
 
-      bool
+      [[nodiscard]] bool
       last_action_requires_retaping() const;
 
       void
@@ -1104,13 +1104,13 @@ namespace Differentiation
        */
       //@{
 
-      bool
+      [[nodiscard]] bool
       is_recording() const;
 
       typename Types<ADNumberType>::tape_index
       active_tape_index() const;
 
-      bool
+      [[nodiscard]] bool
       keep_independent_values() const;
 
       bool
@@ -1143,7 +1143,7 @@ namespace Differentiation
       requires_retaping(
         const typename Types<ADNumberType>::tape_index tape_index) const;
 
-      bool
+      [[nodiscard]] bool
       last_action_requires_retaping() const;
 
       void
@@ -1206,7 +1206,7 @@ namespace Differentiation
       /**
        * Copy a vector of floats into a vector of doubles
        */
-      std::vector<double>
+      [[nodiscard]] std::vector<double>
       vector_float_to_double(const std::vector<float> &in) const;
 
       /**
@@ -1259,7 +1259,7 @@ namespace Differentiation
       void
       prevent_dependent_variable_marking();
 
-      bool
+      [[nodiscard]] bool
       is_dependent_variable_marking_allowed() const;
 
       //@}
@@ -1269,7 +1269,7 @@ namespace Differentiation
        */
       //@{
 
-      ScalarType
+      [[nodiscard]] ScalarType
       value(const std::vector<ADNumberType> &dependent_variables) const;
 
       void
@@ -1351,7 +1351,7 @@ namespace Differentiation
       void
       prevent_dependent_variable_marking();
 
-      bool
+      [[nodiscard]] bool
       is_dependent_variable_marking_allowed() const;
 
       //@}
@@ -1361,7 +1361,7 @@ namespace Differentiation
        */
       //@{
 
-      ScalarType
+      [[nodiscard]] ScalarType
       value(const std::vector<ADNumberType> &dependent_variables) const;
 
       void

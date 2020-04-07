@@ -803,19 +803,19 @@ public:
   /**
    * Pull back operation.
    */
-  virtual Point<3>
+  [[nodiscard]] virtual Point<3>
   pull_back(const Point<3> &p) const override;
 
   /**
    * Push forward operation.
    */
-  virtual Point<3>
+  [[nodiscard]] virtual Point<3>
   push_forward(const Point<3> &chart_point) const override;
 
   /**
    * Gradient.
    */
-  virtual DerivativeForm<1, 3, 3>
+  [[nodiscard]] virtual DerivativeForm<1, 3, 3>
   push_forward_gradient(const Point<3> &chart_point) const override;
 
 private:

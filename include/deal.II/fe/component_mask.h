@@ -126,7 +126,7 @@ public:
    * object would return true when calling represents_the_all_selected_mask())
    * then return zero since no definite size is known.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   size() const;
 
   /**
@@ -153,7 +153,7 @@ public:
    * which case it can represent a mask with an arbitrary number of components
    * and will always say that a component is selected.
    */
-  bool
+  [[nodiscard]] bool
   represents_n_components(const unsigned int n) const;
 
   /**
@@ -169,7 +169,7 @@ public:
    * represents_the_all_selected_mask() returns false) then the argument can
    * be omitted and the result of size() is taken.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_selected_components(const unsigned int overall_number_of_components =
                           numbers::invalid_unsigned_int) const;
 
@@ -179,7 +179,7 @@ public:
    *
    * The function throws an exception if no component is selected at all.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   first_selected_component(const unsigned int overall_number_of_components =
                              numbers::invalid_unsigned_int) const;
 
@@ -188,7 +188,7 @@ public:
    * corresponds to one in which all components are selected. If true, then
    * the size() function will return zero.
    */
-  bool
+  [[nodiscard]] bool
   represents_the_all_selected_mask() const;
 
   /**
@@ -220,7 +220,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**

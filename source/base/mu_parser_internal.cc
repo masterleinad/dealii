@@ -30,167 +30,163 @@ DEAL_II_NAMESPACE_OPEN
 
 #ifdef DEAL_II_WITH_MUPARSER
 
-namespace internal
+namespace internal::FunctionParser
 {
-  namespace FunctionParser
+  int
+  mu_round(double val)
   {
-    int
-    mu_round(double val)
-    {
-      return static_cast<int>(val + ((val >= 0.0) ? 0.5 : -0.5));
-    }
+    return static_cast<int>(val + ((val >= 0.0) ? 0.5 : -0.5));
+  }
 
-    double
-    mu_if(double condition, double thenvalue, double elsevalue)
-    {
-      if (mu_round(condition))
-        return thenvalue;
-      else
-        return elsevalue;
-    }
+  double
+  mu_if(double condition, double thenvalue, double elsevalue)
+  {
+    if (mu_round(condition))
+      return thenvalue;
+    else
+      return elsevalue;
+  }
 
-    double
-    mu_or(double left, double right)
-    {
-      return (mu_round(left)) || (mu_round(right));
-    }
+  double
+  mu_or(double left, double right)
+  {
+    return (mu_round(left)) || (mu_round(right));
+  }
 
-    double
-    mu_and(double left, double right)
-    {
-      return (mu_round(left)) && (mu_round(right));
-    }
+  double
+  mu_and(double left, double right)
+  {
+    return (mu_round(left)) && (mu_round(right));
+  }
 
-    double
-    mu_int(double value)
-    {
-      return static_cast<double>(mu_round(value));
-    }
+  double
+  mu_int(double value)
+  {
+    return static_cast<double>(mu_round(value));
+  }
 
-    double
-    mu_ceil(double value)
-    {
-      return std::ceil(value);
-    }
+  double
+  mu_ceil(double value)
+  {
+    return std::ceil(value);
+  }
 
-    double
-    mu_floor(double value)
-    {
-      return std::floor(value);
-    }
+  double
+  mu_floor(double value)
+  {
+    return std::floor(value);
+  }
 
-    double
-    mu_cot(double value)
-    {
-      return 1.0 / std::tan(value);
-    }
+  double
+  mu_cot(double value)
+  {
+    return 1.0 / std::tan(value);
+  }
 
-    double
-    mu_csc(double value)
-    {
-      return 1.0 / std::sin(value);
-    }
+  double
+  mu_csc(double value)
+  {
+    return 1.0 / std::sin(value);
+  }
 
-    double
-    mu_sec(double value)
-    {
-      return 1.0 / std::cos(value);
-    }
+  double
+  mu_sec(double value)
+  {
+    return 1.0 / std::cos(value);
+  }
 
-    double
-    mu_log(double value)
-    {
-      return std::log(value);
-    }
+  double
+  mu_log(double value)
+  {
+    return std::log(value);
+  }
 
-    double
-    mu_pow(double a, double b)
-    {
-      return std::pow(a, b);
-    }
+  double
+  mu_pow(double a, double b)
+  {
+    return std::pow(a, b);
+  }
 
-    double
-    mu_erfc(double value)
-    {
-      return std::erfc(value);
-    }
+  double
+  mu_erfc(double value)
+  {
+    return std::erfc(value);
+  }
 
-    // returns a random value in the range [0,1] initializing the generator
-    // with the given seed
-    double
-    mu_rand_seed(double seed)
-    {
-      static std::mutex           rand_mutex;
-      std::lock_guard<std::mutex> lock(rand_mutex);
+  // returns a random value in the range [0,1] initializing the generator
+  // with the given seed
+  double
+  mu_rand_seed(double seed)
+  {
+    static std::mutex           rand_mutex;
+    std::lock_guard<std::mutex> lock(rand_mutex);
 
-      std::uniform_real_distribution<> uniform_distribution(0., 1.);
+    std::uniform_real_distribution<> uniform_distribution(0., 1.);
 
-      // for each seed a unique random number generator is created,
-      // which is initialized with the seed itself
-      static std::map<double, std::mt19937> rng_map;
+    // for each seed a unique random number generator is created,
+    // which is initialized with the seed itself
+    static std::map<double, std::mt19937> rng_map;
 
-      if (rng_map.find(seed) == rng_map.end())
-        rng_map[seed] = std::mt19937(static_cast<unsigned int>(seed));
+    if (rng_map.find(seed) == rng_map.end())
+      rng_map[seed] = std::mt19937(static_cast<unsigned int>(seed));
 
-      return uniform_distribution(rng_map[seed]);
-    }
+    return uniform_distribution(rng_map[seed]);
+  }
 
-    // returns a random value in the range [0,1]
-    double
-    mu_rand()
-    {
-      static std::mutex                rand_mutex;
-      std::lock_guard<std::mutex>      lock(rand_mutex);
-      std::uniform_real_distribution<> uniform_distribution(0., 1.);
-      const unsigned int  seed = static_cast<unsigned long>(std::time(nullptr));
-      static std::mt19937 rng(seed);
-      return uniform_distribution(rng);
-    }
+  // returns a random value in the range [0,1]
+  double
+  mu_rand()
+  {
+    static std::mutex                rand_mutex;
+    std::lock_guard<std::mutex>      lock(rand_mutex);
+    std::uniform_real_distribution<> uniform_distribution(0., 1.);
+    const unsigned int  seed = static_cast<unsigned long>(std::time(nullptr));
+    static std::mt19937 rng(seed);
+    return uniform_distribution(rng);
+  }
 
-    std::vector<std::string> function_names = {
-      // functions predefined by muparser
-      "sin",
-      "cos",
-      "tan",
-      "asin",
-      "acos",
-      "atan",
-      "sinh",
-      "cosh",
-      "tanh",
-      "asinh",
-      "acosh",
-      "atanh",
-      "atan2",
-      "log2",
-      "log10",
-      "log",
-      "ln",
-      "exp",
-      "sqrt",
-      "sign",
-      "rint",
-      "abs",
-      "min",
-      "max",
-      "sum",
-      "avg",
-      // functions we define ourselves above
-      "if",
-      "int",
-      "ceil",
-      "cot",
-      "csc",
-      "floor",
-      "sec",
-      "pow",
-      "erfc",
-      "rand",
-      "rand_seed"};
+  std::vector<std::string> function_names = {
+    // functions predefined by muparser
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "sinh",
+    "cosh",
+    "tanh",
+    "asinh",
+    "acosh",
+    "atanh",
+    "atan2",
+    "log2",
+    "log10",
+    "log",
+    "ln",
+    "exp",
+    "sqrt",
+    "sign",
+    "rint",
+    "abs",
+    "min",
+    "max",
+    "sum",
+    "avg",
+    // functions we define ourselves above
+    "if",
+    "int",
+    "ceil",
+    "cot",
+    "csc",
+    "floor",
+    "sec",
+    "pow",
+    "erfc",
+    "rand",
+    "rand_seed"};
 
-  } // namespace FunctionParser
-
-} // namespace internal
+} // namespace internal::FunctionParser
 #endif
 
 

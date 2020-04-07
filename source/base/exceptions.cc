@@ -400,163 +400,160 @@ namespace StandardExceptions
 } // namespace StandardExceptions
 #endif // DEAL_II_WITH_MPI
 
-namespace deal_II_exceptions
+namespace deal_II_exceptions::internals
 {
-  namespace internals
+  [[noreturn]] void
+  abort(const ExceptionBase &exc) noexcept
   {
-    [[noreturn]] void
-    abort(const ExceptionBase &exc) noexcept
-    {
-      // first print the error
-      std::cerr << exc.what() << std::endl;
+    // first print the error
+    std::cerr << exc.what() << std::endl;
 
-      // then bail out. if in MPI mode, bring down the entire
-      // house by asking the MPI system to do a best-effort
-      // operation at also terminating all of the other MPI
-      // processes. this is useful because if only one process
-      // runs into an assertion, then that may lead to deadlocks
-      // if the others don't recognize this, or at the very least
-      // delay their termination until they realize that their
-      // communication with the job that died times out.
-      //
-      // Unlike std::abort(), MPI_Abort() unfortunately doesn't break when
-      // running inside a debugger like GDB, so only use this strategy if
-      // absolutely necessary and inform the user how to use a debugger.
+    // then bail out. if in MPI mode, bring down the entire
+    // house by asking the MPI system to do a best-effort
+    // operation at also terminating all of the other MPI
+    // processes. this is useful because if only one process
+    // runs into an assertion, then that may lead to deadlocks
+    // if the others don't recognize this, or at the very least
+    // delay their termination until they realize that their
+    // communication with the job that died times out.
+    //
+    // Unlike std::abort(), MPI_Abort() unfortunately doesn't break when
+    // running inside a debugger like GDB, so only use this strategy if
+    // absolutely necessary and inform the user how to use a debugger.
 #ifdef DEAL_II_WITH_MPI
-      int is_initialized;
-      MPI_Initialized(&is_initialized);
-      if (is_initialized)
-        {
-          // do the same as in Utilities::MPI::n_mpi_processes() here,
-          // but without error checking to not throw again.
-          const int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
-          if (n_proc > 1)
-            {
-              std::cerr
-                << "Calling MPI_Abort now.\n"
-                << "To break execution in a GDB session, execute 'break MPI_Abort' before "
-                << "running. You can also put the following into your ~/.gdbinit:\n"
-                << "  set breakpoint pending on\n"
-                << "  break MPI_Abort\n"
-                << "  set breakpoint pending auto" << std::endl;
+    int is_initialized;
+    MPI_Initialized(&is_initialized);
+    if (is_initialized)
+      {
+        // do the same as in Utilities::MPI::n_mpi_processes() here,
+        // but without error checking to not throw again.
+        const int n_proc = Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD);
+        if (n_proc > 1)
+          {
+            std::cerr
+              << "Calling MPI_Abort now.\n"
+              << "To break execution in a GDB session, execute 'break MPI_Abort' before "
+              << "running. You can also put the following into your ~/.gdbinit:\n"
+              << "  set breakpoint pending on\n"
+              << "  break MPI_Abort\n"
+              << "  set breakpoint pending auto" << std::endl;
 
-              MPI_Abort(MPI_COMM_WORLD,
-                        /* return code = */ 255);
-            }
-        }
+            MPI_Abort(MPI_COMM_WORLD,
+                      /* return code = */ 255);
+          }
+      }
 #endif
-      std::abort();
-    }
+    std::abort();
+  }
 
 
 
-    void
-    do_issue_error_nothrow(const ExceptionBase &exc) noexcept
-    {
-      if (deal_II_exceptions::internals::allow_abort_on_exception)
-        abort(exc);
-      else
-        {
-          // We are not allowed to throw, and not allowed to abort.
-          // Just print the exception name to deallog and continue normally:
-          deallog << "Exception: " << exc.get_exc_name() << std::endl;
-          deallog << exc.what() << std::endl;
-        }
-    }
+  void
+  do_issue_error_nothrow(const ExceptionBase &exc) noexcept
+  {
+    if (deal_II_exceptions::internals::allow_abort_on_exception)
+      abort(exc);
+    else
+      {
+        // We are not allowed to throw, and not allowed to abort.
+        // Just print the exception name to deallog and continue normally:
+        deallog << "Exception: " << exc.get_exc_name() << std::endl;
+        deallog << exc.what() << std::endl;
+      }
+  }
 
 
 
 #ifdef DEAL_II_WITH_CUDA
-    std::string
-    get_cusparse_error_string(const cusparseStatus_t error_code)
-    {
-      switch (error_code)
-        {
-          case CUSPARSE_STATUS_NOT_INITIALIZED:
-            {
-              return "The cuSPARSE library was not initialized";
-            }
-          case CUSPARSE_STATUS_ALLOC_FAILED:
-            {
-              return "Resource allocation failed inside the cuSPARSE library";
-            }
-          case CUSPARSE_STATUS_INVALID_VALUE:
-            {
-              return "An unsupported value of parameter was passed to the function";
-            }
-          case CUSPARSE_STATUS_ARCH_MISMATCH:
-            {
-              return "The function requires a feature absent from the device architecture";
-            }
-          case CUSPARSE_STATUS_MAPPING_ERROR:
-            {
-              return "An access to GPU memory space failed";
-            }
-          case CUSPARSE_STATUS_EXECUTION_FAILED:
-            {
-              return "The GPU program failed to execute";
-            }
-          case CUSPARSE_STATUS_INTERNAL_ERROR:
-            {
-              return "An internal cuSPARSE operation failed";
-            }
-          case CUSPARSE_STATUS_MATRIX_TYPE_NOT_SUPPORTED:
-            {
-              return "The matrix type is not supported by this function";
-            }
-          default:
-            {
-              return "Unknown error";
-            }
-        }
-    }
+  std::string
+  get_cusparse_error_string(const cusparseStatus_t error_code)
+  {
+    switch (error_code)
+      {
+        case CUSPARSE_STATUS_NOT_INITIALIZED:
+          {
+            return "The cuSPARSE library was not initialized";
+          }
+        case CUSPARSE_STATUS_ALLOC_FAILED:
+          {
+            return "Resource allocation failed inside the cuSPARSE library";
+          }
+        case CUSPARSE_STATUS_INVALID_VALUE:
+          {
+            return "An unsupported value of parameter was passed to the function";
+          }
+        case CUSPARSE_STATUS_ARCH_MISMATCH:
+          {
+            return "The function requires a feature absent from the device architecture";
+          }
+        case CUSPARSE_STATUS_MAPPING_ERROR:
+          {
+            return "An access to GPU memory space failed";
+          }
+        case CUSPARSE_STATUS_EXECUTION_FAILED:
+          {
+            return "The GPU program failed to execute";
+          }
+        case CUSPARSE_STATUS_INTERNAL_ERROR:
+          {
+            return "An internal cuSPARSE operation failed";
+          }
+        case CUSPARSE_STATUS_MATRIX_TYPE_NOT_SUPPORTED:
+          {
+            return "The matrix type is not supported by this function";
+          }
+        default:
+          {
+            return "Unknown error";
+          }
+      }
+  }
 
 
 
-    std::string
-    get_cusolver_error_string(cusolverStatus_t error_code)
-    {
-      std::string message;
-      switch (error_code)
-        {
-          case CUSOLVER_STATUS_NOT_INITIALIZED:
-            {
-              return "The cuSolver library was not initialized";
-            }
-          case CUSOLVER_STATUS_ALLOC_FAILED:
-            {
-              return "Resource allocation failed inside the cuSolver library";
-            }
-          case CUSOLVER_STATUS_INVALID_VALUE:
-            {
-              return "An unsupported value of a parameter was passed to the function";
-            }
-          case CUSOLVER_STATUS_ARCH_MISMATCH:
-            {
-              return "The function requires a feature absent from the device architecture";
-            }
-          case CUSOLVER_STATUS_EXECUTION_FAILED:
-            {
-              return "The GPU program failed to execute";
-            }
-          case CUSOLVER_STATUS_INTERNAL_ERROR:
-            {
-              return "An internal cuSolver operation failed";
-            }
-          case CUSOLVER_STATUS_MATRIX_TYPE_NOT_SUPPORTED:
-            {
-              return "The matrix type is not supported by this function";
-            }
-          default:
-            {
-              return "Unknown error";
-            }
-        }
-    }
+  std::string
+  get_cusolver_error_string(cusolverStatus_t error_code)
+  {
+    std::string message;
+    switch (error_code)
+      {
+        case CUSOLVER_STATUS_NOT_INITIALIZED:
+          {
+            return "The cuSolver library was not initialized";
+          }
+        case CUSOLVER_STATUS_ALLOC_FAILED:
+          {
+            return "Resource allocation failed inside the cuSolver library";
+          }
+        case CUSOLVER_STATUS_INVALID_VALUE:
+          {
+            return "An unsupported value of a parameter was passed to the function";
+          }
+        case CUSOLVER_STATUS_ARCH_MISMATCH:
+          {
+            return "The function requires a feature absent from the device architecture";
+          }
+        case CUSOLVER_STATUS_EXECUTION_FAILED:
+          {
+            return "The GPU program failed to execute";
+          }
+        case CUSOLVER_STATUS_INTERNAL_ERROR:
+          {
+            return "An internal cuSolver operation failed";
+          }
+        case CUSOLVER_STATUS_MATRIX_TYPE_NOT_SUPPORTED:
+          {
+            return "The matrix type is not supported by this function";
+          }
+        default:
+          {
+            return "Unknown error";
+          }
+      }
+  }
 #endif
 
-  } /*namespace internals*/
-} /*namespace deal_II_exceptions*/
+} // namespace deal_II_exceptions::internals
 
 
 

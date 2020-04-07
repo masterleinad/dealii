@@ -186,7 +186,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -245,7 +245,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -305,7 +305,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**

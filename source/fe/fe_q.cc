@@ -29,27 +29,24 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::FE_Q
 {
-  namespace FE_Q
+  namespace
   {
-    namespace
+    std::vector<Point<1>>
+    get_QGaussLobatto_points(const unsigned int degree)
     {
-      std::vector<Point<1>>
-      get_QGaussLobatto_points(const unsigned int degree)
-      {
-        if (degree > 0)
-          return QGaussLobatto<1>(degree + 1).get_points();
-        else
-          {
-            using FEQ = dealii::FE_Q_Base<TensorProductPolynomials<1>, 1, 1>;
-            AssertThrow(false, FEQ::ExcFEQCannotHaveDegree0());
-          }
-        return std::vector<Point<1>>();
-      }
-    } // namespace
-  }   // namespace FE_Q
-} // namespace internal
+      if (degree > 0)
+        return QGaussLobatto<1>(degree + 1).get_points();
+      else
+        {
+          using FEQ = dealii::FE_Q_Base<TensorProductPolynomials<1>, 1, 1>;
+          AssertThrow(false, FEQ::ExcFEQCannotHaveDegree0());
+        }
+      return std::vector<Point<1>>();
+    }
+  } // namespace
+} // namespace internal::FE_Q
 
 
 

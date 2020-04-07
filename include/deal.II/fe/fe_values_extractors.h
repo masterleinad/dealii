@@ -116,7 +116,7 @@ namespace FEValuesExtractors
     /**
      * Return a string that uniquely identifies this finite element extractor.
      */
-    std::string
+    [[nodiscard]] std::string
     get_name() const;
   };
 
@@ -172,7 +172,7 @@ namespace FEValuesExtractors
     /**
      * Return a string that uniquely identifies this finite element extractor.
      */
-    std::string
+    [[nodiscard]] std::string
     get_name() const;
   };
 
@@ -221,7 +221,7 @@ namespace FEValuesExtractors
     /**
      * Return a string that uniquely identifies this finite element extractor.
      */
-    std::string
+    [[nodiscard]] std::string
     get_name() const;
   };
 
@@ -270,7 +270,7 @@ namespace FEValuesExtractors
     /**
      * Return a string that uniquely identifies this finite element extractor.
      */
-    std::string
+    [[nodiscard]] std::string
     get_name() const;
   };
 } // namespace FEValuesExtractors

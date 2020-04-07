@@ -124,25 +124,25 @@ public:
   /**
    * Does the matrix use only one diagonal block?
    */
-  bool
+  [[nodiscard]] bool
   same_diagonal() const;
 
   /**
    * Check, whether diagonal blocks (not their inverses) should be stored.
    */
-  bool
+  [[nodiscard]] bool
   store_diagonals() const;
 
   /**
    * Return true, if inverses are ready for use.
    */
-  bool
+  [[nodiscard]] bool
   inverses_ready() const;
 
   /**
    * The number of blocks.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   size() const;
 
   /**
@@ -184,19 +184,19 @@ public:
   /**
    * Access to the inverse diagonal blocks.
    */
-  const FullMatrix<number> &
+  [[nodiscard]] const FullMatrix<number> &
   inverse(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const Householder<number> &
+  [[nodiscard]] const Householder<number> &
   inverse_householder(size_type i) const;
 
   /**
    * Access to the inverse diagonal blocks if Inversion is #householder.
    */
-  const LAPACKFullMatrix<number> &
+  [[nodiscard]] const LAPACKFullMatrix<number> &
   inverse_svd(size_type i) const;
 
   /**
@@ -208,7 +208,7 @@ public:
   /**
    * Access to the diagonal blocks.
    */
-  const FullMatrix<number> &
+  [[nodiscard]] const FullMatrix<number> &
   diagonal(size_type i) const;
 
   /**
@@ -223,7 +223,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**

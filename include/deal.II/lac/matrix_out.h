@@ -165,14 +165,14 @@ private:
    * Function by which the base class's functions get to know what patches
    * they shall write to a file.
    */
-  virtual const std::vector<Patch> &
+  [[nodiscard]] virtual const std::vector<Patch> &
   get_patches() const override;
 
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual std::vector<std::string>
+  [[nodiscard]] virtual std::vector<std::string>
   get_dataset_names() const override;
 
   /**

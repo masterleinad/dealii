@@ -25,25 +25,22 @@ DEAL_II_NAMESPACE_OPEN
 // arguments is covered by the default copy constructor and copy operator that
 // is declared separately)
 
-namespace LinearAlgebra
+namespace LinearAlgebra::distributed
 {
-  namespace distributed
-  {
 #define TEMPL_COPY_CONSTRUCTOR(S1, S2)                  \
   template Vector<S1, ::dealii::MemorySpace::Host>      \
     &Vector<S1, ::dealii::MemorySpace::Host>::operator= \
       <S2>(const Vector<S2, ::dealii::MemorySpace::Host> &)
 
-    TEMPL_COPY_CONSTRUCTOR(double, float);
-    TEMPL_COPY_CONSTRUCTOR(float, double);
+  TEMPL_COPY_CONSTRUCTOR(double, float);
+  TEMPL_COPY_CONSTRUCTOR(float, double);
 #ifdef DEAL_II_WITH_COMPLEX_VALUES
-    TEMPL_COPY_CONSTRUCTOR(std::complex<double>, std::complex<float>);
-    TEMPL_COPY_CONSTRUCTOR(std::complex<float>, std::complex<double>);
+  TEMPL_COPY_CONSTRUCTOR(std::complex<double>, std::complex<float>);
+  TEMPL_COPY_CONSTRUCTOR(std::complex<float>, std::complex<double>);
 #endif
 
 #undef TEMPL_COPY_CONSTRUCTOR
-  } // namespace distributed
-} // namespace LinearAlgebra
+} // namespace LinearAlgebra::distributed
 
 
 DEAL_II_NAMESPACE_CLOSE

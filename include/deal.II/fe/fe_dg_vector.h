@@ -159,7 +159,7 @@ public:
    * returns <tt>FE_DGNedelec<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 };
 
@@ -192,7 +192,7 @@ public:
    * returns <tt>FE_DGRaviartThomas<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 };
 
@@ -224,7 +224,7 @@ public:
    * returns <tt>FE_DGBDM<dim>(degree)</tt>, with @p dim and @p degree
    * replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 };
 

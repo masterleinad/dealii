@@ -146,7 +146,7 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
+  [[nodiscard]] const Utilities::MPI::MinMaxAvg &
   get_last_lap_wall_time_data() const;
 
   /**
@@ -155,7 +155,7 @@ public:
    * communicator. This structure does not contain meaningful values until
    * Timer::stop() has been called.
    */
-  const Utilities::MPI::MinMaxAvg &
+  [[nodiscard]] const Utilities::MPI::MinMaxAvg &
   get_accumulated_wall_time_data() const;
 
   /**
@@ -210,14 +210,14 @@ public:
    * Return the current accumulated wall time (including the current lap, if
    * the timer is running) in seconds without stopping the timer.
    */
-  double
+  [[nodiscard]] double
   wall_time() const;
 
   /**
    * Return the wall time of the last lap in seconds. The timer is not stopped
    * by this function.
    */
-  double
+  [[nodiscard]] double
   last_wall_time() const;
 
   /**
@@ -228,14 +228,14 @@ public:
    * value is the sum of all accumulated CPU times over all processors in the
    * communicator.
    */
-  double
+  [[nodiscard]] double
   cpu_time() const;
 
   /**
    * Return the CPU time of the last lap in seconds. The timer is not stopped
    * by this function.
    */
-  double
+  [[nodiscard]] double
   last_cpu_time() const;
 
 private:
@@ -780,7 +780,7 @@ public:
   /**
    * Get a map with the collected data of the specified type for each subsection
    */
-  std::map<std::string, double>
+  [[nodiscard]] std::map<std::string, double>
   get_summary_data(const OutputData kind) const;
 
   /**

@@ -606,7 +606,7 @@ namespace
       typename internal::p4est::types<dim>::topidx    coarse_cell_index,
       typename internal::p4est::types<dim>::quadrant *children[]);
 
-    bool
+    [[nodiscard]] bool
     pointers_are_at_end() const;
 
   private:
@@ -2251,9 +2251,8 @@ namespace parallel
           std::vector<unsigned int *>            first_vertex_indices;
           std::vector<dealii::Point<spacedim> *> first_vertices;
 
-          unsigned int
-          bytes_for_buffer() const
-          {
+          [[nodiscard]] unsigned int
+          bytes_for_buffer() const {
             return sizeof(unsigned int) +
                    tree_index.size() * sizeof(unsigned int) +
                    quadrants.size() *
@@ -2263,8 +2262,7 @@ namespace parallel
                    vertices.size() * sizeof(dealii::Point<spacedim>);
           }
 
-          void
-          pack_data(std::vector<char> &buffer) const
+          void pack_data(std::vector<char> &buffer) const
           {
             buffer.resize(bytes_for_buffer());
 

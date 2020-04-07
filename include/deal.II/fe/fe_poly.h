@@ -88,11 +88,11 @@ public:
    * Return the polynomial degree of this finite element, i.e. the value
    * passed to the constructor.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   get_degree() const;
 
   // for documentation, see the FiniteElement base class
-  virtual UpdateFlags
+  [[nodiscard]] virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
@@ -100,14 +100,14 @@ public:
    * lexicographic ordering of the basis functions. Returns
    * PolynomialType::get_numbering().
    */
-  std::vector<unsigned int>
+  [[nodiscard]] std::vector<unsigned int>
   get_poly_space_numbering() const;
 
   /**
    * Return the inverse numbering of the underlying polynomial space. Returns
    * PolynomialType::get_numbering_inverse().
    */
-  std::vector<unsigned int>
+  [[nodiscard]] std::vector<unsigned int>
   get_poly_space_numbering_inverse() const;
 
   /**
@@ -230,7 +230,7 @@ public:
   /**
    * Return an estimate (in bytes) for the memory consumption of this object.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
 protected:

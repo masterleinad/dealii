@@ -2313,19 +2313,19 @@ namespace TrilinosWrappers
         /**
          * Return a payload configured for identity operations
          */
-        TrilinosPayload
+        [[nodiscard]] TrilinosPayload
         identity_payload() const;
 
         /**
          * Return a payload configured for null operations
          */
-        TrilinosPayload
+        [[nodiscard]] TrilinosPayload
         null_payload() const;
 
         /**
          * Return a payload configured for transpose operations
          */
-        TrilinosPayload
+        [[nodiscard]] TrilinosPayload
         transpose_payload() const;
 
         /**
@@ -2389,7 +2389,7 @@ namespace TrilinosWrappers
          * of this matrix, i.e., the partitioning of the vectors this matrix has
          * to be multiplied with / operate on.
          */
-        IndexSet
+        [[nodiscard]] IndexSet
         locally_owned_domain_indices() const;
 
         /**
@@ -2397,13 +2397,13 @@ namespace TrilinosWrappers
          * of this matrix, i.e., the partitioning of the vectors that result
          * from matrix-vector products.
          */
-        IndexSet
+        [[nodiscard]] IndexSet
         locally_owned_range_indices() const;
 
         /**
          * Return the MPI communicator object in use with this Payload.
          */
-        MPI_Comm
+        [[nodiscard]] MPI_Comm
         get_mpi_communicator() const;
 
         /**
@@ -2466,7 +2466,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual bool
+        [[nodiscard]] virtual bool
         UseTranspose() const override;
 
         /**
@@ -2534,7 +2534,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const char *
+        [[nodiscard]] virtual const char *
         Label() const override;
 
         /**
@@ -2544,7 +2544,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Comm &
+        [[nodiscard]] virtual const Epetra_Comm &
         Comm() const override;
 
         /**
@@ -2554,7 +2554,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Map &
+        [[nodiscard]] virtual const Epetra_Map &
         OperatorDomainMap() const override;
 
         /**
@@ -2565,7 +2565,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual const Epetra_Map &
+        [[nodiscard]] virtual const Epetra_Map &
         OperatorRangeMap() const override;
         //@}
 
@@ -2606,7 +2606,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual bool
+        [[nodiscard]] virtual bool
         HasNormInf() const override;
 
         /**
@@ -2616,7 +2616,7 @@ namespace TrilinosWrappers
          * This overloads the same function from the Trilinos class
          * Epetra_Operator.
          */
-        virtual double
+        [[nodiscard]] virtual double
         NormInf() const override;
       };
 

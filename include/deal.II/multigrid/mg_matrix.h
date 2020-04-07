@@ -94,15 +94,15 @@ namespace mg
     Tvmult_add(const unsigned int level,
                VectorType &       dst,
                const VectorType & src) const override;
-    virtual unsigned int
+    [[nodiscard]] virtual unsigned int
     get_minlevel() const override;
-    virtual unsigned int
+    [[nodiscard]] virtual unsigned int
     get_maxlevel() const override;
 
     /**
      * Memory used by this object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
 
   private:

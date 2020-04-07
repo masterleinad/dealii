@@ -321,7 +321,7 @@ public:
    * returns <tt>FE_DGP<dim>(degree)</tt>, with @p dim and @p degree replaced
    * by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   /**
@@ -381,7 +381,7 @@ public:
    * of the element), as it has no hanging nodes (being a discontinuous
    * element).
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -430,7 +430,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -442,7 +442,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
 
@@ -450,7 +450,7 @@ public:
    * Return a list of constant modes of the element. For this element, the
    * first entry is true, all other are false.
    */
-  virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
+  [[nodiscard]] virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
   get_constant_modes() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>

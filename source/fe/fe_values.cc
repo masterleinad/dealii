@@ -2583,52 +2583,48 @@ namespace FEValuesViews
 } // namespace FEValuesViews
 
 
-namespace internal
+namespace internal::FEValuesViews
 {
-  namespace FEValuesViews
+  template <int dim, int spacedim>
+  Cache<dim, spacedim>::Cache(const FEValuesBase<dim, spacedim> &fe_values)
   {
-    template <int dim, int spacedim>
-    Cache<dim, spacedim>::Cache(const FEValuesBase<dim, spacedim> &fe_values)
-    {
-      const FiniteElement<dim, spacedim> &fe = fe_values.get_fe();
+    const FiniteElement<dim, spacedim> &fe = fe_values.get_fe();
 
-      const unsigned int n_scalars = fe.n_components();
-      scalars.reserve(n_scalars);
-      for (unsigned int component = 0; component < n_scalars; ++component)
-        scalars.emplace_back(fe_values, component);
+    const unsigned int n_scalars = fe.n_components();
+    scalars.reserve(n_scalars);
+    for (unsigned int component = 0; component < n_scalars; ++component)
+      scalars.emplace_back(fe_values, component);
 
-      // compute number of vectors that we can fit into this finite element.
-      // note that this is based on the dimensionality 'dim' of the manifold,
-      // not 'spacedim' of the output vector
-      const unsigned int n_vectors =
-        (fe.n_components() >= spacedim ? fe.n_components() - spacedim + 1 : 0);
-      vectors.reserve(n_vectors);
-      for (unsigned int component = 0; component < n_vectors; ++component)
-        vectors.emplace_back(fe_values, component);
+    // compute number of vectors that we can fit into this finite element.
+    // note that this is based on the dimensionality 'dim' of the manifold,
+    // not 'spacedim' of the output vector
+    const unsigned int n_vectors =
+      (fe.n_components() >= spacedim ? fe.n_components() - spacedim + 1 : 0);
+    vectors.reserve(n_vectors);
+    for (unsigned int component = 0; component < n_vectors; ++component)
+      vectors.emplace_back(fe_values, component);
 
-      // compute number of symmetric tensors in the same way as above
-      const unsigned int n_symmetric_second_order_tensors =
-        (fe.n_components() >= (dim * dim + dim) / 2 ?
-           fe.n_components() - (dim * dim + dim) / 2 + 1 :
-           0);
-      symmetric_second_order_tensors.reserve(n_symmetric_second_order_tensors);
-      for (unsigned int component = 0;
-           component < n_symmetric_second_order_tensors;
-           ++component)
-        symmetric_second_order_tensors.emplace_back(fe_values, component);
+    // compute number of symmetric tensors in the same way as above
+    const unsigned int n_symmetric_second_order_tensors =
+      (fe.n_components() >= (dim * dim + dim) / 2 ?
+         fe.n_components() - (dim * dim + dim) / 2 + 1 :
+         0);
+    symmetric_second_order_tensors.reserve(n_symmetric_second_order_tensors);
+    for (unsigned int component = 0;
+         component < n_symmetric_second_order_tensors;
+         ++component)
+      symmetric_second_order_tensors.emplace_back(fe_values, component);
 
 
-      // compute number of symmetric tensors in the same way as above
-      const unsigned int n_second_order_tensors =
-        (fe.n_components() >= dim * dim ? fe.n_components() - dim * dim + 1 :
-                                          0);
-      second_order_tensors.reserve(n_second_order_tensors);
-      for (unsigned int component = 0; component < n_second_order_tensors;
-           ++component)
-        second_order_tensors.emplace_back(fe_values, component);
-    }
-  } // namespace FEValuesViews
-} // namespace internal
+    // compute number of symmetric tensors in the same way as above
+    const unsigned int n_second_order_tensors =
+      (fe.n_components() >= dim * dim ? fe.n_components() - dim * dim + 1 : 0);
+    second_order_tensors.reserve(n_second_order_tensors);
+    for (unsigned int component = 0; component < n_second_order_tensors;
+         ++component)
+      second_order_tensors.emplace_back(fe_values, component);
+  }
+} // namespace internal::FEValuesViews
 
 
 /* ---------------- FEValuesBase<dim,spacedim>::CellIteratorBase --------- */
@@ -2656,7 +2652,7 @@ public:
    * Return the number of degrees of freedom the DoF
    * handler object has to which the iterator belongs to.
    */
-  virtual types::global_dof_index
+  [[nodiscard]] virtual types::global_dof_index
   n_dofs_for_dof_handler() const = 0;
 
 #include "fe_values.decl.1.inst"
@@ -2703,7 +2699,7 @@ public:
    * Return the number of degrees of freedom the DoF handler object has to
    * which the iterator belongs to.
    */
-  virtual types::global_dof_index
+  [[nodiscard]] virtual types::global_dof_index
   n_dofs_for_dof_handler() const override;
 
 #include "fe_values.decl.2.inst"
@@ -2769,7 +2765,7 @@ public:
    * Implement the respective function of the base class. Since this is not
    * possible, we just raise an error.
    */
-  virtual types::global_dof_index
+  [[nodiscard]] virtual types::global_dof_index
   n_dofs_for_dof_handler() const override;
 
 #include "fe_values.decl.2.inst"
@@ -2908,164 +2904,159 @@ FEValuesBase<dim, spacedim>::TriaCellIterator::get_interpolated_dof_values(
 
 
 
-namespace internal
+namespace internal::FEValuesImplementation
 {
-  namespace FEValuesImplementation
+  template <int dim, int spacedim>
+  void
+  MappingRelatedData<dim, spacedim>::initialize(
+    const unsigned int n_quadrature_points,
+    const UpdateFlags  flags)
   {
-    template <int dim, int spacedim>
-    void
-    MappingRelatedData<dim, spacedim>::initialize(
-      const unsigned int n_quadrature_points,
-      const UpdateFlags  flags)
-    {
-      if (flags & update_quadrature_points)
-        this->quadrature_points.resize(
-          n_quadrature_points,
-          Point<spacedim>(numbers::signaling_nan<Tensor<1, spacedim>>()));
+    if (flags & update_quadrature_points)
+      this->quadrature_points.resize(
+        n_quadrature_points,
+        Point<spacedim>(numbers::signaling_nan<Tensor<1, spacedim>>()));
 
-      if (flags & update_JxW_values)
-        this->JxW_values.resize(n_quadrature_points,
-                                numbers::signaling_nan<double>());
+    if (flags & update_JxW_values)
+      this->JxW_values.resize(n_quadrature_points,
+                              numbers::signaling_nan<double>());
 
-      if (flags & update_jacobians)
-        this->jacobians.resize(
-          n_quadrature_points,
-          numbers::signaling_nan<DerivativeForm<1, dim, spacedim>>());
+    if (flags & update_jacobians)
+      this->jacobians.resize(
+        n_quadrature_points,
+        numbers::signaling_nan<DerivativeForm<1, dim, spacedim>>());
 
-      if (flags & update_jacobian_grads)
-        this->jacobian_grads.resize(
-          n_quadrature_points,
-          numbers::signaling_nan<DerivativeForm<2, dim, spacedim>>());
+    if (flags & update_jacobian_grads)
+      this->jacobian_grads.resize(
+        n_quadrature_points,
+        numbers::signaling_nan<DerivativeForm<2, dim, spacedim>>());
 
-      if (flags & update_jacobian_pushed_forward_grads)
-        this->jacobian_pushed_forward_grads.resize(
-          n_quadrature_points, numbers::signaling_nan<Tensor<3, spacedim>>());
+    if (flags & update_jacobian_pushed_forward_grads)
+      this->jacobian_pushed_forward_grads.resize(
+        n_quadrature_points, numbers::signaling_nan<Tensor<3, spacedim>>());
 
-      if (flags & update_jacobian_2nd_derivatives)
-        this->jacobian_2nd_derivatives.resize(
-          n_quadrature_points,
-          numbers::signaling_nan<DerivativeForm<3, dim, spacedim>>());
+    if (flags & update_jacobian_2nd_derivatives)
+      this->jacobian_2nd_derivatives.resize(
+        n_quadrature_points,
+        numbers::signaling_nan<DerivativeForm<3, dim, spacedim>>());
 
-      if (flags & update_jacobian_pushed_forward_2nd_derivatives)
-        this->jacobian_pushed_forward_2nd_derivatives.resize(
-          n_quadrature_points, numbers::signaling_nan<Tensor<4, spacedim>>());
+    if (flags & update_jacobian_pushed_forward_2nd_derivatives)
+      this->jacobian_pushed_forward_2nd_derivatives.resize(
+        n_quadrature_points, numbers::signaling_nan<Tensor<4, spacedim>>());
 
-      if (flags & update_jacobian_3rd_derivatives)
-        this->jacobian_3rd_derivatives.resize(n_quadrature_points);
+    if (flags & update_jacobian_3rd_derivatives)
+      this->jacobian_3rd_derivatives.resize(n_quadrature_points);
 
-      if (flags & update_jacobian_pushed_forward_3rd_derivatives)
-        this->jacobian_pushed_forward_3rd_derivatives.resize(
-          n_quadrature_points, numbers::signaling_nan<Tensor<5, spacedim>>());
+    if (flags & update_jacobian_pushed_forward_3rd_derivatives)
+      this->jacobian_pushed_forward_3rd_derivatives.resize(
+        n_quadrature_points, numbers::signaling_nan<Tensor<5, spacedim>>());
 
-      if (flags & update_inverse_jacobians)
-        this->inverse_jacobians.resize(
-          n_quadrature_points,
-          numbers::signaling_nan<DerivativeForm<1, spacedim, dim>>());
+    if (flags & update_inverse_jacobians)
+      this->inverse_jacobians.resize(
+        n_quadrature_points,
+        numbers::signaling_nan<DerivativeForm<1, spacedim, dim>>());
 
-      if (flags & update_boundary_forms)
-        this->boundary_forms.resize(
-          n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
+    if (flags & update_boundary_forms)
+      this->boundary_forms.resize(
+        n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
 
-      if (flags & update_normal_vectors)
-        this->normal_vectors.resize(
-          n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
-    }
+    if (flags & update_normal_vectors)
+      this->normal_vectors.resize(
+        n_quadrature_points, numbers::signaling_nan<Tensor<1, spacedim>>());
+  }
 
 
 
-    template <int dim, int spacedim>
-    std::size_t
-    MappingRelatedData<dim, spacedim>::memory_consumption() const
-    {
-      return (
-        MemoryConsumption::memory_consumption(JxW_values) +
-        MemoryConsumption::memory_consumption(jacobians) +
-        MemoryConsumption::memory_consumption(jacobian_grads) +
-        MemoryConsumption::memory_consumption(jacobian_pushed_forward_grads) +
-        MemoryConsumption::memory_consumption(jacobian_2nd_derivatives) +
-        MemoryConsumption::memory_consumption(
-          jacobian_pushed_forward_2nd_derivatives) +
-        MemoryConsumption::memory_consumption(jacobian_3rd_derivatives) +
-        MemoryConsumption::memory_consumption(
-          jacobian_pushed_forward_3rd_derivatives) +
-        MemoryConsumption::memory_consumption(inverse_jacobians) +
-        MemoryConsumption::memory_consumption(quadrature_points) +
-        MemoryConsumption::memory_consumption(normal_vectors) +
-        MemoryConsumption::memory_consumption(boundary_forms));
-    }
+  template <int dim, int spacedim>
+  std::size_t
+  MappingRelatedData<dim, spacedim>::memory_consumption() const
+  {
+    return (
+      MemoryConsumption::memory_consumption(JxW_values) +
+      MemoryConsumption::memory_consumption(jacobians) +
+      MemoryConsumption::memory_consumption(jacobian_grads) +
+      MemoryConsumption::memory_consumption(jacobian_pushed_forward_grads) +
+      MemoryConsumption::memory_consumption(jacobian_2nd_derivatives) +
+      MemoryConsumption::memory_consumption(
+        jacobian_pushed_forward_2nd_derivatives) +
+      MemoryConsumption::memory_consumption(jacobian_3rd_derivatives) +
+      MemoryConsumption::memory_consumption(
+        jacobian_pushed_forward_3rd_derivatives) +
+      MemoryConsumption::memory_consumption(inverse_jacobians) +
+      MemoryConsumption::memory_consumption(quadrature_points) +
+      MemoryConsumption::memory_consumption(normal_vectors) +
+      MemoryConsumption::memory_consumption(boundary_forms));
+  }
 
 
 
-    template <int dim, int spacedim>
-    void
-    FiniteElementRelatedData<dim, spacedim>::initialize(
-      const unsigned int                  n_quadrature_points,
-      const FiniteElement<dim, spacedim> &fe,
-      const UpdateFlags                   flags)
-    {
-      // initialize the table mapping from shape function number to
-      // the rows in the tables storing the data by shape function and
-      // nonzero component
-      this->shape_function_to_row_table =
-        dealii::internal::make_shape_function_to_row_table(fe);
+  template <int dim, int spacedim>
+  void
+  FiniteElementRelatedData<dim, spacedim>::initialize(
+    const unsigned int                  n_quadrature_points,
+    const FiniteElement<dim, spacedim> &fe,
+    const UpdateFlags                   flags)
+  {
+    // initialize the table mapping from shape function number to
+    // the rows in the tables storing the data by shape function and
+    // nonzero component
+    this->shape_function_to_row_table =
+      dealii::internal::make_shape_function_to_row_table(fe);
 
-      // count the total number of non-zero components accumulated
-      // over all shape functions
-      unsigned int n_nonzero_shape_components = 0;
-      for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
-        n_nonzero_shape_components += fe.n_nonzero_components(i);
-      Assert(n_nonzero_shape_components >= fe.dofs_per_cell,
-             ExcInternalError());
+    // count the total number of non-zero components accumulated
+    // over all shape functions
+    unsigned int n_nonzero_shape_components = 0;
+    for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
+      n_nonzero_shape_components += fe.n_nonzero_components(i);
+    Assert(n_nonzero_shape_components >= fe.dofs_per_cell, ExcInternalError());
 
-      // with the number of rows now known, initialize those fields
-      // that we will need to their correct size
-      if (flags & update_values)
-        {
-          this->shape_values.reinit(n_nonzero_shape_components,
+    // with the number of rows now known, initialize those fields
+    // that we will need to their correct size
+    if (flags & update_values)
+      {
+        this->shape_values.reinit(n_nonzero_shape_components,
+                                  n_quadrature_points);
+        this->shape_values.fill(numbers::signaling_nan<double>());
+      }
+
+    if (flags & update_gradients)
+      {
+        this->shape_gradients.reinit(n_nonzero_shape_components,
+                                     n_quadrature_points);
+        this->shape_gradients.fill(
+          numbers::signaling_nan<Tensor<1, spacedim>>());
+      }
+
+    if (flags & update_hessians)
+      {
+        this->shape_hessians.reinit(n_nonzero_shape_components,
                                     n_quadrature_points);
-          this->shape_values.fill(numbers::signaling_nan<double>());
-        }
+        this->shape_hessians.fill(
+          numbers::signaling_nan<Tensor<2, spacedim>>());
+      }
 
-      if (flags & update_gradients)
-        {
-          this->shape_gradients.reinit(n_nonzero_shape_components,
-                                       n_quadrature_points);
-          this->shape_gradients.fill(
-            numbers::signaling_nan<Tensor<1, spacedim>>());
-        }
-
-      if (flags & update_hessians)
-        {
-          this->shape_hessians.reinit(n_nonzero_shape_components,
-                                      n_quadrature_points);
-          this->shape_hessians.fill(
-            numbers::signaling_nan<Tensor<2, spacedim>>());
-        }
-
-      if (flags & update_3rd_derivatives)
-        {
-          this->shape_3rd_derivatives.reinit(n_nonzero_shape_components,
-                                             n_quadrature_points);
-          this->shape_3rd_derivatives.fill(
-            numbers::signaling_nan<Tensor<3, spacedim>>());
-        }
-    }
+    if (flags & update_3rd_derivatives)
+      {
+        this->shape_3rd_derivatives.reinit(n_nonzero_shape_components,
+                                           n_quadrature_points);
+        this->shape_3rd_derivatives.fill(
+          numbers::signaling_nan<Tensor<3, spacedim>>());
+      }
+  }
 
 
 
-    template <int dim, int spacedim>
-    std::size_t
-    FiniteElementRelatedData<dim, spacedim>::memory_consumption() const
-    {
-      return (
-        MemoryConsumption::memory_consumption(shape_values) +
-        MemoryConsumption::memory_consumption(shape_gradients) +
-        MemoryConsumption::memory_consumption(shape_hessians) +
-        MemoryConsumption::memory_consumption(shape_3rd_derivatives) +
-        MemoryConsumption::memory_consumption(shape_function_to_row_table));
-    }
-  } // namespace FEValuesImplementation
-} // namespace internal
+  template <int dim, int spacedim>
+  std::size_t
+  FiniteElementRelatedData<dim, spacedim>::memory_consumption() const
+  {
+    return (MemoryConsumption::memory_consumption(shape_values) +
+            MemoryConsumption::memory_consumption(shape_gradients) +
+            MemoryConsumption::memory_consumption(shape_hessians) +
+            MemoryConsumption::memory_consumption(shape_3rd_derivatives) +
+            MemoryConsumption::memory_consumption(shape_function_to_row_table));
+  }
+} // namespace internal::FEValuesImplementation
 
 
 

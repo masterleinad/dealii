@@ -281,14 +281,14 @@ public:
    * returns <tt>FE_DGPNonparametric<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, spacedim>>
   clone() const override;
 
   // for documentation, see the FiniteElement base class
-  virtual UpdateFlags
+  [[nodiscard]] virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
@@ -379,7 +379,7 @@ public:
    * Return the polynomial degree of this finite element, i.e. the value
    * passed to the constructor.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   get_degree() const;
 
   /**
@@ -470,7 +470,7 @@ public:
    * of the degree of the element), as it has no hanging nodes (being a
    * discontinuous element).
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -488,7 +488,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -500,7 +500,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
 protected:

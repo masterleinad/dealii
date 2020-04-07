@@ -103,11 +103,11 @@ public:
    * Return a string that uniquely identifies a finite element. In this case
    * it is <code>FE_Nothing@<dim@></code>.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   // for documentation, see the FiniteElement base class
-  virtual UpdateFlags
+  [[nodiscard]] virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
@@ -211,7 +211,7 @@ public:
   hp_quad_dof_identities(
     const FiniteElement<dim, spacedim> &fe_other) const override;
 
-  virtual bool
+  [[nodiscard]] virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -257,7 +257,7 @@ public:
   /**
    * @return true if the FE dominates any other.
    */
-  bool
+  [[nodiscard]] bool
   is_dominating() const;
 
   /**

@@ -141,9 +141,8 @@ namespace FETools
           return false;
         }
 
-        unsigned int
-        bytes_for_buffer() const
-        {
+        [[nodiscard]] unsigned int
+        bytes_for_buffer() const {
           return (sizeof(unsigned int) +                   // dofs_per_cell
                   dof_values.size() * sizeof(value_type) + // dof_values
                   sizeof(unsigned int) +                   // tree_index
@@ -151,8 +150,7 @@ namespace FETools
                          dim>::quadrant)); // quadrant
         }
 
-        void
-        pack_data(std::vector<char> &buffer) const
+        void pack_data(std::vector<char> &buffer) const
         {
           buffer.resize(bytes_for_buffer());
 

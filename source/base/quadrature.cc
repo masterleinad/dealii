@@ -1524,29 +1524,26 @@ QProjector<dim>::project_to_subface(const SubQuadrature &          quadrature,
 
 // ------------------------------------------------------------ //
 
-namespace internal
+namespace internal::QIteratedImplementation
 {
-  namespace QIteratedImplementation
+  namespace
   {
-    namespace
+    bool
+    uses_both_endpoints(const Quadrature<1> &base_quadrature)
     {
-      bool
-      uses_both_endpoints(const Quadrature<1> &base_quadrature)
-      {
-        bool at_left = false, at_right = false;
-        for (unsigned int i = 0; i < base_quadrature.size(); ++i)
-          {
-            if (base_quadrature.point(i) == Point<1>(0.0))
-              at_left = true;
-            if (base_quadrature.point(i) == Point<1>(1.0))
-              at_right = true;
-          }
+      bool at_left = false, at_right = false;
+      for (unsigned int i = 0; i < base_quadrature.size(); ++i)
+        {
+          if (base_quadrature.point(i) == Point<1>(0.0))
+            at_left = true;
+          if (base_quadrature.point(i) == Point<1>(1.0))
+            at_right = true;
+        }
 
-        return (at_left && at_right);
-      }
-    } // namespace
-  }   // namespace QIteratedImplementation
-} // namespace internal
+      return (at_left && at_right);
+    }
+  } // namespace
+} // namespace internal::QIteratedImplementation
 
 // template <>
 // void

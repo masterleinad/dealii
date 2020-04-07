@@ -367,14 +367,14 @@ public:
    * Number of rows of this matrix.  Note that the matrix is of dimension <i>m
    * x n</i>.
    */
-  size_type
+  [[nodiscard]] size_type
   m() const;
 
   /**
    * Number of columns of this matrix.  Note that the matrix is of dimension
    * <i>m x n</i>.
    */
-  size_type
+  [[nodiscard]] size_type
   n() const;
 
   /**
@@ -382,7 +382,7 @@ public:
    * function is mainly for internal consistency checks and should seldom be
    * used when not in debug mode since it uses quite some time.
    */
-  bool
+  [[nodiscard]] bool
   all_zero() const;
 
   /**
@@ -516,7 +516,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   //@}

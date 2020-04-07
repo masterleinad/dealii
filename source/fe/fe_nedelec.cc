@@ -46,25 +46,22 @@ DEAL_II_NAMESPACE_OPEN
 
 //#define DEBUG_NEDELEC
 
-namespace internal
+namespace internal::FE_Nedelec
 {
-  namespace FE_Nedelec
+  namespace
   {
-    namespace
+    double
+    get_embedding_computation_tolerance(const unsigned int p)
     {
-      double
-      get_embedding_computation_tolerance(const unsigned int p)
-      {
-        // This heuristic was computed by monitoring the worst residual
-        // resulting from the least squares computation when computing
-        // the face embedding matrices in the FE_Nedelec constructor.
-        // The residual growth is exponential, but is bounded by this
-        // function up to degree 12.
-        return 1.e-15 * std::exp(std::pow(p, 1.075));
-      }
-    } // namespace
-  }   // namespace FE_Nedelec
-} // namespace internal
+      // This heuristic was computed by monitoring the worst residual
+      // resulting from the least squares computation when computing
+      // the face embedding matrices in the FE_Nedelec constructor.
+      // The residual growth is exponential, but is bounded by this
+      // function up to degree 12.
+      return 1.e-15 * std::exp(std::pow(p, 1.075));
+    }
+  } // namespace
+} // namespace internal::FE_Nedelec
 
 
 template <int dim>

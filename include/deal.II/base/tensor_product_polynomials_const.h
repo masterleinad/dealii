@@ -120,7 +120,7 @@ public:
    * <tt>values.size()==</tt>n() to get the point values of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -153,7 +153,7 @@ public:
    * <tt>grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -168,27 +168,27 @@ public:
    * <tt>grad_grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the number of tensor product polynomials plus the constant
    * function. For <i>n</i> 1d polynomials this is <i>n<sup>dim</sup>+1</i>.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n() const;
 
   /**
    * Return the name of the space, which is
    * <tt>TensorProductPolynomialsConst</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 
 private:
@@ -270,11 +270,10 @@ TensorProductPolynomialsConst<0>::n() const
 
 template <int dim>
 template <int order>
-Tensor<order, dim>
+[[nodiscard]] Tensor<order, dim>
 TensorProductPolynomialsConst<dim>::compute_derivative(
   const unsigned int i,
-  const Point<dim> & p) const
-{
+  const Point<dim> & p) const {
   const unsigned int max_indices = tensor_polys.n();
   Assert(i <= max_indices, ExcInternalError());
 

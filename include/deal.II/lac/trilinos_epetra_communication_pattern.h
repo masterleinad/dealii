@@ -63,13 +63,13 @@ namespace LinearAlgebra
       /**
        * Return the underlying MPI communicator.
        */
-      virtual const MPI_Comm &
+      [[nodiscard]] virtual const MPI_Comm &
       get_mpi_communicator() const override;
 
       /**
        * Return the underlying Epetra_Import object.
        */
-      const Epetra_Import &
+      [[nodiscard]] const Epetra_Import &
       get_epetra_import() const;
 
     private:

@@ -2895,14 +2895,14 @@ namespace Differentiation
        * we must take into account symmetry when extracting their gradient or
        * Hessian values.
        */
-      bool
+      [[nodiscard]] bool
       is_symmetric_independent_variable(const unsigned int index) const;
 
       /**
        * Return the number of independent variables that have been marked as
        * being components of a symmetric field.
        */
-      unsigned int
+      [[nodiscard]] unsigned int
       n_symmetric_independent_variables() const;
 
       //@}

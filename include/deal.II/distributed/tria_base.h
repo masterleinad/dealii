@@ -93,7 +93,7 @@ namespace parallel
     /**
      * Return MPI communicator used by this triangulation.
      */
-    virtual const MPI_Comm &
+    [[nodiscard]] virtual const MPI_Comm &
     get_communicator() const;
 
     /**
@@ -116,7 +116,7 @@ namespace parallel
      *
      * @note This function involves global communication!
      */
-    std::vector<unsigned int>
+    [[nodiscard]] std::vector<unsigned int>
     compute_n_locally_owned_active_cells_per_processor() const;
 
     /**
@@ -137,7 +137,7 @@ namespace parallel
      * and
      * @ref GlossGhostCell).
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     n_locally_owned_active_cells() const;
 
     /**
@@ -145,13 +145,13 @@ namespace parallel
      * by each processor. This equals the overall number of active cells in
      * the triangulation.
      */
-    virtual types::global_cell_index
+    [[nodiscard]] virtual types::global_cell_index
     n_global_active_cells() const override;
 
     /**
      * Return the local memory consumption in bytes.
      */
-    virtual std::size_t
+    [[nodiscard]] virtual std::size_t
     memory_consumption() const override;
 
 
@@ -162,7 +162,7 @@ namespace parallel
      * the domain that are not very refined, but if other processors store
      * cells in more deeply refined parts of the domain.
      */
-    virtual unsigned int
+    [[nodiscard]] virtual unsigned int
     n_global_levels() const override;
 
     /**
@@ -171,7 +171,7 @@ namespace parallel
      * subdomain id are either owned by another processor or have children
      * that only exist on other processors.
      */
-    types::subdomain_id
+    [[nodiscard]] types::subdomain_id
     locally_owned_subdomain() const override;
 
     /**
@@ -183,7 +183,7 @@ namespace parallel
      * list of processor @p j, then @p j will also be contained in the list of
      * processor @p i.
      */
-    const std::set<types::subdomain_id> &
+    [[nodiscard]] const std::set<types::subdomain_id> &
     ghost_owners() const;
 
     /**
@@ -201,14 +201,15 @@ namespace parallel
      * construct_multigrid_hierarchy flag at construction time), otherwise the
      * returned set will be empty.
      */
-    const std::set<types::subdomain_id> &
+    [[nodiscard]] const std::set<types::subdomain_id> &
     level_ghost_owners() const;
 
     /**
      * Return a map that, for each vertex, lists all the processors whose
      * subdomains are adjacent to that vertex.
      */
-    virtual std::map<unsigned int, std::set<dealii::types::subdomain_id>>
+    [[nodiscard]] virtual std::map<unsigned int,
+                                   std::set<dealii::types::subdomain_id>>
     compute_vertices_with_ghost_neighbors() const;
 
   protected:
@@ -347,7 +348,7 @@ namespace parallel
     /**
      * Return if multilevel hierarchy is supported and has been constructed.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     is_multilevel_hierarchy_constructed() const = 0;
   };
 

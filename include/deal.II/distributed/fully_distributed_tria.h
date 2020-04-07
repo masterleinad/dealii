@@ -221,23 +221,23 @@ namespace parallel
        *
        * @note Not implemented yet.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       has_hanging_nodes() const override;
 
       /**
        * Return the local memory consumption in bytes.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const override;
 
-      virtual bool
+      [[nodiscard]] virtual bool
       is_multilevel_hierarchy_constructed() const override;
 
-      virtual unsigned int
+      [[nodiscard]] virtual unsigned int
       coarse_cell_id_to_coarse_cell_index(
         const types::coarse_cell_id coarse_cell_id) const override;
 
-      virtual types::coarse_cell_id
+      [[nodiscard]] virtual types::coarse_cell_id
       coarse_cell_index_to_coarse_cell_id(
         const unsigned int coarse_cell_index) const override;
 

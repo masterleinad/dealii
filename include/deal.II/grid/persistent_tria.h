@@ -178,7 +178,7 @@ public:
    * Return the number of refinement and coarsening steps. This is given by
    * the size of the @p refine_flags vector.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n_refinement_steps() const;
 
   /**
@@ -248,7 +248,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
   /**

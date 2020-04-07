@@ -85,14 +85,14 @@ public:
    * Number of rows of this matrix. Note that the matrix is an <i>m x
    * m</i> matrix.
    */
-  size_type
+  [[nodiscard]] size_type
   m() const;
 
   /**
    * Number of columns of this matrix. Note that the matrix is an <i>n x
    * n</i> matrix.
    */
-  size_type
+  [[nodiscard]] size_type
   n() const;
 
   /**
@@ -100,7 +100,7 @@ public:
    * function is mainly for internal consistency checks and should seldom be
    * used when not in debug mode since it uses quite some time.
    */
-  bool
+  [[nodiscard]] bool
   all_zero() const;
 
   //@}
@@ -183,7 +183,7 @@ public:
    * useful when building the cellwise scalar product of two functions in the
    * finite element context.
    */
-  number
+  [[nodiscard]] number
   matrix_scalar_product(const Vector<number> &u, const Vector<number> &v) const;
 
   /**
@@ -195,7 +195,7 @@ public:
    *
    * Obviously, the matrix needs to be quadratic for this operation.
    */
-  number
+  [[nodiscard]] number
   matrix_norm_square(const Vector<number> &v) const;
 
   //@}
@@ -213,7 +213,7 @@ public:
   /**
    * After calling compute_eigenvalues(), you can access each eigenvalue here.
    */
-  number
+  [[nodiscard]] number
   eigenvalue(const size_type i) const;
   //@}
 

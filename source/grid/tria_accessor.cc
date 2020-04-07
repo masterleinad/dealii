@@ -1865,9 +1865,9 @@ CellAccessor<3>::point_inside(const Point<3> &p) const
 // 3) then check if inside unit cell
 template <int dim, int spacedim>
 template <int dim_, int spacedim_>
-bool
-CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_> &p) const
-{
+[[nodiscard]] bool
+CellAccessor<dim, spacedim>::point_inside_codim(
+  const Point<spacedim_> &p) const {
   const TriaRawIterator<CellAccessor<dim_, spacedim_>> cell_iterator(*this);
   const Point<dim_>                                    p_unit =
     StaticMappingQ1<dim_, spacedim_>::mapping.transform_real_to_unit_cell(
@@ -1879,8 +1879,7 @@ CellAccessor<dim, spacedim>::point_inside_codim(const Point<spacedim_> &p) const
 
 
 template <>
-bool
-CellAccessor<1, 2>::point_inside(const Point<2> &p) const
+bool CellAccessor<1, 2>::point_inside(const Point<2> &p) const
 {
   return point_inside_codim<1, 2>(p);
 }

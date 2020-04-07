@@ -281,7 +281,7 @@ public:
    * returns <tt>FE_RaviartThomasNodal<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   // documentation inherited from the base class
@@ -301,7 +301,7 @@ public:
   get_subface_interpolation_matrix(const FiniteElement<dim> &source,
                                    const unsigned int        subface,
                                    FullMatrix<double> &matrix) const override;
-  virtual bool
+  [[nodiscard]] virtual bool
   hp_constraints_are_implemented() const override;
 
   virtual std::vector<std::pair<unsigned int, unsigned int>>
@@ -344,7 +344,7 @@ private:
    * Right now, this is only implemented for RT0 in 1D. Otherwise, returns
    * always @p true.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
   /**

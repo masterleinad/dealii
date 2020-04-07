@@ -73,8 +73,8 @@ MGLevelGlobalTransfer<VectorType>::fill_and_communicate_copy_indices(
       // check whether there is a renumbering of degrees of freedom on
       // either the finest level or the global dofs, which means that we
       // cannot apply a plain copy
-      for (unsigned int i = 0; i < copy_indices.back().size(); ++i)
-        if (copy_indices.back()[i].first != copy_indices.back()[i].second)
+      for (auto &i : copy_indices.back())
+        if (i.first != i.second)
           {
             my_perform_plain_copy = false;
             break;

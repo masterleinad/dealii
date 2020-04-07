@@ -73,7 +73,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object. Of course this returns 0.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**

@@ -49,56 +49,53 @@ namespace internal
   } // namespace SparseMatrixImplementation
 } // namespace internal
 
-namespace parallel
+namespace parallel::internal
 {
-  namespace internal
-  {
 #ifdef DEAL_II_WITH_THREADS
-    TBBPartitioner::TBBPartitioner()
-      : my_partitioner(std::make_shared<tbb::affinity_partitioner>())
-      , in_use(false)
-    {}
+  TBBPartitioner::TBBPartitioner()
+    : my_partitioner(std::make_shared<tbb::affinity_partitioner>())
+    , in_use(false)
+  {}
 
 
 
-    TBBPartitioner::~TBBPartitioner()
-    {
-      AssertNothrow(in_use == false,
-                    ExcInternalError(
-                      "A vector partitioner goes out of scope, but "
-                      "it appears to be still in use."));
-    }
+  TBBPartitioner::~TBBPartitioner()
+  {
+    AssertNothrow(in_use == false,
+                  ExcInternalError(
+                    "A vector partitioner goes out of scope, but "
+                    "it appears to be still in use."));
+  }
 
 
 
-    std::shared_ptr<tbb::affinity_partitioner>
-    TBBPartitioner::acquire_one_partitioner()
-    {
-      std::lock_guard<std::mutex> lock(mutex);
-      if (in_use)
-        return std::make_shared<tbb::affinity_partitioner>();
+  std::shared_ptr<tbb::affinity_partitioner>
+  TBBPartitioner::acquire_one_partitioner()
+  {
+    std::lock_guard<std::mutex> lock(mutex);
+    if (in_use)
+      return std::make_shared<tbb::affinity_partitioner>();
 
-      in_use = true;
-      return my_partitioner;
-    }
+    in_use = true;
+    return my_partitioner;
+  }
 
 
 
-    void
-    TBBPartitioner::release_one_partitioner(
-      std::shared_ptr<tbb::affinity_partitioner> &p)
-    {
-      if (p.get() == my_partitioner.get())
-        {
-          std::lock_guard<std::mutex> lock(mutex);
-          in_use = false;
-        }
-    }
+  void
+  TBBPartitioner::release_one_partitioner(
+    std::shared_ptr<tbb::affinity_partitioner> &p)
+  {
+    if (p.get() == my_partitioner.get())
+      {
+        std::lock_guard<std::mutex> lock(mutex);
+        in_use = false;
+      }
+  }
 #else
-    TBBPartitioner::TBBPartitioner() = default;
+  TBBPartitioner::TBBPartitioner() = default;
 #endif
-  } // namespace internal
-} // namespace parallel
+} // namespace parallel::internal
 
 
 

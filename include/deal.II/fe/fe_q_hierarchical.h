@@ -553,7 +553,7 @@ public:
    * returns <tt>FE_Q_Hierarchical<dim>(degree)</tt>, with @p dim and @p
    * degree replaced by appropriate values.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   get_name() const override;
 
   virtual std::unique_ptr<FiniteElement<dim, dim>>
@@ -563,7 +563,7 @@ public:
    * This function returns @p true, if the shape function @p shape_index has
    * non-zero function values somewhere on the face @p face_index.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   has_support_on_face(const unsigned int shape_index,
                       const unsigned int face_index) const override;
 
@@ -580,7 +580,7 @@ public:
    * the degree of the element), as it implements the complete set of
    * functions necessary for hp capability.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   hp_constraints_are_implemented() const override;
 
   /**
@@ -678,7 +678,7 @@ public:
    * accessed through pointers to their base class, rather than the class
    * itself.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
   /**
@@ -686,7 +686,7 @@ public:
    * vector which maps the numbering on an FE of degree @p sub_degree into the
    * numbering on this element.
    */
-  std::vector<unsigned int>
+  [[nodiscard]] std::vector<unsigned int>
   get_embedding_dofs(const unsigned int sub_degree) const;
 
   /**
@@ -694,7 +694,7 @@ public:
    * list consists of true arguments for the first vertex shape functions and
    * false for the remaining ones.
    */
-  virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
+  [[nodiscard]] virtual std::pair<Table<2, bool>, std::vector<unsigned int>>
   get_constant_modes() const override;
 
 private:

@@ -779,9 +779,8 @@ namespace internal
         return X[i] * Number(numbers::NumberTraits<Number2>::conjugate(Y[i]));
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x, y;
         x.load(X + i);
         y.load(Y + i);
@@ -799,7 +798,7 @@ namespace internal
         return x * y;
       }
 
-      const Number *const  X;
+      const Number *const X;
       const Number2 *const Y;
     };
 
@@ -818,9 +817,8 @@ namespace internal
         return numbers::NumberTraits<Number>::abs_square(X[i]);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x;
         x.load(X + i);
         return x * x;
@@ -844,9 +842,8 @@ namespace internal
         return numbers::NumberTraits<Number>::abs(X[i]);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x;
         x.load(X + i);
         return std::abs(x);
@@ -871,15 +868,14 @@ namespace internal
         return std::pow(numbers::NumberTraits<Number>::abs(X[i]), p);
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x;
         x.load(X + i);
         return std::pow(std::abs(x), p);
       }
 
-      const Number * X;
+      const Number *X;
       const RealType p;
     };
 
@@ -898,9 +894,8 @@ namespace internal
         return X[i];
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x;
         x.load(X + i);
         return x;
@@ -931,9 +926,8 @@ namespace internal
         return X[i] * Number(numbers::NumberTraits<Number>::conjugate(W[i]));
       }
 
-      VectorizedArray<Number>
-      do_vectorized(const size_type i) const
-      {
+      [[nodiscard]] VectorizedArray<Number>
+      do_vectorized(const size_type i) const {
         VectorizedArray<Number> x, w, v;
         x.load(X + i);
         v.load(V + i);
@@ -956,7 +950,7 @@ namespace internal
         return x * w;
       }
 
-      Number *const       X;
+      Number *const X;
       const Number *const V;
       const Number *const W;
       const Number        a;

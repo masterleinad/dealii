@@ -81,13 +81,13 @@ namespace BlockMatrixIterators
     /**
      * Block row of the element represented by this object.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     block_row() const;
 
     /**
      * Block column of the element represented by this object.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     block_column() const;
 
   protected:
@@ -150,13 +150,13 @@ namespace BlockMatrixIterators
     /**
      * Row number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     row() const;
 
     /**
      * Column number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     column() const;
 
     /**
@@ -242,13 +242,13 @@ namespace BlockMatrixIterators
     /**
      * Row number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     row() const;
 
     /**
      * Column number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     column() const;
 
     /**

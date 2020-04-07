@@ -283,7 +283,7 @@ namespace internal
        * function always returns index 0. Hence, this function does not
        * check whether the given degree is actually present.
        */
-      unsigned int
+      [[nodiscard]] unsigned int
       quad_index_from_n_q_points(const unsigned int n_q_points) const;
 
       /**
@@ -298,7 +298,7 @@ namespace internal
       /**
        * Returns the memory consumption in bytes.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
     };
 
@@ -353,7 +353,7 @@ namespace internal
       /**
        * Return the type of a given cell as detected during initialization.
        */
-      GeometryType
+      [[nodiscard]] GeometryType
       get_cell_type(const unsigned int cell_chunk_no) const;
 
       /**
@@ -365,7 +365,7 @@ namespace internal
       /**
        * Return the memory consumption of this class in bytes.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**

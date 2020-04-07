@@ -80,7 +80,7 @@ namespace internal
       /**
        * Return the index of the ith face object.
        */
-      int
+      [[nodiscard]] int
       face(const unsigned int i) const;
 
       /**

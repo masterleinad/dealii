@@ -49,52 +49,48 @@ DEAL_II_NAMESPACE_OPEN
 // Not implemented for 3D
 
 
-namespace internal
+namespace internal::DataOutRotationImplementation
 {
-  namespace DataOutRotationImplementation
+  template <int dim, int spacedim>
+  ParallelData<dim, spacedim>::ParallelData(
+    const unsigned int               n_datasets,
+    const unsigned int               n_subdivisions,
+    const unsigned int               n_patches_per_circle,
+    const std::vector<unsigned int> &n_postprocessor_outputs,
+    const Mapping<dim, spacedim> &   mapping,
+    const std::vector<std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
+      &               finite_elements,
+    const UpdateFlags update_flags)
+    : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
+        n_datasets,
+        n_subdivisions,
+        n_postprocessor_outputs,
+        mapping,
+        finite_elements,
+        update_flags,
+        false)
+    , n_patches_per_circle(n_patches_per_circle)
+  {}
+
+
+
+  /**
+   * In a WorkStream context, use this function to append the patch computed
+   * by the parallel stage to the array of patches.
+   */
+  template <int dim, int spacedim>
+  void
+  append_patch_to_list(
+    const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &new_patches,
+    std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &      patches)
   {
-    template <int dim, int spacedim>
-    ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
-      const unsigned int               n_patches_per_circle,
-      const std::vector<unsigned int> &n_postprocessor_outputs,
-      const Mapping<dim, spacedim> &   mapping,
-      const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
-        &               finite_elements,
-      const UpdateFlags update_flags)
-      : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
-          n_datasets,
-          n_subdivisions,
-          n_postprocessor_outputs,
-          mapping,
-          finite_elements,
-          update_flags,
-          false)
-      , n_patches_per_circle(n_patches_per_circle)
-    {}
-
-
-
-    /**
-     * In a WorkStream context, use this function to append the patch computed
-     * by the parallel stage to the array of patches.
-     */
-    template <int dim, int spacedim>
-    void
-    append_patch_to_list(
-      const std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &new_patches,
-      std::vector<DataOutBase::Patch<dim + 1, spacedim + 1>> &      patches)
-    {
-      for (unsigned int i = 0; i < new_patches.size(); ++i)
-        {
-          patches.push_back(new_patches[i]);
-          patches.back().patch_index = patches.size() - 1;
-        }
-    }
-  } // namespace DataOutRotationImplementation
-} // namespace internal
+    for (unsigned int i = 0; i < new_patches.size(); ++i)
+      {
+        patches.push_back(new_patches[i]);
+        patches.back().patch_index = patches.size() - 1;
+      }
+  }
+} // namespace internal::DataOutRotationImplementation
 
 
 

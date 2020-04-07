@@ -42,68 +42,65 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace internal
+namespace internal::TimerImplementation
 {
-  namespace TimerImplementation
+  namespace
   {
-    namespace
+    /**
+     * Type trait for checking whether or not a type is a
+     * std::chrono::duration.
+     */
+    template <typename T>
+    struct is_duration : std::false_type
+    {};
+
+    /**
+     * Specialization to get the right truth value.
+     */
+    template <typename Rep, typename Period>
+    struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type
+    {};
+
+    /**
+     * Convert a double precision number with units of seconds into a
+     * specified duration type T. Only valid when T is a
+     * std::chrono::duration type.
+     */
+    template <typename T>
+    T
+    from_seconds(const double time)
     {
-      /**
-       * Type trait for checking whether or not a type is a
-       * std::chrono::duration.
-       */
-      template <typename T>
-      struct is_duration : std::false_type
-      {};
+      static_assert(is_duration<T>::value,
+                    "The template type should be a duration type.");
+      return T(std::lround(T::period::den * (time / T::period::num)));
+    }
 
-      /**
-       * Specialization to get the right truth value.
-       */
-      template <typename Rep, typename Period>
-      struct is_duration<std::chrono::duration<Rep, Period>> : std::true_type
-      {};
+    /**
+     * Convert a given duration into a double precision number with units of
+     * seconds.
+     */
+    template <typename Rep, typename Period>
+    double
+    to_seconds(const std::chrono::duration<Rep, Period> duration)
+    {
+      return Period::num * double(duration.count()) / Period::den;
+    }
 
-      /**
-       * Convert a double precision number with units of seconds into a
-       * specified duration type T. Only valid when T is a
-       * std::chrono::duration type.
-       */
-      template <typename T>
-      T
-      from_seconds(const double time)
-      {
-        static_assert(is_duration<T>::value,
-                      "The template type should be a duration type.");
-        return T(std::lround(T::period::den * (time / T::period::num)));
-      }
-
-      /**
-       * Convert a given duration into a double precision number with units of
-       * seconds.
-       */
-      template <typename Rep, typename Period>
-      double
-      to_seconds(const std::chrono::duration<Rep, Period> duration)
-      {
-        return Period::num * double(duration.count()) / Period::den;
-      }
-
-      /**
-       * Fill a MinMaxAvg struct with default values.
-       */
-      void
-      clear_timing_data(Utilities::MPI::MinMaxAvg &data)
-      {
-        data.sum       = numbers::signaling_nan<double>();
-        data.min       = numbers::signaling_nan<double>();
-        data.max       = numbers::signaling_nan<double>();
-        data.avg       = numbers::signaling_nan<double>();
-        data.min_index = numbers::invalid_unsigned_int;
-        data.max_index = numbers::invalid_unsigned_int;
-      }
-    } // namespace
-  }   // namespace TimerImplementation
-} // namespace internal
+    /**
+     * Fill a MinMaxAvg struct with default values.
+     */
+    void
+    clear_timing_data(Utilities::MPI::MinMaxAvg &data)
+    {
+      data.sum       = numbers::signaling_nan<double>();
+      data.min       = numbers::signaling_nan<double>();
+      data.max       = numbers::signaling_nan<double>();
+      data.avg       = numbers::signaling_nan<double>();
+      data.min_index = numbers::invalid_unsigned_int;
+      data.max_index = numbers::invalid_unsigned_int;
+    }
+  } // namespace
+} // namespace internal::TimerImplementation
 
 
 

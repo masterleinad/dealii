@@ -281,7 +281,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
+    [[nodiscard]] value_type
     value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
@@ -294,7 +294,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
+    [[nodiscard]] gradient_type
     gradient(const unsigned int shape_function,
              const unsigned int q_point) const;
 
@@ -308,7 +308,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_hessians}
      */
-    hessian_type
+    [[nodiscard]] hessian_type
     hessian(const unsigned int shape_function,
             const unsigned int q_point) const;
 
@@ -322,7 +322,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_third_derivatives}
      */
-    third_derivative_type
+    [[nodiscard]] third_derivative_type
     third_derivative(const unsigned int shape_function,
                      const unsigned int q_point) const;
 
@@ -790,7 +790,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
+    [[nodiscard]] value_type
     value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
@@ -806,7 +806,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
+    [[nodiscard]] gradient_type
     gradient(const unsigned int shape_function,
              const unsigned int q_point) const;
 
@@ -825,7 +825,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    symmetric_gradient_type
+    [[nodiscard]] symmetric_gradient_type
     symmetric_gradient(const unsigned int shape_function,
                        const unsigned int q_point) const;
 
@@ -839,7 +839,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
+    [[nodiscard]] divergence_type
     divergence(const unsigned int shape_function,
                const unsigned int q_point) const;
 
@@ -863,7 +863,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    curl_type
+    [[nodiscard]] curl_type
     curl(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
@@ -876,7 +876,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_hessians}
      */
-    hessian_type
+    [[nodiscard]] hessian_type
     hessian(const unsigned int shape_function,
             const unsigned int q_point) const;
 
@@ -890,7 +890,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_3rd_derivatives}
      */
-    third_derivative_type
+    [[nodiscard]] third_derivative_type
     third_derivative(const unsigned int shape_function,
                      const unsigned int q_point) const;
 
@@ -1387,7 +1387,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
+    [[nodiscard]] value_type
     value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
@@ -1403,7 +1403,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
+    [[nodiscard]] divergence_type
     divergence(const unsigned int shape_function,
                const unsigned int q_point) const;
 
@@ -1682,7 +1682,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_values}
      */
-    value_type
+    [[nodiscard]] value_type
     value(const unsigned int shape_function, const unsigned int q_point) const;
 
     /**
@@ -1698,7 +1698,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    divergence_type
+    [[nodiscard]] divergence_type
     divergence(const unsigned int shape_function,
                const unsigned int q_point) const;
 
@@ -1715,7 +1715,7 @@ namespace FEValuesViews
      *
      * @dealiiRequiresUpdateFlags{update_gradients}
      */
-    gradient_type
+    [[nodiscard]] gradient_type
     gradient(const unsigned int shape_function,
              const unsigned int q_point) const;
 
@@ -3555,7 +3555,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**
@@ -3659,7 +3659,7 @@ public:
    * Return the index of the face selected the last time the reinit() function
    * was called.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   get_face_index() const;
 
   /**
@@ -3673,7 +3673,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
 protected:

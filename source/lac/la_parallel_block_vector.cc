@@ -32,20 +32,17 @@ DEAL_II_NAMESPACE_OPEN
 // arguments is covered by the default copy constructor and copy operator that
 // is declared separately)
 
-namespace LinearAlgebra
+namespace LinearAlgebra::distributed
 {
-  namespace distributed
-  {
 #  define TEMPL_COPY_CONSTRUCTOR(S1, S2)                 \
     template BlockVector<S1> &BlockVector<S1>::operator= \
       <S2>(const BlockVector<S2> &)
 
-    TEMPL_COPY_CONSTRUCTOR(double, float);
-    TEMPL_COPY_CONSTRUCTOR(float, double);
+  TEMPL_COPY_CONSTRUCTOR(double, float);
+  TEMPL_COPY_CONSTRUCTOR(float, double);
 
 #  undef TEMPL_COPY_CONSTRUCTOR
-  } // namespace distributed
-} // namespace LinearAlgebra
+} // namespace LinearAlgebra::distributed
 
 #endif // ! DEAL_II_MSVC
 

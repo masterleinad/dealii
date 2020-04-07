@@ -655,8 +655,8 @@ std::size_t
 SparseBlockVanka<number>::memory_consumption() const
 {
   std::size_t mem = SparseVanka<number>::memory_consumption();
-  for (size_type i = 0; i < dof_masks.size(); ++i)
-    mem += MemoryConsumption::memory_consumption(dof_masks[i]);
+  for (const auto &dof_mask : dof_masks)
+    mem += MemoryConsumption::memory_consumption(dof_mask);
   return mem;
 }
 

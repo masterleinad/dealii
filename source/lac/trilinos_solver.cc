@@ -295,7 +295,7 @@ namespace TrilinosWrappers
 
         virtual ~TrilinosReductionControl() override = default;
 
-        virtual bool
+        [[nodiscard]] virtual bool
         ResidualVectorRequired() const override
         {
           return status_test_collection->ResidualVectorRequired();
@@ -321,7 +321,7 @@ namespace TrilinosWrappers
                                                      SolutionUpdated);
         }
 
-        virtual AztecOO_StatusType
+        [[nodiscard]] virtual AztecOO_StatusType
         GetStatus() const override
         {
           return status_test_collection->GetStatus();
@@ -333,14 +333,10 @@ namespace TrilinosWrappers
           return status_test_collection->Print(stream, indent);
         }
 
-        double
-        get_initial_residual() const
-        {
-          return initial_residual;
-        }
+        [[nodiscard]] double
+        get_initial_residual() const { return initial_residual; }
 
-        double
-        get_current_residual() const
+          [[nodiscard]] double get_current_residual() const
         {
           return current_residual;
         }

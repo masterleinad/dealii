@@ -80,7 +80,7 @@ namespace Particles
      * Virtual function through which the names of data sets are obtained from
      * this class
      */
-    virtual std::vector<std::string>
+    [[nodiscard]] virtual std::vector<std::string>
     get_dataset_names() const override;
 
   private:

@@ -376,7 +376,7 @@ namespace parallel
       /**
        * Return if multilevel hierarchy is supported and has been constructed.
        */
-      bool
+      [[nodiscard]] bool
       is_multilevel_hierarchy_constructed() const override;
 
       /**
@@ -572,13 +572,13 @@ namespace parallel
        * whether there are hanging nodes between any two cells of the "global"
        * mesh, i.e., the union of locally owned cells on all processors.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       has_hanging_nodes() const override;
 
       /**
        * Return the local memory consumption in bytes.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const override;
 
       /**
@@ -586,7 +586,7 @@ namespace parallel
        * structures alone. This is already contained in memory_consumption()
        * but made available separately for debugging purposes.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption_p4est() const;
 
       /**
@@ -603,7 +603,7 @@ namespace parallel
        * Produce a check sum of the triangulation.  This is a collective
        * operation and is mostly useful for debugging purposes.
        */
-      unsigned int
+      [[nodiscard]] unsigned int
       get_checksum() const;
 
       /**
@@ -814,7 +814,7 @@ namespace parallel
        * vector is the index of the deal.II coarse cell (counting from
        * begin(0)) that corresponds to the $i$th tree managed by p4est.
        */
-      const std::vector<types::global_dof_index> &
+      [[nodiscard]] const std::vector<types::global_dof_index> &
       get_p4est_tree_to_coarse_cell_permutation() const;
 
       /**
@@ -822,7 +822,7 @@ namespace parallel
        * cells to the p4est trees. This is the inverse of
        * get_p4est_tree_to_coarse_cell_permutation.
        */
-      const std::vector<types::global_dof_index> &
+      [[nodiscard]] const std::vector<types::global_dof_index> &
       get_coarse_cell_to_p4est_tree_permutation() const;
 
       /**
@@ -1202,7 +1202,7 @@ namespace parallel
        * in the order that p4est will encounter them while iterating over
        * them.
        */
-      std::vector<unsigned int>
+      [[nodiscard]] std::vector<unsigned int>
       get_cell_weights() const;
 
       /**
@@ -1214,14 +1214,14 @@ namespace parallel
        *
        * Used by DoFHandler::Policy::ParallelDistributed.
        */
-      std::vector<bool>
+      [[nodiscard]] std::vector<bool>
       mark_locally_active_vertices_on_level(const int level) const;
 
-      virtual unsigned int
+      [[nodiscard]] virtual unsigned int
       coarse_cell_id_to_coarse_cell_index(
         const types::coarse_cell_id coarse_cell_id) const override;
 
-      virtual types::coarse_cell_id
+      [[nodiscard]] virtual types::coarse_cell_id
       coarse_cell_index_to_coarse_cell_id(
         const unsigned int coarse_cell_index) const override;
 
@@ -1271,7 +1271,7 @@ namespace parallel
        * denotes that the first cell in hierarchical ordering is the ith deal
        * cell starting from begin(0).
        */
-      const std::vector<types::global_dof_index> &
+      [[nodiscard]] const std::vector<types::global_dof_index> &
       get_p4est_tree_to_coarse_cell_permutation() const;
 
       /**
@@ -1325,7 +1325,7 @@ namespace parallel
       void
       save(const std::string &filename) const;
 
-      bool
+      [[nodiscard]] bool
       is_multilevel_hierarchy_constructed() const override;
 
       /**
@@ -1374,7 +1374,8 @@ namespace parallel
        * Like above, this method, which is only implemented for dim = 2 or 3,
        * needs a stub because it is used in dof_handler_policy.cc
        */
-      virtual std::map<unsigned int, std::set<dealii::types::subdomain_id>>
+      [[nodiscard]] virtual std::map<unsigned int,
+                                     std::set<dealii::types::subdomain_id>>
       compute_level_vertices_with_ghost_neighbors(
         const unsigned int level) const;
 
@@ -1382,14 +1383,14 @@ namespace parallel
        * Like above, this method, which is only implemented for dim = 2 or 3,
        * needs a stub because it is used in dof_handler_policy.cc
        */
-      virtual std::vector<bool>
+      [[nodiscard]] virtual std::vector<bool>
       mark_locally_active_vertices_on_level(const unsigned int level) const;
 
-      virtual unsigned int
+      [[nodiscard]] virtual unsigned int
       coarse_cell_id_to_coarse_cell_index(
         const types::coarse_cell_id coarse_cell_id) const override;
 
-      virtual types::coarse_cell_id
+      [[nodiscard]] virtual types::coarse_cell_id
       coarse_cell_index_to_coarse_cell_id(
         const unsigned int coarse_cell_index) const override;
     };

@@ -142,7 +142,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      std::size_t
+      [[nodiscard]] std::size_t
       memory_consumption() const;
 
       /**
@@ -195,7 +195,7 @@ namespace internal
 
     template <int dim>
     template <int dh_dim, int spacedim>
-    inline types::global_dof_index
+    [[nodiscard]] inline types::global_dof_index
     DoFObjects<dim>::get_dof_index(
       const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
       const unsigned int                          obj_index,

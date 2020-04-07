@@ -23,59 +23,52 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace internal
+namespace internal::DoFHandlerImplementation
 {
-  namespace DoFHandlerImplementation
+  template <int dim>
+  std::size_t
+  DoFObjects<dim>::memory_consumption() const
   {
-    template <int dim>
-    std::size_t
-    DoFObjects<dim>::memory_consumption() const
-    {
-      return (MemoryConsumption::memory_consumption(dofs));
-    }
+    return (MemoryConsumption::memory_consumption(dofs));
+  }
 
 
 
-    template <int dim>
-    template <int dh_dim, int spacedim>
-    void
-    DoFObjects<dim>::set_dof_index(
-      const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
-      const unsigned int                          obj_index,
-      const unsigned int                          fe_index,
-      const unsigned int                          local_index,
-      const types::global_dof_index               global_index)
-    {
-      (void)fe_index;
-      Assert(
-        (fe_index == dealii::DoFHandler<dh_dim, spacedim>::default_fe_index),
-        ExcMessage(
-          "Only the default FE index is allowed for non-hp DoFHandler objects"));
-      Assert(
-        local_index < dof_handler.get_fe().template n_dofs_per_object<dim>(),
-        ExcIndexRange(local_index,
-                      0,
-                      dof_handler.get_fe().template n_dofs_per_object<dim>()));
-      Assert(obj_index *
-                   dof_handler.get_fe().template n_dofs_per_object<dim>() +
-                 local_index <
-               dofs.size(),
-             ExcInternalError());
+  template <int dim>
+  template <int dh_dim, int spacedim>
+  void
+  DoFObjects<dim>::set_dof_index(
+    const dealii::DoFHandler<dh_dim, spacedim> &dof_handler,
+    const unsigned int                          obj_index,
+    const unsigned int                          fe_index,
+    const unsigned int                          local_index,
+    const types::global_dof_index               global_index)
+  {
+    (void)fe_index;
+    Assert(
+      (fe_index == dealii::DoFHandler<dh_dim, spacedim>::default_fe_index),
+      ExcMessage(
+        "Only the default FE index is allowed for non-hp DoFHandler objects"));
+    Assert(
+      local_index < dof_handler.get_fe().template n_dofs_per_object<dim>(),
+      ExcIndexRange(local_index,
+                    0,
+                    dof_handler.get_fe().template n_dofs_per_object<dim>()));
+    Assert(obj_index * dof_handler.get_fe().template n_dofs_per_object<dim>() +
+               local_index <
+             dofs.size(),
+           ExcInternalError());
 
-      dofs[obj_index * dof_handler.get_fe().template n_dofs_per_object<dim>() +
-           local_index] = global_index;
-    }
-  } // namespace DoFHandlerImplementation
-} // namespace internal
+    dofs[obj_index * dof_handler.get_fe().template n_dofs_per_object<dim>() +
+         local_index] = global_index;
+  }
+} // namespace internal::DoFHandlerImplementation
 
 
 // explicit instantiations
-namespace internal
+namespace internal::DoFHandlerImplementation
 {
-  namespace DoFHandlerImplementation
-  {
 #include "dof_objects.inst"
-  }
-} // namespace internal
+} // namespace internal::DoFHandlerImplementation
 
 DEAL_II_NAMESPACE_CLOSE

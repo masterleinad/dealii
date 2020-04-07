@@ -365,7 +365,7 @@ public:
    * only intended for limited purposes inside the library and it makes
    * debugging much harder.
    */
-  const Accessor &
+  [[nodiscard]] const Accessor &
   access_any() const;
 
   /*@}*/
@@ -471,7 +471,7 @@ public:
   /**
    * Return the state of the iterator.
    */
-  IteratorState::IteratorStates
+  [[nodiscard]] IteratorState::IteratorStates
   state() const;
 
   /**
@@ -487,7 +487,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**

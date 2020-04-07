@@ -357,7 +357,7 @@ namespace LinearAlgebra
       /**
        * Return if this Vector contains ghost elements.
        */
-      bool
+      [[nodiscard]] bool
       has_ghost_elements() const;
 
       /**
@@ -406,7 +406,7 @@ namespace LinearAlgebra
        * This function is mainly for internal consistency checks and should
        * seldom be used when not in debug mode since it uses quite some time.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       all_zero() const override;
 
       /**
@@ -683,7 +683,7 @@ namespace LinearAlgebra
        *  vec.locally_owned_elements() == complete_index_set(vec.size())
        * @endcode
        */
-      virtual dealii::IndexSet
+      [[nodiscard]] virtual dealii::IndexSet
       locally_owned_elements() const override;
 
       /**
@@ -698,7 +698,7 @@ namespace LinearAlgebra
       /**
        * Return the memory consumption of this class in bytes.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const override;
       //@}
 

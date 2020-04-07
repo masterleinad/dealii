@@ -138,7 +138,7 @@ public:
    * preserve vertex locations (unless the translation vector happens to
    * provide zero displacements at vertex locations).
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   preserves_vertex_locations() const override;
 
   /**

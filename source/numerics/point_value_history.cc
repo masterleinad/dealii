@@ -34,23 +34,20 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::PointValueHistoryImplementation
 {
-  namespace PointValueHistoryImplementation
+  /// Only a constructor needed for this class (a struct really)
+  template <int dim>
+  PointGeometryData<dim>::PointGeometryData(
+    const Point<dim> &                          new_requested_location,
+    const std::vector<Point<dim>> &             new_locations,
+    const std::vector<types::global_dof_index> &new_sol_indices)
   {
-    /// Only a constructor needed for this class (a struct really)
-    template <int dim>
-    PointGeometryData<dim>::PointGeometryData(
-      const Point<dim> &                          new_requested_location,
-      const std::vector<Point<dim>> &             new_locations,
-      const std::vector<types::global_dof_index> &new_sol_indices)
-    {
-      requested_location      = new_requested_location;
-      support_point_locations = new_locations;
-      solution_indices        = new_sol_indices;
-    }
-  } // namespace PointValueHistoryImplementation
-} // namespace internal
+    requested_location      = new_requested_location;
+    support_point_locations = new_locations;
+    solution_indices        = new_sol_indices;
+  }
+} // namespace internal::PointValueHistoryImplementation
 
 
 
@@ -1023,9 +1020,9 @@ PointValueHistory<dim>::write_gnuplot(
 
       if (indep_names.size() > 0)
         {
-          for (unsigned int name = 0; name < indep_names.size(); name++)
+          for (auto &indep_name : indep_names)
             {
-              to_gnuplot << "<" << indep_names[name] << "> ";
+              to_gnuplot << "<" << indep_name << "> ";
             }
           to_gnuplot << "\n";
         }
@@ -1127,9 +1124,9 @@ PointValueHistory<dim>::write_gnuplot(
 
           if (indep_names.size() > 0)
             {
-              for (unsigned int name = 0; name < indep_names.size(); name++)
+              for (auto &indep_name : indep_names)
                 {
-                  to_gnuplot << "<" << indep_names[name] << "> ";
+                  to_gnuplot << "<" << indep_name << "> ";
                 }
             }
           else
@@ -1140,16 +1137,13 @@ PointValueHistory<dim>::write_gnuplot(
                 }
             }
 
-          for (std::map<std::string, std::vector<std::vector<double>>>::iterator
-                 data_store_begin = data_store.begin();
-               data_store_begin != data_store.end();
-               ++data_store_begin)
+          for (auto &data_store_begin : data_store)
             {
               typename std::map<std::string, ComponentMask>::iterator mask =
-                component_mask.find(data_store_begin->first);
+                component_mask.find(data_store_begin.first);
               unsigned int n_stored = mask->second.n_selected_components();
               std::vector<std::string> names =
-                (component_names_map.find(data_store_begin->first))->second;
+                (component_names_map.find(data_store_begin.first))->second;
 
               if (names.size() > 0)
                 {
@@ -1165,7 +1159,7 @@ PointValueHistory<dim>::write_gnuplot(
                   for (unsigned int component = 0; component < n_stored;
                        component++)
                     {
-                      to_gnuplot << "<" << data_store_begin->first << "_"
+                      to_gnuplot << "<" << data_store_begin.first << "_"
                                  << component << "> ";
                     }
                 }
@@ -1182,14 +1176,10 @@ PointValueHistory<dim>::write_gnuplot(
                   to_gnuplot << " " << independent_values[component][key];
                 }
 
-              for (std::map<std::string,
-                            std::vector<std::vector<double>>>::iterator
-                     data_store_begin = data_store.begin();
-                   data_store_begin != data_store.end();
-                   ++data_store_begin)
+              for (auto &data_store_begin : data_store)
                 {
                   typename std::map<std::string, ComponentMask>::iterator mask =
-                    component_mask.find(data_store_begin->first);
+                    component_mask.find(data_store_begin.first);
                   unsigned int n_stored = mask->second.n_selected_components();
 
                   for (unsigned int component = 0; component < n_stored;
@@ -1198,8 +1188,8 @@ PointValueHistory<dim>::write_gnuplot(
                       to_gnuplot
                         << " "
                         << (data_store_begin
-                              ->second)[data_store_index * n_stored + component]
-                                       [key];
+                              .second)[data_store_index * n_stored + component]
+                                      [key];
                     }
                 }
               to_gnuplot << "\n";
@@ -1377,9 +1367,9 @@ PointValueHistory<dim>::status(std::ostream &out)
       if (indep_names.size() > 0)
         {
           out << "Names: ";
-          for (unsigned int name = 0; name < indep_names.size(); name++)
+          for (auto &indep_name : indep_names)
             {
-              out << "<" << indep_names[name] << "> ";
+              out << "<" << indep_name << "> ";
             }
           out << "\n";
         }

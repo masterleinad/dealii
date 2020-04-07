@@ -36,47 +36,43 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::DataOutFacesImplementation
 {
-  namespace DataOutFacesImplementation
+  template <int dim, int spacedim>
+  ParallelData<dim, spacedim>::ParallelData(
+    const unsigned int               n_datasets,
+    const unsigned int               n_subdivisions,
+    const std::vector<unsigned int> &n_postprocessor_outputs,
+    const Mapping<dim, spacedim> &   mapping,
+    const std::vector<std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
+      &               finite_elements,
+    const UpdateFlags update_flags)
+    : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
+        n_datasets,
+        n_subdivisions,
+        n_postprocessor_outputs,
+        mapping,
+        finite_elements,
+        update_flags,
+        true)
+  {}
+
+
+
+  /**
+   * In a WorkStream context, use this function to append the patch computed
+   * by the parallel stage to the array of patches.
+   */
+  template <int dim, int spacedim>
+  void
+  append_patch_to_list(
+    const DataOutBase::Patch<dim - 1, spacedim> &       patch,
+    std::vector<DataOutBase::Patch<dim - 1, spacedim>> &patches)
   {
-    template <int dim, int spacedim>
-    ParallelData<dim, spacedim>::ParallelData(
-      const unsigned int               n_datasets,
-      const unsigned int               n_subdivisions,
-      const std::vector<unsigned int> &n_postprocessor_outputs,
-      const Mapping<dim, spacedim> &   mapping,
-      const std::vector<
-        std::shared_ptr<dealii::hp::FECollection<dim, spacedim>>>
-        &               finite_elements,
-      const UpdateFlags update_flags)
-      : internal::DataOutImplementation::ParallelDataBase<dim, spacedim>(
-          n_datasets,
-          n_subdivisions,
-          n_postprocessor_outputs,
-          mapping,
-          finite_elements,
-          update_flags,
-          true)
-    {}
-
-
-
-    /**
-     * In a WorkStream context, use this function to append the patch computed
-     * by the parallel stage to the array of patches.
-     */
-    template <int dim, int spacedim>
-    void
-    append_patch_to_list(
-      const DataOutBase::Patch<dim - 1, spacedim> &       patch,
-      std::vector<DataOutBase::Patch<dim - 1, spacedim>> &patches)
-    {
-      patches.push_back(patch);
-      patches.back().patch_index = patches.size() - 1;
-    }
-  } // namespace DataOutFacesImplementation
-} // namespace internal
+    patches.push_back(patch);
+    patches.back().patch_index = patches.size() - 1;
+  }
+} // namespace internal::DataOutFacesImplementation
 
 
 

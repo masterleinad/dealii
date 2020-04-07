@@ -153,7 +153,7 @@ public:
   /**
    * Return the update flags set.
    */
-  UpdateFlags
+  [[nodiscard]] UpdateFlags
   get_update_flags() const;
 
   /**
@@ -167,7 +167,7 @@ public:
    *
    * See the corresponding reinit() functions for details.
    */
-  bool
+  [[nodiscard]] bool
   at_boundary() const;
 
   /**
@@ -181,7 +181,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_JxW_values}
    */
-  double
+  [[nodiscard]] double
   JxW(const unsigned int quadrature_point) const;
 
   /**
@@ -189,7 +189,7 @@ public:
    *
    * @dealiiRequiresUpdateFlags{update_JxW_values}
    */
-  const std::vector<double> &
+  [[nodiscard]] const std::vector<double> &
   get_JxW_values() const;
 
   /**
@@ -223,7 +223,7 @@ public:
    * continuous element, it is slightly smaller because the two cells on the
    * interface share some of the dofs.
    */
-  unsigned
+  [[nodiscard]] unsigned
   n_current_interface_dofs() const;
 
   /**
@@ -232,7 +232,7 @@ public:
    * @note This function is only available after a call to reinit() and can change
    * from one call to reinit() to the next.
    */
-  std::vector<types::global_dof_index>
+  [[nodiscard]] std::vector<types::global_dof_index>
   get_interface_dof_indices() const;
 
   /**
@@ -246,7 +246,7 @@ public:
    * @note This function is only available after a call to reinit() and can change
    * from one call to reinit() to the next.
    */
-  std::array<unsigned int, 2>
+  [[nodiscard]] std::array<unsigned int, 2>
   interface_dof_to_dof_indices(const unsigned int interface_dof_index) const;
 
   /**
@@ -290,7 +290,7 @@ public:
    * <code>(direction * normal)>0</code> as the first argument of this
    * function.
    */
-  double
+  [[nodiscard]] double
   shape_value(const bool         here_or_there,
               const unsigned int interface_dof_index,
               const unsigned int q_point,
@@ -310,7 +310,7 @@ public:
    * If this is a boundary face (at_boundary() returns true), then
    * $\jump{u}=u_{\text{cell0}}$.
    */
-  double
+  [[nodiscard]] double
   jump(const unsigned int interface_dof_index,
        const unsigned int q_point,
        const unsigned int component = 0) const;
@@ -324,7 +324,7 @@ public:
    * If this is a boundary face (at_boundary() returns true), then
    * $\average{u}=u_{\text{cell0}}$.
    */
-  double
+  [[nodiscard]] double
   average(const unsigned int interface_dof_index,
           const unsigned int q_point,
           const unsigned int component = 0) const;

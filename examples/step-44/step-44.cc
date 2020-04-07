@@ -558,10 +558,10 @@ namespace Step44
       return get_Jc_vol() + get_Jc_iso();
     }
 
-    // Derivative of the volumetric free energy with respect to
-    // $\widetilde{J}$ return $\frac{\partial
-    // \Psi_{\text{vol}}(\widetilde{J})}{\partial \widetilde{J}}$
-    double get_dPsi_vol_dJ() const
+      // Derivative of the volumetric free energy with respect to
+      // $\widetilde{J}$ return $\frac{\partial
+      // \Psi_{\text{vol}}(\widetilde{J})}{\partial \widetilde{J}}$
+      [[nodiscard]] double get_dPsi_vol_dJ() const
     {
       return (kappa / 2.0) * (J_tilde - 1.0 / J_tilde);
     }
@@ -575,16 +575,16 @@ namespace Step44
       return ((kappa / 2.0) * (1.0 + 1.0 / (J_tilde * J_tilde)));
     }
 
-    // The next few functions return various data that we choose to store with
-    // the material:
-    double get_det_F() const
+      // The next few functions return various data that we choose to store with
+      // the material:
+      [[nodiscard]] double get_det_F() const
     {
       return det_F;
     }
 
     [[nodiscard]] double get_p_tilde() const { return p_tilde; }
 
-    double get_J_tilde() const
+      [[nodiscard]] double get_J_tilde() const
     {
       return J_tilde;
     }
@@ -608,10 +608,10 @@ namespace Step44
       return p_tilde * det_F * Physics::Elasticity::StandardTensors<dim>::I;
     }
 
-    // Next, determine the isochoric Kirchhoff stress
-    // $\boldsymbol{\tau}_{\textrm{iso}} =
-    // \mathcal{P}:\overline{\boldsymbol{\tau}}$:
-    SymmetricTensor<2, dim> get_tau_iso() const
+      // Next, determine the isochoric Kirchhoff stress
+      // $\boldsymbol{\tau}_{\textrm{iso}} =
+      // \mathcal{P}:\overline{\boldsymbol{\tau}}$:
+      [[nodiscard]] SymmetricTensor<2, dim> get_tau_iso() const
     {
       return Physics::Elasticity::StandardTensors<dim>::dev_P * get_tau_bar();
     }
@@ -622,9 +622,9 @@ namespace Step44
       return 2.0 * c_1 * b_bar;
     }
 
-    // Calculate the volumetric part of the tangent $J
-    // \mathfrak{c}_\textrm{vol}$:
-    SymmetricTensor<4, dim> get_Jc_vol() const
+      // Calculate the volumetric part of the tangent $J
+      // \mathfrak{c}_\textrm{vol}$:
+      [[nodiscard]] SymmetricTensor<4, dim> get_Jc_vol() const
     {
       return p_tilde * det_F *
              (Physics::Elasticity::StandardTensors<dim>::IxI -
@@ -649,9 +649,9 @@ namespace Step44
                Physics::Elasticity::StandardTensors<dim>::dev_P;
     }
 
-    // Calculate the fictitious elasticity tensor $\overline{\mathfrak{c}}$.
-    // For the material model chosen this is simply zero:
-    SymmetricTensor<4, dim> get_c_bar() const
+      // Calculate the fictitious elasticity tensor $\overline{\mathfrak{c}}$.
+      // For the material model chosen this is simply zero:
+      [[nodiscard]] SymmetricTensor<4, dim> get_c_bar() const
     {
       return SymmetricTensor<4, dim>();
     }
@@ -730,31 +730,31 @@ namespace Step44
     // variables:
     [[nodiscard]] double get_J_tilde() const { return material->get_J_tilde(); }
 
-    double get_det_F() const
+      [[nodiscard]] double get_det_F() const
     {
       return material->get_det_F();
     }
 
     [[nodiscard]] const Tensor<2, dim> &get_F_inv() const { return F_inv; }
 
-    // ...and the kinetic variables.  These are used in the material and
-    // global tangent matrix and residual assembly operations:
-    double get_p_tilde() const
+      // ...and the kinetic variables.  These are used in the material and
+      // global tangent matrix and residual assembly operations:
+      [[nodiscard]] double get_p_tilde() const
     {
       return material->get_p_tilde();
     }
 
     [[nodiscard]] const SymmetricTensor<2, dim> &get_tau() const { return tau; }
 
-    double get_dPsi_vol_dJ() const
+      [[nodiscard]] double get_dPsi_vol_dJ() const
     {
       return dPsi_vol_dJ;
     }
 
     [[nodiscard]] double get_d2Psi_vol_dJ2() const { return d2Psi_vol_dJ2; }
 
-    // And finally the tangent:
-    const SymmetricTensor<4, dim> &get_Jc() const
+      // And finally the tangent:
+      [[nodiscard]] const SymmetricTensor<4, dim> &get_Jc() const
     {
       return Jc;
     }

@@ -73,7 +73,7 @@ namespace Particles
      *
      * @return The location of this particle.
      */
-    const Point<spacedim> &
+    [[nodiscard]] const Point<spacedim> &
     get_location() const;
 
     /**
@@ -88,13 +88,13 @@ namespace Particles
     /**
      * Return the reference location of this particle in its current cell.
      */
-    const Point<dim> &
+    [[nodiscard]] const Point<dim> &
     get_reference_location() const;
 
     /**
      * Return the ID number of this particle.
      */
-    types::particle_index
+    [[nodiscard]] types::particle_index
     get_id() const;
 
     /**
@@ -111,7 +111,7 @@ namespace Particles
      * Return whether this particle has a valid property pool and a valid
      * handle to properties.
      */
-    bool
+    [[nodiscard]] bool
     has_properties() const;
 
     /**
@@ -136,7 +136,7 @@ namespace Particles
      *
      * @return An ArrayView of the properties of this particle.
      */
-    const ArrayView<const double>
+    [[nodiscard]] const ArrayView<const double>
     get_properties() const;
 
     /**
@@ -144,7 +144,7 @@ namespace Particles
      * serialized (i.e. the number of bytes that is written by the write_data
      * function of this class).
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     serialized_size_in_bytes() const;
 
     /**
@@ -153,7 +153,7 @@ namespace Particles
      * but the triangulation itself is not stored in the particle this
      * operation requires a reference to the triangulation.
      */
-    typename Triangulation<dim, spacedim>::cell_iterator
+    [[nodiscard]] typename Triangulation<dim, spacedim>::cell_iterator
     get_surrounding_cell(
       const Triangulation<dim, spacedim> &triangulation) const;
 

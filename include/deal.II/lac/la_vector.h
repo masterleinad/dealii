@@ -166,7 +166,7 @@ namespace LinearAlgebra
      * This functionality only needs to be called if using MPI based vectors and
      * exists in other objects for compatibility.
      */
-    bool
+    [[nodiscard]] bool
     has_ghost_elements() const;
 
     /**
@@ -276,7 +276,7 @@ namespace LinearAlgebra
     /**
      * Return whether the vector contains only elements with value zero.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     all_zero() const override;
 
     /**
@@ -335,7 +335,7 @@ namespace LinearAlgebra
      * Return the global size of the vector, equal to the sum of the number of
      * locally owned indices among all processors.
      */
-    virtual size_type
+    [[nodiscard]] virtual size_type
     size() const override;
 
     /**
@@ -349,7 +349,7 @@ namespace LinearAlgebra
      *  vec.locally_owned_elements() == complete_index_set(vec.size())
      * @endcode
      */
-    virtual dealii::IndexSet
+    [[nodiscard]] virtual dealii::IndexSet
     locally_owned_elements() const override;
 
     /**
@@ -398,7 +398,7 @@ namespace LinearAlgebra
     /**
      * Return the memory consumption of this class in bytes.
      */
-    virtual std::size_t
+    [[nodiscard]] virtual std::size_t
     memory_consumption() const override;
 
     /**

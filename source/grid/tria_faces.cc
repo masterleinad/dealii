@@ -21,31 +21,28 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::TriangulationImplementation
 {
-  namespace TriangulationImplementation
+  std::size_t
+  TriaFaces<1>::memory_consumption() const
   {
-    std::size_t
-    TriaFaces<1>::memory_consumption() const
-    {
-      return 0;
-    }
+    return 0;
+  }
 
 
-    std::size_t
-    TriaFaces<2>::memory_consumption() const
-    {
-      return MemoryConsumption::memory_consumption(lines);
-    }
+  std::size_t
+  TriaFaces<2>::memory_consumption() const
+  {
+    return MemoryConsumption::memory_consumption(lines);
+  }
 
 
-    std::size_t
-    TriaFaces<3>::memory_consumption() const
-    {
-      return (MemoryConsumption::memory_consumption(quads) +
-              MemoryConsumption::memory_consumption(lines));
-    }
-  } // namespace TriangulationImplementation
-} // namespace internal
+  std::size_t
+  TriaFaces<3>::memory_consumption() const
+  {
+    return (MemoryConsumption::memory_consumption(quads) +
+            MemoryConsumption::memory_consumption(lines));
+  }
+} // namespace internal::TriangulationImplementation
 
 DEAL_II_NAMESPACE_CLOSE

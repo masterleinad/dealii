@@ -1301,20 +1301,20 @@ private:
     /**
      * Return the coarsest level for which this structure stores data.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     get_coarsest_level() const;
 
     /**
      * Return the finest level for which this structure stores data.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     get_finest_level() const;
 
     /**
      * Return the index of the <code>dof_number</code>th degree of freedom for
      * the given level stored for the current vertex.
      */
-    types::global_dof_index
+    [[nodiscard]] types::global_dof_index
     get_index(const unsigned int level,
               const unsigned int dof_number,
               const unsigned int dofs_per_vertex) const;

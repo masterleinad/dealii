@@ -36,68 +36,64 @@
 DEAL_II_NAMESPACE_OPEN
 
 
-namespace internal
+namespace internal::FE_Q_Base
 {
-  namespace FE_Q_Base
+  namespace
   {
-    namespace
+    // get the renumbering for faces
+    template <int dim>
+    inline std::vector<unsigned int>
+    face_lexicographic_to_hierarchic_numbering(const unsigned int degree)
     {
-      // get the renumbering for faces
-      template <int dim>
-      inline std::vector<unsigned int>
-      face_lexicographic_to_hierarchic_numbering(const unsigned int degree)
-      {
-        std::vector<unsigned int> dpo(dim, 1U);
-        for (unsigned int i = 1; i < dpo.size(); ++i)
-          dpo[i] = dpo[i - 1] * (degree - 1);
-        const dealii::FiniteElementData<dim - 1> face_data(dpo, 1, degree);
-        std::vector<unsigned int> face_renumber(face_data.dofs_per_cell);
-        FETools::lexicographic_to_hierarchic_numbering(face_data,
-                                                       face_renumber);
-        return face_renumber;
-      }
+      std::vector<unsigned int> dpo(dim, 1U);
+      for (unsigned int i = 1; i < dpo.size(); ++i)
+        dpo[i] = dpo[i - 1] * (degree - 1);
+      const dealii::FiniteElementData<dim - 1> face_data(dpo, 1, degree);
+      std::vector<unsigned int> face_renumber(face_data.dofs_per_cell);
+      FETools::lexicographic_to_hierarchic_numbering(face_data, face_renumber);
+      return face_renumber;
+    }
 
-      // dummy specialization for dim == 1 to avoid linker errors
-      template <>
-      inline std::vector<unsigned int>
-      face_lexicographic_to_hierarchic_numbering<1>(const unsigned int)
-      {
-        return std::vector<unsigned int>();
-      }
+    // dummy specialization for dim == 1 to avoid linker errors
+    template <>
+    inline std::vector<unsigned int>
+    face_lexicographic_to_hierarchic_numbering<1>(const unsigned int)
+    {
+      return std::vector<unsigned int>();
+    }
 
 
 
-      // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
-      // tensorization on inner loops for performance reasons. this clears a
-      // dim-array
-      template <int dim>
-      inline void
-      zero_indices(unsigned int (&indices)[dim])
-      {
-        for (unsigned int d = 0; d < dim; ++d)
-          indices[d] = 0;
-      }
+    // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
+    // tensorization on inner loops for performance reasons. this clears a
+    // dim-array
+    template <int dim>
+    inline void
+    zero_indices(unsigned int (&indices)[dim])
+    {
+      for (unsigned int d = 0; d < dim; ++d)
+        indices[d] = 0;
+    }
 
 
 
-      // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
-      // tensorization on inner loops for performance reasons. this increments
-      // tensor product indices
-      template <int dim>
-      inline void
-      increment_indices(unsigned int (&indices)[dim], const unsigned int dofs1d)
-      {
-        ++indices[0];
-        for (int d = 0; d < dim - 1; ++d)
-          if (indices[d] == dofs1d)
-            {
-              indices[d] = 0;
-              indices[d + 1]++;
-            }
-      }
-    } // namespace
-  }   // namespace FE_Q_Base
-} // namespace internal
+    // in get_restriction_matrix() and get_prolongation_matrix(), want to undo
+    // tensorization on inner loops for performance reasons. this increments
+    // tensor product indices
+    template <int dim>
+    inline void
+    increment_indices(unsigned int (&indices)[dim], const unsigned int dofs1d)
+    {
+      ++indices[0];
+      for (int d = 0; d < dim - 1; ++d)
+        if (indices[d] == dofs1d)
+          {
+            indices[d] = 0;
+            indices[d + 1]++;
+          }
+    }
+  } // namespace
+} // namespace internal::FE_Q_Base
 
 
 

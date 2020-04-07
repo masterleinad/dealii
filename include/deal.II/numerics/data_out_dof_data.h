@@ -251,7 +251,7 @@ namespace internal
        * Assuming that the stored vector is a cell vector, extract the given
        * element from it.
        */
-      virtual double
+      [[nodiscard]] virtual double
       get_cell_data_value(const unsigned int       cell_number,
                           const ComponentExtractor extract_component) const = 0;
 
@@ -332,7 +332,7 @@ namespace internal
        * Return whether the data represented by (a derived class of) this object
        * represents a complex-valued (as opposed to real-valued) information.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       is_complex_valued() const = 0;
 
       /**
@@ -345,7 +345,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const = 0;
 
       /**
@@ -955,7 +955,7 @@ public:
    * Determine an estimate for the memory consumption (in bytes) of this
    * object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
 protected:
@@ -1001,21 +1001,21 @@ protected:
    * Function by which the base class's functions get to know what patches
    * they shall write to a file.
    */
-  virtual const std::vector<Patch> &
+  [[nodiscard]] virtual const std::vector<Patch> &
   get_patches() const override;
 
   /**
    * Virtual function through which the names of data sets are obtained by the
    * output functions of the base class.
    */
-  virtual std::vector<std::string>
+  [[nodiscard]] virtual std::vector<std::string>
   get_dataset_names() const override;
 
   /**
    * Extracts the finite elements stored in the dof_data object, including a
    * dummy object of FE_DGQ<dim>(0) in case only the triangulation is used.
    */
-  std::vector<
+  [[nodiscard]] std::vector<
     std::shared_ptr<dealii::hp::FECollection<DoFHandlerType::dimension,
                                              DoFHandlerType::space_dimension>>>
   get_fes() const;
@@ -1024,7 +1024,7 @@ protected:
    * Overload of the respective DataOutInterface::get_nonscalar_data_ranges()
    * function. See there for a more extensive documentation.
    */
-  virtual std::vector<
+  [[nodiscard]] virtual std::vector<
     std::tuple<unsigned int,
                unsigned int,
                std::string,

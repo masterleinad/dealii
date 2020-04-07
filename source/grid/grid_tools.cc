@@ -2019,61 +2019,58 @@ namespace GridTools
 
 
 
-  namespace internal
+  namespace internal::BoundingBoxPredicate
   {
-    namespace BoundingBoxPredicate
+    template <class MeshType>
+    std::tuple<BoundingBox<MeshType::space_dimension>, bool>
+    compute_cell_predicate_bounding_box(
+      const typename MeshType::cell_iterator &parent_cell,
+      const std::function<bool(const typename MeshType::active_cell_iterator &)>
+        &predicate)
     {
-      template <class MeshType>
-      std::tuple<BoundingBox<MeshType::space_dimension>, bool>
-      compute_cell_predicate_bounding_box(
-        const typename MeshType::cell_iterator &parent_cell,
-        const std::function<
-          bool(const typename MeshType::active_cell_iterator &)> &predicate)
-      {
-        bool has_predicate =
-          false; // Start assuming there's no cells with predicate inside
-        std::vector<typename MeshType::active_cell_iterator> active_cells;
-        if (parent_cell->is_active())
-          active_cells = {parent_cell};
-        else
-          // Finding all active cells descendants of the current one (or the
-          // current one if it is active)
-          active_cells = get_active_child_cells<MeshType>(parent_cell);
+      bool has_predicate =
+        false; // Start assuming there's no cells with predicate inside
+      std::vector<typename MeshType::active_cell_iterator> active_cells;
+      if (parent_cell->is_active())
+        active_cells = {parent_cell};
+      else
+        // Finding all active cells descendants of the current one (or the
+        // current one if it is active)
+        active_cells = get_active_child_cells<MeshType>(parent_cell);
 
-        const unsigned int spacedim = MeshType::space_dimension;
+      const unsigned int spacedim = MeshType::space_dimension;
 
-        // Looking for the first active cell which has the property predicate
-        unsigned int i = 0;
-        while (i < active_cells.size() && !predicate(active_cells[i]))
-          ++i;
+      // Looking for the first active cell which has the property predicate
+      unsigned int i = 0;
+      while (i < active_cells.size() && !predicate(active_cells[i]))
+        ++i;
 
-        // No active cells or no active cells with property
-        if (active_cells.size() == 0 || i == active_cells.size())
-          {
-            BoundingBox<spacedim> bbox;
-            return std::make_tuple(bbox, has_predicate);
-          }
+      // No active cells or no active cells with property
+      if (active_cells.size() == 0 || i == active_cells.size())
+        {
+          BoundingBox<spacedim> bbox;
+          return std::make_tuple(bbox, has_predicate);
+        }
 
-        // The two boundary points defining the boundary box
-        Point<spacedim> maxp = active_cells[i]->vertex(0);
-        Point<spacedim> minp = active_cells[i]->vertex(0);
+      // The two boundary points defining the boundary box
+      Point<spacedim> maxp = active_cells[i]->vertex(0);
+      Point<spacedim> minp = active_cells[i]->vertex(0);
 
-        for (; i < active_cells.size(); ++i)
-          if (predicate(active_cells[i]))
-            for (const unsigned int v :
-                 GeometryInfo<MeshType::dimension>::vertex_indices())
-              for (unsigned int d = 0; d < spacedim; ++d)
-                {
-                  minp[d] = std::min(minp[d], active_cells[i]->vertex(v)[d]);
-                  maxp[d] = std::max(maxp[d], active_cells[i]->vertex(v)[d]);
-                }
+      for (; i < active_cells.size(); ++i)
+        if (predicate(active_cells[i]))
+          for (const unsigned int v :
+               GeometryInfo<MeshType::dimension>::vertex_indices())
+            for (unsigned int d = 0; d < spacedim; ++d)
+              {
+                minp[d] = std::min(minp[d], active_cells[i]->vertex(v)[d]);
+                maxp[d] = std::max(maxp[d], active_cells[i]->vertex(v)[d]);
+              }
 
-        has_predicate = true;
-        BoundingBox<spacedim> bbox(std::make_pair(minp, maxp));
-        return std::make_tuple(bbox, has_predicate);
-      }
-    } // namespace BoundingBoxPredicate
-  }   // namespace internal
+      has_predicate = true;
+      BoundingBox<spacedim> bbox(std::make_pair(minp, maxp));
+      return std::make_tuple(bbox, has_predicate);
+    }
+  } // namespace internal::BoundingBoxPredicate
 
 
 
@@ -3338,457 +3335,448 @@ namespace GridTools
 
 
 
-  namespace internal
+  namespace internal::FixUpDistortedChildCells
   {
-    namespace FixUpDistortedChildCells
+    // compute the mean square
+    // deviation of the alternating
+    // forms of the children of the
+    // given object from that of
+    // the object itself. for
+    // objects with
+    // structdim==spacedim, the
+    // alternating form is the
+    // determinant of the jacobian,
+    // whereas for faces with
+    // structdim==spacedim-1, the
+    // alternating form is the
+    // (signed and scaled) normal
+    // vector
+    //
+    // this average square
+    // deviation is computed for an
+    // object where the center node
+    // has been replaced by the
+    // second argument to this
+    // function
+    template <typename Iterator, int spacedim>
+    double
+    objective_function(const Iterator &       object,
+                       const Point<spacedim> &object_mid_point)
     {
-      // compute the mean square
-      // deviation of the alternating
-      // forms of the children of the
-      // given object from that of
-      // the object itself. for
-      // objects with
-      // structdim==spacedim, the
-      // alternating form is the
-      // determinant of the jacobian,
-      // whereas for faces with
-      // structdim==spacedim-1, the
-      // alternating form is the
-      // (signed and scaled) normal
-      // vector
-      //
-      // this average square
-      // deviation is computed for an
-      // object where the center node
-      // has been replaced by the
-      // second argument to this
-      // function
-      template <typename Iterator, int spacedim>
-      double
-      objective_function(const Iterator &       object,
-                         const Point<spacedim> &object_mid_point)
-      {
-        const unsigned int structdim =
-          Iterator::AccessorType::structure_dimension;
-        Assert(spacedim == Iterator::AccessorType::dimension,
-               ExcInternalError());
+      const unsigned int structdim =
+        Iterator::AccessorType::structure_dimension;
+      Assert(spacedim == Iterator::AccessorType::dimension, ExcInternalError());
 
-        // everything below is wrong
-        // if not for the following
-        // condition
-        Assert(object->refinement_case() ==
-                 RefinementCase<structdim>::isotropic_refinement,
-               ExcNotImplemented());
-        // first calculate the
-        // average alternating form
-        // for the parent cell/face
-        Point<spacedim>
-          parent_vertices[GeometryInfo<structdim>::vertices_per_cell];
-        Tensor<spacedim - structdim, spacedim>
-          parent_alternating_forms[GeometryInfo<structdim>::vertices_per_cell];
+      // everything below is wrong
+      // if not for the following
+      // condition
+      Assert(object->refinement_case() ==
+               RefinementCase<structdim>::isotropic_refinement,
+             ExcNotImplemented());
+      // first calculate the
+      // average alternating form
+      // for the parent cell/face
+      Point<spacedim>
+        parent_vertices[GeometryInfo<structdim>::vertices_per_cell];
+      Tensor<spacedim - structdim, spacedim>
+        parent_alternating_forms[GeometryInfo<structdim>::vertices_per_cell];
 
+      for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+        parent_vertices[i] = object->vertex(i);
+
+      GeometryInfo<structdim>::alternating_form_at_vertices(
+        parent_vertices, parent_alternating_forms);
+
+      const Tensor<spacedim - structdim, spacedim>
+        average_parent_alternating_form =
+          std::accumulate(parent_alternating_forms,
+                          parent_alternating_forms +
+                            GeometryInfo<structdim>::vertices_per_cell,
+                          Tensor<spacedim - structdim, spacedim>());
+
+      // now do the same
+      // computation for the
+      // children where we use the
+      // given location for the
+      // object mid point instead of
+      // the one the triangulation
+      // currently reports
+      Point<spacedim>
+        child_vertices[GeometryInfo<structdim>::max_children_per_cell]
+                      [GeometryInfo<structdim>::vertices_per_cell];
+      Tensor<spacedim - structdim, spacedim>
+        child_alternating_forms[GeometryInfo<structdim>::max_children_per_cell]
+                               [GeometryInfo<structdim>::vertices_per_cell];
+
+      for (unsigned int c = 0; c < object->n_children(); ++c)
         for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-          parent_vertices[i] = object->vertex(i);
+          child_vertices[c][i] = object->child(c)->vertex(i);
 
+      // replace mid-object
+      // vertex. note that for
+      // child i, the mid-object
+      // vertex happens to have the
+      // number
+      // max_children_per_cell-i
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        child_vertices[c][GeometryInfo<structdim>::max_children_per_cell - c -
+                          1] = object_mid_point;
+
+      for (unsigned int c = 0; c < object->n_children(); ++c)
         GeometryInfo<structdim>::alternating_form_at_vertices(
-          parent_vertices, parent_alternating_forms);
+          child_vertices[c], child_alternating_forms[c]);
 
-        const Tensor<spacedim - structdim, spacedim>
-          average_parent_alternating_form =
-            std::accumulate(parent_alternating_forms,
-                            parent_alternating_forms +
-                              GeometryInfo<structdim>::vertices_per_cell,
-                            Tensor<spacedim - structdim, spacedim>());
+      // on a uniformly refined
+      // hypercube object, the child
+      // alternating forms should
+      // all be smaller by a factor
+      // of 2^structdim than the
+      // ones of the parent. as a
+      // consequence, we'll use the
+      // squared deviation from
+      // this ideal value as an
+      // objective function
+      double objective = 0;
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+          objective +=
+            (child_alternating_forms[c][i] -
+             average_parent_alternating_form / std::pow(2., 1. * structdim))
+              .norm_square();
 
-        // now do the same
-        // computation for the
-        // children where we use the
-        // given location for the
-        // object mid point instead of
-        // the one the triangulation
-        // currently reports
-        Point<spacedim>
-          child_vertices[GeometryInfo<structdim>::max_children_per_cell]
-                        [GeometryInfo<structdim>::vertices_per_cell];
-        Tensor<spacedim - structdim, spacedim> child_alternating_forms
-          [GeometryInfo<structdim>::max_children_per_cell]
-          [GeometryInfo<structdim>::vertices_per_cell];
-
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-            child_vertices[c][i] = object->child(c)->vertex(i);
-
-        // replace mid-object
-        // vertex. note that for
-        // child i, the mid-object
-        // vertex happens to have the
-        // number
-        // max_children_per_cell-i
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          child_vertices[c][GeometryInfo<structdim>::max_children_per_cell - c -
-                            1] = object_mid_point;
-
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          GeometryInfo<structdim>::alternating_form_at_vertices(
-            child_vertices[c], child_alternating_forms[c]);
-
-        // on a uniformly refined
-        // hypercube object, the child
-        // alternating forms should
-        // all be smaller by a factor
-        // of 2^structdim than the
-        // ones of the parent. as a
-        // consequence, we'll use the
-        // squared deviation from
-        // this ideal value as an
-        // objective function
-        double objective = 0;
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-            objective +=
-              (child_alternating_forms[c][i] -
-               average_parent_alternating_form / std::pow(2., 1. * structdim))
-                .norm_square();
-
-        return objective;
-      }
+      return objective;
+    }
 
 
-      /**
-       * Return the location of the midpoint
-       * of the 'f'th face (vertex) of this 1d
-       * object.
-       */
-      template <typename Iterator>
-      Point<Iterator::AccessorType::space_dimension>
-      get_face_midpoint(const Iterator &   object,
-                        const unsigned int f,
-                        std::integral_constant<int, 1>)
-      {
-        return object->vertex(f);
-      }
+    /**
+     * Return the location of the midpoint
+     * of the 'f'th face (vertex) of this 1d
+     * object.
+     */
+    template <typename Iterator>
+    Point<Iterator::AccessorType::space_dimension>
+    get_face_midpoint(const Iterator &   object,
+                      const unsigned int f,
+                      std::integral_constant<int, 1>)
+    {
+      return object->vertex(f);
+    }
 
 
 
-      /**
-       * Return the location of the midpoint
-       * of the 'f'th face (line) of this 2d
-       * object.
-       */
-      template <typename Iterator>
-      Point<Iterator::AccessorType::space_dimension>
-      get_face_midpoint(const Iterator &   object,
-                        const unsigned int f,
-                        std::integral_constant<int, 2>)
-      {
-        return object->line(f)->center();
-      }
+    /**
+     * Return the location of the midpoint
+     * of the 'f'th face (line) of this 2d
+     * object.
+     */
+    template <typename Iterator>
+    Point<Iterator::AccessorType::space_dimension>
+    get_face_midpoint(const Iterator &   object,
+                      const unsigned int f,
+                      std::integral_constant<int, 2>)
+    {
+      return object->line(f)->center();
+    }
 
 
 
-      /**
-       * Return the location of the midpoint
-       * of the 'f'th face (quad) of this 3d
-       * object.
-       */
-      template <typename Iterator>
-      Point<Iterator::AccessorType::space_dimension>
-      get_face_midpoint(const Iterator &   object,
-                        const unsigned int f,
-                        std::integral_constant<int, 3>)
-      {
-        return object->face(f)->center();
-      }
+    /**
+     * Return the location of the midpoint
+     * of the 'f'th face (quad) of this 3d
+     * object.
+     */
+    template <typename Iterator>
+    Point<Iterator::AccessorType::space_dimension>
+    get_face_midpoint(const Iterator &   object,
+                      const unsigned int f,
+                      std::integral_constant<int, 3>)
+    {
+      return object->face(f)->center();
+    }
 
 
 
-      /**
-       * Compute the minimal diameter of an
-       * object by looking for the minimal
-       * distance between the mid-points of
-       * its faces. This minimal diameter is
-       * used to determine the step length
-       * for our grid cell improvement
-       * algorithm, and it should be small
-       * enough that the point moves around
-       * within the cell even if it is highly
-       * elongated -- thus, the diameter of
-       * the object is not a good measure,
-       * while the minimal diameter is. Note
-       * that the algorithm below works for
-       * both cells that are long rectangles
-       * with parallel sides where the
-       * nearest distance is between opposite
-       * edges as well as highly slanted
-       * parallelograms where the shortest
-       * distance is between neighboring
-       * edges.
-       */
-      template <typename Iterator>
-      double
-      minimal_diameter(const Iterator &object)
-      {
-        const unsigned int structdim =
-          Iterator::AccessorType::structure_dimension;
+    /**
+     * Compute the minimal diameter of an
+     * object by looking for the minimal
+     * distance between the mid-points of
+     * its faces. This minimal diameter is
+     * used to determine the step length
+     * for our grid cell improvement
+     * algorithm, and it should be small
+     * enough that the point moves around
+     * within the cell even if it is highly
+     * elongated -- thus, the diameter of
+     * the object is not a good measure,
+     * while the minimal diameter is. Note
+     * that the algorithm below works for
+     * both cells that are long rectangles
+     * with parallel sides where the
+     * nearest distance is between opposite
+     * edges as well as highly slanted
+     * parallelograms where the shortest
+     * distance is between neighboring
+     * edges.
+     */
+    template <typename Iterator>
+    double
+    minimal_diameter(const Iterator &object)
+    {
+      const unsigned int structdim =
+        Iterator::AccessorType::structure_dimension;
 
-        double diameter = object->diameter();
-        for (const unsigned int f : GeometryInfo<structdim>::face_indices())
-          for (unsigned int e = f + 1;
-               e < GeometryInfo<structdim>::faces_per_cell;
-               ++e)
-            diameter = std::min(
-              diameter,
-              get_face_midpoint(object,
-                                f,
-                                std::integral_constant<int, structdim>())
-                .distance(get_face_midpoint(
-                  object, e, std::integral_constant<int, structdim>())));
+      double diameter = object->diameter();
+      for (const unsigned int f : GeometryInfo<structdim>::face_indices())
+        for (unsigned int e = f + 1;
+             e < GeometryInfo<structdim>::faces_per_cell;
+             ++e)
+          diameter =
+            std::min(diameter,
+                     get_face_midpoint(object,
+                                       f,
+                                       std::integral_constant<int, structdim>())
+                       .distance(get_face_midpoint(
+                         object, e, std::integral_constant<int, structdim>())));
 
-        return diameter;
-      }
+      return diameter;
+    }
 
 
 
-      /**
-       * Try to fix up a single cell by moving around its midpoint. Return
-       * whether we succeeded with this.
-       */
-      template <typename Iterator>
-      bool
-      fix_up_object(const Iterator &object)
-      {
-        const unsigned int structdim =
-          Iterator::AccessorType::structure_dimension;
-        const unsigned int spacedim = Iterator::AccessorType::space_dimension;
+    /**
+     * Try to fix up a single cell by moving around its midpoint. Return
+     * whether we succeeded with this.
+     */
+    template <typename Iterator>
+    bool
+    fix_up_object(const Iterator &object)
+    {
+      const unsigned int structdim =
+        Iterator::AccessorType::structure_dimension;
+      const unsigned int spacedim = Iterator::AccessorType::space_dimension;
 
-        // right now we can only deal with cells that have been refined
-        // isotropically because that is the only case where we have a cell
-        // mid-point that can be moved around without having to consider
-        // boundary information
-        Assert(object->has_children(), ExcInternalError());
-        Assert(object->refinement_case() ==
-                 RefinementCase<structdim>::isotropic_refinement,
-               ExcNotImplemented());
+      // right now we can only deal with cells that have been refined
+      // isotropically because that is the only case where we have a cell
+      // mid-point that can be moved around without having to consider
+      // boundary information
+      Assert(object->has_children(), ExcInternalError());
+      Assert(object->refinement_case() ==
+               RefinementCase<structdim>::isotropic_refinement,
+             ExcNotImplemented());
 
-        // get the current location of the object mid-vertex:
-        Point<spacedim> object_mid_point = object->child(0)->vertex(
-          GeometryInfo<structdim>::max_children_per_cell - 1);
+      // get the current location of the object mid-vertex:
+      Point<spacedim> object_mid_point = object->child(0)->vertex(
+        GeometryInfo<structdim>::max_children_per_cell - 1);
 
-        // now do a few steepest descent steps to reduce the objective
-        // function. compute the diameter in the helper function above
-        unsigned int iteration = 0;
-        const double diameter  = minimal_diameter(object);
+      // now do a few steepest descent steps to reduce the objective
+      // function. compute the diameter in the helper function above
+      unsigned int iteration = 0;
+      const double diameter  = minimal_diameter(object);
 
-        // current value of objective function and initial delta
-        double current_value = objective_function(object, object_mid_point);
-        double initial_delta = 0;
+      // current value of objective function and initial delta
+      double current_value = objective_function(object, object_mid_point);
+      double initial_delta = 0;
 
-        do
-          {
-            // choose a step length that is initially 1/4 of the child
-            // objects' diameter, and a sequence whose sum does not converge
-            // (to avoid premature termination of the iteration)
-            const double step_length = diameter / 4 / (iteration + 1);
+      do
+        {
+          // choose a step length that is initially 1/4 of the child
+          // objects' diameter, and a sequence whose sum does not converge
+          // (to avoid premature termination of the iteration)
+          const double step_length = diameter / 4 / (iteration + 1);
 
-            // compute the objective function's derivative using a two-sided
-            // difference formula with eps=step_length/10
-            Tensor<1, spacedim> gradient;
-            for (unsigned int d = 0; d < spacedim; ++d)
+          // compute the objective function's derivative using a two-sided
+          // difference formula with eps=step_length/10
+          Tensor<1, spacedim> gradient;
+          for (unsigned int d = 0; d < spacedim; ++d)
+            {
+              const double eps = step_length / 10;
+
+              Tensor<1, spacedim> h;
+              h[d] = eps / 2;
+
+              gradient[d] =
+                (objective_function(
+                   object, project_to_object(object, object_mid_point + h)) -
+                 objective_function(
+                   object, project_to_object(object, object_mid_point - h))) /
+                eps;
+            }
+
+          // there is nowhere to go
+          if (gradient.norm() == 0)
+            break;
+
+          // We need to go in direction -gradient. the optimal value of the
+          // objective function is zero, so assuming that the model is
+          // quadratic we would have to go -2*val/||gradient|| in this
+          // direction, make sure we go at most step_length into this
+          // direction
+          object_mid_point -=
+            std::min(2 * current_value / (gradient * gradient),
+                     step_length / gradient.norm()) *
+            gradient;
+          object_mid_point = project_to_object(object, object_mid_point);
+
+          // compute current value of the objective function
+          const double previous_value = current_value;
+          current_value = objective_function(object, object_mid_point);
+
+          if (iteration == 0)
+            initial_delta = (previous_value - current_value);
+
+          // stop if we aren't moving much any more
+          if ((iteration >= 1) && ((previous_value - current_value < 0) ||
+                                   (std::fabs(previous_value - current_value) <
+                                    0.001 * initial_delta)))
+            break;
+
+          ++iteration;
+        }
+      while (iteration < 20);
+
+      // verify that the new
+      // location is indeed better
+      // than the one before. check
+      // this by comparing whether
+      // the minimum value of the
+      // products of parent and
+      // child alternating forms is
+      // positive. for cells this
+      // means that the
+      // determinants have the same
+      // sign, for faces that the
+      // face normals of parent and
+      // children point in the same
+      // general direction
+      double old_min_product, new_min_product;
+
+      Point<spacedim>
+        parent_vertices[GeometryInfo<structdim>::vertices_per_cell];
+      for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+        parent_vertices[i] = object->vertex(i);
+
+      Tensor<spacedim - structdim, spacedim>
+        parent_alternating_forms[GeometryInfo<structdim>::vertices_per_cell];
+      GeometryInfo<structdim>::alternating_form_at_vertices(
+        parent_vertices, parent_alternating_forms);
+
+      Point<spacedim>
+        child_vertices[GeometryInfo<structdim>::max_children_per_cell]
+                      [GeometryInfo<structdim>::vertices_per_cell];
+
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+          child_vertices[c][i] = object->child(c)->vertex(i);
+
+      Tensor<spacedim - structdim, spacedim>
+        child_alternating_forms[GeometryInfo<structdim>::max_children_per_cell]
+                               [GeometryInfo<structdim>::vertices_per_cell];
+
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        GeometryInfo<structdim>::alternating_form_at_vertices(
+          child_vertices[c], child_alternating_forms[c]);
+
+      old_min_product =
+        child_alternating_forms[0][0] * parent_alternating_forms[0];
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+          for (const unsigned int j : GeometryInfo<structdim>::vertex_indices())
+            old_min_product = std::min<double>(old_min_product,
+                                               child_alternating_forms[c][i] *
+                                                 parent_alternating_forms[j]);
+
+      // for the new minimum value,
+      // replace mid-object
+      // vertex. note that for child
+      // i, the mid-object vertex
+      // happens to have the number
+      // max_children_per_cell-i
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        child_vertices[c][GeometryInfo<structdim>::max_children_per_cell - c -
+                          1] = object_mid_point;
+
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        GeometryInfo<structdim>::alternating_form_at_vertices(
+          child_vertices[c], child_alternating_forms[c]);
+
+      new_min_product =
+        child_alternating_forms[0][0] * parent_alternating_forms[0];
+      for (unsigned int c = 0; c < object->n_children(); ++c)
+        for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
+          for (const unsigned int j : GeometryInfo<structdim>::vertex_indices())
+            new_min_product = std::min<double>(new_min_product,
+                                               child_alternating_forms[c][i] *
+                                                 parent_alternating_forms[j]);
+
+      // if new minimum value is
+      // better than before, then set the
+      // new mid point. otherwise
+      // return this object as one of
+      // those that can't apparently
+      // be fixed
+      if (new_min_product >= old_min_product)
+        object->child(0)->vertex(
+          GeometryInfo<structdim>::max_children_per_cell - 1) =
+          object_mid_point;
+
+      // return whether after this
+      // operation we have an object that
+      // is well oriented
+      return (std::max(new_min_product, old_min_product) > 0);
+    }
+
+
+
+    void
+    fix_up_faces(const dealii::Triangulation<1, 1>::cell_iterator &,
+                 std::integral_constant<int, 1>,
+                 std::integral_constant<int, 1>)
+    {
+      // nothing to do for the faces of cells in 1d
+    }
+
+
+
+    // possibly fix up the faces of a cell by moving around its mid-points
+    template <int dim, int spacedim>
+    void
+    fix_up_faces(
+      const typename dealii::Triangulation<dim, spacedim>::cell_iterator &cell,
+      std::integral_constant<int, dim>,
+      std::integral_constant<int, spacedim>)
+    {
+      // see if we first can fix up some of the faces of this object. We can
+      // mess with faces if and only if the neighboring cell is not even
+      // more refined than we are (since in that case the sub-faces have
+      // themselves children that we can't move around any more). however,
+      // the latter case shouldn't happen anyway: if the current face is
+      // distorted but the neighbor is even more refined, then the face had
+      // been deformed before already, and had been ignored at the time; we
+      // should then also be able to ignore it this time as well
+      for (auto f : GeometryInfo<dim>::face_indices())
+        {
+          Assert(cell->face(f)->has_children(), ExcInternalError());
+          Assert(cell->face(f)->refinement_case() ==
+                   RefinementCase<dim - 1>::isotropic_refinement,
+                 ExcInternalError());
+
+          bool subface_is_more_refined = false;
+          for (unsigned int g = 0; g < GeometryInfo<dim>::max_children_per_face;
+               ++g)
+            if (cell->face(f)->child(g)->has_children())
               {
-                const double eps = step_length / 10;
-
-                Tensor<1, spacedim> h;
-                h[d] = eps / 2;
-
-                gradient[d] =
-                  (objective_function(
-                     object, project_to_object(object, object_mid_point + h)) -
-                   objective_function(
-                     object, project_to_object(object, object_mid_point - h))) /
-                  eps;
+                subface_is_more_refined = true;
+                break;
               }
 
-            // there is nowhere to go
-            if (gradient.norm() == 0)
-              break;
+          if (subface_is_more_refined == true)
+            continue;
 
-            // We need to go in direction -gradient. the optimal value of the
-            // objective function is zero, so assuming that the model is
-            // quadratic we would have to go -2*val/||gradient|| in this
-            // direction, make sure we go at most step_length into this
-            // direction
-            object_mid_point -=
-              std::min(2 * current_value / (gradient * gradient),
-                       step_length / gradient.norm()) *
-              gradient;
-            object_mid_point = project_to_object(object, object_mid_point);
-
-            // compute current value of the objective function
-            const double previous_value = current_value;
-            current_value = objective_function(object, object_mid_point);
-
-            if (iteration == 0)
-              initial_delta = (previous_value - current_value);
-
-            // stop if we aren't moving much any more
-            if ((iteration >= 1) &&
-                ((previous_value - current_value < 0) ||
-                 (std::fabs(previous_value - current_value) <
-                  0.001 * initial_delta)))
-              break;
-
-            ++iteration;
-          }
-        while (iteration < 20);
-
-        // verify that the new
-        // location is indeed better
-        // than the one before. check
-        // this by comparing whether
-        // the minimum value of the
-        // products of parent and
-        // child alternating forms is
-        // positive. for cells this
-        // means that the
-        // determinants have the same
-        // sign, for faces that the
-        // face normals of parent and
-        // children point in the same
-        // general direction
-        double old_min_product, new_min_product;
-
-        Point<spacedim>
-          parent_vertices[GeometryInfo<structdim>::vertices_per_cell];
-        for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-          parent_vertices[i] = object->vertex(i);
-
-        Tensor<spacedim - structdim, spacedim>
-          parent_alternating_forms[GeometryInfo<structdim>::vertices_per_cell];
-        GeometryInfo<structdim>::alternating_form_at_vertices(
-          parent_vertices, parent_alternating_forms);
-
-        Point<spacedim>
-          child_vertices[GeometryInfo<structdim>::max_children_per_cell]
-                        [GeometryInfo<structdim>::vertices_per_cell];
-
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-            child_vertices[c][i] = object->child(c)->vertex(i);
-
-        Tensor<spacedim - structdim, spacedim> child_alternating_forms
-          [GeometryInfo<structdim>::max_children_per_cell]
-          [GeometryInfo<structdim>::vertices_per_cell];
-
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          GeometryInfo<structdim>::alternating_form_at_vertices(
-            child_vertices[c], child_alternating_forms[c]);
-
-        old_min_product =
-          child_alternating_forms[0][0] * parent_alternating_forms[0];
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-            for (const unsigned int j :
-                 GeometryInfo<structdim>::vertex_indices())
-              old_min_product = std::min<double>(old_min_product,
-                                                 child_alternating_forms[c][i] *
-                                                   parent_alternating_forms[j]);
-
-        // for the new minimum value,
-        // replace mid-object
-        // vertex. note that for child
-        // i, the mid-object vertex
-        // happens to have the number
-        // max_children_per_cell-i
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          child_vertices[c][GeometryInfo<structdim>::max_children_per_cell - c -
-                            1] = object_mid_point;
-
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          GeometryInfo<structdim>::alternating_form_at_vertices(
-            child_vertices[c], child_alternating_forms[c]);
-
-        new_min_product =
-          child_alternating_forms[0][0] * parent_alternating_forms[0];
-        for (unsigned int c = 0; c < object->n_children(); ++c)
-          for (const unsigned int i : GeometryInfo<structdim>::vertex_indices())
-            for (const unsigned int j :
-                 GeometryInfo<structdim>::vertex_indices())
-              new_min_product = std::min<double>(new_min_product,
-                                                 child_alternating_forms[c][i] *
-                                                   parent_alternating_forms[j]);
-
-        // if new minimum value is
-        // better than before, then set the
-        // new mid point. otherwise
-        // return this object as one of
-        // those that can't apparently
-        // be fixed
-        if (new_min_product >= old_min_product)
-          object->child(0)->vertex(
-            GeometryInfo<structdim>::max_children_per_cell - 1) =
-            object_mid_point;
-
-        // return whether after this
-        // operation we have an object that
-        // is well oriented
-        return (std::max(new_min_product, old_min_product) > 0);
-      }
-
-
-
-      void
-      fix_up_faces(const dealii::Triangulation<1, 1>::cell_iterator &,
-                   std::integral_constant<int, 1>,
-                   std::integral_constant<int, 1>)
-      {
-        // nothing to do for the faces of cells in 1d
-      }
-
-
-
-      // possibly fix up the faces of a cell by moving around its mid-points
-      template <int dim, int spacedim>
-      void
-      fix_up_faces(
-        const typename dealii::Triangulation<dim, spacedim>::cell_iterator
-          &cell,
-        std::integral_constant<int, dim>,
-        std::integral_constant<int, spacedim>)
-      {
-        // see if we first can fix up some of the faces of this object. We can
-        // mess with faces if and only if the neighboring cell is not even
-        // more refined than we are (since in that case the sub-faces have
-        // themselves children that we can't move around any more). however,
-        // the latter case shouldn't happen anyway: if the current face is
-        // distorted but the neighbor is even more refined, then the face had
-        // been deformed before already, and had been ignored at the time; we
-        // should then also be able to ignore it this time as well
-        for (auto f : GeometryInfo<dim>::face_indices())
-          {
-            Assert(cell->face(f)->has_children(), ExcInternalError());
-            Assert(cell->face(f)->refinement_case() ==
-                     RefinementCase<dim - 1>::isotropic_refinement,
-                   ExcInternalError());
-
-            bool subface_is_more_refined = false;
-            for (unsigned int g = 0;
-                 g < GeometryInfo<dim>::max_children_per_face;
-                 ++g)
-              if (cell->face(f)->child(g)->has_children())
-                {
-                  subface_is_more_refined = true;
-                  break;
-                }
-
-            if (subface_is_more_refined == true)
-              continue;
-
-            // we finally know that we can do something about this face
-            fix_up_object(cell->face(f));
-          }
-      }
-    } /* namespace FixUpDistortedChildCells */
-  }   /* namespace internal */
+          // we finally know that we can do something about this face
+          fix_up_object(cell->face(f));
+        }
+    }
+  } // namespace internal::FixUpDistortedChildCells
 
 
   template <int dim, int spacedim>
@@ -4817,372 +4805,362 @@ namespace GridTools
 
 
 
-  namespace internal
+  namespace internal::distributed_cptloc
   {
-    // Functions are needed for distributed compute point locations
-    namespace distributed_cptloc
+    // Hash function for cells; needed for unordered maps/multimaps
+    template <int dim, int spacedim>
+    struct cell_hash
     {
-      // Hash function for cells; needed for unordered maps/multimaps
-      template <int dim, int spacedim>
-      struct cell_hash
+      std::size_t
+      operator()(
+        const typename Triangulation<dim, spacedim>::active_cell_iterator &k)
+        const
       {
-        std::size_t
-        operator()(
-          const typename Triangulation<dim, spacedim>::active_cell_iterator &k)
-          const
-        {
-          // Return active cell index, which is faster than CellId to compute
-          return k->active_cell_index();
-        }
-      };
+        // Return active cell index, which is faster than CellId to compute
+        return k->active_cell_index();
+      }
+    };
 
 
 
-      // Compute point locations; internal version which returns an unordered
-      // map The algorithm is the same as GridTools::compute_point_locations
-      template <int dim, int spacedim>
+    // Compute point locations; internal version which returns an unordered
+    // map The algorithm is the same as GridTools::compute_point_locations
+    template <int dim, int spacedim>
+    std::unordered_map<
+      typename Triangulation<dim, spacedim>::active_cell_iterator,
+      std::pair<std::vector<Point<dim>>, std::vector<unsigned int>>,
+      cell_hash<dim, spacedim>>
+    compute_point_locations_unmap(const GridTools::Cache<dim, spacedim> &cache,
+                                  const std::vector<Point<spacedim>> &   points)
+    {
+      // How many points are here?
+      const unsigned int np = points.size();
+      // Creating the output tuple
       std::unordered_map<
         typename Triangulation<dim, spacedim>::active_cell_iterator,
         std::pair<std::vector<Point<dim>>, std::vector<unsigned int>>,
         cell_hash<dim, spacedim>>
-      compute_point_locations_unmap(
-        const GridTools::Cache<dim, spacedim> &cache,
-        const std::vector<Point<spacedim>> &   points)
-      {
-        // How many points are here?
-        const unsigned int np = points.size();
-        // Creating the output tuple
-        std::unordered_map<
-          typename Triangulation<dim, spacedim>::active_cell_iterator,
-          std::pair<std::vector<Point<dim>>, std::vector<unsigned int>>,
-          cell_hash<dim, spacedim>>
-          cell_qpoint_map;
+        cell_qpoint_map;
 
-        // Now the easy case.
-        if (np == 0)
-          return cell_qpoint_map;
-        // We begin by finding the cell/transform of the first point
-        auto my_pair =
-          GridTools::find_active_cell_around_point(cache, points[0]);
+      // Now the easy case.
+      if (np == 0)
+        return cell_qpoint_map;
+      // We begin by finding the cell/transform of the first point
+      auto my_pair = GridTools::find_active_cell_around_point(cache, points[0]);
 
-        auto last_cell = cell_qpoint_map.emplace(
-          std::make_pair(my_pair.first,
-                         std::make_pair(std::vector<Point<dim>>{my_pair.second},
-                                        std::vector<unsigned int>{0})));
-        // Now the second easy case.
-        if (np == 1)
-          return cell_qpoint_map;
-        // Computing the cell center and diameter
-        Point<spacedim> cell_center   = my_pair.first->center();
-        double          cell_diameter = my_pair.first->diameter() *
-                               (0.5 + std::numeric_limits<double>::epsilon());
+      auto last_cell = cell_qpoint_map.emplace(
+        std::make_pair(my_pair.first,
+                       std::make_pair(std::vector<Point<dim>>{my_pair.second},
+                                      std::vector<unsigned int>{0})));
+      // Now the second easy case.
+      if (np == 1)
+        return cell_qpoint_map;
+      // Computing the cell center and diameter
+      Point<spacedim> cell_center   = my_pair.first->center();
+      double          cell_diameter = my_pair.first->diameter() *
+                             (0.5 + std::numeric_limits<double>::epsilon());
 
-        // Cycle over all points left
-        for (unsigned int p = 1; p < np; ++p)
-          {
-            // Checking if the point is close to the cell center, in which
-            // case calling find active cell with a cell hint
-            if (cell_center.distance(points[p]) < cell_diameter)
-              my_pair = GridTools::find_active_cell_around_point(
-                cache, points[p], last_cell.first->first);
-            else
-              my_pair =
-                GridTools::find_active_cell_around_point(cache, points[p]);
+      // Cycle over all points left
+      for (unsigned int p = 1; p < np; ++p)
+        {
+          // Checking if the point is close to the cell center, in which
+          // case calling find active cell with a cell hint
+          if (cell_center.distance(points[p]) < cell_diameter)
+            my_pair =
+              GridTools::find_active_cell_around_point(cache,
+                                                       points[p],
+                                                       last_cell.first->first);
+          else
+            my_pair =
+              GridTools::find_active_cell_around_point(cache, points[p]);
 
-            if (last_cell.first->first == my_pair.first)
-              {
-                last_cell.first->second.first.emplace_back(my_pair.second);
-                last_cell.first->second.second.emplace_back(p);
-              }
-            else
-              {
-                // Check if it is in another cell already found
-                last_cell = cell_qpoint_map.emplace(std::make_pair(
-                  my_pair.first,
-                  std::make_pair(std::vector<Point<dim>>{my_pair.second},
-                                 std::vector<unsigned int>{p})));
+          if (last_cell.first->first == my_pair.first)
+            {
+              last_cell.first->second.first.emplace_back(my_pair.second);
+              last_cell.first->second.second.emplace_back(p);
+            }
+          else
+            {
+              // Check if it is in another cell already found
+              last_cell = cell_qpoint_map.emplace(std::make_pair(
+                my_pair.first,
+                std::make_pair(std::vector<Point<dim>>{my_pair.second},
+                               std::vector<unsigned int>{p})));
 
-                if (last_cell.second == false)
-                  {
-                    // Cell already present: adding the new point
-                    last_cell.first->second.first.emplace_back(my_pair.second);
-                    last_cell.first->second.second.emplace_back(p);
-                  }
-                else
-                  {
-                    // New cell was added, updating center and diameter
-                    cell_center = my_pair.first->center();
-                    cell_diameter =
-                      my_pair.first->diameter() *
-                      (0.5 + std::numeric_limits<double>::epsilon());
-                  }
-              }
-          }
+              if (last_cell.second == false)
+                {
+                  // Cell already present: adding the new point
+                  last_cell.first->second.first.emplace_back(my_pair.second);
+                  last_cell.first->second.second.emplace_back(p);
+                }
+              else
+                {
+                  // New cell was added, updating center and diameter
+                  cell_center = my_pair.first->center();
+                  cell_diameter =
+                    my_pair.first->diameter() *
+                    (0.5 + std::numeric_limits<double>::epsilon());
+                }
+            }
+        }
 
 #ifdef DEBUG
-        unsigned int qps = 0;
-        // The number of points in all
-        // the cells must be the same as
-        // the number of points we
-        // started off from.
-        for (const auto &m : cell_qpoint_map)
-          {
-            Assert(m.second.second.size() == m.second.first.size(),
-                   ExcDimensionMismatch(m.second.second.size(),
-                                        m.second.first.size()));
-            qps += m.second.second.size();
-          }
-        Assert(qps == np, ExcDimensionMismatch(qps, np));
+      unsigned int qps = 0;
+      // The number of points in all
+      // the cells must be the same as
+      // the number of points we
+      // started off from.
+      for (const auto &m : cell_qpoint_map)
+        {
+          Assert(m.second.second.size() == m.second.first.size(),
+                 ExcDimensionMismatch(m.second.second.size(),
+                                      m.second.first.size()));
+          qps += m.second.second.size();
+        }
+      Assert(qps == np, ExcDimensionMismatch(qps, np));
 #endif
-        return cell_qpoint_map;
-      }
+      return cell_qpoint_map;
+    }
 
 
 
-      // Merging the output means to add data to a previous output, here
-      // contained in output unmap: if the cell is already present: add
-      // information about new points if the cell is not present: add the cell
-      // with all information
-      //
-      // Notice we call "information" the data associated with a point of the
-      // sort: cell containing it, transformed point on reference cell, index,
-      // rank of the owner etc.
-      template <int dim, int spacedim>
-      void
-      merge_cptloc_outputs(
-        std::unordered_map<
-          typename Triangulation<dim, spacedim>::active_cell_iterator,
-          std::tuple<std::vector<Point<dim>>,
-                     std::vector<unsigned int>,
-                     std::vector<Point<spacedim>>,
-                     std::vector<unsigned int>>,
-          cell_hash<dim, spacedim>> &output_unmap,
-        const std::vector<
-          typename Triangulation<dim, spacedim>::active_cell_iterator>
-          &                                              in_cells,
-        const std::vector<std::vector<Point<dim>>> &     in_qpoints,
-        const std::vector<std::vector<unsigned int>> &   in_maps,
-        const std::vector<std::vector<Point<spacedim>>> &in_points,
-        const unsigned int                               in_rank)
-      {
-        // Adding cells, one by one
-        for (unsigned int c = 0; c < in_cells.size(); ++c)
-          {
-            // Attempt to add a new cell with its relative data
-            auto current_c = output_unmap.emplace(
-              std::make_pair(in_cells[c],
-                             std::make_tuple(in_qpoints[c],
-                                             in_maps[c],
-                                             in_points[c],
-                                             std::vector<unsigned int>(
-                                               in_points[c].size(), in_rank))));
-            // If the flag is false no new cell was added:
-            if (current_c.second == false)
-              {
-                // Cell in output map at current_c.first:
-                // Adding the information to it
-                auto &cell_qpts  = std::get<0>(current_c.first->second);
-                auto &cell_maps  = std::get<1>(current_c.first->second);
-                auto &cell_pts   = std::get<2>(current_c.first->second);
-                auto &cell_ranks = std::get<3>(current_c.first->second);
-                cell_qpts.insert(cell_qpts.end(),
-                                 in_qpoints[c].begin(),
-                                 in_qpoints[c].end());
-                cell_maps.insert(cell_maps.end(),
-                                 in_maps[c].begin(),
-                                 in_maps[c].end());
-                cell_pts.insert(cell_pts.end(),
-                                in_points[c].begin(),
-                                in_points[c].end());
-                std::vector<unsigned int> ranks_tmp(in_points[c].size(),
-                                                    in_rank);
-                cell_ranks.insert(cell_ranks.end(),
-                                  ranks_tmp.begin(),
-                                  ranks_tmp.end());
-              }
-          }
-      }
+    // Merging the output means to add data to a previous output, here
+    // contained in output unmap: if the cell is already present: add
+    // information about new points if the cell is not present: add the cell
+    // with all information
+    //
+    // Notice we call "information" the data associated with a point of the
+    // sort: cell containing it, transformed point on reference cell, index,
+    // rank of the owner etc.
+    template <int dim, int spacedim>
+    void
+    merge_cptloc_outputs(
+      std::unordered_map<
+        typename Triangulation<dim, spacedim>::active_cell_iterator,
+        std::tuple<std::vector<Point<dim>>,
+                   std::vector<unsigned int>,
+                   std::vector<Point<spacedim>>,
+                   std::vector<unsigned int>>,
+        cell_hash<dim, spacedim>> &output_unmap,
+      const std::vector<
+        typename Triangulation<dim, spacedim>::active_cell_iterator> &in_cells,
+      const std::vector<std::vector<Point<dim>>> &     in_qpoints,
+      const std::vector<std::vector<unsigned int>> &   in_maps,
+      const std::vector<std::vector<Point<spacedim>>> &in_points,
+      const unsigned int                               in_rank)
+    {
+      // Adding cells, one by one
+      for (unsigned int c = 0; c < in_cells.size(); ++c)
+        {
+          // Attempt to add a new cell with its relative data
+          auto current_c = output_unmap.emplace(
+            std::make_pair(in_cells[c],
+                           std::make_tuple(in_qpoints[c],
+                                           in_maps[c],
+                                           in_points[c],
+                                           std::vector<unsigned int>(
+                                             in_points[c].size(), in_rank))));
+          // If the flag is false no new cell was added:
+          if (current_c.second == false)
+            {
+              // Cell in output map at current_c.first:
+              // Adding the information to it
+              auto &cell_qpts  = std::get<0>(current_c.first->second);
+              auto &cell_maps  = std::get<1>(current_c.first->second);
+              auto &cell_pts   = std::get<2>(current_c.first->second);
+              auto &cell_ranks = std::get<3>(current_c.first->second);
+              cell_qpts.insert(cell_qpts.end(),
+                               in_qpoints[c].begin(),
+                               in_qpoints[c].end());
+              cell_maps.insert(cell_maps.end(),
+                               in_maps[c].begin(),
+                               in_maps[c].end());
+              cell_pts.insert(cell_pts.end(),
+                              in_points[c].begin(),
+                              in_points[c].end());
+              std::vector<unsigned int> ranks_tmp(in_points[c].size(), in_rank);
+              cell_ranks.insert(cell_ranks.end(),
+                                ranks_tmp.begin(),
+                                ranks_tmp.end());
+            }
+        }
+    }
 
 
 
-      // This function initializes the output by calling compute point locations
-      // on local points; vector containing points which are probably local.
-      // Its output is then sorted in the following manner:
-      // - output unmap: points, with relative information, inside locally onwed
-      // cells,
-      // - ghost loc pts: points, with relative information, inside ghost cells,
-      // - classified pts: vector of all points returned in output map and ghost
-      // loc pts
-      //   (these are stored as indices)
-      template <int dim, int spacedim>
-      void
-      compute_and_classify_points(
-        const GridTools::Cache<dim, spacedim> &cache,
-        const std::vector<Point<spacedim>> &   local_points,
-        const std::vector<unsigned int> &      local_points_idx,
-        std::unordered_map<
-          typename Triangulation<dim, spacedim>::active_cell_iterator,
-          std::tuple<std::vector<Point<dim>>,
-                     std::vector<unsigned int>,
-                     std::vector<Point<spacedim>>,
-                     std::vector<unsigned int>>,
-          cell_hash<dim, spacedim>> &output_unmap,
-        std::map<unsigned int,
-                 std::tuple<std::vector<CellId>,
-                            std::vector<std::vector<Point<dim>>>,
-                            std::vector<std::vector<unsigned int>>,
-                            std::vector<std::vector<Point<spacedim>>>>>
-          &                        ghost_loc_pts,
-        std::vector<unsigned int> &classified_pts)
-      {
-        auto cpt_loc_pts = compute_point_locations_unmap(cache, local_points);
+    // This function initializes the output by calling compute point locations
+    // on local points; vector containing points which are probably local.
+    // Its output is then sorted in the following manner:
+    // - output unmap: points, with relative information, inside locally onwed
+    // cells,
+    // - ghost loc pts: points, with relative information, inside ghost cells,
+    // - classified pts: vector of all points returned in output map and ghost
+    // loc pts
+    //   (these are stored as indices)
+    template <int dim, int spacedim>
+    void
+    compute_and_classify_points(
+      const GridTools::Cache<dim, spacedim> &cache,
+      const std::vector<Point<spacedim>> &   local_points,
+      const std::vector<unsigned int> &      local_points_idx,
+      std::unordered_map<
+        typename Triangulation<dim, spacedim>::active_cell_iterator,
+        std::tuple<std::vector<Point<dim>>,
+                   std::vector<unsigned int>,
+                   std::vector<Point<spacedim>>,
+                   std::vector<unsigned int>>,
+        cell_hash<dim, spacedim>> &output_unmap,
+      std::map<unsigned int,
+               std::tuple<std::vector<CellId>,
+                          std::vector<std::vector<Point<dim>>>,
+                          std::vector<std::vector<unsigned int>>,
+                          std::vector<std::vector<Point<spacedim>>>>>
+        &                        ghost_loc_pts,
+      std::vector<unsigned int> &classified_pts)
+    {
+      auto cpt_loc_pts = compute_point_locations_unmap(cache, local_points);
 
-        // Alayzing the output discarding artificial cell
-        // and storing in the proper container locally owned and ghost cells
-        for (const auto &cell_tuples : cpt_loc_pts)
-          {
-            auto &cell_loc    = cell_tuples.first;
-            auto &q_loc       = std::get<0>(cell_tuples.second);
-            auto &indices_loc = std::get<1>(cell_tuples.second);
-            if (cell_loc->is_locally_owned())
-              {
-                // Point inside locally owned cell: storing all its data
-                std::vector<Point<spacedim>> cell_points(indices_loc.size());
-                std::vector<unsigned int> cell_points_idx(indices_loc.size());
-                for (unsigned int i = 0; i < indices_loc.size(); ++i)
-                  {
-                    // Adding the point to the cell points
-                    cell_points[i] = local_points[indices_loc[i]];
+      // Alayzing the output discarding artificial cell
+      // and storing in the proper container locally owned and ghost cells
+      for (const auto &cell_tuples : cpt_loc_pts)
+        {
+          auto &cell_loc    = cell_tuples.first;
+          auto &q_loc       = std::get<0>(cell_tuples.second);
+          auto &indices_loc = std::get<1>(cell_tuples.second);
+          if (cell_loc->is_locally_owned())
+            {
+              // Point inside locally owned cell: storing all its data
+              std::vector<Point<spacedim>> cell_points(indices_loc.size());
+              std::vector<unsigned int>    cell_points_idx(indices_loc.size());
+              for (unsigned int i = 0; i < indices_loc.size(); ++i)
+                {
+                  // Adding the point to the cell points
+                  cell_points[i] = local_points[indices_loc[i]];
 
-                    // Storing the index: notice indices loc refer to the local
-                    // points vector, but we need to return the index with
-                    // respect of the points owned by the current process
-                    cell_points_idx[i] = local_points_idx[indices_loc[i]];
-                    classified_pts.emplace_back(
-                      local_points_idx[indices_loc[i]]);
-                  }
-                output_unmap.emplace(
-                  std::make_pair(cell_loc,
-                                 std::make_tuple(q_loc,
-                                                 cell_points_idx,
-                                                 cell_points,
-                                                 std::vector<unsigned int>(
-                                                   indices_loc.size(),
-                                                   cell_loc->subdomain_id()))));
-              }
-            else if (cell_loc->is_ghost())
-              {
-                // Point inside ghost cell: storing all its information and
-                // preparing it to be sent
-                std::vector<Point<spacedim>> cell_points(indices_loc.size());
-                std::vector<unsigned int> cell_points_idx(indices_loc.size());
-                for (unsigned int i = 0; i < indices_loc.size(); ++i)
-                  {
-                    cell_points[i]     = local_points[indices_loc[i]];
-                    cell_points_idx[i] = local_points_idx[indices_loc[i]];
-                    classified_pts.emplace_back(
-                      local_points_idx[indices_loc[i]]);
-                  }
-                // Each key of the following map represent a process,
-                // each mapped value is a tuple containing the information to be
-                // sent: preparing the output for the owner, which has rank
-                // subdomain id
-                auto &map_tuple_owner = ghost_loc_pts[cell_loc->subdomain_id()];
-                // To identify the cell on the other process we use the cell id
-                std::get<0>(map_tuple_owner).emplace_back(cell_loc->id());
-                std::get<1>(map_tuple_owner).emplace_back(q_loc);
-                std::get<2>(map_tuple_owner).emplace_back(cell_points_idx);
-                std::get<3>(map_tuple_owner).emplace_back(cell_points);
-              }
-            // else: the cell is artificial, nothing to do
-          }
-      }
+                  // Storing the index: notice indices loc refer to the local
+                  // points vector, but we need to return the index with
+                  // respect of the points owned by the current process
+                  cell_points_idx[i] = local_points_idx[indices_loc[i]];
+                  classified_pts.emplace_back(local_points_idx[indices_loc[i]]);
+                }
+              output_unmap.emplace(
+                std::make_pair(cell_loc,
+                               std::make_tuple(q_loc,
+                                               cell_points_idx,
+                                               cell_points,
+                                               std::vector<unsigned int>(
+                                                 indices_loc.size(),
+                                                 cell_loc->subdomain_id()))));
+            }
+          else if (cell_loc->is_ghost())
+            {
+              // Point inside ghost cell: storing all its information and
+              // preparing it to be sent
+              std::vector<Point<spacedim>> cell_points(indices_loc.size());
+              std::vector<unsigned int>    cell_points_idx(indices_loc.size());
+              for (unsigned int i = 0; i < indices_loc.size(); ++i)
+                {
+                  cell_points[i]     = local_points[indices_loc[i]];
+                  cell_points_idx[i] = local_points_idx[indices_loc[i]];
+                  classified_pts.emplace_back(local_points_idx[indices_loc[i]]);
+                }
+              // Each key of the following map represent a process,
+              // each mapped value is a tuple containing the information to be
+              // sent: preparing the output for the owner, which has rank
+              // subdomain id
+              auto &map_tuple_owner = ghost_loc_pts[cell_loc->subdomain_id()];
+              // To identify the cell on the other process we use the cell id
+              std::get<0>(map_tuple_owner).emplace_back(cell_loc->id());
+              std::get<1>(map_tuple_owner).emplace_back(q_loc);
+              std::get<2>(map_tuple_owner).emplace_back(cell_points_idx);
+              std::get<3>(map_tuple_owner).emplace_back(cell_points);
+            }
+          // else: the cell is artificial, nothing to do
+        }
+    }
 
 
 
-      // Given the map obtained from a communication, where the key is rank and
-      // the mapped value is a pair of (points,indices), calls compute point
-      // locations; its output is then merged with output tuple if check_owned
-      // is set to true only points lying inside locally onwed cells shall be
-      // merged, otherwise all points shall be merged.
-      template <int dim, int spacedim>
-      void
-      compute_and_merge_from_map(
-        const GridTools::Cache<dim, spacedim> &               cache,
-        const std::map<unsigned int,
-                       std::pair<std::vector<Point<spacedim>>,
-                                 std::vector<unsigned int>>> &map_pts,
-        std::unordered_map<
-          typename Triangulation<dim, spacedim>::active_cell_iterator,
-          std::tuple<std::vector<Point<dim>>,
-                     std::vector<unsigned int>,
-                     std::vector<Point<spacedim>>,
-                     std::vector<unsigned int>>,
-          cell_hash<dim, spacedim>> &output_unmap,
-        const bool                   check_owned)
-      {
-        bool no_check = !check_owned;
+    // Given the map obtained from a communication, where the key is rank and
+    // the mapped value is a pair of (points,indices), calls compute point
+    // locations; its output is then merged with output tuple if check_owned
+    // is set to true only points lying inside locally onwed cells shall be
+    // merged, otherwise all points shall be merged.
+    template <int dim, int spacedim>
+    void
+    compute_and_merge_from_map(
+      const GridTools::Cache<dim, spacedim> &               cache,
+      const std::map<unsigned int,
+                     std::pair<std::vector<Point<spacedim>>,
+                               std::vector<unsigned int>>> &map_pts,
+      std::unordered_map<
+        typename Triangulation<dim, spacedim>::active_cell_iterator,
+        std::tuple<std::vector<Point<dim>>,
+                   std::vector<unsigned int>,
+                   std::vector<Point<spacedim>>,
+                   std::vector<unsigned int>>,
+        cell_hash<dim, spacedim>> &output_unmap,
+      const bool                   check_owned)
+    {
+      bool no_check = !check_owned;
 
-        // rank and points is a pair: first rank, then a pair of vectors
-        // (points, indices)
-        for (const auto &rank_and_points : map_pts)
-          {
-            // Rewriting the contents of the map in human readable format
-            const auto &received_process = rank_and_points.first;
-            const auto &received_points  = rank_and_points.second.first;
-            const auto &received_map     = rank_and_points.second.second;
+      // rank and points is a pair: first rank, then a pair of vectors
+      // (points, indices)
+      for (const auto &rank_and_points : map_pts)
+        {
+          // Rewriting the contents of the map in human readable format
+          const auto &received_process = rank_and_points.first;
+          const auto &received_points  = rank_and_points.second.first;
+          const auto &received_map     = rank_and_points.second.second;
 
-            // Initializing the vectors needed to store the result of compute
-            // point location
-            std::vector<
-              typename Triangulation<dim, spacedim>::active_cell_iterator>
-                                                      in_cell;
-            std::vector<std::vector<Point<dim>>>      in_qpoints;
-            std::vector<std::vector<unsigned int>>    in_maps;
-            std::vector<std::vector<Point<spacedim>>> in_points;
+          // Initializing the vectors needed to store the result of compute
+          // point location
+          std::vector<
+            typename Triangulation<dim, spacedim>::active_cell_iterator>
+                                                    in_cell;
+          std::vector<std::vector<Point<dim>>>      in_qpoints;
+          std::vector<std::vector<unsigned int>>    in_maps;
+          std::vector<std::vector<Point<spacedim>>> in_points;
 
-            auto cpt_loc_pts =
-              compute_point_locations_unmap(cache,
-                                            rank_and_points.second.first);
-            for (const auto &map_c_pt_idx : cpt_loc_pts)
-              {
-                // Human-readable variables:
-                const auto &proc_cell    = map_c_pt_idx.first;
-                const auto &proc_qpoints = map_c_pt_idx.second.first;
-                const auto &proc_maps    = map_c_pt_idx.second.second;
+          auto cpt_loc_pts =
+            compute_point_locations_unmap(cache, rank_and_points.second.first);
+          for (const auto &map_c_pt_idx : cpt_loc_pts)
+            {
+              // Human-readable variables:
+              const auto &proc_cell    = map_c_pt_idx.first;
+              const auto &proc_qpoints = map_c_pt_idx.second.first;
+              const auto &proc_maps    = map_c_pt_idx.second.second;
 
-                // This is stored either if we're not checking if the cell is
-                // owned or if the cell is locally owned
-                if (no_check || proc_cell->is_locally_owned())
-                  {
-                    in_cell.emplace_back(proc_cell);
-                    in_qpoints.emplace_back(proc_qpoints);
-                    // The other two vectors need to be built
-                    unsigned int                 loc_size = proc_qpoints.size();
-                    std::vector<unsigned int>    cell_maps(loc_size);
-                    std::vector<Point<spacedim>> cell_points(loc_size);
-                    for (unsigned int pt = 0; pt < loc_size; ++pt)
-                      {
-                        cell_maps[pt]   = received_map[proc_maps[pt]];
-                        cell_points[pt] = received_points[proc_maps[pt]];
-                      }
-                    in_maps.emplace_back(cell_maps);
-                    in_points.emplace_back(cell_points);
-                  }
-              }
+              // This is stored either if we're not checking if the cell is
+              // owned or if the cell is locally owned
+              if (no_check || proc_cell->is_locally_owned())
+                {
+                  in_cell.emplace_back(proc_cell);
+                  in_qpoints.emplace_back(proc_qpoints);
+                  // The other two vectors need to be built
+                  unsigned int                 loc_size = proc_qpoints.size();
+                  std::vector<unsigned int>    cell_maps(loc_size);
+                  std::vector<Point<spacedim>> cell_points(loc_size);
+                  for (unsigned int pt = 0; pt < loc_size; ++pt)
+                    {
+                      cell_maps[pt]   = received_map[proc_maps[pt]];
+                      cell_points[pt] = received_points[proc_maps[pt]];
+                    }
+                  in_maps.emplace_back(cell_maps);
+                  in_points.emplace_back(cell_points);
+                }
+            }
 
-            // Merge everything from the current process
-            internal::distributed_cptloc::merge_cptloc_outputs(
-              output_unmap,
-              in_cell,
-              in_qpoints,
-              in_maps,
-              in_points,
-              received_process);
-          }
-      }
-    } // namespace distributed_cptloc
-  }   // namespace internal
+          // Merge everything from the current process
+          internal::distributed_cptloc::merge_cptloc_outputs(output_unmap,
+                                                             in_cell,
+                                                             in_qpoints,
+                                                             in_maps,
+                                                             in_points,
+                                                             received_process);
+        }
+    }
+  } // namespace internal::distributed_cptloc
 
 
 

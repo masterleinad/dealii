@@ -32,137 +32,132 @@
 
 DEAL_II_NAMESPACE_OPEN
 
-namespace internal
+namespace internal::FE_PolyTensor
 {
-  namespace FE_PolyTensor
+  namespace
   {
-    namespace
+    //---------------------------------------------------------------------------
+    // Utility method, which is used to determine the change of sign for
+    // the DoFs on the faces of the given cell.
+    //---------------------------------------------------------------------------
+
+    /**
+     * On non-Cartesian grids, the sign of the DoFs associated with the faces
+     * of the elements has to be changed in some cases.  This procedure
+     * implements an algorithm that determines those DoFs that need this
+     * sign change for a given cell.
+     */
+    template <int spacedim>
+    void
+    get_face_sign_change_rt(const dealii::Triangulation<1>::cell_iterator &,
+                            const FiniteElement<1, spacedim> &,
+                            const std::vector<MappingKind> &,
+                            std::vector<double> &)
     {
-      //---------------------------------------------------------------------------
-      // Utility method, which is used to determine the change of sign for
-      // the DoFs on the faces of the given cell.
-      //---------------------------------------------------------------------------
-
-      /**
-       * On non-Cartesian grids, the sign of the DoFs associated with the faces
-       * of the elements has to be changed in some cases.  This procedure
-       * implements an algorithm that determines those DoFs that need this
-       * sign change for a given cell.
-       */
-      template <int spacedim>
-      void
-      get_face_sign_change_rt(const dealii::Triangulation<1>::cell_iterator &,
-                              const FiniteElement<1, spacedim> &,
-                              const std::vector<MappingKind> &,
-                              std::vector<double> &)
-      {
-        // nothing to do in 1d
-      }
+      // nothing to do in 1d
+    }
 
 
 
-      //      template<int spacedim>
-      void
-      get_face_sign_change_rt(
-        const dealii::Triangulation<2>::cell_iterator &cell,
-        const FiniteElement<2, 2> &                    fe,
-        const std::vector<MappingKind> &               mapping_kind,
-        std::vector<double> &                          face_sign)
-      {
-        const unsigned int dim      = 2;
-        const unsigned int spacedim = 2;
+    //      template<int spacedim>
+    void
+    get_face_sign_change_rt(const dealii::Triangulation<2>::cell_iterator &cell,
+                            const FiniteElement<2, 2> &                    fe,
+                            const std::vector<MappingKind> &mapping_kind,
+                            std::vector<double> &           face_sign)
+    {
+      const unsigned int dim      = 2;
+      const unsigned int spacedim = 2;
 
-        for (unsigned int f = GeometryInfo<dim>::faces_per_cell / 2;
-             f < GeometryInfo<dim>::faces_per_cell;
-             ++f)
-          {
-            dealii::Triangulation<dim, spacedim>::face_iterator face =
-              cell->face(f);
-            if (!face->at_boundary())
-              {
-                const unsigned int nn = cell->neighbor_face_no(f);
+      for (unsigned int f = GeometryInfo<dim>::faces_per_cell / 2;
+           f < GeometryInfo<dim>::faces_per_cell;
+           ++f)
+        {
+          dealii::Triangulation<dim, spacedim>::face_iterator face =
+            cell->face(f);
+          if (!face->at_boundary())
+            {
+              const unsigned int nn = cell->neighbor_face_no(f);
 
-                if (nn < GeometryInfo<dim>::faces_per_cell / 2)
-                  for (unsigned int j = 0; j < fe.dofs_per_face; ++j)
-                    {
-                      const unsigned int cell_j = fe.face_to_cell_index(j, f);
+              if (nn < GeometryInfo<dim>::faces_per_cell / 2)
+                for (unsigned int j = 0; j < fe.dofs_per_face; ++j)
+                  {
+                    const unsigned int cell_j = fe.face_to_cell_index(j, f);
 
-                      Assert(f * fe.dofs_per_face + j < face_sign.size(),
-                             ExcInternalError());
-                      Assert(mapping_kind.size() == 1 ||
-                               cell_j < mapping_kind.size(),
-                             ExcInternalError());
+                    Assert(f * fe.dofs_per_face + j < face_sign.size(),
+                           ExcInternalError());
+                    Assert(mapping_kind.size() == 1 ||
+                             cell_j < mapping_kind.size(),
+                           ExcInternalError());
 
-                      // TODO: This is probably only going to work for those
-                      // elements for which all dofs are face dofs
-                      if ((mapping_kind.size() > 1 ?
-                             mapping_kind[cell_j] :
-                             mapping_kind[0]) == mapping_raviart_thomas)
-                        face_sign[f * fe.dofs_per_face + j] = -1.0;
-                    }
-              }
-          }
-      }
-
-
-
-      template <int spacedim>
-      void
-      get_face_sign_change_rt(
-        const dealii::Triangulation<3>::cell_iterator & /*cell*/,
-        const FiniteElement<3, spacedim> & /*fe*/,
-        const std::vector<MappingKind> & /*mapping_kind*/,
-        std::vector<double> & /*face_sign*/)
-      {
-        // TODO: think about what it would take here
-      }
+                    // TODO: This is probably only going to work for those
+                    // elements for which all dofs are face dofs
+                    if ((mapping_kind.size() > 1 ?
+                           mapping_kind[cell_j] :
+                           mapping_kind[0]) == mapping_raviart_thomas)
+                      face_sign[f * fe.dofs_per_face + j] = -1.0;
+                  }
+            }
+        }
+    }
 
 
 
-      template <int spacedim>
-      void
-      get_face_sign_change_nedelec(
-        const dealii::Triangulation<1>::cell_iterator & /*cell*/,
-        const FiniteElement<1, spacedim> & /*fe*/,
-        const std::vector<MappingKind> & /*mapping_kind*/,
-        std::vector<double> & /*face_sign*/)
-      {
-        // nothing to do in 1d
-      }
+    template <int spacedim>
+    void
+    get_face_sign_change_rt(
+      const dealii::Triangulation<3>::cell_iterator & /*cell*/,
+      const FiniteElement<3, spacedim> & /*fe*/,
+      const std::vector<MappingKind> & /*mapping_kind*/,
+      std::vector<double> & /*face_sign*/)
+    {
+      // TODO: think about what it would take here
+    }
 
 
 
-      template <int spacedim>
-      void
-      get_face_sign_change_nedelec(
-        const dealii::Triangulation<2>::cell_iterator & /*cell*/,
-        const FiniteElement<2, spacedim> & /*fe*/,
-        const std::vector<MappingKind> & /*mapping_kind*/,
-        std::vector<double> & /*face_sign*/)
-      {
-        // TODO: think about what it would take here
-      }
+    template <int spacedim>
+    void
+    get_face_sign_change_nedelec(
+      const dealii::Triangulation<1>::cell_iterator & /*cell*/,
+      const FiniteElement<1, spacedim> & /*fe*/,
+      const std::vector<MappingKind> & /*mapping_kind*/,
+      std::vector<double> & /*face_sign*/)
+    {
+      // nothing to do in 1d
+    }
 
 
-      template <int spacedim>
-      void
-      get_face_sign_change_nedelec(
-        const dealii::Triangulation<3>::cell_iterator &cell,
-        const FiniteElement<3, spacedim> & /*fe*/,
-        const std::vector<MappingKind> &mapping_kind,
-        std::vector<double> &           face_sign)
-      {
-        const unsigned int dim = 3;
-        // TODO: This is probably only going to work for those elements for
-        // which all dofs are face dofs
-        for (unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
-          if (!(cell->line_orientation(l)) &&
-              mapping_kind[0] == mapping_nedelec)
-            face_sign[l] = -1.0;
-      }
-    } // namespace
-  }   // namespace FE_PolyTensor
-} // namespace internal
+
+    template <int spacedim>
+    void
+    get_face_sign_change_nedelec(
+      const dealii::Triangulation<2>::cell_iterator & /*cell*/,
+      const FiniteElement<2, spacedim> & /*fe*/,
+      const std::vector<MappingKind> & /*mapping_kind*/,
+      std::vector<double> & /*face_sign*/)
+    {
+      // TODO: think about what it would take here
+    }
+
+
+    template <int spacedim>
+    void
+    get_face_sign_change_nedelec(
+      const dealii::Triangulation<3>::cell_iterator &cell,
+      const FiniteElement<3, spacedim> & /*fe*/,
+      const std::vector<MappingKind> &mapping_kind,
+      std::vector<double> &           face_sign)
+    {
+      const unsigned int dim = 3;
+      // TODO: This is probably only going to work for those elements for
+      // which all dofs are face dofs
+      for (unsigned int l = 0; l < GeometryInfo<dim>::lines_per_cell; ++l)
+        if (!(cell->line_orientation(l)) && mapping_kind[0] == mapping_nedelec)
+          face_sign[l] = -1.0;
+    }
+  } // namespace
+} // namespace internal::FE_PolyTensor
 
 
 

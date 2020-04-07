@@ -90,19 +90,19 @@ namespace DynamicSparsityPatternIterators
     /**
      * Row number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     row() const;
 
     /**
      * Index within the current row of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     index() const;
 
     /**
      * Column number of the element represented by this object.
      */
-    size_type
+    [[nodiscard]] size_type
     column() const;
 
     /**
@@ -725,7 +725,7 @@ private:
     /**
      * estimates memory consumption.
      */
-    size_type
+    [[nodiscard]] size_type
     memory_consumption() const;
   };
 

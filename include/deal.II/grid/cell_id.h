@@ -128,21 +128,21 @@ public:
    * a way of representing the internal state of the current object using
    * only ASCII characters in the printable range.
    */
-  std::string
+  [[nodiscard]] std::string
   to_string() const;
 
   /**
    * Return a compact and fast binary representation of this CellId.
    */
   template <int dim>
-  binary_type
+  [[nodiscard]] binary_type
   to_binary() const;
 
   /**
    * Return a cell_iterator to the cell represented by this CellId.
    */
   template <int dim, int spacedim>
-  typename Triangulation<dim, spacedim>::cell_iterator
+  [[nodiscard]] typename Triangulation<dim, spacedim>::cell_iterator
   to_cell(const Triangulation<dim, spacedim> &tria) const;
 
   /**
@@ -168,13 +168,13 @@ public:
   /**
    * Determine if this cell id is the direct parent of the input cell id.
    */
-  bool
+  [[nodiscard]] bool
   is_parent_of(const CellId &other) const;
 
   /**
    * Determine if this cell id is the ancestor of the input cell id.
    */
-  bool
+  [[nodiscard]] bool
   is_ancestor_of(const CellId &other) const;
 
   /**
@@ -187,7 +187,7 @@ public:
   /**
    * Return the id of the coarse cell.
    */
-  types::coarse_cell_id
+  [[nodiscard]] types::coarse_cell_id
   get_coarse_cell_id() const;
 
 private:

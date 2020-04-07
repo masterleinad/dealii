@@ -73,7 +73,7 @@ public:
    * Returns @p false because the preservation of vertex locations depends on
    * the mapping handed to the reinit() function.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   preserves_vertex_locations() const override;
 
   /**
@@ -116,7 +116,7 @@ public:
   /**
    * Return the memory consumption (in bytes) of the cache.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
 protected:

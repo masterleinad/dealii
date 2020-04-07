@@ -417,13 +417,13 @@ public:
       /**
        * Row number of the element represented by this object.
        */
-      size_type
+      [[nodiscard]] size_type
       row() const;
 
       /**
        * Column number of the element represented by this object.
        */
-      size_type
+      [[nodiscard]] size_type
       column() const;
 
       /**

@@ -314,7 +314,7 @@ namespace parallel
        * artificial cells that do not store who the owner of the cell is in
        * their subdomain_id field.
        */
-      const std::vector<types::subdomain_id> &
+      [[nodiscard]] const std::vector<types::subdomain_id> &
       get_true_subdomain_ids_of_cells() const;
 
       /**
@@ -325,14 +325,14 @@ namespace parallel
        * artificial cells that do not store who the owner of the cell is in
        * their level_subdomain_id field.
        */
-      const std::vector<types::subdomain_id> &
+      [[nodiscard]] const std::vector<types::subdomain_id> &
       get_true_level_subdomain_ids_of_cells(const unsigned int level) const;
 
       /**
        * Return allow_artificial_cells , namely true if artificial cells are
        * allowed.
        */
-      bool
+      [[nodiscard]] bool
       with_artificial_cells() const;
 
     protected:

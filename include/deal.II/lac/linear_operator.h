@@ -1080,15 +1080,13 @@ namespace internal
        * be called under any conditions.
        */
       template <typename... Args>
-      EmptyPayload(const Args &...)
-      {}
+      EmptyPayload(const Args &...){}
 
 
-      /**
-       * Return a payload configured for identity operations
-       */
-      EmptyPayload
-      identity_payload() const
+        /**
+         * Return a payload configured for identity operations
+         */
+        [[nodiscard]] EmptyPayload identity_payload() const
       {
         return *this;
       }
@@ -1097,18 +1095,14 @@ namespace internal
       /**
        * Return a payload configured for null operations
        */
-      EmptyPayload
-      null_payload() const
-      {
-        return *this;
-      }
+      [[nodiscard]] EmptyPayload
+      null_payload() const { return *this; }
 
 
-      /**
-       * Return a payload configured for transpose operations
-       */
-      EmptyPayload
-      transpose_payload() const
+        /**
+         * Return a payload configured for transpose operations
+         */
+        [[nodiscard]] EmptyPayload transpose_payload() const
       {
         return *this;
       }

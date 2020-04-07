@@ -924,11 +924,8 @@ namespace Threads
      * Return true if this object has had a thread associated with it, either
      * by using the non-default constructor or by assignment.
      */
-    bool
-    valid() const
-    {
-      return static_cast<bool>(thread_descriptor);
-    }
+    [[nodiscard]] bool
+    valid() const { return static_cast<bool>(thread_descriptor); }
 
 
     /**
@@ -1558,9 +1555,8 @@ namespace Threads
      * returns true, it will continue to return true until the task object it
      * reports on is assigned to from another object.
      */
-    bool
-    joinable() const
-    {
+    [[nodiscard]] bool
+    joinable() const {
       return (task_descriptor !=
               std::shared_ptr<internal::TaskDescriptor<RT>>());
     }
@@ -1609,8 +1605,7 @@ namespace Threads
      * constructor of this class and have not assigned a task object to it. In
      * other words, the function joinable() must return true.
      */
-    typename internal::return_value<RT>::reference_type
-    return_value()
+    typename internal::return_value<RT>::reference_type return_value()
     {
       join();
       return task_descriptor->ret_val.get();
@@ -1832,11 +1827,8 @@ namespace Threads
      * scheduled to a CPU resource, or are currently running. Tasks
      * that have been joined already are also still counted.
      */
-    std::size_t
-    size() const
-    {
-      return tasks.size();
-    }
+    [[nodiscard]] std::size_t
+    size() const { return tasks.size(); }
 
 
     /**
@@ -1845,8 +1837,7 @@ namespace Threads
      * function more than once, and you can also add new task objects between
      * subsequent calls to this function if you want.
      */
-    void
-    join_all() const
+    void join_all() const
     {
       for (auto &t : tasks)
         t.join();

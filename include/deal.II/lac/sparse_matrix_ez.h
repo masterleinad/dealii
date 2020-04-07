@@ -198,19 +198,19 @@ public:
       /**
        * Row number of the element represented by this object.
        */
-      size_type
+      [[nodiscard]] size_type
       row() const;
 
       /**
        * Index in row of the element represented by this object.
        */
-      unsigned short
+      [[nodiscard]] unsigned short
       index() const;
 
       /**
        * Column number of the element represented by this object.
        */
-      size_type
+      [[nodiscard]] size_type
       column() const;
 
       /**

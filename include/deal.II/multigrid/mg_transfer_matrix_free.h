@@ -464,7 +464,7 @@ public:
   /**
    * Memory used by this object.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
   /**

@@ -2459,14 +2459,11 @@ namespace internals
       individual_size[index]               = my_length + 1;
     }
 
-    size_type
-    get_size(const size_type index) const
-    {
-      return individual_size[index];
-    }
+    [[nodiscard]] size_type
+    get_size(const size_type index) const { return individual_size[index]; }
 
-    const std::pair<size_type, number> *
-    get_entry(const size_type index) const
+      [[nodiscard]] const std::pair<size_type, number> *get_entry(
+        const size_type index) const
     {
       return &data[index * row_length];
     }
@@ -2539,30 +2536,26 @@ namespace internals
          << "Constr rows " << n_constraints() << std::endl
          << "Inhom  rows " << n_inhomogeneous_rows << std::endl
          << "Local: ";
-      for (size_type i = 0; i < total_row_indices.size(); ++i)
-        os << ' ' << std::setw(4) << total_row_indices[i].local_row;
+      for (auto &total_row_indice : total_row_indices)
+        os << ' ' << std::setw(4) << total_row_indice.local_row;
       os << std::endl << "Global:";
-      for (size_type i = 0; i < total_row_indices.size(); ++i)
-        os << ' ' << std::setw(4) << total_row_indices[i].global_row;
+      for (auto &total_row_indice : total_row_indices)
+        os << ' ' << std::setw(4) << total_row_indice.global_row;
       os << std::endl << "ConPos:";
-      for (size_type i = 0; i < total_row_indices.size(); ++i)
-        os << ' ' << std::setw(4) << total_row_indices[i].constraint_position;
+      for (auto &total_row_indice : total_row_indices)
+        os << ' ' << std::setw(4) << total_row_indice.constraint_position;
       os << std::endl;
     }
 
     // return all kind of information on the constraints
 
     // returns the number of global indices in the struct
-    size_type
-    size() const
-    {
-      return n_active_rows;
-    }
+    [[nodiscard]] size_type
+    size() const { return n_active_rows; }
 
-    // returns the number of constraints that are associated to the
-    // counter_index-th entry in the list
-    size_type
-    size(const size_type counter_index) const
+      // returns the number of constraints that are associated to the
+      // counter_index-th entry in the list
+      [[nodiscard]] size_type size(const size_type counter_index) const
     {
       return (total_row_indices[counter_index].constraint_position ==
                   numbers::invalid_size_type ?
@@ -2572,15 +2565,13 @@ namespace internals
     }
 
     // returns the global row of the counter_index-th entry in the list
-    size_type
-    global_row(const size_type counter_index) const
-    {
+    [[nodiscard]] size_type
+    global_row(const size_type counter_index) const {
       return total_row_indices[counter_index].global_row;
     }
 
     // returns the global row of the counter_index-th entry in the list
-    size_type &
-    global_row(const size_type counter_index)
+    size_type &global_row(const size_type counter_index)
     {
       return total_row_indices[counter_index].global_row;
     }
@@ -2588,15 +2579,13 @@ namespace internals
     // returns the local row in the cell matrix associated with the
     // counter_index-th entry in the list. Returns invalid_size_type for
     // constrained rows
-    size_type
-    local_row(const size_type counter_index) const
-    {
+    [[nodiscard]] size_type
+    local_row(const size_type counter_index) const {
       return total_row_indices[counter_index].local_row;
     }
 
     // writable index
-    size_type &
-    local_row(const size_type counter_index)
+    size_type &local_row(const size_type counter_index)
     {
       return total_row_indices[counter_index].local_row;
     }
@@ -2604,20 +2593,19 @@ namespace internals
     // returns the local row in the cell matrix associated with the
     // counter_index-th entry in the list in the index_in_constraint-th
     // position of constraints
-    size_type
+    [[nodiscard]] size_type
     local_row(const size_type counter_index,
-              const size_type index_in_constraint) const
-    {
+              const size_type index_in_constraint) const {
       return (data_cache.get_entry(total_row_indices[counter_index]
                                      .constraint_position)[index_in_constraint])
         .first;
     }
 
-    // returns the value of the constraint in the counter_index-th entry in
-    // the list in the index_in_constraint-th position of constraints
-    number
-    constraint_value(const size_type counter_index,
-                     const size_type index_in_constraint) const
+      // returns the value of the constraint in the counter_index-th entry in
+      // the list in the index_in_constraint-th position of constraints
+      [[nodiscard]] number
+      constraint_value(const size_type counter_index,
+                       const size_type index_in_constraint) const
     {
       return (data_cache.get_entry(total_row_indices[counter_index]
                                      .constraint_position)[index_in_constraint])
@@ -2626,16 +2614,14 @@ namespace internals
 
     // returns whether there is one row with indirect contributions (i.e.,
     // there has been at least one constraint with non-trivial ConstraintLine)
-    bool
-    have_indirect_rows() const
-    {
+    [[nodiscard]] bool
+    have_indirect_rows() const {
       return data_cache.individual_size.empty() == false;
     }
 
     // append an entry that is constrained. This means that there is one less
     // nontrivial row
-    void
-    insert_constraint(const size_type constrained_local_dof)
+    void insert_constraint(const size_type constrained_local_dof)
     {
       --n_active_rows;
       total_row_indices[n_active_rows].local_row  = constrained_local_dof;
@@ -2645,16 +2631,12 @@ namespace internals
     // returns the number of constrained dofs in the structure. Constrained
     // dofs do not contribute directly to the matrix, but are needed in order
     // to set matrix diagonals and resolve inhomogeneities
-    size_type
-    n_constraints() const
-    {
-      return total_row_indices.size() - n_active_rows;
-    }
+    [[nodiscard]] size_type
+    n_constraints() const { return total_row_indices.size() - n_active_rows; }
 
-    // returns the number of constrained dofs in the structure that have an
-    // inhomogeneity
-    size_type
-    n_inhomogeneities() const
+      // returns the number of constrained dofs in the structure that have an
+      // inhomogeneity
+      [[nodiscard]] size_type n_inhomogeneities() const
     {
       return n_inhomogeneous_rows;
     }
@@ -2674,9 +2656,8 @@ namespace internals
 
     // the local row where constraint number i was detected, to find that row
     // easily when the GlobalRowsToLocal has been set up
-    size_type
-    constraint_origin(size_type i) const
-    {
+    [[nodiscard]] size_type
+    constraint_origin(size_type i) const {
       return total_row_indices[n_active_rows + i].local_row;
     }
 

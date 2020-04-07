@@ -78,7 +78,7 @@ public:
    * Always returns @p true because this class assumes that the
    * vertices always lies on the underlying Manifold.
    */
-  virtual bool
+  [[nodiscard]] virtual bool
   preserves_vertex_locations() const override;
 
   /**
@@ -333,7 +333,7 @@ public:
 
 
   // documentation can be found in Mapping::requires_update_flags()
-  virtual UpdateFlags
+  [[nodiscard]] virtual UpdateFlags
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   // documentation can be found in Mapping::get_data()

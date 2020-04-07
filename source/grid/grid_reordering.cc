@@ -237,20 +237,16 @@ namespace
      * Return an iterator to the first valid cell stored as adjacent to the
      * edge represented by the current object.
      */
-    const_iterator
-    begin() const
-    {
-      return adjacent_cells;
-    }
+    [[nodiscard]] const_iterator
+    begin() const { return adjacent_cells; }
 
 
-    /**
-     * Return an iterator to the element past the last valid cell stored
-     * as adjacent to the edge represented by the current object.
-     * @return
-     */
-    const_iterator
-    end() const
+      /**
+       * Return an iterator to the element past the last valid cell stored
+       * as adjacent to the edge represented by the current object.
+       * @return
+       */
+      [[nodiscard]] const_iterator end() const
     {
       // check whether the current object stores zero, one, or two
       // adjacent cells, and use this to point to the element past the
@@ -477,18 +473,14 @@ namespace
     /**
      * Return an iterator pointing to the first element of the set.
      */
-    const_iterator
-    begin() const
-    {
-      return edge_indices;
-    }
+    [[nodiscard]] const_iterator
+    begin() const { return edge_indices; }
 
 
-    /**
-     * Return an iterator pointing to the element past the last used one.
-     */
-    const_iterator
-    end() const
+      /**
+       * Return an iterator pointing to the element past the last used one.
+       */
+      [[nodiscard]] const_iterator end() const
     {
       // check whether the current object stores zero, one, or two
       // indices, and use this to point to the element past the

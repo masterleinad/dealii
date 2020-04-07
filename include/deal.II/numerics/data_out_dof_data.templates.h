@@ -493,16 +493,15 @@ namespace internal
                                   names.size()));
 
       // check that the names use only allowed characters
-      for (unsigned int i = 0; i < names.size(); ++i)
-        Assert(names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                          "0123456789_<>()") ==
-                 std::string::npos,
+      for (const auto &name : names)
+        Assert(name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                      "0123456789_<>()") == std::string::npos,
                Exceptions::DataOutImplementation::ExcInvalidCharacter(
-                 names[i],
-                 names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                            "0123456789_<>()")));
+                 name,
+                 name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                        "0123456789_<>()")));
     }
 
 
@@ -531,16 +530,15 @@ namespace internal
                data_postprocessor->get_data_component_interpretation().size()));
 
       // check that the names use only allowed characters
-      for (unsigned int i = 0; i < names.size(); ++i)
-        Assert(names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                          "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                          "0123456789_<>()") ==
-                 std::string::npos,
+      for (const auto &name : names)
+        Assert(name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                      "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                      "0123456789_<>()") == std::string::npos,
                Exceptions::DataOutImplementation::ExcInvalidCharacter(
-                 names[i],
-                 names[i].find_first_not_of("abcdefghijklmnopqrstuvwxyz"
-                                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                            "0123456789_<>()")));
+                 name,
+                 name.find_first_not_of("abcdefghijklmnopqrstuvwxyz"
+                                        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                        "0123456789_<>()")));
     }
 
 
@@ -581,7 +579,7 @@ namespace internal
        * Assuming that the stored vector is a cell vector, extract the given
        * element from it.
        */
-      virtual double
+      [[nodiscard]] virtual double
       get_cell_data_value(
         const unsigned int       cell_number,
         const ComponentExtractor extract_component) const override;
@@ -664,7 +662,7 @@ namespace internal
        * Return whether the data represented by (a derived class of) this object
        * represents a complex-valued (as opposed to real-valued) information.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       is_complex_valued() const override;
 
       /**
@@ -677,7 +675,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const override;
 
     private:
@@ -1083,13 +1081,11 @@ namespace internal
         : DataEntryBase<DoFHandlerType>(dofs,
                                         names,
                                         data_component_interpretation)
-        , vectors(vectors)
-      {}
+        , vectors(vectors){}
 
-      virtual double
-      get_cell_data_value(
-        const unsigned int       cell_number,
-        const ComponentExtractor extract_component) const override;
+            [[nodiscard]] virtual double get_cell_data_value(
+              const unsigned int       cell_number,
+              const ComponentExtractor extract_component) const override;
 
       virtual void
       get_function_values(
@@ -1182,7 +1178,7 @@ namespace internal
        * Return whether the data represented by (a derived class of) this object
        * represents a complex-valued (as opposed to real-valued) information.
        */
-      virtual bool
+      [[nodiscard]] virtual bool
       is_complex_valued() const override
       {
         Assert(
@@ -1206,7 +1202,7 @@ namespace internal
        * Determine an estimate for the memory consumption (in bytes) of this
        * object.
        */
-      virtual std::size_t
+      [[nodiscard]] virtual std::size_t
       memory_consumption() const override
       {
         return sizeof(vectors);
