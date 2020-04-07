@@ -345,10 +345,7 @@ namespace Euler_DG
         }
     }
 
-    unsigned int n_stages() const
-    {
-      return bi.size();
-    }
+    [[nodiscard]] unsigned int n_stages() const { return bi.size(); }
 
     // The main function of the time integrator is to go through the stages,
     // evaluate the operator, prepare the $\mathbf{r}_i$ vector for the next
@@ -770,7 +767,7 @@ namespace Euler_DG
       const Function<dim> &                             function,
       const LinearAlgebra::distributed::Vector<Number> &solution) const;
 
-    double compute_cell_transport_speed(
+    [[nodiscard]] double compute_cell_transport_speed(
       const LinearAlgebra::distributed::Vector<Number> &solution) const;
 
     void
@@ -1821,13 +1818,14 @@ namespace Euler_DG
         const DataPostprocessorInputs::Vector<dim> &inputs,
         std::vector<Vector<double>> &computed_quantities) const override;
 
-      virtual std::vector<std::string> get_names() const override;
+      [[nodiscard]] virtual std::vector<std::string> get_names() const override;
 
-      virtual std::vector<
+      [[nodiscard]] virtual std::vector<
         DataComponentInterpretation::DataComponentInterpretation>
       get_data_component_interpretation() const override;
 
-      virtual UpdateFlags get_needed_update_flags() const override;
+      [[nodiscard]] virtual UpdateFlags
+      get_needed_update_flags() const override;
 
     private:
       const bool do_schlieren_plot;

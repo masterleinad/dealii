@@ -88,7 +88,7 @@ namespace Patterns
     /**
      * Return <tt>true</tt> if the given string matches the pattern.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const = 0;
 
     /**
@@ -119,7 +119,7 @@ namespace Patterns
     /**
      * Return a string describing the pattern.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const = 0;
 
     /**
@@ -131,7 +131,7 @@ namespace Patterns
      * Ownership of the objects returned by this function is passed to the
      * caller of this function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const = 0;
 
     /**
@@ -149,7 +149,7 @@ namespace Patterns
      * On the other hand, if you know that your class deviates from this
      * assumption significantly, you can still overload this function.
      */
-    virtual std::size_t
+    [[nodiscard]] virtual std::size_t
     memory_consumption() const;
   };
 
@@ -223,7 +223,7 @@ namespace Patterns
      * Return <tt>true</tt> if the string is an integer and its value is
      * within the specified range.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
@@ -231,7 +231,7 @@ namespace Patterns
      * match. If bounds were specified to the constructor, then include them
      * into this description.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -239,7 +239,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -319,7 +319,7 @@ namespace Patterns
      * Return <tt>true</tt> if the string is a number and its value is within
      * the specified range.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
@@ -327,7 +327,7 @@ namespace Patterns
      * match. If bounds were specified to the constructor, then include them
      * into this description.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -335,7 +335,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -393,7 +393,7 @@ namespace Patterns
      * Return <tt>true</tt> if the string is an element of the description
      * list passed to the constructor.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
@@ -401,7 +401,7 @@ namespace Patterns
      * match. Here, this is the list of valid strings passed to the
      * constructor.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -409,14 +409,14 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const override;
 
     /**
@@ -475,13 +475,13 @@ namespace Patterns
     /**
      * Return the internally stored separator.
      */
-    const std::string &
+    [[nodiscard]] const std::string &
     get_separator() const;
 
     /**
      * Return the internally stored base pattern.
      */
-    const PatternBase &
+    [[nodiscard]] const PatternBase &
     get_base_pattern() const;
 
     /**
@@ -493,14 +493,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string is a comma-separated list of strings
      * each of which match the pattern given to the constructor.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -508,7 +508,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -523,7 +523,7 @@ namespace Patterns
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const override;
 
     /**
@@ -616,14 +616,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string is a comma-separated list of strings
      * each of which match the pattern given to the constructor.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -631,7 +631,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -646,31 +646,31 @@ namespace Patterns
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const override;
 
     /**
      * Return a reference to the key pattern.
      */
-    const PatternBase &
+    [[nodiscard]] const PatternBase &
     get_key_pattern() const;
 
     /**
      * Return a reference to the value pattern.
      */
-    const PatternBase &
+    [[nodiscard]] const PatternBase &
     get_value_pattern() const;
 
     /**
      * Return the separator of the map entries.
      */
-    const std::string &
+    [[nodiscard]] const std::string &
     get_separator() const;
 
     /**
      * Return the key-value separator.
      */
-    const std::string &
+    [[nodiscard]] const std::string &
     get_key_value_separator() const;
 
     /**
@@ -831,14 +831,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string is a list of strings
      * each of which matches the patterns given to the constructor.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -846,7 +846,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -861,19 +861,19 @@ namespace Patterns
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const override;
 
     /**
      * Return a reference to the i-th pattern in the tuple.
      */
-    const PatternBase &
+    [[nodiscard]] const PatternBase &
     get_pattern(const unsigned int i) const;
 
     /**
      * Return the separator of the tuple entries.
      */
-    const std::string &
+    [[nodiscard]] const std::string &
     get_separator() const;
 
   private:
@@ -916,7 +916,7 @@ namespace Patterns
      * Return <tt>true</tt> if the string is an element of the description
      * list passed to the constructor.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
@@ -924,7 +924,7 @@ namespace Patterns
      * match. Here, this is the list of valid strings passed to the
      * constructor.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -932,7 +932,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -947,7 +947,7 @@ namespace Patterns
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const override;
 
     /**
@@ -993,7 +993,7 @@ namespace Patterns
      * Return a description of the pattern that valid strings are expected to
      * match.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -1001,7 +1001,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -1035,14 +1035,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string matches its constraints, i.e.
      * always.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match. Here, this is the string <tt>"[Anything]"</tt>.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -1050,7 +1050,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -1112,14 +1112,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string matches its constraints, i.e.
      * always.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match. Here, this is the string <tt>"[Filename]"</tt>.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -1127,7 +1127,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**
@@ -1175,14 +1175,14 @@ namespace Patterns
      * Return <tt>true</tt> if the string matches its constraints, i.e.
      * always.
      */
-    virtual bool
+    [[nodiscard]] virtual bool
     match(const std::string &test_string) const override;
 
     /**
      * Return a description of the pattern that valid strings are expected to
      * match. Here, this is the string <tt>"[Filename]"</tt>.
      */
-    virtual std::string
+    [[nodiscard]] virtual std::string
     description(const OutputStyle style = Machine) const override;
 
     /**
@@ -1190,7 +1190,7 @@ namespace Patterns
      * heap. Ownership of that object is transferred to the caller of this
      * function.
      */
-    virtual std::unique_ptr<PatternBase>
+    [[nodiscard]] virtual std::unique_ptr<PatternBase>
     clone() const override;
 
     /**

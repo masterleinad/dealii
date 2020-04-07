@@ -137,7 +137,8 @@ public:
   /**
    * Return a const reference to the boundary_points
    */
-  const std::pair<Point<spacedim, Number>, Point<spacedim, Number>> &
+  [[nodiscard]] const std::pair<Point<spacedim, Number>,
+                                Point<spacedim, Number>> &
   get_boundary_points() const;
 
   /**
@@ -146,7 +147,7 @@ public:
    *
    * Return an enumerator of type NeighborType.
    */
-  NeighborType
+  [[nodiscard]] NeighborType
   get_neighbor_type(const BoundingBox<spacedim, Number> &other_bbox) const;
 
   /**
@@ -160,7 +161,7 @@ public:
   /**
    * Return true if the point is inside the Bounding Box, false otherwise.
    */
-  bool
+  [[nodiscard]] bool
   point_inside(const Point<spacedim, Number> &p) const;
 
   /**
@@ -179,7 +180,7 @@ public:
   /**
    * Compute the volume (i.e. the dim-dimensional measure) of the BoundingBox.
    */
-  double
+  [[nodiscard]] double
   volume() const;
 
   /**

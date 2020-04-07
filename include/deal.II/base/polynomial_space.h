@@ -156,7 +156,7 @@ public:
    *
    * Consider using evaluate() instead.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -177,7 +177,7 @@ public:
    *
    * Consider using evaluate() instead.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -186,7 +186,7 @@ public:
    *
    * Consider using evaluate() instead.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -201,13 +201,13 @@ public:
   /**
    * Return the name of the space, which is <tt>PolynomialSpace</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 
 protected:
@@ -219,7 +219,7 @@ protected:
    *
    * In 1d and 2d, obviously only i and i,j are returned.
    */
-  std::array<unsigned int, dim>
+  [[nodiscard]] std::array<unsigned int, dim>
   compute_index(const unsigned int n) const;
 
 private:
@@ -243,13 +243,13 @@ private:
 /* -------------- declaration of explicit specializations --- */
 
 template <>
-std::array<unsigned int, 1>
+[[nodiscard]] std::array<unsigned int, 1>
 PolynomialSpace<1>::compute_index(const unsigned int n) const;
 template <>
-std::array<unsigned int, 2>
+[[nodiscard]] std::array<unsigned int, 2>
 PolynomialSpace<2>::compute_index(const unsigned int n) const;
 template <>
-std::array<unsigned int, 3>
+[[nodiscard]] std::array<unsigned int, 3>
 PolynomialSpace<3>::compute_index(const unsigned int n) const;
 
 
@@ -302,10 +302,9 @@ PolynomialSpace<dim>::output_indices(StreamType &out) const
 
 template <int dim>
 template <int order>
-Tensor<order, dim>
+[[nodiscard]] Tensor<order, dim>
 PolynomialSpace<dim>::compute_derivative(const unsigned int i,
-                                         const Point<dim> & p) const
-{
+                                         const Point<dim> & p) const {
   const std::array<unsigned int, dim> indices = compute_index(i);
 
   double v[dim][order + 1];

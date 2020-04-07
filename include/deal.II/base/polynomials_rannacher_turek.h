@@ -57,7 +57,7 @@ public:
   /**
    * Value of basis function @p i at @p p.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -72,13 +72,13 @@ public:
   /**
    * Gradient of basis function @p i at @p p.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Gradient of gradient of basis function @p i at @p p.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -98,13 +98,13 @@ public:
   /**
    * Return the name of the space, which is <tt>RannacherTurek</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 };
 
@@ -210,10 +210,9 @@ namespace internal
 // template functions
 template <int dim>
 template <int order>
-Tensor<order, dim>
+[[nodiscard]] Tensor<order, dim>
 PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
-                                                   const Point<dim> & p) const
-{
+                                                   const Point<dim> & p) const {
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<
     order>(i, p);
 }
@@ -221,8 +220,7 @@ PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
 
 
 template <int dim>
-inline std::string
-PolynomialsRannacherTurek<dim>::name() const
+inline std::string PolynomialsRannacherTurek<dim>::name() const
 {
   return "RannacherTurek";
 }

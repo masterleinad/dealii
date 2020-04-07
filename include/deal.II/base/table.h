@@ -299,19 +299,19 @@ namespace internal
        * Return the length of one row, i.e. the number of elements
        * corresponding to the last index of the table object.
        */
-      size_type
+      [[nodiscard]] size_type
       size() const;
 
       /**
        * Return an iterator to the first element of this row.
        */
-      iterator
+      [[nodiscard]] iterator
       begin() const;
 
       /**
        * Return an iterator to the element past the end of this row.
        */
-      iterator
+      [[nodiscard]] iterator
       end() const;
 
     private:
@@ -915,7 +915,7 @@ namespace MatrixTableIterators
      * Get a constant reference to the value of the element represented by
      * this accessor.
      */
-    const value_type &
+    [[nodiscard]] const value_type &
     value() const;
 
     /**
@@ -926,13 +926,13 @@ namespace MatrixTableIterators
     /**
      * Return the row of the current entry.
      */
-    size_type
+    [[nodiscard]] size_type
     row() const;
 
     /**
      * Return the column of the current entry.
      */
-    size_type
+    [[nodiscard]] size_type
     column() const;
 
   protected:
@@ -1041,7 +1041,7 @@ namespace MatrixTableIterators
      * Get a reference to the value of the element represented by
      * this accessor.
      */
-    value_type &
+    [[nodiscard]] value_type &
     value() const;
 
     /**

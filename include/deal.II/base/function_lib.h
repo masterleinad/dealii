@@ -659,7 +659,7 @@ namespace Functions
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
 
   protected:
@@ -995,13 +995,13 @@ namespace Functions
     /**
      * Return the radius stored in this object.
      */
-    double
+    [[nodiscard]] double
     get_radius() const;
 
     /**
      * Return a boolean indicating whether this function integrates to one.
      */
-    bool
+    [[nodiscard]] bool
     integrates_to_one() const;
 
   protected:

@@ -55,7 +55,7 @@ public:
    * The number of names in this object. This function may be used whether
    * initialize() was called before or not.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   size() const;
 
 

@@ -542,32 +542,32 @@ public:
     /**
      * Number of elements in this interval.
      */
-    size_type
+    [[nodiscard]] size_type
     n_elements() const;
 
     /**
      * If true, we are pointing at a valid interval in the IndexSet.
      */
-    bool
+    [[nodiscard]] bool
     is_valid() const;
 
     /**
      * Return an iterator pointing at the first index in this interval.
      */
-    ElementIterator
+    [[nodiscard]] ElementIterator
     begin() const;
 
     /**
      * Return an iterator pointing directly after the last index in this
      * interval.
      */
-    ElementIterator
+    [[nodiscard]] ElementIterator
     end() const;
 
     /**
      * Return the index of the last index in this interval.
      */
-    size_type
+    [[nodiscard]] size_type
     last() const;
 
   private:
@@ -741,7 +741,7 @@ public:
     /**
      * Does this iterator point to an existing element?
      */
-    bool
+    [[nodiscard]] bool
     is_valid() const;
 
     /**

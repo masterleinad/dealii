@@ -455,19 +455,15 @@ namespace Step44
 
     virtual ~Time() = default;
 
-    double current() const
-    {
+    [[nodiscard]] double current() const {
       return time_current;
-    }
-    double end() const
+    }[[nodiscard]] double end() const
     {
       return time_end;
     }
-    double get_delta_t() const
-    {
+    [[nodiscard]] double get_delta_t() const {
       return delta_t;
-    }
-    unsigned int get_timestep() const
+    }[[nodiscard]] unsigned int get_timestep() const
     {
       return timestep;
     }
@@ -558,8 +554,7 @@ namespace Step44
     // \mathfrak{c}_{ijkl} = F_{iA} F_{jB} \mathfrak{C}_{ABCD} F_{kC} F_{lD}$
     // where $ \mathfrak{C} = 4 \frac{\partial^2 \Psi(\mathbf{C})}{\partial
     // \mathbf{C} \partial \mathbf{C}}$
-    SymmetricTensor<4, dim> get_Jc() const
-    {
+    [[nodiscard]] SymmetricTensor<4, dim> get_Jc() const {
       return get_Jc_vol() + get_Jc_iso();
     }
 
@@ -576,8 +571,7 @@ namespace Step44
     // public.  We calculate $\frac{\partial^2
     // \Psi_{\textrm{vol}}(\widetilde{J})}{\partial \widetilde{J} \partial
     // \widetilde{J}}$
-    double get_d2Psi_vol_dJ2() const
-    {
+    [[nodiscard]] double get_d2Psi_vol_dJ2() const {
       return ((kappa / 2.0) * (1.0 + 1.0 / (J_tilde * J_tilde)));
     }
 
@@ -588,10 +582,7 @@ namespace Step44
       return det_F;
     }
 
-    double get_p_tilde() const
-    {
-      return p_tilde;
-    }
+    [[nodiscard]] double get_p_tilde() const { return p_tilde; }
 
     double get_J_tilde() const
     {
@@ -613,8 +604,7 @@ namespace Step44
     // The following functions are used internally in determining the result
     // of some of the public functions above. The first one determines the
     // volumetric Kirchhoff stress $\boldsymbol{\tau}_{\textrm{vol}}$:
-    SymmetricTensor<2, dim> get_tau_vol() const
-    {
+    [[nodiscard]] SymmetricTensor<2, dim> get_tau_vol() const {
       return p_tilde * det_F * Physics::Elasticity::StandardTensors<dim>::I;
     }
 
@@ -628,8 +618,7 @@ namespace Step44
 
     // Then, determine the fictitious Kirchhoff stress
     // $\overline{\boldsymbol{\tau}}$:
-    SymmetricTensor<2, dim> get_tau_bar() const
-    {
+    [[nodiscard]] SymmetricTensor<2, dim> get_tau_bar() const {
       return 2.0 * c_1 * b_bar;
     }
 
@@ -644,8 +633,7 @@ namespace Step44
 
     // Calculate the isochoric part of the tangent $J
     // \mathfrak{c}_\textrm{iso}$:
-    SymmetricTensor<4, dim> get_Jc_iso() const
-    {
+    [[nodiscard]] SymmetricTensor<4, dim> get_Jc_iso() const {
       const SymmetricTensor<2, dim> tau_bar = get_tau_bar();
       const SymmetricTensor<2, dim> tau_iso = get_tau_iso();
       const SymmetricTensor<4, dim> tau_iso_x_I =
@@ -740,20 +728,14 @@ namespace Step44
 
     // We offer an interface to retrieve certain data.  Here are the kinematic
     // variables:
-    double get_J_tilde() const
-    {
-      return material->get_J_tilde();
-    }
+    [[nodiscard]] double get_J_tilde() const { return material->get_J_tilde(); }
 
     double get_det_F() const
     {
       return material->get_det_F();
     }
 
-    const Tensor<2, dim> &get_F_inv() const
-    {
-      return F_inv;
-    }
+    [[nodiscard]] const Tensor<2, dim> &get_F_inv() const { return F_inv; }
 
     // ...and the kinetic variables.  These are used in the material and
     // global tangent matrix and residual assembly operations:
@@ -762,20 +744,14 @@ namespace Step44
       return material->get_p_tilde();
     }
 
-    const SymmetricTensor<2, dim> &get_tau() const
-    {
-      return tau;
-    }
+    [[nodiscard]] const SymmetricTensor<2, dim> &get_tau() const { return tau; }
 
     double get_dPsi_vol_dJ() const
     {
       return dPsi_vol_dJ;
     }
 
-    double get_d2Psi_vol_dJ2() const
-    {
-      return d2Psi_vol_dJ2;
-    }
+    [[nodiscard]] double get_d2Psi_vol_dJ2() const { return d2Psi_vol_dJ2; }
 
     // And finally the tangent:
     const SymmetricTensor<4, dim> &get_Jc() const

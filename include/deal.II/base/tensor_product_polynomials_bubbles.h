@@ -78,13 +78,13 @@ public:
   /**
    * Give read access to the renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering() const;
 
   /**
    * Give read access to the inverse renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering_inverse() const;
 
   /**
@@ -119,7 +119,7 @@ public:
    * <tt>values.size()==</tt>n() to get the point values of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -150,7 +150,7 @@ public:
    * <tt>grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -165,7 +165,7 @@ public:
    * <tt>grad_grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -174,20 +174,20 @@ public:
    * if the maximum degree of the polynomials is one and
    * <i>n<sup>dim</sup>+dim</i> otherwise.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n() const;
 
   /**
    * Return the name of the space, which is
    * <tt>TensorProductPolynomialsBubbles</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 
 private:
@@ -279,11 +279,10 @@ TensorProductPolynomialsBubbles<dim>::name() const
 
 template <int dim>
 template <int order>
-Tensor<order, dim>
+[[nodiscard]] Tensor<order, dim>
 TensorProductPolynomialsBubbles<dim>::compute_derivative(
   const unsigned int i,
-  const Point<dim> & p) const
-{
+  const Point<dim> & p) const {
   const unsigned int q_degree      = tensor_polys.polynomials.size() - 1;
   const unsigned int max_q_indices = tensor_polys.n();
   Assert(i < max_q_indices + /* n_bubbles= */ ((q_degree <= 1) ? 1 : dim),

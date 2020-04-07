@@ -659,7 +659,7 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   begin_raw() const;
 
   /**
@@ -672,7 +672,7 @@ public:
    * Return a const pointer to the element past the end of the underlying
    * storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   end_raw() const;
 
   /**
@@ -832,8 +832,8 @@ public:
    * <tt>s.access_raw_entry(unrolled_index)</tt> does the same as
    * <tt>s[s.unrolled_to_component_indices(i)]</tt>, but more efficiently.
    */
-  DEAL_II_CONSTEXPR const Number &
-                          access_raw_entry(const unsigned int unrolled_index) const;
+  [[nodiscard]] DEAL_II_CONSTEXPR const Number &
+                                        access_raw_entry(const unsigned int unrolled_index) const;
 
   /**
    * Access to an element according to unrolled index. The function
@@ -852,7 +852,7 @@ public:
    * upper right as well as lower left entries, not just one of them, although
    * they are equal for symmetric tensors).
    */
-  constexpr typename numbers::NumberTraits<Number>::real_type
+  [[nodiscard]] constexpr typename numbers::NumberTraits<Number>::real_type
   norm() const;
 
   /**

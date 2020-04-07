@@ -231,38 +231,38 @@ public:
    * Return the size (in elements) of the view of memory this object
    * represents.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   size() const;
 
   /**
    * Return a pointer to the underlying array serving as element storage.
    * In case the container is empty a nullptr is returned.
    */
-  value_type *
+  [[nodiscard]] value_type *
   data() const noexcept;
 
   /**
    * Return an iterator pointing to the beginning of the array view.
    */
-  iterator
+  [[nodiscard]] iterator
   begin() const;
 
   /**
    * Return an iterator pointing to one past the end of the array view.
    */
-  iterator
+  [[nodiscard]] iterator
   end() const;
 
   /**
    * Return a constant iterator pointing to the beginning of the array view.
    */
-  const_iterator
+  [[nodiscard]] const_iterator
   cbegin() const;
 
   /**
    * Return a constant iterator pointing to one past the end of the array view.
    */
-  const_iterator
+  [[nodiscard]] const_iterator
   cend() const;
 
   /**

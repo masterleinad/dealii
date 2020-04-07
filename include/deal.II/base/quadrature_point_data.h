@@ -294,7 +294,7 @@ public:
    * packed/unpacked from the user's DataType class. Consequently it is also
    * the size of the vectors in pack_values() and unpack_values() .
    */
-  virtual unsigned int
+  [[nodiscard]] virtual unsigned int
   number_of_values() const = 0;
 
   /**

@@ -87,7 +87,7 @@ public:
   /**
    * Return the value of the time variable.
    */
-  Number
+  [[nodiscard]] Number
   get_time() const;
 
   /**

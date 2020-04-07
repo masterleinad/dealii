@@ -108,7 +108,7 @@ public:
    * Return the transpose of a rectangular DerivativeForm,
    * viewed as a two dimensional matrix.
    */
-  DerivativeForm<1, spacedim, dim, Number>
+  [[nodiscard]] DerivativeForm<1, spacedim, dim, Number>
   transpose() const;
 
   /**
@@ -116,7 +116,7 @@ public:
    * $\sqrt{\sum_{ij} |DF_{ij}|^2} =
    * \sqrt{\sum_{ij} |\frac{\partial F_i}{\partial x_j}|^2}$.
    */
-  typename numbers::NumberTraits<Number>::real_type
+  [[nodiscard]] typename numbers::NumberTraits<Number>::real_type
   norm() const;
 
   /**
@@ -124,7 +124,7 @@ public:
    * transformation $\mathbf F$. That is to say if $DF$ is square, it computes
    * $\det(DF)$, in case DF is not square returns $\sqrt{\det(DF^T \,DF)}$.
    */
-  Number
+  [[nodiscard]] Number
   determinant() const;
 
   /**
@@ -136,7 +136,7 @@ public:
    * {\mathbb R}^n \mapsto {\mathbb R}^n$), then this function
    * simplifies to computing $\nabla {\mathbf F}^{-T}$.
    */
-  DerivativeForm<1, dim, spacedim, Number>
+  [[nodiscard]] DerivativeForm<1, dim, spacedim, Number>
   covariant_form() const;
 
   /**
@@ -158,7 +158,7 @@ private:
    * Auxiliary function that computes $A T^{T}$ where A represents the current
    * object.
    */
-  DerivativeForm<1, dim, spacedim, Number>
+  [[nodiscard]] DerivativeForm<1, dim, spacedim, Number>
   times_T_t(const Tensor<2, dim, Number> &T) const;
 
 

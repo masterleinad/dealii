@@ -198,7 +198,7 @@ public:
   /**
    * Return the last element of the vector (read-only access).
    */
-  const_reference
+  [[nodiscard]] const_reference
   back() const;
 
   /**
@@ -241,20 +241,20 @@ public:
   /**
    * Return whether the vector is empty, i.e., its size is zero.
    */
-  bool
+  [[nodiscard]] bool
   empty() const;
 
   /**
    * Return the size of the vector.
    */
-  size_type
+  [[nodiscard]] size_type
   size() const;
 
   /**
    * Return the capacity of the vector, i.e., the size this vector can hold
    * without reallocation. Note that capacity() >= size().
    */
-  size_type
+  [[nodiscard]] size_type
   capacity() const;
 
   /**
@@ -276,7 +276,7 @@ public:
   /**
    * Return a const pointer to the underlying data buffer.
    */
-  const_pointer
+  [[nodiscard]] const_pointer
   data() const;
 
   /**
@@ -294,13 +294,13 @@ public:
   /**
    * Return a read-only pointer to the beginning of the data array.
    */
-  const_iterator
+  [[nodiscard]] const_iterator
   begin() const;
 
   /**
    * Return a read-only pointer to the end of the data array.
    */
-  const_iterator
+  [[nodiscard]] const_iterator
   end() const;
 
   /**
@@ -308,7 +308,7 @@ public:
    * the underlying type @p T allocates memory by itself, this memory is not
    * counted.
    */
-  size_type
+  [[nodiscard]] size_type
   memory_consumption() const;
 
   /**

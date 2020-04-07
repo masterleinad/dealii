@@ -176,7 +176,7 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   begin_raw() const;
 
   /**
@@ -189,7 +189,7 @@ public:
    * Return a const pointer to the element past the end of the underlying
    * storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   end_raw() const;
 
   /**
@@ -325,7 +325,7 @@ public:
    * the absolute squares of all entries. For the present case of rank-1
    * tensors, this equals the usual <tt>l<sub>2</sub></tt> norm of the vector.
    */
-  real_type
+  [[nodiscard]] real_type
   norm() const;
 
   /**
@@ -334,8 +334,8 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV real_type
-                                          norm_square() const;
+  [[nodiscard]] DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV real_type
+                                                        norm_square() const;
 
   /**
    * Read or write the data of this object to or from a stream for the purpose
@@ -540,7 +540,7 @@ public:
   /**
    * Return a const pointer to the first element of the underlying storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   begin_raw() const;
 
   /**
@@ -552,7 +552,7 @@ public:
   /**
    * Return a pointer to the element past the end of the underlying storage.
    */
-  const Number *
+  [[nodiscard]] const Number *
   end_raw() const;
 
   /**
@@ -656,9 +656,9 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV
-  typename numbers::NumberTraits<Number>::real_type
-  norm() const;
+  [[nodiscard]] DEAL_II_CUDA_HOST_DEV
+    typename numbers::NumberTraits<Number>::real_type
+    norm() const;
 
   /**
    * Return the square of the Frobenius-norm of a tensor, i.e. the sum of the
@@ -666,7 +666,7 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV
+  [[nodiscard]] DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV
     typename numbers::NumberTraits<Number>::real_type
     norm_square() const;
 

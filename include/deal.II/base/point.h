@@ -303,8 +303,9 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV typename numbers::NumberTraits<Number>::real_type
-  square() const;
+  [[nodiscard]] DEAL_II_CUDA_HOST_DEV
+    typename numbers::NumberTraits<Number>::real_type
+    square() const;
 
   /**
    * Return the Euclidean distance of <tt>this</tt> point to the point
@@ -313,8 +314,9 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV typename numbers::NumberTraits<Number>::real_type
-  distance(const Point<dim, Number> &p) const;
+  [[nodiscard]] DEAL_II_CUDA_HOST_DEV
+    typename numbers::NumberTraits<Number>::real_type
+    distance(const Point<dim, Number> &p) const;
 
   /**
    * Return the squared Euclidean distance of <tt>this</tt> point to the point
@@ -322,8 +324,9 @@ public:
    *
    * @note This function can also be used in CUDA device code.
    */
-  DEAL_II_CUDA_HOST_DEV typename numbers::NumberTraits<Number>::real_type
-  distance_square(const Point<dim, Number> &p) const;
+  [[nodiscard]] DEAL_II_CUDA_HOST_DEV
+    typename numbers::NumberTraits<Number>::real_type
+    distance_square(const Point<dim, Number> &p) const;
 
   /**
    * @}

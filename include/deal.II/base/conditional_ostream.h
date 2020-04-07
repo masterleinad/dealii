@@ -99,13 +99,13 @@ public:
   /**
    * Return the condition of the object.
    */
-  bool
+  [[nodiscard]] bool
   is_active() const;
 
   /**
    * Return a reference to the stream currently in use.
    */
-  std::ostream &
+  [[nodiscard]] std::ostream &
   get_stream() const;
 
   /**

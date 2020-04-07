@@ -500,8 +500,8 @@ namespace Step13
       virtual void solve_problem() = 0;
       virtual void postprocess(
         const Evaluation::EvaluationBase<dim> &postprocessor) const = 0;
-      virtual void         refine_grid()                            = 0;
-      virtual unsigned int n_dofs() const                           = 0;
+      virtual void                       refine_grid()              = 0;
+      [[nodiscard]] virtual unsigned int n_dofs() const             = 0;
 
     protected:
       const SmartPointer<Triangulation<dim>> triangulation;

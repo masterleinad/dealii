@@ -561,7 +561,7 @@ namespace DataOutBase
      * calculating the memory usage of trees (e.g., <tt>std::map</tt>) is
      * difficult.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
   };
 
@@ -723,7 +723,7 @@ namespace DataOutBase
      * Return an estimate for the memory consumption, in bytes, of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
 
     /**
@@ -937,7 +937,7 @@ namespace DataOutBase
        * Return <tt>true</tt> if the color represented by the three color
        * values is a grey scale, i.e. all components are equal.
        */
-      bool
+      [[nodiscard]] bool
       is_grey() const;
     };
 
@@ -1083,7 +1083,7 @@ namespace DataOutBase
      * Return an estimate for the memory consumption, in bytes, of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
   };
 
@@ -1311,7 +1311,7 @@ namespace DataOutBase
      * Determine an estimate for the memory consumption (in bytes) of this
      * object.
      */
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
   };
 
@@ -1400,41 +1400,41 @@ namespace DataOutBase
     /**
      * Get the name of the data set indicated by the set number.
      */
-    std::string
+    [[nodiscard]] std::string
     get_data_set_name(const unsigned int set_num) const;
 
     /**
      * Get the dimensionality of the data set indicated by the set number.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     get_data_set_dim(const unsigned int set_num) const;
 
     /**
      * Get the raw double valued data of the data set indicated by the set
      * number.
      */
-    const double *
+    [[nodiscard]] const double *
     get_data_set(const unsigned int set_num) const;
 
     /**
      * Return the number of nodes in this DataOutFilter. This may be smaller
      * than the original number of nodes if filtering is enabled.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     n_nodes() const;
 
     /**
      * Return the number of filtered cells in this DataOutFilter. Cells are
      * not filtered so this will be the original number of cells.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     n_cells() const;
 
     /**
      * Return the number of filtered data sets in this DataOutFilter. Data
      * sets are not filtered so this will be the original number of data sets.
      */
-    unsigned int
+    [[nodiscard]] unsigned int
     n_data_sets() const;
 
     /**
@@ -2968,7 +2968,7 @@ public:
    * the correct suffix for the format that was set through
    * set_default_format() or parse_parameters() before calling this function.
    */
-  std::string
+  [[nodiscard]] std::string
   default_suffix(const DataOutBase::OutputFormat output_format =
                    DataOutBase::default_format) const;
 
@@ -3004,7 +3004,7 @@ public:
    * This is not exact (but will usually be close) because calculating the
    * memory usage of trees (e.g., <tt>std::map</tt>) is difficult.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
 protected:
@@ -3015,14 +3015,14 @@ protected:
    * this function to allow the output functions to know what they shall
    * print.
    */
-  virtual const std::vector<DataOutBase::Patch<dim, spacedim>> &
+  [[nodiscard]] virtual const std::vector<DataOutBase::Patch<dim, spacedim>> &
   get_patches() const = 0;
 
   /**
    * Abstract virtual function through which the names of data sets are
    * obtained by the output functions of the base class.
    */
-  virtual std::vector<std::string>
+  [[nodiscard]] virtual std::vector<std::string>
   get_dataset_names() const = 0;
 
   /**
@@ -3043,7 +3043,7 @@ protected:
    * string, meaning that all data is to be considered a collection of scalar
    * fields.
    */
-  virtual std::vector<
+  [[nodiscard]] virtual std::vector<
     std::tuple<unsigned int,
                unsigned int,
                std::string,
@@ -3254,7 +3254,8 @@ protected:
    * It returns the patches as read the last time a stream was given to the
    * read() function.
    */
-  virtual const std::vector<dealii::DataOutBase::Patch<dim, spacedim>> &
+  [[nodiscard]] virtual const std::vector<
+    dealii::DataOutBase::Patch<dim, spacedim>> &
   get_patches() const override;
 
   /**
@@ -3263,7 +3264,7 @@ protected:
    *
    * Return the names of the variables as read the last time we read a file.
    */
-  virtual std::vector<std::string>
+  [[nodiscard]] virtual std::vector<std::string>
   get_dataset_names() const override;
 
   /**
@@ -3284,7 +3285,7 @@ protected:
    * string, meaning that all data is to be considered a collection of scalar
    * fields.
    */
-  virtual std::vector<
+  [[nodiscard]] virtual std::vector<
     std::tuple<unsigned int,
                unsigned int,
                std::string,
@@ -3382,7 +3383,7 @@ public:
    * Get the XDMF content associated with this entry.
    * If the entry is not valid, this returns an empty string.
    */
-  std::string
+  [[nodiscard]] std::string
   get_xdmf_content(const unsigned int indent_level) const;
 
 private:

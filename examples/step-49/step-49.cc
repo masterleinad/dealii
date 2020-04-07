@@ -270,12 +270,12 @@ void grid_5()
 // vertices.
 struct Grid6Func
 {
-  double trans(const double y) const
-  {
+  [[nodiscard]] double trans(const double y) const {
     return std::tanh(2 * y) / tanh(2);
   }
 
-  Point<2> operator()(const Point<2> &in) const
+  Point<2>
+  operator()(const Point<2> &in) const
   {
     return {in(0), trans(in(1))};
   }

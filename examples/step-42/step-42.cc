@@ -431,14 +431,14 @@ namespace Step42
     public:
       BitmapFile(const std::string &name);
 
-      double get_value(const double x, const double y) const;
+      [[nodiscard]] double get_value(const double x, const double y) const;
 
     private:
       std::vector<double> obstacle_data;
       double              hx, hy;
       int                 nx, ny;
 
-      double get_pixel_value(const int i, const int j) const;
+      [[nodiscard]] double get_pixel_value(const int i, const int j) const;
     };
 
     // The constructor of this class reads in the data that describes

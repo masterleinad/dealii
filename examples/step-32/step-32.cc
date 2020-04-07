@@ -2999,13 +2999,13 @@ namespace Step32
       const DataPostprocessorInputs::Vector<dim> &inputs,
       std::vector<Vector<double>> &computed_quantities) const override;
 
-    virtual std::vector<std::string> get_names() const override;
+    [[nodiscard]] virtual std::vector<std::string> get_names() const override;
 
-    virtual std::vector<
+    [[nodiscard]] virtual std::vector<
       DataComponentInterpretation::DataComponentInterpretation>
     get_data_component_interpretation() const override;
 
-    virtual UpdateFlags get_needed_update_flags() const override;
+    [[nodiscard]] virtual UpdateFlags get_needed_update_flags() const override;
 
   private:
     const unsigned int partition;

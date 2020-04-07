@@ -109,7 +109,7 @@ public:
   /**
    * Return the number of polynomials.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   n() const;
 
   /**
@@ -117,7 +117,7 @@ public:
    * class. A derived class may override this if its value is different from
    * @p my_degree.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   degree() const;
 
   /**
@@ -130,19 +130,19 @@ public:
    * need to make copies of polynomial spaces without knowing their exact type.
    * They do so through this function.
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const = 0;
 
   /**
    * Return the name of the space.
    */
-  virtual std::string
+  [[nodiscard]] virtual std::string
   name() const = 0;
 
   /**
    * Return an estimate (in bytes) for the memory consumption of this object.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const;
 
 private:

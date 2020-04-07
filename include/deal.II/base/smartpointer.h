@@ -186,7 +186,7 @@ public:
    * Note in particular, that this only includes the amount of memory used by
    * <b>this</b> object, not by the object pointed to.
    */
-  std::size_t
+  [[nodiscard]] std::size_t
   memory_consumption() const;
 
 private:

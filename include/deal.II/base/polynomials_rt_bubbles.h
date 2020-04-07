@@ -117,7 +117,7 @@ public:
   /**
    * Return the name of the space, which is <tt>RT_Bubbles</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
@@ -131,7 +131,7 @@ public:
   /**
    * @copydoc TensorPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<TensorPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<TensorPolynomialsBase<dim>>
   clone() const override;
 
 private:

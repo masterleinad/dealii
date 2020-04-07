@@ -66,7 +66,7 @@ public:
    * Note, that this number is <tt>PolynomialSpace::degree()-1</tt>, compare
    * definition in PolynomialSpace.
    */
-  unsigned int
+  [[nodiscard]] unsigned int
   degree() const;
 
   /**
@@ -75,7 +75,7 @@ public:
    *
    * In 1d and 2d, obviously only i and i,j are returned.
    */
-  std::array<unsigned int, dim>
+  [[nodiscard]] std::array<unsigned int, dim>
   directional_degrees(unsigned int n) const;
 
 private:

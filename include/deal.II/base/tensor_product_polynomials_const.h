@@ -79,13 +79,13 @@ public:
   /**
    * Give read access to the renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering() const;
 
   /**
    * Give read access to the inverse renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering_inverse() const;
 
   /**

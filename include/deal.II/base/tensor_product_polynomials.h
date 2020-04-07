@@ -105,13 +105,13 @@ public:
   /**
    * Give read access to the renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering() const;
 
   /**
    * Give read access to the inverse renumber vector.
    */
-  const std::vector<unsigned int> &
+  [[nodiscard]] const std::vector<unsigned int> &
   get_numbering_inverse() const;
 
   /**
@@ -146,7 +146,7 @@ public:
    * <tt>values.size()==</tt>n() to get the point values of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -179,7 +179,7 @@ public:
    * <tt>grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -194,25 +194,25 @@ public:
    * <tt>grad_grads.size()==</tt>n() to get the point value of all tensor
    * polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the name of the space, which is <tt>TensorProductPolynomials</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 
   /**
    * Return an estimate (in bytes) for the memory consumption of this object.
    */
-  virtual std::size_t
+  [[nodiscard]] virtual std::size_t
   memory_consumption() const override;
 
 protected:
@@ -339,7 +339,7 @@ public:
    * with <tt>values.size()==this->n()</tt> to get the point values of all
    * tensor polynomials all at once and in a much more efficient way.
    */
-  double
+  [[nodiscard]] double
   compute_value(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -372,7 +372,7 @@ public:
    * with <tt>grads.size()==this->n()</tt> to get the point value of all
    * tensor polynomials all at once and in a much more efficient way.
    */
-  Tensor<1, dim>
+  [[nodiscard]] Tensor<1, dim>
   compute_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
@@ -387,19 +387,19 @@ public:
    * with <tt>grad_grads.size()==this->n()</tt> to get the point value of
    * all tensor polynomials all at once and in a much more efficient way.
    */
-  Tensor<2, dim>
+  [[nodiscard]] Tensor<2, dim>
   compute_grad_grad(const unsigned int i, const Point<dim> &p) const;
 
   /**
    * Return the name of the space, which is <tt>AnisotropicPolynomials</tt>.
    */
-  std::string
+  [[nodiscard]] std::string
   name() const override;
 
   /**
    * @copydoc ScalarPolynomialsBase<dim>::clone()
    */
-  virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
+  [[nodiscard]] virtual std::unique_ptr<ScalarPolynomialsBase<dim>>
   clone() const override;
 
 private:
@@ -479,11 +479,10 @@ TensorProductPolynomials<dim, PolynomialType>::name() const
 
 template <int dim, typename PolynomialType>
 template <int order>
-Tensor<order, dim>
+[[nodiscard]] Tensor<order, dim>
 TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
   const unsigned int i,
-  const Point<dim> & p) const
-{
+  const Point<dim> & p) const {
   std::array<unsigned int, dim> indices;
   compute_index(i, indices);
 
@@ -608,9 +607,9 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
 
 template <int dim>
 template <int order>
-Tensor<order, dim>
-AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
-                                                const Point<dim> & p) const
+Tensor<order, dim> AnisotropicPolynomials<dim>::compute_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
 {
   std::array<unsigned int, dim> indices;
   compute_index(i, indices);

@@ -165,14 +165,14 @@ public:
   /**
    * Return the iterator pointing to the first element of this range.
    */
-  IteratorOverIterators
+  [[nodiscard]] IteratorOverIterators
   begin() const;
 
   /**
    * Return the iterator pointing to the element past the last element of this
    * range.
    */
-  IteratorOverIterators
+  [[nodiscard]] IteratorOverIterators
   end() const;
 
   /**

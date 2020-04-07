@@ -88,7 +88,7 @@ namespace Functions
     hessian(const Point<dim> & p,
             const unsigned int component = 0) const override;
 
-    std::size_t
+    [[nodiscard]] std::size_t
     memory_consumption() const;
 
   private:

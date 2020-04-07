@@ -403,7 +403,7 @@ private:
    * @p a and @p b are indices into the weights array and the result will
    * be determined by comparing the weights.
    */
-  bool
+  [[nodiscard]] bool
   compare_weights(const unsigned int a, const unsigned int b) const;
 };
 
