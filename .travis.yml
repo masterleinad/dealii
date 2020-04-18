@@ -17,6 +17,9 @@ addons:
     packages:
       - doxygen
 
+before_install:
+    - sudo apt-get -y install graphviz
+
 install:
     - ./contrib/utilities/download_clang_format
 
