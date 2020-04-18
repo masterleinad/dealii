@@ -12,6 +12,11 @@ cache:
   directories:
     - programs
 
+addons:
+  apt:
+    packages:
+      - doxygen
+
 install:
     - ./contrib/utilities/download_clang_format
 
