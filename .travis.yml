@@ -17,6 +17,10 @@ install:
 
 script: 
     - ./contrib/utilities/check_indentation.sh 
+    - mkdir build
+    - cd build
+    - cmake -DDEAL_II_COMPONENT_DOCUMENTATION=ON ..
+    - make documentation  
 
 branches:
   only:
