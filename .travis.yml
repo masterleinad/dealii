@@ -18,7 +18,7 @@ addons:
       - doxygen
 
 before_install:
-    - sudo apt-get -y install graphviz perl texlive-binaries
+    - sudo apt-get -y install graphviz perl texlive-latex-recommended
 
 install:
     - ./contrib/utilities/download_clang_format
