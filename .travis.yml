@@ -18,7 +18,7 @@ addons:
       - doxygen
 
 before_install:
-    - sudo apt-get -y install bibtex graphviz perl
+    - sudo apt-get -y install graphviz perl texlive-bibtex-extra
 
 install:
     - ./contrib/utilities/download_clang_format
