@@ -27,7 +27,7 @@ script:
 #    - ./contrib/utilities/check_indentation.sh 
     - mkdir build
     - cd build
-    - cmake -DDEAL_II_COMPONENT_DOCUMENTATION=ON ..
+    - cmake -DDEAL_II_COMPONENT_DOCUMENTATION=ON -DDEAL_II_DOXYGEN_USE_MATHJAX=ON ..
     - travis_wait 60 make -j documentation
     - cat _formulas.log  
     - cat doxygen.log && ! [ -s doxygen.log ]
