@@ -28,7 +28,7 @@ script:
     - mkdir build
     - cd build
     - cmake -DDEAL_II_COMPONENT_DOCUMENTATION=ON ..
-    - make documentation
+    - travis_wait 60 make documentation
     - cat doxygen.log && ! [ -s doxygen.log ]
 
 branches:
