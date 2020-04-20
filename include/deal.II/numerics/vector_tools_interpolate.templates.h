@@ -13,6 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
+#ifndef dealii_vector_tools_interpolate_templates_h
+#define dealii_vector_tools_interpolate_templates_h
+
 
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
@@ -958,3 +961,5 @@ namespace VectorTools
 } // namespace VectorTools
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif // dealii_vector_tools_interpolate_templates_h

@@ -14,6 +14,10 @@
 // ---------------------------------------------------------------------
 
 
+#ifndef dealii_vector_tools_integrate_difference_templates_h
+#define dealii_vector_tools_integrate_difference_templates_h
+
+
 #include <deal.II/hp/fe_values.h>
 
 #include <deal.II/lac/block_vector.h>
@@ -1338,3 +1342,5 @@ namespace VectorTools
 } // namespace VectorTools
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif // dealii_vector_tools_integrate_difference_templates_h

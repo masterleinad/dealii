@@ -14,6 +14,9 @@
 // ---------------------------------------------------------------------
 
 
+#ifndef dealii_vector_tools_boundary_templates_h
+#define dealii_vector_tools_boundary_templates_h
+
 #include <deal.II/base/qprojector.h>
 
 #include <deal.II/dofs/dof_tools.h>
@@ -3755,3 +3758,5 @@ namespace VectorTools
 } // namespace VectorTools
 
 DEAL_II_NAMESPACE_CLOSE
+
+#endif // dealii_vector_tools_boundary_templates_h

@@ -13,8 +13,9 @@
 //
 // ---------------------------------------------------------------------
 
-#ifndef DEAL_II_NUMERICS_VECTOR_TOOLS_TEMPLATES_H
-#define DEAL_II_NUMERICS_VECTOR_TOOLS_TEMPLATES_H
+#ifndef dealii_vector_tools_project_templates_h
+#define dealii_vector_tools_project_templates_h
+
 
 #include <deal.II/lac/block_vector.h>
 #include <deal.II/lac/la_parallel_block_vector.h>
@@ -1082,4 +1083,4 @@ namespace VectorTools
 
 DEAL_II_NAMESPACE_CLOSE
 
-#endif // DEAL_II_NUMERICS_VECTOR_TOOLS_TEMPLATES_H
+#endif // dealii_vector_tools_project_templates_h
