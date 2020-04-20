@@ -19,18 +19,11 @@
 
 #include <deal.II/base/config.h>
 
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace VectorTools
 {
-  /**
-   * Exception
-   */
-  DeclExceptionMsg(ExcPointNotAvailableHere,
-                   "The given point is inside a cell of a "
-                   "parallel::distributed::Triangulation that is not "
-                   "locally owned by this processor.");
-
   /**
    * @name Evaluation of functions and errors
    */

@@ -1964,15 +1964,6 @@ namespace VectorTools
       std::set<types::boundary_id>());
 
   //@}
-
-
-  /**
-   * Exception
-   */
-  DeclExceptionMsg(ExcPointNotAvailableHere,
-                   "The given point is inside a cell of a "
-                   "parallel::distributed::Triangulation that is not "
-                   "locally owned by this processor.");
 } // namespace VectorTools
 
 
