@@ -28,6 +28,64 @@ namespace VectorTools
   //@{
 
   /**
+   * Create a right hand side vector. Prior content of the given @p rhs_vector
+   * vector is deleted.
+   *
+   * See the general documentation of this namespace for further information.
+   */
+  template <int dim, int spacedim, typename VectorType>
+  void
+  create_right_hand_side(
+    const Mapping<dim, spacedim> &                             mapping,
+    const DoFHandler<dim, spacedim> &                          dof,
+    const Quadrature<dim> &                                    q,
+    const Function<spacedim, typename VectorType::value_type> &rhs,
+    VectorType &                                               rhs_vector,
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
+
+  /**
+   * Call the create_right_hand_side() function, see above, with
+   * <tt>mapping=MappingQGeneric@<dim@>(1)</tt>.
+   */
+  template <int dim, int spacedim, typename VectorType>
+  void
+  create_right_hand_side(
+    const DoFHandler<dim, spacedim> &                          dof,
+    const Quadrature<dim> &                                    q,
+    const Function<spacedim, typename VectorType::value_type> &rhs,
+    VectorType &                                               rhs_vector,
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
+
+  /**
+   * Like the previous set of functions, but for hp objects.
+   */
+  template <int dim, int spacedim, typename VectorType>
+  void
+  create_right_hand_side(
+    const hp::MappingCollection<dim, spacedim> &               mapping,
+    const hp::DoFHandler<dim, spacedim> &                      dof,
+    const hp::QCollection<dim> &                               q,
+    const Function<spacedim, typename VectorType::value_type> &rhs,
+    VectorType &                                               rhs_vector,
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
+
+  /**
+   * Like the previous set of functions, but for hp objects.
+   */
+  template <int dim, int spacedim, typename VectorType>
+  void
+  create_right_hand_side(
+    const hp::DoFHandler<dim, spacedim> &                      dof,
+    const hp::QCollection<dim> &                               q,
+    const Function<spacedim, typename VectorType::value_type> &rhs,
+    VectorType &                                               rhs_vector,
+    const AffineConstraints<typename VectorType::value_type> & constraints =
+      AffineConstraints<typename VectorType::value_type>());
+
+  /**
    * Create a right hand side vector from boundary forces. Prior content of
    * the given @p rhs_vector vector is deleted.
    *
