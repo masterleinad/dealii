@@ -634,18 +634,6 @@ namespace VectorTools
       return std::numeric_limits<number>::min();
     }
 
-    template <typename number>
-    void
-    invert_mass_matrix(const SparseMatrix<number> &mass_matrix,
-                       const Vector<number> &      rhs,
-                       Vector<number> &            solution);
-
-    template <typename number>
-    void
-    invert_mass_matrix(const SparseMatrix<number> & /*mass_matrix*/,
-                       const Vector<std::complex<number>> & /*rhs*/,
-                       Vector<std::complex<number>> & /*solution*/);
-
     template <int dim,
               int spacedim,
               template <int, int> class DoFHandlerType,
@@ -788,7 +776,17 @@ namespace VectorTools
         boundary_projection = 0;
       else
         {
-          invert_mass_matrix(mass_matrix, rhs, boundary_projection);
+          // Allow for a maximum of 5*n steps to reduce the residual by 10^-12.
+          // n steps may not be sufficient, since roundoff errors may accumulate
+          // for badly conditioned matrices
+          ReductionControl control(5 * rhs.size(), 0., 1e-12, false, false);
+          GrowingVectorMemory<Vector<number>> memory;
+          SolverCG<Vector<number>>            cg(control, memory);
+
+          PreconditionSSOR<SparseMatrix<number>> prec;
+          prec.initialize(mass_matrix, 1.2);
+
+          cg.solve(mass_matrix, boundary_projection, rhs, prec);
         }
       // fill in boundary values
       for (unsigned int i = 0; i < dof_to_boundary_mapping.size(); ++i)
