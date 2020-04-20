@@ -17,14 +17,14 @@
 #ifndef dealii_vector_tools_templates_h
 #define dealii_vector_tools_templates_h
 
-#include <deal.II/numerics/vector_tools_integrate_difference.templates.h>
-#include <deal.II/numerics/vector_tools_project.templates.h>
-#include <deal.II/numerics/vector_tools_point_gradient.templates.h>
-#include <deal.II/numerics/vector_tools_interpolate.templates.h>
-#include <deal.II/numerics/vector_tools_point_value.templates.h>
-#include <deal.II/numerics/vector_tools_rhs.templates.h>
-#include <deal.II/numerics/vector_tools_constraints.templates.h>
-#include <deal.II/numerics/vector_tools_mean_value.templates.h>
 #include <deal.II/numerics/vector_tools_boundary.templates.h>
+#include <deal.II/numerics/vector_tools_constraints.templates.h>
+#include <deal.II/numerics/vector_tools_integrate_difference.templates.h>
+#include <deal.II/numerics/vector_tools_interpolate.templates.h>
+#include <deal.II/numerics/vector_tools_mean_value.templates.h>
+#include <deal.II/numerics/vector_tools_point_gradient.templates.h>
+#include <deal.II/numerics/vector_tools_point_value.templates.h>
+#include <deal.II/numerics/vector_tools_project.templates.h>
+#include <deal.II/numerics/vector_tools_rhs.templates.h>
 
 #endif
