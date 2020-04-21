@@ -23,6 +23,9 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+template <int dim, int spacedim>
+class DoFHandler;
+
 namespace VectorTools
 {
   /**

@@ -19,7 +19,20 @@
 
 #include <deal.II/base/config.h>
 
+#include <map>
+#include <set>
+
 DEAL_II_NAMESPACE_OPEN
+
+template <typename number>
+class AffineConstraints;
+template <int dim, int spacedim>
+struct StaticMappingQ1;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+
 
 namespace VectorTools
 {
@@ -261,10 +274,11 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof_handler,
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
-    const std::map<types::boundary_id, const Function<spacedim> *>
+    const std::map<types::boundary_id, const Function<spacedim, double> *>
       &                           function_map,
     AffineConstraints<double> &   constraints,
-    const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim> &mapping =
+      StaticMappingQ1<dim, spacedim>::mapping);
 
   /**
    * This function does the same as the
@@ -285,7 +299,8 @@ namespace VectorTools
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
     AffineConstraints<double> &          constraints,
-    const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim> &       mapping =
+      StaticMappingQ1<dim, spacedim>::mapping);
 
   /**
    * Compute the constraints that correspond to boundary conditions of the
@@ -309,10 +324,11 @@ namespace VectorTools
     const DoFHandlerType<dim, spacedim> &dof_handler,
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
-    const std::map<types::boundary_id, const Function<spacedim> *>
+    const std::map<types::boundary_id, const Function<spacedim, double> *>
       &                           function_map,
     AffineConstraints<double> &   constraints,
-    const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim> &mapping =
+      StaticMappingQ1<dim, spacedim>::mapping);
 
   /**
    * Same as above for homogeneous tangential-flux constraints.
@@ -329,7 +345,8 @@ namespace VectorTools
     const unsigned int                   first_vector_component,
     const std::set<types::boundary_id> & boundary_ids,
     AffineConstraints<double> &          constraints,
-    const Mapping<dim, spacedim> &mapping = StaticMappingQ1<dim>::mapping);
+    const Mapping<dim, spacedim> &       mapping =
+      StaticMappingQ1<dim, spacedim>::mapping);
 
   //@}
 } // namespace VectorTools

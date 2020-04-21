@@ -21,6 +21,24 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+template <int dim, int spacedim>
+class DoFHandler;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+template <int dim, typename Number>
+class Point;
+template <typename Number>
+class Vector;
+namespace hp
+{
+  template <int dim, int spacedim>
+  class DoFHandler;
+  template <int dim, int spacedim>
+  class MappingCollection;
+} // namespace hp
+
 namespace VectorTools
 {
   /**
@@ -116,7 +134,7 @@ namespace VectorTools
   void
   create_point_source_vector(const Mapping<dim, spacedim> &   mapping,
                              const DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &          p,
+                             const Point<spacedim, double> &  p,
                              Vector<double> &                 rhs_vector);
 
   /**
@@ -126,7 +144,7 @@ namespace VectorTools
   template <int dim, int spacedim>
   void
   create_point_source_vector(const DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &          p,
+                             const Point<spacedim, double> &  p,
                              Vector<double> &                 rhs_vector);
 
   /**
@@ -137,7 +155,7 @@ namespace VectorTools
   create_point_source_vector(
     const hp::MappingCollection<dim, spacedim> &mapping,
     const hp::DoFHandler<dim, spacedim> &       dof_handler,
-    const Point<spacedim> &                     p,
+    const Point<spacedim, double> &             p,
     Vector<double> &                            rhs_vector);
 
   /**
@@ -149,7 +167,7 @@ namespace VectorTools
   template <int dim, int spacedim>
   void
   create_point_source_vector(const hp::DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &              p,
+                             const Point<spacedim, double> &      p,
                              Vector<double> &                     rhs_vector);
 
   /**
@@ -174,8 +192,8 @@ namespace VectorTools
   void
   create_point_source_vector(const Mapping<dim, spacedim> &   mapping,
                              const DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &          p,
-                             const Point<dim> &               direction,
+                             const Point<spacedim, double> &  p,
+                             const Point<dim, double> &       direction,
                              Vector<double> &                 rhs_vector);
 
   /**
@@ -185,8 +203,8 @@ namespace VectorTools
   template <int dim, int spacedim>
   void
   create_point_source_vector(const DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &          p,
-                             const Point<dim> &               direction,
+                             const Point<spacedim, double> &  p,
+                             const Point<dim, double> &       direction,
                              Vector<double> &                 rhs_vector);
 
   /**
@@ -197,8 +215,8 @@ namespace VectorTools
   create_point_source_vector(
     const hp::MappingCollection<dim, spacedim> &mapping,
     const hp::DoFHandler<dim, spacedim> &       dof_handler,
-    const Point<spacedim> &                     p,
-    const Point<dim> &                          direction,
+    const Point<spacedim, double> &             p,
+    const Point<dim, double> &                  direction,
     Vector<double> &                            rhs_vector);
 
   /**
@@ -210,8 +228,8 @@ namespace VectorTools
   template <int dim, int spacedim>
   void
   create_point_source_vector(const hp::DoFHandler<dim, spacedim> &dof_handler,
-                             const Point<spacedim> &              p,
-                             const Point<dim> &                   direction,
+                             const Point<spacedim, double> &      p,
+                             const Point<dim, double> &           direction,
                              Vector<double> &                     rhs_vector);
 
   // @}
@@ -240,7 +258,7 @@ namespace VectorTools
     const VectorType &                                         fe_function,
     const Function<spacedim, typename VectorType::value_type> &exact_solution,
     Vector<typename VectorType::value_type> &                  difference,
-    const Point<spacedim> &                                    point);
+    const Point<spacedim, double> &                            point);
 
   /**
    * Point error evaluation. Find the first cell containing the given point
@@ -262,7 +280,7 @@ namespace VectorTools
     const VectorType &                                         fe_function,
     const Function<spacedim, typename VectorType::value_type> &exact_solution,
     Vector<typename VectorType::value_type> &                  difference,
-    const Point<spacedim> &                                    point);
+    const Point<spacedim, double> &                            point);
 
   /**
    * Evaluate a possibly vector-valued finite element function defined by the
@@ -304,7 +322,7 @@ namespace VectorTools
   void
   point_value(const DoFHandler<dim, spacedim> &        dof,
               const VectorType &                       fe_function,
-              const Point<spacedim> &                  point,
+              const Point<spacedim, double> &          point,
               Vector<typename VectorType::value_type> &value);
 
   /**
@@ -328,7 +346,7 @@ namespace VectorTools
   void
   point_value(const hp::DoFHandler<dim, spacedim> &    dof,
               const VectorType &                       fe_function,
-              const Point<spacedim> &                  point,
+              const Point<spacedim, double> &          point,
               Vector<typename VectorType::value_type> &value);
 
   /**
@@ -374,7 +392,7 @@ namespace VectorTools
   typename VectorType::value_type
   point_value(const DoFHandler<dim, spacedim> &dof,
               const VectorType &               fe_function,
-              const Point<spacedim> &          point);
+              const Point<spacedim, double> &  point);
 
   /**
    * Same as above for hp.
@@ -397,7 +415,7 @@ namespace VectorTools
   typename VectorType::value_type
   point_value(const hp::DoFHandler<dim, spacedim> &dof,
               const VectorType &                   fe_function,
-              const Point<spacedim> &              point);
+              const Point<spacedim, double> &      point);
 
   /**
    * Evaluate a possibly vector-valued finite element function defined by the
@@ -438,7 +456,7 @@ namespace VectorTools
   point_value(const Mapping<dim, spacedim> &           mapping,
               const DoFHandler<dim, spacedim> &        dof,
               const VectorType &                       fe_function,
-              const Point<spacedim> &                  point,
+              const Point<spacedim, double> &          point,
               Vector<typename VectorType::value_type> &value);
 
   /**
@@ -463,7 +481,7 @@ namespace VectorTools
   point_value(const hp::MappingCollection<dim, spacedim> &mapping,
               const hp::DoFHandler<dim, spacedim> &       dof,
               const VectorType &                          fe_function,
-              const Point<spacedim> &                     point,
+              const Point<spacedim, double> &             point,
               Vector<typename VectorType::value_type> &   value);
 
   /**
@@ -504,7 +522,7 @@ namespace VectorTools
   point_value(const Mapping<dim, spacedim> &   mapping,
               const DoFHandler<dim, spacedim> &dof,
               const VectorType &               fe_function,
-              const Point<spacedim> &          point);
+              const Point<spacedim, double> &  point);
 
   /**
    * Same as above for hp.
@@ -528,7 +546,7 @@ namespace VectorTools
   point_value(const hp::MappingCollection<dim, spacedim> &mapping,
               const hp::DoFHandler<dim, spacedim> &       dof,
               const VectorType &                          fe_function,
-              const Point<spacedim> &                     point);
+              const Point<spacedim, double> &             point);
   //@}
 } // namespace VectorTools
 

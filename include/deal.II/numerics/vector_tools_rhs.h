@@ -18,7 +18,30 @@
 
 #include <deal.II/base/config.h>
 
+#include <set>
+
 DEAL_II_NAMESPACE_OPEN
+
+template <typename number>
+class AffineConstraints;
+template <int dim, int spacedim>
+class DoFHandler;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+template <int dim>
+class Quadrature;
+namespace hp
+{
+  template <int dim, int spacedim>
+  class DoFHandler;
+  template <int dim, int spacedim>
+  class MappingCollection;
+  template <int dim>
+  class QCollection;
+} // namespace hp
+
 
 namespace VectorTools
 {

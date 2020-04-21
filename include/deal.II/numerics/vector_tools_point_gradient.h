@@ -22,6 +22,26 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+template <int dim, int spacedim>
+class DoFHandler;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+template <int dim, typename Number>
+class Point;
+template <int rank_, int dim, typename Number>
+class Tensor;
+template <typename Number>
+class Vector;
+namespace hp
+{
+  template <int dim, int spacedim>
+  class DoFHandler;
+  template <int dim, int spacedim>
+  class MappingCollection;
+} // namespace hp
+
 namespace VectorTools
 {
   /**
@@ -66,7 +86,7 @@ namespace VectorTools
   point_gradient(
     const DoFHandler<dim, spacedim> &dof,
     const VectorType &               fe_function,
-    const Point<spacedim> &          point,
+    const Point<spacedim, double> &  point,
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>> &value);
 
   /**
@@ -90,7 +110,7 @@ namespace VectorTools
   point_gradient(
     const hp::DoFHandler<dim, spacedim> &dof,
     const VectorType &                   fe_function,
-    const Point<spacedim> &              point,
+    const Point<spacedim, double> &      point,
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>> &value);
 
   /**
@@ -129,7 +149,7 @@ namespace VectorTools
   Tensor<1, spacedim, typename VectorType::value_type>
   point_gradient(const DoFHandler<dim, spacedim> &dof,
                  const VectorType &               fe_function,
-                 const Point<spacedim> &          point);
+                 const Point<spacedim, double> &  point);
 
   /**
    * Same as above for hp.
@@ -151,7 +171,7 @@ namespace VectorTools
   Tensor<1, spacedim, typename VectorType::value_type>
   point_gradient(const hp::DoFHandler<dim, spacedim> &dof,
                  const VectorType &                   fe_function,
-                 const Point<spacedim> &              point);
+                 const Point<spacedim, double> &      point);
 
   /**
    * Evaluate a possibly vector-valued finite element function defined by the
@@ -191,7 +211,7 @@ namespace VectorTools
     const Mapping<dim, spacedim> &   mapping,
     const DoFHandler<dim, spacedim> &dof,
     const VectorType &               fe_function,
-    const Point<spacedim> &          point,
+    const Point<spacedim, double> &  point,
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>> &value);
 
   /**
@@ -216,7 +236,7 @@ namespace VectorTools
     const hp::MappingCollection<dim, spacedim> &mapping,
     const hp::DoFHandler<dim, spacedim> &       dof,
     const VectorType &                          fe_function,
-    const Point<spacedim> &                     point,
+    const Point<spacedim, double> &             point,
     std::vector<Tensor<1, spacedim, typename VectorType::value_type>> &value);
 
   /**
@@ -256,7 +276,7 @@ namespace VectorTools
   point_gradient(const Mapping<dim, spacedim> &   mapping,
                  const DoFHandler<dim, spacedim> &dof,
                  const VectorType &               fe_function,
-                 const Point<spacedim> &          point);
+                 const Point<spacedim, double> &  point);
 
   /**
    * Same as above for hp.
@@ -279,7 +299,7 @@ namespace VectorTools
   point_gradient(const hp::MappingCollection<dim, spacedim> &mapping,
                  const hp::DoFHandler<dim, spacedim> &       dof,
                  const VectorType &                          fe_function,
-                 const Point<spacedim> &                     point);
+                 const Point<spacedim, double> &             point);
 
   //@}
 } // namespace VectorTools

@@ -23,6 +23,27 @@
 
 DEAL_II_NAMESPACE_OPEN
 
+template <int dim, int spacedim>
+class DoFHandler;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+template <int dim>
+class Quadrature;
+template <int dim, int spacedim>
+class Triangulation;
+namespace hp
+{
+  template <int dim, int spacedim>
+  class DoFHandler;
+  template <int dim, int spacedim>
+  class MappingCollection;
+  template <int dim>
+  class QCollection;
+} // namespace hp
+
+
 namespace VectorTools
 {
   /**

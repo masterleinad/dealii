@@ -19,7 +19,36 @@
 
 #include <deal.II/base/config.h>
 
+#include <memory>
+
 DEAL_II_NAMESPACE_OPEN
+
+template <typename number>
+class AffineConstraints;
+template <int dim, int spacedim>
+class DoFHandler;
+template <int dim, typename Number>
+class Function;
+template <int dim, int spacedim>
+class Mapping;
+template <int dim, typename number, typename VectorizedArrayType>
+class MatrixFree;
+template <int dim>
+class Quadrature;
+template <int dim>
+class QGauss;
+template <typename Number, std::size_t width>
+class VectorizedArray;
+namespace hp
+{
+  template <int dim, int spacedim>
+  class DoFHandler;
+  template <int dim, int spacedim>
+  class MappingCollection;
+  template <int dim>
+  class QCollection;
+} // namespace hp
+
 
 namespace VectorTools
 {
