@@ -19,6 +19,8 @@
 
 #include <deal.II/base/config.h>
 
+#include <deal.II/base/patterns.h>
+
 DEAL_II_NAMESPACE_OPEN
 
 namespace VectorTools
