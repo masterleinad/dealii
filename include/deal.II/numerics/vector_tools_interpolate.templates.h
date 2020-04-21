@@ -20,6 +20,7 @@
 #include <deal.II/fe/fe_q.h>
 #include <deal.II/fe/fe_system.h>
 
+#include <deal.II/grid/grid_tools.h>
 #include <deal.II/grid/intergrid_map.h>
 
 #include <deal.II/hp/fe_values.h>
@@ -817,6 +818,26 @@ namespace VectorTools
     internal::interpolate(
       mapping, dof_handler, function_map, vec, component_mask);
   }
+
+  namespace internal
+  {
+    /**
+     * Return whether the cell and all of its descendants are locally owned.
+     */
+    template <typename cell_iterator>
+    bool
+    is_locally_owned(const cell_iterator &cell)
+    {
+      if (cell->is_active())
+        return cell->is_locally_owned();
+
+      for (unsigned int c = 0; c < cell->n_children(); ++c)
+        if (!is_locally_owned(cell->child(c)))
+          return false;
+
+      return true;
+    }
+  } // namespace internal
 
   template <int dim,
             int spacedim,
