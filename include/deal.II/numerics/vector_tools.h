@@ -19,52 +19,19 @@
 
 #include <deal.II/base/config.h>
 
-#include <deal.II/base/exceptions.h>
-#include <deal.II/base/function.h>
-#include <deal.II/base/patterns.h>
-#include <deal.II/base/point.h>
-#include <deal.II/base/quadrature_lib.h>
+#include <deal.II/numerics/vector_tools_boundary.h>
+#include <deal.II/numerics/vector_tools_common.h>
+#include <deal.II/numerics/vector_tools_constraints.h>
+#include <deal.II/numerics/vector_tools_integrate_difference.h>
+#include <deal.II/numerics/vector_tools_interpolate.h>
+#include <deal.II/numerics/vector_tools_mean_value.h>
+#include <deal.II/numerics/vector_tools_point_gradient.h>
+#include <deal.II/numerics/vector_tools_point_value.h>
+#include <deal.II/numerics/vector_tools_project.h>
+#include <deal.II/numerics/vector_tools_rhs.h>
 
-#include <deal.II/dofs/deprecated_function_map.h>
-#include <deal.II/dofs/dof_handler.h>
-
-#include <deal.II/hp/dof_handler.h>
-#include <deal.II/hp/mapping_collection.h>
-
-#include <functional>
-#include <map>
-#include <set>
-#include <vector>
 
 DEAL_II_NAMESPACE_OPEN
-
-// Forward declarations
-#ifndef DOXYGEN
-template <int dim, typename RangeNumberType>
-class Function;
-template <int dim>
-class Quadrature;
-template <int dim>
-class QGauss;
-template <int dim, typename number, typename VectorizedArrayType>
-class MatrixFree;
-
-template <typename number>
-class Vector;
-template <typename number>
-class FullMatrix;
-template <int dim, int spacedim>
-class Mapping;
-template <typename gridtype>
-class InterGridMap;
-namespace hp
-{
-  template <int dim>
-  class QCollection;
-}
-template <typename number>
-class AffineConstraints;
-#endif
 
 // TODO: Move documentation of functions to the functions!
 

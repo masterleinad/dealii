@@ -13,8 +13,8 @@
 //
 // ---------------------------------------------------------------------
 
-#ifndef dealii_vector_tools_h
-#define dealii_vector_tools_h
+#ifndef dealii_vector_tools_interpolate_h
+#define dealii_vector_tools_interpolate_h
 
 #include <deal.II/base/config.h>
 
@@ -299,4 +299,4 @@ namespace VectorTools
 
 DEAL_II_NAMESPACE_CLOSE
 
-#endif // dealii_vector_tools_h
+#endif // dealii_vector_tools_interpolate_h
