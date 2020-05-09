@@ -80,6 +80,38 @@ public:
   double
   compute_value(const unsigned int i, const Point<dim> &p) const override;
 
+  virtual Tensor<1, dim>
+  compute_1st_derivative(const unsigned int /*i*/,
+                         const Point<dim> & /*p*/) const override
+  {
+    Assert(false, ExcNotImplemented());
+    return {};
+  }
+
+  virtual Tensor<2, dim>
+  compute_2nd_derivative(const unsigned int /*i*/,
+                         const Point<dim> & /*p*/) const override
+  {
+    Assert(false, ExcNotImplemented());
+    return {};
+  }
+
+  virtual Tensor<3, dim>
+  compute_3rd_derivative(const unsigned int /*i*/,
+                         const Point<dim> & /*p*/) const override
+  {
+    Assert(false, ExcNotImplemented());
+    return {};
+  }
+
+  virtual Tensor<4, dim>
+  compute_4th_derivative(const unsigned int /*i*/,
+                         const Point<dim> & /*p*/) const override
+  {
+    Assert(false, ExcNotImplemented());
+    return {};
+  }
+
   /**
    * Compute the gradient of the <tt>i</tt>th polynomial at
    * <tt>unit_point</tt>.

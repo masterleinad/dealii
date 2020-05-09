@@ -141,6 +141,34 @@ public:
   Tensor<order, dim>
   compute_derivative(const unsigned int i, const Point<dim> &p) const;
 
+  virtual Tensor<1, dim>
+  compute_1st_derivative(const unsigned int i,
+                         const Point<dim> & p) const override
+  {
+    return compute_derivative<1>(i, p);
+  }
+
+  virtual Tensor<2, dim>
+  compute_2nd_derivative(const unsigned int i,
+                         const Point<dim> & p) const override
+  {
+    return compute_derivative<2>(i, p);
+  }
+
+  virtual Tensor<3, dim>
+  compute_3rd_derivative(const unsigned int i,
+                         const Point<dim> & p) const override
+  {
+    return compute_derivative<3>(i, p);
+  }
+
+  virtual Tensor<4, dim>
+  compute_4th_derivative(const unsigned int i,
+                         const Point<dim> & p) const override
+  {
+    return compute_derivative<4>(i, p);
+  }
+
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
    * <tt>unit_point</tt>. Here <tt>i</tt> is given in tensor product
