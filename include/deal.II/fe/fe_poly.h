@@ -517,6 +517,13 @@ protected:
    * The polynomial space.
    */
   const std::unique_ptr<ScalarPolynomialsBase<dim>> poly_space;
+
+public:
+  const ScalarPolynomialsBase<dim> &
+  get_poly_space() const
+  {
+    return *poly_space;
+  }
 };
 
 /*@}*/
