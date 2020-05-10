@@ -143,8 +143,12 @@ FE_DGPMonomial<dim>::FE_DGPMonomial(const unsigned int degree)
         FiniteElementData<dim>(get_dpo_vector(degree), 1, degree).dofs_per_cell,
         std::vector<bool>(1, true)))
 {
-  Assert(this->poly_space->n() == this->dofs_per_cell, ExcInternalError());
-  Assert(this->poly_space->degree() == this->degree, ExcInternalError());
+  auto *const polynomial_space_p =
+    dynamic_cast<PolynomialsP<dim> *>(this->poly_space.get());
+  Assert(polynomial_space_p != nullptr, ExcInternalError());
+
+  Assert(polynomial_space_p->n() == this->dofs_per_cell, ExcInternalError());
+  Assert(polynomial_space_p->degree() == this->degree, ExcInternalError());
 
   // DG doesn't have constraints, so
   // leave them empty
