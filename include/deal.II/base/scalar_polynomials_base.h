@@ -252,6 +252,7 @@ ScalarPolynomialsBase<dim>::degree() const
 }
 
 
+
 template <int dim>
 template <int order>
 inline Tensor<order, dim>
