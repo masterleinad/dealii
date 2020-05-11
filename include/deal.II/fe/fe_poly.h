@@ -100,6 +100,12 @@ public:
   requires_update_flags(const UpdateFlags update_flags) const override;
 
   /**
+   * Return the underlying polynomial space.
+   */
+  const ScalarPolynomialsBase<dim> &
+  get_poly_space() const;
+
+  /**
    * Return the numbering of the underlying polynomial space compared to
    * lexicographic ordering of the basis functions. Returns
    * PolynomialType::get_numbering().
@@ -517,13 +523,6 @@ protected:
    * The polynomial space.
    */
   const std::unique_ptr<ScalarPolynomialsBase<dim>> poly_space;
-
-public:
-  const ScalarPolynomialsBase<dim> &
-  get_poly_space() const
-  {
-    return *poly_space;
-  }
 };
 
 /*@}*/

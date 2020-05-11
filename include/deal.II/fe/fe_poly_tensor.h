@@ -516,13 +516,6 @@ protected:
    * shape_grad_grad_component().
    */
   mutable std::vector<Tensor<3, dim>> cached_grad_grads;
-
-public:
-  const TensorPolynomialsBase<dim> &
-  get_poly_space() const
-  {
-    return *poly_space;
-  }
 };
 
 DEAL_II_NAMESPACE_CLOSE
