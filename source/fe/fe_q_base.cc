@@ -444,15 +444,36 @@ FE_Q_Base<PolynomialType, dim, spacedim>::initialize(
            q_dofs_per_cell + dim == this->dofs_per_cell,
          ExcInternalError());
 
-  {
+  []() {
     std::vector<unsigned int> renumber =
       FETools::hierarchic_to_lexicographic_numbering<dim>(q_degree);
     for (unsigned int i = q_dofs_per_cell; i < this->dofs_per_cell; ++i)
       renumber.push_back(i);
-    TensorProductPolynomials<dim> *poly_space_derived_ptr =
+    TensorProductPolynomials<dim> *tensor_poly_space_ptr =
       dynamic_cast<TensorProductPolynomials<dim> *>(this->poly_space.get());
-    poly_space_derived_ptr->set_numbering(renumber);
-  }
+    if (tensor_poly_space_ptr != nullptr)
+      {
+        tensor_poly_space_ptr->set_numbering(renumber);
+        return;
+      }
+    TensorProductPolynomialsBubbles<dim> *tensor_bubbles_poly_space_ptr =
+      dynamic_cast<TensorProductPolynomialsBubbles<dim> *>(
+        this->poly_space.get());
+    if (tensor_bubbles_poly_space_ptr != nullptr)
+      {
+        tensor_bubbles_poly_space_ptr->set_numbering(renumber);
+        return;
+      }
+    TensorProductPolynomials<dim> *tensor_const_poly_space_ptr =
+      dynamic_cast<TensorProductPolynomialsConst<dim> *>(
+        this->poly_space.get());
+    if (tensor_const_poly_space_ptr != nullptr)
+      {
+        tensor_const_poly_space_ptr->set_numbering(renumber);
+        return;
+      }
+    Assert(false, ExcNotImplemented());
+  }();
 
   // Finally fill in support points on cell and face and initialize
   // constraints. All of this can happen in parallel
