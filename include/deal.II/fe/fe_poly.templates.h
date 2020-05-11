@@ -42,11 +42,7 @@ FE_Poly<dim, spacedim>::FE_Poly(
                                  restriction_is_additive_flags,
                                  nonzero_components)
   , poly_space(poly_space.clone())
-{
-  if (dynamic_cast<const PolynomialsP<dim> *>(&poly_space) != nullptr)
-    Assert(dynamic_cast<PolynomialsP<dim> *>(this->poly_space.get()) != nullptr,
-           ExcInternalError());
-}
+{}
 
 
 template <int dim, int spacedim>
