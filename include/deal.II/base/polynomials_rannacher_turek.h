@@ -71,31 +71,19 @@ public:
 
   virtual Tensor<1, dim>
   compute_1st_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<1>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<2, dim>
   compute_2nd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<2>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<3, dim>
   compute_3rd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<3>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<4, dim>
   compute_4th_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<4>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   /**
    * Gradient of basis function @p i at @p p.
@@ -244,6 +232,50 @@ PolynomialsRannacherTurek<dim>::compute_derivative(const unsigned int i,
 {
   return internal::PolynomialsRannacherTurekImplementation::compute_derivative<
     order>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<1, dim>
+PolynomialsRannacherTurek<dim>::compute_1st_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<1>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<2, dim>
+PolynomialsRannacherTurek<dim>::compute_2nd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<2>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<3, dim>
+PolynomialsRannacherTurek<dim>::compute_3rd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<3>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<4, dim>
+PolynomialsRannacherTurek<dim>::compute_4th_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<4>(i, p);
 }
 
 

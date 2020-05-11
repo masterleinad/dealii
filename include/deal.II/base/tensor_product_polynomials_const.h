@@ -143,31 +143,19 @@ public:
 
   virtual Tensor<1, dim>
   compute_1st_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<1>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<2, dim>
   compute_2nd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<2>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<3, dim>
   compute_3rd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<3>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<4, dim>
   compute_4th_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<4>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -314,6 +302,49 @@ TensorProductPolynomialsConst<dim>::compute_derivative(
     return Tensor<order, dim>();
 }
 
+
+
+template <int dim>
+inline Tensor<1, dim>
+TensorProductPolynomialsConst<dim>::compute_1st_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<1>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<2, dim>
+TensorProductPolynomialsConst<dim>::compute_2nd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<2>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<3, dim>
+TensorProductPolynomialsConst<dim>::compute_3rd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<3>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<4, dim>
+TensorProductPolynomialsConst<dim>::compute_4th_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<4>(i, p);
+}
 
 #endif // DOXYGEN
 DEAL_II_NAMESPACE_CLOSE

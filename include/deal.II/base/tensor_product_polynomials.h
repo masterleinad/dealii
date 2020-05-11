@@ -169,31 +169,19 @@ public:
 
   virtual Tensor<1, dim>
   compute_1st_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<1>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<2, dim>
   compute_2nd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<2>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<3, dim>
   compute_3rd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<3>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<4, dim>
   compute_4th_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<4>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -390,31 +378,19 @@ public:
 
   virtual Tensor<1, dim>
   compute_1st_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<1>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<2, dim>
   compute_2nd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<2>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<3, dim>
   compute_3rd_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<3>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   virtual Tensor<4, dim>
   compute_4th_derivative(const unsigned int i,
-                         const Point<dim> & p) const override
-  {
-    return compute_derivative<4>(i, p);
-  }
+                         const Point<dim> & p) const override;
 
   /**
    * Compute the grad of the <tt>i</tt>th tensor product polynomial at
@@ -662,6 +638,52 @@ TensorProductPolynomials<dim, PolynomialType>::compute_derivative(
     }
 }
 
+
+
+template <int dim, typename PolynomialType>
+inline Tensor<1, dim>
+TensorProductPolynomials<dim, PolynomialType>::compute_1st_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<1>(i, p);
+}
+
+
+
+template <int dim, typename PolynomialType>
+inline Tensor<2, dim>
+TensorProductPolynomials<dim, PolynomialType>::compute_2nd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<2>(i, p);
+}
+
+
+
+template <int dim, typename PolynomialType>
+inline Tensor<3, dim>
+TensorProductPolynomials<dim, PolynomialType>::compute_3rd_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<3>(i, p);
+}
+
+
+
+template <int dim, typename PolynomialType>
+inline Tensor<4, dim>
+TensorProductPolynomials<dim, PolynomialType>::compute_4th_derivative(
+  const unsigned int i,
+  const Point<dim> & p) const
+{
+  return compute_derivative<4>(i, p);
+}
+
+
+
 template <int dim>
 template <int order>
 Tensor<order, dim>
@@ -779,6 +801,47 @@ AnisotropicPolynomials<dim>::compute_derivative(const unsigned int i,
         }
     }
 }
+
+
+
+template <int dim>
+inline Tensor<1, dim>
+AnisotropicPolynomials<dim>::compute_1st_derivative(const unsigned int i,
+                                                    const Point<dim> & p) const
+{
+  return compute_derivative<1>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<2, dim>
+AnisotropicPolynomials<dim>::compute_2nd_derivative(const unsigned int i,
+                                                    const Point<dim> & p) const
+{
+  return compute_derivative<2>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<3, dim>
+AnisotropicPolynomials<dim>::compute_3rd_derivative(const unsigned int i,
+                                                    const Point<dim> & p) const
+{
+  return compute_derivative<3>(i, p);
+}
+
+
+
+template <int dim>
+inline Tensor<4, dim>
+AnisotropicPolynomials<dim>::compute_4th_derivative(const unsigned int i,
+                                                    const Point<dim> & p) const
+{
+  return compute_derivative<4>(i, p);
+}
+
 
 
 template <int dim>
