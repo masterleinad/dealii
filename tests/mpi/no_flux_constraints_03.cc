@@ -113,7 +113,7 @@ test()
     {
       // sort and merge the constraint matrices on proc 0, generate a checksum
       // and output that into the deallog
-      system((std::string("cat ") + base + "cm_*.dot | sort -n | uniq > " +
+      int return_value = system((std::string("cat ") + base + "cm_*.dot | sort -n | uniq > " +
               base + "cm")
                .c_str());
       {
@@ -124,6 +124,7 @@ test()
         deallog << "checksum: " << checksum(str.begin(), str.end())
                 << std::endl;
       }
+      (void) return_value;
       // delete the file created by processor 0
       std::remove((base + "cm").c_str());
     }
