@@ -31,7 +31,7 @@
 # version 15.0" is, the c++ compiler is advertised as "MSVC++ 14.1" but the
 # version information is 19.10.x (this is the numbering used by CMake), see
 # https://en.wikipedia.org/wiki/Microsoft_Visual_C%2B%2B#Internal_version_numbering
-IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "19.10" )
+IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "59.10" )
   MESSAGE(FATAL_ERROR "\n"
     "You're using an old version of the Visual Studio C++ Compiler!\n"
     "You need at least version Visual Studio 2017.\n"
