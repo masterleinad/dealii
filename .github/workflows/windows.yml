@@ -44,9 +44,14 @@ jobs:
       with:
         name: dealii-windows.zip
         path: c:/project/dealii-windows.zip
+    - name: temp
+      shell: bash
+      if: always()
+      run: |
+        ls build/
     - name: archive errors
       uses: actions/upload-artifact@v1
       if: always()
       with:
-        name: windows-serial-CMakeError.log
-        path: build/CMakeFiles/CMakeError.log
+        name: windows-serial-CMakeOutput.log
+        path: build/CMakeFiles/CMakeOutput.log
