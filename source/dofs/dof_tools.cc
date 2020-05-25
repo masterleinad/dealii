@@ -605,8 +605,7 @@ namespace DoFTools
 
     // then loop over all cells and do work
     std::vector<types::global_dof_index>         indices(fe.dofs_per_cell);
-    typename DoFHandlerType::level_cell_iterator c;
-    for (c = dof.begin(level); c != dof.end(level); ++c)
+    for (const auto&c : dof.cell_iterators_on_level(level))
       {
         c->get_mg_dof_indices(indices);
         for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
@@ -1105,10 +1104,7 @@ namespace DoFTools
 
     // this function is similar to the make_sparsity_pattern function, see
     // there for more information
-    typename DoFHandlerType::active_cell_iterator cell =
-                                                    dof_handler.begin_active(),
-                                                  endc = dof_handler.end();
-    for (; cell != endc; ++cell)
+    for (const auto& cell : dof_handler.active_cell_iterators())
       if (cell->subdomain_id() == subdomain_id)
         {
           const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;

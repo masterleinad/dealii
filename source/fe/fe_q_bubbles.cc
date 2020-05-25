@@ -138,9 +138,7 @@ namespace internal
 
             // now create the mass matrix and all the right_hand sides
             unsigned int                                           child_no = 0;
-            typename dealii::DoFHandler<dim>::active_cell_iterator cell =
-              dh.begin_active();
-            for (; cell != dh.end(); ++cell, ++child_no)
+            for (const auto &cell:dh.active_cell_iterators())
               {
                 fine.reinit(cell);
                 cell->get_dof_indices(child_ldi[child_no]);
@@ -161,6 +159,7 @@ namespace internal
                           fine.shape_value(i, q) * fe.shape_value(j, quad_tmp) *
                           fine.JxW(q);
                       }
+		++child_no;
               }
 
             // now solve for all right-hand sides simultaneously
