@@ -446,8 +446,8 @@ inline typename LinearIndexIterator<DerivedIterator, AccessorType>::pointer
 
 template <class DerivedIterator, class AccessorType>
 inline bool
-LinearIndexIterator<DerivedIterator, AccessorType>::
-operator==(const LinearIndexIterator<DerivedIterator, AccessorType> &other) const
+LinearIndexIterator<DerivedIterator, AccessorType>::operator==(
+  const LinearIndexIterator<DerivedIterator, AccessorType> &other) const
 {
   return accessor.container == other.accessor.container &&
          accessor.linear_index == other.accessor.linear_index;
