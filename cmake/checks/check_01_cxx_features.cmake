@@ -69,15 +69,15 @@ MACRO(_test_cxx20_support)
   CHECK_CXX_SOURCE_COMPILES(
     "
     #include <cmath>
-    //#include <ranges>
+    #include <ranges>
 
     #if __cplusplus < 201709L && !defined(_MSC_VER) && !defined(__INTEL_COMPILER)
     #  error \"insufficient support for C++20\"
     #endif
 
-    //#if !(defined __cpp_lib_ranges) || (__cpp_lib_ranges < 201911)
-    //#  error \"insufficient support for C++20\"
-    //#endif
+    #if !(defined __cpp_lib_ranges) || (__cpp_lib_ranges < 201911)
+    #  error \"insufficient support for C++20\"
+    #endif
 
     int main()
     {
