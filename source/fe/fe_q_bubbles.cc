@@ -137,8 +137,8 @@ namespace internal
               nc, std::vector<types::global_dof_index>(fe.dofs_per_cell));
 
             // now create the mass matrix and all the right_hand sides
-            unsigned int                                           child_no = 0;
-            for (const auto &cell:dh.active_cell_iterators())
+            unsigned int child_no = 0;
+            for (const auto &cell : dh.active_cell_iterators())
               {
                 fine.reinit(cell);
                 cell->get_dof_indices(child_ldi[child_no]);
@@ -159,7 +159,7 @@ namespace internal
                           fine.shape_value(i, q) * fe.shape_value(j, quad_tmp) *
                           fine.JxW(q);
                       }
-		++child_no;
+                ++child_no;
               }
 
             // now solve for all right-hand sides simultaneously

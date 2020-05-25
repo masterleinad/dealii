@@ -383,13 +383,13 @@ public:
   bool
   operator==(const TriaRawIterator<OtherAccessor> &) const;
 
-#  ifndef DEAL_II_HAVE_CXX20
+//#  ifndef DEAL_II_HAVE_CXX20
   /**
    * Compare for inequality.
    */
   bool
   operator!=(const TriaRawIterator &) const;
-#  endif
+//#  endif
 
   /**
    * Ordering relation for iterators.

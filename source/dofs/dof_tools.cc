@@ -604,8 +604,8 @@ namespace DoFTools
       local_selected_dofs[i] = component_mask[local_component_asssociation[i]];
 
     // then loop over all cells and do work
-    std::vector<types::global_dof_index>         indices(fe.dofs_per_cell);
-    for (const auto&c : dof.cell_iterators_on_level(level))
+    std::vector<types::global_dof_index> indices(fe.dofs_per_cell);
+    for (const auto &c : dof.cell_iterators_on_level(level))
       {
         c->get_mg_dof_indices(indices);
         for (unsigned int i = 0; i < fe.dofs_per_cell; ++i)
@@ -1104,7 +1104,7 @@ namespace DoFTools
 
     // this function is similar to the make_sparsity_pattern function, see
     // there for more information
-    for (const auto& cell : dof_handler.active_cell_iterators())
+    for (const auto &cell : dof_handler.active_cell_iterators())
       if (cell->subdomain_id() == subdomain_id)
         {
           const unsigned int dofs_per_cell = cell->get_fe().dofs_per_cell;
