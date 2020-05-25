@@ -249,16 +249,14 @@ public:
    * Comparison operator. Returns <code>true</code> if both iterators point to
    * the same entry in the same container.
    */
-  bool
-  operator==(const DerivedIterator &) const;
+  friend bool
+  operator==(const LinearIndexIterator&, const LinearIndexIterator &);
 
-#ifndef DEAL_II_HAVE_CXX20
   /**
    * Inverse of operator==().
    */
   bool
   operator!=(const DerivedIterator &) const;
-#endif
 
   /**
    * Comparison operator: uses the same ordering as operator<(), but also
@@ -448,12 +446,10 @@ inline typename LinearIndexIterator<DerivedIterator, AccessorType>::pointer
 
 template <class DerivedIterator, class AccessorType>
 inline bool
-LinearIndexIterator<DerivedIterator, AccessorType>::
-operator==(const DerivedIterator &other) const
+operator==(const LinearIndexIterator<DerivedIterator, AccessorType>&left, const LinearIndexIterator<DerivedIterator, AccessorType> &right)
 {
-  const auto &other_2 = static_cast<decltype(*this) &>(other);
-  return accessor.container == other_2.accessor.container &&
-         accessor.linear_index == other_2.accessor.linear_index;
+  return left.accessor.container == right.accessor.container &&
+         left.accessor.linear_index == right.accessor.linear_index;
 }
 
 

@@ -379,8 +379,9 @@ public:
   /**
    * Compare for equality.
    */
+  template <typename OtherAccessor>
   bool
-  operator==(const TriaRawIterator &) const;
+  operator==(const TriaRawIterator<OtherAccessor> &) const;
 
 #  ifndef DEAL_II_HAVE_CXX20
   /**

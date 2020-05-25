@@ -81,13 +81,12 @@ TriaRawIterator<Accessor>::operator=(const TriaRawIterator<Accessor> &i)
 
 
 
-template <typename Accessor>
-inline bool
-TriaRawIterator<Accessor>::
-operator==(const TriaRawIterator<Accessor> &other) const
+/*template <typename Accessor>
+bool
+operator==(const TriaRawIterator<Accessor> &left, const TriaRawIterator<Accessor> &right)
 {
-  return accessor == other.accessor;
-}
+  return left.accessor == right.accessor;
+}*/
 
 
 #ifndef DEAL_II_HAVE_CXX20
