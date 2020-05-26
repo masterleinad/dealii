@@ -79,9 +79,9 @@ using MPI_Op       = int;
 
 #    include <type_traits>
 
-#    define DEAL_II_MPI_CONST_CAST(expr)     \
-      const_cast<typename std::remove_const< \
-        typename std::remove_pointer<decltype(expr)>::type>::type *>(expr)
+#    define DEAL_II_MPI_CONST_CAST(expr) \
+      const_cast<                        \
+        std::remove_const_t<std::remove_pointer_t<decltype(expr)>> *>(expr)
 
 #  endif
 #endif
