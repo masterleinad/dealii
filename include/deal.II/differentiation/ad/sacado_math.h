@@ -89,8 +89,8 @@ namespace std
    */
   template <
     typename ADNumberType,
-    typename = typename std::enable_if<
-      dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value>::type>
+    typename = std::enable_if_t<
+      dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value>>
   inline ADNumberType
   erfc(const ADNumberType &x)
   {

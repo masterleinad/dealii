@@ -205,9 +205,9 @@ namespace Differentiation
        * potential ambiguities related to implicit conversions in either user
        * code or math functions that are loaded into the standard namespace.
        */
-      template <typename NumberType,
-                typename = typename std::enable_if<
-                  std::is_arithmetic<NumberType>::value>::type>
+      template <
+        typename NumberType,
+        typename = std::enable_if_t<std::is_arithmetic<NumberType>::value>>
       explicit Expression(const NumberType &value);
 
       /**
@@ -217,9 +217,9 @@ namespace Differentiation
        * potential ambiguities related to implicit conversions in either user
        * code or math functions that are loaded into the standard namespace.
        */
-      template <typename NumberType,
-                typename = typename std::enable_if<
-                  std::is_arithmetic<NumberType>::value>::type>
+      template <
+        typename NumberType,
+        typename = std::enable_if_t<std::is_arithmetic<NumberType>::value>>
       explicit Expression(const std::complex<NumberType> &value);
 
       /**
@@ -233,9 +233,9 @@ namespace Differentiation
        * It is expected that both the @p numerator and @p denominator
        * be integral types.
        */
-      template <typename NumberType,
-                typename = typename std::enable_if<
-                  std::is_integral<NumberType>::value>::type>
+      template <
+        typename NumberType,
+        typename = std::enable_if_t<std::is_integral<NumberType>::value>>
       Expression(const NumberType &numerator, const NumberType &denominator);
 
       /**
@@ -1084,8 +1084,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator+(const NumberType &lhs, const Expression &rhs)
     {
@@ -1101,8 +1101,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator+(const Expression &lhs, const NumberType &rhs)
     {
@@ -1118,8 +1118,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator-(const NumberType &lhs, const Expression &rhs)
     {
@@ -1135,8 +1135,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator-(const Expression &lhs, const NumberType &rhs)
     {
@@ -1152,8 +1152,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression operator*(const NumberType &lhs, const Expression &rhs)
     {
       return Expression(lhs) * rhs;
@@ -1168,8 +1168,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression operator*(const Expression &lhs, const NumberType &rhs)
     {
       return lhs * Expression(rhs);
@@ -1184,8 +1184,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator/(const NumberType &lhs, const Expression &rhs)
     {
@@ -1201,8 +1201,8 @@ namespace Differentiation
      * scalar expressions using Expression more natural.
      */
     template <typename NumberType,
-              typename = typename std::enable_if<
-                std::is_constructible<Expression, NumberType>::value>::type>
+              typename = std::enable_if_t<
+                std::is_constructible<Expression, NumberType>::value>>
     inline Expression
     operator/(const Expression &lhs, const NumberType &rhs)
     {

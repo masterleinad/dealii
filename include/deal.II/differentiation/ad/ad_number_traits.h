@@ -350,8 +350,7 @@ namespace Differentiation
       struct ADNumberInfoFromEnum<
         ScalarType,
         Differentiation::AD::NumberTypes::none,
-        typename std::enable_if<
-          std::is_floating_point<ScalarType>::value>::type>
+        std::enable_if_t<std::is_floating_point<ScalarType>::value>>
       {
         static const bool is_taped                              = false;
         using real_type                                         = ScalarType;
@@ -366,9 +365,9 @@ namespace Differentiation
        * mechanism can be employed (e.g. Sacado types).
        */
       template <typename ScalarType>
-      struct Marking<ScalarType,
-                     typename std::enable_if<
-                       std::is_floating_point<ScalarType>::value>::type>
+      struct Marking<
+        ScalarType,
+        std::enable_if_t<std::is_floating_point<ScalarType>::value>>
       {
         /**
          * Initialize the state of an independent variable.
@@ -483,8 +482,8 @@ namespace Differentiation
     template <typename NumberType>
     struct is_taped_ad_number<
       NumberType,
-      typename std::enable_if<
-        ADNumberTraits<typename std::decay<NumberType>::type>::is_taped>::type>
+      std::enable_if_t<
+        ADNumberTraits<typename std::decay<NumberType>::type>::is_taped>>
       : std::true_type
     {};
 
@@ -496,8 +495,8 @@ namespace Differentiation
     template <typename NumberType>
     struct is_tapeless_ad_number<
       NumberType,
-      typename std::enable_if<ADNumberTraits<
-        typename std::decay<NumberType>::type>::is_tapeless>::type>
+      std::enable_if_t<
+        ADNumberTraits<typename std::decay<NumberType>::type>::is_tapeless>>
       : std::true_type
     {};
 
@@ -510,8 +509,8 @@ namespace Differentiation
     template <typename NumberType>
     struct is_real_valued_ad_number<
       NumberType,
-      typename std::enable_if<ADNumberTraits<
-        typename std::decay<NumberType>::type>::is_real_valued>::type>
+      std::enable_if_t<
+        ADNumberTraits<typename std::decay<NumberType>::type>::is_real_valued>>
       : std::true_type
     {};
 
@@ -524,8 +523,8 @@ namespace Differentiation
     template <typename NumberType>
     struct is_complex_valued_ad_number<
       NumberType,
-      typename std::enable_if<ADNumberTraits<
-        typename std::decay<NumberType>::type>::is_complex_valued>::type>
+      std::enable_if_t<ADNumberTraits<
+        typename std::decay<NumberType>::type>::is_complex_valued>>
       : std::true_type
     {};
 
@@ -561,9 +560,9 @@ namespace Differentiation
        * mechanism can be employed (e.g. Sacado types).
        */
       template <typename NumberType>
-      struct ExtractData<NumberType,
-                         typename std::enable_if<
-                           std::is_floating_point<NumberType>::value>::type>
+      struct ExtractData<
+        NumberType,
+        std::enable_if_t<std::is_floating_point<NumberType>::value>>
       {
         /**
          * Extract the floating point value.

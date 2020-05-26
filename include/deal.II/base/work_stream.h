@@ -1117,13 +1117,13 @@ namespace WorkStream
    * both of which return iterators to elements that form the bounds of the
    * range.
    */
-  template <typename Worker,
-            typename Copier,
-            typename IteratorRangeType,
-            typename ScratchData,
-            typename CopyData,
-            typename = typename std::enable_if<
-              has_begin_and_end<IteratorRangeType>::value>::type>
+  template <
+    typename Worker,
+    typename Copier,
+    typename IteratorRangeType,
+    typename ScratchData,
+    typename CopyData,
+    typename = std::enable_if_t<has_begin_and_end<IteratorRangeType>::value>>
   void
   run(IteratorRangeType  iterator_range,
       Worker             worker,
@@ -1371,12 +1371,12 @@ namespace WorkStream
    * both of which return iterators to elements that form the bounds of the
    * range.
    */
-  template <typename MainClass,
-            typename IteratorRangeType,
-            typename ScratchData,
-            typename CopyData,
-            typename = typename std::enable_if<
-              has_begin_and_end<IteratorRangeType>::value>::type>
+  template <
+    typename MainClass,
+    typename IteratorRangeType,
+    typename ScratchData,
+    typename CopyData,
+    typename = std::enable_if_t<has_begin_and_end<IteratorRangeType>::value>>
   void
   run(IteratorRangeType iterator_range,
       MainClass &       main_object,

@@ -403,10 +403,9 @@ namespace Differentiation
 
 
       template <typename ReturnType_>
-      struct DictionaryOptimizer<
-        ReturnType_,
-        typename std::enable_if<
-          SupportedOptimizerTypeTraits<ReturnType_>::is_supported>::type>
+      struct DictionaryOptimizer<ReturnType_,
+                                 std::enable_if_t<SupportedOptimizerTypeTraits<
+                                   ReturnType_>::is_supported>>
       {
         using ReturnType =
           typename SupportedOptimizerTypeTraits<ReturnType_>::ReturnType;
@@ -502,10 +501,9 @@ namespace Differentiation
 
 
       template <typename ReturnType_>
-      struct LambdaOptimizer<
-        ReturnType_,
-        typename std::enable_if<
-          SupportedOptimizerTypeTraits<ReturnType_>::is_supported>::type>
+      struct LambdaOptimizer<ReturnType_,
+                             std::enable_if_t<SupportedOptimizerTypeTraits<
+                               ReturnType_>::is_supported>>
       {
         using ReturnType =
           typename std::conditional<!boost::is_complex<ReturnType_>::value,
