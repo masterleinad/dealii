@@ -671,8 +671,7 @@ namespace Differentiation
         template <typename F>
         static T
         value(const F &f,
-              typename std::enable_if<is_ad_number<F>::value &&
-                                      std::is_floating_point<T>::value>::type
+              std::enable_if_t<is_ad_number<F>::value &&                                      std::is_floating_point<T>::value>
                 * = nullptr)
         {
           // We recursively call this function in case the AD number is a
@@ -690,8 +689,7 @@ namespace Differentiation
         template <typename F>
         static T
         value(const F &f,
-              typename std::enable_if<is_ad_number<F>::value &&
-                                      is_ad_number<T>::value>::type * = nullptr)
+              std::enable_if_t<is_ad_number<F>::value &&                                      is_ad_number<T>::value> * = nullptr)
         {
           return T(f);
         }
@@ -723,8 +721,7 @@ namespace Differentiation
         template <typename F>
         static std::complex<T>
         value(const F &f,
-              typename std::enable_if<is_ad_number<F>::value &&
-                                      std::is_floating_point<T>::value>::type
+              std::enable_if_t<is_ad_number<F>::value &&                                      std::is_floating_point<T>::value>
                 * = nullptr)
         {
           // We recursively call this function in case the AD number is a

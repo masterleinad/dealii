@@ -1405,8 +1405,7 @@ namespace TrilinosWrappers
      * distributed. Otherwise, an exception will be thrown.
      */
     template <typename VectorType>
-    typename std::enable_if<std::is_same<typename VectorType::value_type,
-                                         TrilinosScalar>::value>::type
+    std::enable_if_t<std::is_same<typename VectorType::value_type,                                         TrilinosScalar>::value>
     vmult(VectorType &dst, const VectorType &src) const;
 
     /**
@@ -1416,8 +1415,7 @@ namespace TrilinosWrappers
      * Despite looking complicated, the return type is just `void`.
      */
     template <typename VectorType>
-    typename std::enable_if<!std::is_same<typename VectorType::value_type,
-                                          TrilinosScalar>::value>::type
+    std::enable_if_t<!std::is_same<typename VectorType::value_type,                                          TrilinosScalar>::value>
     vmult(VectorType &dst, const VectorType &src) const;
 
     /**
@@ -1435,8 +1433,7 @@ namespace TrilinosWrappers
      * Despite looking complicated, the return type is just `void`.
      */
     template <typename VectorType>
-    typename std::enable_if<std::is_same<typename VectorType::value_type,
-                                         TrilinosScalar>::value>::type
+    std::enable_if_t<std::is_same<typename VectorType::value_type,                                         TrilinosScalar>::value>
     Tvmult(VectorType &dst, const VectorType &src) const;
 
     /**
@@ -1446,8 +1443,7 @@ namespace TrilinosWrappers
      * Despite looking complicated, the return type is just `void`.
      */
     template <typename VectorType>
-    typename std::enable_if<!std::is_same<typename VectorType::value_type,
-                                          TrilinosScalar>::value>::type
+    std::enable_if_t<!std::is_same<typename VectorType::value_type,                                          TrilinosScalar>::value>
     Tvmult(VectorType &dst, const VectorType &src) const;
 
     /**

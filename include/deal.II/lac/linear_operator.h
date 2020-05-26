@@ -1494,8 +1494,7 @@ template <
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload,
   typename OperatorExemplar,
   typename Matrix,
-  typename = typename std::enable_if<
-    !std::is_lvalue_reference<OperatorExemplar>::value>::type,
+  typename = std::enable_if_t<    !std::is_lvalue_reference<OperatorExemplar>::value>,
   typename = std::enable_if_t<    !std::is_same<OperatorExemplar,                  LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(OperatorExemplar &&, const Matrix &) = delete;
@@ -1508,8 +1507,7 @@ template <
   typename Matrix,
   typename =
     std::enable_if_t<!std::is_lvalue_reference<Matrix>::value>,
-  typename = typename std::enable_if<
-    !std::is_lvalue_reference<OperatorExemplar>::value>::type,
+  typename = std::enable_if_t<    !std::is_lvalue_reference<OperatorExemplar>::value>,
   typename = std::enable_if_t<    !std::is_same<OperatorExemplar,                  LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(OperatorExemplar &&, Matrix &&) = delete;
@@ -1540,10 +1538,8 @@ template <typename Payload,
           typename Preconditioner,
           typename Range  = typename Solver::vector_type,
           typename Domain = Range,
-          typename        = typename std::enable_if<
-            !std::is_lvalue_reference<Preconditioner>::value>::type,
-          typename = typename std::enable_if<
-            !std::is_same<Preconditioner, PreconditionIdentity>::value>::type,
+          typename        = std::enable_if_t<            !std::is_lvalue_reference<Preconditioner>::value>,
+          typename = std::enable_if_t<            !std::is_same<Preconditioner, PreconditionIdentity>::value>,
           typename = std::enable_if_t<            !std::is_same<Preconditioner,                          LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Domain, Range, Payload>
 inverse_operator(const LinearOperator<Range, Domain, Payload> &,

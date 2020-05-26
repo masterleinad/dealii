@@ -181,8 +181,7 @@ namespace Differentiation
 
       template <typename ADNumberType>
       struct Marking<ADNumberType,
-                     typename std::enable_if<
-                       ADNumberTraits<ADNumberType>::type_code ==
+                     std::enable_if_t<                       ADNumberTraits<ADNumberType>_code ==
                          NumberTypes::adolc_tapeless &&
                        ADNumberTraits<ADNumberType>::is_real_valued>::type>
       {

@@ -1853,8 +1853,7 @@ namespace internal
       // Used for MatrixFree and DiagonalMatrix
       template <
         typename MatrixType,
-        typename std::enable_if<has_initialize_dof_vector<MatrixType>::value,
-                                MatrixType>::type * = nullptr>
+        std::enable_if_t<has_initialize_dof_vector<MatrixType>::value,                                MatrixType> * = nullptr>
       static void
       reinit_domain_vector(MatrixType &                                mat,
                            LinearAlgebra::distributed::Vector<Number> &vec,
@@ -1883,8 +1882,7 @@ namespace internal
       // Used for MatrixFree and DiagonalMatrix
       template <
         typename MatrixType,
-        typename std::enable_if<has_initialize_dof_vector<MatrixType>::value,
-                                MatrixType>::type * = nullptr>
+        std::enable_if_t<has_initialize_dof_vector<MatrixType>::value,                                MatrixType> * = nullptr>
       static void
       reinit_range_vector(MatrixType &                                mat,
                           LinearAlgebra::distributed::Vector<Number> &vec,
