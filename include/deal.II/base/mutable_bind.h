@@ -88,8 +88,8 @@ namespace Utilities
      * An alias to the stored std::tuple type. Only copy constructible
      * objects are allowed as tuple members.
      */
-    using TupleType = std::tuple<typename std::remove_cv<
-      typename std::remove_reference<FunctionArgs>::type>::type...>;
+    using TupleType = std::tuple<
+      std::remove_cv_t<typename std::remove_reference<FunctionArgs>::type>...>;
 
     /**
      * Construct a MutableBind object specifying the function, and
