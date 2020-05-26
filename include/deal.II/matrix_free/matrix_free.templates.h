@@ -58,10 +58,7 @@ namespace internal
 {
   template <
     typename DoFHandlerType,
-    typename std::enable_if<
-      std::is_same<DoFHandlerType,
-                   ::dealii::DoFHandler<DoFHandlerType::dimension>>::value,
-      int>::type = 0>
+    std::enable_if_t<      std::is_same<DoFHandlerType,                   ::dealii::DoFHandler<DoFHandlerType::dimension>>::value,      int> = 0>
   const DoFHandlerType &
   get_dof_handler(
     const std::vector<
@@ -80,10 +77,7 @@ namespace internal
 
   template <
     typename DoFHandlerType,
-    typename std::enable_if<
-      std::is_same<DoFHandlerType,
-                   ::dealii::hp::DoFHandler<DoFHandlerType::dimension>>::value,
-      int>::type = 0>
+    std::enable_if_t<      std::is_same<DoFHandlerType,                   ::dealii::hp::DoFHandler<DoFHandlerType::dimension>>::value,      int> = 0>
   const DoFHandlerType &
   get_dof_handler(
     const std::vector<

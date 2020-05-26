@@ -504,10 +504,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        std::complex<Sacado::Fad::DFad<
-          typename ADNumberType::value_type::scalar_type>>>::value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        std::complex<Sacado::Fad::DFad<          typename ADNumberType::value_type::scalar_type>>>::value>>
       : NumberTraits<
           std::complex<typename ADNumberType::value_type::scalar_type>,
           NumberTypes::sacado_dfad>
@@ -576,10 +573,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        Sacado::Rad::ADvar<typename ADNumberType::ADVari::scalar_type>>::
-                                value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        Sacado::Rad::ADvar<typename ADNumberType::ADVari::scalar_type>>::                                value>>
       : NumberTraits<typename ADNumberType::ADVari::scalar_type,
                      NumberTypes::sacado_rad>
     {};
@@ -621,10 +615,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        std::complex<Sacado::Rad::ADvar<typename ADNumberType::value_type::
-                                          ADVari::scalar_type>>>::value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        std::complex<Sacado::Rad::ADvar<typename ADNumberType::value_type::                                          ADVari::scalar_type>>>::value>>
       : NumberTraits<
           std::complex<typename ADNumberType::value_type::ADVari::scalar_type>,
           NumberTypes::sacado_rad>
@@ -672,10 +663,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<
-        std::is_same<ADNumberType,
-                     Sacado::Fad::DFad<Sacado::Fad::DFad<
-                       typename ADNumberType::scalar_type>>>::value>::type>
+      std::enable_if_t<        std::is_same<ADNumberType,                     Sacado::Fad::DFad<Sacado::Fad::DFad<                       typename ADNumberType::scalar_type>>>::value>>
       : NumberTraits<typename ADNumberType::scalar_type,
                      NumberTypes::sacado_dfad_dfad>
     {};
@@ -691,10 +679,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        std::complex<Sacado::Fad::DFad<Sacado::Fad::DFad<
-          typename ADNumberType::value_type::scalar_type>>>>::value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        std::complex<Sacado::Fad::DFad<Sacado::Fad::DFad<          typename ADNumberType::value_type::scalar_type>>>>::value>>
       : NumberTraits<
           std::complex<typename ADNumberType::value_type::scalar_type>,
           NumberTypes::sacado_dfad_dfad>
@@ -767,10 +752,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        Sacado::Rad::ADvar<Sacado::Fad::DFad<
-          typename ADNumberType::ADVari::scalar_type>>>::value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        Sacado::Rad::ADvar<Sacado::Fad::DFad<          typename ADNumberType::ADVari::scalar_type>>>::value>>
       : NumberTraits<typename ADNumberType::ADVari::scalar_type,
                      NumberTypes::sacado_rad_dfad>
     {};
@@ -891,10 +873,7 @@ namespace Differentiation
     template <typename NumberType>
     struct is_sacado_rad_number<
       NumberType,
-      typename std::enable_if<std::is_same<
-        NumberType,
-        Sacado::Rad::ADvari<Sacado::Fad::DFad<
-          typename NumberType::ADVari::scalar_type>>>::value>::type>
+      std::enable_if_t<std::is_same<        NumberType,        Sacado::Rad::ADvari<Sacado::Fad::DFad<          typename NumberType::ADVari::scalar_type>>>::value>>
       : std::true_type
     {};
 

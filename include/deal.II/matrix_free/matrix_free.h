@@ -3196,10 +3196,7 @@ namespace internal
      * the split into _start() and finish() stages
      */
     template <typename VectorType,
-              typename std::enable_if<
-                !has_update_ghost_values_start<VectorType>::value &&
-                  !is_serial_or_dummy<VectorType>::value,
-                VectorType>::type * = nullptr>
+              std::enable_if_t<                !has_update_ghost_values_start<VectorType>::value &&                  !is_serial_or_dummy<VectorType>::value,                VectorType> * = nullptr>
     void
     update_ghost_values_start(const unsigned int component_in_block_vector,
                               const VectorType & vec)
@@ -3220,10 +3217,7 @@ namespace internal
      * exchange on a subset of DoFs
      */
     template <typename VectorType,
-              typename std::enable_if<
-                has_update_ghost_values_start<VectorType>::value &&
-                  !has_exchange_on_subset<VectorType>::value,
-                VectorType>::type * = nullptr>
+              std::enable_if_t<                has_update_ghost_values_start<VectorType>::value &&                  !has_exchange_on_subset<VectorType>::value,                VectorType> * = nullptr>
     void
     update_ghost_values_start(const unsigned int component_in_block_vector,
                               const VectorType & vec)
@@ -3245,10 +3239,7 @@ namespace internal
      * i.e. LinearAlgebra::distributed::Vector
      */
     template <typename VectorType,
-              typename std::enable_if<
-                has_update_ghost_values_start<VectorType>::value &&
-                  has_exchange_on_subset<VectorType>::value,
-                VectorType>::type * = nullptr>
+              std::enable_if_t<                has_update_ghost_values_start<VectorType>::value &&                  has_exchange_on_subset<VectorType>::value,                VectorType> * = nullptr>
     void
     update_ghost_values_start(const unsigned int component_in_block_vector,
                               const VectorType & vec)
@@ -3324,10 +3315,7 @@ namespace internal
      * exchange on a subset of DoFs
      */
     template <typename VectorType,
-              typename std::enable_if<
-                has_update_ghost_values_start<VectorType>::value &&
-                  !has_exchange_on_subset<VectorType>::value,
-                VectorType>::type * = nullptr>
+              std::enable_if_t<                has_update_ghost_values_start<VectorType>::value &&                  !has_exchange_on_subset<VectorType>::value,                VectorType> * = nullptr>
     void
     update_ghost_values_finish(const unsigned int component_in_block_vector,
                                const VectorType & vec)
@@ -3345,10 +3333,7 @@ namespace internal
      * i.e. LinearAlgebra::distributed::Vector
      */
     template <typename VectorType,
-              typename std::enable_if<
-                has_update_ghost_values_start<VectorType>::value &&
-                  has_exchange_on_subset<VectorType>::value,
-                VectorType>::type * = nullptr>
+              std::enable_if_t<                has_update_ghost_values_start<VectorType>::value &&                  has_exchange_on_subset<VectorType>::value,                VectorType> * = nullptr>
     void
     update_ghost_values_finish(const unsigned int component_in_block_vector,
                                const VectorType & vec)
