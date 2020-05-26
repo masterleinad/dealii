@@ -407,7 +407,7 @@ namespace Differentiation
       template <typename ADNumberType>
       struct Marking<
         ADNumberType,
-        typename std::enable_if<boost::is_complex<ADNumberType>::value>::type>
+        std::enable_if_t<boost::is_complex<ADNumberType>::value>>
       {
         /*
          * Initialize the state of an independent variable.
@@ -1406,7 +1406,7 @@ namespace Differentiation
     template <typename ScalarType>
     struct ADNumberTraits<
       ScalarType,
-      typename std::enable_if<std::is_floating_point<ScalarType>::value>::type>
+      std::enable_if_t<std::is_floating_point<ScalarType>::value>>
       : NumberTraits<ScalarType, NumberTypes::none>
     {};
 

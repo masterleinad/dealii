@@ -1376,7 +1376,7 @@ namespace internal
 
     template <
       typename T,
-      typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
+      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(const T &t)
     {
@@ -1385,7 +1385,7 @@ namespace internal
 
     template <
       typename T,
-      typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
+      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(T &&t)
     {
@@ -1394,7 +1394,7 @@ namespace internal
 
     template <
       typename T,
-      typename = typename std::enable_if<std::is_arithmetic<T>::value>::type>
+      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(const std::complex<T> &t)
     {

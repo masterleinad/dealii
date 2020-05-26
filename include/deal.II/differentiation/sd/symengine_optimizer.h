@@ -372,7 +372,7 @@ namespace Differentiation
       template <typename ReturnType_>
       struct SupportedOptimizerTypeTraits<
         ReturnType_,
-        typename std::enable_if<std::is_arithmetic<ReturnType_>::value>::type>
+        std::enable_if_t<std::is_arithmetic<ReturnType_>::value>>
       {
         static const bool is_supported = true;
 
@@ -601,7 +601,7 @@ namespace Differentiation
       template <typename ReturnType_>
       struct LLVMOptimizer<
         ReturnType_,
-        typename std::enable_if<std::is_arithmetic<ReturnType_>::value>::type>
+        std::enable_if_t<std::is_arithmetic<ReturnType_>::value>>
       {
         using ReturnType = std::
           conditional_t<std::is_same<ReturnType_, float>::value, float, double>;

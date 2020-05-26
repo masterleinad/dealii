@@ -148,7 +148,7 @@ namespace internal
                    1,
                    degree,
                    n_q_points_1d,
-                   typename std::enable_if<n_q_points_1d == degree + 3>::type>
+                   std::enable_if_t<n_q_points_1d == degree + 3>>
       : Default<dim, n_components, Number>
     {};
 
@@ -251,7 +251,7 @@ namespace internal
                    1,
                    degree,
                    n_q_points_1d,
-                   typename std::enable_if<(n_q_points_1d < degree + 3)>::type>
+                   std::enable_if_t<(n_q_points_1d < degree + 3)>>
     {
       /**
        * We enable a transformation to collocation for derivatives if it gives

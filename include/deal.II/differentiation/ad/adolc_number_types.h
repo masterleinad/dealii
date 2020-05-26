@@ -341,7 +341,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<ADNumberType, adouble>::value>::type>
+      std::enable_if_t<std::is_same<ADNumberType, adouble>::value>>
       : NumberTraits<double, NumberTypes::adolc_taped>
     {
       static_assert(std::is_same<ad_type, adouble>::value,

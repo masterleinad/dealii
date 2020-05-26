@@ -1488,7 +1488,7 @@ template <
   typename OperatorExemplar,
   typename Matrix,
   typename =
-    typename std::enable_if<!std::is_lvalue_reference<Matrix>::value>::type>
+    std::enable_if_t<!std::is_lvalue_reference<Matrix>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(const OperatorExemplar &, Matrix &&) = delete;
 
@@ -1528,7 +1528,7 @@ template <
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload,
   typename Matrix,
   typename =
-    typename std::enable_if<!std::is_lvalue_reference<Matrix>::value>::type>
+    std::enable_if_t<!std::is_lvalue_reference<Matrix>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(const LinearOperator<Range, Domain, Payload> &,
                 Matrix &&) = delete;
@@ -1539,7 +1539,7 @@ template <
   typename Payload = internal::LinearOperatorImplementation::EmptyPayload,
   typename Matrix,
   typename =
-    typename std::enable_if<!std::is_lvalue_reference<Matrix>::value>::type>
+    std::enable_if_t<!std::is_lvalue_reference<Matrix>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(Matrix &&) = delete;
 

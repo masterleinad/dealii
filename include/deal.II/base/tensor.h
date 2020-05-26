@@ -2062,7 +2062,7 @@ template <int rank_1,
           int dim,
           typename Number,
           typename OtherNumber,
-          typename = typename std::enable_if<rank_1 >= 1 && rank_2 >= 1>::type>
+          typename = std::enable_if_t<rank_1 >= 1 && rank_2 >= 1>>
 DEAL_II_CONSTEXPR inline DEAL_II_ALWAYS_INLINE
   typename Tensor<rank_1 + rank_2 - 2,
                   dim,

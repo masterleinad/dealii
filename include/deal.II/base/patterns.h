@@ -1494,7 +1494,7 @@ namespace Patterns
     // Arithmetic types
     template <class T>
     struct Convert<T,
-                   typename std::enable_if<std::is_arithmetic<T>::value>::type>
+                   std::enable_if_t<std::is_arithmetic<T>::value>>
     {
       template <typename Dummy = T>
       static
@@ -1698,7 +1698,7 @@ namespace Patterns
       template <class T>
       struct RankInfo<
         T,
-        typename std::enable_if<is_list_compatible<T>::value>::type>
+        std::enable_if_t<is_list_compatible<T>::value>>
       {
         static constexpr int list_rank =
           RankInfo<typename T::value_type>::list_rank + 1;
@@ -1710,7 +1710,7 @@ namespace Patterns
       template <class T>
       struct RankInfo<
         T,
-        typename std::enable_if<is_map_compatible<T>::value>::type>
+        std::enable_if_t<is_map_compatible<T>::value>>
       {
         static constexpr int list_rank =
           max_list_rank<typename T::key_type, typename T::mapped_type>() + 1;
@@ -1776,7 +1776,7 @@ namespace Patterns
     // stl containers
     template <class T>
     struct Convert<T,
-                   typename std::enable_if<is_list_compatible<T>::value>::type>
+                   std::enable_if_t<is_list_compatible<T>::value>>
     {
       static std::unique_ptr<Patterns::PatternBase>
       to_pattern()
@@ -1844,7 +1844,7 @@ namespace Patterns
     // stl maps
     template <class T>
     struct Convert<T,
-                   typename std::enable_if<is_map_compatible<T>::value>::type>
+                   std::enable_if_t<is_map_compatible<T>::value>>
     {
       static std::unique_ptr<Patterns::PatternBase>
       to_pattern()
