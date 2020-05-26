@@ -33,14 +33,14 @@ namespace std_cxx17
 
   template <typename F, typename Tuple>
   auto
-  apply(F &&fn, Tuple &&t) -> decltype(apply_impl(
-    std::forward<F>(fn),
-    std::forward<Tuple>(t),
-    std::make_index_sequence<
-      std::tuple_size<typename std::remove_reference<Tuple>::type>::value>()))
+  apply(F &&fn, Tuple &&t) -> decltype(
+    apply_impl(std::forward<F>(fn),
+               std::forward<Tuple>(t),
+               std::make_index_sequence<
+                 std::tuple_size<std::remove_reference_t<Tuple>>::value>()))
   {
     std::size_t constexpr tSize =
-      std::tuple_size<typename std::remove_reference<Tuple>::type>::value;
+      std::tuple_size<std::remove_reference_t<Tuple>>::value;
     return apply_impl(std::forward<F>(fn),
                       std::forward<Tuple>(t),
                       std::make_index_sequence<tSize>());
