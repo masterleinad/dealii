@@ -797,11 +797,10 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
+      std::enable_if_t<std::is_same<
         ADNumberType,
         std::complex<Sacado::Rad::ADvar<Sacado::Fad::DFad<
-          typename ADNumberType::value_type::ADVari::scalar_type>>>>::value>::
-        type>
+          typename ADNumberType::value_type::ADVari::scalar_type>>>>::value>>
       : NumberTraits<
           std::complex<typename ADNumberType::value_type::ADVari::scalar_type>,
           NumberTypes::sacado_rad_dfad>

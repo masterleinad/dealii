@@ -1325,10 +1325,9 @@ namespace Differentiation
     template <typename ComplexScalarType>
     struct ADNumberTraits<
       ComplexScalarType,
-      typename std::enable_if<
+      std::enable_if_t<
         boost::is_complex<ComplexScalarType>::value &&
-        std::is_floating_point<typename ComplexScalarType::value_type>::value>::
-        type> : NumberTraits<ComplexScalarType, NumberTypes::none>
+        std::is_floating_point<typename ComplexScalarType::value_type>::value>> : NumberTraits<ComplexScalarType, NumberTypes::none>
     {};
 
   } // namespace AD
