@@ -350,9 +350,7 @@ namespace Particles
      * @authors Luca Heltai, Bruno Blais, 2019.
      */
     template <class VectorType>
-    typename std::enable_if<
-      std::is_convertible<VectorType *, Function<spacedim> *>::value ==
-      false>::type
+    std::enable_if_t<      std::is_convertible<VectorType *, Function<spacedim> *>::value ==      false>
     set_particle_positions(const VectorType &input_vector,
                            const bool        displace_particles = true);
 
@@ -806,9 +804,7 @@ namespace Particles
 
   template <int dim, int spacedim>
   template <class VectorType>
-  typename std::enable_if<
-    std::is_convertible<VectorType *, Function<spacedim> *>::value ==
-    false>::type
+  std::enable_if_t<    std::is_convertible<VectorType *, Function<spacedim> *>::value ==    false>
   ParticleHandler<dim, spacedim>::set_particle_positions(
     const VectorType &input_vector,
     const bool        displace_particles)

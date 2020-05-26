@@ -1652,9 +1652,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<
-        ADNumberTraits<ADNumberType>::type_code == NumberTypes::sacado_rad ||
-        ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<        ADNumberTraits<ADNumberType>::type_code == NumberTypes::sacado_rad ||        ADNumberTraits<ADNumberType>_code ==
           NumberTypes::sacado_rad_dfad>::type>::TapelessDrivers()
       : dependent_variable_marking_safe(false)
     {}

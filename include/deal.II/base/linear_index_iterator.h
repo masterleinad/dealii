@@ -250,9 +250,7 @@ public:
    * the same entry in the same container.
    */
   template <typename OtherIterator>
-  friend typename std::enable_if<
-    std::is_convertible<OtherIterator, DerivedIterator>::value,
-    bool>::type
+  friend std::enable_if_t<    std::is_convertible<OtherIterator, DerivedIterator>::value,    bool>
   operator==(const LinearIndexIterator &left, const OtherIterator &right)
   {
     const auto &right_2 = static_cast<const DerivedIterator &>(right);

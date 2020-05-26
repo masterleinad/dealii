@@ -3421,9 +3421,7 @@ namespace internal
      * the split into _start() and finish() stages
      */
     template <typename VectorType,
-              typename std::enable_if<!has_compress_start<VectorType>::value &&
-                                        !is_serial_or_dummy<VectorType>::value,
-                                      VectorType>::type * = nullptr>
+              std::enable_if_t<!has_compress_start<VectorType>::value &&                                        !is_serial_or_dummy<VectorType>::value,                                      VectorType> * = nullptr>
     void
     compress_start(const unsigned int component_in_block_vector,
                    VectorType &       vec)
@@ -3442,9 +3440,7 @@ namespace internal
      */
     template <
       typename VectorType,
-      typename std::enable_if<has_compress_start<VectorType>::value &&
-                                !has_exchange_on_subset<VectorType>::value,
-                              VectorType>::type * = nullptr>
+      std::enable_if_t<has_compress_start<VectorType>::value &&                                !has_exchange_on_subset<VectorType>::value,                              VectorType> * = nullptr>
     void
     compress_start(const unsigned int component_in_block_vector,
                    VectorType &       vec)
@@ -3464,9 +3460,7 @@ namespace internal
      */
     template <
       typename VectorType,
-      typename std::enable_if<has_compress_start<VectorType>::value &&
-                                has_exchange_on_subset<VectorType>::value,
-                              VectorType>::type * = nullptr>
+      std::enable_if_t<has_compress_start<VectorType>::value &&                                has_exchange_on_subset<VectorType>::value,                              VectorType> * = nullptr>
     void
     compress_start(const unsigned int component_in_block_vector,
                    VectorType &       vec)
@@ -3539,9 +3533,7 @@ namespace internal
      */
     template <
       typename VectorType,
-      typename std::enable_if<has_compress_start<VectorType>::value &&
-                                !has_exchange_on_subset<VectorType>::value,
-                              VectorType>::type * = nullptr>
+      std::enable_if_t<has_compress_start<VectorType>::value &&                                !has_exchange_on_subset<VectorType>::value,                              VectorType> * = nullptr>
     void
     compress_finish(const unsigned int component_in_block_vector,
                     VectorType &       vec)
@@ -3560,9 +3552,7 @@ namespace internal
      */
     template <
       typename VectorType,
-      typename std::enable_if<has_compress_start<VectorType>::value &&
-                                has_exchange_on_subset<VectorType>::value,
-                              VectorType>::type * = nullptr>
+      std::enable_if_t<has_compress_start<VectorType>::value &&                                has_exchange_on_subset<VectorType>::value,                              VectorType> * = nullptr>
     void
     compress_finish(const unsigned int component_in_block_vector,
                     VectorType &       vec)
@@ -3633,9 +3623,7 @@ namespace internal
      */
     template <
       typename VectorType,
-      typename std::enable_if<!has_exchange_on_subset<VectorType>::value &&
-                                !is_serial_or_dummy<VectorType>::value,
-                              VectorType>::type * = nullptr>
+      std::enable_if_t<!has_exchange_on_subset<VectorType>::value &&                                !is_serial_or_dummy<VectorType>::value,                              VectorType> * = nullptr>
     void
     reset_ghost_values(const VectorType &vec) const
     {

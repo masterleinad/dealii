@@ -102,9 +102,7 @@ namespace MemoryConsumption
    * <tt>t.memory_consumption()</tt>'s value.
    */
   template <typename T>
-  inline typename std::enable_if<!(std::is_fundamental<T>::value ||
-                                   std::is_pointer<T>::value),
-                                 std::size_t>::type
+  inline std::enable_if_t<!(std::is_fundamental<T>::value ||                                   std::is_pointer<T>::value),                                 std::size_t>
   memory_consumption(const T &t);
 
   /**
@@ -413,9 +411,7 @@ namespace MemoryConsumption
 
 
   template <typename T>
-  inline typename std::enable_if<!(std::is_fundamental<T>::value ||
-                                   std::is_pointer<T>::value),
-                                 std::size_t>::type
+  inline std::enable_if_t<!(std::is_fundamental<T>::value ||                                   std::is_pointer<T>::value),                                 std::size_t>
   memory_consumption(const T &t)
   {
     return t.memory_consumption();

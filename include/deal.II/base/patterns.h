@@ -1498,9 +1498,7 @@ namespace Patterns
     {
       template <typename Dummy = T>
       static
-        typename std::enable_if<std::is_same<Dummy, T>::value &&
-                                  std::is_same<T, bool>::value,
-                                std::unique_ptr<Patterns::PatternBase>>::type
+        std::enable_if_t<std::is_same<Dummy, T>::value &&                                  std::is_same<T, bool>::value,                                std::unique_ptr<Patterns::PatternBase>>
         to_pattern()
       {
         return std::make_unique<Patterns::Bool>();

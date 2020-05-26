@@ -456,16 +456,12 @@ namespace numbers
      */
     template <typename Dummy = number>
     static constexpr DEAL_II_CUDA_HOST_DEV
-      typename std::enable_if<std::is_same<Dummy, number>::value &&
-                                is_cuda_compatible<Dummy>::value,
-                              real_type>::type
+      std::enable_if_t<std::is_same<Dummy, number>::value &&                                is_cuda_compatible<Dummy>::value,                              real_type>
       abs_square(const number &x);
 
     template <typename Dummy = number>
     static constexpr
-      typename std::enable_if<std::is_same<Dummy, number>::value &&
-                                !is_cuda_compatible<Dummy>::value,
-                              real_type>::type
+      std::enable_if_t<std::is_same<Dummy, number>::value &&                                !is_cuda_compatible<Dummy>::value,                              real_type>
       abs_square(const number &x);
 
     /**
@@ -581,9 +577,7 @@ namespace numbers
   template <typename number>
   template <typename Dummy>
   constexpr DEAL_II_CUDA_HOST_DEV
-    typename std::enable_if<std::is_same<Dummy, number>::value &&
-                              is_cuda_compatible<Dummy>::value,
-                            typename NumberTraits<number>::real_type>::type
+    std::enable_if_t<std::is_same<Dummy, number>::value &&                              is_cuda_compatible<Dummy>::value,                            typename NumberTraits<number>::real_type>
     NumberTraits<number>::abs_square(const number &x)
   {
     return x * x;
@@ -594,9 +588,7 @@ namespace numbers
   template <typename number>
   template <typename Dummy>
   constexpr
-    typename std::enable_if<std::is_same<Dummy, number>::value &&
-                              !is_cuda_compatible<Dummy>::value,
-                            typename NumberTraits<number>::real_type>::type
+    std::enable_if_t<std::is_same<Dummy, number>::value &&                              !is_cuda_compatible<Dummy>::value,                            typename NumberTraits<number>::real_type>
     NumberTraits<number>::abs_square(const number &x)
   {
     return x * x;
@@ -716,9 +708,7 @@ namespace internal
     template <typename F>
     static constexpr DEAL_II_ALWAYS_INLINE DEAL_II_CUDA_HOST_DEV T
                                                                  value(const F &f,
-                                                                       typename std::enable_if<
-            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&
-            std::is_constructible<T, F>::value>::type * = nullptr)
+                                                                       std::enable_if_t<            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&            std::is_constructible<T, F>::value> * = nullptr)
     {
       return T(f);
     }

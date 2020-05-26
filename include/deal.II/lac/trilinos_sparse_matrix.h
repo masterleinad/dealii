@@ -809,9 +809,7 @@ namespace TrilinosWrappers
      * processors in order to avoid a dead lock.
      */
     template <typename SparsityPatternType>
-    typename std::enable_if<
-      !std::is_same<SparsityPatternType,
-                    dealii::SparseMatrix<double>>::value>::type
+    std::enable_if_t<      !std::is_same<SparsityPatternType,                    dealii::SparseMatrix<double>>::value>
     reinit(const IndexSet &           row_parallel_partitioning,
            const IndexSet &           col_parallel_partitioning,
            const SparsityPatternType &sparsity_pattern,

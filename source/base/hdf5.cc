@@ -215,9 +215,7 @@ namespace HDF5
 
 
     template <typename Container>
-    typename std::enable_if<
-      std::is_same<Container, Vector<typename Container::value_type>>::value,
-      Container>::type
+    std::enable_if_t<      std::is_same<Container, Vector<typename Container::value_type>>::value,      Container>
     initialize_container(const std::vector<hsize_t> &dimensions)
     {
       return Container(std::accumulate(
