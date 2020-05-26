@@ -76,9 +76,7 @@ namespace internal
     struct GeneralProductTypeImpl<
       T,
       Differentiation::SD::Expression,
-      typename std::enable_if<
-        boost::is_complex<T>::value &&
-        std::is_arithmetic<typename T::value_type>::value>::type>
+      std::enable_if_t<        boost::is_complex<T>::value &&        std::is_arithmetic<typename T::value_type>::value>>
     {
       using type = Differentiation::SD::Expression;
     };

@@ -292,9 +292,7 @@ namespace Differentiation
     typename Types<ADNumberType>::tape_index
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::active_tape_index() const
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::active_tape_index() const
     {
       return active_tape;
     }
@@ -304,9 +302,7 @@ namespace Differentiation
     bool
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::keep_independent_values()
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::keep_independent_values()
       const
     {
       return keep_values;
@@ -586,9 +582,7 @@ namespace Differentiation
     void
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::print(std::ostream &stream)
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::print(std::ostream &stream)
       const
     {
       const std::vector<typename Types<ADNumberType>::tape_index>
@@ -844,9 +838,7 @@ namespace Differentiation
     typename Types<ADNumberType>::tape_index
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::active_tape_index() const
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::active_tape_index() const
     {
       AssertThrow(false, ExcRequiresADOLC());
       return Numbers<ADNumberType>::invalid_tape_index;
@@ -857,9 +849,7 @@ namespace Differentiation
     bool
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::keep_independent_values()
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::keep_independent_values()
       const
     {
       AssertThrow(false, ExcRequiresADOLC());
@@ -987,9 +977,7 @@ namespace Differentiation
     void
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::reset(const bool)
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::reset(const bool)
     {
       AssertThrow(false, ExcRequiresADOLC());
     }
@@ -999,9 +987,7 @@ namespace Differentiation
     void
     TapedDrivers<ADNumberType,
                  double,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::print(std::ostream &) const
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::print(std::ostream &) const
     {
       AssertThrow(false, ExcRequiresADOLC());
     }
@@ -1119,9 +1105,7 @@ namespace Differentiation
     typename Types<ADNumberType>::tape_index
     TapedDrivers<ADNumberType,
                  float,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::active_tape_index() const
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::active_tape_index() const
     {
       // ADOL-C only supports 'double', not 'float', so we can forward to
       // the 'double' implementation of this function
@@ -1133,9 +1117,7 @@ namespace Differentiation
     bool
     TapedDrivers<ADNumberType,
                  float,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::keep_independent_values()
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::keep_independent_values()
       const
     {
       return taped_driver.keep_independent_values();
@@ -1286,9 +1268,7 @@ namespace Differentiation
     void
     TapedDrivers<ADNumberType,
                  float,
-                 typename std::enable_if<
-                   ADNumberTraits<ADNumberType>::type_code ==
-                   NumberTypes::adolc_taped>::type>::print(std::ostream &stream)
+                 std::enable_if_t<                   ADNumberTraits<ADNumberType>::type_code ==                   NumberTypes::adolc_taped>>::print(std::ostream &stream)
       const
     {
       taped_driver.print(stream);

@@ -1430,9 +1430,7 @@ namespace internal
               int dim,
               typename Number,
               typename OtherNumber,
-              typename std::enable_if<
-                !std::is_integral<
-                  typename ProductType<Number, OtherNumber>::type>::value &&
+              std::enable_if_t<                !std::is_integral<                  typename ProductType<Number, OtherNumber>>::value &&
                   !std::is_same<Number, Differentiation::SD::Expression>::value,
                 int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE void
@@ -1450,9 +1448,7 @@ namespace internal
               int dim,
               typename Number,
               typename OtherNumber,
-              typename std::enable_if<
-                std::is_integral<
-                  typename ProductType<Number, OtherNumber>::type>::value ||
+              std::enable_if_t<                std::is_integral<                  typename ProductType<Number, OtherNumber>>::value ||
                   std::is_same<Number, Differentiation::SD::Expression>::value,
                 int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE void
@@ -1868,9 +1864,7 @@ namespace internal
               int dim,
               typename Number,
               typename OtherNumber,
-              typename std::enable_if<
-                !std::is_integral<
-                  typename ProductType<Number, OtherNumber>::type>::value,
+              std::enable_if_t<                !std::is_integral<                  typename ProductType<Number, OtherNumber>>::value,
                 int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE
                       Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type>
@@ -1890,9 +1884,7 @@ namespace internal
               int dim,
               typename Number,
               typename OtherNumber,
-              typename std::enable_if<
-                std::is_integral<
-                  typename ProductType<Number, OtherNumber>::type>::value,
+              std::enable_if_t<                std::is_integral<                  typename ProductType<Number, OtherNumber>>::value,
                 int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE
                       Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type>

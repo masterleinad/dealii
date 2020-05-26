@@ -155,9 +155,7 @@ namespace Differentiation
       template <typename SacadoNumber>
       struct SacadoNumberInfo<
         SacadoNumber,
-        typename std::enable_if<std::is_same<
-          SacadoNumber,
-          Sacado::Fad::DFad<typename SacadoNumber::value_type>>::value>::type>
+        std::enable_if_t<std::is_same<          SacadoNumber,          Sacado::Fad::DFad<typename SacadoNumber::value_type>>::value>>
       {
         using ad_type         = SacadoNumber;
         using scalar_type     = typename ad_type::scalar_type;
@@ -175,9 +173,7 @@ namespace Differentiation
       template <typename SacadoNumber>
       struct SacadoNumberInfo<
         SacadoNumber,
-        typename std::enable_if<std::is_same<
-          SacadoNumber,
-          Sacado::Rad::ADvar<typename SacadoNumber::value_type>>::value>::type>
+        std::enable_if_t<std::is_same<          SacadoNumber,          Sacado::Rad::ADvar<typename SacadoNumber::value_type>>::value>>
       {
         using ad_type         = SacadoNumber;
         using scalar_type     = typename ad_type::ADVari::scalar_type;
@@ -493,9 +489,7 @@ namespace Differentiation
     template <typename ADNumberType>
     struct ADNumberTraits<
       ADNumberType,
-      typename std::enable_if<std::is_same<
-        ADNumberType,
-        Sacado::Fad::DFad<typename ADNumberType::scalar_type>>::value>::type>
+      std::enable_if_t<std::is_same<        ADNumberType,        Sacado::Fad::DFad<typename ADNumberType::scalar_type>>::value>>
       : NumberTraits<typename ADNumberType::scalar_type,
                      NumberTypes::sacado_dfad>
     {};
@@ -879,9 +873,7 @@ namespace Differentiation
     template <typename NumberType>
     struct is_sacado_dfad_number<
       NumberType,
-      typename std::enable_if<std::is_same<
-        NumberType,
-        Sacado::Fad::Expr<typename NumberType::value_type>>::value>::type>
+      std::enable_if_t<std::is_same<        NumberType,        Sacado::Fad::Expr<typename NumberType::value_type>>::value>>
       : std::true_type
     {};
 

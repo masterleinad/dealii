@@ -146,9 +146,7 @@ namespace Differentiation
       template <typename ADNumberType>
       struct Marking<
         ADNumberType,
-        typename std::enable_if<
-          ADNumberTraits<ADNumberType>::type_code == NumberTypes::adolc_taped &&
-          ADNumberTraits<ADNumberType>::is_real_valued>::type>
+        std::enable_if_t<          ADNumberTraits<ADNumberType>::type_code == NumberTypes::adolc_taped &&          ADNumberTraits<ADNumberType>::is_real_valued>>
       {
         using scalar_type = typename ADNumberTraits<ADNumberType>::scalar_type;
 
@@ -501,9 +499,7 @@ namespace Differentiation
      */
     template <typename NumberType>
     struct is_adolc_number<NumberType,
-                           typename std::enable_if<
-                             is_adolc_taped_number<NumberType>::value ||
-                             is_adolc_tapeless_number<NumberType>::value>::type>
+                           std::enable_if_t<                             is_adolc_taped_number<NumberType>::value ||                             is_adolc_tapeless_number<NumberType>::value>>
       : std::true_type
     {};
 

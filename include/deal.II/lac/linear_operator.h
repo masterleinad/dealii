@@ -229,9 +229,7 @@ public:
    * <code>linear_operator</code> is defined.
    */
   template <typename Op,
-            typename = typename std::enable_if<
-              !std::is_base_of<LinearOperator<Range, Domain, Payload>,
-                               Op>::value>::type>
+            typename = std::enable_if_t<              !std::is_base_of<LinearOperator<Range, Domain, Payload>,                               Op>::value>>
   LinearOperator(const Op &op)
   {
     *this = linear_operator<Range, Domain, Payload, Op>(op);
@@ -248,9 +246,7 @@ public:
    * conversion function <code>linear_operator</code> is defined.
    */
   template <typename Op,
-            typename = typename std::enable_if<
-              !std::is_base_of<LinearOperator<Range, Domain, Payload>,
-                               Op>::value>::type>
+            typename = std::enable_if_t<              !std::is_base_of<LinearOperator<Range, Domain, Payload>,                               Op>::value>>
   LinearOperator<Range, Domain, Payload> &
   operator=(const Op &op)
   {
@@ -1500,9 +1496,7 @@ template <
   typename Matrix,
   typename = typename std::enable_if<
     !std::is_lvalue_reference<OperatorExemplar>::value>::type,
-  typename = typename std::enable_if<
-    !std::is_same<OperatorExemplar,
-                  LinearOperator<Range, Domain, Payload>>::value>::type>
+  typename = std::enable_if_t<    !std::is_same<OperatorExemplar,                  LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(OperatorExemplar &&, const Matrix &) = delete;
 
@@ -1516,9 +1510,7 @@ template <
     typename std::enable_if<!std::is_lvalue_reference<Matrix>::value>::type,
   typename = typename std::enable_if<
     !std::is_lvalue_reference<OperatorExemplar>::value>::type,
-  typename = typename std::enable_if<
-    !std::is_same<OperatorExemplar,
-                  LinearOperator<Range, Domain, Payload>>::value>::type>
+  typename = std::enable_if_t<    !std::is_same<OperatorExemplar,                  LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Range, Domain, Payload>
 linear_operator(OperatorExemplar &&, Matrix &&) = delete;
 
@@ -1552,9 +1544,7 @@ template <typename Payload,
             !std::is_lvalue_reference<Preconditioner>::value>::type,
           typename = typename std::enable_if<
             !std::is_same<Preconditioner, PreconditionIdentity>::value>::type,
-          typename = typename std::enable_if<
-            !std::is_same<Preconditioner,
-                          LinearOperator<Range, Domain, Payload>>::value>::type>
+          typename = std::enable_if_t<            !std::is_same<Preconditioner,                          LinearOperator<Range, Domain, Payload>>::value>>
 LinearOperator<Domain, Range, Payload>
 inverse_operator(const LinearOperator<Range, Domain, Payload> &,
                  Solver &,
