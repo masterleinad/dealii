@@ -92,7 +92,7 @@ namespace MemoryConsumption
    */
   template <typename T>
   inline
-    typename std::enable_if<std::is_fundamental<T>::value, std::size_t>::type
+    std::enable_if_t<std::is_fundamental<T>::value, std::size_t>
     memory_consumption(const T &t);
 
   /**
@@ -264,7 +264,7 @@ namespace MemoryConsumption
 {
   template <typename T>
   inline
-    typename std::enable_if<std::is_fundamental<T>::value, std::size_t>::type
+    std::enable_if_t<std::is_fundamental<T>::value, std::size_t>
     memory_consumption(const T &)
   {
     return sizeof(T);

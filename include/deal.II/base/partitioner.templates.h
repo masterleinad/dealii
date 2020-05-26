@@ -449,7 +449,7 @@ namespace Utilities
       }
 
       template <typename Number>
-      typename std::enable_if<std::is_unsigned<Number>::value, Number>::type
+      std::enable_if_t<std::is_unsigned<Number>::value, Number>
       get_abs(const Number a)
       {
         return a;

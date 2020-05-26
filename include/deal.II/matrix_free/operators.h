@@ -93,14 +93,14 @@ namespace MatrixFreeOperators
     }
 
     template <typename VectorType>
-    typename std::enable_if<IsBlockVector<VectorType>::value, void>::type
+    std::enable_if_t<IsBlockVector<VectorType>::value, void>
     collect_sizes(VectorType &vector)
     {
       vector.collect_sizes();
     }
 
     template <typename VectorType>
-    typename std::enable_if<!IsBlockVector<VectorType>::value, void>::type
+    std::enable_if_t<!IsBlockVector<VectorType>::value, void>
     collect_sizes(const VectorType &)
     {}
   } // namespace BlockHelper

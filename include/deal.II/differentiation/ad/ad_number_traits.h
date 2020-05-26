@@ -654,7 +654,7 @@ namespace Differentiation
         template <typename F>
         static auto
         value(const F &f,
-              typename std::enable_if<!is_ad_number<F>::value>::type * =
+              std::enable_if_t<!is_ad_number<F>::value> * =
                 nullptr) -> decltype(dealii::internal::NumberType<T>::value(f))
         {
           // We call the other function defined in the numbers
@@ -707,7 +707,7 @@ namespace Differentiation
         static auto
         value(
           const F &f,
-          typename std::enable_if<!is_ad_number<F>::value>::type * = nullptr)
+          std::enable_if_t<!is_ad_number<F>::value> * = nullptr)
           -> decltype(dealii::internal::NumberType<std::complex<T>>::value(f))
         {
           // We call the other function defined in the numbers

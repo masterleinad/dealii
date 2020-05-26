@@ -1507,7 +1507,7 @@ template <
   typename OperatorExemplar,
   typename Matrix,
   typename =
-    typename std::enable_if<!std::is_lvalue_reference<Matrix>::value>::type,
+    std::enable_if_t<!std::is_lvalue_reference<Matrix>::value>,
   typename = typename std::enable_if<
     !std::is_lvalue_reference<OperatorExemplar>::value>::type,
   typename = std::enable_if_t<    !std::is_same<OperatorExemplar,                  LinearOperator<Range, Domain, Payload>>::value>>

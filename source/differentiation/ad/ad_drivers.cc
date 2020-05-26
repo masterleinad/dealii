@@ -1508,7 +1508,7 @@ namespace Differentiation
        * reverse-mode AD.
        */
       template <typename ADNumberType>
-      typename std::enable_if<!(ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<!(ADNumberTraits<ADNumberType>_code ==
                                   NumberTypes::sacado_rad ||
                                 ADNumberTraits<ADNumberType>::type_code ==
                                   NumberTypes::sacado_rad_dfad)>::type
@@ -1527,7 +1527,7 @@ namespace Differentiation
        * to. This function broadcasts this information.
        */
       template <typename ADNumberType>
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type
@@ -1553,7 +1553,7 @@ namespace Differentiation
        * auto-differentiable numbers.
        */
       template <typename ADNumberType>
-      typename std::enable_if<!(ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<!(ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless)>::type
       configure_tapeless_mode(const unsigned int)
       {}
@@ -1570,7 +1570,7 @@ namespace Differentiation
        * If not then it throws an error.
        */
       template <typename ADNumberType>
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                               NumberTypes::adolc_tapeless>::type
       configure_tapeless_mode(const unsigned int n_directional_derivatives)
       {
@@ -1630,7 +1630,7 @@ namespace Differentiation
 #  else // DEAL_II_WITH_ADOLC
 
       template <typename ADNumberType>
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                               NumberTypes::adolc_tapeless>::type
       configure_tapeless_mode(const unsigned int /*n_directional_derivatives*/)
       {
@@ -1666,7 +1666,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1681,7 +1681,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1696,7 +1696,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1711,7 +1711,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1726,7 +1726,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1744,7 +1744,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1780,7 +1780,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1835,7 +1835,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1857,7 +1857,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::sacado_rad ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_rad_dfad>::type>::
@@ -1938,7 +1938,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -1955,7 +1955,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -1972,7 +1972,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -1989,7 +1989,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -2006,7 +2006,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -2026,7 +2026,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -2062,7 +2062,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -2117,7 +2117,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||
@@ -2141,7 +2141,7 @@ namespace Differentiation
     TapelessDrivers<
       ADNumberType,
       ScalarType,
-      typename std::enable_if<ADNumberTraits<ADNumberType>::type_code ==
+      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
                                 NumberTypes::adolc_tapeless ||
                               ADNumberTraits<ADNumberType>::type_code ==
                                 NumberTypes::sacado_dfad ||

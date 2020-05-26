@@ -300,14 +300,14 @@ namespace internal
     // catches serial vectors
     template <
       typename U,
-      typename std::enable_if<is_serial_vector<U>::value, U>::type * = nullptr>
+      std::enable_if_t<is_serial_vector<U>::value, U> * = nullptr>
     static void
     detect(const U &);
 
     // catches parallel vectors
     template <
       typename U,
-      typename std::enable_if<!is_serial_vector<U>::value, U>::type * = nullptr>
+      std::enable_if_t<!is_serial_vector<U>::value, U> * = nullptr>
     static bool
     detect(const U &);
 

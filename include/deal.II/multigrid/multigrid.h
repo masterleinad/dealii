@@ -649,7 +649,7 @@ namespace internal
               typename VectorType,
               class TRANSFER,
               typename OtherVectorType>
-    typename std::enable_if<TRANSFER::supports_dof_handler_vector>::type
+    std::enable_if_t<TRANSFER::supports_dof_handler_vector>
     vmult(
       const std::vector<const dealii::DoFHandler<dim> *> &dof_handler_vector,
       dealii::Multigrid<VectorType> &                     multigrid,
@@ -710,7 +710,7 @@ namespace internal
               typename VectorType,
               class TRANSFER,
               typename OtherVectorType>
-    typename std::enable_if<TRANSFER::supports_dof_handler_vector>::type
+    std::enable_if_t<TRANSFER::supports_dof_handler_vector>
     vmult_add(
       const std::vector<const dealii::DoFHandler<dim> *> &dof_handler_vector,
       dealii::Multigrid<VectorType> &                     multigrid,

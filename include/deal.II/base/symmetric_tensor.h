@@ -2459,7 +2459,7 @@ namespace internal
     // above
     template <int dim, int rank_>
     DEAL_II_CONSTEXPR inline
-      typename std::enable_if<rank_ != 2, TableIndices<rank_>>::type
+      std::enable_if_t<rank_ != 2, TableIndices<rank_>>
       unrolled_to_component_indices(const unsigned int i,
                                     const std::integral_constant<int, rank_> &)
     {
