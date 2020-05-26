@@ -729,11 +729,7 @@ namespace internal
     template <typename F>
     static T
     value(const F &f,
-          typename std::enable_if<
-            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&
-            !std::is_constructible<T, F>::value &&
-            !is_explicitly_convertible<const F, T>::value &&
-            Differentiation::AD::is_ad_number<F>::value>::type * = nullptr)
+          std::enable_if_t<            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&            !std::is_constructible<T, F>::value &&            !is_explicitly_convertible<const F, T>::value &&            Differentiation::AD::is_ad_number<F>::value> * = nullptr)
     {
       return Differentiation::AD::internal::NumberType<T>::value(f);
     }

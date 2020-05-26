@@ -2114,11 +2114,7 @@ namespace TrilinosWrappers
          * 2. the @p Preconditioner derives from TrilinosWrappers::PreconditionBase.
          */
         template <typename Solver, typename Preconditioner>
-        typename std::enable_if<
-          std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&
-            std::is_base_of<TrilinosWrappers::PreconditionBase,
-                            Preconditioner>::value,
-          TrilinosPayload>::type
+        std::enable_if_t<          std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&            std::is_base_of<TrilinosWrappers::PreconditionBase,                            Preconditioner>::value,          TrilinosPayload>
         inverse_payload(Solver &, const Preconditioner &) const;
 
         /**
@@ -2139,11 +2135,7 @@ namespace TrilinosWrappers
          * TrilinosWrappers::PreconditionBase.
          */
         template <typename Solver, typename Preconditioner>
-        typename std::enable_if<
-          !(std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&
-            std::is_base_of<TrilinosWrappers::PreconditionBase,
-                            Preconditioner>::value),
-          TrilinosPayload>::type
+        std::enable_if_t<          !(std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&            std::is_base_of<TrilinosWrappers::PreconditionBase,                            Preconditioner>::value),          TrilinosPayload>
         inverse_payload(Solver &, const Preconditioner &) const;
 
         //@}
@@ -3030,11 +3022,7 @@ namespace TrilinosWrappers
     namespace LinearOperatorImplementation
     {
       template <typename Solver, typename Preconditioner>
-      typename std::enable_if<
-        std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&
-          std::is_base_of<TrilinosWrappers::PreconditionBase,
-                          Preconditioner>::value,
-        TrilinosPayload>::type
+      std::enable_if_t<        std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&          std::is_base_of<TrilinosWrappers::PreconditionBase,                          Preconditioner>::value,        TrilinosPayload>
       TrilinosPayload::inverse_payload(
         Solver &              solver,
         const Preconditioner &preconditioner) const
@@ -3085,11 +3073,7 @@ namespace TrilinosWrappers
       }
 
       template <typename Solver, typename Preconditioner>
-      typename std::enable_if<
-        !(std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&
-          std::is_base_of<TrilinosWrappers::PreconditionBase,
-                          Preconditioner>::value),
-        TrilinosPayload>::type
+      std::enable_if_t<        !(std::is_base_of<TrilinosWrappers::SolverBase, Solver>::value &&          std::is_base_of<TrilinosWrappers::PreconditionBase,                          Preconditioner>::value),        TrilinosPayload>
       TrilinosPayload::inverse_payload(Solver &, const Preconditioner &) const
       {
         TrilinosPayload return_op(*this);
