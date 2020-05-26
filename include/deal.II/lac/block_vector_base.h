@@ -150,9 +150,9 @@ namespace internal
        * number.
        */
       using value_type =
-        typename std::conditional<Constness,
-                                  const typename BlockVectorType::value_type,
-                                  typename BlockVectorType::value_type>::type;
+        std::conditional_t<Constness,
+                           const typename BlockVectorType::value_type,
+                           typename BlockVectorType::value_type>;
 
       /**
        * Declare some alias which are standard for iterators and are used
@@ -164,10 +164,10 @@ namespace internal
       using reference         = typename BlockVectorType::reference;
       using pointer           = value_type *;
 
-      using dereference_type = typename std::conditional<
-        Constness,
-        value_type,
-        typename BlockVectorType::BlockType::reference>::type;
+      using dereference_type =
+        std::conditional_t<Constness,
+                           value_type,
+                           typename BlockVectorType::BlockType::reference>;
 
       /**
        * Typedef the type of the block vector (which differs in constness,

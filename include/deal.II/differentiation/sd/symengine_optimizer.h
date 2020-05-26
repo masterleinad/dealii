@@ -376,10 +376,8 @@ namespace Differentiation
       {
         static const bool is_supported = true;
 
-        using ReturnType =
-          typename std::conditional<std::is_same<ReturnType_, float>::value,
-                                    float,
-                                    double>::type;
+        using ReturnType = std::
+          conditional_t<std::is_same<ReturnType_, float>::value, float, double>;
       };
 
 
@@ -394,10 +392,10 @@ namespace Differentiation
       {
         static const bool is_supported = true;
 
-        using ReturnType = typename std::conditional<
+        using ReturnType = std::conditional_t<
           std::is_same<ReturnType_, std::complex<float>>::value,
           std::complex<float>,
-          std::complex<double>>::type;
+          std::complex<double>>;
       };
 
 
@@ -506,13 +504,13 @@ namespace Differentiation
                                ReturnType_>::is_supported>>
       {
         using ReturnType =
-          typename std::conditional<!boost::is_complex<ReturnType_>::value,
-                                    double,
-                                    std::complex<double>>::type;
-        using OptimizerType = typename std::conditional<
-          !boost::is_complex<ReturnType_>::value,
-          SymEngine::LambdaRealDoubleVisitor,
-          SymEngine::LambdaComplexDoubleVisitor>::type;
+          std::conditional_t<!boost::is_complex<ReturnType_>::value,
+                             double,
+                             std::complex<double>>;
+        using OptimizerType =
+          std::conditional<!boost::is_complex<ReturnType_>::value,
+                           SymEngine::LambdaRealDoubleVisitor,
+                           SymEngine::LambdaComplexDoubleVisitor>;
 
 
         /**
@@ -605,14 +603,12 @@ namespace Differentiation
         ReturnType_,
         typename std::enable_if<std::is_arithmetic<ReturnType_>::value>::type>
       {
-        using ReturnType =
-          typename std::conditional<std::is_same<ReturnType_, float>::value,
-                                    float,
-                                    double>::type;
+        using ReturnType = std::
+          conditional_t<std::is_same<ReturnType_, float>::value, float, double>;
         using OptimizerType =
-          typename std::conditional<std::is_same<ReturnType_, float>::value,
-                                    SymEngine::LLVMFloatVisitor,
-                                    SymEngine::LLVMDoubleVisitor>::type;
+          std::conditional_t<std::is_same<ReturnType_, float>::value,
+                             SymEngine::LLVMFloatVisitor,
+                             SymEngine::LLVMDoubleVisitor>;
 
         /**
          * A flag to indicate if the ReturnType is supported by a

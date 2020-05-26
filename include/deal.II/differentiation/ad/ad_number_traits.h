@@ -335,10 +335,10 @@ namespace Differentiation
                  (void)std::declval<typename ADNumberTrait::real_type>(),
                  (void)std::declval<typename ADNumberTrait::derivative_type>(),
                  void())>
-        : std::conditional<
+        : std::conditional_t<
             std::is_floating_point<typename ADNumberTrait::real_type>::value,
             std::false_type,
-            std::true_type>::type
+            std::true_type>
       {};
 
 
@@ -903,14 +903,14 @@ namespace Differentiation
       /**
        * The actual auto-differentiable number directional derivative type
        */
-      using derivative_type = typename std::conditional<
+      using derivative_type = std::conditional_t<
         is_real_valued,
         typename internal::ADNumberInfoFromEnum<
           typename internal::RemoveComplexWrapper<ScalarType>::type,
           ADNumberTypeCode>::derivative_type,
         std::complex<typename internal::ADNumberInfoFromEnum<
           typename internal::RemoveComplexWrapper<ScalarType>::type,
-          ADNumberTypeCode>::derivative_type>>::type;
+          ADNumberTypeCode>::derivative_type>>;
 
 
       /**

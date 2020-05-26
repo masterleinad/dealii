@@ -49,10 +49,9 @@ DEAL_II_NAMESPACE_OPEN
  */
 template <typename VectorType>
 class DEAL_II_DEPRECATED VectorSlice
-  : public ArrayView<
-      typename std::conditional<std::is_const<VectorType>::value,
-                                const typename VectorType::value_type,
-                                typename VectorType::value_type>::type>
+  : public ArrayView<std::conditional_t<std::is_const<VectorType>::value,
+                                        const typename VectorType::value_type,
+                                        typename VectorType::value_type>>
 {
 public:
   /**
@@ -73,9 +72,9 @@ protected:
    * Alias for the base class name.
    */
   using ArrayViewType =
-    ArrayView<typename std::conditional<std::is_const<VectorType>::value,
-                                        const typename VectorType::value_type,
-                                        typename VectorType::value_type>::type>;
+    ArrayView<std::conditional_t<std::is_const<VectorType>::value,
+                                 const typename VectorType::value_type,
+                                 typename VectorType::value_type>>;
 };
 
 
