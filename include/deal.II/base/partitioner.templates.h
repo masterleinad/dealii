@@ -440,7 +440,8 @@ namespace Utilities
       // standards. To avoid this, we use std::abs on default types but
       // simply return the number on unsigned types
       template <typename Number>
-      std::enable_if_t<        !std::is_unsigned<Number>::value,        typename numbers::NumberTraits<Number>::real_type>
+      std::enable_if_t<!std::is_unsigned<Number>::value,
+                       typename numbers::NumberTraits<Number>::real_type>
       get_abs(const Number a)
       {
         return std::abs(a);

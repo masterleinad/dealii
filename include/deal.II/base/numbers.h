@@ -456,13 +456,16 @@ namespace numbers
      */
     template <typename Dummy = number>
     static constexpr DEAL_II_CUDA_HOST_DEV
-      std::enable_if_t<std::is_same<Dummy, number>::value &&                                is_cuda_compatible<Dummy>::value,                              real_type>
+      std::enable_if_t<std::is_same<Dummy, number>::value &&
+                         is_cuda_compatible<Dummy>::value,
+                       real_type>
       abs_square(const number &x);
 
     template <typename Dummy = number>
-    static constexpr
-      std::enable_if_t<std::is_same<Dummy, number>::value &&                                !is_cuda_compatible<Dummy>::value,                              real_type>
-      abs_square(const number &x);
+    static constexpr std::enable_if_t<std::is_same<Dummy, number>::value &&
+                                        !is_cuda_compatible<Dummy>::value,
+                                      real_type>
+    abs_square(const number &x);
 
     /**
      * Return the absolute value of a number.
@@ -577,7 +580,9 @@ namespace numbers
   template <typename number>
   template <typename Dummy>
   constexpr DEAL_II_CUDA_HOST_DEV
-    std::enable_if_t<std::is_same<Dummy, number>::value &&                              is_cuda_compatible<Dummy>::value,                            typename NumberTraits<number>::real_type>
+    std::enable_if_t<std::is_same<Dummy, number>::value &&
+                       is_cuda_compatible<Dummy>::value,
+                     typename NumberTraits<number>::real_type>
     NumberTraits<number>::abs_square(const number &x)
   {
     return x * x;
@@ -587,9 +592,10 @@ namespace numbers
 
   template <typename number>
   template <typename Dummy>
-  constexpr
-    std::enable_if_t<std::is_same<Dummy, number>::value &&                              !is_cuda_compatible<Dummy>::value,                            typename NumberTraits<number>::real_type>
-    NumberTraits<number>::abs_square(const number &x)
+  constexpr std::enable_if_t<std::is_same<Dummy, number>::value &&
+                               !is_cuda_compatible<Dummy>::value,
+                             typename NumberTraits<number>::real_type>
+  NumberTraits<number>::abs_square(const number &x)
   {
     return x * x;
   }
@@ -707,8 +713,10 @@ namespace internal
     // Type T is constructible from F.
     template <typename F>
     static constexpr DEAL_II_ALWAYS_INLINE DEAL_II_CUDA_HOST_DEV T
-                                                                 value(const F &f,
-                                                                       std::enable_if_t<            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&            std::is_constructible<T, F>::value> * = nullptr)
+                                                                 value(
+                                                                   const F &f,
+                                                                   std::enable_if_t<!std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&
+                       std::is_constructible<T, F>::value> * = nullptr)
     {
       return T(f);
     }
@@ -716,8 +724,12 @@ namespace internal
     // Type T is explicitly convertible (but not constructible) from F.
     template <typename F>
     static constexpr DEAL_II_ALWAYS_INLINE T
-                                           value(const F &f,
-                                                 std::enable_if_t<            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&            !std::is_constructible<T, F>::value &&            is_explicitly_convertible<const F, T>::value> * = nullptr)
+                                           value(
+                                             const F &f,
+                                             std::enable_if_t<!std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&
+                       !std::is_constructible<T, F>::value &&
+                       is_explicitly_convertible<const F, T>::value> * =
+                                               nullptr)
     {
       return static_cast<T>(f);
     }
@@ -728,8 +740,12 @@ namespace internal
     // might fall into the same category.
     template <typename F>
     static T
-    value(const F &f,
-          std::enable_if_t<            !std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&            !std::is_constructible<T, F>::value &&            !is_explicitly_convertible<const F, T>::value &&            Differentiation::AD::is_ad_number<F>::value> * = nullptr)
+    value(
+      const F &f,
+      std::enable_if_t<!std::is_same<std::decay_t<T>, std::decay_t<F>>::value &&
+                       !std::is_constructible<T, F>::value &&
+                       !is_explicitly_convertible<const F, T>::value &&
+                       Differentiation::AD::is_ad_number<F>::value> * = nullptr)
     {
       return Differentiation::AD::internal::NumberType<T>::value(f);
     }

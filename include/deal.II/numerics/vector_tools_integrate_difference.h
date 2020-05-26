@@ -214,7 +214,8 @@ namespace VectorTools
    * @deprecated Use integrate_difference(const Mapping<dim, spacedim> &, const DoFHandler<dim, spacedim> &, const InVector &, const Function<spacedim, typename InVector::value_type> &, OutVector &, const Quadrature<dim> &, const NormType &, const Function<spacedim, double> *, const double) instead.
    */
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const Mapping<dim, spacedim> &    mapping,
                        const DoFHandler<dim, spacedim> & dof,
                        const InVector &                  fe_function,
@@ -232,7 +233,8 @@ namespace VectorTools
    * @deprecated Use integrate_difference(const DoFHandler<dim, spacedim> &, const InVector &, const Function<spacedim, typename InVector::value_type> &exact_solution, OutVector &, const Quadrature<dim> &, const NormType &, const Function<spacedim, double> *, const double) instead.
    */
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const DoFHandler<dim, spacedim> & dof,
                        const InVector &                  fe_function,
                        const Function<spacedim, double> &exact_solution,
@@ -248,7 +250,8 @@ namespace VectorTools
    * @deprecated Use integrate_difference(const hp::MappingCollection<dim, spacedim> &, const hp::DoFHandler<dim, spacedim> &, const InVector &, const Function<spacedim, typename InVector::value_type> &, OutVector &, const hp::QCollection<dim> &, const NormType &, const Function<spacedim, double> *, const double) instead.
    */
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const hp::MappingCollection<dim, spacedim> &mapping,
                        const hp::DoFHandler<dim, spacedim> &       dof,
                        const InVector &                            fe_function,
@@ -266,7 +269,8 @@ namespace VectorTools
    * @deprecated Use integrate_difference(const hp::DoFHandler<dim, spacedim> &, const InVector &, const Function<spacedim, typename InVector::value_type> &, OutVector &, const hp::QCollection<dim> &, const NormType &, const Function<spacedim, double> *, const double) instead.
    */
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const hp::DoFHandler<dim, spacedim> &dof,
                        const InVector &                     fe_function,
                        const Function<spacedim, double> &   exact_solution,

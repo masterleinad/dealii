@@ -1538,9 +1538,8 @@ namespace FETools
     };
 
     template <class VectorType>
-    struct BlockTypeHelper<
-      VectorType,
-      std::enable_if_t<IsBlockVector<VectorType>::value>>
+    struct BlockTypeHelper<VectorType,
+                           std::enable_if_t<IsBlockVector<VectorType>::value>>
     {
       using type = typename VectorType::BlockType;
     };

@@ -386,7 +386,9 @@ namespace Differentiation
       template <typename ReturnType_>
       struct SupportedOptimizerTypeTraits<
         ReturnType_,
-        std::enable_if_t<          boost::is_complex<ReturnType_>::value &&          std::is_arithmetic<typename ReturnType_::value_type>::value>>
+        std::enable_if_t<
+          boost::is_complex<ReturnType_>::value &&
+          std::is_arithmetic<typename ReturnType_::value_type>::value>>
       {
         static const bool is_supported = true;
 
@@ -711,7 +713,9 @@ namespace Differentiation
       template <typename ReturnType_>
       struct LLVMOptimizer<
         ReturnType_,
-        std::enable_if_t<          boost::is_complex<ReturnType_>::value &&          std::is_arithmetic<typename ReturnType_::value_type>::value>>
+        std::enable_if_t<
+          boost::is_complex<ReturnType_>::value &&
+          std::is_arithmetic<typename ReturnType_::value_type>::value>>
       {
         // Since there is no working implementation, these are dummy types
         // that help with templating in the calling function.
@@ -811,9 +815,11 @@ namespace Differentiation
 
 
       template <typename ReturnType, typename Optimizer>
-      struct OptimizerHelper<ReturnType,
-                             Optimizer,
-                             std::enable_if_t<std::is_same<                               ReturnType,                               typename Optimizer::ReturnType>::value>>
+      struct OptimizerHelper<
+        ReturnType,
+        Optimizer,
+        std::enable_if_t<
+          std::is_same<ReturnType, typename Optimizer::ReturnType>::value>>
       {
         /**
          * Initialize an instance of an optimizer.
@@ -951,9 +957,11 @@ namespace Differentiation
       };
 
       template <typename ReturnType, typename Optimizer>
-      struct OptimizerHelper<ReturnType,
-                             Optimizer,
-                             std::enable_if_t<!std::is_same<                               ReturnType,                               typename Optimizer::ReturnType>::value>>
+      struct OptimizerHelper<
+        ReturnType,
+        Optimizer,
+        std::enable_if_t<
+          !std::is_same<ReturnType, typename Optimizer::ReturnType>::value>>
       {
         /**
          * Initialize an instance of an optimizer.

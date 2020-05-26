@@ -146,7 +146,9 @@ namespace Differentiation
       template <typename ADNumberType>
       struct Marking<
         ADNumberType,
-        std::enable_if_t<          ADNumberTraits<ADNumberType>::type_code == NumberTypes::adolc_taped &&          ADNumberTraits<ADNumberType>::is_real_valued>>
+        std::enable_if_t<ADNumberTraits<ADNumberType>::type_code ==
+                           NumberTypes::adolc_taped &&
+                         ADNumberTraits<ADNumberType>::is_real_valued>>
       {
         using scalar_type = typename ADNumberTraits<ADNumberType>::scalar_type;
 
@@ -180,10 +182,11 @@ namespace Differentiation
       };
 
       template <typename ADNumberType>
-      struct Marking<ADNumberType,
-                     std::enable_if_t<                       ADNumberTraits<ADNumberType>_code ==
-                         NumberTypes::adolc_tapeless &&
-                       ADNumberTraits<ADNumberType>::is_real_valued>::type>
+      struct Marking<
+        ADNumberType,
+        std::enable_if_t<ADNumberTraits<ADNumberType> _code ==
+                           NumberTypes::adolc_tapeless &&
+                         ADNumberTraits<ADNumberType>::is_real_valued>::type>
       {
         using scalar_type = typename ADNumberTraits<ADNumberType>::scalar_type;
 
@@ -497,8 +500,10 @@ namespace Differentiation
      * parameter is a (real or complex; taped or tapeless) ADOL-C number.
      */
     template <typename NumberType>
-    struct is_adolc_number<NumberType,
-                           std::enable_if_t<                             is_adolc_taped_number<NumberType>::value ||                             is_adolc_tapeless_number<NumberType>::value>>
+    struct is_adolc_number<
+      NumberType,
+      std::enable_if_t<is_adolc_taped_number<NumberType>::value ||
+                       is_adolc_tapeless_number<NumberType>::value>>
       : std::true_type
     {};
 

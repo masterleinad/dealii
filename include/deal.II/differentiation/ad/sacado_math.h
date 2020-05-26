@@ -38,7 +38,10 @@ namespace std
    */
   template <
     typename ADNumberType,
-    typename = std::enable_if_t<      dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value &&      dealii::Differentiation::AD::is_real_valued_ad_number<        ADNumberType>::value>>
+    typename = std::enable_if_t<
+      dealii::Differentiation::AD::is_sacado_number<ADNumberType>::value &&
+      dealii::Differentiation::AD::is_real_valued_ad_number<
+        ADNumberType>::value>>
   inline ADNumberType
   erf(ADNumberType x)
   {

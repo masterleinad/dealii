@@ -1226,10 +1226,10 @@ namespace Differentiation
     struct TapelessDrivers<
       ADNumberType,
       ScalarType,
-      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
-                                NumberTypes::sacado_rad ||
-                              ADNumberTraits<ADNumberType>::type_code ==
-                                NumberTypes::sacado_rad_dfad>::type>
+      std::enable_if_t<ADNumberTraits<ADNumberType> _code ==
+                         NumberTypes::sacado_rad ||
+                       ADNumberTraits<ADNumberType>::type_code ==
+                         NumberTypes::sacado_rad_dfad>::type>
     {
       /**
        * Constructor
@@ -1316,12 +1316,11 @@ namespace Differentiation
     struct TapelessDrivers<
       ADNumberType,
       ScalarType,
-      std::enable_if_t<ADNumberTraits<ADNumberType>_code ==
-                                NumberTypes::adolc_tapeless ||
-                              ADNumberTraits<ADNumberType>::type_code ==
-                                NumberTypes::sacado_dfad ||
-                              ADNumberTraits<ADNumberType>::type_code ==
-                                NumberTypes::sacado_dfad_dfad>::type>
+      std::enable_if_t<
+        ADNumberTraits<ADNumberType> _code == NumberTypes::adolc_tapeless ||
+        ADNumberTraits<ADNumberType>::type_code == NumberTypes::sacado_dfad ||
+        ADNumberTraits<ADNumberType>::type_code ==
+          NumberTypes::sacado_dfad_dfad>::type>
     {
       /**
        * Constructor

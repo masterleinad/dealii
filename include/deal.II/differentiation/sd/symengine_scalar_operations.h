@@ -303,7 +303,11 @@ namespace Differentiation
     template <bool ignore_invalid_symbols = false,
               typename ValueType          = double,
               typename SymbolicType,
-              typename T = std::enable_if_t<                !std::is_base_of<Expression, SymbolicType>::value &&                dealii::internal::is_explicitly_convertible<                  SymbolicType,                  const SymEngine::RCP<const SymEngine::Basic> &>::value>>
+              typename T = std::enable_if_t<
+                !std::is_base_of<Expression, SymbolicType>::value &&
+                dealii::internal::is_explicitly_convertible<
+                  SymbolicType,
+                  const SymEngine::RCP<const SymEngine::Basic> &>::value>>
     void
     add_to_symbol_map(types::substitution_map &symbol_map,
                       const SymbolicType &     symbol);
@@ -456,7 +460,11 @@ namespace Differentiation
      */
     template <typename SymbolicType,
               typename ValueType,
-              typename T = std::enable_if_t<                dealii::internal::is_explicitly_convertible<                  SymbolicType,                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&                std::is_constructible<SymbolicType, ValueType>::value>>
+              typename T = std::enable_if_t<
+                dealii::internal::is_explicitly_convertible<
+                  SymbolicType,
+                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&
+                std::is_constructible<SymbolicType, ValueType>::value>>
     void
     set_value_in_symbol_map(types::substitution_map &substitution_map,
                             const SymbolicType &     symbol,
@@ -641,7 +649,11 @@ namespace Differentiation
      */
     template <typename ExpressionType,
               typename ValueType,
-              typename T = std::enable_if_t<                dealii::internal::is_explicitly_convertible<                  ExpressionType,                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&                std::is_constructible<ExpressionType, ValueType>::value>>
+              typename T = std::enable_if_t<
+                dealii::internal::is_explicitly_convertible<
+                  ExpressionType,
+                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&
+                std::is_constructible<ExpressionType, ValueType>::value>>
     types::substitution_map
     make_substitution_map(const ExpressionType &symbol, const ValueType &value);
 
@@ -880,7 +892,11 @@ namespace Differentiation
     template <bool ignore_invalid_symbols = false,
               typename ExpressionType,
               typename ValueType,
-              typename = std::enable_if_t<                dealii::internal::is_explicitly_convertible<                  ExpressionType,                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&                std::is_constructible<ExpressionType, ValueType>::value>>
+              typename = std::enable_if_t<
+                dealii::internal::is_explicitly_convertible<
+                  ExpressionType,
+                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&
+                std::is_constructible<ExpressionType, ValueType>::value>>
     void
     add_to_substitution_map(types::substitution_map &substitution_map,
                             const ExpressionType &   symbol,
@@ -922,7 +938,11 @@ namespace Differentiation
     template <bool ignore_invalid_symbols = false,
               typename ExpressionType,
               typename ValueType,
-              typename = std::enable_if_t<                dealii::internal::is_explicitly_convertible<                  ExpressionType,                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&                std::is_constructible<ExpressionType, ValueType>::value>>
+              typename = std::enable_if_t<
+                dealii::internal::is_explicitly_convertible<
+                  ExpressionType,
+                  const SymEngine::RCP<const SymEngine::Basic> &>::value &&
+                std::is_constructible<ExpressionType, ValueType>::value>>
     void
     add_to_substitution_map(types::substitution_map &          substitution_map,
                             const std::vector<ExpressionType> &symbols,

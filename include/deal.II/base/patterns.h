@@ -1493,30 +1493,34 @@ namespace Patterns
 
     // Arithmetic types
     template <class T>
-    struct Convert<T,
-                   std::enable_if_t<std::is_arithmetic<T>::value>>
+    struct Convert<T, std::enable_if_t<std::is_arithmetic<T>::value>>
     {
       template <typename Dummy = T>
-      static
-        std::enable_if_t<std::is_same<Dummy, T>::value &&                                  std::is_same<T, bool>::value,                                std::unique_ptr<Patterns::PatternBase>>
-        to_pattern()
+      static std::enable_if_t<std::is_same<Dummy, T>::value &&
+                                std::is_same<T, bool>::value,
+                              std::unique_ptr<Patterns::PatternBase>>
+      to_pattern()
       {
         return std::make_unique<Patterns::Bool>();
       }
 
       template <typename Dummy = T>
-      static
-        std::enable_if_t<std::is_same<Dummy, T>::value &&                                  !std::is_same<T, bool>::value &&                                  std::is_integral<T>::value,                                std::unique_ptr<Patterns::PatternBase>>
-        to_pattern()
+      static std::enable_if_t<std::is_same<Dummy, T>::value &&
+                                !std::is_same<T, bool>::value &&
+                                std::is_integral<T>::value,
+                              std::unique_ptr<Patterns::PatternBase>>
+      to_pattern()
       {
         return std::make_unique<Patterns::Integer>(
           std::numeric_limits<T>::lowest(), std::numeric_limits<T>::max());
       }
 
       template <typename Dummy = T>
-      static
-        std::enable_if_t<std::is_same<Dummy, T>::value &&                                  !std::is_same<T, bool>::value &&                                  std::is_floating_point<T>::value,                                std::unique_ptr<Patterns::PatternBase>>
-        to_pattern()
+      static std::enable_if_t<std::is_same<Dummy, T>::value &&
+                                !std::is_same<T, bool>::value &&
+                                std::is_floating_point<T>::value,
+                              std::unique_ptr<Patterns::PatternBase>>
+      to_pattern()
       {
         return std::make_unique<Patterns::Double>(
           std::numeric_limits<T>::lowest(), std::numeric_limits<T>::max());
@@ -1688,9 +1692,7 @@ namespace Patterns
 
       // Rank of vector types
       template <class T>
-      struct RankInfo<
-        T,
-        std::enable_if_t<is_list_compatible<T>::value>>
+      struct RankInfo<T, std::enable_if_t<is_list_compatible<T>::value>>
       {
         static constexpr int list_rank =
           RankInfo<typename T::value_type>::list_rank + 1;
@@ -1700,9 +1702,7 @@ namespace Patterns
 
       // Rank of map types
       template <class T>
-      struct RankInfo<
-        T,
-        std::enable_if_t<is_map_compatible<T>::value>>
+      struct RankInfo<T, std::enable_if_t<is_map_compatible<T>::value>>
       {
         static constexpr int list_rank =
           max_list_rank<typename T::key_type, typename T::mapped_type>() + 1;
@@ -1767,8 +1767,7 @@ namespace Patterns
 
     // stl containers
     template <class T>
-    struct Convert<T,
-                   std::enable_if_t<is_list_compatible<T>::value>>
+    struct Convert<T, std::enable_if_t<is_list_compatible<T>::value>>
     {
       static std::unique_ptr<Patterns::PatternBase>
       to_pattern()
@@ -1835,8 +1834,7 @@ namespace Patterns
 
     // stl maps
     template <class T>
-    struct Convert<T,
-                   std::enable_if_t<is_map_compatible<T>::value>>
+    struct Convert<T, std::enable_if_t<is_map_compatible<T>::value>>
     {
       static std::unique_ptr<Patterns::PatternBase>
       to_pattern()

@@ -2458,10 +2458,9 @@ namespace internal
     // this function is for tensors of a rank not already handled
     // above
     template <int dim, int rank_>
-    DEAL_II_CONSTEXPR inline
-      std::enable_if_t<rank_ != 2, TableIndices<rank_>>
-      unrolled_to_component_indices(const unsigned int i,
-                                    const std::integral_constant<int, rank_> &)
+    DEAL_II_CONSTEXPR inline std::enable_if_t<rank_ != 2, TableIndices<rank_>>
+    unrolled_to_component_indices(const unsigned int i,
+                                  const std::integral_constant<int, rank_> &)
     {
       (void)i;
       Assert(

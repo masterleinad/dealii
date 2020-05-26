@@ -1374,27 +1374,24 @@ namespace internal
       return t;
     }
 
-    template <
-      typename T,
-      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
+    template <typename T,
+              typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(const T &t)
     {
       return Differentiation::SD::Expression(t);
     }
 
-    template <
-      typename T,
-      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
+    template <typename T,
+              typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(T &&t)
     {
       return Differentiation::SD::Expression(t);
     }
 
-    template <
-      typename T,
-      typename = std::enable_if_t<std::is_arithmetic<T>::value>>
+    template <typename T,
+              typename = std::enable_if_t<std::is_arithmetic<T>::value>>
     static Differentiation::SD::Expression
     value(const std::complex<T> &t)
     {

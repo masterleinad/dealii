@@ -1426,13 +1426,15 @@ namespace internal
 {
   namespace TensorImplementation
   {
-    template <int rank,
-              int dim,
-              typename Number,
-              typename OtherNumber,
-              std::enable_if_t<                !std::is_integral<                  typename ProductType<Number, OtherNumber>>::value &&
-                  !std::is_same<Number, Differentiation::SD::Expression>::value,
-                int>::type = 0>
+    template <
+      int rank,
+      int dim,
+      typename Number,
+      typename OtherNumber,
+      std::enable_if_t<
+        !std::is_integral<typename ProductType<Number, OtherNumber>>::value &&
+          !std::is_same<Number, Differentiation::SD::Expression>::value,
+        int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE void
                       division_operator(Tensor<rank, dim, Number> (&t)[dim],
                                         const OtherNumber &factor)
@@ -1444,13 +1446,15 @@ namespace internal
     }
 
 
-    template <int rank,
-              int dim,
-              typename Number,
-              typename OtherNumber,
-              std::enable_if_t<                std::is_integral<                  typename ProductType<Number, OtherNumber>>::value ||
-                  std::is_same<Number, Differentiation::SD::Expression>::value,
-                int>::type = 0>
+    template <
+      int rank,
+      int dim,
+      typename Number,
+      typename OtherNumber,
+      std::enable_if_t<
+        std::is_integral<typename ProductType<Number, OtherNumber>>::value ||
+          std::is_same<Number, Differentiation::SD::Expression>::value,
+        int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE void
                       division_operator(Tensor<rank, dim, Number> (&t)[dim],
                                         const OtherNumber &factor)
@@ -1860,12 +1864,14 @@ namespace internal
 {
   namespace TensorImplementation
   {
-    template <int rank,
-              int dim,
-              typename Number,
-              typename OtherNumber,
-              std::enable_if_t<                !std::is_integral<                  typename ProductType<Number, OtherNumber>>::value,
-                int>::type = 0>
+    template <
+      int rank,
+      int dim,
+      typename Number,
+      typename OtherNumber,
+      std::enable_if_t<
+        !std::is_integral<typename ProductType<Number, OtherNumber>>::value,
+        int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE
                       Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type>
                       division_operator(const Tensor<rank, dim, Number> &t,
@@ -1880,12 +1886,14 @@ namespace internal
     }
 
 
-    template <int rank,
-              int dim,
-              typename Number,
-              typename OtherNumber,
-              std::enable_if_t<                std::is_integral<                  typename ProductType<Number, OtherNumber>>::value,
-                int>::type = 0>
+    template <
+      int rank,
+      int dim,
+      typename Number,
+      typename OtherNumber,
+      std::enable_if_t<
+        std::is_integral<typename ProductType<Number, OtherNumber>>::value,
+        int>::type = 0>
     DEAL_II_CONSTEXPR DEAL_II_CUDA_HOST_DEV inline DEAL_II_ALWAYS_INLINE
                       Tensor<rank, dim, typename ProductType<Number, OtherNumber>::type>
                       division_operator(const Tensor<rank, dim, Number> &t,

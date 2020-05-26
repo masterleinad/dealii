@@ -44,28 +44,30 @@ namespace MatrixFreeOperators
     // a non-block vector has one block and the only subblock is the vector
     // itself
     template <typename VectorType>
-    std::enable_if_t<IsBlockVector<VectorType>::value,                            unsigned int>
+    std::enable_if_t<IsBlockVector<VectorType>::value, unsigned int>
     n_blocks(const VectorType &vector)
     {
       return vector.n_blocks();
     }
 
     template <typename VectorType>
-    std::enable_if_t<!IsBlockVector<VectorType>::value,                            unsigned int>
+    std::enable_if_t<!IsBlockVector<VectorType>::value, unsigned int>
     n_blocks(const VectorType &)
     {
       return 1;
     }
 
     template <typename VectorType>
-    std::enable_if_t<IsBlockVector<VectorType>::value,                            typename VectorType::BlockType &>
+    std::enable_if_t<IsBlockVector<VectorType>::value,
+                     typename VectorType::BlockType &>
     subblock(VectorType &vector, unsigned int block_no)
     {
       return vector.block(block_no);
     }
 
     template <typename VectorType>
-    std::enable_if_t<IsBlockVector<VectorType>::value,                            const typename VectorType::BlockType &>
+    std::enable_if_t<IsBlockVector<VectorType>::value,
+                     const typename VectorType::BlockType &>
     subblock(const VectorType &vector, unsigned int block_no)
     {
       AssertIndexRange(block_no, vector.n_blocks());
@@ -73,14 +75,14 @@ namespace MatrixFreeOperators
     }
 
     template <typename VectorType>
-    std::enable_if_t<!IsBlockVector<VectorType>::value,                            VectorType &>
+    std::enable_if_t<!IsBlockVector<VectorType>::value, VectorType &>
     subblock(VectorType &vector, unsigned int)
     {
       return vector;
     }
 
     template <typename VectorType>
-    std::enable_if_t<!IsBlockVector<VectorType>::value,                            const VectorType &>
+    std::enable_if_t<!IsBlockVector<VectorType>::value, const VectorType &>
     subblock(const VectorType &vector, unsigned int)
     {
       return vector;

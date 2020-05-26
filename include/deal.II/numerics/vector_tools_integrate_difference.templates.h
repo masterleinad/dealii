@@ -506,7 +506,7 @@ namespace VectorTools
 
     template <int dim, int spacedim, typename Number>
     DEAL_II_DEPRECATED
-      std::enable_if_t<!std::is_same<Number, double>::value,                              double>
+      std::enable_if_t<!std::is_same<Number, double>::value, double>
       integrate_difference_inner(
         const Function<spacedim> &                      exact_solution,
         const NormType &                                norm,
@@ -919,7 +919,8 @@ namespace VectorTools
               class OutVector,
               typename DoFHandlerType,
               int spacedim>
-    DEAL_II_DEPRECATED static std::enable_if_t<      !std::is_same<typename InVector::value_type, double>::value>
+    DEAL_II_DEPRECATED static std::enable_if_t<
+      !std::is_same<typename InVector::value_type, double>::value>
     do_integrate_difference(
       const dealii::hp::MappingCollection<dim, spacedim> &mapping,
       const DoFHandlerType &                              dof,
@@ -1063,7 +1064,8 @@ namespace VectorTools
   }
 
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const Mapping<dim, spacedim> &   mapping,
                        const DoFHandler<dim, spacedim> &dof,
                        const InVector &                 fe_function,
@@ -1113,7 +1115,8 @@ namespace VectorTools
 
 
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const DoFHandler<dim, spacedim> &dof,
                        const InVector &                 fe_function,
                        const Function<spacedim> &       exact_solution,
@@ -1163,7 +1166,8 @@ namespace VectorTools
   }
 
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(
     const dealii::hp::MappingCollection<dim, spacedim> &mapping,
     const dealii::hp::DoFHandler<dim, spacedim> &       dof,
@@ -1213,7 +1217,8 @@ namespace VectorTools
   }
 
   template <int dim, class InVector, class OutVector, int spacedim>
-  DEAL_II_DEPRECATED std::enable_if_t<    !std::is_same<typename InVector::value_type, double>::value>
+  DEAL_II_DEPRECATED std::enable_if_t<
+    !std::is_same<typename InVector::value_type, double>::value>
   integrate_difference(const dealii::hp::DoFHandler<dim, spacedim> &dof,
                        const InVector &                             fe_function,
                        const Function<spacedim> &          exact_solution,
