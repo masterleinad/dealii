@@ -508,9 +508,9 @@ namespace Differentiation
                              double,
                              std::complex<double>>;
         using OptimizerType =
-          std::conditional<!boost::is_complex<ReturnType_>::value,
-                           SymEngine::LambdaRealDoubleVisitor,
-                           SymEngine::LambdaComplexDoubleVisitor>;
+          std::conditional_t<!boost::is_complex<ReturnType_>::value,
+                             SymEngine::LambdaRealDoubleVisitor,
+                             SymEngine::LambdaComplexDoubleVisitor>;
 
 
         /**

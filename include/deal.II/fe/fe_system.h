@@ -499,7 +499,7 @@ public:
                     std::pair<std::unique_ptr<FiniteElement<dim, spacedim>>,
                               unsigned int>>::value ||
        std::is_base_of<FiniteElement<dim, spacedim>,
-                       std::decay_t<FEPairs>::type>::value)...>>
+                       std::decay_t<FEPairs>>::value)...>::type>
   FESystem(FEPairs &&... fe_pairs);
 
   /**
