@@ -66,12 +66,12 @@ public:
   /**
    * Read-only access the value of the <tt>i</tt>th index.
    */
-  DEAL_II_CONSTEXPR std::size_t operator[](const unsigned int i) const;
+  constexpr std::size_t operator[](const unsigned int i) const;
 
   /**
    * Write access the value of the <tt>i</tt>th index.
    */
-  DEAL_II_CONSTEXPR std::size_t &operator[](const unsigned int i);
+  constexpr std::size_t &operator[](const unsigned int i);
 
   /**
    * Compare two index fields for equality.
@@ -89,7 +89,7 @@ public:
    * Sort the indices in ascending order. While this operation is not very
    * useful for Table objects, it is used for the SymmetricTensor class.
    */
-  DEAL_II_CONSTEXPR void
+  constexpr void
   sort();
 
   /**
@@ -124,8 +124,8 @@ constexpr TableIndices<N>::TableIndices(const T... args)
 
 
 template <int N>
-DEAL_II_CONSTEXPR inline std::size_t TableIndices<N>::
-                                     operator[](const unsigned int i) const
+constexpr inline std::size_t TableIndices<N>::
+                             operator[](const unsigned int i) const
 {
   AssertIndexRange(i, N);
   return indices[i];
@@ -133,8 +133,7 @@ DEAL_II_CONSTEXPR inline std::size_t TableIndices<N>::
 
 
 template <int N>
-DEAL_II_CONSTEXPR inline std::size_t &TableIndices<N>::
-                                      operator[](const unsigned int i)
+constexpr inline std::size_t &TableIndices<N>::operator[](const unsigned int i)
 {
   AssertIndexRange(i, N);
   return indices[i];
@@ -160,7 +159,7 @@ TableIndices<N>::operator!=(const TableIndices<N> &other) const
 
 
 template <int N>
-DEAL_II_CONSTEXPR inline void
+constexpr inline void
 TableIndices<N>::sort()
 {
   std::sort(std::begin(indices), std::end(indices));
