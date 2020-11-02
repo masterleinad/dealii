@@ -86,54 +86,29 @@ template struct GeometryInfo<3>;
 template struct GeometryInfo<4>;
 
 template void
-GeometryInfo<1>::alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<1> (&)[vertices_per_cell],
-   Tensor<1 - 1, 1> (&)[vertices_per_cell])
-#else
-  (const Point<1> *, Tensor<1 - 1, 1> *)
-#endif
-    ;
+GeometryInfo<1>::alternating_form_at_vertices(
+  const Point<1> (&)[vertices_per_cell],
+  Tensor<1 - 1, 1> (&)[vertices_per_cell]);
 
 template void
-GeometryInfo<1>::alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<2> (&)[vertices_per_cell],
-   Tensor<2 - 1, 2> (&)[vertices_per_cell])
-#else
-  (const Point<2> *, Tensor<2 - 1, 2> *)
-#endif
-    ;
+GeometryInfo<1>::alternating_form_at_vertices(
+  const Point<2> (&)[vertices_per_cell],
+  Tensor<2 - 1, 2> (&)[vertices_per_cell]);
 
 template void
-GeometryInfo<2>::alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<2> (&vertices)[vertices_per_cell],
-   Tensor<2 - 2, 2> (&forms)[vertices_per_cell])
-#else
-  (const Point<2> *, Tensor<2 - 2, 2> *)
-#endif
-    ;
+GeometryInfo<2>::alternating_form_at_vertices(
+  const Point<2> (&vertices)[vertices_per_cell],
+  Tensor<2 - 2, 2> (&forms)[vertices_per_cell]);
 
 template void
-GeometryInfo<2>::alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<3> (&vertices)[vertices_per_cell],
-   Tensor<3 - 2, 3> (&forms)[vertices_per_cell])
-#else
-  (const Point<3> *, Tensor<3 - 2, 3> *)
-#endif
-    ;
+GeometryInfo<2>::alternating_form_at_vertices(
+  const Point<3> (&vertices)[vertices_per_cell],
+  Tensor<3 - 2, 3> (&forms)[vertices_per_cell]);
 
 
 template void
-GeometryInfo<3>::alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<3> (&vertices)[vertices_per_cell],
-   Tensor<3 - 3, 3> (&forms)[vertices_per_cell])
-#else
-  (const Point<3> *, Tensor<3 - 3, 3> *)
-#endif
-    ;
+GeometryInfo<3>::alternating_form_at_vertices(
+  const Point<3> (&vertices)[vertices_per_cell],
+  Tensor<3 - 3, 3> (&forms)[vertices_per_cell]);
 
 DEAL_II_NAMESPACE_CLOSE

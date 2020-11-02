@@ -23,41 +23,25 @@ DEAL_II_NAMESPACE_OPEN
 
 template <int dim>
 constexpr const SymmetricTensor<2, dim>
-  Physics::Elasticity::StandardTensors<dim>::I
-#  ifdef DEAL_II_CXX14_CONSTEXPR_BUG
-  = unit_symmetric_tensor<dim>()
-#  endif
-  ;
+  Physics::Elasticity::StandardTensors<dim>::I;
 
 
 
 template <int dim>
 constexpr const SymmetricTensor<4, dim>
-  Physics::Elasticity::StandardTensors<dim>::S
-#  ifdef DEAL_II_CXX14_CONSTEXPR_BUG
-  = identity_tensor<dim>()
-#  endif
-  ;
+  Physics::Elasticity::StandardTensors<dim>::S;
 
 
 
 template <int dim>
 constexpr const SymmetricTensor<4, dim>
-  Physics::Elasticity::StandardTensors<dim>::IxI
-#  ifdef DEAL_II_CXX14_CONSTEXPR_BUG
-  = outer_product(unit_symmetric_tensor<dim>(), unit_symmetric_tensor<dim>())
-#  endif
-  ;
+  Physics::Elasticity::StandardTensors<dim>::IxI;
 
 
 
 template <int dim>
 constexpr const SymmetricTensor<4, dim>
-  Physics::Elasticity::StandardTensors<dim>::dev_P
-#  ifdef DEAL_II_CXX14_CONSTEXPR_BUG
-  = deviator_tensor<dim>()
-#  endif
-  ;
+  Physics::Elasticity::StandardTensors<dim>::dev_P;
 
 #endif // DOXYGEN
 

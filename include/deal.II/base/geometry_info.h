@@ -2550,13 +2550,9 @@ struct GeometryInfo
    */
   template <int spacedim>
   static void
-  alternating_form_at_vertices
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-    (const Point<spacedim> (&vertices)[vertices_per_cell],
-     Tensor<spacedim - dim, spacedim> (&forms)[vertices_per_cell]);
-#else
-    (const Point<spacedim> *vertices, Tensor<spacedim - dim, spacedim> *forms);
-#endif
+  alternating_form_at_vertices(
+    const Point<spacedim> (&vertices)[vertices_per_cell],
+    Tensor<spacedim - dim, spacedim> (&forms)[vertices_per_cell]);
 
   /**
    * For each face of the reference cell, this field stores the coordinate
@@ -4954,13 +4950,9 @@ namespace internal
 template <int dim>
 template <int spacedim>
 inline void
-GeometryInfo<dim>::alternating_form_at_vertices
-#  ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-  (const Point<spacedim> (&vertices)[vertices_per_cell],
-   Tensor<spacedim - dim, spacedim> (&forms)[vertices_per_cell])
-#  else
-  (const Point<spacedim> *vertices, Tensor<spacedim - dim, spacedim> *forms)
-#  endif
+GeometryInfo<dim>::alternating_form_at_vertices(
+  const Point<spacedim> (&vertices)[vertices_per_cell],
+  Tensor<spacedim - dim, spacedim> (&forms)[vertices_per_cell])
 {
   // for each of the vertices,
   // compute the alternating form

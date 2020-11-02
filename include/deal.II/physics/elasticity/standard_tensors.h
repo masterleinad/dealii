@@ -68,11 +68,8 @@ namespace Physics
        * unit_symmetric_tensor(). If one is to interpret the tensor as a
        * matrix, then this simply corresponds to the identity matrix.
        */
-      static constexpr const SymmetricTensor<2, dim> I
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-        = unit_symmetric_tensor<dim>()
-#endif
-        ;
+      static constexpr const SymmetricTensor<2, dim> I =
+        unit_symmetric_tensor<dim>();
 
       /**
        * The fourth-order referential/spatial unit symmetric tensor
@@ -101,11 +98,7 @@ namespace Physics
        * the fourth-order identity tensor, but rather as a symmetrization
        * operator.
        */
-      static constexpr const SymmetricTensor<4, dim> S
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-        = identity_tensor<dim>()
-#endif
-        ;
+      static constexpr const SymmetricTensor<4, dim> S = identity_tensor<dim>();
 
       /**
        * The fourth-order referential/spatial tensor $\mathbf{I} \otimes
@@ -117,12 +110,9 @@ namespace Physics
        *  \textrm{trace}\{ \bullet \} \mathbf{I} \, .
        * @f]
        */
-      static constexpr const SymmetricTensor<4, dim> IxI
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-        = outer_product(unit_symmetric_tensor<dim>(),
-                        unit_symmetric_tensor<dim>())
-#endif
-        ;
+      static constexpr const SymmetricTensor<4, dim> IxI =
+        outer_product(unit_symmetric_tensor<dim>(),
+                      unit_symmetric_tensor<dim>());
 
       //@}
 
@@ -167,11 +157,8 @@ namespace Physics
        * @dealiiWriggersA{47,3.129}
        * @dealiiHolzapfelA{232,6.105}
        */
-      static constexpr const SymmetricTensor<4, dim> dev_P
-#ifndef DEAL_II_CXX14_CONSTEXPR_BUG
-        = deviator_tensor<dim>()
-#endif
-        ;
+      static constexpr const SymmetricTensor<4, dim> dev_P =
+        deviator_tensor<dim>();
 
       /**
        * Return the fourth-order referential deviatoric tensor, as constructed
