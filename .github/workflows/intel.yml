@@ -1,0 +1,39 @@
+name: github-icc
+
+on: [push, pull_request]
+
+jobs:
+  icc:
+    # simple serial build using apple clang
+
+    name: Intel C++
+    runs-on: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup_icc
+      run: |
+       # use wget to fetch the Intel repository public key
+       cd /tmp
+       wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+       # add to your apt sources keyring so that archives signed with this key will be trusted.
+       sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+       # remove the public key
+       rm GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+       echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+       sudo apt-get update
+       sudo apt-get install intel-basekit libopenmpi-dev
+       echo "source /opt/intel/oneapi/setvars.sh" >> /etc/profile.d 
+    - name: configure
+      run: |
+        CC=icc CXX=icpc cmake -D CMAKE_BUILD_TYPE=Debug -D DEAL_II_WITH_64BIT_INDICES=ON -D DEAL_II_CXX_FLAGS='-Werror' -D DEAL_II_WITH_MPI=on .
+    - name: archive
+      uses: actions/upload-artifact@v1
+      with:
+        name: icpc-parallel-detailed.log
+        path: detailed.log
+    - name: build
+      run: |
+        make -j 2
+        make -j 2 test #quicktests
+
