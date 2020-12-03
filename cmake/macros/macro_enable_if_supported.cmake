@@ -52,10 +52,12 @@ MACRO(ENABLE_IF_SUPPORTED _variable _flag)
     STRING(REPLACE "," "" _flag_name "${_flag_name}")
     STRING(REPLACE "-" "_" _flag_name "${_flag_name}")
     STRING(REPLACE "+" "_" _flag_name "${_flag_name}")
+    ADD_FLAGS(CMAKE_REQUIRED_FLAGS "${_werror_string}")
     CHECK_CXX_COMPILER_FLAG(
-      "${_werror_string}${_flag_stripped}"
+      "${_flag_stripped}"
       DEAL_II_HAVE_FLAG_${_flag_name}
       )
+    RESET_CMAKE_REQUIRED()
     IF(DEAL_II_HAVE_FLAG_${_flag_name})
       SET(${_variable} "${${_variable}} ${_flag_stripped_orig}")
       STRING(STRIP "${${_variable}}" ${_variable})
