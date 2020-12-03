@@ -81,13 +81,13 @@ MACRO(FEATURE_BOOST_CONFIGURE_BUNDLED)
   #
   # Add rt to the link interface as well, boost/chrono needs it.
   #
-  IF(NOT CMAKE_SYSTEM_NAME MATCHES "Windows")
-    FIND_SYSTEM_LIBRARY(rt_LIBRARY NAMES rt)
-    MARK_AS_ADVANCED(rt_LIBRARY)
-    IF(NOT rt_LIBRARY MATCHES "-NOTFOUND")
-      SET(BOOST_LIBRARIES ${rt_LIBRARY})
-    ENDIF()
-  ENDIF()
+  #IF(NOT CMAKE_SYSTEM_NAME MATCHES "Windows")
+  #  FIND_SYSTEM_LIBRARY(rt_LIBRARY NAMES rt)
+  #  MARK_AS_ADVANCED(rt_LIBRARY)
+  #  IF(NOT rt_LIBRARY MATCHES "-NOTFOUND")
+  #    SET(BOOST_LIBRARIES ${rt_LIBRARY})
+  #  ENDIF()
+  #ENDIF()
 
   # We need to set this path before calling the configure function
   # to be able to use the include paths in the checks.
