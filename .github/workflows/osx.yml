@@ -42,7 +42,7 @@ jobs:
         path: CMakeFiles/CMakeError.log
     - name: build
       run: |
-        make -j 2
+        make VERBOSE=1 -j 2
         make -j 2 test # quicktests
 
   osx-parallel64:
@@ -90,6 +90,6 @@ jobs:
         path: CMakeFiles/CMakeError.log
     - name: build
       run: |
-        make -j 2
+        make VERBOSE=1 -j 2
         make -j 2 test #quicktests
 
