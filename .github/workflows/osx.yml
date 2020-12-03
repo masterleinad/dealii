@@ -26,6 +26,20 @@ jobs:
       with:
         name: serial-detailed.log
         path: detailed.log
+    - name: archive error 1
+      uses: actions/upload-artifact@v1
+      if: always()
+      continue-on-error: true
+      with:
+        name: osx-serial-CMakeOutput.log
+        path: build/CMakeFiles/CMakeOutput.log
+    - name: archive error 2
+      uses: actions/upload-artifact@v1
+      if: always()
+      continue-on-error: true
+      with:
+        name: osx-serial-CMakeError.log
+        path: build/CMakeFiles/CMakeError.log
     - name: build
       run: |
         make -j 2
@@ -60,6 +74,20 @@ jobs:
       with:
         name: parallel-detailed.log
         path: detailed.log
+    - name: archive error 1
+      uses: actions/upload-artifact@v1
+      if: always()
+      continue-on-error: true
+      with:
+        name: osx-parallel-CMakeOutput.log
+        path: build/CMakeFiles/CMakeOutput.log
+    - name: archive error 2
+      uses: actions/upload-artifact@v1
+      if: always()
+      continue-on-error: true
+      with:
+        name: osx-parallel-CMakeError.log
+        path: build/CMakeFiles/CMakeError.log
     - name: build
       run: |
         make -j 2
