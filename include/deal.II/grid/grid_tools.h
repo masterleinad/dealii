@@ -3972,7 +3972,7 @@ namespace GridTools
     template <typename DataType,
               typename MeshType,
               typename MeshCellIteratorType>
-    void
+    inline void
     exchange_cell_data(
       const MeshType &mesh,
       const std::function<
@@ -4210,7 +4210,7 @@ namespace GridTools
   } // namespace internal
 
   template <typename DataType, typename MeshType>
-  void
+  inline void
   exchange_cell_data_to_ghosts(
     const MeshType &                                     mesh,
     const std::function<std_cxx17::optional<DataType>(
@@ -4248,7 +4248,7 @@ namespace GridTools
 
 
   template <typename DataType, typename MeshType>
-  void
+  inline void
   exchange_cell_data_to_level_ghosts(
     const MeshType &                                    mesh,
     const std::function<std_cxx17::optional<DataType>(
