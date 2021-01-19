@@ -549,7 +549,9 @@ namespace parallel
     for (int d = 0; d < spacedim; ++d)
       invalid_point[d] = std::numeric_limits<double>::quiet_NaN();
 
-    const auto pack = [&](const auto &cell) {
+    using ActiveCellIteratorType =
+      typename TriangulationBase<dim, spacedim>::active_cell_iterator;
+    const auto pack = [&](const ActiveCellIteratorType &cell) {
       std::vector<Point<spacedim>> vertices(cell->n_vertices());
 
       for (const auto v : cell->vertex_indices())
@@ -561,7 +563,8 @@ namespace parallel
       return vertices;
     };
 
-    const auto unpack = [&](const auto &cell, const auto &vertices) {
+    const auto unpack = [&](const ActiveCellIteratorType &      cell,
+                            const std::vector<Point<spacedim>> &vertices) {
       for (const auto v : cell->vertex_indices())
         if (std::isnan(vertices[v][0]) == false)
           cell->vertex(v) = vertices[v];
