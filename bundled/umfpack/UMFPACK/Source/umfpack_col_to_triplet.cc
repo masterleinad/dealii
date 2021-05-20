@@ -35,7 +35,7 @@ GLOBAL Int UMFPACK_col_to_triplet
     /* construct the column indices */
     /* ---------------------------------------------------------------------- */
 
-    if (!Ap || !Tj)
+    if ((Ap == nullptr) || (Tj == nullptr))
     {
 	return (UMFPACK_ERROR_argument_missing) ;
     }

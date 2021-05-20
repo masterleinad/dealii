@@ -150,7 +150,7 @@ UMFPACK_solve
 	irstep = 0 ;
     }
 
-    if (!Xx || !Bx)
+    if ((Xx == nullptr) || (Bx == nullptr))
     {
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_argument_missing ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -168,7 +168,7 @@ UMFPACK_solve
 
 #ifdef WSOLVE
 
-    if (!W || !Pattern)
+    if ((W == nullptr) || (Pattern == nullptr))
     {
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_argument_missing ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -198,7 +198,7 @@ UMFPACK_solve
 
     Pattern = (Int *) UMF_malloc (n, sizeof (Int)) ;
     W = (double *) UMF_malloc (wsize, sizeof (double)) ;
-    if (!W || !Pattern)
+    if ((W == nullptr) || (Pattern == nullptr))
     {
 	DEBUGm4 (("out of memory: solve work\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;

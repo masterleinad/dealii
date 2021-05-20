@@ -189,7 +189,7 @@ GLOBAL Int UMFPACK_numeric
     Info [UMFPACK_NCOL] = n_col ;
     Info [UMFPACK_SIZE_OF_UNIT] = (double) (sizeof (Unit)) ;
 
-    if (!Ap || !Ai || !Ax || !NumericHandle)
+    if ((Ap == nullptr) || (Ai == nullptr) || (Ax == nullptr) || (NumericHandle == nullptr))
     {
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_argument_missing ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -220,7 +220,7 @@ GLOBAL Int UMFPACK_numeric
     Work->nb = Symbolic->nb ;
     Work->n1 = Symbolic->n1 ;
 
-    if (!work_alloc (Work, Symbolic))
+    if (work_alloc (Work, Symbolic) == 0)
     {
 	DEBUGm4 (("out of memory: numeric work\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -244,7 +244,7 @@ GLOBAL Int UMFPACK_numeric
      * factorization.  * This request is reduced if it fails.
      */
 
-    if (!numeric_alloc (&Numeric, Symbolic, alloc_init, scale))
+    if (numeric_alloc (&Numeric, Symbolic, alloc_init, scale) == 0)
     {
 	DEBUGm4 (("out of memory: initial numeric\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -302,7 +302,7 @@ GLOBAL Int UMFPACK_numeric
 
     Info [UMFPACK_FORCED_UPDATES] = Work->nforced ;
     Info [UMFPACK_VARIABLE_INIT] = Numeric->init_usage ;
-    if (Symbolic->prefer_diagonal)
+    if (Symbolic->prefer_diagonal != 0)
     {
 	Info [UMFPACK_NOFF_DIAG] = Work->noff_diagonal ;
     }
@@ -349,17 +349,17 @@ GLOBAL Int UMFPACK_numeric
     {
 	/* reduce Lpos, Uilen, and Uip from size n_row+1 to size npiv */
 	inew = (Int *) UMF_realloc (Numeric->Lpos, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Lpos = inew ;
 	}
 	inew = (Int *) UMF_realloc (Numeric->Uilen, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Uilen = inew ;
 	}
 	inew = (Int *) UMF_realloc (Numeric->Uip, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Uip = inew ;
 	}
@@ -369,17 +369,17 @@ GLOBAL Int UMFPACK_numeric
     {
 	/* reduce Upos, Lilen, and Lip from size n_col+1 to size npiv */
 	inew = (Int *) UMF_realloc (Numeric->Upos, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Upos = inew ;
 	}
 	inew = (Int *) UMF_realloc (Numeric->Lilen, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Lilen = inew ;
 	}
 	inew = (Int *) UMF_realloc (Numeric->Lip, npiv+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Lip = inew ;
 	}
@@ -398,7 +398,7 @@ GLOBAL Int UMFPACK_numeric
     if (ulen > 0 && ulen < n_col)
     {
 	inew = (Int *) UMF_realloc (Numeric->Upattern, ulen+1, sizeof (Int)) ;
-	if (inew)
+	if (inew != nullptr)
 	{
 	    Numeric->Upattern = inew ;
 	}
@@ -417,7 +417,7 @@ GLOBAL Int UMFPACK_numeric
     if (newsize < Numeric->size)
     {
 	mnew = (Unit *) UMF_realloc (Numeric->Memory, newsize, sizeof (Unit)) ;
-	if (mnew)
+	if (mnew != nullptr)
 	{
 	    /* realloc succeeded (how can it fail since the size is reduced?) */
 	    Numeric->Memory = mnew ;
@@ -447,7 +447,7 @@ GLOBAL Int UMFPACK_numeric
 	(double) npiv,			/* actual # pivots found */
 	(double) Numeric->maxnrows,	/* actual largest #rows in front */
 	(double) Numeric->maxncols,	/* actual largest #cols in front */
-	scale != UMFPACK_SCALE_NONE,
+	static_cast<long>(scale != UMFPACK_SCALE_NONE),
 	Symbolic->prefer_diagonal,
 	ACTUAL) ;
 
@@ -551,7 +551,7 @@ PRIVATE Int numeric_alloc
      * free'd in umfpack_free_numeric */
     Numeric = (NumericType *) UMF_malloc (1, sizeof (NumericType)) ;
 
-    if (!Numeric)
+    if (Numeric == nullptr)
     {
 	return (FALSE) ;	/* out of memory */
     }
@@ -592,9 +592,9 @@ PRIVATE Int numeric_alloc
      * Numeric->Upattern is free'd in umfpack_free_numeric. */
     Numeric->Upattern = (Int *) NULL ;	/* used for singular matrices only */
 
-    if (!Numeric->D || !Numeric->Rperm || !Numeric->Cperm || !Numeric->Upos ||
-	!Numeric->Lpos || !Numeric->Lilen || !Numeric->Uilen || !Numeric->Lip ||
-	!Numeric->Uip || (scale != UMFPACK_SCALE_NONE && !Numeric->Rs))
+    if ((Numeric->D == nullptr) || (Numeric->Rperm == nullptr) || (Numeric->Cperm == nullptr) || (Numeric->Upos == nullptr) ||
+	(Numeric->Lpos == nullptr) || (Numeric->Lilen == nullptr) || (Numeric->Uilen == nullptr) || (Numeric->Lip == nullptr) ||
+	(Numeric->Uip == nullptr) || (scale != UMFPACK_SCALE_NONE && (Numeric->Rs == nullptr)))
     {
 	return (FALSE) ;	/* out of memory */
     }
@@ -632,17 +632,17 @@ PRIVATE Int numeric_alloc
     /* allocates 1 object: */
     /* keep trying until successful, or memory request is too small */
     trying = TRUE ;
-    while (trying)
+    while (trying != 0)
     {
 	Numeric->Memory = (Unit *) UMF_malloc (Numeric->size, sizeof (Unit)) ;
-	if (Numeric->Memory)
+	if (Numeric->Memory != nullptr)
 	{
 	    DEBUG0 (("Successful Numeric->size: " ID "\n", Numeric->size)) ;
 	    return (TRUE) ;
 	}
 	/* too much, reduce the request (but not below the minimum) */
 	/* and try again */
-	trying = Numeric->size > min_usage ;
+	trying = static_cast<long>(Numeric->size > min_usage) ;
 	Numeric->size = (Int)
 	    (UMF_REALLOC_REDUCTION * ((double) Numeric->size)) ;
 	Numeric->size = MAX (min_usage, Numeric->size) ;
@@ -701,17 +701,17 @@ PRIVATE Int work_alloc
     Work->E = (Int *) UMF_malloc (Work->elen, sizeof (Int)) ;
     Work->Front_new1strow = (Int *) UMF_malloc (nfr + 1, sizeof (Int)) ;
 
-    ok = (Work->Frpos && Work->Fcpos && Work->Lpattern
-	&& Work->Wp && Work->Wrp && Work->Frows && Work->Fcols
-	&& Work->Wio && Work->Woi && Work->Woo && Work->Wm
-	&& Work->E && Work->Front_new1strow && Work->Wx && Work->Wy) ;
+    ok = static_cast<long>((Work->Frpos != nullptr) && (Work->Fcpos != nullptr) && (Work->Lpattern != nullptr)
+	&& (Work->Wp != nullptr) && (Work->Wrp != nullptr) && (Work->Frows != nullptr) && (Work->Fcols != nullptr)
+	&& (Work->Wio != nullptr) && (Work->Woi != nullptr) && (Work->Woo != nullptr) && (Work->Wm != nullptr)
+	&& (Work->E != nullptr) && (Work->Front_new1strow != nullptr) && (Work->Wx != nullptr) && (Work->Wy != nullptr)) ;
 
     /* 2 allocations: accounted for in UMF_set_stats (work_usage) */
-    if (Symbolic->prefer_diagonal)
+    if (Symbolic->prefer_diagonal != 0)
     {
 	Work->Diagonal_map  = (Int *) UMF_malloc (nn, sizeof (Int)) ;
 	Work->Diagonal_imap = (Int *) UMF_malloc (nn, sizeof (Int)) ;
-	ok = ok && Work->Diagonal_map && Work->Diagonal_imap ;
+	ok = static_cast<long>((static_cast<long>(ok != 0) != 0) && (Work->Diagonal_map != nullptr) && (Work->Diagonal_imap) != nullptr) ;
     }
     else
     {
@@ -722,7 +722,7 @@ PRIVATE Int work_alloc
 
     /* 1 allocation, may become part of Numeric (if singular or rectangular): */
     Work->Upattern = (Int *) UMF_malloc (n_col + 1, sizeof (Int)) ;
-    ok = ok && Work->Upattern ;
+    ok = static_cast<long>((static_cast<long>(ok != 0) != 0) && (Work->Upattern) != nullptr) ;
 
     /* current frontal matrix does not yet exist */
     Work->Flublock = (Entry *) NULL ;
@@ -745,7 +745,7 @@ PRIVATE void free_work
 )
 {
     DEBUG0 (("work free:\n")) ;
-    if (Work)
+    if (Work != nullptr)
     {
 	/* these 16 objects do exist */
 	Work->Wx = (Entry *) UMF_free ((void *) Work->Wx) ;

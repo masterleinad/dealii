@@ -62,12 +62,12 @@ GLOBAL Int UMF_init_front
     DEBUG1 (("CURR before init:\n")) ;
     UMF_dump_current_front (Numeric, Work, FALSE) ;
 #endif
-    if (Work->do_grow)
+    if (Work->do_grow != 0)
     {
 	fnr2 = UMF_FRONTAL_GROWTH * Work->fnrows_new + 2 ;
 	fnc2 = UMF_FRONTAL_GROWTH * Work->fncols_new + 2 ;
 	if (!UMF_grow_front (Numeric, fnr2, fnc2, Work,
-	    Work->pivrow_in_front ? 2 : 0))
+	    Work->pivrow_in_front != 0 ? 2 : 0))
 	{
 	    /* :: out of memory in umf_init_front :: */
 	    DEBUGm4 (("out of memory: init front\n")) ;
@@ -116,7 +116,7 @@ GLOBAL Int UMF_init_front
 
     Fl = Work->Flblock ;
 
-    if (Work->pivcol_in_front)
+    if (Work->pivcol_in_front != 0)
     {
 	/* Append the pivot column extension.
 	 * Note that all we need to do is increment the size, since the
@@ -176,7 +176,7 @@ GLOBAL Int UMF_init_front
     /* ---------------------------------------------------------------------- */
 
     Wrow = Work->Wrow ;
-    if (Work->pivrow_in_front)
+    if (Work->pivrow_in_front != 0)
     {
 	/* append the pivot row extension */
 	Work->fscan_col = fncols ;	/* only scan the new columns */

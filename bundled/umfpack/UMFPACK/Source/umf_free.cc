@@ -26,7 +26,7 @@ GLOBAL void *UMF_free
 )
 {
     DEBUG0 (("UMF_free: " ID "\n", (Int) p)) ;
-    if (p)
+    if (p != nullptr)
     {
 
 	/* see AMD/Source/amd_global.c for the memory allocator selection */

@@ -126,5 +126,5 @@ int umf_divcomplex
     }
     *cr = tr ;
     *ci = ti ;
-    return (SCALAR_IS_ZERO (den)) ;
+    return static_cast<int>(SCALAR_IS_ZERO (den)) ;
 }

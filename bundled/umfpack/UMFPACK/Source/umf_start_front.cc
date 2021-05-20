@@ -42,7 +42,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 	(double) (fnrows_max + nb) * (double) (fncols_max + nb) ;
     fcurr_size = Work->fcurr_size ;
 
-    if (Symbolic->prefer_diagonal)
+    if (Symbolic->prefer_diagonal != 0)
     {
 	/* Get a rough upper bound on the degree of the first pivot column in
 	 * this front.  Note that Col_degree is not maintained if diagonal
@@ -68,7 +68,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 	{
 	    DEBUG1 (("Tuple (" ID "," ID ")\n", tp->e, tp->f)) ;
 	    e = tp->e ;
-	    if (!E [e]) continue ;
+	    if (E [e] == 0) continue ;
 	    f = tp->f ;
 	    p = Memory + E [e] ;
 	    ep = (Element *) p ;
@@ -144,7 +144,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 
     /* get the maximum front size, avoiding integer overflow */
     overflow = INT_OVERFLOW (maxbytes) ;
-    if (overflow)
+    if (overflow != 0)
     {
 	/* :: int overflow, max front size :: */
 	maxfrsize = Int_MAX / sizeof (Entry) ;
@@ -208,7 +208,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
     DEBUGm2 (("    maxfrsize " ID "  fnr_curr " ID " fnc_curr " ID "\n", maxfrsize,
 	Work->fnr_curr, Work->fnc_curr)) ;
 
-    if (fsize >= maxfrsize && !overflow)
+    if (fsize >= maxfrsize && (overflow == 0))
     {
 	/* max working array is small, allocate all of it */
 	fnr2 = fnrows_max + nb ;

@@ -52,7 +52,7 @@ namespace tbb {
         }
 #else
         int error_code = pthread_mutex_lock(&m.impl);
-        if( error_code )
+        if( error_code != 0 )
             tbb::internal::handle_perror(error_code,"mutex::scoped_lock: pthread_mutex_lock failed");
 #endif /* _WIN32||_WIN64 */
         my_mutex = &m;
@@ -119,7 +119,7 @@ void mutex::internal_construct() {
     state = INITIALIZED;
 #else
     int error_code = pthread_mutex_init(&impl,NULL);
-    if( error_code )
+    if( error_code != 0 )
         tbb::internal::handle_perror(error_code,"mutex: pthread_mutex_init failed");
 #endif /* _WIN32||_WIN64*/
     ITT_SYNC_CREATE(&impl, _T("tbb::mutex"), _T(""));

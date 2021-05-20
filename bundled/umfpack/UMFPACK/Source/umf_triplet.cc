@@ -134,7 +134,7 @@ GLOBAL Int UMF_triplet_nomap_nox
 	Rj [p] = Tj [k] ;
 #ifdef DO_VALUES
 #ifdef COMPLEX
-	if (split)
+	if (split != 0)
 	{
 	    Rx [p] = Tx [k] ;
 	    Rz [p] = Tz [k] ;
@@ -219,7 +219,7 @@ GLOBAL Int UMF_triplet_nomap_nox
 #ifdef DO_VALUES
 		/* sum the entry */
 #ifdef COMPLEX
-		if (split)
+		if (split != 0)
 		{
 		    Rx [pj] += Rx [p] ;
 		    Rz [pj] += Rz [p] ;
@@ -248,7 +248,7 @@ GLOBAL Int UMF_triplet_nomap_nox
 		    Rj [pdest] = j ;
 #ifdef DO_VALUES
 #ifdef COMPLEX
-		    if (split)
+		    if (split != 0)
 		    {
 			Rx [pdest] = Rx [p] ;
 			Rz [pdest] = Rz [p] ;
@@ -276,7 +276,7 @@ GLOBAL Int UMF_triplet_nomap_nox
     /* ---------------------------------------------------------------------- */
 
 #ifdef DO_MAP
-    if (duplicates)
+    if (duplicates != 0)
     {
 	for (k = 0 ; k < nz ; k++)
 	{
@@ -358,7 +358,7 @@ GLOBAL Int UMF_triplet_nomap_nox
 	    Ai [cp] = i ;
 #ifdef DO_VALUES
 #ifdef COMPLEX
-	    if (split)
+	    if (split != 0)
 	    {
 		Ax [cp] = Rx [p] ;
 		Az [cp] = Rz [p] ;

@@ -62,7 +62,7 @@ GLOBAL void UMF_set_stats
 	+ DUNITS (Entry, n_inner+1)	/* D */
 	+ 4 * DUNITS (Int, n_row+1)	/* Rperm, Lpos, Uilen, Uip */
 	+ 4 * DUNITS (Int, n_col+1)	/* Cperm, Upos, Lilen, Lip */
-	+ (scale ? DUNITS (Entry, n_row) : 0) ;   /* Rs, row scale factors */
+	+ (scale != 0 ? DUNITS (Entry, n_row) : 0) ;   /* Rs, row scale factors */
 
     /* size of O(n) part of Numeric object after factorization, */
     /* except Numeric->Memory and Numeric->Upattern */
@@ -72,7 +72,7 @@ GLOBAL void UMF_set_stats
 	+ DUNITS (Int, n_row+1)		/* Rperm */
 	+ DUNITS (Int, n_col+1)		/* Cperm */
 	+ 6 * DUNITS (Int, npiv+1)	/* Lpos, Uilen, Uip, Upos, Lilen, Lip */
-	+ (scale ? DUNITS (Entry, n_row) : 0) ;	    /* Rs, row scale factors */
+	+ (scale != 0 ? DUNITS (Entry, n_row) : 0) ;	    /* Rs, row scale factors */
 
     DEBUG1 (("num O(n) size2: %g\n", num_On_size2)) ;
 

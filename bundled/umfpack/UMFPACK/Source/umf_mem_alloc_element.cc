@@ -45,7 +45,7 @@ GLOBAL Int UMF_mem_alloc_element
 
     i = UMF_mem_alloc_tail_block (Numeric, *size) ;
     (*size)++ ;
-    if (!i)
+    if (i == 0)
     {
 	DEBUG0 (("alloc element failed - out of memory\n")) ;
 	return (0) ;	/* out of memory */

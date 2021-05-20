@@ -90,7 +90,7 @@ GLOBAL void UMFPACK_report_info
 
     prl = GET_CONTROL (UMFPACK_PRL, UMFPACK_DEFAULT_PRL) ;
 
-    if (!Info || prl < 2)
+    if ((Info == nullptr) || prl < 2)
     {
 	/* no output generated if Info is (double *) NULL */
 	/* or if prl is less than 2 */

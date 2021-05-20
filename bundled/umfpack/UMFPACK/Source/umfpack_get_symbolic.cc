@@ -59,32 +59,32 @@ GLOBAL Int UMFPACK_get_symbolic
     nfr = Symbolic->nfr ;
     nchains = Symbolic->nchains ;
 
-    if (p_n_row)
+    if (p_n_row != nullptr)
     {
 	*p_n_row = n_row ;
     }
 
-    if (p_n_col)
+    if (p_n_col != nullptr)
     {
 	*p_n_col = n_col ;
     }
 
-    if (p_n1)
+    if (p_n1 != nullptr)
     {
 	*p_n1 = n1 ;
     }
 
-    if (p_nz)
+    if (p_nz != nullptr)
     {
 	*p_nz = Symbolic->nz ;
     }
 
-    if (p_nfr)
+    if (p_nfr != nullptr)
     {
 	*p_nfr = nfr ;
     }
 
-    if (p_nchains)
+    if (p_nchains != nullptr)
     {
 	*p_nchains = nchains ;
     }

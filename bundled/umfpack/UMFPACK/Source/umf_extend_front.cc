@@ -124,7 +124,7 @@ GLOBAL Int UMF_extend_front
     UMF_dump_dense (Work->Flublock, Work->nb, fnpiv, fnpiv) ;
 #endif
 
-    if (Work->do_grow)
+    if (Work->do_grow != 0)
     {
 	fnr2 = UMF_FRONTAL_GROWTH * Work->fnrows_new + 2 ;
 	fnc2 = UMF_FRONTAL_GROWTH * Work->fncols_new + 2 ;
@@ -184,7 +184,7 @@ GLOBAL Int UMF_extend_front
 
     Fl = Work->Flblock + fnpiv * fnr_curr ;
 
-    if (Work->pivcol_in_front)
+    if (Work->pivcol_in_front != 0)
     {
 	/* extended pattern and position already in Frows, Frpos.  Values above
 	 * the diagonal are already in LU block.  Values on and below the
@@ -263,9 +263,9 @@ GLOBAL Int UMF_extend_front
     DEBUG6 (("Extending pivot row:\n")) ;
 #endif
 
-    if (Work->pivrow_in_front)
+    if (Work->pivrow_in_front != 0)
     {
-	if (Work->pivcol_in_front)
+	if (Work->pivcol_in_front != 0)
 	{
 	    ASSERT (Fcols == Work->Wrow) ;
 	    for (j = fncols ; j < rrdeg ; j++)

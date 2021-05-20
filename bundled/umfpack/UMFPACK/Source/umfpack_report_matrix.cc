@@ -47,7 +47,7 @@ GLOBAL Int UMFPACK_report_matrix
 	return (UMFPACK_OK) ;
     }
 
-    if (col_form)
+    if (col_form != 0)
     {
 	vector = "column" ;	/* column vectors */
 	index = "row" ;		/* with row indices */
@@ -70,7 +70,7 @@ GLOBAL Int UMFPACK_report_matrix
 	return (UMFPACK_ERROR_n_nonpositive) ;
     }
 
-    if (!Ap)
+    if (Ap == nullptr)
     {
 	PRINTF (("ERROR: Ap missing\n\n")) ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -91,13 +91,13 @@ GLOBAL Int UMFPACK_report_matrix
 	return (UMFPACK_ERROR_invalid_matrix) ;
     }
 
-    if (!Ai)
+    if (Ai == nullptr)
     {
 	PRINTF (("ERROR: Ai missing\n\n")) ;
 	return (UMFPACK_ERROR_argument_missing) ;
     }
 
-    do_values = Ax != (double *) NULL ;
+    do_values = static_cast<long>(Ax != (double *) NULL) ;
 
     PRINTF4 (("\n")) ;
 
@@ -154,7 +154,7 @@ GLOBAL Int UMFPACK_report_matrix
 	{
 	    i = Ai [p] ;
 	    PRINTF4 (("\t%s " ID " ", index, INDEX (i))) ;
-	    if (do_values && prl >= 4)
+	    if ((do_values != 0) && prl >= 4)
 	    {
 		PRINTF ((":")) ;
 		ASSIGN (a, Ax, Az, p, split) ;

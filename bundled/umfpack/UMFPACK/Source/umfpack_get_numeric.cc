@@ -124,14 +124,14 @@ GLOBAL Int UMFPACK_get_numeric
     /* allocate workspace */
     /* ---------------------------------------------------------------------- */
 
-    getL = Lp && Lj && Lx ;
-    getU = Up && Ui && Ux ;
+    getL = static_cast<long>((static_cast<long>(Lp != nullptr) != 0) && (Lj != nullptr) && (Lx) != nullptr) ;
+    getU = static_cast<long>((static_cast<long>(Up != nullptr) != 0) && (Ui != nullptr) && (Ux) != nullptr) ;
 
-    if (getL || getU)
+    if ((getL != 0) || (getU != 0))
     {
 	Wi = (Int *) UMF_malloc (nn, sizeof (Int)) ;
 	Pattern = (Int *) UMF_malloc (nn, sizeof (Int)) ;
-	if (!Wi || !Pattern)
+	if ((Wi == nullptr) || (Pattern == nullptr))
 	{
 	    (void) UMF_free ((void *) Wi) ;
 	    (void) UMF_free ((void *) Pattern) ;
@@ -164,7 +164,7 @@ GLOBAL Int UMFPACK_get_numeric
 	}
     }
 
-    if (getL)
+    if (getL != 0)
     {
 	get_L (Lp, Lj, Lx,
 #ifdef COMPLEX
@@ -173,7 +173,7 @@ GLOBAL Int UMFPACK_get_numeric
 	    Numeric, Pattern, Wi) ;
     }
 
-    if (getU)
+    if (getU != 0)
     {
 	get_U (Up, Ui, Ux,
 #ifdef COMPLEX
@@ -411,8 +411,8 @@ PRIVATE void get_L
 	/* ------------------------------------------------------------------ */
 
 	lp = Lip [k] ;
-	newLchain = (lp < 0) ;
-	if (newLchain)
+	newLchain = static_cast<long>(lp < 0) ;
+	if (newLchain != 0)
 	{
 	    lp = -lp ;
 	    deg = 0 ;
@@ -497,7 +497,7 @@ PRIVATE void get_L
 		    p = Wi [row]++ ;
 		    Lj [p] = k ;
 #ifdef COMPLEX
-		    if (split)
+		    if (split != 0)
 		    {
 
 		        Lx [p] = REAL_COMPONENT (value) ;
@@ -525,8 +525,8 @@ PRIVATE void get_L
 	/* ------------------------------------------------------------------ */
 
 	lp = Lip [k] ;
-	newLchain = (lp < 0) ;
-	if (newLchain)
+	newLchain = static_cast<long>(lp < 0) ;
+	if (newLchain != 0)
 	{
 	    lp = -lp ;
 	    deg = 0 ;
@@ -571,7 +571,7 @@ PRIVATE void get_L
 		p = Wi [row]++ ;
 		Lj [p] = k ;
 #ifdef COMPLEX
-		if (split)
+		if (split != 0)
 		{
 		    Lx [p] = REAL_COMPONENT (value) ;
 		    Lz [p] = IMAG_COMPONENT (value) ;
@@ -595,7 +595,7 @@ PRIVATE void get_L
 	Lj [p] = row ;
 
 #ifdef COMPLEX
-	if (split)
+	if (split != 0)
 	{
 	    Lx [p] = 1. ;
 	    Lz [p] = 0. ;
@@ -771,8 +771,8 @@ PRIVATE void get_U
 
 	up = Uip [k] ;
 	ulen = Uilen [k] ;
-	newUchain = (up < 0) ;
-	if (newUchain)
+	newUchain = static_cast<long>(up < 0) ;
+	if (newUchain != 0)
 	{
 	    up = -up ;
 	    xp = (Entry *) (Numeric->Memory + up + UNITS (Int, ulen)) ;
@@ -802,7 +802,7 @@ PRIVATE void get_U
 
 	if (k == n1) break ;
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* next row is a new Uchain */
 	    deg = ulen ;
@@ -888,7 +888,7 @@ PRIVATE void get_U
 	    p = --(Wi [col]) ;
 	    Ui [p] = col ;
 #ifdef COMPLEX
-	    if (split)
+	    if (split != 0)
 	    {
 
 	        Ux [p] = REAL_COMPONENT (D [col]) ;
@@ -927,8 +927,8 @@ PRIVATE void get_U
 
 	up = Uip [k] ;
 	ulen = Uilen [k] ;
-	newUchain = (up < 0) ;
-	if (newUchain)
+	newUchain = static_cast<long>(up < 0) ;
+	if (newUchain != 0)
 	{
 	    up = -up ;
 	    xp = (Entry *) (Numeric->Memory + up + UNITS (Int, ulen)) ;
@@ -952,7 +952,7 @@ PRIVATE void get_U
 		p = --(Wi [col]) ;
 		Ui [p] = k ;
 #ifdef COMPLEX
-		if (split)
+		if (split != 0)
 		{
 		    Ux [p] = REAL_COMPONENT (value) ;
 		    Uz [p] = IMAG_COMPONENT (value) ;
@@ -973,7 +973,7 @@ PRIVATE void get_U
 	/* make row k-1 of U in Pattern [0..deg-1] */
 	/* ------------------------------------------------------------------ */
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* next row is a new Uchain */
 	    deg = ulen ;
@@ -1027,7 +1027,7 @@ PRIVATE void get_U
 		    p = --(Wi [col]) ;
 		    Ui [p] = k ;
 #ifdef COMPLEX
-		    if (split)
+		    if (split != 0)
 		    {
 			Ux [p] = REAL_COMPONENT (value) ;
 			Uz [p] = IMAG_COMPONENT (value) ;

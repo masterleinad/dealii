@@ -45,7 +45,7 @@ GLOBAL Int UMFPACK_report_triplet
     PRINTF (("triplet-form matrix, n_row = " ID ", n_col = " ID " nz = " ID ". ",
 	n_row, n_col, nz)) ;
 
-    if (!Ti || !Tj)
+    if ((Ti == nullptr) || (Tj == nullptr))
     {
 	PRINTF (("ERROR: indices not present\n\n")) ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -65,7 +65,7 @@ GLOBAL Int UMFPACK_report_triplet
 
     PRINTF4 (("\n")) ;
 
-    do_values = Tx != (double *) NULL ;
+    do_values = static_cast<long>(Tx != (double *) NULL) ;
 
     prl1 = prl ;
     for (k = 0 ; k < nz ; k++)
@@ -73,7 +73,7 @@ GLOBAL Int UMFPACK_report_triplet
 	i = Ti [k] ;
 	j = Tj [k] ;
 	PRINTF4 (("    " ID " : " ID " " ID " ", INDEX (k), INDEX (i), INDEX (j))) ;
-	if (do_values && prl >= 4)
+	if ((do_values != 0) && prl >= 4)
 	{
 	    ASSIGN (t, Tx, Tz, k, split) ;
 	    PRINT_ENTRY (t) ;

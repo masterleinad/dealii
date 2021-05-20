@@ -104,7 +104,7 @@ GLOBAL void UMF_garbage_collection
 
     for (row = 0 ; row < n_row ; row++)
     {
-	if (NON_PIVOTAL_ROW (row) && Row_tuples [row])
+	if (NON_PIVOTAL_ROW (row) && (Row_tuples [row] != 0))
 	{
 	    DEBUG2 (("row " ID " tuples " ID "\n", row, Row_tuples [row])) ;
 	    p = Numeric->Memory + Row_tuples [row] - 1 ;
@@ -120,7 +120,7 @@ GLOBAL void UMF_garbage_collection
 
     for (col = 0 ; col < n_col ; col++)
     {
-	if (NON_PIVOTAL_COL (col) && Col_tuples [col])
+	if (NON_PIVOTAL_COL (col) && (Col_tuples [col] != 0))
 	{
 	    DEBUG2 (("col " ID " tuples " ID "\n", col, Col_tuples [col])) ;
 	    p = Numeric->Memory + Col_tuples [col] - 1 ;
@@ -156,7 +156,7 @@ GLOBAL void UMF_garbage_collection
 
     for (e = 0 ; e <= nel ; e++) /* for all elements in order of creation */
     {
-	if (E [e])
+	if (E [e] != 0)
 	{
 	    psrc = Numeric->Memory + E [e] ;
 	    psrc-- ;		/* get the header of this block */
@@ -333,7 +333,7 @@ GLOBAL void UMF_garbage_collection
 	    ASSERT (Fdst == F1 + nb*nb + drnew*nb + nb*dcnew + drnew*c) ;
 
 	    /* recompute Fcpos, if necessary */
-	    if (do_Fcpos)
+	    if (do_Fcpos != 0)
 	    {
 		Int *Fcols, *Fcpos ;
 		Fcols = Work->Fcols ;

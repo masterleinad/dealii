@@ -283,7 +283,7 @@ namespace mu
     // (The GetUsedVar function must suppress the error for
     // undefined variables in order to collect all variable 
     // names including the undefined ones.)
-    if ( (m_bIgnoreUndefVar || m_pFactory) && IsUndefVarTok(tok) )  
+    if ( (m_bIgnoreUndefVar || (m_pFactory != nullptr)) && IsUndefVarTok(tok) )  
       return SaveBeforeReturn(tok);
 
     // Check for unknown token
@@ -379,7 +379,7 @@ namespace mu
 
     // Compare token with function and operator strings
     // check string for operator/function
-    for (int i=0; pOprtDef[i]; i++)
+    for (int i=0; pOprtDef[i] != nullptr; i++)
     {
       std::size_t len( std::char_traits<char_type>::length(pOprtDef[i]) );
       if ( string_type(pOprtDef[i]) == string_type(szFormula + m_iPos, szFormula + m_iPos + len) )
@@ -407,11 +407,11 @@ namespace mu
               //  continue;
 
               // The assignement operator need special treatment
-              if (i==cmASSIGN && m_iSynFlags & noASSIGN)
+              if (i==cmASSIGN && ((m_iSynFlags & noASSIGN) != 0))
                 Error(ecUNEXPECTED_OPERATOR, m_iPos, pOprtDef[i]);
 
               if (!m_pParser->HasBuiltInOprt()) continue;
-              if (m_iSynFlags & noOPT) 
+              if ((m_iSynFlags & noOPT) != 0) 
               {
                 // Maybe its an infix operator not an operator
                 // Both operator types can share characters in 
@@ -426,7 +426,7 @@ namespace mu
               break;
 
 		    case cmBO:
-              if (m_iSynFlags & noBO)
+              if ((m_iSynFlags & noBO) != 0)
 	              Error(ecUNEXPECTED_PARENS, m_iPos, pOprtDef[i]);
               
               if (m_lastTok.GetCode()==cmFUNC)
@@ -438,7 +438,7 @@ namespace mu
               break;
 
 		    case cmBC:
-              if (m_iSynFlags & noBC)
+              if ((m_iSynFlags & noBC) != 0)
                 Error(ecUNEXPECTED_PARENS, m_iPos, pOprtDef[i]);
 
               m_iSynFlags  = noBO | noVAR | noVAL | noFUN | noINFIXOP | noSTR | noASSIGN;
@@ -448,14 +448,14 @@ namespace mu
               break;
 
         case cmELSE:
-              if (m_iSynFlags & noELSE)
+              if ((m_iSynFlags & noELSE) != 0)
                 Error(ecUNEXPECTED_CONDITIONAL, m_iPos, pOprtDef[i]);
 
               m_iSynFlags = noBC | noPOSTOP | noEND | noOPT | noIF | noELSE;
               break;
 
         case cmIF:
-              if (m_iSynFlags & noIF)
+              if ((m_iSynFlags & noIF) != 0)
                 Error(ecUNEXPECTED_CONDITIONAL, m_iPos, pOprtDef[i]);
 
               m_iSynFlags = noBC | noPOSTOP | noEND | noOPT | noIF | noELSE;
@@ -486,7 +486,7 @@ namespace mu
       szSep[0] = m_cArgSep;
       szSep[1] = 0;
 
-      if (m_iSynFlags & noARG_SEP)
+      if ((m_iSynFlags & noARG_SEP) != 0)
         Error(ecUNEXPECTED_ARG_SEP, m_iPos, szSep);
 
       m_iSynFlags  = noBC | noOPT | noEND | noARG_SEP | noPOSTOP | noASSIGN;
@@ -511,9 +511,9 @@ namespace mu
     const char_type* szFormula = m_strFormula.c_str();
 
     // check for EOF
-    if ( !szFormula[m_iPos] /*|| szFormula[m_iPos] == '\n'*/)
+    if ( szFormula[m_iPos] == 0 /*|| szFormula[m_iPos] == '\n'*/)
     {
-      if ( m_iSynFlags & noEND )
+      if ( (m_iSynFlags & noEND) != 0 )
         Error(ecUNEXPECTED_EOF, m_iPos);
 
       if (m_iBrackets>0)
@@ -548,7 +548,7 @@ namespace mu
       a_Tok.Set(it->second, it->first);
       m_iPos += (int)it->first.length();
 
-      if (m_iSynFlags & noINFIXOP) 
+      if ((m_iSynFlags & noINFIXOP) != 0) 
         Error(ecUNEXPECTED_OPERATOR, m_iPos, a_Tok.GetAsString());
 
       m_iSynFlags = noPOSTOP | noINFIXOP | noOPT | noBC | noSTR | noASSIGN;
@@ -595,7 +595,7 @@ namespace mu
     a_Tok.Set(item->second, strTok);
 
     m_iPos = (int)iEnd;
-    if (m_iSynFlags & noFUN)
+    if ((m_iSynFlags & noFUN) != 0)
       Error(ecUNEXPECTED_FUN, m_iPos-(int)a_Tok.GetAsString().length(), a_Tok.GetAsString());
 
     m_iSynFlags = noANY ^ noBO;
@@ -618,7 +618,7 @@ namespace mu
 
     // Check if the operator is a built in operator, if so ignore it here
     const char_type **const pOprtDef = m_pParser->GetOprtDef();
-    for (int i=0; m_pParser->HasBuiltInOprt() && pOprtDef[i]; ++i)
+    for (int i=0; m_pParser->HasBuiltInOprt() && (pOprtDef[i] != nullptr); ++i)
     {
       if (string_type(pOprtDef[i])==strTok)
         return false;
@@ -639,7 +639,7 @@ namespace mu
         a_Tok.Set(it->second, strTok);
 
         // operator was found
-        if (m_iSynFlags & noOPT) 
+        if ((m_iSynFlags & noOPT) != 0) 
         {
           // An operator was found but is not expected to occur at
           // this position of the formula, maybe it is an infix 
@@ -676,7 +676,7 @@ namespace mu
     //
     //  http://sourceforge.net/tracker/index.php?func=detail&aid=3343891&group_id=137191&atid=737979
     //
-    if (m_iSynFlags & noPOSTOP)
+    if ((m_iSynFlags & noPOSTOP) != 0)
       return false;
     // </ibg>
 
@@ -739,7 +739,7 @@ namespace mu
         m_iPos = iEnd;
         a_Tok.SetVal(item->second, strTok);
 
-        if (m_iSynFlags & noVAL)
+        if ((m_iSynFlags & noVAL) != 0)
           Error(ecUNEXPECTED_VAL, m_iPos - (int)strTok.length(), strTok);
 
         m_iSynFlags = noVAL | noVAR | noFUN | noBO | noINFIXOP | noSTR | noASSIGN; 
@@ -758,7 +758,7 @@ namespace mu
         // 2013-11-27 Issue 2:  https://code.google.com/p/muparser/issues/detail?id=2
         strTok.assign(m_strFormula.c_str(), iStart, m_iPos-iStart);
 
-        if (m_iSynFlags & noVAL)
+        if ((m_iSynFlags & noVAL) != 0)
           Error(ecUNEXPECTED_VAL, m_iPos - (int)strTok.length(), strTok);
 
         a_Tok.SetVal(fVal, strTok);
@@ -789,7 +789,7 @@ namespace mu
     if (item==m_pVarDef->end())
       return false;
 
-    if (m_iSynFlags & noVAR)
+    if ((m_iSynFlags & noVAR) != 0)
       Error(ecUNEXPECTED_VAR, m_iPos, strTok);
 
     m_pParser->OnDetectVar(&m_strFormula, m_iPos, iEnd);
@@ -808,7 +808,7 @@ namespace mu
   //---------------------------------------------------------------------------
   bool ParserTokenReader::IsStrVarTok(token_type &a_Tok)
   {
-    if (!m_pStrVarDef || m_pStrVarDef->empty())
+    if ((m_pStrVarDef == nullptr) || m_pStrVarDef->empty())
       return false;
 
     string_type strTok;
@@ -820,11 +820,11 @@ namespace mu
     if (item==m_pStrVarDef->end())
       return false;
 
-    if (m_iSynFlags & noSTR)
+    if ((m_iSynFlags & noSTR) != 0)
       Error(ecUNEXPECTED_VAR, m_iPos, strTok);
 
     m_iPos = iEnd;
-    if (!m_pParser->m_vStringVarBuf.size())
+    if (m_pParser->m_vStringVarBuf.size() == 0u)
       Error(ecINTERNAL_ERROR);
 
     a_Tok.SetString(m_pParser->m_vStringVarBuf[item->second], m_pParser->m_vStringVarBuf.size() );
@@ -848,7 +848,7 @@ namespace mu
     if ( iEnd==m_iPos )
       return false;
 
-    if (m_iSynFlags & noVAR)
+    if ((m_iSynFlags & noVAR) != 0)
     {
       // <ibg/> 20061021 added token string strTok instead of a_Tok.GetAsString() as the 
       //                 token identifier. 
@@ -858,7 +858,7 @@ namespace mu
     }
 
     // If a factory is available implicitely create new variables
-    if (m_pFactory)
+    if (m_pFactory != nullptr)
     {
       value_type *fVar = m_pFactory(strTok.c_str(), m_pFactoryData);
       a_Tok.SetVar(fVar, strTok );
@@ -914,7 +914,7 @@ namespace mu
 
     string_type strTok(strBuf.begin(), strBuf.begin()+iEnd);
 
-    if (m_iSynFlags & noSTR)
+    if ((m_iSynFlags & noSTR) != 0)
       Error(ecUNEXPECTED_STR, m_iPos, strTok);
 
 		m_pParser->m_vStringBuf.push_back(strTok); // Store string in internal buffer

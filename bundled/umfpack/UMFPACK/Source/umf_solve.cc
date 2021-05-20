@@ -105,7 +105,7 @@ GLOBAL Int UMF_solve
     Rperm = Numeric->Rperm ;
     Cperm = Numeric->Cperm ;
     Rs = Numeric->Rs ;		/* row scale factors */
-    do_scale = (Rs != (double *) NULL) ;
+    do_scale = static_cast<long>(Rs != (double *) NULL) ;
     flops = 0 ;
     Info [UMFPACK_SOLVE_FLOPS] = 0 ;
     Info [UMFPACK_IR_TAKEN] = 0 ;
@@ -140,7 +140,7 @@ GLOBAL Int UMF_solve
 #ifdef COMPLEX
     if (irstep > 0)
     {
-	if (!Ap || !Ai || !Ax)
+	if ((Ap == nullptr) || (Ai == nullptr) || (Ax == nullptr))
 	{
 	    return (UMFPACK_ERROR_argument_missing) ;
 	}
@@ -159,7 +159,7 @@ GLOBAL Int UMF_solve
     }
     Bsplit = SPLIT (Bz);
 
-    if (AXsplit)
+    if (AXsplit != 0)
     {
 	X = (Entry *) (SolveWork + 2*n) ;	/* Entry X [0..n-1] */
     }
@@ -171,7 +171,7 @@ GLOBAL Int UMF_solve
     X = (Entry *) Xx ;				/* Entry X [0..n-1] */
     if (irstep > 0)
     {
-	if (!Ap || !Ai || !Ax)
+	if ((Ap == nullptr) || (Ai == nullptr) || (Ax == nullptr))
 	{
 	    return (UMFPACK_ERROR_argument_missing) ;
 	}
@@ -230,12 +230,12 @@ GLOBAL Int UMF_solve
 	    }
 
 	    /* scale Y and B2. */
-	    if (do_scale)
+	    if (do_scale != 0)
 	    {
 		/* Y = R Y */
 		/* B2 = R B2 */
 #ifndef NRECIPROCAL
-		if (do_recip)
+		if (do_recip != 0)
 		{
 		    /* multiply by the scale factors */
 		    for (i = 0 ; i < n ; i++)
@@ -272,12 +272,12 @@ GLOBAL Int UMF_solve
 
 	    if (step == 0)
 	    {
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* W = P R b, using X as workspace, since Z is not
 		     * allocated if irstep = 0. */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -332,10 +332,10 @@ GLOBAL Int UMF_solve
 		    }
 		}
 		/* scale, Z = R Z */
-		if (do_scale)
+		if (do_scale != 0)
 		{
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -422,12 +422,12 @@ GLOBAL Int UMF_solve
 		}
 
 		/* scale W and Z2 */
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* Z2 = R Z2 */
 		    /* W = R W */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -450,7 +450,7 @@ GLOBAL Int UMF_solve
 		}
 
 		flops += (2*ABS_FLOPS + 5) * n ;
-		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info))
+		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info) != 0)
 		{
 		    /* iterative refinement is done */
 		    break ;
@@ -483,11 +483,11 @@ GLOBAL Int UMF_solve
 	    /* A' is stored by row */
 	    /* Y (i) = ||(A' R)_i||, 1-norm of row i of A' R */
 
-	    if (do_scale)
+	    if (do_scale != 0)
 	    {
 		flops += (ABS_FLOPS + 2) * nz ;
 #ifndef NRECIPROCAL
-		if (do_recip)
+		if (do_recip != 0)
 		{
 		    /* multiply by the scale factors */
 		    for (i = 0 ; i < n ; i++)
@@ -619,11 +619,11 @@ GLOBAL Int UMF_solve
 		{
 		    X [Rperm [i]] = W [i] ;
 		}
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* X = R X */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -652,11 +652,11 @@ GLOBAL Int UMF_solve
 		{
 		    Z [Rperm [i]] = W [i] ;
 		}
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* Z = R Z */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -723,7 +723,7 @@ GLOBAL Int UMF_solve
 		}
 
 		flops += (2*ABS_FLOPS + 5) * n ;
-		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info))
+		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info) != 0)
 		{
 		    /* iterative refinement is done */
 		    break ;
@@ -756,11 +756,11 @@ GLOBAL Int UMF_solve
 	    /* A.' is stored by row */
 	    /* Y (i) = ||(A.' R)_i||, 1-norm of row i of A.' R */
 
-	    if (do_scale)
+	    if (do_scale != 0)
 	    {
 		flops += (ABS_FLOPS + 2) * nz ;
 #ifndef NRECIPROCAL
-		if (do_recip)
+		if (do_recip != 0)
 		{
 		    /* multiply by the scale factors */
 		    for (i = 0 ; i < n ; i++)
@@ -892,11 +892,11 @@ GLOBAL Int UMF_solve
 		{
 		    X [Rperm [i]] = W [i] ;
 		}
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* X = R X */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -925,11 +925,11 @@ GLOBAL Int UMF_solve
 		{
 		    Z [Rperm [i]] = W [i] ;
 		}
-		if (do_scale)
+		if (do_scale != 0)
 		{
 		    /* Z = R Z */
 #ifndef NRECIPROCAL
-		    if (do_recip)
+		    if (do_recip != 0)
 		    {
 			/* multiply by the scale factors */
 			for (i = 0 ; i < n ; i++)
@@ -996,7 +996,7 @@ GLOBAL Int UMF_solve
 		}
 
 		flops += (2*ABS_FLOPS + 5) * n ;
-		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info))
+		if (do_step (omega, step, B2, X, W, Y, Z2, S, n, Info) != 0)
 		{
 		    /* iterative refinement is done */
 		    break ;
@@ -1212,7 +1212,7 @@ GLOBAL Int UMF_solve
 
 #ifdef COMPLEX
     /* copy the solution back, from Entry X [ ] to double Xx [ ] and Xz [ ] */
-    if (AXsplit)
+    if (AXsplit != 0)
     {
 	for (i = 0 ; i < n ; i++)
 	{

@@ -110,11 +110,11 @@ GLOBAL Int UMF_row_search
     prefer_diagonal = Symbolic->prefer_diagonal ;
     Diagonal_map = Work->Diagonal_map ;
 
-    if (Diagonal_map)
+    if (Diagonal_map != nullptr)
     {
 	diag_row = Diagonal_map [pivcol] ;
-	was_offdiag = diag_row < 0 ;
-	if (was_offdiag)
+	was_offdiag = static_cast<long>(diag_row < 0) ;
+	if (was_offdiag != 0)
 	{
 	    /* the "diagonal" entry in this column was permuted here by an
 	     * earlier pivot choice.  The tighter off-diagonal tolerance will
@@ -156,7 +156,7 @@ GLOBAL Int UMF_row_search
 
     toler = Numeric->relpt * maxval ;
     toler2 = Numeric->relpt2 * maxval ;
-    toler2 = was_offdiag ? toler : toler2 ;
+    toler2 = was_offdiag != 0 ? toler : toler2 ;
 
     DEBUG5 (("Row_search begins [ maxval %g toler %g %g\n",
 	maxval, toler, toler2)) ;
@@ -165,14 +165,14 @@ GLOBAL Int UMF_row_search
 	nans_in_col = TRUE ;
     }
 
-    if (!nans_in_col)
+    if (nans_in_col == 0)
     {
 
 	/* look for the diagonal entry, if it exists */
 	found = FALSE ;
 	ASSERT (!SCALAR_IS_NAN (toler)) ;
 
-	if (prefer_diagonal)
+	if (prefer_diagonal != 0)
 	{
 	    ASSERT (diag_row != EMPTY) ;
 	    i = Pos [diag_row] ;
@@ -207,7 +207,7 @@ GLOBAL Int UMF_row_search
 	}
 
 	/* either no diagonal found, or we didn't look for it */
-	if (!found)
+	if (found == 0)
 	{
 	    if (cdeg0 > 0)
 	    {
@@ -560,10 +560,10 @@ GLOBAL Int UMF_row_search
     {
 
 	/* the row merge candidate row is not pivrow [IN] */
-	freebie [IN] = (pivrow [IN] == prior_pivrow [IN]) && (cdeg1  > 0) ;
+	freebie [IN] = static_cast<long>((pivrow [IN] == prior_pivrow [IN]) && (cdeg1  > 0)) ;
 	ASSERT (cdeg1  >= 0) ;
 
-	if (!freebie [IN])
+	if (freebie [IN] == 0)
 	{
 	    /* include current front in the degree of this row */
 
@@ -617,7 +617,7 @@ GLOBAL Int UMF_row_search
 	    }
 
 	    tpi = Row_tuples [pivrow [IN]] ;
-	    if (tpi)
+	    if (tpi != 0)
 	    {
 		tp = (Tuple *) (Memory + tpi) ;
 		tp1 = tp ;
@@ -627,7 +627,7 @@ GLOBAL Int UMF_row_search
 		{
 		    e = tp->e ;
 		    ASSERT (e > 0 && e <= Work->nel) ;
-		    if (!E [e])
+		    if (E [e] == 0)
 		    {
 			continue ;	/* element already deallocated */
 		    }
@@ -720,10 +720,10 @@ GLOBAL Int UMF_row_search
 
     if (pivrow [OUT] != EMPTY)
     {
-	freebie [OUT] = (pivrow [OUT] == prior_pivrow [OUT]) && cdeg1  > 0 ;
+	freebie [OUT] = static_cast<long>((pivrow [OUT] == prior_pivrow [OUT]) && cdeg1  > 0) ;
 	ASSERT (cdeg1  >= 0) ;
 
-	if (!freebie [OUT])
+	if (freebie [OUT] == 0)
 	{
 
 	    Wrpflag = Work->Wrpflag ;
@@ -749,7 +749,7 @@ GLOBAL Int UMF_row_search
 	    W_o [rdeg [OUT]++] = pivcol ;
 
 	    tpi = Row_tuples [pivrow [OUT]] ;
-	    if (tpi)
+	    if (tpi != 0)
 	    {
 		tp = (Tuple *) (Memory + tpi) ;
 		tp1 = tp ;
@@ -759,7 +759,7 @@ GLOBAL Int UMF_row_search
 		{
 		    e = tp->e ;
 		    ASSERT (e > 0 && e <= Work->nel) ;
-		    if (!E [e])
+		    if (E [e] == 0)
 		    {
 			continue ;	/* element already deallocated */
 		    }

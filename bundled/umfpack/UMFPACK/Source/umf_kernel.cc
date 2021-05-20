@@ -82,7 +82,7 @@ GLOBAL Int UMF_kernel
     Front_npivcol = Symbolic->Front_npivcol ;
     nb = Symbolic->nb ;
     fixQ = Symbolic->fixQ ;
-    drop = Numeric->droptol > 0.0 ;
+    drop = static_cast<long>(Numeric->droptol > 0.0) ;
 
 #ifndef NDEBUG
     for (chain = 0 ; chain < nchains ; chain++)
@@ -130,7 +130,7 @@ GLOBAL Int UMF_kernel
 	    jmax = MIN (MAX_CANDIDATES, Work->ncand) ;
 	    DEBUGm1 ((">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Starting front "
 		ID ", npivcol: " ID "\n", Work->frontid, Work->ncand)) ;
-	    if (fixQ)
+	    if (fixQ != 0)
 	    {
 		/* do not modify the column order */
 		jmax = 1 ;
@@ -174,10 +174,10 @@ GLOBAL Int UMF_kernel
 		/* update if front not extended or too many zeros in L,U */
 		/* ---------------------------------------------------------- */
 
-		if (Work->do_update)
+		if (Work->do_update != 0)
 		{
 		    UMF_blas3_update (Work) ;
-		    if (drop)
+		    if (drop != 0)
 		    {
 			DO (UMF_store_lu_drop (Numeric, Work)) ;
 		    }
@@ -191,7 +191,7 @@ GLOBAL Int UMF_kernel
 		/* extend the frontal matrix, or start a new one */
 		/* ---------------------------------------------------------- */
 
-		if (Work->do_extend)
+		if (Work->do_extend != 0)
 		{
 		    /* extend the current front */
 		    DO (UMF_extend_front (Numeric, Work)) ;
@@ -207,7 +207,7 @@ GLOBAL Int UMF_kernel
 		/* Numerical & symbolic assembly into current frontal matrix */
 		/* ---------------------------------------------------------- */
 
-		if (fixQ)
+		if (fixQ != 0)
 		{
 		    UMF_assemble_fixq (Numeric, Work) ;
 		}
@@ -226,11 +226,11 @@ GLOBAL Int UMF_kernel
 		/* Numerical update if enough pivots accumulated */
 		/* ---------------------------------------------------------- */
 
-		evaporate = Work->fnrows == 0 || Work->fncols == 0 ;
-		if (Work->fnpiv >= nb || evaporate)
+		evaporate = static_cast<long>(Work->fnrows == 0 || Work->fncols == 0) ;
+		if (Work->fnpiv >= nb || (evaporate != 0))
 		{
 		    UMF_blas3_update (Work) ;
-		    if (drop)
+		    if (drop != 0)
 		    {
 			DO (UMF_store_lu_drop (Numeric, Work)) ;
 		    }
@@ -248,7 +248,7 @@ GLOBAL Int UMF_kernel
 		/* If front is empty, evaporate it */
 		/* ---------------------------------------------------------- */
 
-		if (evaporate)
+		if (evaporate != 0)
 		{
 		    /* This does not create an element, just evaporates it.
 		     * It ensures that a front is not 0-by-c or r-by-0.  No
@@ -268,7 +268,7 @@ GLOBAL Int UMF_kernel
 	 * ------------------------------------------------------------------ */
 
 	UMF_blas3_update (Work) ;
-	if (drop)
+	if (drop != 0)
 	{
 	    DO (UMF_store_lu_drop (Numeric, Work)) ;
 	}

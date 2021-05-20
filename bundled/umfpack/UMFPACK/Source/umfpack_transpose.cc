@@ -78,7 +78,7 @@ GLOBAL Int UMFPACK_transpose
     nn = MAX (n_row, n_col) ;
     nn = MAX (nn, 1) ;
     W = (Int *) UMF_malloc (nn, sizeof (Int)) ;
-    if (!W)
+    if (W == nullptr)
     {
 	DEBUGm4 (("out of memory: transpose work\n")) ;
 	ASSERT (UMF_malloc_count == init_count) ;

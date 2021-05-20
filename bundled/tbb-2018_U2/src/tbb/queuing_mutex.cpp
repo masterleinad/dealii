@@ -42,7 +42,7 @@ void queuing_mutex::scoped_lock::acquire( queuing_mutex& m )
     // The fetch_and_store must have release semantics, because we are
     // "sending" the fields initialized above to other processors.
     scoped_lock* pred = m.q_tail.fetch_and_store<tbb::release>(this);
-    if( pred ) {
+    if( pred != nullptr ) {
         ITT_NOTIFY(sync_prepare, mutex);
 #if TBB_USE_ASSERT
         __TBB_control_consistency_helper(); // on "m.q_tail"
@@ -70,7 +70,7 @@ bool queuing_mutex::scoped_lock::try_acquire( queuing_mutex& m )
 
     // The CAS must have release semantics, because we are
     // "sending" the fields initialized above to other processors.
-    if( m.q_tail.compare_and_swap<tbb::release>(this, NULL) )
+    if( m.q_tail.compare_and_swap<tbb::release>(this, NULL) != nullptr )
         return false;
 
     // Force acquire so that user's critical section receives correct values
@@ -87,7 +87,7 @@ void queuing_mutex::scoped_lock::release( )
     __TBB_ASSERT(this->mutex!=NULL, "no lock acquired");
 
     ITT_NOTIFY(sync_releasing, mutex);
-    if( !next ) {
+    if( next == nullptr ) {
         if( this == mutex->q_tail.compare_and_swap<tbb::release>(NULL, this) ) {
             // this was the only item in the queue, and the queue is now empty.
             goto done;

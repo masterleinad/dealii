@@ -833,7 +833,7 @@ GLOBAL Int UMF_colamd		/* returns TRUE if successful, FALSE otherwise*/
 
     /* --------------------- */
     /* added for UMFPACK v4.1: */
-    aggressive = (knobs [COLAMD_AGGRESSIVE] != 0) ;
+    aggressive = static_cast<long>(knobs [COLAMD_AGGRESSIVE] != 0) ;
     /* --------------------- */
 
     /* === Allocate the Row and Col arrays from array A ===================== */
@@ -2054,7 +2054,7 @@ PRIVATE Int find_ordering	/* return the number of garbage collections */
 		ASSERT (ROW_IS_ALIVE (row)) ;
 
 		/* absorb this row if the set difference becomes zero */
-		if (set_difference == 0 && aggressive)
+		if (set_difference == 0 && (aggressive != 0))
 		{
 		    /* v4.1: do aggressive absorption */
 		    DEBUG3 (("aggressive absorption. Row: " ID "\n", row)) ;

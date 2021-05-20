@@ -27,7 +27,7 @@ GLOBAL void AMD_info
     PRINTF (("\nAMD version %d.%d.%d, %s, results:\n",
 	AMD_MAIN_VERSION, AMD_SUB_VERSION, AMD_SUBSUB_VERSION, AMD_DATE)) ;
 
-    if (!Info)
+    if (Info == nullptr)
     {
 	return ;
     }

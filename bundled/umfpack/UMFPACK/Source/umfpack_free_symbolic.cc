@@ -23,12 +23,12 @@ GLOBAL void UMFPACK_free_symbolic
 {
 
     SymbolicType *Symbolic ;
-    if (!SymbolicHandle)
+    if (SymbolicHandle == nullptr)
     {
 	return ;
     }
     Symbolic = *((SymbolicType **) SymbolicHandle) ;
-    if (!Symbolic)
+    if (Symbolic == nullptr)
     {
 	return ;
     }

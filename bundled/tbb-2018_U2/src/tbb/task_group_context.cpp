@@ -34,7 +34,7 @@ using namespace internal;
 
 inline char* duplicate_string ( const char* src ) {
     char* dst = NULL;
-    if ( src ) {
+    if ( src != nullptr ) {
         size_t len = strlen(src) + 1;
         dst = (char*)allocate_via_handler_v3(len);
         strncpy (dst, src, len);
@@ -58,7 +58,7 @@ void captured_exception::clear () throw() {
 
 captured_exception* captured_exception::move () throw() {
     captured_exception *e = (captured_exception*)allocate_via_handler_v3(sizeof(captured_exception));
-    if ( e ) {
+    if ( e != nullptr ) {
         ::new (e) captured_exception();
         e->my_exception_name = my_exception_name;
         e->my_exception_info = my_exception_info;
@@ -78,7 +78,7 @@ void captured_exception::destroy () throw() {
 
 captured_exception* captured_exception::allocate ( const char* a_name, const char* info ) {
     captured_exception *e = (captured_exception*)allocate_via_handler_v3( sizeof(captured_exception) );
-    if ( e ) {
+    if ( e != nullptr ) {
         ::new (e) captured_exception(a_name, info);
         e->my_dynamic = true;
     }
@@ -146,7 +146,7 @@ task_group_context::~task_group_context () {
             // Prevent load of nonlocal update flag from being hoisted before the
             // store to local update flag.
             atomic_fence();
-            if ( my_owner->my_nonlocal_ctx_list_update.load<relaxed>() ) {
+            if ( my_owner->my_nonlocal_ctx_list_update.load<relaxed>() != 0u ) {
                 spin_mutex::scoped_lock lock(my_owner->my_context_list_mutex);
                 my_node.my_prev->my_next = my_node.my_next;
                 my_node.my_next->my_prev = my_node.my_prev;
@@ -194,7 +194,7 @@ task_group_context::~task_group_context () {
     internal::punned_cast<cpu_ctl_env*>(&my_cpu_ctl_env)->~cpu_ctl_env();
 #endif
     poison_value(my_version_and_traits);
-    if ( my_exception )
+    if ( my_exception != nullptr )
         my_exception->destroy();
     ITT_STACK(itt_caller != ITT_CALLER_NULL, caller_destroy, itt_caller);
 }
@@ -220,7 +220,7 @@ void task_group_context::init () {
 
     cpu_ctl_env &ctl = *internal::punned_cast<cpu_ctl_env*>(&my_cpu_ctl_env);
     new ( &ctl ) cpu_ctl_env;
-    if ( my_version_and_traits & fp_settings )
+    if ( (my_version_and_traits & fp_settings) != 0u )
         ctl.get_env();
 #endif
 }
@@ -238,7 +238,7 @@ void task_group_context::register_with ( generic_scheduler *local_sched ) {
     // being hoisted before the store to local update flag.
     atomic_fence();
     // Finalize local context list update
-    if ( local_sched->my_nonlocal_ctx_list_update.load<relaxed>() ) {
+    if ( local_sched->my_nonlocal_ctx_list_update.load<relaxed>() != 0u ) {
         spin_mutex::scoped_lock lock(my_owner->my_context_list_mutex);
         local_sched->my_context_list_head.my_next->my_prev = &my_node;
         my_node.my_next = local_sched->my_context_list_head.my_next;
@@ -263,14 +263,14 @@ void task_group_context::bind_to ( generic_scheduler *local_sched ) {
     my_parent = local_sched->my_innermost_running_task->prefix().context;
 #if __TBB_FP_CONTEXT
     // Inherit FPU settings only if the context has not captured FPU settings yet.
-    if ( !(my_version_and_traits & fp_settings) )
+    if ( (my_version_and_traits & fp_settings) == 0u )
         copy_fp_settings(*my_parent);
 #endif
 
     // Condition below prevents unnecessary thrashing parent context's cache line
-    if ( !(my_parent->my_state & may_have_children) )
+    if ( (my_parent->my_state & may_have_children) == 0u )
         my_parent->my_state |= may_have_children; // full fence is below
-    if ( my_parent->my_parent ) {
+    if ( my_parent->my_parent != nullptr ) {
         // Even if this context were made accessible for state change propagation
         // (by placing __TBB_store_with_release(s->my_context_list_head.my_next, &my_node)
         // above), it still could be missed if state propagation from a grand-ancestor
@@ -394,7 +394,7 @@ bool market::propagate_task_group_state ( T task_group_context::*mptr_state, tas
 
 bool task_group_context::cancel_group_execution () {
     __TBB_ASSERT ( my_cancellation_requested == 0 || my_cancellation_requested == 1, "Invalid cancellation state");
-    if ( my_cancellation_requested || as_atomic(my_cancellation_requested).compare_and_swap(1, 0) ) {
+    if ( (my_cancellation_requested != 0u) || (as_atomic(my_cancellation_requested).compare_and_swap(1, 0) != 0u) ) {
         // This task group and any descendants have already been canceled.
         // (A newly added descendant would inherit its parent's my_cancellation_requested,
         // not missing out on any cancellation still being propagated, and a context cannot be uncanceled.)
@@ -413,7 +413,7 @@ void task_group_context::reset () {
     //! TODO: Add assertion that this context does not have children
     // No fences are necessary since this context can be accessed from another thread
     // only after stealing happened (which means necessary fences were used).
-    if ( my_exception )  {
+    if ( my_exception != nullptr )  {
         my_exception->destroy();
         my_exception = NULL;
     }
@@ -427,7 +427,7 @@ void task_group_context::capture_fp_settings () {
     // No fences are necessary since this context can be accessed from another thread
     // only after stealing happened (which means necessary fences were used).
     cpu_ctl_env &ctl = *internal::punned_cast<cpu_ctl_env*>(&my_cpu_ctl_env);
-    if ( !(my_version_and_traits & fp_settings) ) {
+    if ( (my_version_and_traits & fp_settings) == 0u ) {
         new ( &ctl ) cpu_ctl_env;
         my_version_and_traits |= fp_settings;
     }
@@ -446,7 +446,7 @@ void task_group_context::copy_fp_settings( const task_group_context &src ) {
 #endif /* __TBB_FP_CONTEXT */
 
 void task_group_context::register_pending_exception () {
-    if ( my_cancellation_requested )
+    if ( my_cancellation_requested != 0u )
         return;
 #if TBB_USE_EXCEPTIONS
     try {
@@ -459,11 +459,11 @@ void task_group_context::register_pending_exception () {
 void task_group_context::set_priority ( priority_t prio ) {
     __TBB_ASSERT( prio == priority_low || prio == priority_normal || prio == priority_high, "Invalid priority level value" );
     intptr_t p = normalize_priority(prio);
-    if ( my_priority == p && !(my_state & task_group_context::may_have_children))
+    if ( my_priority == p && ((my_state & task_group_context::may_have_children) == 0u))
         return;
     my_priority = p;
     internal::generic_scheduler* s = governor::local_scheduler_if_initialized();
-    if ( !s || !s->my_arena || !s->my_market->propagate_task_group_state(&task_group_context::my_priority, *this, p) )
+    if ( (s == nullptr) || (s->my_arena == nullptr) || !s->my_market->propagate_task_group_state(&task_group_context::my_priority, *this, p) )
         return;
 
     //! TODO: the arena of the calling thread might be unrelated;

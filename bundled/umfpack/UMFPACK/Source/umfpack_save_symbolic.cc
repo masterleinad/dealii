@@ -59,7 +59,7 @@ GLOBAL Int UMFPACK_save_symbolic
 	filename = user_filename ;
     }
     f = fopen (filename, "wb") ;
-    if (!f)
+    if (f == nullptr)
     {
 	return (UMFPACK_ERROR_file_IO) ;
     }
@@ -82,7 +82,7 @@ GLOBAL Int UMFPACK_save_symbolic
 	/* only when dense rows are present */
 	WRITE (Symbolic->Esize, Int, Symbolic->esize) ;
     }
-    if (Symbolic->prefer_diagonal)
+    if (Symbolic->prefer_diagonal != 0)
     {
 	/* only when diagonal pivoting is prefered */
 	WRITE (Symbolic->Diagonal_map, Int, Symbolic->n_col+1) ;

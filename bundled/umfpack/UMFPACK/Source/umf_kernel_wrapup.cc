@@ -73,7 +73,7 @@ GLOBAL void UMF_kernel_wrapup
 	zero_pivot = SCALAR_IS_ZERO (d) ;
 	nan_pivot = SCALAR_IS_NAN (d) ;
 
-	if (!zero_pivot)
+	if (zero_pivot == 0)
 	{
 	    /* the pivot is nonzero, but might be Inf or NaN */
 	    Numeric->nnzpiv++ ;
@@ -95,7 +95,7 @@ GLOBAL void UMF_kernel_wrapup
 
 	    if (SCALAR_IS_NONZERO (Numeric->min_udiag))
 	    {
-		if (zero_pivot || nan_pivot)
+		if ((zero_pivot != 0) || (nan_pivot != 0))
 		{
 		    Numeric->min_udiag = d ;
 		}
@@ -112,7 +112,7 @@ GLOBAL void UMF_kernel_wrapup
 	       absolute value on the diagonal of U.
 	    */
 
-	    if (nan_pivot)
+	    if (nan_pivot != 0)
 	    {
 		Numeric->max_udiag = d ;
 	    }

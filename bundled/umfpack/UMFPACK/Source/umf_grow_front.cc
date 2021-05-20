@@ -136,7 +136,7 @@ GLOBAL Int UMF_grow_front
     /* free the current front if it is empty of any numerical values */
     /* ---------------------------------------------------------------------- */
 
-    if (E [0] && do_what != 1)
+    if ((E [0] != 0) && do_what != 1)
     {
 	/* free the current front, if it exists and has nothing in it */
 	DEBUG0 (("Freeing empty front\n")) ;
@@ -166,7 +166,7 @@ GLOBAL Int UMF_grow_front
     DEBUG0 (("Attempt size: " ID "-by-" ID "\n", fnr2, fnc2)) ;
     eloc = UMF_mem_alloc_tail_block (Numeric, UNITS (Entry, newsize)) ;
 
-    if (!eloc)
+    if (eloc == 0)
     {
 	/* Do garbage collection, realloc, and try again. Compact the current
 	 * contribution block in the front to fnrows-by-fncols.  Note that
@@ -184,7 +184,7 @@ GLOBAL Int UMF_grow_front
     }
 
     /* try again with something smaller */
-    while ((fnr2 != fnr_min || fnc2 != fnc_min) && !eloc)
+    while ((fnr2 != fnr_min || fnc2 != fnc_min) && (eloc == 0))
     {
 	fnr2 = MIN (fnr2 - 2, fnr2 * UMF_REALLOC_REDUCTION) ;
 	fnc2 = MIN (fnc2 - 2, fnc2 * UMF_REALLOC_REDUCTION) ;
@@ -201,7 +201,7 @@ GLOBAL Int UMF_grow_front
     }
 
     /* try again with the smallest possible size */
-    if (!eloc)
+    if (eloc == 0)
     {
 	fnr2 = fnr_min ;
 	fnc2 = fnc_min ;
@@ -210,7 +210,7 @@ GLOBAL Int UMF_grow_front
 	eloc = UMF_mem_alloc_tail_block (Numeric, UNITS (Entry, newsize)) ;
     }
 
-    if (!eloc)
+    if (eloc == 0)
     {
 	/* out of memory */
 	return (FALSE) ;
@@ -243,7 +243,7 @@ GLOBAL Int UMF_grow_front
     Work->Fcblock  = Work->Fublock  + nb * fnc2 ;
     Fcnew = Work->Fcblock ;
 
-    if (E [0])
+    if (E [0] != 0)
     {
 	/* copy the old contribution block into the new one */
 	for (j = 0 ; j < fncols ; j++)

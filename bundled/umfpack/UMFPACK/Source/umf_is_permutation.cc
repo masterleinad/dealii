@@ -23,7 +23,7 @@ GLOBAL Int UMF_is_permutation
 {
     Int i, k ;
 
-    if (!P)
+    if (P == nullptr)
     {
 	/* if P is (Int *) NULL, this is the identity permutation */
 	return (TRUE) ;
@@ -44,7 +44,7 @@ GLOBAL Int UMF_is_permutation
 	    DEBUG0 (("i out of range " ID " " ID "\n", i, n)) ;
 	    return (FALSE) ;
 	}
-	if (W [i])
+	if (W [i] != 0)
 	{
 	    DEBUG0 (("i duplicate " ID "\n", i)) ;
 	    return (FALSE) ;

@@ -70,7 +70,7 @@ GLOBAL Int UMFPACK_load_numeric
 	filename = user_filename ;
     }
     f = fopen (filename, "rb") ;
-    if (!f)
+    if (f == nullptr)
     {
 	return (UMFPACK_ERROR_file_IO) ;
     }
@@ -91,7 +91,7 @@ GLOBAL Int UMFPACK_load_numeric
 	fclose (f) ;
 	return (UMFPACK_ERROR_file_IO) ;
     }
-    if (ferror (f))
+    if (ferror (f) != 0)
     {
 	(void) UMF_free ((void *) Numeric) ;
 	fclose (f) ;

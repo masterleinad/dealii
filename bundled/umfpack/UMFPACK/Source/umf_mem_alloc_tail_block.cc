@@ -54,7 +54,7 @@ GLOBAL Int UMF_mem_alloc_tail_block
 	ASSERT (pbig->header.prevsize >= 0) ;	/* prev. is not free */
     }
 
-    if (pbig && bigsize >= nunits)
+    if ((pbig != nullptr) && bigsize >= nunits)
     {
 
 	/* use the biggest block, somewhere in middle of memory */

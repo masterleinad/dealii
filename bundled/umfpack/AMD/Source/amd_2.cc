@@ -585,7 +585,7 @@ GLOBAL void AMD_2
     if (Control != (double *) NULL)
     {
 	alpha = Control [AMD_DENSE] ;
-	aggressive = (Control [AMD_AGGRESSIVE] != 0) ;
+	aggressive = static_cast<long>(Control [AMD_AGGRESSIVE] != 0) ;
     }
     else
     {
@@ -1097,7 +1097,7 @@ GLOBAL void AMD_2
 	    /* ------------------------------------------------------------- */
 
 	    /* UMFPACK/MA38-style approximate degree: */
-	    if (aggressive)
+	    if (aggressive != 0)
 	    {
 		for (p = p1 ; p <= p2 ; p++)
 		{
@@ -1386,14 +1386,14 @@ GLOBAL void AMD_2
 			/* check if i and j have the same Len and Elen */
 			ASSERT (Len [j] >= 0 && Elen [j] >= 0) ;
 			ASSERT (Pe [j] >= 0 && Pe [j] < iwlen) ;
-			ok = (Len [j] == ln) && (Elen [j] == eln) ;
+			ok = static_cast<long>((Len [j] == ln) && (Elen [j] == eln)) ;
 			/* skip the first element in the list (me) */
-			for (p = Pe [j] + 1 ; ok && p <= Pe [j] + ln - 1 ; p++)
+			for (p = Pe [j] + 1 ; (ok != 0) && p <= Pe [j] + ln - 1 ; p++)
 			{
 			    ASSERT (Iw [p] >= 0 && Iw [p] < n) ;
 			    if (W [Iw [p]] != wflg) ok = 0 ;
 			}
-			if (ok)
+			if (ok != 0)
 			{
 			    /* --------------------------------------------- */
 			    /* found it!  j can be absorbed into i */

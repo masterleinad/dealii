@@ -27,7 +27,7 @@ GLOBAL void AMD_control
     if (Control != (double *) NULL)
     {
 	alpha = Control [AMD_DENSE] ;
-	aggressive = Control [AMD_AGGRESSIVE] != 0 ;
+	aggressive = static_cast<long>(Control [AMD_AGGRESSIVE] != 0) ;
     }
     else
     {
@@ -51,7 +51,7 @@ GLOBAL void AMD_control
 	alpha)) ;
     }
 
-    if (aggressive)
+    if (aggressive != 0)
     {
 	PRINTF (("    aggressive absorption:  yes\n")) ;
     }

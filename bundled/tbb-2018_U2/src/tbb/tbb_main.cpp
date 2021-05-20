@@ -441,7 +441,7 @@ protected:
         return a>b; // prefer max by default
     }
     virtual size_t active_value() const {
-        return my_head? my_active_value : default_value();
+        return my_head != nullptr? my_active_value : default_value();
     }
 };
 
@@ -461,17 +461,17 @@ class allowed_parallelism_control : public padded<control_storage> {
 /* Reading of my_active_value is not synchronized with possible updating
    of my_head by other thread. It's ok, as value of my_active_value became
    not invalid, just obsolete. */
-        if (!my_head)
+        if (my_head == nullptr)
             return default_value();
         // non-zero, if market is active
         const size_t workers = market::max_num_workers();
         // We can't exceed market's maximal number of workers.
         // +1 to take master into account
-        return workers? min(workers+1, my_active_value): my_active_value;
+        return workers != 0u? min(workers+1, my_active_value): my_active_value;
     }
 public:
     size_t active_value_if_present() const {
-        return my_head? my_active_value : 0;
+        return my_head != nullptr? my_active_value : 0;
     }
 };
 
@@ -507,7 +507,7 @@ void global_control::internal_create() {
     control_storage *const c = controls[my_param];
 
     spin_mutex::scoped_lock lock(c->my_list_mutex);
-    if (!c->my_head || c->is_first_arg_preferred(my_value, c->my_active_value)) {
+    if ((c->my_head == nullptr) || c->is_first_arg_preferred(my_value, c->my_active_value)) {
         c->my_active_value = my_value;
         // to guarantee that apply_active() is called with current active value,
         // calls it here and in internal_destroy() under my_list_mutex
@@ -535,12 +535,12 @@ void global_control::internal_destroy() {
 
     if ( c->my_head != this )
         new_active = c->my_head->my_value;
-    else if ( c->my_head->my_next )
+    else if ( c->my_head->my_next != nullptr )
         new_active = c->my_head->my_next->my_value;
     // if there is only one element, new_active will be set later
-    for ( global_control *curr = c->my_head; curr; prev = curr, curr = curr->my_next )
+    for ( global_control *curr = c->my_head; curr != nullptr; prev = curr, curr = curr->my_next )
         if ( curr == this ) {
-            if ( prev )
+            if ( prev != nullptr )
                 prev->my_next = my_next;
             else
                 c->my_head = my_next;
@@ -548,7 +548,7 @@ void global_control::internal_destroy() {
             if (c->is_first_arg_preferred(curr->my_value, new_active))
                 new_active = curr->my_value;
 
-    if ( !c->my_head ) {
+    if ( c->my_head == nullptr ) {
         __TBB_ASSERT( new_active==(size_t)-1, NULL );
         new_active = c->default_value();
     }

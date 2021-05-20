@@ -22,7 +22,7 @@ GLOBAL void UMFPACK_defaults
 {
     Int i ;
 
-    if (!Control)
+    if (Control == nullptr)
     {
 	/* silently return if no Control array */
 	return ;

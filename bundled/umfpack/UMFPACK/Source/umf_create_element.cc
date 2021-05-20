@@ -93,7 +93,7 @@ GLOBAL Int UMF_create_element
     /* add the current frontal matrix to the degrees of each column */
     /* ---------------------------------------------------------------------- */
 
-    if (!Symbolic->fixQ)
+    if (Symbolic->fixQ == 0)
     {
 	/* but only if the column ordering is not fixed */
 #pragma ivdep
@@ -124,7 +124,7 @@ GLOBAL Int UMF_create_element
     E = Work->E ;
     max_mark = MAX_MARK (nn) ;
 
-    if (!Work->pivcol_in_front)
+    if (Work->pivcol_in_front == 0)
     {
 	/* clear the external column degrees. no more Usons of current front */
 	Work->cdeg0 += (nn + 1) ;
@@ -136,7 +136,7 @@ GLOBAL Int UMF_create_element
 #pragma ivdep
 	    for (e = 1 ; e <= Work->nel ; e++)
 	    {
-		if (E [e])
+		if (E [e] != 0)
 		{
 		    ep = (Element *) (Memory + E [e]) ;
 		    ep->cdeg = 0 ;
@@ -145,7 +145,7 @@ GLOBAL Int UMF_create_element
 	}
     }
 
-    if (!Work->pivrow_in_front)
+    if (Work->pivrow_in_front == 0)
     {
 	/* clear the external row degrees.  no more Lsons of current front */
 	Work->rdeg0 += (nn + 1) ;
@@ -157,7 +157,7 @@ GLOBAL Int UMF_create_element
 #pragma ivdep
 	    for (e = 1 ; e <= Work->nel ; e++)
 	    {
-		if (E [e])
+		if (E [e] != 0)
 		{
 		    ep = (Element *) (Memory + E [e]) ;
 		    ep->rdeg = 0 ;
@@ -170,7 +170,7 @@ GLOBAL Int UMF_create_element
     /* clear row/col offsets */
     /* ---------------------------------------------------------------------- */
 
-    if (!Work->pivrow_in_front)
+    if (Work->pivrow_in_front == 0)
     {
 #pragma ivdep
 	for (j = 0 ; j < fncols ; j++)
@@ -179,7 +179,7 @@ GLOBAL Int UMF_create_element
 	}
     }
 
-    if (!Work->pivcol_in_front)
+    if (Work->pivcol_in_front == 0)
     {
 #pragma ivdep
 	for (i = 0 ; i < fnrows ; i++)
@@ -217,7 +217,7 @@ GLOBAL Int UMF_create_element
 	&needunits, &ep) ;
 
     /* if UMF_get_memory needs to be called */
-    if (Work->do_grow)
+    if (Work->do_grow != 0)
     {
 	/* full compaction of current frontal matrix, since UMF_grow_front will
 	 * be called next anyway. */
@@ -234,7 +234,7 @@ GLOBAL Int UMF_create_element
 	do_Fcpos = Work->pivrow_in_front ;
     }
 
-    if (!eloc)
+    if (eloc == 0)
     {
 	/* Do garbage collection, realloc, and try again. */
 	/* Compact the current front if it needs to grow anyway. */
@@ -251,7 +251,7 @@ GLOBAL Int UMF_create_element
 	eloc = UMF_mem_alloc_element (Numeric, fnrows, fncols, &Rows, &Cols, &C,
 	    &needunits, &ep) ;
 	ASSERT (eloc >= 0) ;
-	if (!eloc)
+	if (eloc == 0)
 	{
 	    /* :: out of memory in umf_create_element (2) :: */
 	    DEBUGm4 (("out of memory: create element (2)\n")) ;
@@ -267,13 +267,13 @@ GLOBAL Int UMF_create_element
     ASSERT (E [e] == 0) ;
     E [e] = eloc ;
 
-    if (Work->pivcol_in_front)
+    if (Work->pivcol_in_front != 0)
     {
 	/* the new element is a Uson of the next frontal matrix */
 	ep->cdeg = Work->cdeg0 ;
     }
 
-    if (Work->pivrow_in_front)
+    if (Work->pivrow_in_front != 0)
     {
 	/* the new element is an Lson of the next frontal matrix */
 	ep->rdeg = Work->rdeg0 ;
@@ -312,7 +312,7 @@ GLOBAL Int UMF_create_element
 
     tuple.e = e ;
 
-    if (got_memory)
+    if (got_memory != 0)
     {
 
 	/* ------------------------------------------------------------------ */
@@ -365,7 +365,7 @@ GLOBAL Int UMF_create_element
 	    size = 0 ;
 	    len = 0 ;
 
-	    if (t1)
+	    if (t1 != 0)
 	    {
 		p = Memory + t1 ;
 		tp = (Tuple *) p ;
@@ -378,7 +378,7 @@ GLOBAL Int UMF_create_element
 	    DEBUG1 (("len: " ID " size: " ID " needunits: " ID "\n",
 		len, size, needunits));
 
-	    if (needunits > size && t1)
+	    if (needunits > size && (t1 != 0))
 	    {
 		/* prune the tuples */
 		tp1 = tp ;
@@ -388,7 +388,7 @@ GLOBAL Int UMF_create_element
 		{
 		    e = tp->e ;
 		    ASSERT (e > 0 && e <= Work->nel) ;
-		    if (!E [e]) continue ;   /* element already deallocated */
+		    if (E [e] == 0) continue ;   /* element already deallocated */
 		    f = tp->f ;
 		    p = Memory + E [e] ;
 		    ep = (Element *) p ;
@@ -424,7 +424,7 @@ GLOBAL Int UMF_create_element
 
 		needunits = MIN (2*needunits, (Int) UNITS (Tuple, nn)) ;
 		t2 = UMF_mem_alloc_tail_block (Numeric, needunits) ;
-		if (!t2)
+		if (t2 == 0)
 		{
 		    /* :: get memory in umf_create_element (1) :: */
 		    /* get memory, reconstruct all tuple lists, and return */
@@ -435,7 +435,7 @@ GLOBAL Int UMF_create_element
 		}
 		Col_tuples [col] = t2 ;
 		tp2 = (Tuple *) (Memory + t2) ;
-		if (t1)
+		if (t1 != 0)
 		{
 		    for (i = 0 ; i < len ; i++)
 		    {
@@ -465,7 +465,7 @@ GLOBAL Int UMF_create_element
 
 	    size = 0 ;
 	    len = 0 ;
-	    if (t1)
+	    if (t1 != 0)
 	    {
 		p = Memory + t1 ;
 		tp = (Tuple *) p ;
@@ -478,7 +478,7 @@ GLOBAL Int UMF_create_element
 	    DEBUG1 (("len: " ID " size: " ID " needunits: " ID "\n",
 		len, size, needunits)) ;
 
-	    if (needunits > size && t1)
+	    if (needunits > size && (t1 != 0))
 	    {
 		/* prune the tuples */
 		tp1 = tp ;
@@ -488,7 +488,7 @@ GLOBAL Int UMF_create_element
 		{
 		    e = tp->e ;
 		    ASSERT (e > 0 && e <= Work->nel) ;
-		    if (!E [e])
+		    if (E [e] == 0)
 		    {
 			continue ;	/* element already deallocated */
 		    }
@@ -527,7 +527,7 @@ GLOBAL Int UMF_create_element
 
 		needunits = MIN (2*needunits, (Int) UNITS (Tuple, nn)) ;
 		t2 = UMF_mem_alloc_tail_block (Numeric, needunits) ;
-		if (!t2)
+		if (t2 == 0)
 		{
 		    /* :: get memory in umf_create_element (2) :: */
 		    /* get memory, reconstruct all tuple lists, and return */
@@ -538,7 +538,7 @@ GLOBAL Int UMF_create_element
 		}
 		Row_tuples [row] = t2 ;
 		tp2 = (Tuple *) (Memory + t2) ;
-		if (t1)
+		if (t1 != 0)
 		{
 		    for (i = 0 ; i < len ; i++)
 		    {

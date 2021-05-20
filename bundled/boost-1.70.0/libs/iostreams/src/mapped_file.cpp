@@ -116,11 +116,11 @@ void mapped_file_impl::resize(stream_offset new_size)
 {
     if (!is_open())
         boost::throw_exception(BOOST_IOSTREAMS_FAILURE("file is closed"));
-    if (flags() & mapped_file::priv)
+    if ((flags() & mapped_file::priv) != 0u)
         boost::throw_exception(
             BOOST_IOSTREAMS_FAILURE("can't resize private mapped file")
         );
-    if (!(flags() & mapped_file::readwrite))
+    if ((flags() & mapped_file::readwrite) == 0u)
         boost::throw_exception(
             BOOST_IOSTREAMS_FAILURE("can't resize readonly mapped file")
         );
@@ -348,7 +348,7 @@ void mapped_file_impl::map_file(param_type& p)
     try {
         try_map_file(p);
     } catch (const std::exception&) {
-        if (p.hint) {
+        if (p.hint != nullptr) {
             p.hint = 0;
             try_map_file(p);
         } else {
@@ -409,11 +409,11 @@ void mapped_file_impl::cleanup_and_throw(const char* msg)
 
 void mapped_file_params_base::normalize()
 {
-    if (mode && flags)
+    if ((mode != 0) && (flags != 0u))
         boost::throw_exception(BOOST_IOSTREAMS_FAILURE(
             "at most one of 'mode' and 'flags' may be specified"
         ));
-    if (flags) {
+    if (flags != 0u) {
         switch (flags) {
         case mapped_file::readonly:
         case mapped_file::readwrite:
@@ -423,7 +423,7 @@ void mapped_file_params_base::normalize()
             boost::throw_exception(BOOST_IOSTREAMS_FAILURE("invalid flags"));
         }
     } else {
-        flags = (mode & BOOST_IOS::out) ? 
+        flags = (mode & BOOST_IOS::out) != 0 ? 
             mapped_file::readwrite :
             mapped_file::readonly;
         mode = BOOST_IOS::openmode();

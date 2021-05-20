@@ -415,7 +415,7 @@ PRIVATE Int find_any_singletons	    /* returns # of singletons found */
 	/* create the row-form of A, if not already created */
 	/* ------------------------------------------------------------------ */
 
-	if (!row_form)
+	if (row_form == 0)
 	{
 	    create_row_form (n_row, n_col, Ap, Ai, Rdeg, Rp, Ri, W) ;
 	}
@@ -479,9 +479,9 @@ PRIVATE Int find_user_singletons	/* returns # singletons found */
 
     /* find singletons in the user column permutation, Quser */
     pivcol = Quser [0] ;
-    found = (Cdeg [pivcol] == 1) ;
+    found = static_cast<long>(Cdeg [pivcol] == 1) ;
     DEBUG0 (("Is first col: " ID " a col singleton?: " ID "\n", pivcol, found)) ;
-    if (!found)
+    if (found == 0)
     {
 	/* the first column is not a column singleton, check for a row
 	 * singleton in the first column. */
@@ -497,7 +497,7 @@ PRIVATE Int find_user_singletons	/* returns # singletons found */
 	}
     }
 
-    if (!found)
+    if (found == 0)
     {
 	/* no singletons in the leading part of A (:,Quser) */
 	return (0) ;
@@ -517,9 +517,9 @@ PRIVATE Int find_user_singletons	/* returns # singletons found */
 	/* check if col is a column singleton, or contains a row singleton */
 	/* ------------------------------------------------------------------ */
 
-	found = (Cdeg [pivcol] == 1) ;
+	found = static_cast<long>(Cdeg [pivcol] == 1) ;
 
-	if (found)
+	if (found != 0)
 	{
 
 	    /* -------------------------------------------------------------- */
@@ -606,7 +606,7 @@ PRIVATE Int find_user_singletons	/* returns # singletons found */
 		}
 	    }
 
-	    if (!found)
+	    if (found == 0)
 	    {
 		DEBUG0 (("End of user singletons\n")) ;
 		break ;

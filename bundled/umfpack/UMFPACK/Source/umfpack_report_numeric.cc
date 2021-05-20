@@ -177,16 +177,16 @@ GLOBAL Int UMFPACK_report_numeric
     }
 
     W = (Int *) UMF_malloc (nn, sizeof (Int)) ;
-    if (!W)
+    if (W == nullptr)
     {
 	PRINTF ((" ERROR: out of memory to check Numeric object\n\n")) ;
 	return (UMFPACK_ERROR_out_of_memory) ;
     }
 
-    if (Numeric->Rs)
+    if (Numeric->Rs != nullptr)
     {
 #ifndef NRECIPROCAL
-	if (Numeric->do_recip)
+	if (Numeric->do_recip != 0)
 	{
 	    PRINTF4 (("\nScale factors applied via multiplication\n")) ;
 	}
@@ -218,14 +218,14 @@ GLOBAL Int UMFPACK_report_numeric
 	return (UMFPACK_ERROR_invalid_Numeric_object) ;
     }
 
-    if (!report_L (Numeric, W, prl))
+    if (report_L (Numeric, W, prl) == 0)
     {
 	(void) UMF_free ((void *) W) ;
 	PRINTF ((" ERROR: L factor invalid\n\n")) ;
 	return (UMFPACK_ERROR_invalid_Numeric_object) ;
     }
 
-    if (!report_U (Numeric, W, prl))
+    if (report_U (Numeric, W, prl) == 0)
     {
 	(void) UMF_free ((void *) W) ;
 	PRINTF ((" ERROR: U factor invalid\n\n")) ;
@@ -343,8 +343,8 @@ PRIVATE Int report_L
 	}
 
 	lp = Lip [k] ;
-	newLchain = (lp < 0) ;
-	if (newLchain)
+	newLchain = static_cast<long>(lp < 0) ;
+	if (newLchain != 0)
 	{
 	    lp = -lp ;
 	    deg = 0 ;
@@ -372,9 +372,9 @@ PRIVATE Int report_L
 	{
 	    PRINTF4 (("  remove row " ID " at position " ID ".",
 		INDEX (Pattern [pos]), INDEX (pos))) ;
-	    valid = (!newLchain) && (deg > 0) && (pos < deg) && (pos >= 0)
-		&& (Pattern [pos] == k) ;
-	    if (!valid)
+	    valid = static_cast<long>((newLchain == 0) && (deg > 0) && (pos < deg) && (pos >= 0)
+		&& (Pattern [pos] == k)) ;
+	    if (valid == 0)
 	    {
 		return (FALSE) ;
 	    }
@@ -409,7 +409,7 @@ PRIVATE Int report_L
 	/* ------------------------------------------------------------------ */
 
 	PRINTF4 (("  length " ID ".", deg)) ;
-	if (newLchain)
+	if (newLchain != 0)
 	{
 	    PRINTF4 (("  Start of Lchain.")) ;
 	}
@@ -513,8 +513,8 @@ PRIVATE Int report_U
 	{
 	    return (FALSE) ;
 	}
-	newUchain = (up < 0) ;
-	if (newUchain)
+	newUchain = static_cast<long>(up < 0) ;
+	if (newUchain != 0)
 	{
 	    up = -up ;
 	    p = up + UNITS (Int, ulen) ;
@@ -566,7 +566,7 @@ PRIVATE Int report_U
 	    PRINTF4 (("\n    row " ID ":  ", INDEX (k-1))) ;
 	}
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* next row is a new Uchain */
 	    if (k > 0)

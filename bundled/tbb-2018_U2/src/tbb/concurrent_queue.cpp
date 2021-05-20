@@ -92,16 +92,16 @@ public:
     {}
     ~micro_queue_pop_finalizer() {
         page* p = my_page;
-        if( p ) {
+        if( p != nullptr ) {
             spin_mutex::scoped_lock lock( my_queue.page_mutex );
             page* q = p->next;
             my_queue.head_page = q;
-            if( !q ) {
+            if( q == nullptr ) {
                 my_queue.tail_page = NULL;
             }
         }
         my_queue.head_counter = my_ticket;
-        if( p )
+        if( p != nullptr )
            base.deallocate_page( p );
     }
 };
@@ -170,7 +170,7 @@ void micro_queue::push( const void* item, ticket k, concurrent_queue_base& base,
     page* p = NULL;
     // find index on page where we would put the data
     size_t index = modulo_power_of_two( k/concurrent_queue_rep::n_queue, base.items_per_page );
-    if( !index ) {  // make a new page
+    if( index == 0u ) {  // make a new page
         __TBB_TRY {
             p = base.allocate_page();
         } __TBB_CATCH(...) {
@@ -187,14 +187,14 @@ void micro_queue::push( const void* item, ticket k, concurrent_queue_base& base,
         for( atomic_backoff b(true);;b.pause() ) {
             ticket tail = tail_counter;
             if( tail==k ) break;
-            else if( tail&0x1 ) {
+            else if( (tail&0x1) != 0u ) {
                 // no memory. throws an exception; assumes concurrent_queue_rep::n_queue>1
                 ++base.my_rep->n_invalid_entries;
                 throw_exception( eid_bad_last_alloc );
             }
         }
 
-    if( p ) { // page is newly allocated; insert in micro_queue
+    if( p != nullptr ) { // page is newly allocated; insert in micro_queue
         spin_mutex::scoped_lock lock( page_mutex );
         if( page* q = tail_page )
             q->next = p;
@@ -203,7 +203,7 @@ void micro_queue::push( const void* item, ticket k, concurrent_queue_base& base,
         tail_page = p;
     }
 
-    if (item) {
+    if (item != nullptr) {
         p = tail_page;
         ITT_NOTIFY( sync_acquired, p );
         __TBB_TRY {
@@ -243,7 +243,7 @@ bool micro_queue::pop( void* dst, ticket k, concurrent_queue_base& base ) {
     bool success = false;
     {
         micro_queue_pop_finalizer finalizer( *this, base, k+concurrent_queue_rep::n_queue, index==base.items_per_page-1 ? p : NULL );
-        if( p->mask & uintptr_t(1)<<index ) {
+        if( (p->mask & uintptr_t(1)<<index) != 0u ) {
             success = true;
             ITT_NOTIFY( sync_acquired, dst );
             ITT_NOTIFY( sync_acquired, head_page );
@@ -263,7 +263,7 @@ micro_queue& micro_queue::assign( const micro_queue& src, concurrent_queue_base&
     tail_counter = src.tail_counter;
 
     const page* srcp = src.head_page;
-    if( srcp ) {
+    if( srcp != nullptr ) {
         ticket g_index = head_counter;
         __TBB_TRY {
             size_t n_items  = (tail_counter-head_counter)/concurrent_queue_rep::n_queue;
@@ -306,7 +306,7 @@ concurrent_queue_base::page* micro_queue::make_copy( concurrent_queue_base& base
     new_page->next = NULL;
     new_page->mask = src_page->mask;
     for( ; begin_in_page!=end_in_page; ++begin_in_page, ++g_index )
-        if( new_page->mask & uintptr_t(1)<<begin_in_page ) {
+        if( (new_page->mask & uintptr_t(1)<<begin_in_page) != 0u ) {
             if( concurrent_queue_base::copy == op_type ) {
                 base.copy_page_item( *new_page, begin_in_page, *src_page, begin_in_page );
             } else {
@@ -634,11 +634,11 @@ concurrent_queue_iterator_base_v3::concurrent_queue_iterator_base_v3( const conc
 
 void concurrent_queue_iterator_base_v3::assign( const concurrent_queue_iterator_base& other ) {
     if( my_rep!=other.my_rep ) {
-        if( my_rep ) {
+        if( my_rep != nullptr ) {
             cache_aligned_allocator<concurrent_queue_iterator_rep>().deallocate(my_rep, 1);
             my_rep = NULL;
         }
-        if( other.my_rep ) {
+        if( other.my_rep != nullptr ) {
             my_rep = cache_aligned_allocator<concurrent_queue_iterator_rep>().allocate(1);
             new( my_rep ) concurrent_queue_iterator_rep( *other.my_rep );
         }

@@ -85,7 +85,7 @@ file_descriptor_impl::file_descriptor_impl()
 
 file_descriptor_impl::~file_descriptor_impl() 
 { 
-    close_impl(flags_ & close_on_exit, false);
+    close_impl((flags_ & close_on_exit) != 0, false);
 }
 
 void file_descriptor_impl::open(file_handle fd, flags f)
@@ -98,7 +98,7 @@ void file_descriptor_impl::open(file_handle fd, flags f)
 
     file_descriptor_impl tmp;
     tmp.handle_ = handle_;
-    tmp.flags_ = flags_ & close_on_exit ? close_on_close : never_close;
+    tmp.flags_ = (flags_ & close_on_exit) != 0 ? close_on_close : never_close;
 
     handle_ = fd;
     flags_ = f;
@@ -115,7 +115,7 @@ void file_descriptor_impl::open(int fd, flags f)
 
 void file_descriptor_impl::open(const detail::path& p, BOOST_IOS::openmode mode)
 {
-    close_impl(flags_ & close_on_exit, true);
+    close_impl((flags_ & close_on_exit) != 0, true);
 
 #ifdef BOOST_IOSTREAMS_WINDOWS //---------------------------------------------//
     DWORD dwDesiredAccess;
@@ -200,23 +200,23 @@ void file_descriptor_impl::open(const detail::path& p, BOOST_IOS::openmode mode)
         // Calculate oflag argument to open.
 
     int oflag = 0;
-    if ( !(mode & (BOOST_IOS::in | BOOST_IOS::out | BOOST_IOS::app)) ||
-            ((mode & BOOST_IOS::trunc) &&
-            ((mode & BOOST_IOS::app) || !(mode & BOOST_IOS::out))) ) {
+    if ( ((mode & (BOOST_IOS::in | BOOST_IOS::out | BOOST_IOS::app)) == 0) ||
+            (((mode & BOOST_IOS::trunc) != 0) &&
+            (((mode & BOOST_IOS::app) != 0) || ((mode & BOOST_IOS::out) == 0))) ) {
         boost::throw_exception(BOOST_IOSTREAMS_FAILURE("bad open mode"));
     }
-    else if ( mode & BOOST_IOS::in ) {
-        if ( mode & BOOST_IOS::app )
+    else if ( (mode & BOOST_IOS::in) != 0 ) {
+        if ( (mode & BOOST_IOS::app) != 0 )
             oflag |= O_CREAT | O_APPEND | O_RDWR;
-        else if ( mode & BOOST_IOS::trunc )
+        else if ( (mode & BOOST_IOS::trunc) != 0 )
             oflag |= O_CREAT | O_TRUNC | O_RDWR;
-        else if ( mode & BOOST_IOS::out )
+        else if ( (mode & BOOST_IOS::out) != 0 )
             oflag |= O_RDWR;
         else
             oflag |= O_RDONLY;
     }
     else {
-        if ( mode & BOOST_IOS::app )
+        if ( (mode & BOOST_IOS::app) != 0 )
             oflag |= O_CREAT | O_APPEND | O_WRONLY;
         else
             oflag |= O_CREAT | O_TRUNC | O_WRONLY;
@@ -237,7 +237,7 @@ void file_descriptor_impl::open(const detail::path& p, BOOST_IOS::openmode mode)
     if (fd == -1) {
         boost::throw_exception(system_failure("failed opening file"));
     } else {
-        if ( mode & BOOST_IOS::ate ) {
+        if ( (mode & BOOST_IOS::ate) != 0 ) {
             if (BOOST_IOSTREAMS_FD_SEEK(fd, 0, SEEK_END) == -1) {
                 BOOST_IOSTREAMS_FD_CLOSE(fd);
                 boost::throw_exception(system_failure("failed opening file"));
@@ -537,7 +537,7 @@ void file_descriptor_source::open(
 void file_descriptor_source::open(
     const detail::path& path, BOOST_IOS::openmode mode)
 { 
-    if (mode & (BOOST_IOS::out | BOOST_IOS::trunc))
+    if ((mode & (BOOST_IOS::out | BOOST_IOS::trunc)) != 0)
         boost::throw_exception(BOOST_IOSTREAMS_FAILURE("invalid mode"));
     file_descriptor::open(path, mode, BOOST_IOS::in); 
 }
@@ -609,7 +609,7 @@ void file_descriptor_sink::open(
 void file_descriptor_sink::open(
     const detail::path& path, BOOST_IOS::openmode mode)
 { 
-    if (mode & BOOST_IOS::in)
+    if ((mode & BOOST_IOS::in) != 0)
         boost::throw_exception(BOOST_IOSTREAMS_FAILURE("invalid mode"));
     file_descriptor::open(path, mode, BOOST_IOS::out); 
 }

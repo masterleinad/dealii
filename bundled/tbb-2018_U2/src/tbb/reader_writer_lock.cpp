@@ -132,12 +132,12 @@ bool reader_writer_lock::start_write(scoped_lock *I) {
         ITT_NOTIFY(sync_prepare, this);
         pred = writer_tail.fetch_and_store(I);
     }
-    if (pred)
+    if (pred != nullptr)
         pred->next = I;
     else {
         set_next_writer(I);
         if (I->status == waiting_nonblocking) {
-            if (I->next) { // potentially more writers
+            if (I->next != nullptr) { // potentially more writers
                 set_next_writer(I->next);
             }
             else { // no more writers
@@ -166,7 +166,7 @@ void reader_writer_lock::set_next_writer(scoped_lock *W) {
         }
     }
     else {
-        if (fetch_and_or(rdr_count_and_flags, WFLAG1) & RFLAG) { // reader present
+        if ((fetch_and_or(rdr_count_and_flags, WFLAG1) & RFLAG) != 0u) { // reader present
             spin_wait_until_and(rdr_count_and_flags, WFLAG2); // block until readers set WFLAG2
         }
         else { // no reader in timing window
@@ -199,7 +199,7 @@ bool reader_writer_lock::try_lock_read() {
         return false;
     }
     else {
-        if (rdr_count_and_flags.fetch_and_add(RC_INCR) & (WFLAG1+WFLAG2)) { // writers present
+        if ((rdr_count_and_flags.fetch_and_add(RC_INCR) & (WFLAG1+WFLAG2)) != 0u) { // writers present
             rdr_count_and_flags -= RC_INCR;
             return false;
         }
@@ -213,15 +213,15 @@ bool reader_writer_lock::try_lock_read() {
 void reader_writer_lock::start_read(scoped_lock_read *I) {
     ITT_NOTIFY(sync_prepare, this);
     I->next = reader_head.fetch_and_store(I);
-    if (!I->next) { // first arriving reader in my group; set RFLAG, test writer flags
+    if (I->next == nullptr) { // first arriving reader in my group; set RFLAG, test writer flags
         // unblock and/or update statuses of non-blocking readers
-        if (!(fetch_and_or(rdr_count_and_flags, RFLAG) & (WFLAG1+WFLAG2))) { // no writers
+        if ((fetch_and_or(rdr_count_and_flags, RFLAG) & (WFLAG1+WFLAG2)) == 0u) { // no writers
             unblock_readers();
         }
     }
     __TBB_ASSERT(I->status == waiting || I->status == active, "Lock requests should be waiting or active before blocking.");
     spin_wait_while_eq(I->status, waiting); // block
-    if (I->next) {
+    if (I->next != nullptr) {
         __TBB_ASSERT(I->next->status == waiting, NULL);
         rdr_count_and_flags += RC_INCR;
         I->next->status = active; // wake successor
@@ -235,7 +235,7 @@ void reader_writer_lock::unblock_readers() {
     rdr_count_and_flags += RC_INCR-RFLAG;
     __TBB_ASSERT(rdr_count_and_flags >= RC_INCR, NULL);
     // indicate clear of window
-    if (rdr_count_and_flags & WFLAG1 && !(rdr_count_and_flags & WFLAG2)) {
+    if (((rdr_count_and_flags & WFLAG1) != 0u) && ((rdr_count_and_flags & WFLAG2) == 0u)) {
         __TBB_AtomicOR(&rdr_count_and_flags, WFLAG2);
     }
     // unblock waiting readers
@@ -265,13 +265,13 @@ void reader_writer_lock::end_write(scoped_lock *I) {
     __TBB_ASSERT(I==writer_head, "Internal error: can't unlock a thread that is not holding the lock.");
     my_current_writer = tbb_thread::id();
     ITT_NOTIFY(sync_releasing, this);
-    if (I->next) { // potentially more writers
+    if (I->next != nullptr) { // potentially more writers
         writer_head = I->next;
         writer_head->status = active;
     }
     else { // No more writers; clear writer flag, test reader interest flag
         __TBB_ASSERT(writer_head, NULL);
-        if (fetch_and_and(rdr_count_and_flags, ~(WFLAG1+WFLAG2)) & RFLAG) {
+        if ((fetch_and_and(rdr_count_and_flags, ~(WFLAG1+WFLAG2)) & RFLAG) != 0u) {
             unblock_readers();
         }
         writer_head.fetch_and_store(NULL);
@@ -330,7 +330,7 @@ inline reader_writer_lock::scoped_lock_read::scoped_lock_read() : mutex(NULL), n
 }
 
 void reader_writer_lock::scoped_lock::internal_destroy() {
-    if (mutex) {
+    if (mutex != nullptr) {
         __TBB_ASSERT(mutex->is_current_writer(), "~scoped_lock() destroyed by thread different than thread that holds lock.");
         mutex->end_write(this);
     }
@@ -338,7 +338,7 @@ void reader_writer_lock::scoped_lock::internal_destroy() {
 }
 
 void reader_writer_lock::scoped_lock_read::internal_destroy() {
-    if (mutex)
+    if (mutex != nullptr)
         mutex->end_read();
     status = invalid;
 }

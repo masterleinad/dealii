@@ -22,12 +22,12 @@ GLOBAL void UMFPACK_free_numeric
 {
 
     NumericType *Numeric ;
-    if (!NumericHandle)
+    if (NumericHandle == nullptr)
     {
 	return ;
     }
     Numeric = *((NumericType **) NumericHandle) ;
-    if (!Numeric)
+    if (Numeric == nullptr)
     {
 	return ;
     }

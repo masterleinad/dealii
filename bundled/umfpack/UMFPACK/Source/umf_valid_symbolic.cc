@@ -22,7 +22,7 @@ GLOBAL Int UMF_valid_symbolic
     /* it can miss some errors.  All it checks for is the presence of the */
     /* arrays, and the Symbolic "valid" entry. */
 
-    if (!Symbolic)
+    if (Symbolic == nullptr)
     {
 	return (FALSE) ;
     }
@@ -33,11 +33,11 @@ GLOBAL Int UMF_valid_symbolic
 	return (FALSE) ;
     }
 
-    if (!Symbolic->Cperm_init || !Symbolic->Rperm_init ||
-	!Symbolic->Front_npivcol || !Symbolic->Front_1strow ||
-	!Symbolic->Front_leftmostdesc ||
-	!Symbolic->Front_parent || !Symbolic->Chain_start ||
-	!Symbolic->Chain_maxrows || !Symbolic->Chain_maxcols ||
+    if ((Symbolic->Cperm_init == nullptr) || (Symbolic->Rperm_init == nullptr) ||
+	(Symbolic->Front_npivcol == nullptr) || (Symbolic->Front_1strow == nullptr) ||
+	(Symbolic->Front_leftmostdesc == nullptr) ||
+	(Symbolic->Front_parent == nullptr) || (Symbolic->Chain_start == nullptr) ||
+	(Symbolic->Chain_maxrows == nullptr) || (Symbolic->Chain_maxcols == nullptr) ||
 	Symbolic->n_row <= 0 || Symbolic->n_col <= 0)
     {
 	return (FALSE) ;

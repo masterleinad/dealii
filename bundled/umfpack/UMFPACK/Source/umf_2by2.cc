@@ -302,7 +302,7 @@ PRIVATE Int two_by_two	    /* returns # unmatched weak diagonals */
 				     * Tie break by picking the smaller of
 				     * j and j_best */
 				    DEBUG1 (("   tie degree, as close\n"));
-				    best = j < j_best ;
+				    best = static_cast<long>(j < j_best) ;
 				}
 			    }
 			    else
@@ -313,7 +313,7 @@ PRIVATE Int two_by_two	    /* returns # unmatched weak diagonals */
 			}
 		    }
 
-		    if (best)
+		    if (best != 0)
 		    {
 			/* j is best match for k */
 			/* found a strong pair, A (j,k) and A (k,j) */
@@ -448,11 +448,11 @@ GLOBAL void UMF_2by2
 
     /* use the values, but only if they are present */
     /* ignore the values if tol <= 0 */
-    do_values = (tol > 0) && (Ax != (double *) NULL) ;
-    if (do_values && (Rs != (double *) NULL))
+    do_values = static_cast<long>((tol > 0) && (Ax != (double *) NULL)) ;
+    if ((do_values != 0) && (Rs != (double *) NULL))
     {
-	do_sum = (scale == UMFPACK_SCALE_SUM) ;
-	do_max = (scale == UMFPACK_SCALE_MAX) ;
+	do_sum = static_cast<long>(scale == UMFPACK_SCALE_SUM) ;
+	do_max = static_cast<long>(scale == UMFPACK_SCALE_MAX) ;
     }
     else
     {
@@ -460,7 +460,7 @@ GLOBAL void UMF_2by2
 	do_sum = FALSE ;
 	do_max = FALSE ;
     }
-    do_scale = do_max || do_sum ;
+    do_scale = static_cast<long>((static_cast<long>(do_max != 0) != 0) || (do_sum) != 0) ;
     DEBUGm3 (("do_values " ID " do_sum " ID " do_max " ID " do_scale " ID "\n",
 	do_values, do_sum, do_max, do_scale)) ;
 
@@ -470,7 +470,7 @@ GLOBAL void UMF_2by2
 
     /* see also umf_kernel_init */
 
-    if (do_scale)
+    if (do_scale != 0)
     {
 #ifndef NRECIPROCAL
 	double rsmin ;
@@ -496,7 +496,7 @@ GLOBAL void UMF_2by2
 			 * for the row is NaN.  It will be set to 1 later. */
 			Rs [row] = value ;
 		    }
-		    else if (do_max)
+		    else if (do_max != 0)
 		    {
 			Rs [row] = MAX (rs, value) ;
 		    }
@@ -529,8 +529,8 @@ GLOBAL void UMF_2by2
 
 #ifndef NRECIPROCAL
 	/* multiply by the reciprocal if Rs is not too small */
-	do_recip = (rsmin >= RECIPROCAL_TOLERANCE) ;
-	if (do_recip)
+	do_recip = static_cast<long>(rsmin >= RECIPROCAL_TOLERANCE) ;
+	if (do_recip != 0)
 	{
 	    /* invert the scale factors */
 	    for (row = 0 ; row < n ; row++)
@@ -581,12 +581,12 @@ GLOBAL void UMF_2by2
 	dfound = FALSE ;
 	p1 = Ap [oldcol] ;
 	p2 = Ap [oldcol+1] ;
-	if (do_values)
+	if (do_values != 0)
 	{
 	    cmax = 0 ;
 	    dvalue = 0 ;
 
-	    if (!do_scale)
+	    if (do_scale == 0)
 	    {
 		/* no scaling */
 		for (p = p1 ; p < p2 ; p++)
@@ -620,7 +620,7 @@ GLOBAL void UMF_2by2
 		}
 	    }
 #ifndef NRECIPROCAL
-	    else if (do_recip)
+	    else if (do_recip != 0)
 	    {
 		/* multiply by the reciprocal */
 		for (p = p1 ; p < p2 ; p++)
@@ -718,7 +718,7 @@ GLOBAL void UMF_2by2
 	/* flag the weak diagonals */
 	/* ------------------------------------------------------------------ */
 
-	if (!dfound)
+	if (dfound == 0)
 	{
 	    /* no diagonal entry present */
 	    weak = TRUE ;
@@ -726,9 +726,9 @@ GLOBAL void UMF_2by2
 	else
 	{
 	    /* diagonal entry is present, check its value */
-	    weak = (do_values) ?  WEAK (dvalue, ctol) : FALSE ;
+	    weak = (do_values) != 0 ?  WEAK (dvalue, ctol) : FALSE ;
 	}
-	if (weak)
+	if (weak != 0)
 	{
 	    /* flag this column as weak */
 	    DEBUG0 (("Weak!\n")) ;
@@ -740,9 +740,9 @@ GLOBAL void UMF_2by2
 	/* count entries in each row that are not numerically weak */
 	/* ------------------------------------------------------------------ */
 
-	if (do_values)
+	if (do_values != 0)
 	{
-	    if (!do_scale)
+	    if (do_scale == 0)
 	    {
 		/* no scaling */
 		for (p = p1 ; p < p2 ; p++)
@@ -753,7 +753,7 @@ GLOBAL void UMF_2by2
 		    ASSIGN (aij, Ax, Az, p, split) ;
 		    APPROX_ABS (value, aij) ;
 		    weak = WEAK (value, ctol) ;
-		    if (!weak)
+		    if (weak == 0)
 		    {
 			DEBUG0 (("    strong: row " ID ": %g\n", oldrow, value)) ;
 			Ci [pp++] = newrow ;
@@ -762,7 +762,7 @@ GLOBAL void UMF_2by2
 		}
 	    }
 #ifndef NRECIPROCAL
-	    else if (do_recip)
+	    else if (do_recip != 0)
 	    {
 		/* multiply by the reciprocal */
 		for (p = p1 ; p < p2 ; p++)
@@ -774,7 +774,7 @@ GLOBAL void UMF_2by2
 		    APPROX_ABS (value, aij) ;
 		    value *= Rs [oldrow] ;
 		    weak = WEAK (value, ctol) ;
-		    if (!weak)
+		    if (weak == 0)
 		    {
 			DEBUG0 (("    strong: row " ID ": %g\n", oldrow, value)) ;
 			Ci [pp++] = newrow ;
@@ -795,7 +795,7 @@ GLOBAL void UMF_2by2
 		    APPROX_ABS (value, aij) ;
 		    value /= Rs [oldrow] ;
 		    weak = WEAK (value, ctol) ;
-		    if (!weak)
+		    if (weak == 0)
 		    {
 			DEBUG0 (("    strong: row " ID ": %g\n", oldrow, value)) ;
 			Ci [pp++] = newrow ;

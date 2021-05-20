@@ -152,7 +152,7 @@ class basic_iarchive_impl {
             bis_ptr(& bis_),
             bpis_ptr(NULL),
             file_version(0),
-            tracking_level(track_never),
+            tracking_level(track_never != 0u),
             initialized(false)
         {}
         cobject_id(const cobject_id &rhs): 

@@ -236,7 +236,7 @@ void generic_scheduler::cleanup_local_context_list () {
         // load from my_nonlocal_ctx_list_update.
         atomic_fence();
         // Check for the conflict with concurrent destroyer or cancellation propagator
-        if ( my_nonlocal_ctx_list_update.load<relaxed>() || local_count_snapshot != the_context_state_propagation_epoch )
+        if ( (my_nonlocal_ctx_list_update.load<relaxed>() != 0u) || local_count_snapshot != the_context_state_propagation_epoch )
             lock.acquire(my_context_list_mutex);
         // No acquire fence is necessary for loading my_context_list_head.my_next,
         // as the list can be updated by this thread only.
@@ -307,11 +307,11 @@ task& generic_scheduler::allocate_task( size_t number_of_bytes,
             my_nonlocal_free_list = t->prefix().next;
         } else
 #endif
-        if( (t = my_free_list) ) {
+        if( (t = my_free_list) != nullptr ) {
             GATHER_STATISTIC(--my_counters.free_list_length);
             __TBB_ASSERT( t->state()==task::freed, "free list of tasks is corrupted" );
             my_free_list = t->prefix().next;
-        } else if( my_return_list ) {
+        } else if( my_return_list != nullptr ) {
             // No fence required for read of my_return_list above, because __TBB_FetchAndStoreW has a fence.
             t = (task*)__TBB_FetchAndStoreW( &my_return_list, 0 ); // with acquire
             __TBB_ASSERT( t, "another thread emptied the my_return_list" );
@@ -404,7 +404,7 @@ inline size_t generic_scheduler::prepare_task_pool ( size_t num_tasks ) {
 
     size_t new_size = num_tasks;
 
-    if ( !my_arena_slot->my_task_pool_size ) {
+    if ( my_arena_slot->my_task_pool_size == 0u ) {
         __TBB_ASSERT( !is_task_pool_published() && is_quiescent_local_task_pool_reset(), NULL );
         __TBB_ASSERT( !my_arena_slot->task_pool_ptr, NULL );
         if ( num_tasks < min_task_pool_size ) new_size = min_task_pool_size;
@@ -418,7 +418,7 @@ inline size_t generic_scheduler::prepare_task_pool ( size_t num_tasks ) {
     __TBB_ASSERT( my_arena_slot->my_task_pool_size >= min_task_pool_size, NULL );
     // Count not skipped tasks. Consider using std::count_if.
     for ( size_t i = H; i < T; ++i )
-        if ( task_pool[i] ) ++new_size;
+        if ( task_pool[i] != nullptr ) ++new_size;
     // If the free space at the beginning of the task pool is too short, we
     // are likely facing a pathological single-producer-multiple-consumers
     // scenario, and thus it's better to expand the task pool
@@ -433,7 +433,7 @@ inline size_t generic_scheduler::prepare_task_pool ( size_t num_tasks ) {
     // Filter out skipped tasks. Consider using std::copy_if.
     size_t T1 = 0;
     for ( size_t i = H; i < T; ++i )
-        if ( task_pool[i] )
+        if ( task_pool[i] != nullptr )
             my_arena_slot->task_pool_ptr[T1++] = task_pool[i];
     // Deallocate the previous task pool if a new one has been allocated.
     if ( allocate )
@@ -701,7 +701,7 @@ task *generic_scheduler::get_task_and_activate_task_pool( size_t H0, __TBB_ISOLA
 #if __TBB_TASK_ISOLATION
     size_t T = T0;
     bool tasks_omitted = false;
-    while ( !t && T>H0 ) {
+    while ( (t == nullptr) && T>H0 ) {
         t = get_task( --T, isolation, tasks_omitted );
         if ( !tasks_omitted ) {
             poison_pointer( my_arena_slot->task_pool_ptr[T] );
@@ -709,7 +709,7 @@ task *generic_scheduler::get_task_and_activate_task_pool( size_t H0, __TBB_ISOLA
         }
     }
     // Make a hole if some tasks have been skipped.
-    if ( t && tasks_omitted ) {
+    if ( (t != nullptr) && tasks_omitted ) {
         my_arena_slot->task_pool_ptr[T] = NULL;
         if ( T == H0 ) {
             // The obtained task is on the head. So we can move the head instead of making a hole.
@@ -835,7 +835,7 @@ task* generic_scheduler::reload_tasks ( task*& offloaded_tasks, task**& offloade
     }
     __TBB_ASSERT( link, NULL );
     size_t num_tasks = tasks.size();
-    if ( !num_tasks ) {
+    if ( num_tasks == 0u ) {
         __TBB_ISOLATION_EXPR( release_task_pool() );
         return NULL;
     }
@@ -847,8 +847,8 @@ task* generic_scheduler::reload_tasks ( task*& offloaded_tasks, task**& offloade
 
     // Find a task available for execution.
     task *t = get_task_and_activate_task_pool( __TBB_load_relaxed( my_arena_slot->head ), __TBB_ISOLATION_ARG( T + num_tasks, isolation ) );
-    if ( t ) --num_tasks;
-    if ( num_tasks )
+    if ( t != nullptr ) --num_tasks;
+    if ( num_tasks != 0u )
         my_arena->advertise_new_work<arena::work_spawned>();
 
     return t;
@@ -866,7 +866,7 @@ task* generic_scheduler::reload_tasks( __TBB_ISOLATION_EXPR( isolation_tag isola
     intptr_t top_priority = effective_reference_priority();
     __TBB_ASSERT( (uintptr_t)top_priority < (uintptr_t)num_priority_levels, NULL );
     task *t = reload_tasks( my_offloaded_tasks, my_offloaded_task_list_tail_link, __TBB_ISOLATION_ARG( top_priority, isolation ) );
-    if ( my_offloaded_tasks && (my_arena->my_bottom_priority >= top_priority || !my_arena->my_num_workers_requested) ) {
+    if ( (my_offloaded_tasks != nullptr) && (my_arena->my_bottom_priority >= top_priority || (my_arena->my_num_workers_requested == 0)) ) {
         // Safeguard against deliberately relaxed synchronization while checking
         // for the presence of work in arena (so that not to impact hot paths).
         // Arena may be reset to empty state when offloaded low priority tasks
@@ -899,7 +899,7 @@ inline task* generic_scheduler::get_task( size_t T )
     task* result = my_arena_slot->task_pool_ptr[T];
     __TBB_ASSERT( !is_poisoned( result ), "The poisoned task is going to be processed" );
 #if __TBB_TASK_ISOLATION
-    if ( !result )
+    if ( result == nullptr )
         return NULL;
 
     bool omit = isolation != no_isolation && isolation != result->prefix().isolation;
@@ -981,7 +981,7 @@ inline task* generic_scheduler::get_task( __TBB_ISOLATION_EXPR( isolation_tag is
         __TBB_control_consistency_helper(); // on my_arena_slot->head
 #if __TBB_TASK_ISOLATION
         result = get_task( T, isolation, tasks_omitted );
-        if ( result ) {
+        if ( result != nullptr ) {
             poison_pointer( my_arena_slot->task_pool_ptr[T] );
             break;
         } else if ( !tasks_omitted ) {
@@ -992,7 +992,7 @@ inline task* generic_scheduler::get_task( __TBB_ISOLATION_EXPR( isolation_tag is
 #else
         result = get_task( T );
 #endif /* __TBB_TASK_ISOLATION */
-    } while ( !result && !task_pool_empty );
+    } while ( (result == nullptr) && !task_pool_empty );
 
 #if __TBB_TASK_ISOLATION
     if ( tasks_omitted ) {
@@ -1001,7 +1001,7 @@ inline task* generic_scheduler::get_task( __TBB_ISOLATION_EXPR( isolation_tag is
             // We just restore the bounds for the available tasks.
             // TODO: Does it have sense to move them to the beginning of the task pool?
             __TBB_ASSERT( is_quiescent_local_task_pool_reset(), NULL );
-            if ( result ) {
+            if ( result != nullptr ) {
                 // If we have a task, it should be at H0 position.
                 __TBB_ASSERT( H0 == T, NULL );
                 ++H0;
@@ -1041,7 +1041,7 @@ inline task* generic_scheduler::get_task( __TBB_ISOLATION_EXPR( isolation_tag is
 
 task* generic_scheduler::steal_task( __TBB_ISOLATION_ARG( arena_slot& victim_slot, isolation_tag isolation ) ) {
     task** victim_pool = lock_task_pool( &victim_slot );
-    if ( !victim_pool )
+    if ( victim_pool == nullptr )
         return NULL;
     task* result = NULL;
     size_t H = __TBB_load_relaxed(victim_slot.head); // mirror
@@ -1061,7 +1061,7 @@ task* generic_scheduler::steal_task( __TBB_ISOLATION_ARG( arena_slot& victim_slo
         result = victim_pool[H-1];
         __TBB_ASSERT( !is_poisoned( result ), NULL );
 
-        if ( result ) {
+        if ( result != nullptr ) {
             __TBB_ISOLATION_EXPR( if ( isolation == no_isolation || isolation == result->prefix().isolation ) )
             {
                 if ( !is_proxy( *result ) )
@@ -1081,7 +1081,7 @@ task* generic_scheduler::steal_task( __TBB_ISOLATION_ARG( arena_slot& victim_slo
             poison_pointer( victim_pool[H0] );
             H0 = H;
         }
-    } while ( !result );
+    } while ( result == nullptr );
     __TBB_ASSERT( result, NULL );
 
     // emit "task was consumed" signal
@@ -1176,7 +1176,7 @@ generic_scheduler* generic_scheduler::create_master( arena* a ) {
     s->my_market->my_masters.push_front( *s );
     lock.release();
 #endif /* __TBB_TASK_GROUP_CONTEXT */
-    if( a ) {
+    if( a != nullptr ) {
     // Master thread always occupies the first slot
         s->attach_arena( a, /*index*/0, /*is_master*/true );
     s->my_arena_slot->my_scheduler = s;
@@ -1212,7 +1212,7 @@ bool generic_scheduler::cleanup_master( bool blocking_terminate ) {
     arena* const a = my_arena;
     market * const m = my_market;
     __TBB_ASSERT( my_market, NULL );
-    if( a && is_task_pool_published() ) {
+    if( (a != nullptr) && is_task_pool_published() ) {
         acquire_task_pool();
         if ( my_arena_slot->task_pool == EmptyTaskPool ||
              __TBB_load_relaxed(my_arena_slot->head) >= __TBB_load_relaxed(my_arena_slot->tail) )
@@ -1230,7 +1230,7 @@ bool generic_scheduler::cleanup_master( bool blocking_terminate ) {
         }
     }
 #if __TBB_ARENA_OBSERVER
-    if( a )
+    if( a != nullptr )
         a->my_observers.notify_exit_observers( my_last_local_observer, /*worker=*/false );
 #endif
 #if __TBB_SCHEDULER_OBSERVER
@@ -1239,7 +1239,7 @@ bool generic_scheduler::cleanup_master( bool blocking_terminate ) {
 #if _WIN32||_WIN64
     m->unregister_master( master_exec_resource );
 #endif /* _WIN32||_WIN64 */
-    if( a ) {
+    if( a != nullptr ) {
         __TBB_ASSERT(a->my_slots+0 == my_arena_slot, NULL);
 #if __TBB_STATISTICS
         *my_arena_slot->my_counters += my_counters;
@@ -1258,7 +1258,7 @@ bool generic_scheduler::cleanup_master( bool blocking_terminate ) {
     my_arena_slot = NULL; // detached from slot
     free_scheduler(); // do not use scheduler state after this point
 
-    if( a )
+    if( a != nullptr )
         a->on_thread_leaving<arena::ref_external>();
     // If there was an associated arena, it added a public market reference
     return m->release( /*is_public*/ a != NULL, blocking_terminate );

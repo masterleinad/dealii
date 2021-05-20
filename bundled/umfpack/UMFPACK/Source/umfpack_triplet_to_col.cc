@@ -86,7 +86,7 @@ GLOBAL Int UMFPACK_triplet_to_col
     /* check inputs */
     /* ---------------------------------------------------------------------- */
 
-    if (!Ai || !Ap || !Ti || !Tj)
+    if ((Ai == nullptr) || (Ap == nullptr) || (Ti == nullptr) || (Tj == nullptr))
     {
 	return (UMFPACK_ERROR_argument_missing) ;
     }
@@ -109,14 +109,14 @@ GLOBAL Int UMFPACK_triplet_to_col
 
     Rx = (double *) NULL ;
 
-    do_values = Ax && Tx ;
+    do_values = static_cast<long>((static_cast<long>(Ax != nullptr) != 0) && (Tx) != nullptr) ;
 
-    if (do_values)
+    if (do_values != 0)
     {
 #ifdef COMPLEX
 	Rx = (double *) UMF_malloc (2*nz+2, sizeof (double)) ;
 	split = SPLIT (Tz) && SPLIT (Az) ;
-	if (split)
+	if (split != 0)
 	{
 	    Rz = Rx + nz ;
 	}
@@ -127,7 +127,7 @@ GLOBAL Int UMFPACK_triplet_to_col
 #else
 	Rx = (double *) UMF_malloc (nz+1, sizeof (double)) ;
 #endif
-	if (!Rx)
+	if (Rx == nullptr)
 	{
 	    DEBUGm4 (("out of memory: triplet work \n")) ;
 	    ASSERT (UMF_malloc_count == init_count) ;
@@ -135,13 +135,13 @@ GLOBAL Int UMFPACK_triplet_to_col
 	}
     }
 
-    do_map = (Map != (Int *) NULL) ;
+    do_map = static_cast<long>(Map != (Int *) NULL) ;
     Map2 = (Int *) NULL ;
-    if (do_map)
+    if (do_map != 0)
     {
 	DEBUG0 (("Do map:\n")) ;
 	Map2 = (Int *) UMF_malloc (nz+1, sizeof (Int)) ;
-	if (!Map2)
+	if (Map2 == nullptr)
 	{
 	    DEBUGm4 (("out of memory: triplet map\n")) ;
 	    (void) UMF_free ((void *) Rx) ;
@@ -154,7 +154,7 @@ GLOBAL Int UMFPACK_triplet_to_col
     Rp = (Int *) UMF_malloc (n_row+1, sizeof (Int)) ;
     RowCount = (Int *) UMF_malloc (n_row, sizeof (Int)) ;
     W = (Int *) UMF_malloc (nn, sizeof (Int)) ;
-    if (!Rj || !Rp || !RowCount || !W)
+    if ((Rj == nullptr) || (Rp == nullptr) || (RowCount == nullptr) || (W == nullptr))
     {
 	DEBUGm4 (("out of memory: triplet work (int)\n")) ;
 	(void) UMF_free ((void *) Rx) ;
@@ -174,9 +174,9 @@ GLOBAL Int UMFPACK_triplet_to_col
     /* convert from triplet to column form */
     /* ---------------------------------------------------------------------- */
 
-    if (do_map)
+    if (do_map != 0)
     {
-	if (do_values)
+	if (do_values != 0)
 	{
 	    status = UMF_triplet_map_x (n_row, n_col, nz, Ti, Tj, Ap, Ai, Rp,
 		Rj, W, RowCount, Tx, Ax, Rx
@@ -193,7 +193,7 @@ GLOBAL Int UMFPACK_triplet_to_col
     }
     else
     {
-	if (do_values)
+	if (do_values != 0)
 	{
 	    status = UMF_triplet_nomap_x (n_row, n_col, nz, Ti, Tj, Ap, Ai, Rp,
 		Rj, W, RowCount , Tx, Ax, Rx

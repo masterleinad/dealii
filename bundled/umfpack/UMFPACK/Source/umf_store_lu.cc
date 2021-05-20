@@ -258,7 +258,7 @@ GLOBAL Int UMF_store_lu
 	lnz2x += lnz2i ;
 
 	/* determine if we start a new Lchain or continue the old one */
-	if (llen == 0 || zero_pivot)
+	if (llen == 0 || (zero_pivot != 0))
 	{
 	    /* llen == 0 means there is no prior Lchain */
 	    /* D [k] == 0 means the pivot column is empty */
@@ -274,7 +274,7 @@ GLOBAL Int UMF_store_lu
 		    UNITS (Entry, lnz2x) + UNITS (Int, lnz2i) ;
 	}
 
-	if (newLchain)
+	if (newLchain != 0)
 	{
 	    /* start a new chain for column k of L */
 	    DEBUG2 (("Start new Lchain, k = " ID "\n", k)) ;
@@ -318,12 +318,12 @@ GLOBAL Int UMF_store_lu
 #endif
 
 	p = UMF_mem_alloc_head_block (Numeric, size) ;
-	if (!p)
+	if (p == 0)
 	{
 	    Int r2, c2 ;
 	    /* Do garbage collection, realloc, and try again. */
 	    /* Note that there are pivot rows/columns in current front. */
-	    if (Work->do_grow)
+	    if (Work->do_grow != 0)
 	    {
 		/* full compaction of current frontal matrix, since
 		 * UMF_grow_front will be called next anyway. */
@@ -343,7 +343,7 @@ GLOBAL Int UMF_store_lu
 		return (FALSE) ;	/* out of memory */
 	    }
 	    p = UMF_mem_alloc_head_block (Numeric, size) ;
-	    if (!p)
+	    if (p == 0)
 	    {
 		DEBUGm4 (("out of memory: store LU (2)\n")) ;
 		return (FALSE) ;	/* out of memory */
@@ -376,7 +376,7 @@ GLOBAL Int UMF_store_lu
 
 	/* store the numerical entries */
 
-	if (newLchain)
+	if (newLchain != 0)
 	{
 	    /* flag the first column in the Lchain by negating Lip [k] */
 	    lip = -lip ;
@@ -692,7 +692,7 @@ GLOBAL Int UMF_store_lu
 	ASSERT (IMPLIES (k == 0, ulen == 0)) ;
 
 	/* determine if we start a new Uchain or continue the old one */
-	if (ulen == 0 || zero_pivot)
+	if (ulen == 0 || (zero_pivot != 0))
 	{
 	    /* ulen == 0 means there is no prior Uchain */
 	    /* D [k] == 0 means the matrix is singular (pivot row might */
@@ -718,7 +718,7 @@ GLOBAL Int UMF_store_lu
 	/* ------------------------------------------------------------------ */
 
 	size = 0 ;
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* store the pattern of the last row in the prior Uchain */
 	    size += UNITS (Int, ulen) ;
@@ -742,12 +742,12 @@ GLOBAL Int UMF_store_lu
 #endif
 
 	p = UMF_mem_alloc_head_block (Numeric, size) ;
-	if (!p)
+	if (p == 0)
 	{
 	    Int r2, c2 ;
 	    /* Do garbage collection, realloc, and try again. */
 	    /* Note that there are pivot rows/columns in current front. */
-	    if (Work->do_grow)
+	    if (Work->do_grow != 0)
 	    {
 		/* full compaction of current frontal matrix, since
 		 * UMF_grow_front will be called next anyway. */
@@ -768,7 +768,7 @@ GLOBAL Int UMF_store_lu
 		return (FALSE) ;	/* out of memory */
 	    }
 	    p = UMF_mem_alloc_head_block (Numeric, size) ;
-	    if (!p)
+	    if (p == 0)
 	    {
 		/* :: out of memory, column of U :: */
 		DEBUGm4 (("out of memory: store LU (2)\n")) ;
@@ -790,7 +790,7 @@ GLOBAL Int UMF_store_lu
 
 	uip = p ;
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* starting a new Uchain - flag this by negating Uip [k] */
 	    uip = -uip ;
@@ -854,7 +854,7 @@ GLOBAL Int UMF_store_lu
 	    CLEAR (Uval [i]) ;
 	}
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    ASSERT (ulen == 0) ;
 

@@ -27,7 +27,7 @@ PRIVATE void print_value
     /* if Xz is null, then X is in "merged" format (compatible with Entry, */
     /* and ANSI C99 double _Complex type). */
     PRINTF (("    " ID " :", INDEX (i))) ;
-    if (scalar)
+    if (scalar != 0)
     {
 	PRINT_SCALAR (Xx [i]) ;
     }
@@ -55,14 +55,14 @@ GLOBAL Int UMF_report_vector
 {
     Int n2, i ;
 
-    if (user || prl >= 4)
+    if ((user != 0) || prl >= 4)
     {
 	PRINTF (("dense vector, n = " ID ". ", n)) ;
     }
 
-    if (user)
+    if (user != 0)
     {
-	if (!Xx)
+	if (Xx == nullptr)
 	{
 	    PRINTF (("ERROR: vector not present\n\n")) ;
 	    return (UMFPACK_ERROR_argument_missing) ;
@@ -74,7 +74,7 @@ GLOBAL Int UMF_report_vector
 	}
     }
 
-    if (user || prl >= 4)
+    if ((user != 0) || prl >= 4)
     {
 	PRINTF4 (("\n")) ;
     }
@@ -103,7 +103,7 @@ GLOBAL Int UMF_report_vector
     }
 
     PRINTF4 (("    dense vector ")) ;
-    if (user || prl >= 4)
+    if ((user != 0) || prl >= 4)
     {
 	PRINTF (("OK\n\n")) ;
     }

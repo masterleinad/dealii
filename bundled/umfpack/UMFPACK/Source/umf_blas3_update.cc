@@ -66,7 +66,7 @@ GLOBAL void UMF_blas3_update
 	BLAS_GER (m, n, L, U, C, d) ;
 #endif
 
-	if (!blas_ok)
+	if (blas_ok == 0)
 	{
 	    /* rank-1 outer product to update the C block */
 	    for (j = 0 ; j < n ; j++)
@@ -99,7 +99,7 @@ GLOBAL void UMF_blas3_update
 	BLAS_TRSM_RIGHT (n, k, LU, nb, U, dc) ;
 #endif
 
-	if (!blas_ok)
+	if (blas_ok == 0)
 	{
 	    /* use plain C code if no BLAS at compile time, or if integer
 	     * overflow has occurred */
@@ -133,7 +133,7 @@ GLOBAL void UMF_blas3_update
 	BLAS_GEMM (m, n, k, L, U, dc, C, d) ;
 #endif
 
-	if (!blas_ok)
+	if (blas_ok == 0)
 	{
 	    /* use plain C code if no BLAS at compile time, or if integer
 	     * overflow has occurred */

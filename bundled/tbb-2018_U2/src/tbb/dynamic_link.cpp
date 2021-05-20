@@ -119,7 +119,7 @@ OPEN_INTERNAL_NAMESPACE
 
     static bool resolve_symbols( dynamic_link_handle module, const dynamic_link_descriptor descriptors[], size_t required )
     {
-        if ( !module )
+        if ( module == nullptr )
             return false;
 
         #if !__TBB_DYNAMIC_LOAD_ENABLED /* only __TBB_WEAK_SYMBOLS_PRESENT is defined */
@@ -134,7 +134,7 @@ OPEN_INTERNAL_NAMESPACE
         for ( size_t k = 0; k < required; ++k ) {
             dynamic_link_descriptor const & desc = descriptors[k];
             pointer_to_handler addr = (pointer_to_handler)dlsym( module, desc.name );
-            if ( !addr ) {
+            if ( addr == nullptr ) {
                 return false;
             }
             h[k] = addr;
@@ -303,7 +303,7 @@ OPEN_INTERNAL_NAMESPACE
         // Get the library path
         Dl_info dlinfo;
         int res = dladdr( (void*)&dynamic_link, &dlinfo ); // any function inside the library can be used for the address
-        if ( !res ) {
+        if ( res == 0 ) {
             char const * err = dlerror();
             DYNAMIC_LINK_WARNING( dl_sys_fail, "dladdr", err );
             return;
@@ -313,7 +313,7 @@ OPEN_INTERNAL_NAMESPACE
 
         char const *slash = strrchr( dlinfo.dli_fname, '/' );
         size_t fname_len=0;
-        if ( slash ) {
+        if ( slash != nullptr ) {
             LIBRARY_ASSERT( slash >= dlinfo.dli_fname, "Unbelievable.");
             fname_len = (size_t)(slash - dlinfo.dli_fname) + 1;
         }
@@ -325,7 +325,7 @@ OPEN_INTERNAL_NAMESPACE
             ap_data._len = 0;
         } else {
             // The library path is relative so get the current working directory
-            if ( !getcwd( ap_data._path, sizeof(ap_data._path)/sizeof(ap_data._path[0]) ) ) {
+            if ( getcwd( ap_data._path, sizeof(ap_data._path)/sizeof(ap_data._path[0]) ) == nullptr ) {
                 DYNAMIC_LINK_WARNING( dl_buff_too_small );
                 return;
             }
@@ -366,7 +366,7 @@ OPEN_INTERNAL_NAMESPACE
                     buffer.
     */
     static size_t abs_path( char const * name, char * path, size_t len ) {
-        if ( !ap_data._len )
+        if ( ap_data._len == 0u )
             return 0;
 
         size_t name_len = strlen( name );
@@ -402,7 +402,7 @@ OPEN_INTERNAL_NAMESPACE
     {
         // Check if the required entries are present in what was loaded into our process.
         for ( size_t k = 0; k < required; ++k )
-            if ( !descriptors[k].ptr )
+            if ( descriptors[k].ptr == nullptr )
                 return false;
         // Commit the entry points.
         for ( size_t k = 0; k < required; ++k )
@@ -419,7 +419,7 @@ OPEN_INTERNAL_NAMESPACE
     #if !__TBB_DYNAMIC_LOAD_ENABLED /* only __TBB_WEAK_SYMBOLS_PRESENT is defined */
         if ( !dlclose ) return;
     #endif
-        if ( handle ) {
+        if ( handle != nullptr ) {
             dlclose( handle );
         }
     }
@@ -440,10 +440,10 @@ OPEN_INTERNAL_NAMESPACE
         dynamic_link_handle library_handle = 0;
         Dl_info info;
         // Get library's name from earlier found symbol
-        if ( dladdr( (void*)*desc.handler, &info ) ) {
+        if ( dladdr( (void*)*desc.handler, &info ) != 0 ) {
             // Pin the library
             library_handle = dlopen( info.dli_fname, RTLD_LAZY );
-            if ( library_handle ) {
+            if ( library_handle != nullptr ) {
                 // If original library was unloaded before we pinned it
                 // and then another module loaded in its place, the earlier
                 // found symbol would become invalid. So revalidate them.
@@ -503,7 +503,7 @@ OPEN_INTERNAL_NAMESPACE
 
     static void save_library_handle( dynamic_link_handle src, dynamic_link_handle *dst ) {
         LIBRARY_ASSERT( src, "The library handle to store must be non-zero" );
-        if ( dst )
+        if ( dst != nullptr )
             *dst = src;
     #if __TBB_DYNAMIC_LOAD_ENABLED
         else
@@ -528,7 +528,7 @@ OPEN_INTERNAL_NAMESPACE
 #if _WIN32
         SetErrorMode (prev_mode);
 #endif /* _WIN32 */
-        if( library_handle ) {
+        if( library_handle != nullptr ) {
             if( !resolve_symbols( library_handle, descriptors, required ) ) {
                 // The loaded library does not contain all the expected entry points
                 dynamic_unlink( library_handle );
@@ -549,15 +549,15 @@ OPEN_INTERNAL_NAMESPACE
         init_dynamic_link_data();
 
         // TODO: May global_symbols_link find weak symbols?
-        dynamic_link_handle library_handle = ( flags & DYNAMIC_LINK_GLOBAL ) ? global_symbols_link( library, descriptors, required ) : 0;
+        dynamic_link_handle library_handle = ( flags & DYNAMIC_LINK_GLOBAL ) != 0 ? global_symbols_link( library, descriptors, required ) : 0;
 
-        if ( !library_handle && ( flags & DYNAMIC_LINK_LOAD ) )
+        if ( (library_handle == nullptr) && (( flags & DYNAMIC_LINK_LOAD ) != 0) )
             library_handle = dynamic_load( library, descriptors, required );
 
-        if ( !library_handle && ( flags & DYNAMIC_LINK_WEAK ) )
+        if ( (library_handle == nullptr) && (( flags & DYNAMIC_LINK_WEAK ) != 0) )
             return weak_symbol_link( descriptors, required );
 
-        if ( library_handle ) {
+        if ( library_handle != nullptr ) {
             save_library_handle( library_handle, handle );
             return true;
         }

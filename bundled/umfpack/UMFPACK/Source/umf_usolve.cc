@@ -98,8 +98,8 @@ GLOBAL double UMF_usolve
 
 	up = Uip [k] ;
 	ulen = Uilen [k] ;
-	newUchain = (up < 0) ;
-	if (newUchain)
+	newUchain = static_cast<long>(up < 0) ;
+	if (newUchain != 0)
 	{
 	    up = -up ;
 	    xp = (Entry *) (Numeric->Memory + up + UNITS (Int, ulen)) ;
@@ -139,7 +139,7 @@ GLOBAL double UMF_usolve
 
 	if (k == n1) break ;
 
-	if (newUchain)
+	if (newUchain != 0)
 	{
 	    /* next row is a new Uchain */
 	    deg = ulen ;

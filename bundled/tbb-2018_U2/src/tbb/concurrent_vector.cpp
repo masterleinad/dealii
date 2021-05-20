@@ -64,7 +64,7 @@ public:
     // TODO: optimize accesses to my_first_block
     //! assign first segment size. k - is index of last segment to be allocated, not a count of segments
     inline static void assign_first_segment_if_necessary(concurrent_vector_base_v3 &v, segment_index_t k) {
-        if( !v.my_first_block ) {
+        if( v.my_first_block == 0u ) {
             /* There was a suggestion to set first segment according to incompact_predicate:
             while( k && !helper::incompact_predicate(segment_size( k ) * element_size) )
                 --k; // while previous vector size is compact, decrement
@@ -80,7 +80,7 @@ public:
 
     inline static void *allocate_segment(concurrent_vector_base_v3 &v, size_type n) {
         void *ptr = v.vector_allocator_ptr(v, n);
-        if(!ptr) throw_exception(eid_bad_alloc); // check for bad allocation, throw exception
+        if(ptr == nullptr) throw_exception(eid_bad_alloc); // check for bad allocation, throw exception
         return ptr;
     }
 
@@ -136,11 +136,11 @@ public:
         size_type base = segment_base( k );
         __TBB_ASSERT( base <= start, NULL );
         finish -= base; start -= base; // rebase as offsets from segment k
-        sz = k ? base : segment_size( first_block ); // sz==base for k>0
+        sz = k != 0u ? base : segment_size( first_block ); // sz==base for k>0
     }
     inline void next_segment() throw() {
         finish -= sz; start = 0; // offsets from next segment
-        if( !k ) k = first_block;
+        if( k == 0u ) k = first_block;
         else { ++k; sz = segment_size( k ); }
     }
     template<typename F>
@@ -234,7 +234,7 @@ concurrent_vector_base_v3::size_type concurrent_vector_base_v3::helper::enable_s
         segment_scope_guard(segment_t& segment, bool mark_as_not_used) : my_segment_ptr(&segment), my_mark_as_not_used(mark_as_not_used){}
         void dismiss(){ my_segment_ptr = 0;}
         ~segment_scope_guard(){
-            if (my_segment_ptr){
+            if (my_segment_ptr != nullptr){
                 if (!my_mark_as_not_used){
                     publish_segment(*my_segment_ptr, segment_allocation_failed());
                 }else{
@@ -249,7 +249,7 @@ concurrent_vector_base_v3::size_type concurrent_vector_base_v3::helper::enable_s
 
     size_type size_of_enabled_segment =  segment_size(k);
     size_type size_to_allocate = size_of_enabled_segment;
-    if( !k ) {
+    if( k == 0u ) {
         assign_first_segment_if_necessary(v, default_initial_segments-1);
         size_of_enabled_segment =  2 ;
         size_to_allocate = segment_size(v.my_first_block);
@@ -258,7 +258,7 @@ concurrent_vector_base_v3::size_type concurrent_vector_base_v3::helper::enable_s
         spin_wait_while_eq( v.my_first_block, segment_index_t(0) );
     }
 
-    if( k && (k < v.my_first_block)){ //no need to allocate anything
+    if( (k != 0u) && (k < v.my_first_block)){ //no need to allocate anything
         // s[0].array is changed only once ( 0 -> !0 ) and points to uninitialized memory
         segment_value_t array0 = s[0].load<acquire>();
         if(array0 == segment_not_used()){
@@ -285,13 +285,13 @@ concurrent_vector_base_v3::size_type concurrent_vector_base_v3::helper::enable_s
 }
 
 void concurrent_vector_base_v3::helper::cleanup() {
-    if( !sz ) { // allocation failed, restore the table
+    if( sz == 0u ) { // allocation failed, restore the table
         segment_index_t k_start = k, k_end = segment_index_of(finish-1);
         if( segment_base( k_start ) < start )
             get_segment_value(k_start++, true); // wait
         if( k_start < first_block ) {
             segment_value_t segment0 = get_segment_value(0, start>0); // wait if necessary
-            if((segment0 != segment_not_used()) && !k_start ) ++k_start;
+            if((segment0 != segment_not_used()) && (k_start == 0u) ) ++k_start;
             if(segment0 != segment_allocated())
                 for(; k_start < first_block && k_start <= k_end; ++k_start )
                     publish_segment(table[k_start], segment_allocation_failed());
@@ -364,7 +364,7 @@ void concurrent_vector_base_v3::internal_reserve( size_type n, size_type element
 void concurrent_vector_base_v3::internal_copy( const concurrent_vector_base_v3& src, size_type element_size, internal_array_op2 copy ) {
     size_type n = src.my_early_size;
     __TBB_ASSERT( my_segment == my_storage, NULL);
-    if( n ) {
+    if( n != 0u ) {
         helper::assign_first_segment_if_necessary(*this, segment_index_of(n-1));
         size_type b;
         for( segment_index_t k=0; (b=segment_base(k))<n; ++k ) {
@@ -407,7 +407,7 @@ void concurrent_vector_base_v3::internal_assign( const concurrent_vector_base_v3
             helper::enable_segment(*this, k, element_size);
         else
             enforce_segment_allocated(my_segment[k].load<relaxed>());
-        size_type m = k? segment_size(k) : 2;
+        size_type m = k != 0u? segment_size(k) : 2;
         if( m > n-b ) m = n-b;
         size_type a = 0;
         if( dst_initialized_size>b ) {
@@ -520,7 +520,7 @@ void *concurrent_vector_base_v3::internal_compact( size_type element_size, void 
 {
     const size_type my_size = my_early_size;
     const segment_index_t k_end = helper::find_segment_end(*this); // allocated segments
-    const segment_index_t k_stop = my_size? segment_index_of(my_size-1) + 1 : 0; // number of segments to store existing items: 0=>0; 1,2=>1; 3,4=>2; [5-8]=>3;..
+    const segment_index_t k_stop = my_size != 0u? segment_index_of(my_size-1) + 1 : 0; // number of segments to store existing items: 0=>0; 1,2=>1; 3,4=>2; [5-8]=>3;..
     const segment_index_t first_block = my_first_block; // number of merged segments, getting values from atomics
 
     segment_index_t k = first_block;
@@ -537,7 +537,7 @@ void *concurrent_vector_base_v3::internal_compact( size_type element_size, void 
     std::fill_n(old.table,sizeof(old.table)/sizeof(old.table[0]),segment_t());
     old.first_block=0;
 
-    if ( k != first_block && k ) // first segment optimization
+    if ( k != first_block && (k != 0u) ) // first segment optimization
     {
         // exception can occur here
         void *seg = helper::allocate_segment(*this, segment_size(k));
@@ -559,7 +559,7 @@ void *concurrent_vector_base_v3::internal_compact( size_type element_size, void 
                 for_each.apply( helper::destroy_body(destroy) );
                 __TBB_RETHROW();
             }
-            my_segment_size = i? segment_size( ++i ) : segment_size( i = first_block );
+            my_segment_size = i != 0u? segment_size( ++i ) : segment_size( i = first_block );
         }
         // commit the changes
         std::copy(segment_table,segment_table + k,old.table);
@@ -574,7 +574,7 @@ void *concurrent_vector_base_v3::internal_compact( size_type element_size, void 
             if(j + my_segment_size >= my_size) my_segment_size = my_size - j;
             // destructors are supposed to not throw any exceptions
             destroy( old.table[i].load<relaxed>().pointer<void>(), my_segment_size );
-            my_segment_size = i? segment_size( ++i ) : segment_size( i = first_block );
+            my_segment_size = i != 0u? segment_size( ++i ) : segment_size( i = first_block );
         }
     }
     // free unnecessary segments allocated by reserve() call
@@ -582,7 +582,7 @@ void *concurrent_vector_base_v3::internal_compact( size_type element_size, void 
         old.first_block = first_block;
         std::copy(segment_table+k_stop, segment_table+k_end, old.table+k_stop );
         std::fill_n(segment_table+k_stop, (k_end-k_stop), segment_t());
-        if( !k ) my_first_block = 0;
+        if( k == 0u ) my_first_block = 0;
     }
     return table;
 }
@@ -591,7 +591,7 @@ void concurrent_vector_base_v3::internal_swap(concurrent_vector_base_v3& v)
 {
     size_type my_sz = my_early_size.load<acquire>();
     size_type v_sz = v.my_early_size.load<relaxed>();
-    if(!my_sz && !v_sz) return;
+    if((my_sz == 0u) && (v_sz == 0u)) return;
 
     bool my_was_short = (my_segment.load<relaxed>() == my_storage);
     bool v_was_short  = (v.my_segment.load<relaxed>() == v.my_storage);

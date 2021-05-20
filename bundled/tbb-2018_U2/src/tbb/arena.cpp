@@ -69,7 +69,7 @@ void generic_scheduler::attach_arena( arena* a, size_t index, bool is_master ) {
 }
 
 inline static bool occupy_slot( generic_scheduler*& slot, generic_scheduler& s ) {
-    return !slot && as_atomic( slot ).compare_and_swap( &s, NULL ) == NULL;
+    return (slot == nullptr) && as_atomic( slot ).compare_and_swap( &s, NULL ) == NULL;
 }
 
 size_t arena::occupy_free_slot_in_range( generic_scheduler& s, size_t lower, size_t upper ) {
@@ -153,7 +153,7 @@ void arena::process( generic_scheduler& s ) {
         // Passing reference count is technically unnecessary in this context,
         // but omitting it here would add checks inside the function.
         task* t = s.receive_or_steal_task( __TBB_ISOLATION_ARG( s.my_dummy_task->prefix().ref_count, no_isolation ) );
-        if (t) {
+        if (t != nullptr) {
             // A side effect of receive_or_steal_task is that my_innermost_running_task can be set.
             // But for the outermost dispatch loop it has to be a dummy task.
             s.my_innermost_running_task = s.my_dummy_task;
@@ -165,7 +165,7 @@ void arena::process( generic_scheduler& s ) {
     s.my_last_local_observer = NULL;
 #endif /* __TBB_ARENA_OBSERVER */
 #if __TBB_TASK_PRIORITY
-    if ( s.my_offloaded_tasks )
+    if ( s.my_offloaded_tasks != nullptr )
         orphan_offloaded_tasks( s );
 #endif /* __TBB_TASK_PRIORITY */
 #if __TBB_STATISTICS
@@ -330,7 +330,7 @@ void arena::dump_arena_statistics () {
 // 2. if it has any tasks at all, including those of lower priority (via tasks_present);
 // 3. if it is able to work with enqueued tasks (via dequeuing_possible).
 inline bool arena::may_have_tasks ( generic_scheduler* s, bool& tasks_present, bool& dequeuing_possible ) {
-    if ( !s || s->my_arena != this )
+    if ( (s == nullptr) || s->my_arena != this )
         return false;
     dequeuing_possible |= s->worker_outermost_level();
     if ( s->my_pool_reshuffling_pending ) {
@@ -339,7 +339,7 @@ inline bool arena::may_have_tasks ( generic_scheduler* s, bool& tasks_present, b
         tasks_present = true;
         return true;
     }
-    if ( s->my_offloaded_tasks ) {
+    if ( s->my_offloaded_tasks != nullptr ) {
         tasks_present = true;
         if ( s->my_local_reload_epoch < *s->my_ref_reload_epoch ) {
             // This scheduler's offload area is nonempty and may contain tasks at the
@@ -435,7 +435,7 @@ bool arena::is_out_of_work() {
 #if __TBB_TASK_PRIORITY
                     // Variable tasks_present indicates presence of tasks at any priority
                     // level, while work_absent refers only to the current priority.
-                    bool tasks_present = !work_absent || my_orphaned_tasks;
+                    bool tasks_present = !work_absent || (my_orphaned_tasks != nullptr);
                     bool dequeuing_possible = false;
                     if ( work_absent ) {
                         // Check for the possibility that recent priority changes
@@ -469,7 +469,7 @@ bool arena::is_out_of_work() {
                         }
                         // Preclude premature switching arena off because of a race in the previous loop.
                         work_absent = work_absent
-                                      && !__TBB_load_with_acquire(my_orphaned_tasks)
+                                      && (__TBB_load_with_acquire(my_orphaned_tasks) == nullptr)
                                       && abandonment_epoch == my_abandonment_epoch;
                     }
 #endif /* __TBB_TASK_PRIORITY */
@@ -492,7 +492,7 @@ bool arena::is_out_of_work() {
                                     atomic_update( my_skipped_fifo_priority, top_priority, std::less<intptr_t>());
                                 }
                             }
-                            else if ( !tasks_present && !my_orphaned_tasks && no_fifo_tasks ) {
+                            else if ( !tasks_present && (my_orphaned_tasks == nullptr) && no_fifo_tasks ) {
 #endif /* __TBB_TASK_PRIORITY */
                                 // save current demand value before setting SNAPSHOT_EMPTY,
                                 // to avoid race with advertise_new_work.
@@ -564,7 +564,7 @@ void arena::enqueue_task( task& t, intptr_t prio, FastRandom &random )
 
     ITT_NOTIFY(sync_releasing, &my_task_stream);
 #if __TBB_TASK_PRIORITY
-    intptr_t p = prio ? normalize_priority(priority_t(prio)) : normalized_normal_priority;
+    intptr_t p = prio != 0 ? normalize_priority(priority_t(prio)) : normalized_normal_priority;
     assert_priority_valid(p);
     my_task_stream.push( &t, p, random );
     if ( p != my_top_priority )
@@ -635,7 +635,7 @@ void generic_scheduler::nested_arena_entry(arena* a, size_t slot_index) {
 
     // overwrite arena settings
 #if __TBB_TASK_PRIORITY
-    if ( my_offloaded_tasks )
+    if ( my_offloaded_tasks != nullptr )
         my_arena->orphan_offloaded_tasks( *this );
     my_offloaded_tasks = NULL;
 #endif /* __TBB_TASK_PRIORITY */
@@ -658,7 +658,7 @@ void generic_scheduler::nested_arena_exit() {
     my_arena->my_observers.notify_exit_observers( my_last_local_observer, /*worker=*/false );
 #endif /* __TBB_ARENA_OBSERVER */
 #if __TBB_TASK_PRIORITY
-    if ( my_offloaded_tasks )
+    if ( my_offloaded_tasks != nullptr )
         my_arena->orphan_offloaded_tasks( *this );
 #endif
     if( !is_worker() && my_arena_index >= my_arena->my_num_reserved_slots )
@@ -720,7 +720,7 @@ void task_arena_base::internal_initialize( ) {
 }
 
 void task_arena_base::internal_terminate( ) {
-    if( my_arena ) {// task_arena was initialized
+    if( my_arena != nullptr ) {// task_arena was initialized
         my_arena->my_market->release( /*is_public=*/true, /*blocking_terminate=*/false );
         my_arena->on_thread_leaving<arena::ref_external>();
         my_arena = 0;
@@ -733,7 +733,7 @@ void task_arena_base::internal_terminate( ) {
 void task_arena_base::internal_attach( ) {
     __TBB_ASSERT(!my_arena, NULL);
     generic_scheduler* s = governor::local_scheduler_if_initialized();
-    if( s && s->my_arena ) {
+    if( (s != nullptr) && (s->my_arena != nullptr) ) {
         // There is an active arena to attach to.
         // It's still used by s, so won't be destroyed right away.
         my_arena = s->my_arena;
@@ -834,7 +834,7 @@ void task_arena_base::internal_execute(internal::delegate_base& d) const {
             internal::delegated_function< graph_funct, void >* deleg_funct =
                     dynamic_cast< internal::delegated_function< graph_funct, void>* >(&d);
 
-            if (deleg_funct) {
+            if (deleg_funct != nullptr) {
                 internal_enqueue(*new(task::allocate_root(*my_context)) 
                     internal::function_task< internal::strip< graph_funct >::type >
                         (internal::forward< graph_funct >(deleg_funct->my_func)), 0);
@@ -902,7 +902,7 @@ void task_arena_base::internal_execute(internal::delegate_base& d) const {
     }
     catch (...) {
         cpu_ctl_helper.restore_default(); // TODO: is it needed on Windows?
-        if (my_version_and_traits & exact_exception_flag) throw;
+        if ((my_version_and_traits & exact_exception_flag) != 0) throw;
         else {
             task_group_context exception_container(task_group_context::isolated,
                 task_group_context::default_traits & ~task_group_context::exact_exception);
@@ -944,12 +944,12 @@ void task_arena_base::internal_wait() const {
     if( s->my_arena == my_arena ) {
         //unsupported, but try do something for outermost master
         __TBB_ASSERT(s->master_outermost_level(), "unsupported");
-        if( !s->my_arena_index )
-            while( my_arena->num_workers_active() )
+        if( s->my_arena_index == 0u )
+            while( my_arena->num_workers_active() != 0u )
                 s->wait_until_empty();
     } else for(;;) {
         while( my_arena->my_pool_state != arena::SNAPSHOT_EMPTY ) {
-            if( !__TBB_load_with_acquire(my_arena->my_slots[0].my_scheduler) // TODO TEMP: one master, make more masters
+            if( (__TBB_load_with_acquire(my_arena->my_slots[0].my_scheduler) == nullptr) // TODO TEMP: one master, make more masters
                 && as_atomic(my_arena->my_slots[0].my_scheduler).compare_and_swap(s, NULL) == NULL ) {
                 nested_arena_context a(s, my_arena, 0, scheduler_properties::worker, false);
                 s->wait_until_empty();
@@ -959,7 +959,7 @@ void task_arena_base::internal_wait() const {
                 waiter.P(); // TODO: concurrent_monitor
             }
         }
-        if( !my_arena->num_workers_active() && !my_arena->my_slots[0].my_scheduler) // no activity
+        if( (my_arena->num_workers_active() == 0u) && (my_arena->my_slots[0].my_scheduler == nullptr)) // no activity
             break; // spin until workers active but avoid spinning in a worker
         __TBB_Yield(); // wait until workers and master leave
     }
@@ -967,7 +967,7 @@ void task_arena_base::internal_wait() const {
 
 /*static*/ int task_arena_base::internal_current_slot() {
     generic_scheduler* s = governor::local_scheduler_if_initialized();
-    return s? int(s->my_arena_index) : -1;
+    return s != nullptr? int(s->my_arena_index) : -1;
 }
 
 #if __TBB_TASK_ISOLATION
@@ -999,12 +999,12 @@ void isolate_within_arena( delegate_base& d, intptr_t reserved ) {
 
 int task_arena_base::internal_max_concurrency(const task_arena *ta) {
     arena* a = NULL;
-    if( ta ) // for special cases of ta->max_concurrency()
+    if( ta != nullptr ) // for special cases of ta->max_concurrency()
         a = ta->my_arena;
     else if( generic_scheduler* s = governor::local_scheduler_if_initialized() )
         a = s->my_arena; // the current arena if any
 
-    if( a ) { // Get parameters from the arena
+    if( a != nullptr ) { // Get parameters from the arena
         __TBB_ASSERT( !ta || ta->my_max_concurrency==1, NULL );
         return a->my_num_reserved_slots + a->my_max_num_workers;
     } else {

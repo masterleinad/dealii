@@ -81,7 +81,7 @@ task& allocate_root_with_context_proxy::allocate( size_t size ) const {
     }
 #if __TBB_FP_CONTEXT
     if ( __TBB_load_relaxed(my_context.my_kind) == task_group_context::isolated &&
-            !(my_context.my_version_and_traits & task_group_context::fp_settings) )
+            ((my_context.my_version_and_traits & task_group_context::fp_settings) == 0u) )
         my_context.copy_fp_settings( *s->default_context() );
 #endif
     ITT_STACK_CREATE(my_context.itt_caller);
@@ -162,15 +162,15 @@ size_t get_initial_auto_partitioner_divisor() {
 //------------------------------------------------------------------------
 void affinity_partitioner_base_v3::resize( unsigned factor ) {
     // Check factor to avoid asking for number of workers while there might be no arena.
-    size_t new_size = factor ? factor*governor::local_scheduler()->max_threads_in_arena() : 0;
+    size_t new_size = factor != 0u ? factor*governor::local_scheduler()->max_threads_in_arena() : 0;
     if( new_size!=my_size ) {
-        if( my_array ) {
+        if( my_array != nullptr ) {
             NFS_Free( my_array );
             // Following two assignments must be done here for sake of exception safety.
             my_array = NULL;
             my_size = 0;
         }
-        if( new_size ) {
+        if( new_size != 0u ) {
             my_array = static_cast<affinity_id*>(NFS_Allocate(new_size,sizeof(affinity_id), NULL ));
             memset( my_array, 0, sizeof(affinity_id)*new_size );
             my_size = new_size;
@@ -223,7 +223,7 @@ void interface5::internal::task_base::destroy( task& victim ) {
     __TBB_ASSERT( victim.state()==task::allocated, "illegal state for victim task" );
     task* parent = victim.parent();
     victim.~task();
-    if( parent ) {
+    if( parent != nullptr ) {
         __TBB_ASSERT( parent->state()!=task::freed && parent->state()!=task::ready,
                       "attempt to destroy child of running or corrupted parent?" );
         // 'reexecute' and 'executing' are also signs of a race condition, since most tasks
@@ -237,7 +237,7 @@ void interface5::internal::task_base::destroy( task& victim ) {
 void task::spawn_and_wait_for_all( task_list& list ) {
     generic_scheduler* s = governor::local_scheduler();
     task* t = list.first;
-    if( t ) {
+    if( t != nullptr ) {
         if( &t->prefix().next!=list.next_ptr )
             s->local_spawn( t->prefix().next, *list.next_ptr );
         list.clear();
@@ -266,7 +266,7 @@ void task::change_group ( task_group_context& ctx ) {
     }
 #if __TBB_FP_CONTEXT
     if ( __TBB_load_relaxed(ctx.my_kind) == task_group_context::isolated &&
-            !(ctx.my_version_and_traits & task_group_context::fp_settings) )
+            ((ctx.my_version_and_traits & task_group_context::fp_settings) == 0u) )
         ctx.copy_fp_settings( *s->default_context() );
 #endif
     ITT_STACK_CREATE(ctx.itt_caller);

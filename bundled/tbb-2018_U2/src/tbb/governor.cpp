@@ -79,7 +79,7 @@ void governor::acquire_resources () {
 #else
     int status = theTLS.create();
 #endif
-    if( status )
+    if( status != 0 )
         handle_perror(status, "TBB failed to initialize task scheduler TLS\n");
     is_speculation_enabled = cpu_has_speculation();
     is_rethrow_broken = gcc_rethrow_exception_broken();
@@ -93,7 +93,7 @@ void governor::release_resources () {
         runtime_warning( "TBB is unloaded while tbb::task_scheduler_init object is alive?" );
 #endif
     int status = theTLS.destroy();
-    if( status )
+    if( status != 0 )
         runtime_warning("failed to destroy task scheduler TLS: %s", strerror(status));
     dynamic_unlink_all();
 }
@@ -107,7 +107,7 @@ rml::tbb_server* governor::create_rml_server ( rml::tbb_client& client ) {
             runtime_warning( "rml::tbb_factory::make_server failed with status %x, falling back on private rml", status );
         }
     }
-    if ( !server ) {
+    if ( server == nullptr ) {
         __TBB_ASSERT( UsePrivateRML, NULL );
         server = rml::make_private_server( client );
     }
@@ -119,7 +119,7 @@ rml::tbb_server* governor::create_rml_server ( rml::tbb_client& client ) {
 uintptr_t governor::tls_value_of( generic_scheduler* s ) {
     __TBB_ASSERT( (uintptr_t(s)&1) == 0, "Bad pointer to the scheduler" );
     // LSB marks the scheduler initialized with arena
-    return uintptr_t(s) | uintptr_t((s && (s->my_arena || s->is_worker()))? 1 : 0);
+    return uintptr_t(s) | uintptr_t(((s != nullptr) && ((s->my_arena != nullptr) || s->is_worker()))? 1 : 0);
 }
 
 void governor::assume_scheduler( generic_scheduler* s ) {
@@ -134,11 +134,11 @@ void governor::sign_on(generic_scheduler* s) {
     __TBB_ASSERT( is_set(NULL) && s, NULL );
     assume_scheduler( s );
 #if __TBB_SURVIVE_THREAD_SWITCH
-    if( watch_stack_handler ) {
+    if( watch_stack_handler != nullptr ) {
         __cilk_tbb_stack_op_thunk o;
         o.routine = &stack_op_handler;
         o.data = s;
-        if( (*watch_stack_handler)(&s->my_cilk_unwatch_thunk, o) ) {
+        if( (*watch_stack_handler)(&s->my_cilk_unwatch_thunk, o) != 0 ) {
             // Failed to register with cilkrts, make sure we are clean
             s->my_cilk_unwatch_thunk.routine = NULL;
         }
@@ -157,7 +157,7 @@ void governor::sign_off(generic_scheduler* s) {
     assume_scheduler(NULL);
 #if __TBB_SURVIVE_THREAD_SWITCH
     __cilk_tbb_unwatch_thunk &ut = s->my_cilk_unwatch_thunk;
-    if ( ut.routine )
+    if ( ut.routine != nullptr )
        (*ut.routine)(ut.data);
 #endif /* __TBB_SURVIVE_THREAD_SWITCH */
 }
@@ -221,8 +221,8 @@ bool governor::terminate_scheduler( generic_scheduler* s, const task_scheduler_i
 
 void governor::auto_terminate(void* arg){
     generic_scheduler* s = tls_scheduler_of( uintptr_t(arg) ); // arg is equivalent to theTLS.get()
-    if( s && s->my_auto_initialized ) {
-        if( !--(s->my_ref_count) ) {
+    if( (s != nullptr) && s->my_auto_initialized ) {
+        if( --(s->my_ref_count) == 0 ) {
             // If the TLS slot is already cleared by OS or underlying concurrency
             // runtime, restore its value.
             if( !is_set(s) )
@@ -241,7 +241,7 @@ void governor::print_version_info () {
         theRMLServerFactory.call_with_server_info( PrintRMLVersionInfo, (void*)"" );
     }
 #if __TBB_SURVIVE_THREAD_SWITCH
-    if( watch_stack_handler )
+    if( watch_stack_handler != nullptr )
         PrintExtraVersionInfo( "CILK", CILKLIB_NAME );
 #endif /* __TBB_SURVIVE_THREAD_SWITCH */
 }
@@ -326,9 +326,9 @@ void task_scheduler_init::initialize( int number_of_threads, stack_size_type thr
 #if __TBB_TASK_GROUP_CONTEXT && TBB_USE_EXCEPTIONS
         if ( s->master_outermost_level() ) {
             uintptr_t &vt = s->default_context()->my_version_and_traits;
-            uintptr_t prev_mode = vt & task_group_context::exact_exception ? propagation_mode_exact : 0;
-            vt = new_mode & propagation_mode_exact ? vt | task_group_context::exact_exception
-                    : new_mode & propagation_mode_captured ? vt & ~task_group_context::exact_exception : vt;
+            uintptr_t prev_mode = (vt & task_group_context::exact_exception) != 0u ? propagation_mode_exact : 0;
+            vt = (new_mode & propagation_mode_exact) != 0u ? vt | task_group_context::exact_exception
+                    : (new_mode & propagation_mode_captured) != 0u ? vt & ~task_group_context::exact_exception : vt;
             // Use least significant bit of the scheduler pointer to store previous mode.
             // This is necessary when components compiled with different compilers and/or
             // TBB versions initialize the
@@ -353,7 +353,7 @@ bool task_scheduler_init::internal_terminate( bool blocking ) {
 #if __TBB_TASK_GROUP_CONTEXT && TBB_USE_EXCEPTIONS
     if ( s->master_outermost_level() ) {
         uintptr_t &vt = s->default_context()->my_version_and_traits;
-        vt = prev_mode & propagation_mode_exact ? vt | task_group_context::exact_exception
+        vt = (prev_mode & propagation_mode_exact) != 0u ? vt | task_group_context::exact_exception
                                         : vt & ~task_group_context::exact_exception;
     }
 #endif /* __TBB_TASK_GROUP_CONTEXT && TBB_USE_EXCEPTIONS */

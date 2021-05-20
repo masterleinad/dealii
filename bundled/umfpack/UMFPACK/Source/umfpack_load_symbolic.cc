@@ -70,7 +70,7 @@ GLOBAL Int UMFPACK_load_symbolic
 	filename = user_filename ;
     }
     f = fopen (filename, "rb") ;
-    if (!f)
+    if (f == nullptr)
     {
 	return (UMFPACK_ERROR_file_IO) ;
     }
@@ -91,7 +91,7 @@ GLOBAL Int UMFPACK_load_symbolic
 	fclose (f) ;
 	return (UMFPACK_ERROR_file_IO) ;
     }
-    if (ferror (f))
+    if (ferror (f) != 0)
     {
 	(void) UMF_free ((void *) Symbolic) ;
 	fclose (f) ;
@@ -144,7 +144,7 @@ GLOBAL Int UMFPACK_load_symbolic
 	/* only when dense rows are present */
 	READ (Symbolic->Esize, Int, Symbolic->esize) ;
     }
-    if (Symbolic->prefer_diagonal)
+    if (Symbolic->prefer_diagonal != 0)
     {
 	/* only when diagonal pivoting is prefered */
 	READ (Symbolic->Diagonal_map, Int, Symbolic->n_col+1) ;

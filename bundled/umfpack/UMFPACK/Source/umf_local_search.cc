@@ -52,7 +52,7 @@ PRIVATE void remove_candidate (Int jj, WorkType *Work, SymbolicType *Symbolic)
     DEBUGm2 (("\n")) ;
 #endif
 
-    if (Symbolic->fixQ)
+    if (Symbolic->fixQ != 0)
     {
 	DEBUGm2 (("FixQ\n")) ;
 	/* do not modify the column ordering */
@@ -174,7 +174,7 @@ GLOBAL Int UMF_local_search
     fnpiv = Work->fnpiv ;
     nothing [0] = EMPTY ;
     nothing [1] = EMPTY ;
-    relax1 = (Symbolic->prefer_diagonal) ? SYM_RELAX1 : RELAX1 ;
+    relax1 = (Symbolic->prefer_diagonal) != 0 ? SYM_RELAX1 : RELAX1 ;
     fnzeros = Work->fnzeros ;
     new_fnzeros = fnzeros ;
     jj = EMPTY ;
@@ -323,7 +323,7 @@ GLOBAL Int UMF_local_search
     ASSERT (col >= 0 && col < n_col) ;
 
     /* there is no Col_degree if fixQ is true */
-    deg = Symbolic->fixQ ? EMPTY : Col_degree [col] ;
+    deg = Symbolic->fixQ != 0 ? EMPTY : Col_degree [col] ;
 
 #ifndef NDEBUG
     DEBUG3 (("Pivot column candidate: " ID " cost: " ID "  Fcpos[col] " ID "\n",
@@ -477,7 +477,7 @@ GLOBAL Int UMF_local_search
 #ifndef NBLAS
 	    BLAS_TRSV (fnpiv, Flublock, Flu, nb) ;
 #endif
-	    if (!blas_ok)
+	    if (blas_ok == 0)
 	    {
 		/* use plain C code if no BLAS, or on integer overflow */
 		Entry *Flub = Flublock ;
@@ -609,7 +609,7 @@ GLOBAL Int UMF_local_search
 	ASSERT (NON_PIVOTAL_COL (pivcol [IN])) ;
 
 	tpi = Col_tuples [pivcol [IN]] ;
-	if (tpi)
+	if (tpi != 0)
 	{
 	    tp = (Tuple *) (Memory + tpi) ;
 	    tp1 = tp ;
@@ -619,7 +619,7 @@ GLOBAL Int UMF_local_search
 	    {
 		e = tp->e ;
 		ASSERT (e > 0 && e <= Work->nel) ;
-		if (!E [e]) continue ;	/* element already deallocated */
+		if (E [e] == 0) continue ;	/* element already deallocated */
 		f = tp->f ;
 		p = Memory + E [e] ;
 		ep = (Element *) p ;
@@ -804,8 +804,8 @@ GLOBAL Int UMF_local_search
 	     * will be the (fnpiv+1)st pivot, if it is extended. */
 
 	    /* RELAX2 parameter uses a double relop, but ignore NaN case: */
-	    do_update = fnpiv > 0 &&
-		(((double) fnzeros) / ((double) new_LUsize)) > RELAX2 ;
+	    do_update = static_cast<long>(fnpiv > 0 &&
+		(((double) fnzeros) / ((double) new_LUsize)) > RELAX2) ;
 
 	    DEBUG2 (("do_update " ID "\n", do_update))
 
@@ -896,11 +896,11 @@ GLOBAL Int UMF_local_search
 	    }
 	    else
 	    {
-		do_extend = ((double) extra_zeros) <
-		   (relax1 * (double) relaxed_front) ;
+		do_extend = static_cast<long>(((double) extra_zeros) <
+		   (relax1 * (double) relaxed_front)) ;
 	    }
 
-	    if (do_extend)
+	    if (do_extend != 0)
 	    {
 		/* count the cost of relaxed amalgamation */
 		thiscost += extra_zeros ;
@@ -921,15 +921,15 @@ GLOBAL Int UMF_local_search
 		DEBUG2 (("new_LUsize " ID "\n", new_LUsize)) ;
 
 		/* RELAX3 parameter uses a double relop, ignore NaN case: */
-		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		do_update = static_cast<long>(fnpiv > 0 &&
+		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3) ;
 		DEBUG2 (("do_update " ID "\n", do_update))
 
 	    }
 	    else
 	    {
 		/* the current front would not be extended */
-		do_update = fnpiv > 0 ;
+		do_update = static_cast<long>(fnpiv > 0) ;
 		fnzeros = 0 ;
 		DEBUG2 (("IN-OUT do_update forced true: " ID "\n", do_update)) ;
 
@@ -959,13 +959,13 @@ GLOBAL Int UMF_local_search
     /* construct candidate column not in front, and search for pivot rows */
     /* ---------------------------------------------------------------------- */
 
-    search_pivcol_out = (bestcost != 0 && pivcol [OUT] != EMPTY) ;
-    if (Symbolic->prefer_diagonal)
+    search_pivcol_out = static_cast<long>(bestcost != 0 && pivcol [OUT] != EMPTY) ;
+    if (Symbolic->prefer_diagonal != 0)
     {
-	search_pivcol_out = search_pivcol_out && (pivrow [IN][IN] == EMPTY) ;
+	search_pivcol_out = static_cast<long>((static_cast<long>(search_pivcol_out != 0) != 0) && (pivrow [IN][IN] == EMPTY)) ;
     }
 
-    if (search_pivcol_out)
+    if (search_pivcol_out != 0)
     {
 
 #ifndef NDEBUG
@@ -1007,7 +1007,7 @@ GLOBAL Int UMF_local_search
 	ASSERT (NON_PIVOTAL_COL (pivcol [OUT])) ;
 
 	tpi = Col_tuples [pivcol [OUT]] ;
-	if (tpi)
+	if (tpi != 0)
 	{
 	    tp = (Tuple *) (Memory + tpi) ;
 	    tp1 = tp ;
@@ -1017,7 +1017,7 @@ GLOBAL Int UMF_local_search
 	    {
 		e = tp->e ;
 		ASSERT (e > 0 && e <= Work->nel) ;
-		if (!E [e]) continue ;	/* element already deallocated */
+		if (E [e] == 0) continue ;	/* element already deallocated */
 		f = tp->f ;
 		p = Memory + E [e] ;
 		ep = (Element *) p ;
@@ -1141,7 +1141,7 @@ GLOBAL Int UMF_local_search
 
 	/* ------------------------------------------------------------------ */
 
-	if (freebie [IN])
+	if (freebie [IN] != 0)
 	{
 	    /* the "in" row is the same as the "in" row for the "in" column */
 	    Woi = Fcols ;
@@ -1149,7 +1149,7 @@ GLOBAL Int UMF_local_search
 	    DEBUG4 (("Freebie in, row " ID "\n", pivrow [IN][IN])) ;
 	}
 
-	if (freebie [OUT])
+	if (freebie [OUT] != 0)
 	{
 	    /* the "out" row is the same as the "out" row for the "in" column */
 	    Woo = Wio ;
@@ -1169,8 +1169,8 @@ GLOBAL Int UMF_local_search
 
 	    ASSERT (fnrows > 0 && fncols >= 0) ;
 
-	    did_rowmerge = (cdeg_out == 0) ;
-	    if (did_rowmerge)
+	    did_rowmerge = static_cast<long>(cdeg_out == 0) ;
+	    if (did_rowmerge != 0)
 	    {
 		/* pivrow [OUT][IN] was found via row merge search */
 		/* it is not (yet) in the pivot column pattern (add it now) */
@@ -1230,7 +1230,7 @@ GLOBAL Int UMF_local_search
 	    /* than a fraction (default 0.25) of the relaxed front */
 	    /* if relax = 0: no extra zeros allowed */
 	    /* if relax = +inf: always amalgamate */
-	    if (did_rowmerge)
+	    if (did_rowmerge != 0)
 	    {
 		do_extend = FALSE ;
 	    }
@@ -1243,12 +1243,12 @@ GLOBAL Int UMF_local_search
 		}
 		else
 		{
-		    do_extend = ((double) extra_zeros) <
-		       (relax1 * (double) relaxed_front) ;
+		    do_extend = static_cast<long>(((double) extra_zeros) <
+		       (relax1 * (double) relaxed_front)) ;
 		}
 	    }
 
-	    if (do_extend)
+	    if (do_extend != 0)
 	    {
 		/* count the cost of relaxed amalgamation */
 		thiscost += extra_zeros ;
@@ -1269,14 +1269,14 @@ GLOBAL Int UMF_local_search
 		DEBUG2 (("new_LUsize " ID "\n", new_LUsize)) ;
 
 		/* RELAX3 parameter uses a double relop, ignore NaN case: */
-		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		do_update = static_cast<long>(fnpiv > 0 &&
+		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3) ;
 		DEBUG2 (("do_update " ID "\n", do_update))
 	    }
 	    else
 	    {
 		/* the current front would not be extended */
-		do_update = fnpiv > 0 ;
+		do_update = static_cast<long>(fnpiv > 0) ;
 		fnzeros = 0 ;
 		DEBUG2 (("OUT-IN do_update forced true: " ID "\n", do_update)) ;
 
@@ -1311,8 +1311,8 @@ GLOBAL Int UMF_local_search
 
 	    ASSERT (fnrows >= 0 && fncols >= 0) ;
 
-	    did_rowmerge = (cdeg_out == 0) ;
-	    if (did_rowmerge)
+	    did_rowmerge = static_cast<long>(cdeg_out == 0) ;
+	    if (did_rowmerge != 0)
 	    {
 		/* pivrow [OUT][OUT] was found via row merge search */
 		/* it is not (yet) in the pivot column pattern (add it now) */
@@ -1416,7 +1416,7 @@ GLOBAL Int UMF_local_search
 	    /* than a fraction (default 0.25) of the relaxed front */
 	    /* if relax = 0: no extra zeros allowed */
 	    /* if relax = +inf: always amalgamate */
-	    if (did_rowmerge)
+	    if (did_rowmerge != 0)
 	    {
 		do_extend = FALSE ;
 	    }
@@ -1429,12 +1429,12 @@ GLOBAL Int UMF_local_search
 		}
 		else
 		{
-		    do_extend = ((double) extra_zeros) <
-		       (relax1 * (double) relaxed_front) ;
+		    do_extend = static_cast<long>(((double) extra_zeros) <
+		       (relax1 * (double) relaxed_front)) ;
 		}
 	    }
 
-	    if (do_extend)
+	    if (do_extend != 0)
 	    {
 		/* count the cost of relaxed amalgamation */
 		thiscost += extra_zeros ;
@@ -1455,14 +1455,14 @@ GLOBAL Int UMF_local_search
 		DEBUG2 (("new_LUsize " ID "\n", new_LUsize)) ;
 
 		/* RELAX3 parameter uses a double relop, ignore NaN case: */
-		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		do_update = static_cast<long>(fnpiv > 0 &&
+		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3) ;
 		DEBUG2 (("do_update " ID "\n", do_update))
 	    }
 	    else
 	    {
 		/* the current front would not be extended */
-		do_update = fnpiv > 0 ;
+		do_update = static_cast<long>(fnpiv > 0) ;
 		fnzeros = 0 ;
 		DEBUG2 (("OUT-OUT do_update forced true: " ID "\n", do_update)) ;
 
@@ -1572,7 +1572,7 @@ GLOBAL Int UMF_local_search
 
     ASSERT (IMPLIES (fnrows == 0 && fncols == 0, Work->pivot_case == OUT_OUT)) ;
 
-    if (!Work->pivcol_in_front && pivcol [IN] != EMPTY)
+    if ((Work->pivcol_in_front == 0) && pivcol [IN] != EMPTY)
     {
 	/* clear Frpos if pivcol [IN] was searched, but not selected */
 	for (i = fnrows ; i < cdeg_in ; i++)
@@ -1603,15 +1603,15 @@ GLOBAL Int UMF_local_search
     DEBUG1 (("fncols_new " ID " + 1 = " ID ",  fnc_curr " ID "\n",
 	    Work->fncols_new, Work->fncols_new + 1, fnc_curr)) ;
 
-    Work->do_grow = (Work->fnrows_new + 1 > fnr_curr
+    Work->do_grow = static_cast<long>(Work->fnrows_new + 1 > fnr_curr
 		  || Work->fncols_new + 1 > fnc_curr) ;
-    if (Work->do_grow)
+    if (Work->do_grow != 0)
     {
 	DEBUG0 (("\nNeed to grow frontal matrix, force do_update true\n")) ;
 	/* If the front must grow, then apply the pending updates and remove
 	 * the current pivot rows/columns from the front prior to growing the
 	 * front.  This frees up as much space as possible for the new front. */
-	if (!Work->do_update && fnpiv > 0)
+	if ((Work->do_update == 0) && fnpiv > 0)
 	{
 	    /* This update would not have to be done if the current front
 	     * was big enough. */
@@ -1883,15 +1883,15 @@ GLOBAL Int UMF_local_search
     /* determine whether to do scan2-row and scan2-col */
     /* ---------------------------------------------------------------------- */
 
-    if (Work->do_extend)
+    if (Work->do_extend != 0)
     {
-	Work->do_scan2row = (fncols > 0) ;
-	Work->do_scan2col = (fnrows > 0) ;
+	Work->do_scan2row = static_cast<long>(fncols > 0) ;
+	Work->do_scan2col = static_cast<long>(fnrows > 0) ;
     }
     else
     {
-	Work->do_scan2row = (fncols > 0) && Work->pivrow_in_front ;
-	Work->do_scan2col = (fnrows > 0) && Work->pivcol_in_front ;
+	Work->do_scan2row = static_cast<long>((fncols > 0) && (Work->pivrow_in_front) != 0) ;
+	Work->do_scan2col = static_cast<long>((fnrows > 0) && (Work->pivcol_in_front) != 0) ;
     }
 
     /* ---------------------------------------------------------------------- */
@@ -1906,7 +1906,7 @@ GLOBAL Int UMF_local_search
     /* keep track of the diagonal */
     /* ---------------------------------------------------------------------- */
 
-    if (Symbolic->prefer_diagonal
+    if ((Symbolic->prefer_diagonal != 0)
 	&& Work->pivcol < Work->n_col - Symbolic->nempty_col)
     {
 	Diagonal_map = Work->Diagonal_map ;

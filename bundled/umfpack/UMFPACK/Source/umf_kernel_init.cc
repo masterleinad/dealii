@@ -73,7 +73,7 @@ PRIVATE Int packsp	/* returns new value of pnew */
 	ASSERT (i >= 0) ;
 	/* skip if zero or below drop tolerance */
 	if (IS_ZERO (x)) continue ;
-	if (drop)
+	if (drop != 0)
 	{
 	    APPROX_ABS (s, x) ;
 	    if (s <= droptol) continue ;
@@ -330,7 +330,7 @@ GLOBAL Int UMF_kernel_init
     Numeric->flops = 0. ;
     Numeric->n1 = n1 ;
     droptol = Numeric->droptol ;
-    drop = (droptol > 0) ;
+    drop = static_cast<long>(droptol > 0) ;
 
     /* ---------------------------------------------------------------------- */
     /* compute the scale factors, if requested, and check the input matrix */
@@ -351,11 +351,11 @@ GLOBAL Int UMF_kernel_init
      * the rows are always divided by the scale factors.
      */
 
-    do_scale = (Numeric->scale != UMFPACK_SCALE_NONE) ;
+    do_scale = static_cast<long>(Numeric->scale != UMFPACK_SCALE_NONE) ;
 
-    if (do_scale)
+    if (do_scale != 0)
     {
-	int do_max = Numeric->scale == UMFPACK_SCALE_MAX ;
+	int do_max = static_cast<int>(Numeric->scale == UMFPACK_SCALE_MAX) ;
 	for (row = 0 ; row < n_row ; row++)
 	{
 	    Rs [row] = 0.0 ;
@@ -393,7 +393,7 @@ GLOBAL Int UMF_kernel_init
 			 * is NaN too (for now) and then set to 1.0 below */
 			Rs [row] = value ;
 		    }
-		    else if (do_max)
+		    else if (do_max != 0)
 		    {
 			Rs [row] = MAX (rs, value) ;
 		    }
@@ -428,8 +428,8 @@ GLOBAL Int UMF_kernel_init
 	}
 #ifndef NRECIPROCAL
 	/* multiply by the reciprocal if Rs is not too small */
-	do_recip = (rsmin >= RECIPROCAL_TOLERANCE) ;
-	if (do_recip)
+	do_recip = static_cast<long>(rsmin >= RECIPROCAL_TOLERANCE) ;
+	if (do_recip != 0)
 	{
 	    /* invert the scale factors */
 	    for (row = 0 ; row < n_row ; row++)
@@ -480,7 +480,7 @@ GLOBAL Int UMF_kernel_init
     /* construct the diagonal imap if doing symmetric pivoting */
     /* ---------------------------------------------------------------------- */
 
-    if (prefer_diagonal)
+    if (prefer_diagonal != 0)
     {
 	ASSERT (n_row == n_col) ;
 	ASSERT (nempty_col == Symbolic->nempty_row) ;
@@ -504,7 +504,7 @@ GLOBAL Int UMF_kernel_init
 
     rpi = UMF_mem_alloc_tail_block (Numeric, UNITS (Int *, n_row+1)) ;
     rpx = UMF_mem_alloc_tail_block (Numeric, UNITS (Entry *, n_row+1)) ;
-    if (!rpi || !rpx)
+    if ((rpi == 0) || (rpx == 0))
     {
 	/* :: pattern change (out of memory for Rpx, Rpx) :: */
 	/* out of memory, which can only mean that the pattern has changed */
@@ -532,7 +532,7 @@ GLOBAL Int UMF_kernel_init
 	     + UNITS (Int, unz) + UNITS (Entry, unz) ;
 	p = UMF_mem_alloc_head_block (Numeric, size) ;
 	DEBUG1 (("Kernel init head usage: " ID "\n", Numeric->ihead)) ;
-	if (!p)
+	if (p == 0)
 	{
 	    /* :: pattern change (out of memory for singletons) :: */
 	    DEBUG0 (("Pattern has gotten larger - kernel init failed\n")) ;
@@ -591,7 +591,7 @@ GLOBAL Int UMF_kernel_init
     {
 	e = k - n1 + 1 ;
 	ASSERT (e < Work->elen) ;
-	esize = Esize ? Esize [k-n1] : Cdeg [k] ;
+	esize = Esize != nullptr ? Esize [k-n1] : Cdeg [k] ;
 	if (esize > 0)
 	{
 	    /* allocate an element for this column */
@@ -621,7 +621,7 @@ GLOBAL Int UMF_kernel_init
     /* allocate the row elements for dense rows of A (if any) */
     /* ---------------------------------------------------------------------- */
 
-    if (Esize)
+    if (Esize != nullptr)
     {
 	for (k = n1 ; k < n_row - nempty_row ; k++)
 	{
@@ -675,10 +675,10 @@ GLOBAL Int UMF_kernel_init
 	    ASSIGN (x, Ax, Az, pa, split) ;
 
 	    /* scale the value using the scale factors, Rs */
-	    if (do_scale)
+	    if (do_scale != 0)
 	    {
 #ifndef NRECIPROCAL
-		if (do_recip)
+		if (do_recip != 0)
 		{
 		    SCALE (x, Rs [oldrow]) ;
 		}
@@ -763,14 +763,14 @@ GLOBAL Int UMF_kernel_init
 	    cdeg > 1 || cdeg == 0)) ;
 
 	/* if fixQ: set Col_degree to 0 for the NON_PIVOTAL_COL macro */
-	Col_degree [k] = fixQ ? 0 : cdeg ;
+	Col_degree [k] = fixQ != 0 ? 0 : cdeg ;
 
 	/* get the element for this column (if any) */
 	e = k - n1 + 1 ;
 	if (k < n_col - nempty_col)
 	{
-	    esize = Esize ? Esize [k-n1] : cdeg ;
-	    if (E [e])
+	    esize = Esize != nullptr ? Esize [k-n1] : cdeg ;
+	    if (E [e] != 0)
 	    {
 		Int ncols, nrows ;
 		Unit *pp ;
@@ -796,10 +796,10 @@ GLOBAL Int UMF_kernel_init
 	    ASSIGN (x, Ax, Az, pa, split) ;
 
 	    /* scale the value using the scale factors, Rs */
-	    if (do_scale)
+	    if (do_scale != 0)
 	    {
 #ifndef NRECIPROCAL
-		if (do_recip)
+		if (do_recip != 0)
 		{
 		    /* multiply by the reciprocal */
 		    SCALE (x, Rs [oldrow]) ;
@@ -973,13 +973,13 @@ GLOBAL Int UMF_kernel_init
     /* pack the element name space */
     /* ---------------------------------------------------------------------- */
 
-    if (empty_elements)
+    if (empty_elements != 0)
     {
 	Int e2 = 0 ;
 	DEBUG0 (("\n\n============= Packing element space\n")) ;
 	for (e = 1 ; e <= Work->nel ; e++)
 	{
-	    if (E [e])
+	    if (E [e] != 0)
 	    {
 		e2++ ;
 		E [e2] = E [e] ;

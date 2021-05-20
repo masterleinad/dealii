@@ -38,8 +38,8 @@ GLOBAL Int AMD_order
 #endif
 
     /* clear the Info array, if it exists */
-    info = Info != (double *) NULL ;
-    if (info)
+    info = static_cast<long>(Info != (double *) NULL) ;
+    if (info != 0)
     {
 	for (i = 0 ; i < AMD_INFO ; i++)
 	{
@@ -52,7 +52,7 @@ GLOBAL Int AMD_order
     /* make sure inputs exist and n is >= 0 */
     if (Ai == (Int *) NULL || Ap == (Int *) NULL || P == (Int *) NULL || n < 0)
     {
-	if (info) Info [AMD_STATUS] = AMD_INVALID ;
+	if (info != 0) Info [AMD_STATUS] = AMD_INVALID ;
 	return (AMD_INVALID) ;	    /* arguments are invalid */
     }
 
@@ -62,13 +62,13 @@ GLOBAL Int AMD_order
     }
 
     nz = Ap [n] ;
-    if (info)
+    if (info != 0)
     {
 	Info [AMD_NZ] = nz ;
     }
     if (nz < 0)
     {
-	if (info) Info [AMD_STATUS] = AMD_INVALID ;
+	if (info != 0) Info [AMD_STATUS] = AMD_INVALID ;
 	return (AMD_INVALID) ;
     }
 
@@ -76,7 +76,7 @@ GLOBAL Int AMD_order
     if (((size_t) n) >= SIZE_T_MAX / sizeof (Int)
      || ((size_t) nz) >= SIZE_T_MAX / sizeof (Int))
     {
-	if (info) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
+	if (info != 0) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
 	return (AMD_OUT_OF_MEMORY) ;	    /* problem too large */
     }
 
@@ -85,7 +85,7 @@ GLOBAL Int AMD_order
 
     if (status == AMD_INVALID)
     {
-	if (info) Info [AMD_STATUS] = AMD_INVALID ;
+	if (info != 0) Info [AMD_STATUS] = AMD_INVALID ;
 	return (AMD_INVALID) ;	    /* matrix is invalid */
     }
 
@@ -94,12 +94,12 @@ GLOBAL Int AMD_order
     Pinv = (Int*)amd_malloc (n * sizeof (Int)) ;
     mem += n ;
     mem += n ;
-    if (!Len || !Pinv)
+    if ((Len == nullptr) || (Pinv == nullptr))
     {
 	/* :: out of memory :: */
 	amd_free (Len) ;
 	amd_free (Pinv) ;
-	if (info) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
+	if (info != 0) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
 	return (AMD_OUT_OF_MEMORY) ;
     }
 
@@ -111,14 +111,14 @@ GLOBAL Int AMD_order
 	Ri = (Int*)amd_malloc (MAX (nz,1) * sizeof (Int)) ;
 	mem += (n+1) ;
 	mem += MAX (nz,1) ;
-	if (!Rp || !Ri)
+	if ((Rp == nullptr) || (Ri == nullptr))
 	{
 	    /* :: out of memory :: */
 	    amd_free (Rp) ;
 	    amd_free (Ri) ;
 	    amd_free (Len) ;
 	    amd_free (Pinv) ;
-	    if (info) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
+	    if (info != 0) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
 	    return (AMD_OUT_OF_MEMORY) ;
 	}
 	/* use Len and Pinv as workspace to create R = A' */
@@ -149,32 +149,32 @@ GLOBAL Int AMD_order
 
     S = NULL ;
     slen = nzaat ;			/* space for matrix */
-    ok = ((slen + nzaat/5) >= slen) ;	/* check for size_t overflow */
+    ok = static_cast<long>((slen + nzaat/5) >= slen) ;	/* check for size_t overflow */
     slen += nzaat/5 ;			/* add elbow room */
-    for (i = 0 ; ok && i < 7 ; i++)
+    for (i = 0 ; (ok != 0) && i < 7 ; i++)
     {
-	ok = ((slen + n) > slen) ;	/* check for size_t overflow */
+	ok = static_cast<long>((slen + n) > slen) ;	/* check for size_t overflow */
 	slen += n ;			/* size-n elbow room, 6 size-n work */
     }
     mem += slen ;
-    ok = ok && (slen < SIZE_T_MAX / sizeof (Int)) ; /* check for overflow */
-    ok = ok && (slen < Int_MAX) ;	/* S[i] for Int i must be OK */
-    if (ok)
+    ok = static_cast<int>((static_cast<long>(ok != 0) != 0) && (slen < SIZE_T_MAX / sizeof (Int))) ; /* check for overflow */
+    ok = static_cast<int>((static_cast<long>(ok != 0) != 0) && (slen < Int_MAX)) ;	/* S[i] for Int i must be OK */
+    if (ok != 0)
     {
 	S = (Int*)amd_malloc (slen * sizeof (Int)) ;
     }
     AMD_DEBUG1 (("slen %g\n", (double) slen)) ;
-    if (!S)
+    if (S == nullptr)
     {
 	/* :: out of memory :: (or problem too large) */
 	amd_free (Rp) ;
 	amd_free (Ri) ;
 	amd_free (Len) ;
 	amd_free (Pinv) ;
-	if (info) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
+	if (info != 0) Info [AMD_STATUS] = AMD_OUT_OF_MEMORY ;
 	return (AMD_OUT_OF_MEMORY) ;
     }
-    if (info)
+    if (info != 0)
     {
 	/* memory usage, in bytes. */
 	Info [AMD_MEMORY] = mem * sizeof (Int) ;
@@ -195,6 +195,6 @@ GLOBAL Int AMD_order
     amd_free (Len) ;
     amd_free (Pinv) ;
     amd_free (S) ;
-    if (info) Info [AMD_STATUS] = status ;
+    if (info != 0) Info [AMD_STATUS] = status ;
     return (status) ;	    /* successful ordering */
 }

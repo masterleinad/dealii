@@ -56,7 +56,7 @@ interface6::task_scheduler_observer* observer_proxy::get_v6_observer() {
 
 #if __TBB_ARENA_OBSERVER
 bool observer_proxy::is_global() {
-    return !get_v6_observer() || get_v6_observer()->my_context_tag == interface6::task_scheduler_observer::global_tag;
+    return (get_v6_observer() == nullptr) || get_v6_observer()->my_context_tag == interface6::task_scheduler_observer::global_tag;
 }
 #endif /* __TBB_ARENA_OBSERVER */
 
@@ -108,7 +108,7 @@ void observer_list::clear () {
             task_scheduler_observer_v3 *obs = p->my_observer;
             // Make sure that possible concurrent observer destruction does not
             // conflict with the proxy list cleanup.
-            if ( !obs || !(p = (observer_proxy*)__TBB_FetchAndStoreW(&obs->my_proxy, 0)) )
+            if ( (obs == nullptr) || ((p = (observer_proxy*)__TBB_FetchAndStoreW(&obs->my_proxy, 0)) == nullptr) )
                 continue;
             // accessing 'obs' after detaching of obs->my_proxy leads to the race with observer destruction
             __TBB_ASSERT( !next || p == next->my_prev, NULL );
@@ -122,13 +122,13 @@ void observer_list::clear () {
             delete p;
         }
     }
-    while( my_head )
+    while( my_head != nullptr )
         __TBB_Yield();
 }
 
 void observer_list::insert ( observer_proxy* p ) {
     scoped_lock lock(mutex(), /*is_writer=*/true);
-    if ( my_head ) {
+    if ( my_head != nullptr ) {
         p->my_prev = my_tail;
         my_tail->my_next = p;
     }
@@ -177,11 +177,11 @@ void observer_list::remove_ref( observer_proxy* p ) {
         // Use lock to avoid resurrection by a thread concurrently walking the list
         observer_list::scoped_lock lock(mutex(), /*is_writer=*/true);
         r = --p->my_ref_count;
-        if( !r )
+        if( r == 0 )
             remove(p);
     }
     __TBB_ASSERT( r || !p->my_ref_count, NULL );
-    if( !r )
+    if( r == 0 )
         delete p;
 }
 
@@ -194,7 +194,7 @@ void observer_list::do_notify_entry_observers( observer_proxy*& last, bool worke
         {
             scoped_lock lock(mutex(), /*is_writer=*/false);
             do {
-                if( p ) {
+                if( p != nullptr ) {
                     // We were already processing the list.
                     if( observer_proxy* q = p->my_next ) {
                         if( p == prev )
@@ -210,7 +210,7 @@ void observer_list::do_notify_entry_observers( observer_proxy*& last, bool worke
                             // The last few proxies were empty
                             __TBB_ASSERT(p->my_ref_count, NULL);
                             ++p->my_ref_count;
-                            if( prev ) {
+                            if( prev != nullptr ) {
                                 lock.release();
                                 remove_ref(prev);
                             }
@@ -221,17 +221,17 @@ void observer_list::do_notify_entry_observers( observer_proxy*& last, bool worke
                 } else {
                     // Starting pass through the list
                     p = my_head;
-                    if( !p )
+                    if( p == nullptr )
                         return;
                 }
                 tso = p->my_observer;
-            } while( !tso );
+            } while( tso == nullptr );
             ++p->my_ref_count;
             ++tso->my_busy_count;
         }
         __TBB_ASSERT( !prev || p!=prev, NULL );
         // Release the proxy pinned before p
-        if( prev )
+        if( prev != nullptr )
             remove_ref(prev);
         // Do not hold any locks on the list while calling user's code.
         // Do not intercept any exceptions that may escape the callback so that
@@ -253,7 +253,7 @@ void observer_list::do_notify_exit_observers( observer_proxy* last, bool worker 
         {
             scoped_lock lock(mutex(), /*is_writer=*/false);
             do {
-                if( p ) {
+                if( p != nullptr ) {
                     // We were already processing the list.
                     if( p != last ) {
                         __TBB_ASSERT( p->my_next, "List items before 'last' must have valid my_next pointer" );
@@ -263,7 +263,7 @@ void observer_list::do_notify_exit_observers( observer_proxy* last, bool worker 
                     } else {
                         // remove the reference from the last item
                         remove_ref_fast(p);
-                        if( p ) {
+                        if( p != nullptr ) {
                             lock.release();
                             remove_ref(p);
                         }
@@ -275,14 +275,14 @@ void observer_list::do_notify_exit_observers( observer_proxy* last, bool worker 
                     __TBB_ASSERT( p, "Nonzero 'last' must guarantee that the global list is non-empty" );
                 }
                 tso = p->my_observer;
-            } while( !tso );
+            } while( tso == nullptr );
             // The item is already refcounted
             if ( p != last ) // the last is already referenced since entry notification
                 ++p->my_ref_count;
             ++tso->my_busy_count;
         }
         __TBB_ASSERT( !prev || p!=prev, NULL );
-        if( prev )
+        if( prev != nullptr )
             remove_ref(prev);
         // Do not hold any locks on the list while calling user's code.
         // Do not intercept any exceptions that may escape the callback so that
@@ -355,7 +355,7 @@ bool observer_list::ask_permission_to_leave() {
 
 void task_scheduler_observer_v3::observe( bool enable ) {
     if( enable ) {
-        if( !my_proxy ) {
+        if( my_proxy == nullptr ) {
             my_proxy = new observer_proxy( *this );
             my_busy_count = 0; // proxy stores versioning information, clear it
 #if __TBB_ARENA_OBSERVER
@@ -369,7 +369,7 @@ void task_scheduler_observer_v3::observe( bool enable ) {
                     a->initialize();
                     my_proxy->my_list = &a->my_arena->my_observers;
                 } else {
-                    if( !s )
+                    if( s == nullptr )
                         s = governor::init_scheduler( task_scheduler_init::automatic, 0, true );
                     __TBB_ASSERT( __TBB_InitOnce::initialization_done(), NULL );
                     __TBB_ASSERT( s && s->my_arena, NULL );
@@ -377,7 +377,7 @@ void task_scheduler_observer_v3::observe( bool enable ) {
                 }
                 my_proxy->my_list->insert(my_proxy);
                 // Notify newly activated observer and other pending ones if it belongs to current arena
-                if(s && &s->my_arena->my_observers == my_proxy->my_list )
+                if((s != nullptr) && &s->my_arena->my_observers == my_proxy->my_list )
                     my_proxy->my_list->notify_entry_observers( s->my_last_local_observer, s->is_worker() );
             } else
 #endif /* __TBB_ARENA_OBSERVER */
@@ -408,13 +408,13 @@ void task_scheduler_observer_v3::observe( bool enable ) {
                 observer_list::scoped_lock lock(list.mutex(), /*is_writer=*/true);
                 proxy->my_observer = NULL;
                 // Proxy may still be held by other threads (to track the last notified observer)
-                if( !--proxy->my_ref_count ) {// nobody can increase it under exclusive lock
+                if( (--proxy->my_ref_count) == 0 ) {// nobody can increase it under exclusive lock
                     list.remove(proxy);
                     __TBB_ASSERT( !proxy->my_ref_count, NULL );
                     delete proxy;
                 }
             }
-            while( my_busy_count ) // other threads are still accessing the callback
+            while( my_busy_count != 0 ) // other threads are still accessing the callback
                 __TBB_Yield();
         }
     }

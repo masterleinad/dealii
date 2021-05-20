@@ -157,7 +157,7 @@ private:
         which in turn each wake up two threads, etc. */
     void propagate_chain_reaction() {
         // First test of a double-check idiom.  Second test is inside wake_some(0).
-        if( my_asleep_list_root )
+        if( my_asleep_list_root != nullptr )
             wake_some(0);
     }
 
@@ -339,7 +339,7 @@ private_server::private_server( tbb_client& client ) :
 
 private_server::~private_server() {
     __TBB_ASSERT( my_net_slack_requests==0, NULL );
-    for( size_t i=my_n_thread; i--; )
+    for( size_t i=my_n_thread; (i--) != 0u; )
         my_thread_array[i].~padded_private_worker();
     tbb::cache_aligned_allocator<padded_private_worker>().deallocate( my_thread_array, my_n_thread );
     tbb::internal::poison_pointer( my_thread_array );
@@ -368,7 +368,7 @@ void private_server::wake_some( int additional_slack ) {
     private_worker**w = wakee;
     {
         asleep_list_mutex_type::scoped_lock lock(my_asleep_list_mutex);
-        while( my_asleep_list_root && w<wakee+2 ) {
+        while( (my_asleep_list_root != nullptr) && w<wakee+2 ) {
             if( additional_slack>0 ) {
                 if (additional_slack+my_slack<=0) // additional demand does not exceed surplus supply
                     break;
@@ -384,7 +384,7 @@ void private_server::wake_some( int additional_slack ) {
             // Pop sleeping worker to combine with claimed unit of slack
             my_asleep_list_root = (*w++ = my_asleep_list_root)->my_next;
         }
-        if( additional_slack ) {
+        if( additional_slack != 0 ) {
             // Contribute our unused slack to my_slack.
             my_slack += additional_slack;
         }

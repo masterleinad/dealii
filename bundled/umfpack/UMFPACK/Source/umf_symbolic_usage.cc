@@ -36,7 +36,7 @@ GLOBAL double UMF_symbolic_usage
     units += DUNITS (Int, esize) ;	/* Esize */
 
     /* for diagonal pivoting */
-    if (prefer_diagonal)
+    if (prefer_diagonal != 0)
     {
 	units += DUNITS (Int, n_col+1) ;    /* Diagonal_map */
     }

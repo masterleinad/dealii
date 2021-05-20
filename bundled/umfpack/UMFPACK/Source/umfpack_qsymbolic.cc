@@ -162,7 +162,7 @@ PRIVATE Int prune_singletons
 #endif
 
     nzdiag = 0 ;
-    do_nzdiag = (Ax != (double *) NULL) ;
+    do_nzdiag = static_cast<long>(Ax != (double *) NULL) ;
 
 #ifndef NDEBUG
     DEBUGm4 (("Prune : S = A (Cperm1 (n1+1:end), Rperm1 (n1+1:end))\n")) ;
@@ -194,7 +194,7 @@ PRIVATE Int prune_singletons
 	    {
 		DEBUG5 (("  newrow " ID, newrow)) ;
 		Si [pp++] = newrow ;
-		if (do_nzdiag)
+		if (do_nzdiag != 0)
 		{
 		    /* count the number of truly nonzero entries on the
 		     * diagonal of S, excluding entries that are present,
@@ -203,7 +203,7 @@ PRIVATE Int prune_singletons
 		    {
 			/* this is the diagonal entry */
 #ifdef COMPLEX
-		        if (split)
+		        if (split != 0)
 			{
 			    if (SCALAR_IS_NONZERO (Ax [p]) ||
 				SCALAR_IS_NONZERO (Az [p]))
@@ -368,7 +368,7 @@ GLOBAL Int UMFPACK_qsymbolic
     amd_Control [AMD_DENSE] =
 	GET_CONTROL (UMFPACK_AMD_DENSE, UMFPACK_DEFAULT_AMD_DENSE) ;
     aggressive =
-	(GET_CONTROL (UMFPACK_AGGRESSIVE, UMFPACK_DEFAULT_AGGRESSIVE) != 0) ;
+	static_cast<long>(GET_CONTROL (UMFPACK_AGGRESSIVE, UMFPACK_DEFAULT_AGGRESSIVE) != 0) ;
     amd_Control [AMD_AGGRESSIVE] = aggressive ;
 
     nb = MAX (2, nb) ;
@@ -413,7 +413,7 @@ GLOBAL Int UMFPACK_qsymbolic
     Info [UMFPACK_SIZE_OF_ENTRY] = (double) (sizeof (Entry)) ;
     Info [UMFPACK_SYMBOLIC_DEFRAG] = 0 ;
 
-    if (!Ai || !Ap || !SymbolicHandle)
+    if ((Ai == nullptr) || (Ap == nullptr) || (SymbolicHandle == nullptr))
     {
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_argument_missing ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -469,7 +469,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	}
     }
 
-    user_auto_strategy = (strategy == UMFPACK_STRATEGY_AUTO) ;
+    user_auto_strategy = static_cast<long>(strategy == UMFPACK_STRATEGY_AUTO) ;
 
     /* ---------------------------------------------------------------------- */
     /* determine amount of memory required for UMFPACK_symbolic */
@@ -535,7 +535,7 @@ GLOBAL Int UMFPACK_qsymbolic
 
     Symbolic = (SymbolicType *) UMF_malloc (1, sizeof (SymbolicType)) ;
 
-    if (!Symbolic)
+    if (Symbolic == nullptr)
     {
 	/* If we fail here, Symbolic is NULL and thus it won't be */
 	/* dereferenced by UMFPACK_free_symbolic, as called by error ( ). */
@@ -568,7 +568,7 @@ GLOBAL Int UMFPACK_qsymbolic
     Cdeg = Symbolic->Cdeg ;
     Rdeg = Symbolic->Rdeg ;
 
-    if (!Cperm_init || !Rperm_init || !Cdeg || !Rdeg)
+    if ((Cperm_init == nullptr) || (Rperm_init == nullptr) || (Cdeg == nullptr) || (Rdeg == nullptr))
     {
 	DEBUGm4 (("out of memory: symbolic perm\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -660,8 +660,8 @@ GLOBAL Int UMFPACK_qsymbolic
     Rperm_2by2 = (Int *) NULL ;
     InFront    = SW->InFront ;
 
-    if (!Ci || !Fr_npivcol || !Fr_nrows || !Fr_ncols || !Fr_parent || !Fr_cols
-	|| !Cperm1 || !Rperm1 || !Si || !Sp || !InvRperm1 || !InFront)
+    if ((Ci == nullptr) || (Fr_npivcol == nullptr) || (Fr_nrows == nullptr) || (Fr_ncols == nullptr) || (Fr_parent == nullptr) || (Fr_cols == nullptr)
+	|| (Cperm1 == nullptr) || (Rperm1 == nullptr) || (Si == nullptr) || (Sp == nullptr) || (InvRperm1 == nullptr) || (InFront == nullptr))
     {
 	DEBUGm4 (("out of memory: symbolic work\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -721,7 +721,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	UMFPACK_DENSE_DEGREE_THRESHOLD (drow, n_col - n1 - nempty_col) ;
     Symbolic->dense_row_threshold = dense_row_threshold ;
 
-    if (!is_sym)
+    if (is_sym == 0)
     {
 	/* either the pruned submatrix rectangular, or it is square and
 	 * Rperm [n1 .. n-nempty-1] is not the same as Cperm [n1 .. n-nempty-1].
@@ -969,7 +969,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	/* evaluate the 2-by-2 results */
 	/* ------------------------------------------------------------------ */
 
-	if (user_auto_strategy)
+	if (user_auto_strategy != 0)
 	{
 	    if ((sym2 > 1.1 * sym) && (nzd2 > 0.9 * n2))
 	    {
@@ -1218,8 +1218,8 @@ GLOBAL Int UMFPACK_qsymbolic
 
 	/* re-analyze if any "dense" rows or cols ignored by UMF_colamd */
 	do_UMF_analyze =
-	    colamd_stats [COLAMD_DENSE_ROW] > 0 ||
-	    colamd_stats [COLAMD_DENSE_COL] > 0 ;
+	    static_cast<long>(colamd_stats [COLAMD_DENSE_ROW] > 0 ||
+	    colamd_stats [COLAMD_DENSE_COL] > 0) ;
 
 	/* Combine the singleton and colamd ordering into Cperm_init */
 	/* Note that colamd returns its inverse permutation in Ci */
@@ -1277,7 +1277,7 @@ GLOBAL Int UMFPACK_qsymbolic
     /* symbolic factorization (unless colamd has already done it) */
     /* ---------------------------------------------------------------------- */
 
-    if (do_UMF_analyze)
+    if (do_UMF_analyze != 0)
     {
 
 	Int *W, *Bp, *Bi, *Cperm2, ok, *P, Clen2, bsize, Clen0 ;
@@ -1343,7 +1343,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	    for (p = Sp [col] ; p < Sp [col+1] ; p++)
 	    {
 		row = Si [p] ;
-		if (!W [row])
+		if (W [row] == 0)
 		{
 		    /* this row has just been seen for the first time */
 		    W [row] = TRUE ;
@@ -1361,7 +1361,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	    /* rather than declaring an error (the matrix is singular) */
 	    for (row = 0 ; row < n_row - n1 ; row++)
 	    {
-		if (!W [row])
+		if (W [row] == 0)
 		{
 		    /* W [row] = TRUE ;  (not required) */
 		    P [k++] = row ;
@@ -1452,7 +1452,7 @@ GLOBAL Int UMFPACK_qsymbolic
 		Ci, Bp, Cperm2, fixQ, W, Link,
 		Fr_ncols, Fr_nrows, Fr_npivcol,
 		Fr_parent, &nfr, &analyze_compactions) ;
-	if (!ok)
+	if (ok == 0)
 	{
 	    /* :: internal error in umf_analyze :: */
 	    Info [UMFPACK_STATUS] = UMFPACK_ERROR_internal_error ;
@@ -1465,7 +1465,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	/* combine the input permutation and UMF_analyze's permutation */
 	/* ------------------------------------------------------------------ */
 
-	if (!fixQ)
+	if (fixQ == 0)
 	{
 	    /* Cperm2 is the column etree post-ordering */
 	    ASSERT (UMF_is_permutation (Cperm2, W,
@@ -1556,18 +1556,18 @@ GLOBAL Int UMFPACK_qsymbolic
     Symbolic->Chain_maxrows = (Int *) UMF_malloc (nchains+1, sizeof (Int)) ;
     Symbolic->Chain_maxcols = (Int *) UMF_malloc (nchains+1, sizeof (Int)) ;
 
-    fail = (!Symbolic->Front_npivcol || !Symbolic->Front_parent ||
-	!Symbolic->Front_1strow || !Symbolic->Front_leftmostdesc ||
-	!Symbolic->Chain_start || !Symbolic->Chain_maxrows ||
-	!Symbolic->Chain_maxcols) ;
+    fail = static_cast<long>((Symbolic->Front_npivcol == nullptr) || (Symbolic->Front_parent == nullptr) ||
+	(Symbolic->Front_1strow == nullptr) || (Symbolic->Front_leftmostdesc == nullptr) ||
+	(Symbolic->Chain_start == nullptr) || (Symbolic->Chain_maxrows == nullptr) ||
+	(Symbolic->Chain_maxcols == nullptr)) ;
 
     if (Symbolic->esize > 0)
     {
 	Symbolic->Esize = (Int *) UMF_malloc (Symbolic->esize, sizeof (Int)) ;
-	fail = fail || !Symbolic->Esize ;
+	fail = static_cast<long>((static_cast<long>(fail != 0) != 0) || (Symbolic->Esize) == nullptr) ;
     }
 
-    if (fail)
+    if (fail != 0)
     {
 	DEBUGm4 (("out of memory: rest of symbolic object\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -1596,7 +1596,7 @@ GLOBAL Int UMFPACK_qsymbolic
     /* ---------------------------------------------------------------------- */
 
     /* find InFront, unless colamd has already computed it */
-    if (do_UMF_analyze)
+    if (do_UMF_analyze != 0)
     {
 
 	DEBUGm4 ((">>>>>>>>>Computing Front_1strow from scratch\n")) ;
@@ -1796,7 +1796,7 @@ GLOBAL Int UMFPACK_qsymbolic
      * k = n1 to nn - nempty, but go ahead and define it for all of
      * k = 0 to nn */
 
-    if (prefer_diagonal)
+    if (prefer_diagonal != 0)
     {
 	Int *Diagonal_map ;
 	ASSERT (n_row == n_col && nn == n_row) ;
@@ -2089,7 +2089,7 @@ GLOBAL Int UMFPACK_qsymbolic
     /* column elements: */
     for (k = n1 ; k < n_col - nempty_col; k++)
     {
-	esize = Esize ? Esize [k-n1] : Cdeg [k] ;
+	esize = Esize != nullptr ? Esize [k-n1] : Cdeg [k] ;
 	DEBUG2 (("   esize: " ID "\n", esize)) ;
 	ASSERT (esize >= 0) ;
 	if (esize > 0)
@@ -2100,7 +2100,7 @@ GLOBAL Int UMFPACK_qsymbolic
     }
 
     /* dense row elements */
-    if (Esize)
+    if (Esize != nullptr)
     {
 	Int nrow_elements = 0 ;
 	for (k = n1 ; k < n_row - nempty_row ; k++)
@@ -2120,7 +2120,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	head_usage + tail_usage, head_usage, tail_usage)) ;
 
     /* compute the tuple lengths */
-    if (Esize)
+    if (Esize != nullptr)
     {
 	/* row tuples */
 	for (row = n1 ; row < n_row ; row++)
@@ -2135,7 +2135,7 @@ GLOBAL Int UMFPACK_qsymbolic
 	{
 	    /* tlen is 1 plus the number of dense rows in this column */
 	    esize = Esize [col - n1] ;
-	    tlen = (esize > 0) + (Cdeg [col] - esize) ;
+	    tlen = static_cast<long>(esize > 0) + (Cdeg [col] - esize) ;
 	    tail_usage  += 1 +  UNITS (Tuple, TUPLES (tlen)) ;
 	    dtail_usage += 1 + DUNITS (Tuple, TUPLES (tlen)) ;
 	}
@@ -2372,7 +2372,7 @@ PRIVATE void free_work
     SWType *SW
 )
 {
-    if (SW)
+    if (SW != nullptr)
     {
 	SW->Rperm_2by2 = (Int *) UMF_free ((void *) SW->Rperm_2by2) ;
 	SW->InvRperm1 = (Int *) UMF_free ((void *) SW->InvRperm1) ;

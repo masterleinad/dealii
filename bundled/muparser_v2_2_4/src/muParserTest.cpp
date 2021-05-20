@@ -1179,15 +1179,15 @@ namespace mu
       }
 
       // if a_bFail==false no exception is expected
-      bool bRet((a_bFail==false) ? 0 : 1);
-      if (bRet==1)
+      bool bRet((a_bFail==false) ? 0 : 1 != 0);
+      if (static_cast<int>(bRet)==1)
       {
         mu::console() << _T("\n  ") 
                       << _T("Expression: ") << a_str 
                       << _T("  did evaluate; Expected error:") << a_iErrc;
       }
 
-      return bRet; 
+      return static_cast<int>(bRet); 
     }
 
     //---------------------------------------------------------------------------
@@ -1545,7 +1545,7 @@ namespace mu
     void ParserTester::Abort() const
     {
       mu::console() << _T("Test failed (internal error in test class)") << endl;
-      while (!getchar());
+      while (getchar() == 0);
       exit(-1);
     }
   } // namespace test

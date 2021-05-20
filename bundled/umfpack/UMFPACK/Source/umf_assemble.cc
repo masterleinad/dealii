@@ -41,7 +41,7 @@ PRIVATE void row_assemble
 
     Row_tuples = Numeric->Uip ;
     tpi = Row_tuples [row] ;
-    if (!tpi) return ;
+    if (tpi == 0) return ;
 
     Memory = Numeric->Memory ;
     E = Work->E ;
@@ -69,7 +69,7 @@ PRIVATE void row_assemble
     {
 	e = tp->e ;
 	ASSERT (e > 0 && e <= Work->nel) ;
-	if (!E [e]) continue ;	/* element already deallocated */
+	if (E [e] == 0) continue ;	/* element already deallocated */
 	f = tp->f ;
 	p = Memory + E [e] ;
 	ep = (Element *) p ;
@@ -193,7 +193,7 @@ PRIVATE void col_assemble
 
     Col_tuples = Numeric->Lip ;
     tpi = Col_tuples [col] ;
-    if (!tpi) return ;
+    if (tpi == 0) return ;
 
     Memory = Numeric->Memory ;
     E = Work->E ;
@@ -220,7 +220,7 @@ PRIVATE void col_assemble
     {
 	e = tp->e ;
 	ASSERT (e > 0 && e <= Work->nel) ;
-	if (!E [e]) continue ;	/* element already deallocated */
+	if (E [e] == 0) continue ;	/* element already deallocated */
 	f = tp->f ;
 	p = Memory + E [e] ;
 	ep = (Element *) p ;
@@ -448,11 +448,11 @@ GLOBAL void UMF_assemble_fixq
     /* determine if most recent element is Lson or Uson of current front */
     /* ---------------------------------------------------------------------- */
 
-    if (!Work->do_extend)
+    if (Work->do_extend == 0)
     {
-	prior_Uson = ( Work->pivcol_in_front && !Work->pivrow_in_front) ;
-	prior_Lson = (!Work->pivcol_in_front &&  Work->pivrow_in_front) ;
-	if (prior_Uson || prior_Lson)
+	prior_Uson = static_cast<long>( (Work->pivcol_in_front != 0) && (Work->pivrow_in_front == 0)) ;
+	prior_Lson = static_cast<long>((Work->pivcol_in_front == 0) &&  (Work->pivrow_in_front != 0)) ;
+	if ((prior_Uson != 0) || (prior_Lson != 0))
 	{
 	    e = Work->prior_element ;
 	    if (e != EMPTY)
@@ -492,7 +492,7 @@ GLOBAL void UMF_assemble_fixq
 
 	ASSERT (NON_PIVOTAL_ROW (row)) ;
 	tpi = Row_tuples [row] ;
-	if (!tpi) continue ;
+	if (tpi == 0) continue ;
 	tp = (Tuple *) (Memory + tpi) ;
 	tp1 = tp ;
 	tp2 = tp ;
@@ -501,7 +501,7 @@ GLOBAL void UMF_assemble_fixq
 	{
 	    e = tp->e ;
 	    ASSERT (e > 0 && e <= Work->nel) ;
-	    if (!E [e]) continue ;	/* element already deallocated */
+	    if (E [e] == 0) continue ;	/* element already deallocated */
 	    f = tp->f ;
 	    p = Memory + E [e] ;
 	    ep = (Element *) p ;
@@ -554,7 +554,7 @@ GLOBAL void UMF_assemble_fixq
 
 	ASSERT (NON_PIVOTAL_COL (col)) ;
 	tpi = Col_tuples [col] ;
-	if (!tpi) continue ;
+	if (tpi == 0) continue ;
 	tp = (Tuple *) (Memory + tpi) ;
 	tp1 = tp ;
 	tp2 = tp ;
@@ -563,7 +563,7 @@ GLOBAL void UMF_assemble_fixq
 	{
 	    e = tp->e ;
 	    ASSERT (e > 0 && e <= Work->nel) ;
-	    if (!E [e]) continue ;	/* element already deallocated */
+	    if (E [e] == 0) continue ;	/* element already deallocated */
 	    f = tp->f ;
 	    p = Memory + E [e] ;
 	    ep = (Element *) p ;
@@ -806,7 +806,7 @@ GLOBAL void UMF_assemble_fixq
 		    Work->any_skip = TRUE ;
 		}
 
-		if (!skip)
+		if (skip == 0)
 		{
 
 		    if (nrows == nrowsleft)
@@ -929,7 +929,7 @@ GLOBAL void UMF_assemble_fixq
 		    skip = TRUE ;
 		}
 
-		if (!skip)
+		if (skip == 0)
 		{
 
 		    /* compute the compressed column offset vector */
@@ -1031,12 +1031,12 @@ GLOBAL void UMF_assemble_fixq
 #endif
 
     /* rescan the pivot row */
-    if (Work->any_skip)
+    if (Work->any_skip != 0)
     {
 	row_assemble (Work->pivrow, Numeric, Work) ;
     }
 
-    if (Work->do_scan2row)
+    if (Work->do_scan2row != 0)
     {
 	for (i2 = Work->fscan_row ; i2 < fnrows ; i2++)
 	{
@@ -1044,7 +1044,7 @@ GLOBAL void UMF_assemble_fixq
 	    row = Work->NewRows [i2] ;
 	    if (row < 0) row = FLIP (row) ;
 	    ASSERT (row >= 0 && row < n_row) ;
-	    if (!(row == Work->pivrow && Work->any_skip))
+	    if (!(row == Work->pivrow && (Work->any_skip != 0)))
 	    {
 		/* assemble it */
 		row_assemble (row, Numeric, Work) ;
@@ -1062,12 +1062,12 @@ GLOBAL void UMF_assemble_fixq
 #endif
 
     /* rescan the pivot col */
-    if (Work->any_skip)
+    if (Work->any_skip != 0)
     {
 	col_assemble (Work->pivcol, Numeric, Work) ;
     }
 
-    if (Work->do_scan2col)
+    if (Work->do_scan2col != 0)
     {
 
 	for (j2 = Work->fscan_col ; j2 < fncols ; j2++)
@@ -1076,7 +1076,7 @@ GLOBAL void UMF_assemble_fixq
 	    col = Work->NewCols [j2] ;
 	    if (col < 0) col = FLIP (col) ;
 	    ASSERT (col >= 0 && col < n_col) ;
-	    if (!(col == Work->pivcol && Work->any_skip))
+	    if (!(col == Work->pivcol && (Work->any_skip != 0)))
 	    {
 		/* assemble it */
 		col_assemble (col, Numeric, Work) ;

@@ -61,13 +61,13 @@ void gzip_header::process(char c)
         break;
     case s_os:
         os_ = value;
-        if (flags_ & gzip::flags::extra) {
+        if ((flags_ & gzip::flags::extra) != 0) {
             state_ = s_xlen;
-        } else if (flags_ & gzip::flags::name) {
+        } else if ((flags_ & gzip::flags::name) != 0) {
             state_ = s_name;
-        } else if (flags_ & gzip::flags::comment) {
+        } else if ((flags_ & gzip::flags::comment) != 0) {
             state_ = s_comment;
-        } else if (flags_ & gzip::flags::header_crc) {
+        } else if ((flags_ & gzip::flags::header_crc) != 0) {
             state_ = s_hcrc;
         } else {
             state_ = s_done;
@@ -84,11 +84,11 @@ void gzip_header::process(char c)
         break;
     case s_extra:
         if (--xlen_ == 0) {
-            if (flags_ & gzip::flags::name) {
+            if ((flags_ & gzip::flags::name) != 0) {
                 state_ = s_name;
-            } else if (flags_ & gzip::flags::comment) {
+            } else if ((flags_ & gzip::flags::comment) != 0) {
                 state_ = s_comment;
-            } else if (flags_ & gzip::flags::header_crc) {
+            } else if ((flags_ & gzip::flags::header_crc) != 0) {
                 state_ = s_hcrc;
             } else {
                 state_ = s_done;
@@ -98,9 +98,9 @@ void gzip_header::process(char c)
     case s_name:
         if (c != 0) {
             file_name_ += c;
-        } else if (flags_ & gzip::flags::comment) {
+        } else if ((flags_ & gzip::flags::comment) != 0) {
             state_ = s_comment;
-        } else if (flags_ & gzip::flags::header_crc) {
+        } else if ((flags_ & gzip::flags::header_crc) != 0) {
             state_ = s_hcrc;
         } else {
             state_ = s_done;
@@ -109,7 +109,7 @@ void gzip_header::process(char c)
     case s_comment:
         if (c != 0) {
             comment_ += c;
-        } else if (flags_ & gzip::flags::header_crc) {
+        } else if ((flags_ & gzip::flags::header_crc) != 0) {
             state_ = s_hcrc;
         } else {
             state_ = s_done;

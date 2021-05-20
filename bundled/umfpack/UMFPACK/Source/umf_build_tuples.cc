@@ -70,7 +70,7 @@ GLOBAL Int UMF_build_tuples
 	{
 	    Row_tuples [row] = UMF_mem_alloc_tail_block (Numeric,
 		UNITS (Tuple, TUPLES (Row_tlen [row]))) ;
-	    if (!Row_tuples [row])
+	    if (Row_tuples [row] == 0)
 	    {
 		/* :: out of memory for row tuples :: */
 		DEBUGm4 (("out of memory: build row tuples\n")) ;
@@ -88,7 +88,7 @@ GLOBAL Int UMF_build_tuples
 	{
 	    Col_tuples [col] = UMF_mem_alloc_tail_block (Numeric,
 		UNITS (Tuple, TUPLES (Col_tlen [col]))) ;
-	    if (!Col_tuples [col])
+	    if (Col_tuples [col] == 0)
 	    {
 		/* :: out of memory for col tuples :: */
 		DEBUGm4 (("out of memory: build col tuples\n")) ;

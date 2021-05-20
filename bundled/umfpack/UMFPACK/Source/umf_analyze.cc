@@ -570,7 +570,7 @@ GLOBAL Int UMF_analyze
 
     Front_order = W ;	/* use W for Front_order [ */
 
-    if (fixQ)
+    if (fixQ != 0)
     {
 	/* do not postorder the fronts if Q is fixed */
 	DEBUG1 (("\nNo postorder (Q is fixed)\n")) ;

@@ -59,7 +59,7 @@ GLOBAL Int UMF_tuple_lengths	    /* return memory usage */
 
     for (e = 1 ; e <= nel ; e++)	/* for all elements, in any order */
     {
-	if (E [e])
+	if (E [e] != 0)
 	{
 #ifndef NDEBUG
 	    UMF_dump_element (Numeric, Work, e, FALSE) ;

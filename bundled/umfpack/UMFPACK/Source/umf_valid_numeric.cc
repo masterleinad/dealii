@@ -22,7 +22,7 @@ GLOBAL Int UMF_valid_numeric
     /* it can miss some errors.  All it checks for is the presence of the */
     /* arrays, and the Numeric "valid" entry. */
 
-    if (!Numeric)
+    if (Numeric == nullptr)
     {
 	return (FALSE) ;
     }
@@ -33,11 +33,11 @@ GLOBAL Int UMF_valid_numeric
 	return (FALSE) ;
     }
 
-    if (Numeric->n_row <= 0 || Numeric->n_col <= 0 || !Numeric->D ||
-	!Numeric->Rperm || !Numeric->Cperm ||
-	!Numeric->Lpos || !Numeric->Upos ||
-	!Numeric->Lilen || !Numeric->Uilen || !Numeric->Lip || !Numeric->Uip ||
-	!Numeric->Memory || (Numeric->ulen > 0 && !Numeric->Upattern))
+    if (Numeric->n_row <= 0 || Numeric->n_col <= 0 || (Numeric->D == nullptr) ||
+	(Numeric->Rperm == nullptr) || (Numeric->Cperm == nullptr) ||
+	(Numeric->Lpos == nullptr) || (Numeric->Upos == nullptr) ||
+	(Numeric->Lilen == nullptr) || (Numeric->Uilen == nullptr) || (Numeric->Lip == nullptr) || (Numeric->Uip == nullptr) ||
+	(Numeric->Memory == nullptr) || (Numeric->ulen > 0 && (Numeric->Upattern == nullptr)))
     {
 	return (FALSE) ;
     }

@@ -85,8 +85,8 @@ GLOBAL double UMF_lsolve
 	/* ------------------------------------------------------------------ */
 
 	lp = Lip [k] ;
-	newLchain = (lp < 0) ;
-	if (newLchain)
+	newLchain = static_cast<long>(lp < 0) ;
+	if (newLchain != 0)
 	{
 	    lp = -lp ;
 	    deg = 0 ;

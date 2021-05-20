@@ -52,15 +52,15 @@ value_type ParserInt::Shr(value_type v1, value_type v2) { return Round(v1) >> Ro
 value_type ParserInt::Shl(value_type v1, value_type v2) { return Round(v1) << Round(v2); }
 value_type ParserInt::LogAnd(value_type v1, value_type v2) { return Round(v1) & Round(v2); }
 value_type ParserInt::LogOr(value_type v1, value_type v2)  { return Round(v1) | Round(v2); }
-value_type ParserInt::And(value_type v1, value_type v2) { return Round(v1) && Round(v2); }
-value_type ParserInt::Or(value_type v1, value_type v2)  { return Round(v1) || Round(v2); }
-value_type ParserInt::Less(value_type v1, value_type v2)      { return Round(v1)  < Round(v2); }
-value_type ParserInt::Greater(value_type v1, value_type v2)   { return Round(v1)  > Round(v2); }
-value_type ParserInt::LessEq(value_type v1, value_type v2)    { return Round(v1) <= Round(v2); }
-value_type ParserInt::GreaterEq(value_type v1, value_type v2) { return Round(v1) >= Round(v2); }
-value_type ParserInt::Equal(value_type v1, value_type v2)     { return Round(v1) == Round(v2); }
-value_type ParserInt::NotEqual(value_type v1, value_type v2)  { return Round(v1) != Round(v2); }
-value_type ParserInt::Not(value_type v) { return !Round(v); }
+value_type ParserInt::And(value_type v1, value_type v2) { return (static_cast<mu::value_type>(Round(v1) != 0) && (Round(v2)) != 0); }
+value_type ParserInt::Or(value_type v1, value_type v2)  { return (static_cast<mu::value_type>(Round(v1) != 0) || (Round(v2)) != 0); }
+value_type ParserInt::Less(value_type v1, value_type v2)      { return static_cast<mu::value_type>(Round(v1)  < Round(v2)); }
+value_type ParserInt::Greater(value_type v1, value_type v2)   { return static_cast<mu::value_type>(Round(v1)  > Round(v2)); }
+value_type ParserInt::LessEq(value_type v1, value_type v2)    { return static_cast<mu::value_type>(Round(v1) <= Round(v2)); }
+value_type ParserInt::GreaterEq(value_type v1, value_type v2) { return static_cast<mu::value_type>(Round(v1) >= Round(v2)); }
+value_type ParserInt::Equal(value_type v1, value_type v2)     { return static_cast<mu::value_type>(Round(v1) == Round(v2)); }
+value_type ParserInt::NotEqual(value_type v1, value_type v2)  { return static_cast<mu::value_type>(Round(v1) != Round(v2)); }
+value_type ParserInt::Not(value_type v) { return static_cast<mu::value_type>(Round(v)) == 0; }
 
 value_type ParserInt::Pow(value_type v1, value_type v2) 
 { 
@@ -77,7 +77,7 @@ value_type ParserInt::UnaryMinus(value_type v)
 //---------------------------------------------------------------------------
 value_type ParserInt::Sum(const value_type* a_afArg, int a_iArgc)
 { 
-  if (!a_iArgc)	
+  if (a_iArgc == 0)	
     throw ParserError(_T("too few arguments for function sum."));
 
   value_type fRes=0;
@@ -90,7 +90,7 @@ value_type ParserInt::Sum(const value_type* a_afArg, int a_iArgc)
 //---------------------------------------------------------------------------
 value_type ParserInt::Min(const value_type* a_afArg, int a_iArgc)
 { 
-  if (!a_iArgc)	
+  if (a_iArgc == 0)	
     throw ParserError( _T("too few arguments for function min.") );
 
   value_type fRes=a_afArg[0];
@@ -103,7 +103,7 @@ value_type ParserInt::Min(const value_type* a_afArg, int a_iArgc)
 //---------------------------------------------------------------------------
 value_type ParserInt::Max(const value_type* a_afArg, int a_iArgc)
 { 
-  if (!a_iArgc)	
+  if (a_iArgc == 0)	
     throw ParserError(_T("too few arguments for function min."));
 
   value_type fRes=a_afArg[0];

@@ -76,7 +76,7 @@ inline void queuing_rw_mutex::scoped_lock::wait_for_release_of_internal_lock()
 }
 
 inline void queuing_rw_mutex::scoped_lock::unblock_or_wait_on_internal_lock( uintptr_t flag ) {
-    if( flag )
+    if( flag != 0u )
         wait_for_release_of_internal_lock();
     else
         release_internal_lock();
@@ -158,7 +158,7 @@ void queuing_rw_mutex::scoped_lock::acquire( queuing_rw_mutex& m, bool write )
 
     if( write ) {       // Acquiring for write
 
-        if( pred ) {
+        if( pred != nullptr ) {
             ITT_NOTIFY(sync_prepare, my_mutex);
             pred = tricky_pointer(pred) & ~FLAG;
             __TBB_ASSERT( !( uintptr_t(pred) & FLAG ), "use of corrupted pointer!" );
@@ -174,10 +174,10 @@ void queuing_rw_mutex::scoped_lock::acquire( queuing_rw_mutex& m, bool write )
 #if DO_ITT_NOTIFY
         bool sync_prepare_done = false;
 #endif
-        if( pred ) {
+        if( pred != nullptr ) {
             unsigned short pred_state;
             __TBB_ASSERT( !__TBB_load_relaxed(my_prev), "the predecessor is already set" );
-            if( uintptr_t(pred) & FLAG ) {
+            if( (uintptr_t(pred) & FLAG) != 0u ) {
                 /* this is only possible if pred is an upgrading reader and it signals us to wait */
                 pred_state = STATE_UPGRADE_WAITING;
                 pred = tricky_pointer(pred) & ~FLAG;
@@ -231,7 +231,7 @@ bool queuing_rw_mutex::scoped_lock::try_acquire( queuing_rw_mutex& m, bool write
 {
     __TBB_ASSERT( !my_mutex, "scoped_lock is already holding a mutex");
 
-    if( load<relaxed>(m.q_tail) )
+    if( load<relaxed>(m.q_tail) != nullptr )
         return false; // Someone already took the lock
 
     // Must set all fields before the fetch_and_store, because once the
@@ -244,7 +244,7 @@ bool queuing_rw_mutex::scoped_lock::try_acquire( queuing_rw_mutex& m, bool write
 
     // The CAS must have release semantics, because we are
     // "sending" the fields initialized above to other processors.
-    if( m.q_tail.compare_and_swap<tbb::release>(this, NULL) )
+    if( m.q_tail.compare_and_swap<tbb::release>(this, NULL) != nullptr )
         return false; // Someone already took the lock
     // Force acquire so that user's critical section receives correct values
     // from processor that was previously in the user's critical section.
@@ -268,7 +268,7 @@ void queuing_rw_mutex::scoped_lock::release( )
         // In the statement below, acquire semantics of reading my_next is required
         // so that following operations with fields of my_next are safe.
         scoped_lock* n = __TBB_load_with_acquire(my_next);
-        if( !n ) {
+        if( n == nullptr ) {
             if( this == my_mutex->q_tail.compare_and_swap<tbb::release>(NULL, this) ) {
                 // this was the only item in the queue, and the queue is now empty.
                 goto done;
@@ -298,13 +298,13 @@ retry:
         // Addition to the original paper: Mark my_prev as in use
         queuing_rw_mutex::scoped_lock *pred = tricky_pointer::fetch_and_add<tbb::acquire>(&my_prev, FLAG);
 
-        if( pred ) {
+        if( pred != nullptr ) {
             if( !(pred->try_acquire_internal_lock()) )
             {
                 // Failed to acquire the lock on pred. The predecessor either unlinks or upgrades.
                 // In the second case, it could or could not know my "in use" flag - need to check
                 tmp = tricky_pointer::compare_and_swap<tbb::release>(&my_prev, pred, tricky_pointer(pred) | FLAG );
-                if( !(uintptr_t(tmp) & FLAG) ) {
+                if( (uintptr_t(tmp) & FLAG) == 0u ) {
                     // Wait for the predecessor to change my_prev (e.g. during unlink)
                     spin_wait_while_eq( my_prev, tricky_pointer(pred)|FLAG );
                     // Now owner of pred is waiting for _us_ to release its lock
@@ -321,7 +321,7 @@ retry:
 
             __TBB_store_with_release(pred->my_next,static_cast<scoped_lock *>(NULL));
 
-            if( !__TBB_load_relaxed(my_next) && this != my_mutex->q_tail.compare_and_swap<tbb::release>(pred, this) ) {
+            if( (__TBB_load_relaxed(my_next) == nullptr) && this != my_mutex->q_tail.compare_and_swap<tbb::release>(pred, this) ) {
                 spin_wait_while_eq( my_next, (void*)NULL );
             }
             __TBB_ASSERT( !get_flag(__TBB_load_relaxed(my_next)), "use of corrupted pointer" );
@@ -340,7 +340,7 @@ retry:
         } else { // No predecessor when we looked
             acquire_internal_lock();  // "exclusiveLock(&I->EL)"
             scoped_lock* n = __TBB_load_with_acquire(my_next);
-            if( !n ) {
+            if( n == nullptr ) {
                 if( this != my_mutex->q_tail.compare_and_swap<tbb::release>(NULL, this) ) {
                     spin_wait_while_eq( my_next, (scoped_lock*)NULL );
                     n = __TBB_load_relaxed(my_next);
@@ -367,7 +367,7 @@ bool queuing_rw_mutex::scoped_lock::downgrade_to_reader()
 
     ITT_NOTIFY(sync_releasing, my_mutex);
     my_state = STATE_READER;
-    if( ! __TBB_load_relaxed(my_next) ) {
+    if( __TBB_load_relaxed(my_next) == nullptr ) {
         // the following load of q_tail must not be reordered with setting STATE_READER above
         if( this==my_mutex->q_tail.load<full_fence>() ) {
             unsigned short old_state = my_state.compare_and_swap<tbb::release>(STATE_ACTIVEREADER, STATE_READER);
@@ -379,7 +379,7 @@ bool queuing_rw_mutex::scoped_lock::downgrade_to_reader()
     }
     scoped_lock *const n = __TBB_load_with_acquire(my_next);
     __TBB_ASSERT( n, "still no successor at this point!" );
-    if( n->my_state & STATE_COMBINED_WAITINGREADER )
+    if( (n->my_state & STATE_COMBINED_WAITINGREADER) != 0 )
         __TBB_store_with_release(n->my_going,1);
     else if( n->my_state==STATE_UPGRADE_WAITING )
         // the next waiting for upgrade means this writer was upgraded before.
@@ -406,15 +406,15 @@ requested:
         n = tricky_pointer::fetch_and_add<tbb::acquire>(&my_next, FLAG);
         unsigned short n_state = n->my_state;
         /* the next reader can be blocked by our state. the best thing to do is to unblock it */
-        if( n_state & STATE_COMBINED_WAITINGREADER )
+        if( (n_state & STATE_COMBINED_WAITINGREADER) != 0 )
             __TBB_store_with_release(n->my_going,1);
         tmp = tricky_pointer::fetch_and_store<tbb::release>(&(n->my_prev), this);
         unblock_or_wait_on_internal_lock(get_flag(tmp));
-        if( n_state & (STATE_COMBINED_READER | STATE_UPGRADE_REQUESTED) ) {
+        if( (n_state & (STATE_COMBINED_READER | STATE_UPGRADE_REQUESTED)) != 0 ) {
             // save n|FLAG for simplicity of following comparisons
             tmp = tricky_pointer(n)|FLAG;
             for( atomic_backoff b; __TBB_load_relaxed(my_next)==tmp; b.pause() ) {
-                if( my_state & STATE_COMBINED_UPGRADING ) {
+                if( (my_state & STATE_COMBINED_UPGRADING) != 0 ) {
                     if( __TBB_load_with_acquire(my_next)==tmp )
                         __TBB_store_relaxed(my_next, n);
                     goto waiting;
@@ -442,12 +442,12 @@ waiting:
     my_mutex->q_tail.compare_and_swap<tbb::release>( this, tricky_pointer(me)|FLAG );
     queuing_rw_mutex::scoped_lock * pred;
     pred = tricky_pointer::fetch_and_add<tbb::acquire>(&my_prev, FLAG);
-    if( pred ) {
+    if( pred != nullptr ) {
         bool success = pred->try_acquire_internal_lock();
         pred->my_state.compare_and_swap<tbb::release>(STATE_UPGRADE_WAITING, STATE_UPGRADE_REQUESTED);
         if( !success ) {
             tmp = tricky_pointer::compare_and_swap<tbb::release>(&my_prev, pred, tricky_pointer(pred)|FLAG );
-            if( uintptr_t(tmp) & FLAG ) {
+            if( (uintptr_t(tmp) & FLAG) != 0u ) {
                 spin_wait_while_eq(my_prev, pred);
                 pred = __TBB_load_relaxed(my_prev);
             } else {
@@ -460,7 +460,7 @@ waiting:
             spin_wait_while_eq(my_prev, pred);
             pred = __TBB_load_relaxed(my_prev);
         }
-        if( pred )
+        if( pred != nullptr )
             goto waiting;
     } else {
         // restore the corrupted my_prev field for possible further use (e.g. if downgrade back to reader)

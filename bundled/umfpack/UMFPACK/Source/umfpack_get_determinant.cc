@@ -151,7 +151,7 @@ GLOBAL Int UMFPACK_get_determinant
 
     Wi = (Int *) UMF_malloc (n, sizeof (Int)) ;
 
-    if (!Wi)
+    if (Wi == nullptr)
     {
 	DEBUGm4 (("out of memory: get determinant\n")) ;
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_out_of_memory ;
@@ -163,7 +163,7 @@ GLOBAL Int UMFPACK_get_determinant
     /* ---------------------------------------------------------------------- */
 
     Rs = Numeric->Rs ;		/* row scale factors */
-    do_scale = (Rs != (double *) NULL) ;
+    do_scale = static_cast<long>(Rs != (double *) NULL) ;
 
 #ifndef NRECIPROCAL
     do_recip = Numeric->do_recip ;
@@ -179,7 +179,7 @@ GLOBAL Int UMFPACK_get_determinant
 	MULT (d_tmp, d_mantissa, D [i]) ;
 	d_mantissa = d_tmp ;
 
-	if (!rescale_determinant (&d_mantissa, &d_exponent))
+	if (rescale_determinant (&d_mantissa, &d_exponent) == 0)
 	{
 	    /* the determinant is zero or NaN */
 	    Info [UMFPACK_STATUS] = UMFPACK_WARNING_singular_matrix ;
@@ -190,12 +190,12 @@ GLOBAL Int UMFPACK_get_determinant
     }
 
     /* compute product of diagonal entries of R (or its inverse) */
-    if (do_scale)
+    if (do_scale != 0)
     {
 	for (i = 0 ; i < n ; i++)
 	{
 #ifndef NRECIPROCAL
-	    if (do_recip)
+	    if (do_recip != 0)
 	    {
 		/* compute determinant of R inverse */
 		SCALE_DIV (d_mantissa, Rs [i]) ;
@@ -206,7 +206,7 @@ GLOBAL Int UMFPACK_get_determinant
 		/* compute determinant of R */
 		SCALE (d_mantissa, Rs [i]) ;
 	    }
-	    if (!rescale_determinant (&d_mantissa, &d_exponent))
+	    if (rescale_determinant (&d_mantissa, &d_exponent) == 0)
 	    {
 		/* the determinant is zero or NaN.  This is very unlikey to
 		 * occur here, since the scale factors for a tiny or zero row
@@ -259,7 +259,7 @@ GLOBAL Int UMFPACK_get_determinant
     }
 
     /* if npiv is odd, the sign is -1.  if it is even, the sign is +1 */
-    d_sign = (npiv % 2) ? -1. : 1. ;
+    d_sign = (npiv % 2) != 0 ? -1. : 1. ;
 
     /* ---------------------------------------------------------------------- */
     /* free workspace */

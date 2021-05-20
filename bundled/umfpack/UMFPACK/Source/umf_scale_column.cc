@@ -240,7 +240,7 @@ GLOBAL void UMF_scale_column
 	}
 
 	/* row of the L2 block: */
-	if (Work->pivrow_in_front)
+	if (Work->pivrow_in_front != 0)
 	{
 	    Int j ;
 	    Entry *Fd, *Fs ;
@@ -291,7 +291,7 @@ GLOBAL void UMF_scale_column
 	}
 
 	/* row of the L2 block: */
-	if (Work->pivrow_in_front)
+	if (Work->pivrow_in_front != 0)
 	{
 	    /* Fd: destination of pivot row in LU block */
 	    /* Fs: current position of pivot row in L block */

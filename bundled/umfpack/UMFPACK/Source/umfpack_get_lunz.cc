@@ -34,7 +34,7 @@ GLOBAL Int UMFPACK_get_lunz
     {
 	return (UMFPACK_ERROR_invalid_Numeric_object) ;
     }
-    if (!lnz || !unz || !n_row || !n_col || !nz_udiag)
+    if ((lnz == nullptr) || (unz == nullptr) || (n_row == nullptr) || (n_col == nullptr) || (nz_udiag == nullptr))
     {
 	return (UMFPACK_ERROR_argument_missing) ;
     }

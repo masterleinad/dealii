@@ -75,11 +75,11 @@ GLOBAL Int UMF_transpose
     DEBUG2 (("UMF_transpose: " ID "-by-" ID " nz " ID "\n", n_row, n_col, nz)) ;
 #endif
 
-    if (check)
+    if (check != 0)
     {
 	/* UMFPACK_symbolic skips this check */
 	/* UMFPACK_transpose always does this check */
-	if (!Ai || !Ap || !Ri || !Rp || !W)
+	if ((Ai == nullptr) || (Ap == nullptr) || (Ri == nullptr) || (Rp == nullptr) || (W == nullptr))
 	{
 	    return (UMFPACK_ERROR_argument_missing) ;
 	}
@@ -186,16 +186,16 @@ GLOBAL Int UMF_transpose
     /* construct the row form of B */
     /* ---------------------------------------------------------------------- */
 
-    do_values = Ax && Rx ;
+    do_values = static_cast<long>((static_cast<long>(Ax != nullptr) != 0) && (Rx) != nullptr) ;
 
 #ifdef COMPLEX
     split = SPLIT (Az) && SPLIT (Rz) ;
 
-    if (do_conjugate && do_values)
+    if ((do_conjugate != 0) && (do_values != 0))
     {
 	if (Q != (Int *) NULL)
 	{
-	    if (split)
+	    if (split != 0)
 	    {
 		/* R = A (P,Q)' */
 		for (newj = 0 ; newj < nq ; newj++)
@@ -230,7 +230,7 @@ GLOBAL Int UMF_transpose
 	}
 	else
 	{
-	    if (split)
+	    if (split != 0)
 	    {
 		/* R = A (P,:)' */
 		for (j = 0 ; j < n_col ; j++)
@@ -265,10 +265,10 @@ GLOBAL Int UMF_transpose
     {
 	if (Q != (Int *) NULL)
 	{
-	    if (do_values)
+	    if (do_values != 0)
 	    {
 #ifdef COMPLEX
-		if (split)
+		if (split != 0)
 #endif
 		{
 		    /* R = A (P,Q).' */
@@ -322,10 +322,10 @@ GLOBAL Int UMF_transpose
 	}
 	else
 	{
-	    if (do_values)
+	    if (do_values != 0)
 	    {
 #ifdef COMPLEX
-		if (split)
+		if (split != 0)
 #endif
 		{
 		    /* R = A (P,:).' */

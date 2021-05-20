@@ -33,14 +33,14 @@ GLOBAL Int UMF_report_perm
 	return (UMFPACK_ERROR_n_nonpositive) ;
     }
 
-    if (!P)
+    if (P == nullptr)
     {
 	/* if P is (Int *) NULL, this is the identity permutation */
 	PRINTF (("(not present)\n\n")) ;
 	return (UMFPACK_OK) ;
     }
 
-    if (!W)
+    if (W == nullptr)
     {
 	PRINTF (("ERROR: out of memory\n\n")) ;
 	return (UMFPACK_ERROR_out_of_memory) ;
@@ -58,13 +58,13 @@ GLOBAL Int UMF_report_perm
     {
 	i = P [k] ;
 	PRINTF4 (("    " ID " : " ID " ", INDEX (k), INDEX (i))) ;
-	valid = (i >= 0 && i < n) ;
-	if (valid)
+	valid = static_cast<long>(i >= 0 && i < n) ;
+	if (valid != 0)
 	{
 	    valid = W [i] ;
 	    W [i] = FALSE ;
 	}
-	if (!valid)
+	if (valid == 0)
 	{
 	    /* out of range or duplicate entry */
 	    PRINTF (("ERROR: invalid\n\n")) ;

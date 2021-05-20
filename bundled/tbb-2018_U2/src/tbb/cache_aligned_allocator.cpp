@@ -194,7 +194,7 @@ void* NFS_Allocate( size_t n, size_t element_size, void* /*hint*/ ) {
     if (bytes==0) bytes = 1;
 
     void* result = (*padded_allocate_handler)( bytes, nfs_cache_line_size );
-    if (!result)
+    if (result == nullptr)
         throw_exception(eid_bad_alloc);
 
     __TBB_ASSERT( is_aligned(result, nfs_cache_line_size), "The address returned isn't aligned to cache line size" );
@@ -208,7 +208,7 @@ void NFS_Free( void* p ) {
 static void* padded_allocate( size_t bytes, size_t alignment ) {
     unsigned char* result = NULL;
     unsigned char* base = (unsigned char*)malloc(alignment+bytes);
-    if( base ) {
+    if( base != nullptr ) {
         // Round up to the next line
         result = (unsigned char*)((uintptr_t)(base+alignment)&-alignment);
         // Record where block actually starts.
@@ -218,7 +218,7 @@ static void* padded_allocate( size_t bytes, size_t alignment ) {
 }
 
 static void padded_free( void* p ) {
-    if( p ) {
+    if( p != nullptr ) {
         __TBB_ASSERT( (uintptr_t)p>=0x4096, "attempt to free block not obtained from cache_aligned_allocator" );
         // Recover where block actually starts
         unsigned char* base = ((unsigned char**)p)[-1];
@@ -229,14 +229,14 @@ static void padded_free( void* p ) {
 
 void* __TBB_EXPORTED_FUNC allocate_via_handler_v3( size_t n ) {
     void* result = (*MallocHandler) (n);
-    if (!result) {
+    if (result == nullptr) {
         throw_exception(eid_bad_alloc);
     }
     return result;
 }
 
 void __TBB_EXPORTED_FUNC deallocate_via_handler_v3( void *p ) {
-    if( p ) {
+    if( p != nullptr ) {
         (*FreeHandler)( p );
     }
 }

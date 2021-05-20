@@ -54,9 +54,9 @@ extended_type_info_typeid_0::is_less_than(
     // shortcut for common case
     if(this == & rhs)
         return false;
-    return 0 != m_ti->before(
+    return 0 != static_cast<int>(m_ti->before(
         *(static_cast<const extended_type_info_typeid_0 &>(rhs).m_ti)
-    );
+    ));
 }
 
 BOOST_SERIALIZATION_DECL bool

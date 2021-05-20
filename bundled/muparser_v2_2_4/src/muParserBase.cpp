@@ -370,7 +370,7 @@ namespace mu
                              const ParserCallback &a_Callback,
                              const string_type &a_szCharSet) const
   {
-    if ( !a_sName.length() ||
+    if ( (a_sName.length() == 0u) ||
         (a_sName.find_first_not_of(a_szCharSet)!=string_type::npos) ||
         (a_sName[0]>='0' && a_sName[0]<='9'))
     {
@@ -391,7 +391,7 @@ namespace mu
   void ParserBase::CheckName(const string_type &a_sName,
                              const string_type &a_szCharSet) const
   {
-    if ( !a_sName.length() ||
+    if ( (a_sName.length() == 0u) ||
         (a_sName.find_first_not_of(a_szCharSet)!=string_type::npos) ||
         (a_sName[0]>='0' && a_sName[0]<='9'))
     {
@@ -874,7 +874,7 @@ namespace mu
                                ParserStack<token_type> &a_stVal) const
   {
     // Check if there is an if Else clause to be calculated
-    while (a_stOpt.size() && a_stOpt.top().GetCode()==cmELSE)
+    while ((a_stOpt.size() != 0u) && a_stOpt.top().GetCode()==cmELSE)
     {
       token_type opElse = a_stOpt.pop();
       MUP_ASSERT(a_stOpt.size()>0);
@@ -947,7 +947,7 @@ namespace mu
   void ParserBase::ApplyRemainingOprt(ParserStack<token_type> &stOpt,
                                       ParserStack<token_type> &stVal) const
   {
-    while (stOpt.size() && 
+    while ((stOpt.size() != 0u) && 
            stOpt.top().GetCode() != cmBO &&
            stOpt.top().GetCode() != cmIF)
     {
@@ -1018,12 +1018,12 @@ namespace mu
       switch (pTok->Cmd)
       {
       // built in binary operators
-      case  cmLE:   --sidx; Stack[sidx]  = Stack[sidx] <= Stack[sidx+1]; continue;
-      case  cmGE:   --sidx; Stack[sidx]  = Stack[sidx] >= Stack[sidx+1]; continue;
-      case  cmNEQ:  --sidx; Stack[sidx]  = Stack[sidx] != Stack[sidx+1]; continue;
-      case  cmEQ:   --sidx; Stack[sidx]  = Stack[sidx] == Stack[sidx+1]; continue;
-      case  cmLT:   --sidx; Stack[sidx]  = Stack[sidx] < Stack[sidx+1];  continue;
-      case  cmGT:   --sidx; Stack[sidx]  = Stack[sidx] > Stack[sidx+1];  continue;
+      case  cmLE:   --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] <= Stack[sidx+1]); continue;
+      case  cmGE:   --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] >= Stack[sidx+1]); continue;
+      case  cmNEQ:  --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] != Stack[sidx+1]); continue;
+      case  cmEQ:   --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] == Stack[sidx+1]); continue;
+      case  cmLT:   --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] < Stack[sidx+1]);  continue;
+      case  cmGT:   --sidx; Stack[sidx]  = static_cast<mu::value_type>(Stack[sidx] > Stack[sidx+1]);  continue;
       case  cmADD:  --sidx; Stack[sidx] += Stack[1+sidx]; continue;
       case  cmSUB:  --sidx; Stack[sidx] -= Stack[1+sidx]; continue;
       case  cmMUL:  --sidx; Stack[sidx] *= Stack[1+sidx]; continue;
@@ -1040,8 +1040,8 @@ namespace mu
               --sidx; Stack[sidx] = MathImpl<value_type>::Pow(Stack[sidx], Stack[1+sidx]);
               continue;
 
-      case  cmLAND: --sidx; Stack[sidx]  = (Stack[sidx] != 0.) && (Stack[sidx+1] != 0.); continue;
-      case  cmLOR:  --sidx; Stack[sidx]  = (Stack[sidx] != 0.) || (Stack[sidx+1] != 0.); continue;
+      case  cmLAND: --sidx; Stack[sidx]  = static_cast<mu::value_type>((Stack[sidx] != 0.) && (Stack[sidx+1] != 0.)); continue;
+      case  cmLOR:  --sidx; Stack[sidx]  = static_cast<mu::value_type>((Stack[sidx] != 0.) || (Stack[sidx+1] != 0.)); continue;
 
       case  cmASSIGN: 
           // Bugfix for Bulkmode:
@@ -1175,7 +1175,7 @@ namespace mu
   //---------------------------------------------------------------------------
   void ParserBase::CreateRPN() const
   {
-    if (!m_pTokenReader->GetExpr().length())
+    if (m_pTokenReader->GetExpr().length() == 0u)
       Error(ecUNEXPECTED_EOF, 0);
 
     ParserStack<token_type> stOpt, stVal;
@@ -1248,7 +1248,7 @@ namespace mu
                   ApplyRemainingOprt(stOpt, stVal);
 
                   // Check if the bracket content has been evaluated completely
-                  if (stOpt.size() && stOpt.top().GetCode()==cmBO)
+                  if ((stOpt.size() != 0u) && stOpt.top().GetCode()==cmBO)
                   {
                     // if opt is ")" and opta is "(" the bracket has been evaluated, now its time to check
                     // if there is either a function or a sign pending
@@ -1269,7 +1269,7 @@ namespace mu
                     
                     // The opening bracket was popped from the stack now check if there
                     // was a function before this bracket
-                    if (stOpt.size() && 
+                    if ((stOpt.size() != 0u) && 
                         stOpt.top().GetCode()!=cmOPRT_INFIX && 
                         stOpt.top().GetCode()!=cmOPRT_BIN && 
                         stOpt.top().GetFuncAddr()!=0)
@@ -1307,7 +1307,7 @@ namespace mu
         case cmOPRT_BIN:
 
                 // A binary operator (user defined or built in) has been found. 
-                while ( stOpt.size() && 
+                while ( (stOpt.size() != 0u) && 
                         stOpt.top().GetCode() != cmBO &&
                         stOpt.top().GetCode() != cmELSE &&
                         stOpt.top().GetCode() != cmIF)

@@ -59,7 +59,7 @@ GLOBAL Int UMFPACK_save_numeric
 	filename = user_filename ;
     }
     f = fopen (filename, "wb") ;
-    if (!f)
+    if (f == nullptr)
     {
 	return (UMFPACK_ERROR_file_IO) ;
     }

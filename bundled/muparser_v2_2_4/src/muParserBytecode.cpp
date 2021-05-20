@@ -149,14 +149,14 @@ namespace mu
                &y = m_vRPN[sz-1].u.Val.data2;
     switch (a_Oprt)
     {
-    case cmLAND: x = (int)x && (int)y; m_vRPN.pop_back(); break;
-    case cmLOR:  x = (int)x || (int)y; m_vRPN.pop_back(); break;
-    case cmLT:   x = x < y;  m_vRPN.pop_back();  break;
-    case cmGT:   x = x > y;  m_vRPN.pop_back();  break;
-    case cmLE:   x = x <= y; m_vRPN.pop_back();  break;
-    case cmGE:   x = x >= y; m_vRPN.pop_back();  break;
-    case cmNEQ:  x = x != y; m_vRPN.pop_back();  break;
-    case cmEQ:   x = x == y; m_vRPN.pop_back();  break;
+    case cmLAND: x = (static_cast<mu::value_type>((int)x != 0) && ((int)y) != 0); m_vRPN.pop_back(); break;
+    case cmLOR:  x = (static_cast<mu::value_type>((int)x != 0) || ((int)y) != 0); m_vRPN.pop_back(); break;
+    case cmLT:   x = static_cast<mu::value_type>(x < y);  m_vRPN.pop_back();  break;
+    case cmGT:   x = static_cast<mu::value_type>(x > y);  m_vRPN.pop_back();  break;
+    case cmLE:   x = static_cast<mu::value_type>(x <= y); m_vRPN.pop_back();  break;
+    case cmGE:   x = static_cast<mu::value_type>(x >= y); m_vRPN.pop_back();  break;
+    case cmNEQ:  x = static_cast<mu::value_type>(x != y); m_vRPN.pop_back();  break;
+    case cmEQ:   x = static_cast<mu::value_type>(x == y); m_vRPN.pop_back();  break;
     case cmADD:  x = x + y;  m_vRPN.pop_back();  break;
     case cmSUB:  x = x - y;  m_vRPN.pop_back();  break;
     case cmMUL:  x = x * y;  m_vRPN.pop_back();  break;
@@ -499,7 +499,7 @@ namespace mu
   /** \brief Dump bytecode (for debugging only!). */
   void ParserByteCode::AsciiDump()
   {
-    if (!m_vRPN.size()) 
+    if (m_vRPN.size() == 0u) 
     {
       mu::console() << _T("No bytecode available\n");
       return;
@@ -539,7 +539,7 @@ namespace mu
 
       case cmFUNC:  mu::console() << _T("CALL\t");
                     mu::console() << _T("[ARG:") << std::dec << m_vRPN[i].u.Fun.argc << _T("]"); 
-                    mu::console() << _T("[ADDR: 0x") << std::hex << m_vRPN[i].u.Fun.ptr << _T("]"); 
+                    mu::console() << _T("[ADDR: 0x") << std::hex << (m_vRPN[i].u.Fun.ptr != nullptr) << _T("]"); 
                     mu::console() << _T("\n");
                     break;
 
@@ -547,7 +547,7 @@ namespace mu
                     mu::console() << _T("CALL STRFUNC\t");
                     mu::console() << _T("[ARG:") << std::dec << m_vRPN[i].u.Fun.argc << _T("]");
                     mu::console() << _T("[IDX:") << std::dec << m_vRPN[i].u.Fun.idx << _T("]");
-                    mu::console() << _T("[ADDR: 0x") << m_vRPN[i].u.Fun.ptr << _T("]\n"); 
+                    mu::console() << _T("[ADDR: 0x") << (m_vRPN[i].u.Fun.ptr != nullptr) << _T("]\n"); 
                     break;
 
       case cmLT:    mu::console() << _T("LT\n");  break;

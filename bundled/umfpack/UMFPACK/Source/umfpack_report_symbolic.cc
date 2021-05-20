@@ -111,7 +111,7 @@ GLOBAL Int UMFPACK_report_symbolic
 	PRINTF (("\n")) ;
 
 	PRINTF (("    performn column etree postorder:            ")) ;
-	if (Symbolic->fixQ)
+	if (Symbolic->fixQ != 0)
 	{
 	    PRINTF (("no\n")) ;
 	}
@@ -121,7 +121,7 @@ GLOBAL Int UMFPACK_report_symbolic
 	}
 
 	PRINTF (("    prefer diagonal pivoting (attempt P=Q):     ")) ;
-	if (Symbolic->prefer_diagonal)
+	if (Symbolic->prefer_diagonal != 0)
 	{
 	    PRINTF (("yes\n")) ;
 	}
@@ -183,8 +183,8 @@ GLOBAL Int UMFPACK_report_symbolic
 	    {
 		PRINTF4 ((" " ID "\n", INDEX (Front_parent [frontid]))) ;
 	    }
-	    done = (frontid == 20 && frontid < nfr-1 && prl == 4) ;
-	    if (done)
+	    done = static_cast<long>(frontid == 20 && frontid < nfr-1 && prl == 4) ;
+	    if (done != 0)
 	    {
 		PRINTF4 (("\t...\n")) ;
 		break ;
@@ -196,14 +196,14 @@ GLOBAL Int UMFPACK_report_symbolic
 	    PRINTF4 (("\tFront: " ID " placeholder for " ID " empty columns\n",
 		INDEX (nfr), Front_npivcol [nfr])) ;
 	}
-	if (done)
+	if (done != 0)
 	{
 	    break ;
 	}
     }
 
     W = (Int *) UMF_malloc (MAX (n_row, n_col), sizeof (Int)) ;
-    if (!W)
+    if (W == nullptr)
     {
 	PRINTF (("ERROR: out of memory to check Symbolic object\n\n")) ;
 	return (UMFPACK_ERROR_out_of_memory) ;

@@ -43,11 +43,11 @@ bool spin_rw_mutex_v3::internal_acquire_writer()
     ITT_NOTIFY(sync_prepare, this);
     for( internal::atomic_backoff backoff;;backoff.pause() ){
         state_t s = const_cast<volatile state_t&>(state); // ensure reloading
-        if( !(s & BUSY) ) { // no readers, no writers
+        if( (s & BUSY) == 0 ) { // no readers, no writers
             if( CAS(state, WRITER, s)==s )
                 break; // successfully stored writer flag
             backoff.reset(); // we could be very close to complete op.
-        } else if( !(s & WRITER_PENDING) ) { // no pending writers
+        } else if( (s & WRITER_PENDING) == 0 ) { // no pending writers
             __TBB_AtomicOR(&state, WRITER_PENDING);
         }
     }
@@ -68,9 +68,9 @@ void spin_rw_mutex_v3::internal_acquire_reader()
     ITT_NOTIFY(sync_prepare, this);
     for( internal::atomic_backoff b;;b.pause() ){
         state_t s = const_cast<volatile state_t&>(state); // ensure reloading
-        if( !(s & (WRITER|WRITER_PENDING)) ) { // no writer or write requests
+        if( (s & (WRITER|WRITER_PENDING)) == 0 ) { // no writer or write requests
             state_t t = (state_t)__TBB_FetchAndAddW( &state, (intptr_t) ONE_READER );
-            if( !( t&WRITER ))
+            if( ( t&WRITER ) == 0)
                 break; // successfully stored increased number of readers
             // writer got there first, undo the increment
             __TBB_FetchAndAddW( &state, -(intptr_t)ONE_READER );
@@ -90,7 +90,7 @@ bool spin_rw_mutex_v3::internal_upgrade()
     // check and set writer-pending flag
     // required conditions: either no pending writers, or we are the only reader
     // (with multiple readers and pending writer, another upgrade could have been requested)
-    while( (s & READERS)==ONE_READER || !(s & WRITER_PENDING) ) {
+    while( (s & READERS)==ONE_READER || ((s & WRITER_PENDING) == 0) ) {
         state_t old_s = s;
         if( (s=CAS(state, s | WRITER | WRITER_PENDING, s))==old_s ) {
             ITT_NOTIFY(sync_prepare, this);
@@ -128,7 +128,7 @@ bool spin_rw_mutex_v3::internal_try_acquire_writer()
 {
     // for a writer: only possible to acquire if no active readers or writers
     state_t s = state;
-    if( !(s & BUSY) ) // no readers, no writers; mask is 1..1101
+    if( (s & BUSY) == 0 ) // no readers, no writers; mask is 1..1101
         if( CAS(state, WRITER, s)==s ) {
             ITT_NOTIFY(sync_acquired, this);
             return true; // successfully stored writer flag
@@ -141,9 +141,9 @@ bool spin_rw_mutex_v3::internal_try_acquire_reader()
 {
     // for a reader: acquire if no active or waiting writers
     state_t s = state;
-    if( !(s & (WRITER|WRITER_PENDING)) ) { // no writers
+    if( (s & (WRITER|WRITER_PENDING)) == 0 ) { // no writers
         state_t t = (state_t)__TBB_FetchAndAddW( &state, (intptr_t) ONE_READER );
-        if( !( t&WRITER )) {  // got the lock
+        if( ( t&WRITER ) == 0) {  // got the lock
             ITT_NOTIFY(sync_acquired, this);
             return true; // successfully stored increased number of readers
         }

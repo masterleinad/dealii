@@ -58,7 +58,7 @@ GLOBAL Int UMFPACK_scale
     n = Numeric->n_row ;
     Rs = Numeric->Rs ;
 
-    if (!Xx || !Bx)
+    if ((Xx == nullptr) || (Bx == nullptr))
     {
 	return (UMFPACK_ERROR_argument_missing) ;
     }
@@ -70,11 +70,11 @@ GLOBAL Int UMFPACK_scale
     if (Rs != (double *) NULL)
     {
 #ifndef NRECIPROCAL
-	if (Numeric->do_recip)
+	if (Numeric->do_recip != 0)
 	{
 	    /* multiply by the scale factors */
 #ifdef COMPLEX
-	    if (split)
+	    if (split != 0)
 	    {
 		for (i = 0 ; i < n ; i++)
 		{
@@ -102,7 +102,7 @@ GLOBAL Int UMFPACK_scale
 	{
 	    /* divide by the scale factors */
 #ifdef COMPLEX
-	    if (split)
+	    if (split != 0)
 	    {
 		for (i = 0 ; i < n ; i++)
 		{
@@ -130,7 +130,7 @@ GLOBAL Int UMFPACK_scale
     {
 	/* no scale factors, just copy B into X */
 #ifdef COMPLEX
-        if (split)
+        if (split != 0)
 	{
 	    for (i = 0 ; i < n ; i++)
 	    {

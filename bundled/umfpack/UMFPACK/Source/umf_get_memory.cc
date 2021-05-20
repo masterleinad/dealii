@@ -129,10 +129,10 @@ GLOBAL Int UMF_get_memory
     /* ---------------------------------------------------------------------- */
 
     mnew = (Unit *) NULL ;
-    while (!mnew)
+    while (mnew == nullptr)
     {
 	mnew = (Unit *) UMF_realloc (Numeric->Memory, newsize, sizeof (Unit)) ;
-	if (!mnew)
+	if (mnew == nullptr)
 	{
 	    if (newsize == minsize)	/* last realloc attempt failed */
 	    {
@@ -153,14 +153,14 @@ GLOBAL Int UMF_get_memory
     ASSERT (mnew != (Unit *) NULL) ;
 
     /* see if realloc had to copy, rather than just extend memory */
-    costly = (mnew != Numeric->Memory) ;
+    costly = static_cast<long>(mnew != Numeric->Memory) ;
 
     /* ---------------------------------------------------------------------- */
     /* extend the tail portion of memory downwards */
     /* ---------------------------------------------------------------------- */
 
     Numeric->Memory = mnew ;
-    if (Work->E [0])
+    if (Work->E [0] != 0)
     {
 	Int nb, dr, dc ;
 	nb = Work->nb ;
@@ -200,7 +200,7 @@ GLOBAL Int UMF_get_memory
 
 	Numeric->nrealloc++ ;
 
-	if (costly)
+	if (costly != 0)
 	{
 	    Numeric->ncostly++ ;
 	}

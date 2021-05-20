@@ -119,7 +119,7 @@ public:
         __TBB_ASSERT( array, NULL );
         cache_aligned_allocator<task_info>().deallocate(array,array_size);
         poison_pointer( array );
-        if(my_sem) {
+        if(my_sem != nullptr) {
             free_sema();
         }
         if(end_of_input_tls_allocated) {
@@ -226,15 +226,15 @@ public:
     bool has_item() { spin_mutex::scoped_lock lock(array_mutex); return array[low_token&(array_size -1)].is_valid; }
 
     // end_of_input signal for parallel_pipeline, parallel input filters with 0 tokens allowed.
-    void create_my_tls() { int status = end_of_input_tls.create(); if(status) handle_perror(status, "TLS not allocated for filter"); end_of_input_tls_allocated = true; }
-    void destroy_my_tls() { int status = end_of_input_tls.destroy(); if(status) handle_perror(status, "Failed to destroy filter TLS"); }
+    void create_my_tls() { int status = end_of_input_tls.create(); if(status != 0) handle_perror(status, "TLS not allocated for filter"); end_of_input_tls_allocated = true; }
+    void destroy_my_tls() { int status = end_of_input_tls.destroy(); if(status != 0) handle_perror(status, "Failed to destroy filter TLS"); }
     bool my_tls_end_of_input() { return end_of_input_tls.get() != 0; }
     void set_my_tls_end_of_input() { end_of_input_tls.set(1); }
 };
 
 void input_buffer::grow( size_type minimum_size ) {
     size_type old_size = array_size;
-    size_type new_size = old_size ? 2*old_size : initial_buffer_size;
+    size_type new_size = old_size != 0u ? 2*old_size : initial_buffer_size;
     while( new_size<minimum_size )
         new_size*=2;
     task_info* new_array = cache_aligned_allocator<task_info>().allocate(new_size);
@@ -246,7 +246,7 @@ void input_buffer::grow( size_type minimum_size ) {
         new_array[t&(new_size-1)] = old_array[t&(old_size-1)];
     array = new_array;
     array_size = new_size;
-    if( old_array )
+    if( old_array != nullptr )
         cache_aligned_allocator<task_info>().deallocate(old_array,old_size);
 }
 
@@ -286,7 +286,7 @@ public:
 #if __TBB_TASK_GROUP_CONTEXT
     ~stage_task()
     {
-        if (my_filter && my_object && (my_filter->my_filter_mode & filter::version_mask) >= __TBB_PIPELINE_VERSION(4)) {
+        if ((my_filter != nullptr) && (my_object != nullptr) && (my_filter->my_filter_mode & filter::version_mask) >= __TBB_PIPELINE_VERSION(4)) {
             __TBB_ASSERT(is_cancelled(), "Trying to finalize the task that wasn't cancelled");
             my_filter->finalize(my_object);
             my_object = NULL;
@@ -308,7 +308,7 @@ task* stage_task::execute() {
     if( my_at_start ) {
         if( my_filter->is_serial() ) {
             my_object = (*my_filter)(my_object);
-            if( my_object || ( my_filter->object_may_be_null() && !my_pipeline.end_of_input) )
+            if( (my_object != nullptr) || ( my_filter->object_may_be_null() && !my_pipeline.end_of_input) )
             {
                 if( my_filter->is_ordered() ) {
                     my_token = my_pipeline.token_counter++; // ideally, with relaxed semantics
@@ -317,7 +317,7 @@ task* stage_task::execute() {
                     if( my_pipeline.has_thread_bound_filters )
                         my_pipeline.token_counter++; // ideally, with relaxed semantics
                 }
-                if( !my_filter->next_filter_in_pipeline ) { // we're only filter in pipeline
+                if( my_filter->next_filter_in_pipeline == nullptr ) { // we're only filter in pipeline
                     reset();
                     goto process_another_stage;
                 } else {
@@ -340,7 +340,7 @@ task* stage_task::execute() {
             if( --my_pipeline.input_tokens>0 )
                 spawn( *new( allocate_additional_child_of(*parent()) ) stage_task( my_pipeline ) );
             my_object = (*my_filter)(my_object);
-            if( !my_object && (!my_filter->object_may_be_null() || my_filter->my_input_buffer->my_tls_end_of_input()) )
+            if( (my_object == nullptr) && (!my_filter->object_may_be_null() || my_filter->my_input_buffer->my_tls_end_of_input()) )
             {
                 my_pipeline.end_of_input = true;
                 if( (my_filter->my_filter_mode & my_filter->version_mask) >= __TBB_PIPELINE_VERSION(5) ) {
@@ -357,7 +357,7 @@ task* stage_task::execute() {
             my_filter->my_input_buffer->note_done(my_token, *this);
     }
     my_filter = my_filter->next_filter_in_pipeline;
-    if( my_filter ) {
+    if( my_filter != nullptr ) {
         // There is another filter to execute.
         if( my_filter->is_serial() ) {
             // The next filter must execute tokens in order
@@ -367,9 +367,9 @@ task* stage_task::execute() {
                     // Find the next non-thread-bound filter
                     do {
                         my_filter = my_filter->next_filter_in_pipeline;
-                    } while( my_filter && my_filter->is_bound() );
+                    } while( (my_filter != nullptr) && my_filter->is_bound() );
                     // Check if there is an item ready to process
-                    if( my_filter && my_filter->my_input_buffer->return_item(*this, !my_filter->is_serial()))
+                    if( (my_filter != nullptr) && my_filter->my_input_buffer->return_item(*this, !my_filter->is_serial()))
                         goto process_another_stage;
                 }
                 my_filter = NULL; // To prevent deleting my_object twice if exception occurs
@@ -418,7 +418,7 @@ class pipeline_root_task: public task {
             /* first non-thread-bound filter that follows thread-bound one
             and may have valid items to process */
             filter* first_suitable_filter = current_filter;
-            while( current_filter ) {
+            while( current_filter != nullptr ) {
                 __TBB_ASSERT( !current_filter->is_bound(), "filter is thread-bound?" );
                 __TBB_ASSERT( current_filter->prev_filter_in_pipeline->is_bound(), "previous filter is not thread-bound?" );
                 if( !my_pipeline.end_of_input || current_filter->has_more_work())
@@ -431,7 +431,7 @@ class pipeline_root_task: public task {
                         return new( allocate_child() ) stage_task( my_pipeline, current_filter, info);
                     }
                     current_filter = current_filter->next_segment;
-                    if( !current_filter ) {
+                    if( current_filter == nullptr ) {
                         if( !my_pipeline.end_of_input ) {
                             recycle_as_continuation();
                             return this;
@@ -507,7 +507,7 @@ void pipeline::inject_token( task& ) {
 
 #if __TBB_TASK_GROUP_CONTEXT
 void pipeline::clear_filters() {
-    for( filter* f = filter_list; f; f = f->next_filter_in_pipeline ) {
+    for( filter* f = filter_list; f != nullptr; f = f->next_filter_in_pipeline ) {
         if ((f->my_filter_mode & filter::version_mask) >= __TBB_PIPELINE_VERSION(4))
             if( internal::input_buffer* b = f->my_input_buffer )
                 b->clear(f);
@@ -532,7 +532,7 @@ pipeline::~pipeline() {
 
 void pipeline::clear() {
     filter* next;
-    for( filter* f = filter_list; f; f=next ) {
+    for( filter* f = filter_list; f != nullptr; f=next ) {
         if( internal::input_buffer* b = f->my_input_buffer ) {
             delete b;
             f->my_input_buffer = NULL;
@@ -568,7 +568,7 @@ void pipeline::add_filter( filter& filter_ ) {
     }
     else
     {
-        if( !filter_end )
+        if( filter_end == nullptr )
             filter_end = reinterpret_cast<filter*>(&filter_list);
 
         *reinterpret_cast<filter**>(filter_end) = &filter_;
@@ -582,7 +582,7 @@ void pipeline::add_filter( filter& filter_ ) {
             filter_.my_input_buffer = new internal::input_buffer( filter_.is_ordered(), filter_.is_bound() );
         }
         else {
-            if(filter_.prev_filter_in_pipeline) {
+            if(filter_.prev_filter_in_pipeline != nullptr) {
                 if(filter_.prev_filter_in_pipeline->is_bound()) {
                     // successors to bound filters must have an input_buffer
                     filter_.my_input_buffer = new internal::input_buffer( /*is_ordered*/false, false );
@@ -637,7 +637,7 @@ void pipeline::run( size_t max_number_of_live_tokens
     ) {
     __TBB_ASSERT( max_number_of_live_tokens>0, "pipeline::run must have at least one token" );
     __TBB_ASSERT( !end_counter, "pipeline already running?" );
-    if( filter_list ) {
+    if( filter_list != nullptr ) {
         internal::pipeline_cleaner my_pipeline_cleaner(*this);
         end_of_input = false;
         input_tokens = internal::Token(max_number_of_live_tokens);
@@ -656,7 +656,7 @@ void pipeline::run( size_t max_number_of_live_tokens
         task::spawn_root_and_wait( *end_counter );
 
         if(has_thread_bound_filters) {
-            for(filter* f = filter_list->next_filter_in_pipeline; f; f=f->next_filter_in_pipeline) {
+            for(filter* f = filter_list->next_filter_in_pipeline; f != nullptr; f=f->next_filter_in_pipeline) {
                 if(f->is_bound()) {
                     f->my_input_buffer->sema_V(); // wake to end
                 }
@@ -667,10 +667,10 @@ void pipeline::run( size_t max_number_of_live_tokens
 
 #if __TBB_TASK_GROUP_CONTEXT
 void pipeline::run( size_t max_number_of_live_tokens ) {
-    if( filter_list ) {
+    if( filter_list != nullptr ) {
         // Construct task group context with the exception propagation mode expected
         // by the pipeline caller.
-        uintptr_t ctx_traits = filter_list->my_filter_mode & filter::exact_exception_propagation ?
+        uintptr_t ctx_traits = (filter_list->my_filter_mode & filter::exact_exception_propagation) != 0 ?
                 task_group_context::default_traits :
                 task_group_context::default_traits & ~task_group_context::exact_exception;
         task_group_context context(task_group_context::bound, ctx_traits);
@@ -725,7 +725,7 @@ thread_bound_filter::result_type thread_bound_filter::internal_process_item(bool
     if( my_pipeline->end_of_input && !has_more_work() )
         return end_of_stream;
 
-    if( !prev_filter_in_pipeline ) {
+    if( prev_filter_in_pipeline == nullptr ) {
         if( my_pipeline->end_of_input )
             return end_of_stream;
         while( my_pipeline->input_tokens == 0 ) {
@@ -734,7 +734,7 @@ thread_bound_filter::result_type thread_bound_filter::internal_process_item(bool
             my_input_buffer->sema_P();
         }
         info.my_object = (*this)(info.my_object);
-        if( info.my_object ) {
+        if( info.my_object != nullptr ) {
             __TBB_ASSERT(my_pipeline->input_tokens > 0, "Token failed in thread-bound filter");
             my_pipeline->input_tokens--;
             if( is_ordered() ) {
@@ -761,7 +761,7 @@ thread_bound_filter::result_type thread_bound_filter::internal_process_item(bool
         }
         info.my_object = (*this)(info.my_object);
     }
-    if( next_filter_in_pipeline ) {
+    if( next_filter_in_pipeline != nullptr ) {
         if ( !next_filter_in_pipeline->my_input_buffer->put_token(info,/*force_put=*/true) ) {
             __TBB_ASSERT(false, "Couldn't put token after thread-bound buffer");
         }

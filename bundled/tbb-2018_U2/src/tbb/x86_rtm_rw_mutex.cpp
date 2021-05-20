@@ -109,18 +109,18 @@ void x86_rtm_rw_mutex::internal_acquire_writer(x86_rtm_rw_mutex::scoped_lock& s,
         unsigned int abort_code;
         do {
             tbb::internal::atomic_backoff backoff;
-            if(this->state) {
+            if(this->state != 0) {
                 if(only_speculate) return;
                 do {
                     backoff.pause();  // test the spin_rw_mutex (real readers or writers)
-                } while(this->state);
+                } while(this->state != 0);
             }
             // _xbegin returns -1 on success or the abort code, so capture it
             if(( abort_code = __TBB_machine_begin_transaction()) == ~(unsigned int)(0) )
             {
                 // started speculation
 #if !__TBB_RW_MUTEX_DELAY_TEST
-                if(this->state) {  // add spin_rw_mutex to read-set.
+                if(this->state != 0) {  // add spin_rw_mutex to read-set.
                     // reader or writer grabbed the lock, so abort.
                     __TBB_machine_transaction_conflict_abort();
                 }
@@ -204,7 +204,7 @@ bool x86_rtm_rw_mutex::internal_upgrade(x86_rtm_rw_mutex::scoped_lock& s)
         }
     case RTM_transacting_reader:
 #if !__TBB_RW_MUTEX_DELAY_TEST
-        if(this->state) {  // add spin_rw_mutex to read-set.
+        if(this->state != 0) {  // add spin_rw_mutex to read-set.
             // Real reader or writer holds the lock; so commit the read and re-acquire for write.
             internal_release(s);
             internal_acquire_writer(s);

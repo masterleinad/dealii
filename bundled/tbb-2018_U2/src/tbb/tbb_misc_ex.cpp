@@ -72,7 +72,7 @@ static const dynamic_link_descriptor iompLinkTable[] = {
 
 static void set_thread_affinity_mask( size_t maskSize, const basic_mask_t* threadMask ) {
 #if __linux__
-    if( sched_setaffinity( 0, maskSize, threadMask ) )
+    if( sched_setaffinity( 0, maskSize, threadMask ) != 0 )
 #else /* FreeBSD */
     if( cpuset_setaffinity( CPU_LEVEL_WHICH, CPU_WHICH_TID, -1, maskSize, threadMask ) )
 #endif
@@ -81,7 +81,7 @@ static void set_thread_affinity_mask( size_t maskSize, const basic_mask_t* threa
 
 static void get_thread_affinity_mask( size_t maskSize, basic_mask_t* threadMask ) {
 #if __linux__
-    if( sched_getaffinity( 0, maskSize, threadMask ) )
+    if( sched_getaffinity( 0, maskSize, threadMask ) != 0 )
 #else /* FreeBSD */
     if( cpuset_getaffinity( CPU_LEVEL_WHICH, CPU_WHICH_TID, -1, maskSize, threadMask ) )
 #endif
@@ -92,29 +92,29 @@ static basic_mask_t* process_mask;
 static int num_masks;
 
 void destroy_process_mask() {
-    if( process_mask ) {
+    if( process_mask != nullptr ) {
         delete [] process_mask;
     }
 }
 
 #define curMaskSize sizeof(basic_mask_t) * num_masks
 affinity_helper::~affinity_helper() {
-    if( threadMask ) {
-        if( is_changed ) {
+    if( threadMask != nullptr ) {
+        if( is_changed != 0 ) {
             set_thread_affinity_mask( curMaskSize, threadMask );
         }
         delete [] threadMask;
     }
 }
 void affinity_helper::protect_affinity_mask( bool restore_process_mask ) {
-    if( threadMask == NULL && num_masks ) { // TODO: assert num_masks validity?
+    if( threadMask == NULL && (num_masks != 0) ) { // TODO: assert num_masks validity?
         threadMask = new basic_mask_t [num_masks];
         memset( threadMask, 0, curMaskSize );
         get_thread_affinity_mask( curMaskSize, threadMask );
         if( restore_process_mask ) {
             __TBB_ASSERT( process_mask, "A process mask is requested but not yet stored" );
             is_changed = memcmp( process_mask, threadMask, curMaskSize );
-            if( is_changed )
+            if( is_changed != 0 )
                 set_thread_affinity_mask( curMaskSize, process_mask );
         } else {
             // Assume that the mask will be changed by the caller.
@@ -123,7 +123,7 @@ void affinity_helper::protect_affinity_mask( bool restore_process_mask ) {
     }
 }
 void affinity_helper::dismiss() {
-    if( threadMask ) {
+    if( threadMask != nullptr ) {
         delete [] threadMask;
         threadMask = NULL;
     }
@@ -158,7 +158,7 @@ static void initialize_hardware_concurrency_info () {
         memset( processMask, 0, curMaskSize );
 #if __linux__
         err = sched_getaffinity( pid, curMaskSize, processMask );
-        if ( !err || errno != EINVAL || curMaskSize * CHAR_BIT >= 256 * 1024 )
+        if ( (err == 0) || errno != EINVAL || curMaskSize * CHAR_BIT >= 256 * 1024 )
             break;
 #else /* FreeBSD >= 7.1 */
         // CPU_LEVEL_WHICH - anonymous (current) mask, CPU_LEVEL_CPUSET - assigned mask
@@ -173,7 +173,7 @@ static void initialize_hardware_concurrency_info () {
         delete[] processMask;
         numMasks <<= 1;
     }
-    if ( !err ) {
+    if ( err == 0 ) {
         // We have found the mask size and captured the process affinity mask into processMask.
         num_masks = numMasks; // do here because it's needed for affinity_helper to work
 #if __linux__
