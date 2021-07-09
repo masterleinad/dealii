@@ -44,11 +44,15 @@ MACRO(CHECK_COMPILER_SETUP _compiler_flags_unstr _linker_flags_unstr _var)
   #
   STRING(REPLACE "-Wl,--as-needed" "" _linker_flags "${_linker_flags_unstr}")
 
+  MESSAGE(STATUS "Initial linker_flags: X ${_linker_flags} X")
+
   #
   # Strip leading and trailing whitespace to make CMake 2.8.8 happy
   #
   STRING(STRIP "${_compiler_flags_unstr}" _compiler_flags)
   STRING(STRIP "${_linker_flags}" _linker_flags)
+
+  MESSAGE(STATUS "Stripped linker_flags: X ${_linker_flags} X")
 
   #
   # Rerun this test if flags have changed:
