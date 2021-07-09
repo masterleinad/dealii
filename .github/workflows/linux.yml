@@ -185,7 +185,7 @@ jobs:
       run: |
         source /opt/intel/oneapi/setvars.sh
         cmake -D CMAKE_BUILD_TYPE=Debug \
-              -D CMAKE_CXX_COMPILER=mpiicpc \
+              -D CMAKE_CXX_COMPILER=icpc \
               -D DEAL_II_CXX_FLAGS='-Werror' \
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_MPI=ON \
