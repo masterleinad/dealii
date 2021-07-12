@@ -74,6 +74,7 @@ MACRO(CHECK_COMPILER_SETUP _compiler_flags_unstr _linker_flags_unstr _var)
  # Convert to ;-separated list
   SEPARATE_ARGUMENTS(_compiler_flags_csv)
   SEPARATE_ARGUMENTS(_linker_flags_csv)
+  MESSAGE(STATUS "XXX ARGN: ${ARGN}")
   SEPARATE_ARGUMENTS(_argn_csv ${ARGN})
 
   SET(CMAKE_REQUIRED_FLAGS ${_compiler_flags_csv})
