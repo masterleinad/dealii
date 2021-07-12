@@ -54,6 +54,10 @@ MACRO(CHECK_COMPILER_SETUP _compiler_flags_unstr _linker_flags_unstr _var)
 
   MESSAGE(STATUS "Stripped linker_flags: X ${_linker_flags} X")
 
+  # Convert to ;-separated list
+  SEPARATE_ARGUMENTS(_compiler_flags)
+  SEPARATE_ARGUMENTS(_linker_flags)
+
   #
   # Rerun this test if flags have changed:
   #
