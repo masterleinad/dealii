@@ -75,8 +75,13 @@ MACRO(CHECK_COMPILER_SETUP _compiler_flags_unstr _linker_flags_unstr _var)
     )
   SET(CACHED_${_var}_ARGN "${ARGN}" CACHE INTERNAL "" FORCE)
 
-  SET(CMAKE_REQUIRED_FLAGS ${_compiler_flags})
-  SET(CMAKE_REQUIRED_LIBRARIES "${_linker_flags}" ${ARGN})
+ # Convert to ;-separated list
+  SEPARATE_ARGUMENTS(_compiler_flags_csv)
+  SEPARATE_ARGUMENTS(_linker_flags_csv)
+  SEPARATE_ARGUMENTS(_argn_csv ${ARGN})
+
+  SET(CMAKE_REQUIRED_FLAGS ${_compiler_flags_csv})
+  SET(CMAKE_REQUIRED_LIBRARIES "${_linker_flags_csv};${ARGN}")
 
   CHECK_CXX_SOURCE_COMPILES("int main(){ return 0; }" ${_var})
   RESET_CMAKE_REQUIRED()
