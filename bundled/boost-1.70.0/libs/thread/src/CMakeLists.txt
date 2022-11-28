@@ -27,14 +27,14 @@ else()
     )
 endif()
 
-deal_ii_add_library(obj_boost_thread OBJECT ${src_boost_thread})
-deal_ii_add_definitions(obj_boost_thread
+define_object_library(bundled_boost_thread OBJECT ${src_boost_thread})
+deal_ii_add_definitions(bundled_boost_thread
   "BOOST_THREAD_BUILD_LIB" "BOOST_ALL_NO_LIB"
   )
 
 if(CMAKE_SYSTEM_NAME MATCHES "Windows")
-  deal_ii_add_definitions(obj_boost_thread "BOOST_HAS_WINTHREADS")
+  deal_ii_add_definitions(bundled_boost_thread "BOOST_HAS_WINTHREADS")
 else()
-  deal_ii_add_definitions(obj_boost_thread "BOOST_THREAD_POSIX")
+  deal_ii_add_definitions(bundled_boost_thread "BOOST_THREAD_POSIX")
 endif()
 
