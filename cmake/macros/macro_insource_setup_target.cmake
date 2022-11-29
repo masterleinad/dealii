@@ -27,7 +27,6 @@ function(insource_setup_target _target _build)
   string(TOLOWER ${_build} _build_lowercase)
 
   set_target_properties(${_target} PROPERTIES
-    LINK_FLAGS "${DEAL_II_LINKER_FLAGS} ${DEAL_II_LINKER_FLAGS_${_build}}"
     LINKER_LANGUAGE "CXX"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
     )
@@ -37,33 +36,9 @@ function(insource_setup_target _target _build)
       "${CMAKE_BINARY_DIR}/include"
       "${CMAKE_SOURCE_DIR}/include"
       ${DEAL_II_BUNDLED_INCLUDE_DIRS}
+    SYSTEM PRIVATE
+      ${DEAL_II_INCLUDE_DIRS}
     )
-  target_include_directories(${_target} SYSTEM PRIVATE ${DEAL_II_INCLUDE_DIRS})
 
-  if(CMAKE_VERSION VERSION_LESS 3.9 OR CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-    set_property(TARGET ${_target} APPEND_STRING PROPERTY
-      COMPILE_FLAGS " ${DEAL_II_CXX_FLAGS} ${DEAL_II_CXX_FLAGS_${_build}}"
-      )
-    set_property(TARGET ${_target} APPEND PROPERTY
-      COMPILE_DEFINITIONS "${DEAL_II_DEFINITIONS};${DEAL_II_DEFINITIONS_${_build}}"
-      )
-
-  else()
-
-    set(_flags "${DEAL_II_CXX_FLAGS} ${DEAL_II_CXX_FLAGS_${_build}}")
-    separate_arguments(_flags)
-    target_compile_options(${_target} PUBLIC
-      $<$<COMPILE_LANGUAGE:CXX>:${_flags}>
-      )
-
-    target_compile_definitions(${_target}
-      PUBLIC ${DEAL_II_DEFINITIONS} ${DEAL_II_DEFINITIONS_${_build}}
-      )
-  endif()
-
-  get_property(_type TARGET ${_target} PROPERTY TYPE)
-  if(NOT "${_type}" STREQUAL "OBJECT_LIBRARY")
-    target_link_libraries(${_target} ${DEAL_II_NAMESPACE}_${_build_lowercase})
-  endif()
-
+  target_link_libraries(${_target} ${DEAL_II_NAMESPACE}_${_build_lowercase})
 endfunction()
