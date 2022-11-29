@@ -185,25 +185,25 @@ namespace LinearAlgebra
      * fail in some circumstances. Therefore, it is strongly recommended to
      * not rely on this class to automatically detect the unsupported case.
      *
-     * <h4>CUDA support</h4>
+     * <h4>Device support</h4>
      *
-     * This vector class supports two different memory spaces: Host and CUDA. By
+     * This vector class supports two different memory spaces: Host and Device. By
      * default, the memory space is Host and all the data are allocated on the
-     * CPU. When the memory space is CUDA, all the data is allocated on the GPU.
+     * CPU. When the memory space is Device, all the data is allocated on the GPU.
      * The operations on the vector are performed on the chosen memory space. *
      * From the host, there are two methods to access the elements of the Vector
-     * when using the CUDA memory space:
+     * when using the Device memory space:
      * <ul>
      * <li> use get_values():
      * @code
-     * Vector<double, MemorySpace::CUDA> vector(local_range, comm);
+     * Vector<double, MemorySpace::Device> vector(local_range, comm);
      * double* vector_dev = vector.get_values();
      * std::vector<double> vector_host(local_range.n_elements(), 1.);
-     * Utilities::CUDA::copy_to_dev(vector_host, vector_dev);
+     * Utilities::Device::copy_to_dev(vector_host, vector_dev);
      * @endcode
      * <li> use import():
      * @code
-     * Vector<double, MemorySpace::CUDA> vector(local_range, comm);
+     * Vector<double, MemorySpace::Device> vector(local_range, comm);
      * ReadWriteVector<double> rw_vector(local_range);
      * for (auto & val : rw_vector)
      *   val = 1.;
@@ -245,7 +245,7 @@ namespace LinearAlgebra
      *                       &comm_sm);
      * @endcode
      *
-     * @see CUDAWrappers
+     * @see DeviceWrappers
      */
     template <typename Number, typename MemorySpace = MemorySpace::Host>
     class Vector : public ::dealii::LinearAlgebra::VectorSpaceVector<Number>,
@@ -262,11 +262,6 @@ namespace LinearAlgebra
       using const_reference = const value_type &;
       using size_type       = types::global_dof_index;
       using real_type       = typename numbers::NumberTraits<Number>::real_type;
-
-      static_assert(
-        std::is_same<MemorySpace, ::dealii::MemorySpace::Host>::value ||
-          std::is_same<MemorySpace, ::dealii::MemorySpace::CUDA>::value,
-        "MemorySpace should be Host or CUDA");
 
       /**
        * @name 1: Basic Object-handling
@@ -579,7 +574,7 @@ namespace LinearAlgebra
        *
        * Must follow a call to the @p compress_start function.
        *
-       * When the MemorySpace is CUDA and MPI is not CUDA-aware, data changed on
+       * When the MemorySpace is Device and MPI is not Device-aware, data changed on
        * the device after the call to compress_start will be lost.
        */
       void
@@ -678,7 +673,7 @@ namespace LinearAlgebra
        * VectorOperation::values @p operation is used to decide if the elements
        * in @p V should be added to the current vector or replace the current
        * elements. The main purpose of this function is to get data from one
-       * memory space, e.g. CUDA, to the other, e.g. the Host.
+       * memory space, e.g. Device, to the other, e.g. the Host.
        *
        * @note The partitioners of the two distributed vectors need to be the
        * same as no MPI communication is performed.
@@ -735,7 +730,7 @@ namespace LinearAlgebra
        * communication pattern is used multiple times. This can be used to
        * improve performance.
        *
-       * @note If the MemorySpace is CUDA, the data in the ReadWriteVector will
+       * @note If the MemorySpace is Device, the data in the ReadWriteVector will
        * be moved to the device.
        */
       virtual void
@@ -969,7 +964,7 @@ namespace LinearAlgebra
        *
        * It holds that end() - begin() == locally_owned_size().
        *
-       * @note For the CUDA memory space, the iterator points to memory on the
+       * @note For the Device memory space, the iterator points to memory on the
        * device.
        */
       iterator
@@ -979,7 +974,7 @@ namespace LinearAlgebra
        * Return constant iterator to the start of the locally owned elements
        * of the vector.
        *
-       * @note For the CUDA memory space, the iterator points to memory on the
+       * @note For the Device memory space, the iterator points to memory on the
        * device.
        */
       const_iterator
@@ -989,7 +984,7 @@ namespace LinearAlgebra
        * Return an iterator pointing to the element past the end of the array
        * of locally owned entries.
        *
-       * @note For the CUDA memory space, the iterator points to memory on the
+       * @note For the Device memory space, the iterator points to memory on the
        * device.
        */
       iterator
@@ -999,7 +994,7 @@ namespace LinearAlgebra
        * Return a constant iterator pointing to the element past the end of
        * the array of the locally owned entries.
        *
-       * @note For the CUDA memory space, the iterator points to memory on the
+       * @note For the Device memory space, the iterator points to memory on the
        * device.
        */
       const_iterator
@@ -1073,7 +1068,7 @@ namespace LinearAlgebra
       /**
        * Return the pointer to the underlying raw array.
        *
-       * @note For the CUDA memory space, the pointer points to memory on the
+       * @note For the Device memory space, the pointer points to memory on the
        * device.
        */
       Number *
@@ -1094,7 +1089,7 @@ namespace LinearAlgebra
        *
        * @pre The sizes of the @p indices and @p values arrays must be identical.
        *
-       * @note This function is not implemented for CUDA memory space.
+       * @note This function is not implemented for Device memory space.
        */
       template <typename OtherNumber>
       void
@@ -1443,82 +1438,27 @@ namespace LinearAlgebra
       template <typename Number, typename MemorySpace>
       struct Policy
       {
-        static inline typename Vector<Number, MemorySpace>::iterator
-        begin(::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace> &)
-        {
-          return nullptr;
-        }
-
-        static inline typename Vector<Number, MemorySpace>::const_iterator
-        begin(
-          const ::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace> &)
-        {
-          return nullptr;
-        }
-
-        static inline Number *
-        get_values(
-          ::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace> &)
-        {
-          return nullptr;
-        }
-      };
-
-
-
-      template <typename Number>
-      struct Policy<Number, ::dealii::MemorySpace::Host>
-      {
         static inline
-          typename Vector<Number, ::dealii::MemorySpace::Host>::iterator
+          typename Vector<Number, MemorySpace>::iterator
           begin(::dealii::MemorySpace::
-                  MemorySpaceData<Number, ::dealii::MemorySpace::Host> &data)
+                  MemorySpaceData<Number, MemorySpace> &data)
         {
-          return data.values.get();
+          return data.values_dev.data();
         }
 
         static inline
-          typename Vector<Number, ::dealii::MemorySpace::Host>::const_iterator
+          typename Vector<Number, MemorySpace>::const_iterator
           begin(const ::dealii::MemorySpace::
-                  MemorySpaceData<Number, ::dealii::MemorySpace::Host> &data)
+                  MemorySpaceData<Number, MemorySpace> &data)
         {
-          return data.values.get();
+          return data.values_dev.data();
         }
 
         static inline Number *
         get_values(::dealii::MemorySpace::
-                     MemorySpaceData<Number, ::dealii::MemorySpace::Host> &data)
+                     MemorySpaceData<Number, MemorySpace> &data)
         {
-          return data.values.get();
-        }
-      };
-
-
-
-      template <typename Number>
-      struct Policy<Number, ::dealii::MemorySpace::CUDA>
-      {
-        static inline
-          typename Vector<Number, ::dealii::MemorySpace::CUDA>::iterator
-          begin(::dealii::MemorySpace::
-                  MemorySpaceData<Number, ::dealii::MemorySpace::CUDA> &data)
-        {
-          return data.values_dev.get();
-        }
-
-        static inline
-          typename Vector<Number, ::dealii::MemorySpace::CUDA>::const_iterator
-          begin(const ::dealii::MemorySpace::
-                  MemorySpaceData<Number, ::dealii::MemorySpace::CUDA> &data)
-        {
-          return data.values_dev.get();
-        }
-
-        static inline Number *
-        get_values(::dealii::MemorySpace::
-                     MemorySpaceData<Number, ::dealii::MemorySpace::CUDA> &data)
-        {
-          return data.values_dev.get();
+          return data.values_dev.data();
         }
       };
     } // namespace internal

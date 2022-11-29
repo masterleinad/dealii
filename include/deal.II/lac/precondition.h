@@ -3363,7 +3363,7 @@ namespace internal
     }
 
 
-#  ifdef DEAL_II_COMPILER_CUDA_AWARE
+#  ifdef DEAL_II_COMPILER_Device_AWARE
     template <typename Number>
     __global__ void
     set_initial_guess_kernel(const types::global_dof_index offset,
@@ -3379,7 +3379,7 @@ namespace internal
     template <typename Number>
     void
     set_initial_guess(
-      ::dealii::LinearAlgebra::distributed::Vector<Number, MemorySpace::CUDA>
+      ::dealii::LinearAlgebra::distributed::Vector<Number, MemorySpace::Device>
         &vector)
     {
       // Choose a high-frequency mode consisting of numbers between 0 and 1
@@ -3394,15 +3394,15 @@ namespace internal
 
       const auto n_local_elements = vector.locally_owned_size();
       const int  n_blocks =
-        1 + (n_local_elements - 1) / CUDAWrappers::block_size;
-      set_initial_guess_kernel<<<n_blocks, CUDAWrappers::block_size>>>(
+        1 + (n_local_elements - 1) / DeviceWrappers::block_size;
+      set_initial_guess_kernel<<<n_blocks, DeviceWrappers::block_size>>>(
         first_local_range, n_local_elements, vector.get_values());
       AssertCudaKernel();
 
       const Number mean_value = vector.mean_value();
       vector.add(-mean_value);
     }
-#  endif // DEAL_II_COMPILER_CUDA_AWARE
+#  endif // DEAL_II_COMPILER_Device_AWARE
 
     struct EigenvalueTracker
     {
@@ -3678,7 +3678,7 @@ PreconditionChebyshev<MatrixType, VectorType, PreconditionerType>::
          false) ||
         (std::is_same<VectorType,
                       LinearAlgebra::distributed::
-                        Vector<NumberType, MemorySpace::CUDA>>::value ==
+                        Vector<NumberType, MemorySpace::Device>>::value ==
          false))))
     temp_vector2.reinit(src, true);
   else

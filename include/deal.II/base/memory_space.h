@@ -30,18 +30,24 @@ namespace MemorySpace
   /**
    * Structure describing Host memory space.
    */
-  using Host = ::Kokkos::HostSpace;
+  struct Host
+  {
+    using kokkos_space = ::Kokkos::HostSpace;
+  }; 
 
   /**
    * Structure describing Device memory space.
    */
-  using Device = ::Kokkos::DefaultExecutionSpace::memory_space;
+  struct Device
+  {
+    using kokkos_space = ::Kokkos::DefaultExecutionSpace::memory_space;
+  };
 
 #ifdef DEAL_II_WITH_CUDA
   /**
    * Structure describing CUDA memory space.
    */
-  using CUDA = ::Kokkos::CudaSpace;
+  using CUDA = Device;
 #endif
 
 } // namespace MemorySpace
