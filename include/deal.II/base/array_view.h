@@ -359,8 +359,7 @@ inline ArrayView<ElementType, MemorySpaceType>::ArrayView(
   const std::size_t n_elements)
   : starting_element(starting_element)
   , n_elements(n_elements)
-{
-}
+{}
 
 
 

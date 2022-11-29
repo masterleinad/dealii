@@ -187,13 +187,12 @@ namespace LinearAlgebra
      *
      * <h4>Device support</h4>
      *
-     * This vector class supports two different memory spaces: Host and Device. By
-     * default, the memory space is Host and all the data are allocated on the
-     * CPU. When the memory space is Device, all the data is allocated on the GPU.
-     * The operations on the vector are performed on the chosen memory space. *
-     * From the host, there are two methods to access the elements of the Vector
-     * when using the Device memory space:
-     * <ul>
+     * This vector class supports two different memory spaces: Host and Device.
+     * By default, the memory space is Host and all the data are allocated on
+     * the CPU. When the memory space is Device, all the data is allocated on
+     * the GPU. The operations on the vector are performed on the chosen memory
+     * space. * From the host, there are two methods to access the elements of
+     * the Vector when using the Device memory space: <ul>
      * <li> use get_values():
      * @code
      * Vector<double, MemorySpace::Device> vector(local_range, comm);
@@ -574,8 +573,8 @@ namespace LinearAlgebra
        *
        * Must follow a call to the @p compress_start function.
        *
-       * When the MemorySpace is Device and MPI is not Device-aware, data changed on
-       * the device after the call to compress_start will be lost.
+       * When the MemorySpace is Device and MPI is not Device-aware, data
+       * changed on the device after the call to compress_start will be lost.
        */
       void
       compress_finish(::dealii::VectorOperation::values operation);
@@ -1438,25 +1437,22 @@ namespace LinearAlgebra
       template <typename Number, typename MemorySpace>
       struct Policy
       {
-        static inline
-          typename Vector<Number, MemorySpace>::iterator
-          begin(::dealii::MemorySpace::
-                  MemorySpaceData<Number, MemorySpace> &data)
+        static inline typename Vector<Number, MemorySpace>::iterator
+        begin(::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace> &data)
         {
           return data.values_dev.data();
         }
 
-        static inline
-          typename Vector<Number, MemorySpace>::const_iterator
-          begin(const ::dealii::MemorySpace::
-                  MemorySpaceData<Number, MemorySpace> &data)
+        static inline typename Vector<Number, MemorySpace>::const_iterator
+        begin(const ::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace>
+                &data)
         {
           return data.values_dev.data();
         }
 
         static inline Number *
-        get_values(::dealii::MemorySpace::
-                     MemorySpaceData<Number, MemorySpace> &data)
+        get_values(
+          ::dealii::MemorySpace::MemorySpaceData<Number, MemorySpace> &data)
         {
           return data.values_dev.data();
         }

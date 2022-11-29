@@ -33,7 +33,7 @@ namespace MemorySpace
   struct Host
   {
     using kokkos_space = ::Kokkos::HostSpace;
-  }; 
+  };
 
   /**
    * Structure describing Device memory space.

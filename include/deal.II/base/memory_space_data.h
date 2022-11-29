@@ -23,10 +23,10 @@
 #include <deal.II/base/exceptions.h>
 #include <deal.II/base/kokkos.h>
 
+#include <Kokkos_Core.hpp>
+
 #include <functional>
 #include <memory>
-
-#  include <Kokkos_Core.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -59,10 +59,10 @@ namespace MemorySpace
     void
     copy_from(const T *begin, const std::size_t n_elements);
 
-    /** 
+    /**
      * Kokkos View to the data on the host
      */
-    Kokkos::View<T*, Kokkos::HostSpace> values;
+    Kokkos::View<T *, Kokkos::HostSpace> values;
 
     /**
      * Kokkos View to the data on the device
@@ -101,8 +101,10 @@ namespace MemorySpace
   template <typename T, typename MemorySpace>
   MemorySpaceData<T, MemorySpace>::MemorySpaceData()
     : values((dealii::Impl::ensure_kokkos_initialized(),
-              Kokkos::View<T *, Kokkos::HostSpace>("host data", 0))),
-     values_dev(Kokkos::View<T *, typename MemorySpace::kokkos_space>("memoryspace data", 0))
+              Kokkos::View<T *, Kokkos::HostSpace>("host data", 0)))
+    , values_dev(Kokkos::View<T *, typename MemorySpace::kokkos_space>(
+        "memoryspace data",
+        0))
   {}
 
 

@@ -177,8 +177,11 @@ namespace LinearAlgebra
 
         const unsigned int n_elements =
           communication_pattern->locally_owned_size();
-        Kokkos::deep_copy(Kokkos::View<Number*, Kokkos::HostSpace>(tmp_vector.begin(), n_elements),
-                          Kokkos::View<Number*, ::dealii::MemorySpace::Device::kokkos_space>(values, n_elements));         
+        Kokkos::deep_copy(
+          Kokkos::View<Number *, Kokkos::HostSpace>(tmp_vector.begin(),
+                                                    n_elements),
+          Kokkos::View<Number *, ::dealii::MemorySpace::Device::kokkos_space>(
+            values, n_elements));
 
         tmp_vector.update_ghost_values();
 
