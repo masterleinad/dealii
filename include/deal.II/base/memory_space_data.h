@@ -21,9 +21,12 @@
 
 #include <deal.II/base/cuda.h>
 #include <deal.II/base/exceptions.h>
+#include <deal.II/base/kokkos.h>
 
 #include <functional>
 #include <memory>
+
+#  include <Kokkos_Core.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -32,54 +35,44 @@ DEAL_II_NAMESPACE_OPEN
 namespace MemorySpace
 {
   /**
-   * Data structure
+   * Structure which stores data on the host or the device depending on the
+   * template parameter @p MemorySpace. The data is copied into the structure
+   * which then owns the data and will release the memory when the destructor is
+   * called.
    */
-  template <typename Number, typename MemorySpace>
+  template <typename T, typename MemorySpace>
   struct MemorySpaceData
   {
-    MemorySpaceData()
-    {
-      static_assert(std::is_same<MemorySpace, Host>::value ||
-                      std::is_same<MemorySpace, CUDA>::value,
-                    "MemorySpace should be Host or CUDA");
-    }
+    MemorySpaceData();
 
     /**
-     * Copy the active data (values for Host and values_dev for CUDA) to @p begin.
+     * Copy the active data (values for Host and values_dev for Device) to @p begin.
      * If the data is on the device it is moved to the host.
      */
     void
-    copy_to(Number *begin, std::size_t n_elements)
-    {
-      (void)begin;
-      (void)n_elements;
-    }
+    copy_to(T *begin, const std::size_t n_elements);
 
     /**
      * Copy the data in @p begin to the active data of the structure (values for
-     * Host and values_dev for CUDA). The pointer @p begin must be on the host.
+     * Host and values_dev for Device). The pointer @p begin must be on the host.
      */
     void
-    copy_from(Number *begin, std::size_t n_elements)
-    {
-      (void)begin;
-      (void)n_elements;
-    }
+    copy_from(const T *begin, const std::size_t n_elements);
+
+    /** 
+     * Kokkos View to the data on the host
+     */
+    Kokkos::View<T*, Kokkos::HostSpace> values;
 
     /**
-     * Pointer to data on the host.
+     * Kokkos View to the data on the device
      */
-    std::unique_ptr<Number[], std::function<void(Number *)>> values;
-
-    /**
-     * Pointer to data on the device.
-     */
-    std::unique_ptr<Number[]> values_dev;
+    Kokkos::View<T *, MemorySpace> values_dev;
 
     /**
      * Pointers to the data of the processes sharing the same memory.
      */
-    std::vector<ArrayView<const Number>> values_sm;
+    std::vector<ArrayView<const T>> values_sm;
   };
 
 
@@ -87,109 +80,122 @@ namespace MemorySpace
   /**
    * Swap function similar to std::swap.
    */
-  template <typename Number, typename MemorySpace>
+  template <typename T, typename MemorySpace>
   inline void
-  swap(MemorySpaceData<Number, MemorySpace> &,
-       MemorySpaceData<Number, MemorySpace> &)
-  {
-    static_assert(std::is_same<MemorySpace, Host>::value ||
-                    std::is_same<MemorySpace, CUDA>::value,
-                  "MemorySpace should be Host or CUDA");
-  }
+  swap(MemorySpaceData<T, MemorySpace> &u, MemorySpaceData<T, MemorySpace> &v);
+
 
 #ifndef DOXYGEN
 
-  template <typename Number>
-  struct MemorySpaceData<Number, Host>
+  template <typename T, typename MemorySpace>
+  MemorySpaceData<T, MemorySpace>::MemorySpaceData()
+    : values((dealii::Impl::ensure_kokkos_initialized(),
+              Kokkos::View<T *, Kokkos::HostSpace>("host data", 0))),
+     values_dev(Kokkos::View<T *, MemorySpace>("memoryspace data", 0))
+  {}
+
+
+
+  template <typename T, typename MemorySpace>
+  bool
+  MemorySpaceData<T, MemorySpace>::has_data_on_host()
   {
-    MemorySpaceData()
-      : values(nullptr, &std::free)
-    {}
-
-    void
-    copy_to(Number *begin, std::size_t n_elements)
-    {
-      std::copy(values.get(), values.get() + n_elements, begin);
-    }
-
-    void
-    copy_from(Number *begin, std::size_t n_elements)
-    {
-      std::copy(begin, begin + n_elements, values.get());
-    }
-
-    std::unique_ptr<Number[], std::function<void(Number *)>> values;
-
-    // This is not used but it allows to simplify the code until we start using
-    // CUDA-aware MPI.
-    std::unique_ptr<Number[]> values_dev;
-
-    std::vector<ArrayView<const Number>> values_sm;
-  };
-
-
-
-  template <typename Number>
-  inline void
-  swap(MemorySpaceData<Number, Host> &u, MemorySpaceData<Number, Host> &v)
-  {
-    std::swap(u.values, v.values);
+    return values.extent(0) > 0;
   }
 
 
 
-#  ifdef DEAL_II_COMPILER_CUDA_AWARE
-
-  template <typename Number>
-  struct MemorySpaceData<Number, CUDA>
+  template <typename T, typename MemorySpace>
+  T *
+  MemorySpaceData<T, MemorySpace>::data()
   {
-    MemorySpaceData()
-      : values(nullptr, &std::free)
-      , values_dev(nullptr, Utilities::CUDA::delete_device_data<Number>)
-    {}
-
-    void
-    copy_to(Number *begin, std::size_t n_elements)
-    {
-      const cudaError_t cuda_error_code =
-        cudaMemcpy(begin,
-                   values_dev.get(),
-                   n_elements * sizeof(Number),
-                   cudaMemcpyDeviceToHost);
-      AssertCuda(cuda_error_code);
-    }
-
-    void
-    copy_from(Number *begin, std::size_t n_elements)
-    {
-      const cudaError_t cuda_error_code =
-        cudaMemcpy(values_dev.get(),
-                   begin,
-                   n_elements * sizeof(Number),
-                   cudaMemcpyHostToDevice);
-      AssertCuda(cuda_error_code);
-    }
-
-    std::unique_ptr<Number[], std::function<void(Number *)>> values;
-    std::unique_ptr<Number[], void (*)(Number *)>            values_dev;
-
-    /**
-     * This is currently not used.
-     */
-    std::vector<ArrayView<const Number>> values_sm;
-  };
-
-
-
-  template <typename Number>
-  inline void
-  swap(MemorySpaceData<Number, CUDA> &u, MemorySpaceData<Number, CUDA> &v)
-  {
-    std::swap(u.values, v.values);
-    std::swap(u.values_dev, v.values_dev);
+    return values.data();
   }
 
-#  endif
+
+
+  template <typename T, typename MemorySpace>
+  const T *
+  MemorySpaceData<T, MemorySpace>::data() const
+  {
+    return values.data();
+  }
+
+
+  template <typename T, typename MemorySpace>
+  T &
+  MemorySpaceData<T, MemorySpace>::operator()(const unsigned int i)
+  {
+    return values(i);
+  }
+
+
+
+  template <typename T, typename MemorySpace>
+  const T &
+  MemorySpaceData<T, MemorySpace>::operator()(const unsigned int i) const
+  {
+    return values(i);
+  }
+
+
+
+  template <typename T, typename MemorySpace>
+  void
+  MemorySpaceData<T, MemorySpace>::copy_to(T *               begin,
+                                           const std::size_t n_elements)
+  {
+    Assert(n_elements <= values.extent(0),
+           ExcMessage("n_elements greater than the size of values."));
+    using ExecutionSpace = typename MemorySpace::execution_space;
+    Kokkos::
+      View<T *, Kokkos::HostSpace, Kokkos::MemoryTraits<Kokkos::Unmanaged>>
+        begin_view(begin, n_elements);
+    Kokkos::deep_copy(
+      ExecutionSpace{},
+      begin_view,
+      Kokkos::subview(values, Kokkos::make_pair(std::size_t(0), n_elements)));
+    ExecutionSpace{}.fence();
+  }
+
+
+
+  template <typename T, typename MemorySpace>
+  void
+  MemorySpaceData<T, MemorySpace>::copy_from(const T *         begin,
+                                             const std::size_t n_elements)
+  {
+    Assert(n_elements <= values.extent(0),
+           ExcMessage("n_elements greater than the size of values."));
+    using ExecutionSpace = typename MemorySpace::execution_space;
+    Kokkos::View<const T *,
+                 Kokkos::HostSpace,
+                 Kokkos::MemoryTraits<Kokkos::Unmanaged>>
+      begin_view(begin, n_elements);
+    Kokkos::deep_copy(
+      ExecutionSpace{},
+      Kokkos::subview(values, Kokkos::make_pair(std::size_t(0), n_elements)),
+      begin_view);
+    ExecutionSpace{}.fence();
+  }
+
+
+
+  /**
+   * Swap function similar to std::swap.
+   */
+  template <typename T, typename MemorySpace>
+  inline void
+  swap(MemorySpaceData<T, MemorySpace> &u, MemorySpaceData<T, MemorySpace> &v)
+  {
+    auto u_copy = Kokkos::create_mirror(Kokkos::WithoutInitializing, u);
+    typename MemorySpace::execution_space exec_space;
+    // The first two calls to Kokkos::deep_copy are asynchronous. The last call
+    // will wait for the three deep_copy to be done before returning.
+    Kokkos::deep_copy(exec_space, u_copy, u);
+    Kokkos::deep_copy(exec_space, u, v);
+    Kokkos::deep_copy(v, u_copy);
+  }
 
 #endif
 
