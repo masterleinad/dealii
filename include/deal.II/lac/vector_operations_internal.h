@@ -1739,8 +1739,8 @@ namespace internal
                                                   ::dealii::MemorySpace::Host>
              &data)
       {
-        Vector_copy<Number, Number2> copier(v_data.values.get(),
-                                            data.values.get());
+        Vector_copy<Number, Number2> copier(v_data.values.data(),
+                                            data.values.data());
         parallel_for(copier, 0, size, thread_loop_partitioner);
       }
 
@@ -1753,7 +1753,7 @@ namespace internal
                                                  ::dealii::MemorySpace::Host>
             &data)
       {
-        Vector_set<Number> setter(s, data.values.get());
+        Vector_set<Number> setter(s, data.values.data());
         parallel_for(setter, 0, size, thread_loop_partitioner);
       }
 
@@ -1768,8 +1768,8 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_add_v<Number> vector_add(data.values.get(),
-                                               v_data.values.get());
+        Vectorization_add_v<Number> vector_add(data.values.data(),
+                                               v_data.values.data());
         parallel_for(vector_add, 0, size, thread_loop_partitioner);
       }
 
@@ -1784,8 +1784,8 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_subtract_v<Number> vector_subtract(data.values.get(),
-                                                         v_data.values.get());
+        Vectorization_subtract_v<Number> vector_subtract(data.values.data(),
+                                                         v_data.values.data());
         parallel_for(vector_subtract, 0, size, thread_loop_partitioner);
       }
 
@@ -1799,7 +1799,7 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_add_factor<Number> vector_add(data.values.get(), a);
+        Vectorization_add_factor<Number> vector_add(data.values.data(), a);
         parallel_for(vector_add, 0, size, thread_loop_partitioner);
       }
 
@@ -1814,8 +1814,8 @@ namespace internal
                                                     ::dealii::MemorySpace::Host>
                &data)
       {
-        Vectorization_add_av<Number> vector_add(data.values.get(),
-                                                v_data.values.get(),
+        Vectorization_add_av<Number> vector_add(data.values.data(),
+                                                v_data.values.data(),
                                                 a);
         parallel_for(vector_add, 0, size, thread_loop_partitioner);
       }
@@ -1836,7 +1836,7 @@ namespace internal
           &data)
       {
         Vectorization_add_avpbw<Number> vector_add(
-          data.values.get(), v_data.values.get(), w_data.values.get(), a, b);
+          data.values.data(), v_data.values.data(), w_data.values.data(), a, b);
         parallel_for(vector_add, 0, size, thread_loop_partitioner);
       }
 
@@ -1852,8 +1852,8 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_sadd_xv<Number> vector_sadd(data.values.get(),
-                                                  v_data.values.get(),
+        Vectorization_sadd_xv<Number> vector_sadd(data.values.data(),
+                                                  v_data.values.data(),
                                                   x);
         parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
       }
@@ -1871,8 +1871,8 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_sadd_xav<Number> vector_sadd(data.values.get(),
-                                                   v_data.values.get(),
+        Vectorization_sadd_xav<Number> vector_sadd(data.values.data(),
+                                                   v_data.values.data(),
                                                    a,
                                                    x);
         parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
@@ -1895,7 +1895,7 @@ namespace internal
           &data)
       {
         Vectorization_sadd_xavbw<Number> vector_sadd(
-          data.values.get(), v_data.values.get(), w_data.values.get(), x, a, b);
+          data.values.data(), v_data.values.data(), w_data.values.data(), x, a, b);
         parallel_for(vector_sadd, 0, size, thread_loop_partitioner);
       }
 
@@ -1909,7 +1909,7 @@ namespace internal
                                                ::dealii::MemorySpace::Host>
           &data)
       {
-        Vectorization_multiply_factor<Number> vector_multiply(data.values.get(),
+        Vectorization_multiply_factor<Number> vector_multiply(data.values.data(),
                                                               factor);
         parallel_for(vector_multiply, 0, size, thread_loop_partitioner);
       }
@@ -1924,8 +1924,8 @@ namespace internal
                                                    ::dealii::MemorySpace::Host>
               &data)
       {
-        Vectorization_scale<Number> vector_scale(data.values.get(),
-                                                 v_data.values.get());
+        Vectorization_scale<Number> vector_scale(data.values.data(),
+                                                 v_data.values.data());
         parallel_for(vector_scale, 0, size, thread_loop_partitioner);
       }
 
@@ -1940,8 +1940,8 @@ namespace internal
                                                     ::dealii::MemorySpace::Host>
                &data)
       {
-        Vectorization_equ_au<Number> vector_equ(data.values.get(),
-                                                v_data.values.get(),
+        Vectorization_equ_au<Number> vector_equ(data.values.data(),
+                                                v_data.values.data(),
                                                 a);
         parallel_for(vector_equ, 0, size, thread_loop_partitioner);
       }
@@ -1962,7 +1962,7 @@ namespace internal
           &data)
       {
         Vectorization_equ_aubv<Number> vector_equ(
-          data.values.get(), v_data.values.get(), w_data.values.get(), a, b);
+          data.values.data(), v_data.values.data(), w_data.values.data(), a, b);
         parallel_for(vector_equ, 0, size, thread_loop_partitioner);
       }
 
@@ -1978,7 +1978,7 @@ namespace internal
       {
         Number                                                   sum;
         dealii::internal::VectorOperations::Dot<Number, Number2> dot(
-          data.values.get(), v_data.values.get());
+          data.values.data(), v_data.values.data());
         dealii::internal::VectorOperations::parallel_reduce(
           dot, 0, size, sum, thread_loop_partitioner);
         AssertIsFinite(sum);
@@ -1996,7 +1996,7 @@ namespace internal
                                                     ::dealii::MemorySpace::Host>
                &data)
       {
-        Norm2<Number, real_type> norm2(data.values.get());
+        Norm2<Number, real_type> norm2(data.values.data());
         parallel_reduce(norm2, 0, size, sum, thread_loop_partitioner);
       }
 
@@ -2009,7 +2009,7 @@ namespace internal
           MemorySpaceData<Number, ::dealii::MemorySpace::Host> &data)
       {
         Number            sum;
-        MeanValue<Number> mean(data.values.get());
+        MeanValue<Number> mean(data.values.data());
         parallel_reduce(mean, 0, size, sum, thread_loop_partitioner);
 
         return sum;
@@ -2025,7 +2025,7 @@ namespace internal
                                                     ::dealii::MemorySpace::Host>
                &data)
       {
-        Norm1<Number, real_type> norm1(data.values.get());
+        Norm1<Number, real_type> norm1(data.values.data());
         parallel_reduce(norm1, 0, size, sum, thread_loop_partitioner);
       }
 
@@ -2040,7 +2040,7 @@ namespace internal
                                                     ::dealii::MemorySpace::Host>
                &data)
       {
-        NormP<Number, real_type> normp(data.values.get(), p);
+        NormP<Number, real_type> normp(data.values.data(), p);
         parallel_reduce(normp, 0, size, sum, thread_loop_partitioner);
       }
 
@@ -2059,9 +2059,9 @@ namespace internal
           &data)
       {
         Number            sum;
-        AddAndDot<Number> adder(data.values.get(),
-                                v_data.values.get(),
-                                w_data.values.get(),
+        AddAndDot<Number> adder(data.values.data(),
+                                v_data.values.data(),
+                                w_data.values.data(),
                                 a);
         parallel_reduce(adder, 0, size, sum, thread_loop_partitioner);
 
@@ -2117,8 +2117,8 @@ namespace internal
       {
         if (operation == VectorOperation::insert)
           {
-            cudaError_t cuda_error_code = cudaMemcpy(data.values.get(),
-                                                     v_data.values_dev.get(),
+            cudaError_t cuda_error_code = cudaMemcpy(data.values.data(),
+                                                     v_data.values_dev.data(),
                                                      size * sizeof(Number),
                                                      cudaMemcpyDeviceToHost);
             AssertCuda(cuda_error_code);
@@ -2152,8 +2152,8 @@ namespace internal
                                                ::dealii::MemorySpace::CUDA>
           &data)
       {
-        cudaError_t cuda_error_code = cudaMemcpy(data.values_dev.get(),
-                                                 v_data.values_dev.get(),
+        cudaError_t cuda_error_code = cudaMemcpy(data.values_dev.data(),
+                                                 v_data.values_dev.data(),
                                                  size * sizeof(Number),
                                                  cudaMemcpyDeviceToDevice);
         AssertCuda(cuda_error_code);
@@ -2169,7 +2169,7 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::set<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), s, size);
+          <<<n_blocks, block_size>>>(data.values_dev.data(), s, size);
         AssertCudaKernel();
       }
 
@@ -2185,9 +2185,9 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+          <<<n_blocks, block_size>>>(data.values_dev.data(),
                                      1.,
-                                     v_data.values_dev.get(),
+                                     v_data.values_dev.data(),
                                      size);
         AssertCudaKernel();
       }
@@ -2204,9 +2204,9 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+          <<<n_blocks, block_size>>>(data.values_dev.data(),
                                      -1.,
-                                     v_data.values_dev.get(),
+                                     v_data.values_dev.data(),
                                      size);
         AssertCudaKernel();
       }
@@ -2222,7 +2222,7 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_add<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), a, size);
+          <<<n_blocks, block_size>>>(data.values_dev.data(), a, size);
         AssertCudaKernel();
       }
 
@@ -2239,9 +2239,9 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aV<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(),
+          <<<n_blocks, block_size>>>(data.values_dev.data(),
                                      a,
-                                     v_data.values_dev.get(),
+                                     v_data.values_dev.data(),
                                      size);
         AssertCudaKernel();
       }
@@ -2262,11 +2262,11 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_aVbW<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.data(),
                                                     a,
-                                                    v_data.values_dev.get(),
+                                                    v_data.values_dev.data(),
                                                     b,
-                                                    w_data.values_dev.get(),
+                                                    w_data.values_dev.data(),
                                                     size);
         AssertCudaKernel();
       }
@@ -2285,7 +2285,7 @@ namespace internal
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(
-            x, data.values_dev.get(), 1., v_data.values_dev.get(), size);
+            x, data.values_dev.data(), 1., v_data.values_dev.data(), size);
         AssertCudaKernel();
       }
 
@@ -2304,7 +2304,7 @@ namespace internal
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(
-            x, data.values_dev.get(), a, v_data.values_dev.get(), size);
+            x, data.values_dev.data(), a, v_data.values_dev.data(), size);
         AssertCudaKernel();
       }
 
@@ -2326,11 +2326,11 @@ namespace internal
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::sadd<Number>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(x,
-                                                    data.values_dev.get(),
+                                                    data.values_dev.data(),
                                                     a,
-                                                    v_data.values_dev.get(),
+                                                    v_data.values_dev.data(),
                                                     b,
-                                                    w_data.values_dev.get(),
+                                                    w_data.values_dev.data(),
                                                     size);
         AssertCudaKernel();
       }
@@ -2346,7 +2346,7 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::vec_scale<Number>
-          <<<n_blocks, block_size>>>(data.values_dev.get(), factor, size);
+          <<<n_blocks, block_size>>>(data.values_dev.data(), factor, size);
         AssertCudaKernel();
       }
 
@@ -2362,8 +2362,8 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::scale<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
-                                                    v_data.values_dev.get(),
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.data(),
+                                                    v_data.values_dev.data(),
                                                     size);
         AssertCudaKernel();
       }
@@ -2381,9 +2381,9 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.data(),
                                                     a,
-                                                    v_data.values_dev.get(),
+                                                    v_data.values_dev.data(),
                                                     size);
         AssertCudaKernel();
       }
@@ -2404,11 +2404,11 @@ namespace internal
       {
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::equ<Number>
-          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.get(),
+          <<<dim3(n_blocks, 1), dim3(block_size)>>>(data.values_dev.data(),
                                                     a,
-                                                    v_data.values_dev.get(),
+                                                    v_data.values_dev.data(),
                                                     b,
-                                                    w_data.values_dev.get(),
+                                                    w_data.values_dev.data(),
                                                     size);
         AssertCudaKernel();
       }
@@ -2433,8 +2433,8 @@ namespace internal
           Number,
           ::dealii::LinearAlgebra::CUDAWrappers::kernel::DotProduct<Number>>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
-                                                    data.values_dev.get(),
-                                                    v_data.values_dev.get(),
+                                                    data.values_dev.data(),
+                                                    v_data.values_dev.data(),
                                                     static_cast<unsigned int>(
                                                       size));
         AssertCudaKernel();
@@ -2485,7 +2485,7 @@ namespace internal
           Number,
           ::dealii::LinearAlgebra::CUDAWrappers::kernel::ElemSum<Number>>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
-                                                    data.values_dev.get(),
+                                                    data.values_dev.data(),
                                                     size);
 
         // Copy the result back to the host
@@ -2522,7 +2522,7 @@ namespace internal
           Number,
           ::dealii::LinearAlgebra::CUDAWrappers::kernel::L1Norm<Number>>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(result_device,
-                                                    data.values_dev.get(),
+                                                    data.values_dev.data(),
                                                     size);
 
         // Copy the result back to the host
@@ -2571,9 +2571,9 @@ namespace internal
         const int n_blocks = 1 + size / (chunk_size * block_size);
         ::dealii::LinearAlgebra::CUDAWrappers::kernel::add_and_dot<Number>
           <<<dim3(n_blocks, 1), dim3(block_size)>>>(res_d,
-                                                    data.values_dev.get(),
-                                                    v_data.values_dev.get(),
-                                                    w_data.values_dev.get(),
+                                                    data.values_dev.data(),
+                                                    v_data.values_dev.data(),
+                                                    w_data.values_dev.data(),
                                                     a,
                                                     size);
 
@@ -2634,8 +2634,8 @@ namespace internal
       {
         if (operation == VectorOperation::insert)
           {
-            cudaError_t cuda_error_code = cudaMemcpy(data.values_dev.get(),
-                                                     v_data.values.get(),
+            cudaError_t cuda_error_code = cudaMemcpy(data.values_dev.data(),
+                                                     v_data.values.data(),
                                                      size * sizeof(Number),
                                                      cudaMemcpyHostToDevice);
             AssertCuda(cuda_error_code);
