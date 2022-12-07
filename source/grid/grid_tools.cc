@@ -3014,7 +3014,7 @@ namespace GridTools
           {
             if (!used_vertices_rtree.empty())
               {
-		Assert(false, ExcInternalError());
+                Assert(false, ExcInternalError());
               }
             else
               {
