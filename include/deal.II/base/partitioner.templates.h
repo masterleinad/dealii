@@ -108,7 +108,7 @@ namespace Utilities
 
       Number *temp_array_ptr = temporary_storage.data();
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_CUDA_SUPPORT)
+      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
       // When using CUDAs-aware MPI, the set of local indices that are ghosts
       // indices on other processors is expanded in arrays. This is for
       // performance reasons as this can significantly decrease the number of
@@ -122,7 +122,7 @@ namespace Utilities
       for (unsigned int i = 0; i < n_import_targets; ++i)
         {
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_CUDA_SUPPORT)
+      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
           if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
             {
               const auto chunk_size = import_indices_plain_dev[i].second;
@@ -415,7 +415,7 @@ namespace Utilities
                        "The number of ghost entries times the size of 'Number' "
                        "exceeds this value. This is not supported."));
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_CUDA_SUPPORT)
+      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
           if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
             cudaDeviceSynchronize();
 #    endif
@@ -561,7 +561,7 @@ namespace Utilities
       const unsigned int n_ghost_targets  = ghost_targets_data.size();
 
 #    if (defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-         defined(DEAL_II_MPI_WITH_CUDA_SUPPORT))
+         defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT))
       // When using CUDAs-aware MPI, the set of local indices that are ghosts
       // indices on other processors is expanded in arrays. This is for
       // performance reasons as this can significantly decrease the number of
@@ -584,7 +584,7 @@ namespace Utilities
 
           const Number *read_position = temporary_storage.data();
 #    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_MPI_WITH_CUDA_SUPPORT))
+          defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT))
           // If the operation is no insertion, add the imported data to the
           // local values. For insert, nothing is done here (but in debug mode
           // we assert that the specified value is either zero or matches with
@@ -731,7 +731,7 @@ namespace Utilities
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
 
 #    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_CUDA_SUPPORT)
+      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
           if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
             {
               Assert(std::is_trivial<Number>::value, ExcNotImplemented());
