@@ -1132,11 +1132,6 @@ namespace LinearAlgebra
           else
 #  endif
             {
-#  ifdef DEAL_II_MPI_WITH_DEVICE_SUPPORT
-              static_assert(
-                std::is_same<MemorySpaceType, dealii::MemorySpace::Host>::value,
-                "This code path should only be compiled for CUDA-aware-MPI for MemorySpace::Host!");
-#  endif
               if (import_data.values.size() == 0)
                 Kokkos::resize(import_data.values,
                                partitioner->n_import_indices());

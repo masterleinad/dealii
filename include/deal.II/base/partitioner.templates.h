@@ -107,35 +107,35 @@ namespace Utilities
         }
 
       Number *temp_array_ptr = temporary_storage.data();
-#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-      // When using CUDAs-aware MPI, the set of local indices that are ghosts
+#    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
+      // When using device-aware MPI, the set of local indices that are ghosts
       // indices on other processors is expanded in arrays. This is for
       // performance reasons as this can significantly decrease the number of
       // kernel launched. The indices are expanded the first time the function
       // is called.
-      if ((std::is_same<MemorySpaceType, MemorySpace::CUDA>::value) &&
+      if ((std::is_same<MemorySpaceType, MemorySpace::Device>::value) &&
           (import_indices_plain_dev.size() == 0))
         initialize_import_indices_plain_dev();
 #    endif
 
       for (unsigned int i = 0; i < n_import_targets; ++i)
         {
-#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+#    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
+          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
             {
               const auto chunk_size = import_indices_plain_dev[i].second;
-              const int  n_blocks =
-                1 + chunk_size / (::dealii::CUDAWrappers::chunk_size *
-                                  ::dealii::CUDAWrappers::block_size);
-              ::dealii::LinearAlgebra::CUDAWrappers::kernel::
-                gather<<<n_blocks, ::dealii::CUDAWrappers::block_size>>>(
-                  temp_array_ptr,
-                  import_indices_plain_dev[i].first.get(),
-                  locally_owned_array.data(),
-                  chunk_size);
-              cudaDeviceSynchronize();
+              using IndexType       = decltype(chunk_size);
+
+              MemorySpace::Device::kokkos_space::execution_space exec;
+              Kokkos::parallel_for(
+                Kokkos::RangePolicy<
+                  MemorySpace::Device::kokkos_space::execution_space>(
+                  exec, 0, chunk_size),
+                KOKKOS_LAMBDA(IndexType idx) {
+                  temp_array_ptr[idx] =
+                    locally_owned_array[import_indices_plain_dev[i].first[idx]];
+                });
+              exec.fence();
             }
           else
 #    endif
@@ -216,6 +216,8 @@ namespace Utilities
                 {
                   const unsigned int chunk_size =
                     ghost_range.second - ghost_range.first;
+                  Assert(ghost_range.first > (offset + chunk_size),
+                         ExcInternalError());
                   if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
                     {
                       std::copy(ghost_array.data() + offset,
@@ -228,27 +230,21 @@ namespace Utilities
                     }
                   else
                     {
-#    ifdef DEAL_II_COMPILER_CUDA_AWARE
-                      cudaError_t cuda_error =
-                        cudaMemcpy(ghost_array.data() + ghost_range.first,
-                                   ghost_array.data() + offset,
-                                   chunk_size * sizeof(Number),
-                                   cudaMemcpyDeviceToDevice);
-                      AssertCuda(cuda_error);
-                      cuda_error =
-                        cudaMemset(ghost_array.data() +
-                                     std::max(ghost_range.second, offset),
-                                   0,
-                                   (offset + chunk_size -
-                                    std::max(ghost_range.second, offset)) *
-                                     sizeof(Number));
-                      AssertCuda(cuda_error);
-#    else
-                      Assert(
-                        false,
-                        ExcMessage(
-                          "If the compiler doesn't understand CUDA code, only MemorySpace::Host is allowed!"));
-#    endif
+                      Kokkos::deep_copy(
+                        Kokkos::View<Number *,
+                                     MemorySpace::Device::kokkos_space>(
+                          ghost_array.data() + ghost_range.first, chunk_size),
+                        Kokkos::View<Number *,
+                                     MemorySpace::Device::kokkos_space>(
+                          ghost_array.data() + offset, chunk_size));
+                      Kokkos::deep_copy(
+                        Kokkos::View<Number *,
+                                     MemorySpace::Device::kokkos_space>(
+                          ghost_array.data() +
+                            std::max(ghost_range.second, offset),
+                          (offset + chunk_size -
+                           std::max(ghost_range.second, offset))),
+                        0);
                     }
                   offset += chunk_size;
                 }
@@ -378,28 +374,24 @@ namespace Utilities
                         }
                       else
                         {
-#    ifdef DEAL_II_COMPILER_CUDA_AWARE
-                          cudaError_t cuda_error =
-                            cudaMemcpy(ghost_array_ptr + offset,
-                                       ghost_array.data() + my_ghosts->first,
-                                       chunk_size * sizeof(Number),
-                                       cudaMemcpyDeviceToDevice);
-                          AssertCuda(cuda_error);
-                          cuda_error = cudaMemset(
-                            std::max(ghost_array.data() + my_ghosts->first,
-                                     ghost_array_ptr + offset + chunk_size),
-                            0,
-                            (ghost_array.data() + my_ghosts->second -
-                             std::max(ghost_array.data() + my_ghosts->first,
-                                      ghost_array_ptr + offset + chunk_size)) *
-                              sizeof(Number));
-                          AssertCuda(cuda_error);
-#    else
-                          Assert(
-                            false,
-                            ExcMessage(
-                              "If the compiler doesn't understand CUDA code, only MemorySpace::Host is allowed!"));
-#    endif
+                          Kokkos::deep_copy(
+                            Kokkos::View<Number *,
+                                         MemorySpace::Device::kokkos_space>(
+                              ghost_array_ptr + offset, chunk_size),
+                            Kokkos::View<Number *,
+                                         MemorySpace::Device::kokkos_space>(
+                              ghost_array.data() + my_ghosts->first,
+                              chunk_size));
+                          Kokkos::deep_copy(
+                            Kokkos::View<Number *,
+                                         MemorySpace::Device::kokkos_space>(
+                              std::max(ghost_array.data() + my_ghosts->first,
+                                       ghost_array_ptr + offset + chunk_size),
+                              (ghost_array.data() + my_ghosts->second -
+                               std::max(ghost_array.data() + my_ghosts->first,
+                                        ghost_array_ptr + offset +
+                                          chunk_size))),
+                            0);
                         }
                     }
                   offset += chunk_size;
@@ -414,11 +406,8 @@ namespace Utilities
             ExcMessage("Index overflow: Maximum message size in MPI is 2GB. "
                        "The number of ghost entries times the size of 'Number' "
                        "exceeds this value. This is not supported."));
-#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
-            cudaDeviceSynchronize();
-#    endif
+          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
+            Kokkos::fence();
           const int ierr =
             MPI_Isend(ghost_array_ptr,
                       ghost_targets_data[i].second * sizeof(Number),
@@ -526,20 +515,18 @@ namespace Utilities
                    "import_from_ghosted_array_start as is passed "
                    "to import_from_ghosted_array_finish."));
 
-#      ifdef DEAL_II_COMPILER_CUDA_AWARE
-          if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
             {
               cudaMemset(ghost_array.data(),
                          0,
                          sizeof(Number) * ghost_array.size());
             }
           else
-#      endif
             {
 #      ifdef DEAL_II_HAVE_CXX17
               if constexpr (std::is_trivial<Number>::value)
 #      else
-            if (std::is_trivial<Number>::value)
+              if (std::is_trivial<Number>::value)
 #      endif
                 std::memset(ghost_array.data(),
                             0,
@@ -560,14 +547,13 @@ namespace Utilities
       const unsigned int n_import_targets = import_targets_data.size();
       const unsigned int n_ghost_targets  = ghost_targets_data.size();
 
-#    if (defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-         defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT))
-      // When using CUDAs-aware MPI, the set of local indices that are ghosts
+#    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
+      // When using device-aware MPI, the set of local indices that are ghosts
       // indices on other processors is expanded in arrays. This is for
       // performance reasons as this can significantly decrease the number of
       // kernel launched. The indices are expanded the first time the function
       // is called.
-      if ((std::is_same<MemorySpaceType, MemorySpace::CUDA>::value) &&
+      if ((std::is_same<MemorySpaceType, MemorySpace::Device>::value) &&
           (import_indices_plain_dev.size() == 0))
         initialize_import_indices_plain_dev();
 #    endif
@@ -583,8 +569,7 @@ namespace Utilities
           AssertThrowMPI(ierr);
 
           const Number *read_position = temporary_storage.data();
-#    if !(defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-          defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT))
+#    if !defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
           // If the operation is no insertion, add the imported data to the
           // local values. For insert, nothing is done here (but in debug mode
           // we assert that the specified value is either zero or matches with
@@ -643,18 +628,19 @@ namespace Utilities
               for (auto const &import_indices_plain : import_indices_plain_dev)
                 {
                   const auto chunk_size = import_indices_plain.second;
-                  const int n_blocks =
-                    1 + chunk_size / (::dealii::CUDAWrappers::chunk_size *
-                                      ::dealii::CUDAWrappers::block_size);
-                  dealii::LinearAlgebra::CUDAWrappers::kernel::
-                    masked_vector_bin_op<Number,
-                                         dealii::LinearAlgebra::CUDAWrappers::
-                                           kernel::Binop_Addition>
-                    <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
-                      import_indices_plain.first.get(),
-                      locally_owned_array.data(),
-                      read_position,
-                      chunk_size);
+
+                  using IndexType = decltype(chunk_size);
+                  MemorySpace::Device::kokkos_space::execution_space exec;
+                  Kokkos::parallel_for(
+                    Kokkos::RangePolicy<
+                      MemorySpace::Device::kokkos_space::execution_space>(
+                      exec, 0, chunk_size),
+                    KOKKOS_LAMBDA(IndexType idx) {
+                      locally_owned_array[import_indices_plain.first[idx]] +=
+                        read_position[idx];
+                    });
+                  exec.fence();
+
                   read_position += chunk_size;
                 }
             }
@@ -663,18 +649,21 @@ namespace Utilities
               for (auto const &import_indices_plain : import_indices_plain_dev)
                 {
                   const auto chunk_size = import_indices_plain.second;
-                  const int n_blocks =
-                    1 + chunk_size / (::dealii::CUDAWrappers::chunk_size *
-                                      ::dealii::CUDAWrappers::block_size);
-                  dealii::LinearAlgebra::CUDAWrappers::kernel::
-                    masked_vector_bin_op<
-                      Number,
-                      dealii::LinearAlgebra::CUDAWrappers::kernel::Binop_Min>
-                    <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
-                      import_indices_plain.first.get(),
-                      locally_owned_array.data(),
-                      read_position,
-                      chunk_size);
+
+                  using IndexType = decltype(chunk_size);
+                  MemorySpace::Device::kokkos_space::execution_space exec;
+                  Kokkos::parallel_for(
+                    Kokkos::RangePolicy<
+                      MemorySpace::Device::kokkos_space::execution_space>(
+                      exec, 0, chunk_size),
+                    KOKKOS_LAMBDA(IndexType idx) {
+                      locally_owned_array[import_indices_plain.first[idx]] =
+                        internal::get_min(
+                          locally_owned_array[import_indices_plain.first[idx]],
+                          read_position[idx]);
+                    });
+                  exec.fence();
+
                   read_position += chunk_size;
                 }
             }
@@ -683,18 +672,21 @@ namespace Utilities
               for (auto const &import_indices_plain : import_indices_plain_dev)
                 {
                   const auto chunk_size = import_indices_plain.second;
-                  const int n_blocks =
-                    1 + chunk_size / (::dealii::CUDAWrappers::chunk_size *
-                                      ::dealii::CUDAWrappers::block_size);
-                  dealii::LinearAlgebra::CUDAWrappers::kernel::
-                    masked_vector_bin_op<
-                      Number,
-                      dealii::LinearAlgebra::CUDAWrappers::kernel::Binop_Max>
-                    <<<n_blocks, dealii::CUDAWrappers::block_size>>>(
-                      import_indices_plain.first.get(),
-                      locally_owned_array.data(),
-                      read_position,
-                      chunk_size);
+
+                  using IndexType = decltype(chunk_size);
+                  MemorySpace::Device::kokkos_space::execution_space exec;
+                  Kokkos::parallel_for(
+                    Kokkos::RangePolicy<
+                      MemorySpace::Device::kokkos_space::execution_space>(
+                      exec, 0, chunk_size),
+                    KOKKOS_LAMBDA(IndexType idx) {
+                      locally_owned_array[import_indices_plain.first[idx]] =
+                        internal::get_max(
+                          locally_owned_array[import_indices_plain.first[idx]],
+                          read_position[idx]);
+                    });
+                  exec.fence();
+
                   read_position += chunk_size;
                 }
             }
@@ -730,14 +722,14 @@ namespace Utilities
         {
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
 
-#    if defined(DEAL_II_COMPILER_CUDA_AWARE) && \
-      defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::CUDA>::value)
+#    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
+          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
             {
               Assert(std::is_trivial<Number>::value, ExcNotImplemented());
-              cudaMemset(ghost_array.data(),
-                         0,
-                         sizeof(Number) * n_ghost_indices());
+              Kokkos::deep_copy(
+                Kokkos::View<Number *, MemorySpace::Device::kokkos_space>(
+                  ghost_array.data(), n_ghost_indices()),
+                0);
             }
           else
 #    endif
