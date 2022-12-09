@@ -133,7 +133,8 @@ namespace Utilities
                   exec, 0, chunk_size),
                 KOKKOS_LAMBDA(IndexType idx) {
                   temp_array_ptr[idx] =
-                    locally_owned_array[import_indices_plain_dev[i].first[idx]];
+                    locally_owned_array
+                      .data()[import_indices_plain_dev[i].first[idx]];
                 });
               exec.fence();
             }
@@ -569,138 +570,160 @@ namespace Utilities
           AssertThrowMPI(ierr);
 
           const Number *read_position = temporary_storage.data();
-#    if !defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          // If the operation is no insertion, add the imported data to the
-          // local values. For insert, nothing is done here (but in debug mode
-          // we assert that the specified value is either zero or matches with
-          // the ones already present
-          if (vector_operation == dealii::VectorOperation::add)
-            for (const auto &import_range : import_indices_data)
-              for (unsigned int j = import_range.first; j < import_range.second;
-                   j++)
-                locally_owned_array[j] += *read_position++;
-          else if (vector_operation == dealii::VectorOperation::min)
-            for (const auto &import_range : import_indices_data)
-              for (unsigned int j = import_range.first; j < import_range.second;
-                   j++)
-                {
-                  locally_owned_array[j] =
-                    internal::get_min(*read_position, locally_owned_array[j]);
-                  read_position++;
-                }
-          else if (vector_operation == dealii::VectorOperation::max)
-            for (const auto &import_range : import_indices_data)
-              for (unsigned int j = import_range.first; j < import_range.second;
-                   j++)
-                {
-                  locally_owned_array[j] =
-                    internal::get_max(*read_position, locally_owned_array[j]);
-                  read_position++;
-                }
-          else
-            for (const auto &import_range : import_indices_data)
-              for (unsigned int j = import_range.first; j < import_range.second;
-                   j++, read_position++)
-                // Below we use relatively large precision in units in the last
-                // place (ULP) as this Assert can be easily triggered in
-                // p::d::SolutionTransfer. The rationale is that during
-                // interpolation on two elements sharing the face, values on
-                // this face obtained from each side might be different due to
-                // additions being done in different order. If the local
-                // value is zero, it indicates that the local process has not
-                // set the value during the cell loop and its value can be
-                // safely overridden.
-                Assert(*read_position == Number() ||
-                         internal::get_abs(locally_owned_array[j] -
-                                           *read_position) <=
-                           internal::get_abs(locally_owned_array[j] +
-                                             *read_position) *
-                             100000. *
-                             std::numeric_limits<typename numbers::NumberTraits<
-                               Number>::real_type>::epsilon(),
-                       typename dealii::LinearAlgebra::distributed::Vector<
-                         Number>::ExcNonMatchingElements(*read_position,
-                                                         locally_owned_array[j],
-                                                         my_pid));
-#    else
-          if (vector_operation == dealii::VectorOperation::add)
+#    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
+          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
             {
-              for (auto const &import_indices_plain : import_indices_plain_dev)
+              if (vector_operation == dealii::VectorOperation::add)
                 {
-                  const auto chunk_size = import_indices_plain.second;
+                  for (auto const &import_indices_plain :
+                       import_indices_plain_dev)
+                    {
+                      const auto chunk_size = import_indices_plain.second;
 
-                  using IndexType = decltype(chunk_size);
-                  MemorySpace::Device::kokkos_space::execution_space exec;
-                  Kokkos::parallel_for(
-                    Kokkos::RangePolicy<
-                      MemorySpace::Device::kokkos_space::execution_space>(
-                      exec, 0, chunk_size),
-                    KOKKOS_LAMBDA(IndexType idx) {
-                      locally_owned_array[import_indices_plain.first[idx]] +=
-                        read_position[idx];
-                    });
-                  exec.fence();
+                      using IndexType = decltype(chunk_size);
+                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      Kokkos::parallel_for(
+                        Kokkos::RangePolicy<
+                          MemorySpace::Device::kokkos_space::execution_space>(
+                          exec, 0, chunk_size),
+                        KOKKOS_LAMBDA(IndexType idx) {
+                          locally_owned_array
+                            .data()[import_indices_plain.first[idx]] +=
+                            read_position[idx];
+                        });
+                      exec.fence();
 
-                  read_position += chunk_size;
+                      read_position += chunk_size;
+                    }
                 }
-            }
-          else if (vector_operation == dealii::VectorOperation::min)
-            {
-              for (auto const &import_indices_plain : import_indices_plain_dev)
+              else if (vector_operation == dealii::VectorOperation::min)
                 {
-                  const auto chunk_size = import_indices_plain.second;
+                  for (auto const &import_indices_plain :
+                       import_indices_plain_dev)
+                    {
+                      const auto chunk_size = import_indices_plain.second;
 
-                  using IndexType = decltype(chunk_size);
-                  MemorySpace::Device::kokkos_space::execution_space exec;
-                  Kokkos::parallel_for(
-                    Kokkos::RangePolicy<
-                      MemorySpace::Device::kokkos_space::execution_space>(
-                      exec, 0, chunk_size),
-                    KOKKOS_LAMBDA(IndexType idx) {
-                      locally_owned_array[import_indices_plain.first[idx]] =
-                        internal::get_min(
-                          locally_owned_array[import_indices_plain.first[idx]],
-                          read_position[idx]);
-                    });
-                  exec.fence();
+                      using IndexType = decltype(chunk_size);
+                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      Kokkos::parallel_for(
+                        Kokkos::RangePolicy<
+                          MemorySpace::Device::kokkos_space::execution_space>(
+                          exec, 0, chunk_size),
+                        KOKKOS_LAMBDA(IndexType idx) {
+                          locally_owned_array
+                            .data()[import_indices_plain.first[idx]] =
+                            internal::get_min(
+                              locally_owned_array
+                                .data()[import_indices_plain.first[idx]],
+                              read_position[idx]);
+                        });
+                      exec.fence();
 
-                  read_position += chunk_size;
+                      read_position += chunk_size;
+                    }
                 }
-            }
-          else if (vector_operation == dealii::VectorOperation::max)
-            {
-              for (auto const &import_indices_plain : import_indices_plain_dev)
+              else if (vector_operation == dealii::VectorOperation::max)
                 {
-                  const auto chunk_size = import_indices_plain.second;
+                  for (auto const &import_indices_plain :
+                       import_indices_plain_dev)
+                    {
+                      const auto chunk_size = import_indices_plain.second;
 
-                  using IndexType = decltype(chunk_size);
-                  MemorySpace::Device::kokkos_space::execution_space exec;
-                  Kokkos::parallel_for(
-                    Kokkos::RangePolicy<
-                      MemorySpace::Device::kokkos_space::execution_space>(
-                      exec, 0, chunk_size),
-                    KOKKOS_LAMBDA(IndexType idx) {
-                      locally_owned_array[import_indices_plain.first[idx]] =
-                        internal::get_max(
-                          locally_owned_array[import_indices_plain.first[idx]],
-                          read_position[idx]);
-                    });
-                  exec.fence();
+                      using IndexType = decltype(chunk_size);
+                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      Kokkos::parallel_for(
+                        Kokkos::RangePolicy<
+                          MemorySpace::Device::kokkos_space::execution_space>(
+                          exec, 0, chunk_size),
+                        KOKKOS_LAMBDA(IndexType idx) {
+                          locally_owned_array
+                            .data()[import_indices_plain.first[idx]] =
+                            internal::get_max(
+                              locally_owned_array
+                                .data()[import_indices_plain.first[idx]],
+                              read_position[idx]);
+                        });
+                      exec.fence();
 
-                  read_position += chunk_size;
+                      read_position += chunk_size;
+                    }
+                }
+              else
+                {
+                  for (auto const &import_indices_plain :
+                       import_indices_plain_dev)
+                    {
+                      // We can't easily assert here, so we just move the
+                      // pointer matching the host code.
+                      const auto chunk_size = import_indices_plain.second;
+                      read_position += chunk_size;
+                    }
                 }
             }
           else
-            {
-              for (auto const &import_indices_plain : import_indices_plain_dev)
-                {
-                  // We can't easily assert here, so we just move the pointer
-                  // matching the host code.
-                  const auto chunk_size = import_indices_plain.second;
-                  read_position += chunk_size;
-                }
-            }
 #    endif
+            {
+              // If the operation is no insertion, add the imported data to the
+              // local values. For insert, nothing is done here (but in debug
+              // mode we assert that the specified value is either zero or
+              // matches with the ones already present
+              if (vector_operation == dealii::VectorOperation::add)
+                for (const auto &import_range : import_indices_data)
+                  for (unsigned int j = import_range.first;
+                       j < import_range.second;
+                       j++)
+                    locally_owned_array[j] += *read_position++;
+              else if (vector_operation == dealii::VectorOperation::min)
+                for (const auto &import_range : import_indices_data)
+                  for (unsigned int j = import_range.first;
+                       j < import_range.second;
+                       j++)
+                    {
+                      locally_owned_array[j] =
+                        internal::get_min(*read_position,
+                                          locally_owned_array[j]);
+                      read_position++;
+                    }
+              else if (vector_operation == dealii::VectorOperation::max)
+                for (const auto &import_range : import_indices_data)
+                  for (unsigned int j = import_range.first;
+                       j < import_range.second;
+                       j++)
+                    {
+                      locally_owned_array[j] =
+                        internal::get_max(*read_position,
+                                          locally_owned_array[j]);
+                      read_position++;
+                    }
+              else
+                for (const auto &import_range : import_indices_data)
+                  for (unsigned int j = import_range.first;
+                       j < import_range.second;
+                       j++, read_position++)
+                    // Below we use relatively large precision in units in the
+                    // last place (ULP) as this Assert can be easily triggered
+                    // in p::d::SolutionTransfer. The rationale is that during
+                    // interpolation on two elements sharing the face, values on
+                    // this face obtained from each side might be different due
+                    // to additions being done in different order. If the local
+                    // value is zero, it indicates that the local process has
+                    // not set the value during the cell loop and its value can
+                    // be safely overridden.
+                    Assert(
+                      *read_position == Number() ||
+                        internal::get_abs(locally_owned_array[j] -
+                                          *read_position) <=
+                          internal::get_abs(locally_owned_array[j] +
+                                            *read_position) *
+                            100000. *
+                            std::numeric_limits<typename numbers::NumberTraits<
+                              Number>::real_type>::epsilon(),
+                      typename dealii::LinearAlgebra::distributed::Vector<
+                        Number>::ExcNonMatchingElements(*read_position,
+                                                        locally_owned_array[j],
+                                                        my_pid));
+            }
+
           AssertDimension(read_position - temporary_storage.data(),
                           n_import_indices());
         }
