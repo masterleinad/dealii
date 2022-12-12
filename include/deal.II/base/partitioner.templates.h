@@ -217,15 +217,18 @@ namespace Utilities
                 {
                   const unsigned int chunk_size =
                     ghost_range.second - ghost_range.first;
-                  /*Assert(ghost_range.first > (offset + chunk_size) ||
-                           ghost_range.first < (offset - chunk_size),
-                         ExcInternalError());*/
-
                   if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
                     {
-                      std::copy(ghost_array.data() + offset,
-                                ghost_array.data() + offset + chunk_size,
-                                ghost_array.data() + ghost_range.first);
+                      if (ghost_range.first > offset)
+                        std::copy_backward(ghost_array.data() + offset,
+                                           ghost_array.data() + offset +
+                                             chunk_size,
+                                           ghost_array.data() +
+                                             ghost_range.first);
+                      else
+                        std::copy(ghost_array.data() + offset,
+                                  ghost_array.data() + offset + chunk_size,
+                                  ghost_array.data() + ghost_range.first);
                       std::fill(ghost_array.data() +
                                   std::max(ghost_range.second, offset),
                                 ghost_array.data() + offset + chunk_size,
@@ -371,9 +374,16 @@ namespace Utilities
                       if (std::is_same<MemorySpaceType,
                                        MemorySpace::Host>::value)
                         {
-                          std::copy(ghost_array.data() + my_ghosts->first,
-                                    ghost_array.data() + my_ghosts->second,
-                                    ghost_array_ptr + offset);
+                          if (offset > my_ghosts->first)
+                            std::copy_backward(ghost_array.data() +
+                                                 my_ghosts->first,
+                                               ghost_array_ptr +
+                                                 my_ghosts->second,
+                                               ghost_array.data() + offset);
+                          else
+                            std::copy(ghost_array.data() + my_ghosts->first,
+                                      ghost_array.data() + my_ghosts->second,
+                                      ghost_array_ptr + offset);
                           std::fill(
                             std::max(ghost_array.data() + my_ghosts->first,
                                      ghost_array_ptr + offset + chunk_size),
