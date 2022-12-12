@@ -217,8 +217,10 @@ namespace Utilities
                 {
                   const unsigned int chunk_size =
                     ghost_range.second - ghost_range.first;
-                  Assert(ghost_range.first > (offset + chunk_size),
-                         ExcInternalError());
+                  /*Assert(ghost_range.first > (offset + chunk_size) ||
+                           ghost_range.first < (offset - chunk_size),
+                         ExcInternalError());*/
+
                   if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
                     {
                       std::copy(ghost_array.data() + offset,
@@ -231,13 +233,18 @@ namespace Utilities
                     }
                   else
                     {
+                      Kokkos::View<Number *, MemorySpace::Device::kokkos_space>
+                        copy("copy", chunk_size);
+                      Kokkos::deep_copy(
+                        copy,
+                        Kokkos::View<Number *,
+                                     MemorySpace::Device::kokkos_space>(
+                          ghost_array.data() + offset, chunk_size));
                       Kokkos::deep_copy(
                         Kokkos::View<Number *,
                                      MemorySpace::Device::kokkos_space>(
                           ghost_array.data() + ghost_range.first, chunk_size),
-                        Kokkos::View<Number *,
-                                     MemorySpace::Device::kokkos_space>(
-                          ghost_array.data() + offset, chunk_size));
+                        copy);
                       Kokkos::deep_copy(
                         Kokkos::View<Number *,
                                      MemorySpace::Device::kokkos_space>(
@@ -375,14 +382,20 @@ namespace Utilities
                         }
                       else
                         {
+                          Kokkos::View<Number *,
+                                       MemorySpace::Device::kokkos_space>
+                            copy("copy", chunk_size);
                           Kokkos::deep_copy(
-                            Kokkos::View<Number *,
-                                         MemorySpace::Device::kokkos_space>(
-                              ghost_array_ptr + offset, chunk_size),
+                            copy,
                             Kokkos::View<Number *,
                                          MemorySpace::Device::kokkos_space>(
                               ghost_array.data() + my_ghosts->first,
                               chunk_size));
+                          Kokkos::deep_copy(
+                            Kokkos::View<Number *,
+                                         MemorySpace::Device::kokkos_space>(
+                              ghost_array_ptr + offset, chunk_size),
+                            copy);
                           Kokkos::deep_copy(
                             Kokkos::View<Number *,
                                          MemorySpace::Device::kokkos_space>(
