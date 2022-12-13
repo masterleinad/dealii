@@ -539,27 +539,10 @@ namespace Utilities
                    "import_from_ghosted_array_start as is passed "
                    "to import_from_ghosted_array_finish."));
 
-          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
-            {
-              cudaMemset(ghost_array.data(),
-                         0,
-                         sizeof(Number) * ghost_array.size());
-            }
-          else
-            {
-#      ifdef DEAL_II_HAVE_CXX17
-              if constexpr (std::is_trivial<Number>::value)
-#      else
-              if (std::is_trivial<Number>::value)
-#      endif
-                std::memset(ghost_array.data(),
-                            0,
-                            sizeof(Number) * ghost_array.size());
-              else
-                std::fill(ghost_array.data(),
-                          ghost_array.data() + ghost_array.size(),
-                          0);
-            }
+          Kokkos::deep_copy(
+            Kokkos::View<Number *, typename MemorySpaceType::kokkos_space>(
+              ghost_array.data(), ghost_array.size()),
+            0);
           return;
         }
 #    endif
