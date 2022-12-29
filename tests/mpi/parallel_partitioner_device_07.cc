@@ -29,7 +29,7 @@
 template <typename Number>
 void
 print_device_view(
-  const Kokkos::View<Number *, MemorySpace::Device::kokkos_space> device_view)
+  const Kokkos::View<Number *, MemorySpace::Default::kokkos_space> device_view)
 {
   std::vector<Number> cpu_values(device_view.size());
   Kokkos::deep_copy(Kokkos::View<Number *, Kokkos::HostSpace>(
@@ -103,36 +103,36 @@ test()
   x.set_ghost_indices(local_relevant_3, v.ghost_indices());
 
   // set up a ghost array with some entries
-  Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> ghost_array(
+  Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> ghost_array(
     "ghost_array", v.n_ghost_indices());
-  ArrayView<unsigned int, MemorySpace::Device> ghost_array_view(
+  ArrayView<unsigned int, MemorySpace::Default> ghost_array_view(
     ghost_array.data(), ghost_array.size());
   Kokkos::deep_copy(ghost_array, 1);
 
   // set up other arrays
-  Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space>
+  Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space>
     locally_owned_array("locally_owned_array", local_size);
-  ArrayView<unsigned int, MemorySpace::Device> locally_owned_array_view(
+  ArrayView<unsigned int, MemorySpace::Default> locally_owned_array_view(
     locally_owned_array.data(), locally_owned_array.size());
 
-  Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> temp_array(
+  Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> temp_array(
     "temp_array", v.n_import_indices());
-  ArrayView<unsigned int, MemorySpace::Device> temp_array_view(
+  ArrayView<unsigned int, MemorySpace::Default> temp_array_view(
     temp_array.data(), temp_array.size());
 
   std::vector<MPI_Request> requests;
 
   // send the full array
   {
-    Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> ghosts(
+    Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> ghosts(
       "ghosts", ghost_array_view.size());
-    ArrayView<unsigned int, MemorySpace::Device> ghosts_view(ghosts.data(),
-                                                             ghosts.size());
+    ArrayView<unsigned int, MemorySpace::Default> ghosts_view(ghosts.data(),
+                                                              ghosts.size());
     Kokkos::deep_copy(ghosts, ghost_array);
 
-    v.import_from_ghosted_array_start<unsigned int, MemorySpace::Device>(
+    v.import_from_ghosted_array_start<unsigned int, MemorySpace::Default>(
       VectorOperation::add, 3, ghosts_view, temp_array_view, requests);
-    v.import_from_ghosted_array_finish<unsigned int, MemorySpace::Device>(
+    v.import_from_ghosted_array_finish<unsigned int, MemorySpace::Default>(
       VectorOperation::add,
       temp_array_view,
       locally_owned_array_view,
@@ -149,18 +149,18 @@ test()
   // send only the array in w
   Kokkos::deep_copy(locally_owned_array, 0);
   Assert(temp_array_view.size() >= w.n_import_indices(), ExcInternalError());
-  ArrayView<unsigned int, MemorySpace::Device> temp_array_view_w(
+  ArrayView<unsigned int, MemorySpace::Default> temp_array_view_w(
     temp_array_view.data(), w.n_import_indices());
   {
-    Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> ghosts(
+    Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> ghosts(
       "ghosts", ghost_array_view.size());
-    ArrayView<unsigned int, MemorySpace::Device> ghosts_view(ghosts.data(),
-                                                             ghosts.size());
+    ArrayView<unsigned int, MemorySpace::Default> ghosts_view(ghosts.data(),
+                                                              ghosts.size());
     Kokkos::deep_copy(ghosts, ghost_array);
 
-    w.import_from_ghosted_array_start<unsigned int, MemorySpace::Device>(
+    w.import_from_ghosted_array_start<unsigned int, MemorySpace::Default>(
       VectorOperation::add, 3, ghosts_view, temp_array_view_w, requests);
-    w.import_from_ghosted_array_finish<unsigned int, MemorySpace::Device>(
+    w.import_from_ghosted_array_finish<unsigned int, MemorySpace::Default>(
       VectorOperation::add,
       temp_array_view_w,
       locally_owned_array_view,
@@ -178,18 +178,18 @@ test()
   // send only the array in x
   Kokkos::deep_copy(locally_owned_array, 0);
   Assert(temp_array_view.size() >= x.n_import_indices(), ExcInternalError());
-  ArrayView<unsigned int, MemorySpace::Device> temp_array_view_x(
+  ArrayView<unsigned int, MemorySpace::Default> temp_array_view_x(
     temp_array_view.data(), x.n_import_indices());
   {
-    Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> ghosts(
+    Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> ghosts(
       "ghosts", ghost_array_view.size());
-    ArrayView<unsigned int, MemorySpace::Device> ghosts_view(ghosts.data(),
-                                                             ghosts.size());
+    ArrayView<unsigned int, MemorySpace::Default> ghosts_view(ghosts.data(),
+                                                              ghosts.size());
     Kokkos::deep_copy(ghosts, ghost_array);
 
-    x.import_from_ghosted_array_start<unsigned int, MemorySpace::Device>(
+    x.import_from_ghosted_array_start<unsigned int, MemorySpace::Default>(
       VectorOperation::add, 3, ghosts_view, temp_array_view_x, requests);
-    x.import_from_ghosted_array_finish<unsigned int, MemorySpace::Device>(
+    x.import_from_ghosted_array_finish<unsigned int, MemorySpace::Default>(
       VectorOperation::add,
       temp_array_view_x,
       locally_owned_array_view,
@@ -205,15 +205,15 @@ test()
   print_device_view(locally_owned_array);
 
   // now send a tight array from x and add into the existing entries
-  Kokkos::View<unsigned *, MemorySpace::Device::kokkos_space> ghosts(
+  Kokkos::View<unsigned *, MemorySpace::Default::kokkos_space> ghosts(
     "ghosts", x.n_ghost_indices());
-  ArrayView<unsigned int, MemorySpace::Device> ghosts_view(ghosts.data(),
-                                                           ghosts.size());
+  ArrayView<unsigned int, MemorySpace::Default> ghosts_view(ghosts.data(),
+                                                            ghosts.size());
   Kokkos::deep_copy(ghosts, 1);
 
-  x.import_from_ghosted_array_start<unsigned int, MemorySpace::Device>(
+  x.import_from_ghosted_array_start<unsigned int, MemorySpace::Default>(
     VectorOperation::add, 3, ghosts_view, temp_array_view_x, requests);
-  x.import_from_ghosted_array_finish<unsigned int, MemorySpace::Device>(
+  x.import_from_ghosted_array_finish<unsigned int, MemorySpace::Default>(
     VectorOperation::add,
     temp_array_view_x,
     locally_owned_array_view,

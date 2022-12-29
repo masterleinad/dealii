@@ -38,9 +38,9 @@ namespace MemorySpace
   };
 
   /**
-   * Structure describing Device memory space.
+   * Structure describing Default memory space.
    */
-  struct Device
+  struct Default
   {
     using kokkos_space = ::Kokkos::DefaultExecutionSpace::memory_space;
   };
@@ -48,7 +48,7 @@ namespace MemorySpace
   /**
    * Structure describing CUDA memory space.
    */
-  using CUDA = Device;
+  using CUDA = Default;
 
 } // namespace MemorySpace
 

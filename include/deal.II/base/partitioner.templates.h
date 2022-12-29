@@ -113,7 +113,7 @@ namespace Utilities
       // performance reasons as this can significantly decrease the number of
       // kernel launched. The indices are expanded the first time the function
       // is called.
-      if ((std::is_same<MemorySpaceType, MemorySpace::Device>::value) &&
+      if ((std::is_same<MemorySpaceType, MemorySpace::Default>::value) &&
           (import_indices_plain_dev.size() == 0))
         initialize_import_indices_plain_dev();
 #    endif
@@ -121,15 +121,15 @@ namespace Utilities
       for (unsigned int i = 0; i < n_import_targets; ++i)
         {
 #    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
+          if (std::is_same<MemorySpaceType, MemorySpace::Default>::value)
             {
               const auto chunk_size = import_indices_plain_dev[i].size();
               using IndexType       = decltype(chunk_size);
 
-              MemorySpace::Device::kokkos_space::execution_space exec;
+              MemorySpace::Default::kokkos_space::execution_space exec;
               Kokkos::parallel_for(
                 Kokkos::RangePolicy<
-                  MemorySpace::Device::kokkos_space::execution_space>(
+                  MemorySpace::Default::kokkos_space::execution_space>(
                   exec, 0, chunk_size),
                 KOKKOS_LAMBDA(IndexType idx) {
                   temp_array_ptr[idx] =
@@ -236,21 +236,21 @@ namespace Utilities
                     }
                   else
                     {
-                      Kokkos::View<Number *, MemorySpace::Device::kokkos_space>
+                      Kokkos::View<Number *, MemorySpace::Default::kokkos_space>
                         copy("copy", chunk_size);
                       Kokkos::deep_copy(
                         copy,
                         Kokkos::View<Number *,
-                                     MemorySpace::Device::kokkos_space>(
+                                     MemorySpace::Default::kokkos_space>(
                           ghost_array.data() + offset, chunk_size));
                       Kokkos::deep_copy(
                         Kokkos::View<Number *,
-                                     MemorySpace::Device::kokkos_space>(
+                                     MemorySpace::Default::kokkos_space>(
                           ghost_array.data() + ghost_range.first, chunk_size),
                         copy);
                       Kokkos::deep_copy(
                         Kokkos::View<Number *,
-                                     MemorySpace::Device::kokkos_space>(
+                                     MemorySpace::Default::kokkos_space>(
                           ghost_array.data() +
                             std::max(ghost_range.second, offset),
                           (offset + chunk_size -
@@ -393,22 +393,22 @@ namespace Utilities
                       else
                         {
                           Kokkos::View<Number *,
-                                       MemorySpace::Device::kokkos_space>
+                                       MemorySpace::Default::kokkos_space>
                             copy("copy", chunk_size);
                           Kokkos::deep_copy(
                             copy,
                             Kokkos::View<Number *,
-                                         MemorySpace::Device::kokkos_space>(
+                                         MemorySpace::Default::kokkos_space>(
                               ghost_array.data() + my_ghosts->first,
                               chunk_size));
                           Kokkos::deep_copy(
                             Kokkos::View<Number *,
-                                         MemorySpace::Device::kokkos_space>(
+                                         MemorySpace::Default::kokkos_space>(
                               ghost_array_ptr + offset, chunk_size),
                             copy);
                           Kokkos::deep_copy(
                             Kokkos::View<Number *,
-                                         MemorySpace::Device::kokkos_space>(
+                                         MemorySpace::Default::kokkos_space>(
                               std::max(ghost_array.data() + my_ghosts->first,
                                        ghost_array_ptr + offset + chunk_size),
                               (ghost_array.data() + my_ghosts->second -
@@ -430,7 +430,7 @@ namespace Utilities
             ExcMessage("Index overflow: Maximum message size in MPI is 2GB. "
                        "The number of ghost entries times the size of 'Number' "
                        "exceeds this value. This is not supported."));
-          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
+          if (std::is_same<MemorySpaceType, MemorySpace::Default>::value)
             Kokkos::fence();
           const int ierr =
             MPI_Isend(ghost_array_ptr,
@@ -560,7 +560,7 @@ namespace Utilities
       // performance reasons as this can significantly decrease the number of
       // kernel launched. The indices are expanded the first time the function
       // is called.
-      if ((std::is_same<MemorySpaceType, MemorySpace::Device>::value) &&
+      if ((std::is_same<MemorySpaceType, MemorySpace::Default>::value) &&
           (import_indices_plain_dev.size() == 0))
         initialize_import_indices_plain_dev();
 #    endif
@@ -577,7 +577,7 @@ namespace Utilities
 
           const Number *read_position = temporary_storage.data();
 #    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
+          if (std::is_same<MemorySpaceType, MemorySpace::Default>::value)
             {
               if (vector_operation == dealii::VectorOperation::add)
                 {
@@ -587,10 +587,10 @@ namespace Utilities
                       const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
-                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      MemorySpace::Default::kokkos_space::execution_space exec;
                       Kokkos::parallel_for(
                         Kokkos::RangePolicy<
-                          MemorySpace::Device::kokkos_space::execution_space>(
+                          MemorySpace::Default::kokkos_space::execution_space>(
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
@@ -610,10 +610,10 @@ namespace Utilities
                       const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
-                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      MemorySpace::Default::kokkos_space::execution_space exec;
                       Kokkos::parallel_for(
                         Kokkos::RangePolicy<
-                          MemorySpace::Device::kokkos_space::execution_space>(
+                          MemorySpace::Default::kokkos_space::execution_space>(
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
@@ -636,10 +636,10 @@ namespace Utilities
                       const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
-                      MemorySpace::Device::kokkos_space::execution_space exec;
+                      MemorySpace::Default::kokkos_space::execution_space exec;
                       Kokkos::parallel_for(
                         Kokkos::RangePolicy<
-                          MemorySpace::Device::kokkos_space::execution_space>(
+                          MemorySpace::Default::kokkos_space::execution_space>(
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
@@ -752,11 +752,11 @@ namespace Utilities
           Assert(ghost_array.begin() != nullptr, ExcInternalError());
 
 #    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
-          if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
+          if (std::is_same<MemorySpaceType, MemorySpace::Default>::value)
             {
               Assert(std::is_trivial<Number>::value, ExcNotImplemented());
               Kokkos::deep_copy(
-                Kokkos::View<Number *, MemorySpace::Device::kokkos_space>(
+                Kokkos::View<Number *, MemorySpace::Default::kokkos_space>(
                   ghost_array.data(), n_ghost_indices()),
                 0);
             }
