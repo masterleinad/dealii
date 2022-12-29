@@ -123,7 +123,7 @@ namespace Utilities
 #    if defined(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
           if (std::is_same<MemorySpaceType, MemorySpace::Device>::value)
             {
-              const auto chunk_size = import_indices_plain_dev[i].second;
+              const auto chunk_size = import_indices_plain_dev[i].size();
               using IndexType       = decltype(chunk_size);
 
               MemorySpace::Device::kokkos_space::execution_space exec;
@@ -134,7 +134,7 @@ namespace Utilities
                 KOKKOS_LAMBDA(IndexType idx) {
                   temp_array_ptr[idx] =
                     locally_owned_array
-                      .data()[import_indices_plain_dev[i].first[idx]];
+                      .data()[import_indices_plain_dev[i](idx)];
                 });
               exec.fence();
             }
@@ -584,7 +584,7 @@ namespace Utilities
                   for (auto const &import_indices_plain :
                        import_indices_plain_dev)
                     {
-                      const auto chunk_size = import_indices_plain.second;
+                      const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
                       MemorySpace::Device::kokkos_space::execution_space exec;
@@ -594,7 +594,7 @@ namespace Utilities
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
-                            .data()[import_indices_plain.first[idx]] +=
+                            .data()[import_indices_plain(idx)] +=
                             read_position[idx];
                         });
                       exec.fence();
@@ -607,7 +607,7 @@ namespace Utilities
                   for (auto const &import_indices_plain :
                        import_indices_plain_dev)
                     {
-                      const auto chunk_size = import_indices_plain.second;
+                      const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
                       MemorySpace::Device::kokkos_space::execution_space exec;
@@ -617,10 +617,10 @@ namespace Utilities
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
-                            .data()[import_indices_plain.first[idx]] =
+                            .data()[import_indices_plain(idx)] =
                             internal::get_min(
                               locally_owned_array
-                                .data()[import_indices_plain.first[idx]],
+                                .data()[import_indices_plain(idx)],
                               read_position[idx]);
                         });
                       exec.fence();
@@ -633,7 +633,7 @@ namespace Utilities
                   for (auto const &import_indices_plain :
                        import_indices_plain_dev)
                     {
-                      const auto chunk_size = import_indices_plain.second;
+                      const auto chunk_size = import_indices_plain.size();
 
                       using IndexType = decltype(chunk_size);
                       MemorySpace::Device::kokkos_space::execution_space exec;
@@ -643,10 +643,10 @@ namespace Utilities
                           exec, 0, chunk_size),
                         KOKKOS_LAMBDA(IndexType idx) {
                           locally_owned_array
-                            .data()[import_indices_plain.first[idx]] =
+                            .data()[import_indices_plain(idx)] =
                             internal::get_max(
                               locally_owned_array
-                                .data()[import_indices_plain.first[idx]],
+                                .data()[import_indices_plain(idx)],
                               read_position[idx]);
                         });
                       exec.fence();
@@ -661,7 +661,7 @@ namespace Utilities
                     {
                       // We can't easily assert here, so we just move the
                       // pointer matching the host code.
-                      const auto chunk_size = import_indices_plain.second;
+                      const auto chunk_size = import_indices_plain.size();
                       read_position += chunk_size;
                     }
                 }

@@ -727,9 +727,8 @@ namespace Utilities
        */
       // The variable is mutable to enable lazy initialization in
       // export_to_ghosted_array_start().
-      mutable std::vector<std::pair<
-        Kokkos::View<unsigned int *, MemorySpace::Device::kokkos_space>,
-        unsigned int>>
+      mutable std::vector<
+        Kokkos::View<unsigned int *, MemorySpace::Device::kokkos_space>>
         import_indices_plain_dev;
 
       /**
