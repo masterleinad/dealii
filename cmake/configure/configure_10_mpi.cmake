@@ -66,9 +66,9 @@ macro(feature_mpi_configure_external)
   # advanced configuration option.
   #
   if(DEAL_II_MPI_WITH_CUDA_SUPPORT)
-    option(DEAL_II_MPI_WITH_DEVICE_SUPPORT "Enable MPI Cuda support" ON)
+    option(DEAL_II_MPI_WITH_DEVICE_SUPPORT "Enable MPI Device support" ON)
   else()
-    option(DEAL_II_MPI_WITH_DEVICE_SUPPORT "Enable MPI Cuda support" OFF)
+    option(DEAL_II_MPI_WITH_DEVICE_SUPPORT "Enable MPI Device support" OFF)
   endif()
   mark_as_advanced(DEAL_II_MPI_WITH_DEVICE_SUPPORT)
 endmacro()
