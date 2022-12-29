@@ -551,16 +551,14 @@ namespace Utilities
             }
 
           // Move the indices to the device
+          // std::cout << import_indices_plain_dev[i].second << std::endl;
           Kokkos::View<unsigned int *, MemorySpace::Device::kokkos_space> view(
             "import_indices_plain_dev" + std::to_string(i),
-            import_indices_plain_dev[i].second);
-          Kokkos::deep_copy(
-            Kokkos::subview(
-              view,
-              Kokkos::pair<long, long>(0, import_indices_plain_host.size())),
-            Kokkos::View<unsigned int *, Kokkos::HostSpace>(
-              import_indices_plain_host.data(),
-              import_indices_plain_host.size()));
+            import_indices_plain_host.size());
+          Kokkos::deep_copy(view,
+                            Kokkos::View<unsigned int *, Kokkos::HostSpace>(
+                              import_indices_plain_host.data(),
+                              import_indices_plain_host.size()));
 
           import_indices_plain_dev.emplace_back(
             std::make_pair(view, import_indices_plain_host.size()));
