@@ -1097,7 +1097,7 @@ namespace LinearAlgebra
                 data.values.data() + partitioner->locally_owned_size(),
                 partitioner->n_ghost_indices()),
               compress_requests);
-	}
+        }
 #else
       (void)operation;
 #endif
