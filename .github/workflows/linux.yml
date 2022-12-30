@@ -214,13 +214,13 @@ jobs:
         make -j2 compile_test_executables
 
 
-  linux-debug-intel-oneapi:
-    # parallel debug build with Intel oneAPI including MPI and MKL
+  linux-debug-intel-oneapi-icpc:
+    # parallel debug build with Intel oneAPI (icpc) including MPI and MKL
     #
     # Based on https://github.com/oneapi-src/oneapi-ci
     # For a list of Intel packages see https://oneapi-src.github.io/oneapi-ci/#linux-apt
 
-    name: linux debug intel oneapi
+    name: linux debug icpc oneapi
     runs-on: [ubuntu-20.04]
 
     steps:
@@ -279,7 +279,101 @@ jobs:
     - name: archive detailed.log
       uses: actions/upload-artifact@v3
       with:
-        name: linux-intel-detailed.log
+        name: linux-icpx-detailed.log
+        path: build/detailed.log
+    - name: build
+      run: |
+        source /opt/intel/oneapi/setvars.sh
+        cd build
+        make -j 2
+    - name: quicktest
+      run: |
+        source /opt/intel/oneapi/setvars.sh
+        cd build
+        make test
+
+  linux-debug-intel-oneapi-icpx:
+    # parallel debug build with Intel oneAPI (icpcx) including MPI and MKL
+    #
+    # Based on https://github.com/oneapi-src/oneapi-ci
+    # For a list of Intel packages see https://oneapi-src.github.io/oneapi-ci/#linux-apt
+
+    name: linux debug icpx oneapi
+    runs-on: [ubuntu-20.04]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup apt repo
+      run: |
+        # oneapi-ci/scripts/setup_apt_repo_linux.sh
+        wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+        sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
+        echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
+        sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/oneAPI.list" -o APT::Get::List-Cleanup="0"
+    - name: collect versioned dependencies of apt packages
+      run : |
+        # oneapi-ci/scripts/apt_depends.sh
+        apt-cache depends intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic \
+          | tee dependencies.txt
+    - name: cache install
+      id: cache-install
+      uses: actions/cache@v3
+      with:
+        path: /opt/intel/oneapi
+        key: install-${{ hashFiles('**/dependencies.txt') }}
+    - name: install
+      if: steps.cache-install.outputs.cache-hit != 'true'
+      run: |
+        # oneapi-ci/scripts/install_linux_apt.sh
+        sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic \
+        sudo apt-get clean
+    - name: modules
+      run : |
+        sudo apt-get install -y software-properties-common
+        sudo add-apt-repository -y ppa:ginggs/deal.ii-9.4.0-backports
+        sudo apt-get update
+        sudo apt-get install -yq --no-install-recommends \
+            numdiff \
+            libp4est-dev
+    - name: info
+      run: |
+        source /opt/intel/oneapi/setvars.sh
+        cmake --version
+    - uses: actions/checkout@v3
+      with:
+        repository: kokkos/kokkos
+        ref: 3.7.00
+        path: kokkos
+    - name: compile and install kokkos
+      working-directory: kokkos
+      run: |
+        source /opt/intel/oneapi/setvars.sh
+        mkdir build
+        cd build
+        cmake -D BUILD_SHARED_LIBS=ON \
+              -D CMAKE_CXX_COMPILER=icpx \
+              -D CMAKE_INSTALL_PREFIX=${GITHUB_WORKSPACE}/../kokkos-install \
+              -D CMAKE_CXX_STANDARD=17\
+              -D Kokkos_ENABLE_SYCL=ON \
+              ..
+        make install
+    - name: configure deal.II
+      run: |
+        source /opt/intel/oneapi/setvars.sh
+        mkdir build
+        cd build
+        cmake -D CMAKE_BUILD_TYPE=Debug \
+              -D CMAKE_CXX_COMPILER=icpx \
+              -D DEAL_II_CXX_FLAGS='-std=c++17 -Werror' \
+              -D DEAL_II_EARLY_DEPRECATIONS=ON \
+              -D DEAL_II_WITH_MPI=ON \
+              -D DEAL_II_WITH_P4EST=ON \
+              -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
+              ..
+    - name: archive detailed.log
+      uses: actions/upload-artifact@v3
+      with:
+        name: linux-icpc-detailed.log
         path: build/detailed.log
     - name: build
       run: |
