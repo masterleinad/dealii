@@ -83,7 +83,7 @@ jobs:
         cd build
         cmake -D CMAKE_BUILD_TYPE=Debug \
               -D CMAKE_CXX_COMPILER=icpx \
-              -D DEAL_II_CXX_FLAGS='-std=c++17 -Werror -Wno-deprecated-declarations -fp-model=precise' \
+              -D DEAL_II_CXX_FLAGS='-std=c++17 -Werror -Wno-deprecated-declarations -fp-model=precise -Wno-unused-command-line-argument' \
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_MPI=ON \
               -D DEAL_II_WITH_P4EST=ON \
