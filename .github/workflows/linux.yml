@@ -104,4 +104,4 @@ jobs:
       run: |
         source /opt/intel/oneapi/setvars.sh
         cd build
-        make test
+        make -j2 setup_tests && ctest -V -R "kokkos"
