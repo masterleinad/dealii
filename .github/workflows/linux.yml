@@ -43,7 +43,7 @@ jobs:
       if: steps.cache-install.outputs.cache-hit != 'true'
       run: |
         # oneapi-ci/scripts/install_linux_apt.sh
-        sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
+        sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic-2022.3.0
         sudo apt-get clean
     - name: modules
       run : |
@@ -52,6 +52,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -yq --no-install-recommends \
             numdiff \
+            libopenmpi-dev \
             libp4est-dev
     - name: info
       run: |
