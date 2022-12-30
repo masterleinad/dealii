@@ -89,6 +89,7 @@ jobs:
               -D DEAL_II_WITH_P4EST=ON \
               -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
               .. ; cat /home/runner/work/dealii/dealii/build/CMakeFiles/CMakeError.log
+      shell: bash {0}
     - name: archive detailed.log
       uses: actions/upload-artifact@v3
       with:
