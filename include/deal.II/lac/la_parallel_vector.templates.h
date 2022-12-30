@@ -89,7 +89,7 @@ namespace LinearAlgebra
         static_assert(
           std::is_same<MemorySpaceType, MemorySpace::Host>::value ||
             std::is_same<MemorySpaceType, MemorySpace::Default>::value,
-          "MemorySpace should be Host or Device");
+          "MemorySpace should be Host or Default");
 
         static void
         resize_val(
@@ -338,7 +338,7 @@ namespace LinearAlgebra
           static_assert(
             std::is_same<Number, float>::value ||
               std::is_same<Number, double>::value,
-            "Number should be float or double for Device memory space");
+            "Number should be float or double for Default memory space");
 
           if (new_alloc_size > allocated_size)
             {
@@ -385,9 +385,11 @@ namespace LinearAlgebra
           const IndexSet &                  v_stored = V.get_stored_elements();
           const size_type                   n_elements = v_stored.n_elements();
           Kokkos::DefaultHostExecutionSpace host_exec;
-          Kokkos::View<size_type *, Kokkos::HostSpace> indices("indices",
-                                                               n_elements);
+          Kokkos::View<size_type *, Kokkos::HostSpace> indices(
+            Kokkos::view_alloc(Kokkos::WithoutInitializing, "indices"),
+            n_elements);
           Kokkos::parallel_for(
+            "import_elements: fill indices",
             Kokkos::RangePolicy<Kokkos::DefaultHostExecutionSpace>(host_exec,
                                                                    0,
                                                                    n_elements),
@@ -399,23 +401,18 @@ namespace LinearAlgebra
 
           // Move the indices to the device
           ::dealii::MemorySpace::Default::kokkos_space::execution_space exec;
-          Kokkos::View<size_type *,
-                       ::dealii::MemorySpace::Default::kokkos_space>
-            indices_dev("indices_dev", n_elements);
-          Kokkos::deep_copy(exec, indices_dev, indices);
-          exec.fence();
+          auto indices_dev = Kokkos::create_mirror_view_and_copy(
+            ::dealii::MemorySpace::Default::kokkos_space{}, indices);
 
           // Move the data to the device
-          Kokkos::View<Number *, ::dealii::MemorySpace::Default::kokkos_space>
-            V_dev("V_dev", n_elements);
-          Kokkos::deep_copy(
-            exec,
-            V_dev,
-            Kokkos::View<Number *, Kokkos::HostSpace>(V.begin(), n_elements));
-          exec.fence();
+          Kokkos::View<Number *, Kokkos::HostSpace> V_view(V.begin(),
+                                                           n_elements);
+          auto V_dev = Kokkos::create_mirror_view_and_copy(
+            ::dealii::MemorySpace::Default::kokkos_space{}, V_view);
 
           // Set the values in tmp_vector
           Kokkos::parallel_for(
+            "import_elements: set values tmp_vector",
             Kokkos::RangePolicy<
               ::dealii::MemorySpace::Default::kokkos_space::execution_space>(
               exec, 0, n_elements),
@@ -431,6 +428,7 @@ namespace LinearAlgebra
           const size_type tmp_n_elements = tmp_index_set.n_elements();
           Kokkos::realloc(indices, tmp_n_elements);
           Kokkos::parallel_for(
+            "import_elements: copy local elements to val",
             Kokkos::RangePolicy<Kokkos::DefaultHostExecutionSpace>(host_exec,
                                                                    0,
                                                                    n_elements),
@@ -441,11 +439,13 @@ namespace LinearAlgebra
           host_exec.fence();
           Kokkos::realloc(indices_dev, tmp_n_elements);
           Kokkos::deep_copy(indices_dev,
-                            Kokkos::View<size_type *>(indices.data(),
-                                                      tmp_n_elements));
+                            Kokkos::subview(indices,
+                                            Kokkos::make_pair(size_type(0),
+                                                              tmp_n_elements)));
 
           if (operation == VectorOperation::add)
             Kokkos::parallel_for(
+              "import_elements: add values",
               Kokkos::RangePolicy<
                 ::dealii::MemorySpace::Default::kokkos_space::execution_space>(
                 exec, 0, n_elements),
@@ -454,6 +454,7 @@ namespace LinearAlgebra
               });
           else
             Kokkos::parallel_for(
+              "import_elements: set values",
               Kokkos::RangePolicy<
                 ::dealii::MemorySpace::Default::kokkos_space::execution_space>(
                 exec, 0, n_elements),
@@ -477,6 +478,7 @@ namespace LinearAlgebra
           typename ::dealii::MemorySpace::Default::kokkos_space::execution_space
             exec;
           Kokkos::parallel_reduce(
+            "linfty_norm_local",
             Kokkos::RangePolicy<
               ::dealii::MemorySpace::Default::kokkos_space::execution_space>(
               exec, 0, size),

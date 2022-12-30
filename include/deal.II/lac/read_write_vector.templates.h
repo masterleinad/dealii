@@ -110,7 +110,7 @@ namespace LinearAlgebra
         static_assert(
           std::is_same<MemorySpace, ::dealii::MemorySpace::Host>::value ||
             std::is_same<MemorySpace, ::dealii::MemorySpace::Default>::value,
-          "MemorySpace should be Host or Device");
+          "MemorySpace should be Host or Default");
       }
     };
 
