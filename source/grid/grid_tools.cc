@@ -3012,6 +3012,8 @@ namespace GridTools
           }
         else
           {
+            // FIXME boost with icpx fails compiling
+#ifndef __INTEL_LLVM_COMPILER
             if (!used_vertices_rtree.empty())
               {
                 // If we have an rtree at our disposal, use it.
@@ -3040,6 +3042,7 @@ namespace GridTools
                     closest_vertex_index = res[0].second;
               }
             else
+#endif
               {
                 closest_vertex_index = GridTools::find_closest_vertex(
                   mapping, mesh, p, marked_vertices);

@@ -1393,6 +1393,8 @@ namespace Particles
                 }
             }
 
+            // FIXME boost with icpx fails compiling
+#ifndef __INTEL_LLVM_COMPILER
           if (!found_cell)
             {
               // The particle is not in a neighbor of the old cell.
@@ -1427,6 +1429,7 @@ namespace Particles
                     }
                 }
             }
+#endif
 
           if (!found_cell)
             {
