@@ -32,7 +32,8 @@ jobs:
       run : |
         # oneapi-ci/scripts/apt_depends.sh
         apt-cache depends intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic \
-          | tee dependencies.txt
+                          intel-oneapi-mkl-devel \
+                          intel-oneapi-tbb-devel | tee dependencies.txt
     - name: cache install
       id: cache-install
       uses: actions/cache@v3
@@ -43,7 +44,9 @@ jobs:
       if: steps.cache-install.outputs.cache-hit != 'true'
       run: |
         # oneapi-ci/scripts/install_linux_apt.sh
-        sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic
+        sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic \
+                                intel-oneapi-mkl-devel \
+                                intel-oneapi-tbb-devel
         sudo apt-get clean
     - name: modules
       run : |
@@ -87,7 +90,11 @@ jobs:
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_MPI=ON \
               -D DEAL_II_WITH_P4EST=ON \
+              -D DEAL_II_WITH_TBB=ON \
               -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
+              -D BLAS_DIR=${MKLROOT} \
+              -D LAPACK_DIR=${MKLROOT} \
+              -D TBB_DIR=${TBBROOT} \
               .. ; cat /home/runner/work/dealii/dealii/build/CMakeFiles/CMakeError.log
       shell: bash {0}
     - name: archive detailed.log
