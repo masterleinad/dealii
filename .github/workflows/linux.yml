@@ -114,3 +114,5 @@ jobs:
         cd build
         make -j2 setup_tests && ctest -V -R "kokkos"; gdb -batch -ex "run" -ex "bt" /home/runner/work/dealii/dealii/build/tests/quick_tests/kokkos.debug/kokkos.debug 2>&1 | grep -v ^"No stack."$
       shell: bash {0}
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
