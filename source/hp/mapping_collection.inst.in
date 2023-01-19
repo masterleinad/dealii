@@ -20,16 +20,24 @@ for (deal_II_dimension : DIMENSIONS)
     \{
       template class MappingCollection<deal_II_dimension>;
       template struct StaticMappingQ1<deal_II_dimension>;
+      template MappingCollection<deal_II_dimension, deal_II_dimension>
+        StaticMappingQ1<deal_II_dimension,
+                        deal_II_dimension>::mapping_collection;
 
 #if deal_II_dimension != 3
       template class MappingCollection<deal_II_dimension,
                                        deal_II_dimension + 1>;
       template struct StaticMappingQ1<deal_II_dimension, deal_II_dimension + 1>;
+      template MappingCollection<deal_II_dimension, deal_II_dimension + 1>
+        StaticMappingQ1<deal_II_dimension,
+                        deal_II_dimension + 1>::mapping_collection;
 #endif
 
 #if deal_II_dimension == 3
       template class MappingCollection<1, 3>;
       template struct StaticMappingQ1<1, 3>;
+      template MappingCollection<1, 3>
+        StaticMappingQ1<1, 3>::mapping_collection;
 #endif
     \}
   }
