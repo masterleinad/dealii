@@ -44,7 +44,7 @@ message(STATUS "Running quick_tests in ${CMAKE_BUILD_TYPE} mode with -j${_n_proc
 string(TOLOWER "${CMAKE_BUILD_TYPE}" _build_type)
 execute_process(COMMAND ${CMAKE_CTEST_COMMAND}
   -j${_n_processors} -C ${CMAKE_BUILD_TYPE} --force-new-ctest-process
-  -R "quick_tests/(step.debug|step.release|affinity|.*.${_build_type})"
+  -R "quick_tests/(step.debug|step.release|affinity|.*.${_build_type})" -V
   OUTPUT_VARIABLE _output ERROR_VARIABLE _output RESULT_VARIABLE _return_value
   )
 file(WRITE quick_tests.log ${_output})
