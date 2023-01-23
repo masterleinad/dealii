@@ -508,7 +508,7 @@ namespace Utilities
       // straight forward for complex numbers. Therefore, comparison of complex
       // numbers is prohibited and throws an exception.
       template <typename Number>
-      Number
+      DEAL_II_HOST_DEVICE Number
       get_min(const Number a, const Number b)
       {
         return std::min(a, b);
@@ -525,7 +525,7 @@ namespace Utilities
       }
 
       template <typename Number>
-      Number
+      DEAL_II_HOST_DEVICE Number
       get_max(const Number a, const Number b)
       {
         return std::max(a, b);
