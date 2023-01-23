@@ -43,7 +43,12 @@ for (SCALAR : MPI_SCALARS)
                          const ArrayView<SCALAR, MemorySpace::Host> &,
                          const ArrayView<SCALAR, MemorySpace::Host> &,
                          std::vector<MPI_Request> &) const;
+#endif
+  }
 
+for (SCALAR : MPI_DEVICE_SCALARS)
+  {
+#ifdef DEAL_II_WITH_MPI
     template void Utilities::MPI::Partitioner::
       export_to_ghosted_array_start<SCALAR, dealii::MemorySpace::Default>(
         const unsigned int,
