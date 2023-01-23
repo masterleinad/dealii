@@ -39,15 +39,17 @@ enum class NeighborType
 
   /**
    * Simple neighbors: the boxes intersect with an intersection of dimension at
-   * most `spacedim - 2`. For example, in 2d this means that the two boxes
-   * touch at one corner of the each box.
+   * most `spacedim - 2`. For example, in 2d this means that the two rectangles
+   * touch at a single point, which must then be a vertex of each box. In 3d,
+   * this means that two boxes touch along an edge.
    */
   simple_neighbors = 1,
 
   /**
    * Attached neighbors: neighbors with an intersection of
    * `dimension > spacedim - 2`. For example, in 2d this means that the two
-   * boxes touch along an edge.
+   * rectangles touch along (parts of) their edges. In 3d, it would mean that
+   * two boxes touch along (parts of) their faces.
    */
   attached_neighbors = 2,
 
@@ -59,7 +61,9 @@ enum class NeighborType
    *  |  |  | =  |     |
    *  V--W--.    V-----.
    *  @endcode
-   * or one is inside the other
+   * or one is inside the other. This is a special case of `attached_neighbors`
+   * where the two bounding boxes touch along the entirety of their respective
+   * faces, or where they overlap in suitable ways.
    */
   mergeable_neighbors = 3
 };
@@ -183,8 +187,14 @@ public:
   /**
    * Check if the current object and @p other_bbox are neighbors, i.e. if the boxes
    * have dimension spacedim, check if their intersection is non empty.
-   *
-   * Return an enumerator of type NeighborType.
+   */
+  bool
+  has_overlap_with(
+    const BoundingBox<spacedim, Number> &other_bbox,
+    const double tolerance = std::numeric_limits<Number>::epsilon()) const;
+
+  /**
+   * Check which NeighborType @p other_bbox is to the current object.
    */
   NeighborType
   get_neighbor_type(
@@ -432,12 +442,11 @@ inline BoundingBox<spacedim, Number>::BoundingBox(const Container &points)
     {
       auto &min = boundary_points.first;
       auto &max = boundary_points.second;
-      std::fill(min.begin_raw(),
-                min.end_raw(),
-                std::numeric_limits<Number>::infinity());
-      std::fill(max.begin_raw(),
-                max.end_raw(),
-                -std::numeric_limits<Number>::infinity());
+      for (unsigned int d = 0; d < spacedim; ++d)
+        {
+          min[d] = std::numeric_limits<Number>::infinity();
+          max[d] = -std::numeric_limits<Number>::infinity();
+        }
 
       for (const Point<spacedim, Number> &point : points)
         for (unsigned int d = 0; d < spacedim; ++d)

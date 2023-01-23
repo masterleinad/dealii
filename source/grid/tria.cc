@@ -447,13 +447,16 @@ namespace
                         SubCellData &             subcelldata)
   {
     unsigned int tmp[GeometryInfo<3>::vertices_per_cell];
+    static constexpr std::array<unsigned int,
+                                GeometryInfo<3>::vertices_per_cell>
+      local_vertex_numbering{{0, 1, 5, 4, 2, 3, 7, 6}};
     for (auto &cell : cells)
       if (cell.vertices.size() == GeometryInfo<3>::vertices_per_cell)
         {
           for (const unsigned int i : GeometryInfo<3>::vertex_indices())
             tmp[i] = cell.vertices[i];
           for (const unsigned int i : GeometryInfo<3>::vertex_indices())
-            cell.vertices[GeometryInfo<3>::ucd_to_deal[i]] = tmp[i];
+            cell.vertices[local_vertex_numbering[i]] = tmp[i];
         }
 
     // now points in boundary quads
@@ -1224,20 +1227,15 @@ namespace internal
           if (tria_level.dim == 2 || tria_level.dim == 3)
             {
               const unsigned int max_faces_per_cell = 2 * dimension;
-              tria_level.face_orientations.reserve(total_cells *
-                                                   max_faces_per_cell);
-              tria_level.face_orientations.insert(
-                tria_level.face_orientations.end(),
-                total_cells * max_faces_per_cell -
-                  tria_level.face_orientations.size(),
-                1u);
+              tria_level.face_orientations.resize(total_cells *
+                                                  max_faces_per_cell);
 
               tria_level.reference_cell.reserve(total_cells);
               tria_level.reference_cell.insert(
                 tria_level.reference_cell.end(),
                 total_cells - tria_level.reference_cell.size(),
-                tria_level.dim == 2 ? dealii::ReferenceCells::Quadrilateral :
-                                      dealii::ReferenceCells::Hexahedron);
+                tria_level.dim == 2 ? ReferenceCells::Quadrilateral :
+                                      ReferenceCells::Hexahedron);
             }
         }
     }
@@ -2352,7 +2350,8 @@ namespace internal
 
                     // set line orientations
                     const unsigned char raw_orientation =
-                      connectivity.entity_orientations(1)[k];
+                      connectivity.entity_orientations(1).get_raw_orientation(
+                        k);
                     // it doesn't make sense to set any flags except
                     // orientation for a line
                     Assert(raw_orientation == 0u || raw_orientation == 1u,
@@ -2375,12 +2374,19 @@ namespace internal
 
           // in 2D optional: since in in pure QUAD meshes same line
           // orientations can be guaranteed
-          const bool orientation_needed =
-            dim == 3 ||
-            (dim == 2 &&
-             std::any_of(connectivity.entity_orientations(1).begin(),
-                         connectivity.entity_orientations(1).end(),
-                         [](const auto &i) { return i == 0; }));
+          bool orientation_needed = false;
+          if (dim == 3)
+            orientation_needed = true;
+          else if (dim == 2)
+            {
+              const auto &orientations = connectivity.entity_orientations(1);
+              for (unsigned int i = 0; i < orientations.n_objects(); ++i)
+                if (orientations.get_raw_orientation(i) != 1u)
+                  {
+                    orientation_needed = true;
+                    break;
+                  }
+            }
 
           // allocate memory
           reserve_space_(cells_0, n_cell);
@@ -2415,9 +2421,10 @@ namespace internal
                   // set face orientation if needed
                   if (orientation_needed)
                     {
-                      level.face_orientations
-                        [cell * GeometryInfo<dim>::faces_per_cell + j] =
-                        connectivity.entity_orientations(dim - 1)[i];
+                      level.face_orientations.set_raw_orientation(
+                        cell * GeometryInfo<dim>::faces_per_cell + j,
+                        connectivity.entity_orientations(dim - 1)
+                          .get_raw_orientation(i));
                     }
                 }
             }
@@ -2655,10 +2662,11 @@ namespace internal
 
         level.neighbors.assign(size * max_faces_per_cell, {-1, -1});
 
-        level.reference_cell.assign(size, dealii::ReferenceCells::Invalid);
+        level.reference_cell.assign(size, ReferenceCells::Invalid);
 
         if (orientation_needed)
-          level.face_orientations.assign(size * max_faces_per_cell, -1);
+          level.face_orientations.reinit(size * max_faces_per_cell);
+
 
         level.global_active_cell_indices.assign(size,
                                                 numbers::invalid_dof_index);
@@ -4340,9 +4348,11 @@ namespace internal
                   if (new_lines[line_no]->vertex_index(1) !=
                       new_vertices[vertex_no])
                     triangulation.levels[subcells[subcell_no]->level()]
-                      ->face_orientations[subcells[subcell_no]->index() *
-                                            GeometryInfo<2>::faces_per_cell +
-                                          subcell_line_no] = 0;
+                      ->face_orientations.set_raw_orientation(
+                        subcells[subcell_no]->index() *
+                            GeometryInfo<2>::faces_per_cell +
+                          subcell_line_no,
+                        0u);
                 };
 
               fix_line_orientation(0, 3, 0, 0);
@@ -5501,19 +5511,18 @@ namespace internal
                     {
                       for (const auto f : new_quad->line_indices())
                         {
-                          std::array<unsigned int, 2> vertices_0, vertices_1;
+                          const std::array<unsigned int, 2> vertices_0 = {
+                            {lines[quad_lines[i][f]]->vertex_index(0),
+                             lines[quad_lines[i][f]]->vertex_index(1)}};
 
-                          for (unsigned int v = 0; v < 2; ++v)
-                            vertices_0[v] =
-                              lines[quad_lines[i][f]]->vertex_index(v);
-
-                          for (unsigned int v = 0; v < 2; ++v)
-                            vertices_1[v] =
-                              vertex_indices[quad_line_vertices_tri[i][f][v]];
+                          const std::array<unsigned int, 2> vertices_1 = {
+                            {vertex_indices[quad_line_vertices_tri[i][f][0]],
+                             vertex_indices[quad_line_vertices_tri[i][f][1]]}};
 
                           const auto orientation =
-                            ReferenceCells::Line.compute_orientation(
-                              vertices_0, vertices_1);
+                            ReferenceCells::Line.get_orientation_index(
+                              make_array_view(vertices_0),
+                              make_array_view(vertices_1));
 
 #ifdef DEBUG
                           for (const auto i : vertices_0)
@@ -5710,7 +5719,10 @@ namespace internal
                     const std::array<unsigned int, 12> line_indices =
                       TriaAccessorImplementation::Implementation::
                         get_line_indices_of_cell(*hex);
-                    for (unsigned int l = 0; l < hex->n_lines(); ++l)
+                    // avoid a compiler warning by fixing the max number of
+                    // loop iterations to 12
+                    const unsigned int n_lines = std::min(hex->n_lines(), 12u);
+                    for (unsigned int l = 0; l < n_lines; ++l)
                       {
                         raw_line_iterator line(&triangulation,
                                                0,
@@ -5824,10 +5836,10 @@ namespace internal
                                   ->line(
                                     table[triangulation.levels[hex->level()]
                                             ->face_orientations
-                                              [hex->index() *
-                                                 GeometryInfo<
-                                                   dim>::faces_per_cell +
-                                               f]][l]);
+                                            .get_raw_orientation(
+                                              hex->index() * GeometryInfo<dim>::
+                                                               faces_per_cell +
+                                              f)][l]);
                             }
 
                         relevant_lines[k++] = new_lines[0];
@@ -5949,19 +5961,21 @@ namespace internal
                                ReferenceCells::Hexahedron) ?
                                 representative_lines[q % 4][0] :
                                 line;
-                            std::array<unsigned int, 2> vertices_0, vertices_1;
 
-                            for (unsigned int v = 0; v < 2; ++v)
-                              vertices_0[v] =
-                                relevant_lines[new_quad_lines[q][l]]
-                                  ->vertex_index(v);
+                            const std::array<unsigned int, 2> vertices_0 = {
+                              {relevant_lines[new_quad_lines[q][l]]
+                                 ->vertex_index(0),
+                               relevant_lines[new_quad_lines[q][l]]
+                                 ->vertex_index(1)}};
 
-                            for (unsigned int v = 0; v < 2; ++v)
-                              vertices_1[v] = vertex_indices[table[q][l][v]];
+                            const std::array<unsigned int, 2> vertices_1 = {
+                              {vertex_indices[table[q][l][0]],
+                               vertex_indices[table[q][l][1]]}};
 
                             const auto orientation =
-                              ReferenceCells::Line.compute_orientation(
-                                vertices_0, vertices_1);
+                              ReferenceCells::Line.get_orientation_index(
+                                make_array_view(vertices_0),
+                                make_array_view(vertices_1));
 
                             new_quad->set_line_orientation(l, orientation);
 
@@ -6012,10 +6026,10 @@ namespace internal
                                       c,
                                       f,
                                       triangulation.levels[hex->level()]
-                                        ->face_orientations
-                                          [hex->index() *
-                                             GeometryInfo<dim>::faces_per_cell +
-                                           f]));
+                                        ->face_orientations.get_raw_orientation(
+                                          hex->index() *
+                                            GeometryInfo<dim>::faces_per_cell +
+                                          f)));
                             }
                       }
                     else
@@ -6118,22 +6132,30 @@ namespace internal
                             // figure the orientation out the hard way
                             for (const auto f : new_hex->face_indices())
                               {
-                                std::array<unsigned int, 4> vertices_0,
-                                  vertices_1;
-
                                 const auto &face = new_hex->face(f);
 
-                                for (const auto i : face->vertex_indices())
-                                  vertices_0[i] = face->vertex_index(i);
+                                Assert(face->n_vertices() == 3,
+                                       ExcInternalError());
 
-                                for (const auto i : face->vertex_indices())
-                                  vertices_1[i] =
+                                const std::array<unsigned int, 3> vertices_0 = {
+                                  {face->vertex_index(0),
+                                   face->vertex_index(1),
+                                   face->vertex_index(2)}};
+
+                                const std::array<unsigned int, 3> vertices_1 = {
+                                  {
                                     vertex_indices[cell_face_vertices_tet[c][f]
-                                                                         [i]];
+                                                                         [0]],
+                                    vertex_indices[cell_face_vertices_tet[c][f]
+                                                                         [1]],
+                                    vertex_indices[cell_face_vertices_tet[c][f]
+                                                                         [2]],
+                                  }};
 
                                 const auto orientation =
-                                  face->reference_cell().compute_orientation(
-                                    vertices_1, vertices_0);
+                                  face->reference_cell().get_orientation_index(
+                                    make_array_view(vertices_1),
+                                    make_array_view(vertices_0));
 
                                 new_hex->set_face_orientation(
                                   f, Utilities::get_bit(orientation, 0));
@@ -14602,7 +14624,8 @@ Triangulation<dim, spacedim>::reset_cell_vertex_indices_cache()
                    face_iter->line(1)->vertex_index(line_orientations[1])}};
 
                 const unsigned char orientate =
-                  levels[l]->face_orientations[cell->index() * 6 + face];
+                  levels[l]->face_orientations.get_raw_orientation(
+                    cell->index() * GeometryInfo<3>::faces_per_cell + face);
                 std::array<unsigned int, 4> vertex_order{
                   {ref_cell.standard_to_real_face_vertex(0, face, orientate),
                    ref_cell.standard_to_real_face_vertex(1, face, orientate),

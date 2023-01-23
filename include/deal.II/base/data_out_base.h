@@ -281,13 +281,23 @@ namespace DataOutBase
      *
      * The order of points is the same as for cells in the
      * triangulation.
+     *
+     * @note This array is sized to accommodate the maximal number of vertices
+     *   one might encounter in a cell, namely those for a hypercube cell.
+     *   For other kinds of cells (triangles, tetrahedra, etc.), only the
+     *   first few elements of this array will be used.
      */
-    Point<spacedim> vertices[GeometryInfo<dim>::vertices_per_cell];
+    std::array<Point<spacedim>, GeometryInfo<dim>::vertices_per_cell> vertices;
 
     /**
      * Patch indices of neighbors of the current patch. This is made available
      * for the OpenDX format that requires neighbor
      * information for advanced output.
+     *
+     * @note This array is sized to accommodate the maximal number of faces
+     *   one might encounter in a cell, namely those for a hypercube cell.
+     *   For other kinds of cells (triangles, tetrahedra, etc.), only the
+     *   first few elements of this array will be used.
      */
     std::array<unsigned int, GeometryInfo<dim>::faces_per_cell> neighbors;
 

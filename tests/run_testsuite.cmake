@@ -245,7 +245,7 @@ endif()
 
 message("-- CTEST_SITE:             ${CTEST_SITE}")
 
-if(TRACK MATCHES "^Regression Tests$" AND NOT CTEST_SITE MATCHES "^tester$")
+if(TRACK MATCHES "^Regression Tests$" AND NOT CTEST_SITE MATCHES "^tester(|-ng)$")
   message(FATAL_ERROR "
 I'm sorry ${CTEST_SITE}, I'm afraid I can't do that.
 The TRACK \"Regression Tests\" is not for you.
@@ -266,7 +266,7 @@ if(NOT "${CONFIG_FILE}" STREQUAL "")
 endif()
 
 if("${TRACK}" STREQUAL "Build Tests")
-  set(TEST_PICKUP_REGEX "^do_not_run_any_tests")
+  set(TEST_PICKUP_REGEX "^quick_tests")
 endif()
 
 # Pass all relevant variables down to configure:
