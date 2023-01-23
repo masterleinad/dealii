@@ -131,6 +131,8 @@ namespace Utilities
               const auto chunk_size = import_indices_plain_dev[i].size();
               using IndexType       = decltype(chunk_size);
 
+              auto import_indices           = import_indices_plain_dev[i];
+              auto locally_owned_array_data = locally_owned_array.data();
               MemorySpace::Default::kokkos_space::execution_space exec;
               Kokkos::parallel_for(
                 "fill temp_array_ptr",
@@ -139,8 +141,7 @@ namespace Utilities
                   exec, 0, chunk_size),
                 KOKKOS_LAMBDA(IndexType idx) {
                   temp_array_ptr[idx] =
-                    locally_owned_array
-                      .data()[import_indices_plain_dev[i](idx)];
+                    locally_owned_array_data[import_indices[idx]];
                 });
               exec.fence();
             }
