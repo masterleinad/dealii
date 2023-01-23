@@ -231,6 +231,8 @@ namespace Utilities
                   if (std::is_same<MemorySpaceType, MemorySpace::Host>::value)
 #    endif
                     {
+                      // If source and destination are overlapping, we must be
+                      // careful to use an appropriate copy function.
                       if (ghost_range.first > offset)
                         std::copy_backward(ghost_array.data() + offset,
                                            ghost_array.data() + offset +
@@ -248,18 +250,33 @@ namespace Utilities
                     }
                   else
                     {
+                      Kokkos::View<const Number *,
+                                   MemorySpace::Default::kokkos_space>
+                        ghost_src_view(ghost_array.data() + offset, chunk_size);
                       Kokkos::View<Number *, MemorySpace::Default::kokkos_space>
-                        copy("copy", chunk_size);
-                      Kokkos::deep_copy(
-                        copy,
-                        Kokkos::View<Number *,
-                                     MemorySpace::Default::kokkos_space>(
-                          ghost_array.data() + offset, chunk_size));
-                      Kokkos::deep_copy(
-                        Kokkos::View<Number *,
-                                     MemorySpace::Default::kokkos_space>(
-                          ghost_array.data() + ghost_range.first, chunk_size),
-                        copy);
+                        ghost_dst_view(ghost_array.data() + ghost_range.first,
+                                       chunk_size);
+
+                      // If source and destination are overlapping, we can't
+                      // just call deep_copy but must copy the data to a buffer
+                      // first.
+                      if ((offset < ghost_range.first &&
+                           ghost_range.first < offset + chunk_size) ||
+                          (ghost_range.first < offset &&
+                           offset < ghost_range.first + chunk_size))
+                        {
+                          Kokkos::View<Number *,
+                                       MemorySpace::Default::kokkos_space>
+                            copy(Kokkos::view_alloc(
+                                   "copy", Kokkos::WithoutInitializing),
+                                 chunk_size);
+                          Kokkos::deep_copy(copy, ghost_src_view);
+                          Kokkos::deep_copy(ghost_dst_view, copy);
+                        }
+                      else
+                        {
+                          Kokkos::deep_copy(ghost_dst_view, ghost_src_view);
+                        }
                       Kokkos::deep_copy(
                         Kokkos::View<Number *,
                                      MemorySpace::Default::kokkos_space>(
