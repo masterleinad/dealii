@@ -646,7 +646,7 @@ else()
     DEAL_II_CXX14_CONSTEXPR_BUG)
 endif()
 
-set(DEAL_II_CONSTEXPR "constexpr")
+set(DEAL_II_CONSTEXPR "constexpr __host__")
 if(DEAL_II_CXX14_CONSTEXPR_BUG)
   set(DEAL_II_CONSTEXPR " ")
 endif()
