@@ -28,6 +28,7 @@
 #  include <cusparse.h>
 #endif
 
+#include <Kokkos_Core.hpp>
 
 DEAL_II_NAMESPACE_OPEN
 
@@ -1507,7 +1508,8 @@ namespace deal_II_exceptions
 #ifdef DEBUG
 #  ifdef DEAL_II_HAVE_BUILTIN_EXPECT
 #    define Assert(cond, exc)                                            \
-      {                                                                  \
+      {\
+	KOKKOS_IF_ON_HOST((      \
         if (__builtin_expect(!(cond), false))                            \
           ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
             ::dealii::deal_II_exceptions::internals::ExceptionHandling:: \
@@ -1517,11 +1519,13 @@ namespace deal_II_exceptions
             __PRETTY_FUNCTION__,                                         \
             #cond,                                                       \
             #exc,                                                        \
-            exc);                                                        \
+            exc);       ))\
+	      KOKKOS_IF_ON_DEVICE(((void)(cond);))\
       }
 #  else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #    define Assert(cond, exc)                                            \
-      {                                                                  \
+      {            \
+KOKKOS_IF_ON_HOST((	      \
         if (!(cond))                                                     \
           ::dealii::deal_II_exceptions::internals::issue_error_noreturn( \
             ::dealii::deal_II_exceptions::internals::ExceptionHandling:: \
@@ -1531,7 +1535,9 @@ namespace deal_II_exceptions
             __PRETTY_FUNCTION__,                                         \
             #cond,                                                       \
             #exc,                                                        \
-            exc);                                                        \
+            exc);   \
+	    ))	    \
+	                  KOKKOS_IF_ON_DEVICE(((void)(cond);))\
       }
 #  endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #else

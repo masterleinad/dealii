@@ -1167,8 +1167,7 @@ namespace internal
     constexpr DEAL_II_HOST_DEVICE_ALWAYS_INLINE void
     multiply_assign_scalar(std::complex<Number> &, const OtherNumber &)
     {
-      printf("This function is not implemented for std::complex<Number>!\n");
-      assert(false);
+      Kokkos::abort("This function is not implemented for std::complex<Number>!\n");
     }
 #  endif
   } // namespace ComplexWorkaround
@@ -1721,7 +1720,7 @@ constexpr inline DEAL_II_ALWAYS_INLINE
 
 
 template <int rank_, int dim, typename Number>
-inline typename numbers::NumberTraits<Number>::real_type
+inline DEAL_II_HOST_DEVICE typename numbers::NumberTraits<Number>::real_type
 Tensor<rank_, dim, Number>::norm() const
 {
   // Make things work with AD types
