@@ -41,7 +41,13 @@ namespace Utilities
      * fact, any linear data structure) among processors using MPI.
      *
      * The partitioner stores the global vector size and the locally owned
-     * range as a half-open interval [@p lower, @p upper) on each process.
+     * range as a half-open interval [@p lower, @p upper) on each process. In
+     * other words, it assumes that every process stores a contiguous subset
+     * of the array mentioned in the documentation of the base class
+     * Utilities::MPI::CommunicationPatternBase. (If you want to store
+     * non-contiguous parts of these arrays on each process, take a look
+     * at Utilities::MPI::NoncontiguousPartitioner.)
+     *
      * Furthermore, it includes a structure for the point-to-point communication
      * patterns. It allows the inclusion of ghost indices (i.e. indices that a
      * current processor needs to have access to, but are owned by another
@@ -671,7 +677,7 @@ namespace Utilities
     private:
       /**
        * Initialize import_indices_plain_dev from import_indices_data. This
-       * function is only used when using CUDA-aware MPI.
+       * function is only used when using device-aware MPI.
        */
       void
       initialize_import_indices_plain_dev() const;
@@ -722,15 +728,13 @@ namespace Utilities
       /**
        * The set of (local) indices that we are importing during compress(),
        * i.e., others' ghosts that belong to the local range. The data stored is
-       * the same than in import_indices_data but the data is expanded in plain
-       * arrays. This variable is only used when using CUDA-aware MPI.
+       * the same as in import_indices_data but the data is expanded in plain
+       * arrays. This variable is only used when using device-aware MPI.
        */
       // The variable is mutable to enable lazy initialization in
-      // export_to_ghosted_array_start(). This way partitioner does not have to
-      // be templated on the MemorySpaceType.
+      // export_to_ghosted_array_start().
       mutable std::vector<
-        std::pair<std::unique_ptr<unsigned int[], void (*)(unsigned int *)>,
-                  unsigned int>>
+        Kokkos::View<unsigned int *, MemorySpace::Default::kokkos_space>>
         import_indices_plain_dev;
 
       /**

@@ -677,20 +677,16 @@ FiniteElement<dim, spacedim>::adjust_quad_dof_index_for_face_orientation(
   // the function should also not have been
   // called
   AssertIndexRange(index, this->n_dofs_per_quad(face));
-  Assert(adjust_quad_dof_index_for_face_orientation_table
-             [this->n_unique_quads() == 1 ? 0 : face]
-               .n_elements() == (this->reference_cell().face_reference_cell(
-                                   face) == ReferenceCells::Quadrilateral ?
-                                   8 :
-                                   6) *
-                                  this->n_dofs_per_quad(face),
-         ExcInternalError());
-  return index +
-         adjust_quad_dof_index_for_face_orientation_table
-           [this->n_unique_quads() == 1 ? 0 : face](index,
-                                                    (face_orientation ? 4 : 0) +
-                                                      (face_flip ? 2 : 0) +
-                                                      (face_rotation ? 1 : 0));
+  const auto table_n = this->n_unique_quads() == 1 ? 0 : face;
+  Assert(
+    adjust_quad_dof_index_for_face_orientation_table[table_n].n_elements() ==
+      (this->reference_cell().n_face_orientations(face)) *
+        this->n_dofs_per_quad(face),
+    ExcInternalError());
+  return index + adjust_quad_dof_index_for_face_orientation_table[table_n](
+                   index,
+                   (face_orientation ? 4 : 0) + (face_flip ? 2 : 0) +
+                     (face_rotation ? 1 : 0));
 }
 
 
@@ -1325,8 +1321,7 @@ FiniteElement<dim, spacedim>::fill_fe_face_values(
   const hp::QCollection<dim - 1> &                            quadrature,
   const Mapping<dim, spacedim> &                              mapping,
   const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     &                                                            mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
@@ -1355,8 +1350,7 @@ FiniteElement<dim, spacedim>::fill_fe_face_values(
   const Quadrature<dim - 1> &                                 quadrature,
   const Mapping<dim, spacedim> &                              mapping,
   const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     &                                                            mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,

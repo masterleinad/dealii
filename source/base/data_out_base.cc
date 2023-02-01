@@ -14,23 +14,6 @@
 // ---------------------------------------------------------------------
 
 
-// TODO: Do neighbors for dx and povray smooth triangles
-
-//--------------------------------------------------------------------
-// Remarks on the implementations
-//
-// Variable names: in most functions, variable names have been
-// standardized in the following way:
-//
-// n1, n2, ni Number of points in coordinate direction 1, 2, i
-//    will be 1 if i>=dim
-//
-// i1, i2, ii Loop variable running up to ni
-//
-// d1, d2, di Multiplicators for ii to find positions in the
-//    array of nodes.
-//--------------------------------------------------------------------
-
 #include <deal.II/base/data_out_base.h>
 #include <deal.II/base/memory_consumption.h>
 #include <deal.II/base/mpi.h>
@@ -726,128 +709,63 @@ namespace
   const unsigned int tecplot_binary_cell_type[4] = {0, 0, 1, 3};
 #endif
 
-  // Define cell id using VTK nomenclature for linear, quadratic and
-  // high-order Lagrange cells
-  enum vtk_linear_cell_type
-  {
-    VTK_VERTEX     = 1,
-    VTK_LINE       = 3,
-    VTK_TRIANGLE   = 5,
-    VTK_QUAD       = 9,
-    VTK_TETRA      = 10,
-    VTK_HEXAHEDRON = 12,
-    VTK_WEDGE      = 13,
-    VTK_PYRAMID    = 14
-  };
-
-  enum vtk_quadratic_cell_type
-  {
-    VTK_QUADRATIC_EDGE       = 21,
-    VTK_QUADRATIC_TRIANGLE   = 22,
-    VTK_QUADRATIC_QUAD       = 23,
-    VTK_QUADRATIC_TETRA      = 24,
-    VTK_QUADRATIC_HEXAHEDRON = 25,
-    VTK_QUADRATIC_WEDGE      = 26,
-    VTK_QUADRATIC_PYRAMID    = 27
-  };
-
-  enum vtk_lagrange_cell_type
-  {
-    VTK_LAGRANGE_CURVE         = 68,
-    VTK_LAGRANGE_TRIANGLE      = 69,
-    VTK_LAGRANGE_QUADRILATERAL = 70,
-    VTK_LAGRANGE_TETRAHEDRON   = 71,
-    VTK_LAGRANGE_HEXAHEDRON    = 72,
-    VTK_LAGRANGE_WEDGE         = 73,
-    VTK_LAGRANGE_PYRAMID       = 74
-  };
 
   /**
-   * Return the tuple (vtk cell type, number of cells, number of vertices)
+   * Return the tuple (vtk cell type, number of cells, number of nodes)
    * for a patch.
+   *
+   * The logic used here is as follows:
+   * - If a cell is not subdivided or we don't use higher order cells,
+   *   then we use linear cells
+   * - For hypercubes, we support subdividing cells into sub-cells,
+   *   which are then treated as each being linear
+   * - For triangles and tetrahedra, we special-case the situation of
+   *   n_subdivisions==2, in which case we treat the cell as a single
+   *   quadratic cell (i.e., higher order)
    */
   template <int dim, int spacedim>
   std::array<unsigned int, 3>
   extract_vtk_patch_info(const DataOutBase::Patch<dim, spacedim> &patch,
                          const bool write_higher_order_cells)
   {
-    std::array<unsigned int, 3> vtk_cell_id{};
+    std::array<unsigned int, 3> vtk_cell_id = {
+      {/* cell type, tbd: */ numbers::invalid_unsigned_int,
+       /* # of cells, default: just one cell */ 1,
+       /* # of nodes, default: as many nodes as vertices */
+       patch.reference_cell.n_vertices()}};
 
     if (write_higher_order_cells)
       {
-        if (patch.reference_cell.is_hyper_cube())
-          {
-            const std::array<unsigned int, 4> cell_type_by_dim{
-              {VTK_VERTEX,
-               VTK_LAGRANGE_CURVE,
-               VTK_LAGRANGE_QUADRILATERAL,
-               VTK_LAGRANGE_HEXAHEDRON}};
-            vtk_cell_id[0] = cell_type_by_dim[dim];
-            vtk_cell_id[1] = 1;
-          }
-        else if (patch.reference_cell == ReferenceCells::Triangle)
-          {
-            vtk_cell_id[0] = VTK_LAGRANGE_TRIANGLE;
-            vtk_cell_id[1] = 1;
-          }
-        else
-          {
-            Assert(false, ExcNotImplemented());
-          }
+        vtk_cell_id[0] = patch.reference_cell.vtk_lagrange_type();
+        vtk_cell_id[2] = patch.data.n_cols();
       }
-    else if (patch.reference_cell == ReferenceCells::Triangle &&
-             patch.data.n_cols() == 3)
-      {
-        vtk_cell_id[0] = VTK_TRIANGLE;
-        vtk_cell_id[1] = 1;
-      }
+    else if (patch.data.n_cols() == patch.reference_cell.n_vertices())
+      // One data set per vertex -> a linear cell
+      vtk_cell_id[0] = patch.reference_cell.vtk_linear_type();
     else if (patch.reference_cell == ReferenceCells::Triangle &&
              patch.data.n_cols() == 6)
       {
-        vtk_cell_id[0] = VTK_QUADRATIC_TRIANGLE;
-        vtk_cell_id[1] = 1;
-      }
-    else if (patch.reference_cell == ReferenceCells::Tetrahedron &&
-             patch.data.n_cols() == 4)
-      {
-        vtk_cell_id[0] = VTK_TETRA;
-        vtk_cell_id[1] = 1;
+        Assert(patch.n_subdivisions == 2, ExcInternalError());
+        vtk_cell_id[0] = patch.reference_cell.vtk_quadratic_type();
+        vtk_cell_id[2] = patch.data.n_cols();
       }
     else if (patch.reference_cell == ReferenceCells::Tetrahedron &&
              patch.data.n_cols() == 10)
       {
-        vtk_cell_id[0] = VTK_QUADRATIC_TETRA;
-        vtk_cell_id[1] = 1;
-      }
-    else if (patch.reference_cell == ReferenceCells::Wedge &&
-             patch.data.n_cols() == 6)
-      {
-        vtk_cell_id[0] = VTK_WEDGE;
-        vtk_cell_id[1] = 1;
-      }
-    else if (patch.reference_cell == ReferenceCells::Pyramid &&
-             patch.data.n_cols() == 5)
-      {
-        vtk_cell_id[0] = VTK_PYRAMID;
-        vtk_cell_id[1] = 1;
+        Assert(patch.n_subdivisions == 2, ExcInternalError());
+        vtk_cell_id[0] = patch.reference_cell.vtk_quadratic_type();
+        vtk_cell_id[2] = patch.data.n_cols();
       }
     else if (patch.reference_cell.is_hyper_cube())
       {
-        const std::array<unsigned int, 4> cell_type_by_dim{
-          {VTK_VERTEX, VTK_LINE, VTK_QUAD, VTK_HEXAHEDRON}};
-        vtk_cell_id[0] = cell_type_by_dim[dim];
+        // For hypercubes, we support sub-divided linear cells
+        vtk_cell_id[0] = patch.reference_cell.vtk_linear_type();
         vtk_cell_id[1] = Utilities::pow(patch.n_subdivisions, dim);
       }
     else
       {
         Assert(false, ExcNotImplemented());
       }
-
-    if (patch.reference_cell != ReferenceCells::get_hypercube<dim>() ||
-        write_higher_order_cells)
-      vtk_cell_id[2] = patch.data.n_cols();
-    else
-      vtk_cell_id[2] = GeometryInfo<dim>::vertices_per_cell;
 
     return vtk_cell_id;
   }
@@ -991,172 +909,6 @@ namespace
 
         return patch.vertices[point_no_actual];
       }
-  }
-
-
-
-  /**
-   * Given (i,j,k) coordinates within the Lagrange quadrilateral, return an
-   * offset into the local connectivity array.
-   *
-   * Modified from
-   * https://github.com/Kitware/VTK/blob/265ca48a/Common/DataModel/vtkLagrangeQuadrilateral.cxx#L558
-   */
-  int
-  vtk_point_index_from_ijk(const unsigned i,
-                           const unsigned j,
-                           const unsigned,
-                           const std::array<unsigned, 2> &order,
-                           const bool)
-  {
-    const bool ibdy = (i == 0 || i == order[0]);
-    const bool jbdy = (j == 0 || j == order[1]);
-    // How many boundaries do we lie on at once?
-    const int nbdy = (ibdy ? 1 : 0) + (jbdy ? 1 : 0);
-
-    if (nbdy == 2) // Vertex DOF
-      { // ijk is a corner node. Return the proper index (somewhere in [0,3]):
-        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0));
-      }
-
-    int offset = 4;
-    if (nbdy == 1) // Edge DOF
-      {
-        if (!ibdy)
-          { // On i axis
-            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) +
-                   offset;
-          }
-
-        if (!jbdy)
-          { // On j axis
-            return (j - 1) +
-                   (i != 0u ? order[0] - 1 :
-                              2 * (order[0] - 1) + order[1] - 1) +
-                   offset;
-          }
-      }
-
-    offset += 2 * (order[0] - 1 + order[1] - 1);
-    // nbdy == 0: Face DOF
-    return offset + (i - 1) + (order[0] - 1) * ((j - 1));
-  }
-
-
-
-  /**
-   * Given (i,j,k) coordinates within the Lagrange hexahedron, return an
-   * offset into the local connectivity array.
-   *
-   * Modified from
-   * https://github.com/Kitware/VTK/blob/265ca48a/Common/DataModel/vtkLagrangeHexahedron.cxx#L734
-   * (legacy_format=true) and from
-   * https://github.com/Kitware/VTK/blob/256fe70de00e3441f126276ca4a8c5477d0bcb86/Common/DataModel/vtkHigherOrderHexahedron.cxx#L593
-   * (legacy_format=false). The two versions differ regarding the ordering of
-   * lines 10 and 11 (clockwise vs. anti-clockwise). See also:
-   * https://github.com/Kitware/VTK/blob/7a0b92864c96680b1f42ee84920df556fc6ebaa3/Documentation/release/dev/node-numbering-change-for-VTK_LAGRANGE_HEXAHEDRON.md
-   *
-   */
-  int
-  vtk_point_index_from_ijk(const unsigned                 i,
-                           const unsigned                 j,
-                           const unsigned                 k,
-                           const std::array<unsigned, 3> &order,
-                           const bool                     legacy_format)
-  {
-    const bool ibdy = (i == 0 || i == order[0]);
-    const bool jbdy = (j == 0 || j == order[1]);
-    const bool kbdy = (k == 0 || k == order[2]);
-    // How many boundaries do we lie on at once?
-    const int nbdy = (ibdy ? 1 : 0) + (jbdy ? 1 : 0) + (kbdy ? 1 : 0);
-
-    if (nbdy == 3) // Vertex DOF
-      { // ijk is a corner node. Return the proper index (somewhere in [0,7]):
-        return (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0)) +
-               (k != 0u ? 4 : 0);
-      }
-
-    int offset = 8;
-    if (nbdy == 2) // Edge DOF
-      {
-        if (!ibdy)
-          { // On i axis
-            return (i - 1) + (j != 0u ? order[0] - 1 + order[1] - 1 : 0) +
-                   (k != 0u ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
-          }
-        if (!jbdy)
-          { // On j axis
-            return (j - 1) +
-                   (i != 0u ? order[0] - 1 :
-                              2 * (order[0] - 1) + order[1] - 1) +
-                   (k != 0u ? 2 * (order[0] - 1 + order[1] - 1) : 0) + offset;
-          }
-        // !kbdy, On k axis
-        offset += 4 * (order[0] - 1) + 4 * (order[1] - 1);
-        if (legacy_format)
-          return (k - 1) +
-                 (order[2] - 1) *
-                   (i != 0u ? (j != 0u ? 3 : 1) : (j != 0u ? 2 : 0)) +
-                 offset;
-        else
-          return (k - 1) +
-                 (order[2] - 1) *
-                   (i != 0u ? (j != 0u ? 2 : 1) : (j != 0u ? 3 : 0)) +
-                 offset;
-      }
-
-    offset += 4 * (order[0] - 1 + order[1] - 1 + order[2] - 1);
-    if (nbdy == 1) // Face DOF
-      {
-        if (ibdy) // On i-normal face
-          {
-            return (j - 1) + ((order[1] - 1) * (k - 1)) +
-                   (i != 0u ? (order[1] - 1) * (order[2] - 1) : 0) + offset;
-          }
-        offset += 2 * (order[1] - 1) * (order[2] - 1);
-        if (jbdy) // On j-normal face
-          {
-            return (i - 1) + ((order[0] - 1) * (k - 1)) +
-                   (j != 0u ? (order[2] - 1) * (order[0] - 1) : 0) + offset;
-          }
-        offset += 2 * (order[2] - 1) * (order[0] - 1);
-        // kbdy, On k-normal face
-        return (i - 1) + ((order[0] - 1) * (j - 1)) +
-               (k != 0u ? (order[0] - 1) * (order[1] - 1) : 0) + offset;
-      }
-
-    // nbdy == 0: Body DOF
-    offset +=
-      2 * ((order[1] - 1) * (order[2] - 1) + (order[2] - 1) * (order[0] - 1) +
-           (order[0] - 1) * (order[1] - 1));
-    return offset + (i - 1) +
-           (order[0] - 1) * ((j - 1) + (order[1] - 1) * ((k - 1)));
-  }
-
-
-
-  int
-  vtk_point_index_from_ijk(const unsigned,
-                           const unsigned,
-                           const unsigned,
-                           const std::array<unsigned, 0> &,
-                           const bool)
-  {
-    Assert(false, ExcNotImplemented());
-    return 0;
-  }
-
-
-
-  int
-  vtk_point_index_from_ijk(const unsigned,
-                           const unsigned,
-                           const unsigned,
-                           const std::array<unsigned, 1> &,
-                           const bool)
-  {
-    Assert(false, ExcNotImplemented());
-    return 0;
   }
 
 
@@ -1551,44 +1303,8 @@ namespace
      */
     template <int dim>
     void
-    write_high_order_cell(const unsigned int           index,
-                          const unsigned int           start,
+    write_high_order_cell(const unsigned int           start,
                           const std::vector<unsigned> &connectivity);
-  };
-
-
-  class VtuStream : public StreamBase<DataOutBase::VtkFlags>
-  {
-  public:
-    VtuStream(std::ostream &stream, const DataOutBase::VtkFlags &flags);
-
-    /**
-     * Write a high-order cell type, i.e., a Lagrange cell
-     * in the VTK terminology.
-     * The connectivity order of the points is given in the
-     * @p connectivity array, which are offset
-     * by the global index @p start.
-     */
-    template <int dim>
-    void
-    write_high_order_cell(const unsigned int           index,
-                          const unsigned int           start,
-                          const std::vector<unsigned> &connectivity);
-
-    void
-    flush_cells();
-
-  private:
-    /**
-     * A list of vertices and cells, to be used in case we want to compress the
-     * data.
-     *
-     * The data types of these arrays needs to match what we print in the
-     * XML-preamble to the respective parts of VTU files (e.g. Float32 and
-     * Int32)
-     */
-    std::vector<float>   vertices;
-    std::vector<int32_t> cells;
   };
 
 
@@ -2032,57 +1748,13 @@ namespace
 
   template <int dim>
   void
-  VtkStream::write_high_order_cell(const unsigned int,
-                                   const unsigned int           start,
+  VtkStream::write_high_order_cell(const unsigned int           start,
                                    const std::vector<unsigned> &connectivity)
   {
     stream << connectivity.size();
     for (const auto &c : connectivity)
       stream << '\t' << start + c;
     stream << '\n';
-  }
-
-
-
-  VtuStream::VtuStream(std::ostream &out, const DataOutBase::VtkFlags &f)
-    : StreamBase<DataOutBase::VtkFlags>(out, f)
-  {}
-
-
-
-  template <int dim>
-  void
-  VtuStream::write_high_order_cell(const unsigned int,
-                                   const unsigned int           start,
-                                   const std::vector<unsigned> &connectivity)
-  {
-    if (deal_ii_with_zlib &&
-        (flags.compression_level != DataOutBase::CompressionLevel::plain_text))
-      {
-        for (const auto &c : connectivity)
-          cells.push_back(start + c);
-      }
-    else
-      {
-        for (const auto &c : connectivity)
-          stream << '\t' << start + c;
-        stream << '\n';
-      }
-  }
-
-  void
-  VtuStream::flush_cells()
-  {
-    if (deal_ii_with_zlib &&
-        (flags.compression_level != DataOutBase::CompressionLevel::plain_text))
-      {
-        // compress the data we have in memory and write them to the stream.
-        // then release the data
-        *this << vtu_stringize_array(cells,
-                                     flags.compression_level,
-                                     stream.precision());
-        cells.clear();
-      }
   }
 } // namespace
 
@@ -2970,7 +2642,7 @@ namespace DataOutBase
                                   patch.reference_cell);
             first_vertex_of_patch += patch.data.n_cols();
           }
-        else
+        else // hypercube cell
           {
             const unsigned int n_subdivisions = patch.n_subdivisions;
             const unsigned int n              = n_subdivisions + 1;
@@ -3059,11 +2731,8 @@ namespace DataOutBase
   {
     Assert(dim <= 3 && dim > 1, ExcNotImplemented());
     unsigned int first_vertex_of_patch = 0;
-    unsigned int count                 = 0;
     // Array to hold all the node numbers of a cell
     std::vector<unsigned> connectivity;
-    // Array to hold cell order in each dimension
-    std::array<unsigned, dim> cell_order;
 
     for (const auto &patch : patches)
       {
@@ -3074,8 +2743,7 @@ namespace DataOutBase
             for (unsigned int i = 0; i < patch.data.n_cols(); ++i)
               connectivity[i] = i;
 
-            out.template write_high_order_cell<dim>(count++,
-                                                    first_vertex_of_patch,
+            out.template write_high_order_cell<dim>(first_vertex_of_patch,
                                                     connectivity);
 
             first_vertex_of_patch += patch.data.n_cols();
@@ -3085,34 +2753,79 @@ namespace DataOutBase
             const unsigned int n_subdivisions = patch.n_subdivisions;
             const unsigned int n              = n_subdivisions + 1;
 
-            cell_order.fill(n_subdivisions);
             connectivity.resize(Utilities::fixed_power<dim>(n));
 
-            // Length of loops in all dimensons
-            const unsigned int n1 = (dim > 0) ? n_subdivisions : 0;
-            const unsigned int n2 = (dim > 1) ? n_subdivisions : 0;
-            const unsigned int n3 = (dim > 2) ? n_subdivisions : 0;
-            // Offsets of outer loops
-            constexpr unsigned int d1 = 1;
-            const unsigned int     d2 = n;
-            const unsigned int     d3 = n * n;
-            for (unsigned int i3 = 0; i3 <= n3; ++i3)
-              for (unsigned int i2 = 0; i2 <= n2; ++i2)
-                for (unsigned int i1 = 0; i1 <= n1; ++i1)
+            switch (dim)
+              {
+                case 0:
                   {
-                    const unsigned int local_index =
-                      i3 * d3 + i2 * d2 + i1 * d1;
-                    const unsigned int connectivity_index =
-                      vtk_point_index_from_ijk(
-                        i1, i2, i3, cell_order, legacy_format);
-                    connectivity[connectivity_index] = local_index;
+                    Assert(false,
+                           ExcMessage("Point-like cells should not be possible "
+                                      "when writing higher-order cells."));
+                    break;
                   }
+                case 1:
+                  {
+                    for (unsigned int i1 = 0; i1 < n_subdivisions + 1; ++i1)
+                      {
+                        const unsigned int local_index = i1;
+                        const unsigned int connectivity_index =
+                          patch.reference_cell
+                            .template vtk_lexicographic_to_node_index<1>(
+                              {{i1}}, {{n_subdivisions}}, legacy_format);
+                        connectivity[connectivity_index] = local_index;
+                      }
 
-            out.template write_high_order_cell<dim>(count++,
-                                                    first_vertex_of_patch,
+                    break;
+                  }
+                case 2:
+                  {
+                    for (unsigned int i2 = 0; i2 < n_subdivisions + 1; ++i2)
+                      for (unsigned int i1 = 0; i1 < n_subdivisions + 1; ++i1)
+                        {
+                          const unsigned int local_index = i2 * n + i1;
+                          const unsigned int connectivity_index =
+                            patch.reference_cell
+                              .template vtk_lexicographic_to_node_index<2>(
+                                {{i1, i2}},
+                                {{n_subdivisions, n_subdivisions}},
+                                legacy_format);
+                          connectivity[connectivity_index] = local_index;
+                        }
+
+                    break;
+                  }
+                case 3:
+                  {
+                    for (unsigned int i3 = 0; i3 < n_subdivisions + 1; ++i3)
+                      for (unsigned int i2 = 0; i2 < n_subdivisions + 1; ++i2)
+                        for (unsigned int i1 = 0; i1 < n_subdivisions + 1; ++i1)
+                          {
+                            const unsigned int local_index =
+                              i3 * n * n + i2 * n + i1;
+                            const unsigned int connectivity_index =
+                              patch.reference_cell
+                                .template vtk_lexicographic_to_node_index<3>(
+                                  {{i1, i2, i3}},
+                                  {{n_subdivisions,
+                                    n_subdivisions,
+                                    n_subdivisions}},
+                                  legacy_format);
+                            connectivity[connectivity_index] = local_index;
+                          }
+
+                    break;
+                  }
+                default:
+                  Assert(false, ExcNotImplemented());
+              }
+
+            // Having so set up the 'connectivity' data structure,
+            // output it:
+            out.template write_high_order_cell<dim>(first_vertex_of_patch,
                                                     connectivity);
 
-            // finally update the number of the first vertex of this patch
+            // Finally update the number of the first vertex of this patch
             first_vertex_of_patch += Utilities::fixed_power<dim>(n);
           }
       }
@@ -3660,6 +3373,12 @@ namespace DataOutBase
             const unsigned int n1              = (dim > 0) ? n : 1;
             const unsigned int n2              = (dim > 1) ? n : 1;
             const unsigned int n3              = (dim > 2) ? n : 1;
+            const unsigned int x_minus         = (dim > 0) ? 0 : 0;
+            const unsigned int x_plus          = (dim > 0) ? 1 : 0;
+            const unsigned int y_minus         = (dim > 1) ? 2 : 0;
+            const unsigned int y_plus          = (dim > 1) ? 3 : 0;
+            const unsigned int z_minus         = (dim > 2) ? 4 : 0;
+            const unsigned int z_plus          = (dim > 2) ? 5 : 0;
             unsigned int       cells_per_patch = Utilities::fixed_power<dim>(n);
             unsigned int       dx              = 1;
             unsigned int       dy              = n;
@@ -3686,7 +3405,7 @@ namespace DataOutBase
                     // Direction -x Last cell in row of other patch
                     if (i1 == 0)
                       {
-                        const unsigned int nn = patch.neighbors[0];
+                        const unsigned int nn = patch.neighbors[x_minus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out
@@ -3701,7 +3420,7 @@ namespace DataOutBase
                     // Direction +x First cell in row of other patch
                     if (i1 == n - 1)
                       {
-                        const unsigned int nn = patch.neighbors[1];
+                        const unsigned int nn = patch.neighbors[x_plus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out << (nn * cells_per_patch + ny + nz);
@@ -3717,7 +3436,7 @@ namespace DataOutBase
                     // Direction -y
                     if (i2 == 0)
                       {
-                        const unsigned int nn = patch.neighbors[2];
+                        const unsigned int nn = patch.neighbors[y_minus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out
@@ -3732,7 +3451,7 @@ namespace DataOutBase
                     // Direction +y
                     if (i2 == n - 1)
                       {
-                        const unsigned int nn = patch.neighbors[3];
+                        const unsigned int nn = patch.neighbors[y_plus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out << (nn * cells_per_patch + nx + nz);
@@ -3749,7 +3468,7 @@ namespace DataOutBase
                     // Direction -z
                     if (i3 == 0)
                       {
-                        const unsigned int nn = patch.neighbors[4];
+                        const unsigned int nn = patch.neighbors[z_minus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out
@@ -3764,7 +3483,7 @@ namespace DataOutBase
                     // Direction +z
                     if (i3 == n - 1)
                       {
-                        const unsigned int nn = patch.neighbors[5];
+                        const unsigned int nn = patch.neighbors[z_plus];
                         out << '\t';
                         if (nn != patch.no_neighbor)
                           out << (nn * cells_per_patch + nx + ny);
@@ -6092,23 +5811,17 @@ namespace DataOutBase
       const std::vector<Point<spacedim>> node_positions =
         get_node_positions(patches);
 
-      // note that according to the standard, we have to print d=1..3
-      // dimensions, even if we are in reality in 2d, for example
+      // VTK/VTU always wants to see three coordinates, even if we are
+      // in 1d or 2d. So pad node positions with zeros as appropriate.
       std::vector<float> node_coordinates_3d;
       node_coordinates_3d.reserve(node_positions.size() * 3);
       for (const auto &node_position : node_positions)
         {
-          node_coordinates_3d.emplace_back(node_position[0]);
-
-          if (spacedim >= 2)
-            node_coordinates_3d.emplace_back(node_position[1]);
-          else
-            node_coordinates_3d.emplace_back(0.0f);
-
-          if (spacedim >= 3)
-            node_coordinates_3d.emplace_back(node_position[2]);
-          else
-            node_coordinates_3d.emplace_back(0.0f);
+          for (unsigned int d = 0; d < 3; ++d)
+            if (d < spacedim)
+              node_coordinates_3d.emplace_back(node_position[d]);
+            else
+              node_coordinates_3d.emplace_back(0.0f);
         }
       o << vtu_stringize_array(node_coordinates_3d,
                                flags.compression_level,
@@ -6134,223 +5847,190 @@ namespace DataOutBase
       o << "  <Cells>\n";
       o << "    <DataArray type=\"Int32\" Name=\"connectivity\" format=\""
         << ascii_or_binary << "\">\n";
-      if (flags.write_higher_order_cells)
+
+      std::vector<int32_t> cells;
+      Assert(dim <= 3, ExcNotImplemented());
+
+      unsigned int first_vertex_of_patch = 0;
+
+      for (const auto &patch : patches)
         {
-          std::ostringstream oo;
-          {
-            VtuStream vtu_out(oo, flags);
-
-            write_high_order_cells(patches,
-                                   vtu_out,
-                                   /* legacy_format = */ false);
-            vtu_out.flush_cells();
-          }
-          o << oo.str() << '\n';
-        }
-      else
-        {
-          Assert(dim <= 3, ExcNotImplemented());
-
-          std::vector<int32_t> cells;
-          unsigned int         first_vertex_of_patch = 0;
-
-          for (const auto &patch : patches)
+          // First treat a slight oddball case: For triangles and tetrahedra,
+          // the case with n_subdivisions==2 is treated as if the cell was
+          // output as a single, quadratic, cell rather than as one would
+          // expect as 4 sub-cells (for triangles; and the corresponding
+          // number of sub-cells for tetrahedra). This is courtesy of some
+          // special-casing in the function extract_vtk_patch_info().
+          if ((dim >= 2) &&
+              (patch.reference_cell == ReferenceCells::get_simplex<dim>()) &&
+              (patch.n_subdivisions == 2))
             {
-              // special treatment of simplices since they are not subdivided
-              if (patch.reference_cell != ReferenceCells::get_hypercube<dim>())
+              const unsigned int n_points = patch.data.n_cols();
+              Assert((dim == 2 && n_points == 6) ||
+                       (dim == 3 && n_points == 10),
+                     ExcInternalError());
+
+              if (deal_ii_with_zlib &&
+                  (flags.compression_level !=
+                   DataOutBase::CompressionLevel::plain_text))
                 {
-                  const unsigned int n_points = patch.data.n_cols();
-                  static const std::array<unsigned int, 5>
-                    pyramid_index_translation_table = {{0, 1, 3, 2, 4}};
-
-                  if (deal_ii_with_zlib &&
-                      (flags.compression_level !=
-                       DataOutBase::CompressionLevel::plain_text))
-                    {
-                      for (unsigned int i = 0; i < n_points; ++i)
-                        cells.push_back(
-                          first_vertex_of_patch +
-                          (patch.reference_cell == ReferenceCells::Pyramid ?
-                             pyramid_index_translation_table[i] :
-                             i));
-                    }
-                  else
-                    {
-                      for (unsigned int i = 0; i < n_points; ++i)
-                        o << '\t'
-                          << first_vertex_of_patch +
-                               (patch.reference_cell ==
-                                    ReferenceCells::Pyramid ?
-                                  pyramid_index_translation_table[i] :
-                                  i);
-                      o << '\n';
-                    }
-
-                  first_vertex_of_patch += n_points;
+                  for (unsigned int i = 0; i < n_points; ++i)
+                    cells.push_back(first_vertex_of_patch + i);
                 }
               else
                 {
-                  const unsigned int n_subdivisions = patch.n_subdivisions;
-                  const unsigned int n_points_per_direction =
-                    n_subdivisions + 1;
+                  for (unsigned int i = 0; i < n_points; ++i)
+                    o << '\t' << first_vertex_of_patch + i;
+                  o << '\n';
+                }
+
+              first_vertex_of_patch += n_points;
+            }
+          // Then treat all of the other non-hypercube cases since they can
+          // currently not be subdivided (into sub-cells, or into higher-order
+          // cells):
+          else if (patch.reference_cell != ReferenceCells::get_hypercube<dim>())
+            {
+              Assert(patch.n_subdivisions == 1, ExcNotImplemented());
+
+              const unsigned int n_points = patch.data.n_cols();
+
+              if (deal_ii_with_zlib &&
+                  (flags.compression_level !=
+                   DataOutBase::CompressionLevel::plain_text))
+                {
+                  for (unsigned int i = 0; i < n_points; ++i)
+                    cells.push_back(
+                      first_vertex_of_patch +
+                      patch.reference_cell.vtk_vertex_to_deal_vertex(i));
+                }
+              else
+                {
+                  for (unsigned int i = 0; i < n_points; ++i)
+                    o << '\t'
+                      << (first_vertex_of_patch +
+                          patch.reference_cell.vtk_vertex_to_deal_vertex(i));
+                  o << '\n';
+                }
+
+              first_vertex_of_patch += n_points;
+            }
+          else // a hypercube cell
+            {
+              const unsigned int n_subdivisions         = patch.n_subdivisions;
+              const unsigned int n_points_per_direction = n_subdivisions + 1;
+
+              std::vector<unsigned> local_vertex_order;
+
+              // Output the current state of the local_vertex_order array,
+              // then clear it:
+              const auto flush_current_cell = [&flags,
+                                               &o,
+                                               &cells,
+                                               first_vertex_of_patch,
+                                               &local_vertex_order]() {
+                if (deal_ii_with_zlib &&
+                    (flags.compression_level !=
+                     DataOutBase::CompressionLevel::plain_text))
+                  {
+                    for (const auto &c : local_vertex_order)
+                      cells.push_back(first_vertex_of_patch + c);
+                  }
+                else
+                  {
+                    for (const auto &c : local_vertex_order)
+                      o << '\t' << first_vertex_of_patch + c;
+                    o << '\n';
+                  }
+
+                local_vertex_order.clear();
+              };
+
+              if (flags.write_higher_order_cells == false)
+                {
+                  local_vertex_order.reserve(Utilities::fixed_power<dim>(2));
 
                   switch (dim)
                     {
                       case 0:
                         {
-                          auto write_cell =
-                            [&flags, &o, &cells](const unsigned int start) {
-                              if (deal_ii_with_zlib &&
-                                  (flags.compression_level !=
-                                   DataOutBase::CompressionLevel::plain_text))
-                                {
-                                  cells.push_back(start);
-                                }
-                              else
-                                {
-                                  o << start;
-                                  o << '\n';
-                                }
-                            };
-
-                          const unsigned int starting_offset =
-                            first_vertex_of_patch;
-                          write_cell(starting_offset);
+                          local_vertex_order.emplace_back(0);
+                          flush_current_cell();
                           break;
                         }
 
                       case 1:
                         {
-                          auto write_cell =
-                            [&flags, &o, &cells](const unsigned int start) {
-                              if (deal_ii_with_zlib &&
-                                  (flags.compression_level !=
-                                   DataOutBase::CompressionLevel::plain_text))
-                                {
-                                  cells.push_back(start);
-                                  cells.push_back(start + 1);
-                                }
-                              else
-                                {
-                                  o << start << '\t' << start + 1;
-                                  o << '\n';
-                                }
-                            };
-
                           for (unsigned int i1 = 0; i1 < n_subdivisions; ++i1)
                             {
-                              const unsigned int starting_offset =
-                                first_vertex_of_patch + i1;
-                              write_cell(starting_offset);
+                              const unsigned int starting_offset = i1;
+                              local_vertex_order.emplace_back(starting_offset);
+                              local_vertex_order.emplace_back(starting_offset +
+                                                              1);
+                              flush_current_cell();
                             }
                           break;
                         }
 
                       case 2:
                         {
-                          auto write_cell =
-                            [&flags, &o, &cells, n_points_per_direction](
-                              const unsigned int start) {
-                              if (deal_ii_with_zlib &&
-                                  (flags.compression_level !=
-                                   DataOutBase::CompressionLevel::plain_text))
-                                {
-                                  cells.push_back(start);
-                                  cells.push_back(start + 1);
-                                  cells.push_back(start +
-                                                  n_points_per_direction + 1);
-                                  cells.push_back(start +
-                                                  n_points_per_direction);
-                                }
-                              else
-                                {
-                                  o << start << '\t' << start + 1 << '\t'
-                                    << start + n_points_per_direction + 1
-                                    << '\t' << start + n_points_per_direction;
-                                  o << '\n';
-                                }
-                            };
-
                           for (unsigned int i2 = 0; i2 < n_subdivisions; ++i2)
                             for (unsigned int i1 = 0; i1 < n_subdivisions; ++i1)
                               {
                                 const unsigned int starting_offset =
-                                  first_vertex_of_patch +
                                   i2 * n_points_per_direction + i1;
-                                write_cell(starting_offset);
+                                local_vertex_order.emplace_back(
+                                  starting_offset);
+                                local_vertex_order.emplace_back(
+                                  starting_offset + 1);
+                                local_vertex_order.emplace_back(
+                                  starting_offset + n_points_per_direction + 1);
+                                local_vertex_order.emplace_back(
+                                  starting_offset + n_points_per_direction);
+                                flush_current_cell();
                               }
                           break;
                         }
 
                       case 3:
                         {
-                          auto write_cell = [&flags,
-                                             &o,
-                                             &cells,
-                                             n_points_per_direction](
-                                              const unsigned int start) {
-                            if (deal_ii_with_zlib &&
-                                (flags.compression_level !=
-                                 DataOutBase::CompressionLevel::plain_text))
-                              {
-                                cells.push_back(start);
-                                cells.push_back(start + 1);
-                                cells.push_back(start + n_points_per_direction +
-                                                1);
-                                cells.push_back(start + n_points_per_direction);
-                                cells.push_back(start +
-                                                n_points_per_direction *
-                                                  n_points_per_direction);
-                                cells.push_back(start +
-                                                n_points_per_direction *
-                                                  n_points_per_direction +
-                                                1);
-                                cells.push_back(start +
-                                                n_points_per_direction *
-                                                  n_points_per_direction +
-                                                n_points_per_direction + 1);
-                                cells.push_back(start +
-                                                n_points_per_direction *
-                                                  n_points_per_direction +
-                                                n_points_per_direction);
-                              }
-                            else
-                              {
-                                o << start << '\t' << start + 1 << '\t'
-                                  << start + n_points_per_direction + 1 << '\t'
-                                  << start + n_points_per_direction << '\t'
-                                  << start + n_points_per_direction *
-                                               n_points_per_direction
-                                  << '\t'
-                                  << start +
-                                       n_points_per_direction *
-                                         n_points_per_direction +
-                                       1
-                                  << '\t'
-                                  << start +
-                                       n_points_per_direction *
-                                         n_points_per_direction +
-                                       n_points_per_direction + 1
-                                  << '\t'
-                                  << start +
-                                       n_points_per_direction *
-                                         n_points_per_direction +
-                                       n_points_per_direction;
-                                o << '\n';
-                              }
-                          };
-
                           for (unsigned int i3 = 0; i3 < n_subdivisions; ++i3)
                             for (unsigned int i2 = 0; i2 < n_subdivisions; ++i2)
                               for (unsigned int i1 = 0; i1 < n_subdivisions;
                                    ++i1)
                                 {
                                   const unsigned int starting_offset =
-                                    first_vertex_of_patch +
                                     i3 * n_points_per_direction *
                                       n_points_per_direction +
                                     i2 * n_points_per_direction + i1;
-                                  write_cell(starting_offset);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset + 1);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset + n_points_per_direction +
+                                    1);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset + n_points_per_direction);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset + n_points_per_direction *
+                                                        n_points_per_direction);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset +
+                                    n_points_per_direction *
+                                      n_points_per_direction +
+                                    1);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset +
+                                    n_points_per_direction *
+                                      n_points_per_direction +
+                                    n_points_per_direction + 1);
+                                  local_vertex_order.emplace_back(
+                                    starting_offset +
+                                    n_points_per_direction *
+                                      n_points_per_direction +
+                                    n_points_per_direction);
+                                  flush_current_cell();
                                 }
                           break;
                         }
@@ -6358,22 +6038,111 @@ namespace DataOutBase
                       default:
                         Assert(false, ExcNotImplemented());
                     }
-
-                  // Finally update the number of the first vertex of this patch
-                  first_vertex_of_patch +=
-                    Utilities::fixed_power<dim>(n_subdivisions + 1);
                 }
-            }
+              else // use higher-order output
+                {
+                  local_vertex_order.resize(
+                    Utilities::fixed_power<dim>(n_points_per_direction));
 
-          // Flush the 'cells' object we created herein.
-          if (deal_ii_with_zlib && (flags.compression_level !=
-                                    DataOutBase::CompressionLevel::plain_text))
-            {
-              o << vtu_stringize_array(cells,
-                                       flags.compression_level,
-                                       output_precision)
-                << '\n';
+                  switch (dim)
+                    {
+                      case 0:
+                        {
+                          Assert(false,
+                                 ExcMessage(
+                                   "Point-like cells should not be possible "
+                                   "when writing higher-order cells."));
+                          break;
+                        }
+                      case 1:
+                        {
+                          for (unsigned int i1 = 0; i1 < n_subdivisions + 1;
+                               ++i1)
+                            {
+                              const unsigned int local_index = i1;
+                              const unsigned int connectivity_index =
+                                patch.reference_cell
+                                  .template vtk_lexicographic_to_node_index<1>(
+                                    {{i1}},
+                                    {{n_subdivisions}},
+                                    /* use VTU, not VTK: */ false);
+                              local_vertex_order[connectivity_index] =
+                                local_index;
+                              flush_current_cell();
+                            }
+
+                          break;
+                        }
+                      case 2:
+                        {
+                          for (unsigned int i2 = 0; i2 < n_subdivisions + 1;
+                               ++i2)
+                            for (unsigned int i1 = 0; i1 < n_subdivisions + 1;
+                                 ++i1)
+                              {
+                                const unsigned int local_index =
+                                  i2 * n_points_per_direction + i1;
+                                const unsigned int connectivity_index =
+                                  patch.reference_cell
+                                    .template vtk_lexicographic_to_node_index<
+                                      2>({{i1, i2}},
+                                         {{n_subdivisions, n_subdivisions}},
+                                         /* use VTU, not VTK: */ false);
+                                local_vertex_order[connectivity_index] =
+                                  local_index;
+                              }
+                          flush_current_cell();
+
+                          break;
+                        }
+                      case 3:
+                        {
+                          for (unsigned int i3 = 0; i3 < n_subdivisions + 1;
+                               ++i3)
+                            for (unsigned int i2 = 0; i2 < n_subdivisions + 1;
+                                 ++i2)
+                              for (unsigned int i1 = 0; i1 < n_subdivisions + 1;
+                                   ++i1)
+                                {
+                                  const unsigned int local_index =
+                                    i3 * n_points_per_direction *
+                                      n_points_per_direction +
+                                    i2 * n_points_per_direction + i1;
+                                  const unsigned int connectivity_index =
+                                    patch.reference_cell
+                                      .template vtk_lexicographic_to_node_index<
+                                        3>({{i1, i2, i3}},
+                                           {{n_subdivisions,
+                                             n_subdivisions,
+                                             n_subdivisions}},
+                                           /* use VTU, not VTK: */ false);
+                                  local_vertex_order[connectivity_index] =
+                                    local_index;
+                                }
+
+                          flush_current_cell();
+                          break;
+                        }
+                      default:
+                        Assert(false, ExcNotImplemented());
+                    }
+                }
+
+              // Finally update the number of the first vertex of this
+              // patch
+              first_vertex_of_patch +=
+                Utilities::fixed_power<dim>(patch.n_subdivisions + 1);
             }
+        }
+
+      // Flush the 'cells' object we created herein.
+      if (deal_ii_with_zlib && (flags.compression_level !=
+                                DataOutBase::CompressionLevel::plain_text))
+        {
+          o << vtu_stringize_array(cells,
+                                   flags.compression_level,
+                                   output_precision)
+            << '\n';
         }
       o << "    </DataArray>\n";
 

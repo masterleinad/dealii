@@ -67,7 +67,7 @@ jobs:
     # simple parallel debug build using g++ with simplex configuration enabled
 
     name: linux debug parallel simplex
-    runs-on: [ubuntu-20.04]
+    runs-on: [ubuntu-22.04]
 
     steps:
     - uses: actions/checkout@v3
@@ -194,6 +194,7 @@ jobs:
               -D DEAL_II_WITH_KOKKOS="ON" \
               -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
               -D DEAL_II_WITH_MPI="ON" \
+              -D DEAL_II_MPI_WITH_DEVICE_SUPPORT="ON" \
               -D DEAL_II_WITH_P4EST="ON" \
               -D DEAL_II_COMPONENT_EXAMPLES="ON" \
               ..

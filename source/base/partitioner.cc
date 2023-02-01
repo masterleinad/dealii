@@ -288,8 +288,8 @@ namespace Utilities
         std::vector<
           std::pair<types::global_dof_index, types::global_dof_index>>,
         std::vector<unsigned int>>
-        consensus_algorithm(process, communicator);
-      consensus_algorithm.run();
+        consensus_algorithm;
+      consensus_algorithm.run(process, communicator);
 
       {
         ghost_targets_data = {};
@@ -365,13 +365,14 @@ namespace Utilities
       // exchange step and see whether the ghost indices sent to us by other
       // processes (ghost_indices) are the same as we hold locally
       // (ghost_indices_ref).
-      std::vector<types::global_dof_index> ghost_indices_ref;
-      ghost_indices_data.fill_index_vector(ghost_indices_ref);
+      const std::vector<types::global_dof_index> ghost_indices_ref =
+        ghost_indices_data.get_index_vector();
       AssertDimension(ghost_indices_ref.size(), n_ghost_indices());
       std::vector<types::global_dof_index> indices_to_send(n_import_indices());
       std::vector<types::global_dof_index> ghost_indices(n_ghost_indices());
-      std::vector<types::global_dof_index> my_indices;
-      locally_owned_range_data.fill_index_vector(my_indices);
+
+      const std::vector<types::global_dof_index> my_indices =
+        locally_owned_range_data.get_index_vector();
       std::vector<MPI_Request> requests;
       n_ghost_indices_in_larger_set = n_ghost_indices_data;
       export_to_ghosted_array_start(127,
@@ -510,20 +511,66 @@ namespace Utilities
     std::size_t
     Partitioner::memory_consumption() const
     {
-      std::size_t memory = (3 * sizeof(types::global_dof_index) +
-                            4 * sizeof(unsigned int) + sizeof(MPI_Comm));
-      memory += MemoryConsumption::memory_consumption(locally_owned_range_data);
+      std::size_t memory = MemoryConsumption::memory_consumption(global_size);
+      memory += locally_owned_range_data.memory_consumption();
+      memory += MemoryConsumption::memory_consumption(local_range_data);
+      memory += ghost_indices_data.memory_consumption();
+      memory += sizeof(n_ghost_indices_data);
       memory += MemoryConsumption::memory_consumption(ghost_targets_data);
-      memory += MemoryConsumption::memory_consumption(import_targets_data);
       memory += MemoryConsumption::memory_consumption(import_indices_data);
+      memory += sizeof(import_indices_plain_dev) +
+                sizeof(*import_indices_plain_dev.begin()) *
+                  import_indices_plain_dev.capacity();
+      memory += MemoryConsumption::memory_consumption(n_import_indices_data);
+      memory += MemoryConsumption::memory_consumption(import_targets_data);
       memory += MemoryConsumption::memory_consumption(
         import_indices_chunks_by_rank_data);
+      memory +=
+        MemoryConsumption::memory_consumption(n_ghost_indices_in_larger_set);
       memory += MemoryConsumption::memory_consumption(
         ghost_indices_subset_chunks_by_rank_data);
       memory +=
         MemoryConsumption::memory_consumption(ghost_indices_subset_data);
-      memory += MemoryConsumption::memory_consumption(ghost_indices_data);
+      memory += MemoryConsumption::memory_consumption(my_pid);
+      memory += MemoryConsumption::memory_consumption(n_procs);
+      memory += MemoryConsumption::memory_consumption(communicator);
+      memory += MemoryConsumption::memory_consumption(have_ghost_indices);
       return memory;
+    }
+
+
+
+    void
+    Partitioner::initialize_import_indices_plain_dev() const
+    {
+      const unsigned int n_import_targets = import_targets_data.size();
+      import_indices_plain_dev.reserve(n_import_targets);
+      for (unsigned int i = 0; i < n_import_targets; ++i)
+        {
+          // Expand the indices on the host
+          std::vector<std::pair<unsigned int, unsigned int>>::const_iterator
+            my_imports = import_indices_data.begin() +
+                         import_indices_chunks_by_rank_data[i],
+            end_my_imports = import_indices_data.begin() +
+                             import_indices_chunks_by_rank_data[i + 1];
+          std::vector<unsigned int> import_indices_plain_host;
+          for (; my_imports != end_my_imports; ++my_imports)
+            {
+              const unsigned int chunk_size =
+                my_imports->second - my_imports->first;
+              for (unsigned int j = 0; j < chunk_size; ++j)
+                import_indices_plain_host.push_back(my_imports->first + j);
+            }
+
+          // Move the indices to the device
+          const auto chunk_size = import_indices_plain_host.size();
+          import_indices_plain_dev.emplace_back("import_indices_plain_dev" +
+                                                  std::to_string(i),
+                                                chunk_size);
+          Kokkos::deep_copy(import_indices_plain_dev.back(),
+                            Kokkos::View<unsigned int *, Kokkos::HostSpace>(
+                              import_indices_plain_host.data(), chunk_size));
+        }
     }
 
   } // namespace MPI

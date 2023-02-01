@@ -169,6 +169,11 @@ namespace PETScWrappers
       Vector();
 
       /**
+       * Import VectorBase constructors, including from a PETSc Vec object.
+       */
+      using VectorBase::VectorBase;
+
+      /**
        * Constructor. Set dimension to @p n and initialize all elements with
        * zero.
        *
@@ -284,6 +289,8 @@ namespace PETScWrappers
       Vector &
       operator=(const dealii::Vector<number> &v);
 
+      using VectorBase::reinit;
+
       /**
        * Change the dimension of the vector to @p N. It is unspecified how
        * resizing the vector affects the memory allocation of this object;
@@ -349,13 +356,6 @@ namespace PETScWrappers
         const std::shared_ptr<const Utilities::MPI::Partitioner> &partitioner);
 
       /**
-       * Return a reference to the MPI communicator object in use with this
-       * vector.
-       */
-      const MPI_Comm &
-      get_mpi_communicator() const override;
-
-      /**
        * Print to a stream. @p precision denotes the desired precision with
        * which values shall be printed, @p scientific whether scientific
        * notation shall be used. If @p across is @p true then the vector is
@@ -389,7 +389,9 @@ namespace PETScWrappers
        * locally.
        */
       virtual void
-      create_vector(const size_type n, const size_type locally_owned_size);
+      create_vector(const MPI_Comm &comm,
+                    const size_type n,
+                    const size_type locally_owned_size);
 
 
 
@@ -399,16 +401,10 @@ namespace PETScWrappers
        * you need to call update_ghost_values() before accessing those.
        */
       virtual void
-      create_vector(const size_type n,
+      create_vector(const MPI_Comm &comm,
+                    const size_type n,
                     const size_type locally_owned_size,
                     const IndexSet &ghostnodes);
-
-
-    private:
-      /**
-       * Copy of the communicator object to be used for this parallel vector.
-       */
-      MPI_Comm communicator;
     };
 
 
@@ -435,9 +431,8 @@ namespace PETScWrappers
     Vector::Vector(const MPI_Comm &              communicator,
                    const dealii::Vector<number> &v,
                    const size_type               locally_owned_size)
-      : communicator(communicator)
     {
-      Vector::create_vector(v.size(), locally_owned_size);
+      Vector::create_vector(communicator, v.size(), locally_owned_size);
 
       *this = v;
     }
@@ -483,7 +478,7 @@ namespace PETScWrappers
       // in this case a) again takes up a whole lot of memory on the heap,
       // and b) is totally dumb since its content would simply be the
       // sequence 0,1,2,3,...,n. the best of all worlds would probably be a
-      // function in Petsc that would take a pointer to an array of
+      // function in PETSc that would take a pointer to an array of
       // PetscScalar values and simply copy n elements verbatim into the
       // vector...
       for (size_type i = 0; i < v.size(); ++i)
@@ -495,12 +490,6 @@ namespace PETScWrappers
     }
 
 
-
-    inline const MPI_Comm &
-    Vector::get_mpi_communicator() const
-    {
-      return communicator;
-    }
 
 #  endif // DOXYGEN
   }      // namespace MPI

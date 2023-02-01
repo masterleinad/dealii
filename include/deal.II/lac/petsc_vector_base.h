@@ -275,17 +275,9 @@ namespace PETScWrappers
 
     /**
      * Initialize a Vector from a PETSc Vec object. Note that we do not copy
-     * the vector and we do not obtain ownership, so we do not destroy the
-     * PETSc object in the destructor.
+     * the vector.
      */
     explicit VectorBase(const Vec &v);
-
-    /**
-     * The copy assignment operator is deleted to avoid accidental usage with
-     * unexpected behavior.
-     */
-    VectorBase &
-    operator=(const VectorBase &) = delete;
 
     /**
      * Destructor.
@@ -313,6 +305,12 @@ namespace PETScWrappers
     compress(const VectorOperation::values operation);
 
     /**
+     * The copy assignment operator.
+     */
+    VectorBase &
+    operator=(const VectorBase &);
+
+    /**
      * Set all components of the vector to the given number @p s. Simply pass
      * this down to the individual block objects, but we still need to declare
      * this function to make the example given in the discussion about making
@@ -327,6 +325,15 @@ namespace PETScWrappers
      */
     VectorBase &
     operator=(const PetscScalar s);
+
+    /**
+     * This method associates the PETSc Vec to the instance of the class.
+     * This is particularly useful when performing PETSc to Deal.II operations
+     * since it allows to reuse the Deal.II VectorBase and the PETSc Vec
+     * without incurring in memory copies.
+     */
+    void
+    reinit(Vec v);
 
     /**
      * Test for equality. This function assumes that the present vector and
@@ -779,6 +786,14 @@ namespace PETScWrappers
     operator const Vec &() const;
 
     /**
+     * Return a reference to the underlying PETSc type. It can be used to
+     * modify the underlying data, so use it only when you know what you
+     * are doing.
+     */
+    Vec &
+    petsc_vector();
+
+    /**
      * Estimate for the memory consumption (not implemented for this class).
      */
     std::size_t
@@ -788,7 +803,7 @@ namespace PETScWrappers
      * Return a reference to the MPI communicator object in use with this
      * object.
      */
-    virtual const MPI_Comm &
+    const MPI_Comm &
     get_mpi_communicator() const;
 
   protected:
@@ -821,13 +836,6 @@ namespace PETScWrappers
 
     // Make the reference class a friend.
     friend class internal::VectorReference;
-
-    /**
-     * Specifies if the vector is the owner of the PETSc Vec. This is true if
-     * it got created by this class and determines if it gets destroyed in
-     * the destructor.
-     */
-    bool obtained_ownership;
 
     /**
      * Collective set or add operation: This function is invoked by the
@@ -1148,8 +1156,10 @@ namespace PETScWrappers
   inline const MPI_Comm &
   VectorBase::get_mpi_communicator() const
   {
-    static MPI_Comm comm;
-    PetscObjectGetComm(reinterpret_cast<PetscObject>(vector), &comm);
+    static MPI_Comm comm = PETSC_COMM_SELF;
+    MPI_Comm pcomm = PetscObjectComm(reinterpret_cast<PetscObject>(vector));
+    if (pcomm != MPI_COMM_NULL)
+      comm = pcomm;
     return comm;
   }
 
@@ -1205,8 +1215,8 @@ namespace PETScWrappers
         ierr = VecGetSize(locally_stored_elements, &lsize);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        PetscScalar *ptr;
-        ierr = VecGetArray(locally_stored_elements, &ptr);
+        const PetscScalar *ptr;
+        ierr = VecGetArrayRead(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         for (PetscInt i = 0; i < n_idx; ++i)
@@ -1229,7 +1239,7 @@ namespace PETScWrappers
               }
           }
 
-        ierr = VecRestoreArray(locally_stored_elements, &ptr);
+        ierr = VecRestoreArrayRead(locally_stored_elements, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         ierr = VecGhostRestoreLocalForm(vector, &locally_stored_elements);
@@ -1244,8 +1254,8 @@ namespace PETScWrappers
         PetscErrorCode ierr = VecGetOwnershipRange(vector, &begin, &end);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-        PetscScalar *ptr;
-        ierr = VecGetArray(vector, &ptr);
+        const PetscScalar *ptr;
+        ierr = VecGetArrayRead(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
 
         for (PetscInt i = 0; i < n_idx; ++i)
@@ -1266,7 +1276,7 @@ namespace PETScWrappers
             *(values_begin + i) = *(ptr + index - begin);
           }
 
-        ierr = VecRestoreArray(vector, &ptr);
+        ierr = VecRestoreArrayRead(vector, &ptr);
         AssertThrow(ierr == 0, ExcPETScError(ierr));
       }
   }

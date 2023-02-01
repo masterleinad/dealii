@@ -1947,21 +1947,6 @@ DEAL_II_CONSTEXPR inline typename internal::SymmetricTensorAccessors::
 // into a separate namespace
 namespace internal
 {
-  // The variables within this struct will be referenced in the next functions.
-  // It is a workaround that allows returning a reference to a static variable
-  // while allowing constexpr evaluation of the function.
-  // It has to be defined outside the function because constexpr functions
-  // cannot define static variables.
-  // A similar struct has also been defined in tensor.h
-  template <typename Type>
-  struct Uninitialized
-  {
-    static Type value;
-  };
-
-  template <typename Type>
-  Type Uninitialized<Type>::value;
-
   template <int dim, typename Number>
   constexpr inline DEAL_II_ALWAYS_INLINE Number &
   symmetric_tensor_access(const TableIndices<2> &indices,
@@ -2000,10 +1985,11 @@ namespace internal
           }
       }
 
-    // The code should never reach there.
-    // Returns a dummy reference to a dummy variable just to make the
-    // compiler happy.
-    return Uninitialized<Number>::value;
+    // The code should never reach here.
+    // We cannot return a static variable, as this class must support number
+    // types that require no instances of the number type to be in scope during
+    // a reinitialization procedure (e.g. ADOL-C adtl::adouble).
+    return data[0];
   }
 
 
@@ -2046,10 +2032,11 @@ namespace internal
           }
       }
 
-    // The code should never reach there.
-    // Returns a dummy reference to a dummy variable just to make the
-    // compiler happy.
-    return Uninitialized<Number>::value;
+    // The code should never reach here.
+    // We cannot return a static variable, as this class must support number
+    // types that require no instances of the number type to be in scope during
+    // a reinitialization procedure (e.g. ADOL-C adtl::adouble).
+    return data[0];
   }
 
 
@@ -2094,10 +2081,11 @@ namespace internal
           Assert(false, ExcNotImplemented());
       }
 
-    // The code should never reach there.
-    // Returns a dummy reference to a dummy variable just to make the
-    // compiler happy.
-    return Uninitialized<Number>::value;
+    // The code should never reach here.
+    // We cannot return a static variable, as this class must support number
+    // types that require no instances of the number type to be in scope during
+    // a reinitialization procedure (e.g. ADOL-C adtl::adouble).
+    return data[0][0];
   }
 
 
@@ -2141,10 +2129,11 @@ namespace internal
           Assert(false, ExcNotImplemented());
       }
 
-    // The code should never reach there.
-    // Returns a dummy reference to a dummy variable just to make the
-    // compiler happy.
-    return Uninitialized<Number>::value;
+    // The code should never reach here.
+    // We cannot return a static variable, as this class must support number
+    // types that require no instances of the number type to be in scope during
+    // a reinitialization procedure (e.g. ADOL-C adtl::adouble).
+    return data[0][0];
   }
 
 } // end of namespace internal

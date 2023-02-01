@@ -14,6 +14,7 @@
 // ---------------------------------------------------------------------
 
 #include <deal.II/lac/petsc_block_sparse_matrix.h>
+#include <deal.II/lac/petsc_compatibility.h>
 
 #ifdef DEAL_II_WITH_PETSC
 
@@ -30,6 +31,16 @@ namespace PETScWrappers
 
       return *this;
     }
+
+
+
+    BlockSparseMatrix::~BlockSparseMatrix()
+    {
+      PetscErrorCode ierr = destroy_matrix(petsc_nest_matrix);
+      (void)ierr;
+      AssertNothrow(ierr == 0, ExcPETScError(ierr));
+    }
+
 
 
 #  ifndef DOXYGEN
@@ -57,6 +68,8 @@ namespace PETScWrappers
           }
     }
 #  endif
+
+
 
     void
     BlockSparseMatrix::reinit(const std::vector<IndexSet> &      rows,
@@ -111,7 +124,27 @@ namespace PETScWrappers
     BlockSparseMatrix::collect_sizes()
     {
       BaseClass::collect_sizes();
+
+      auto m = this->n_block_cols();
+      auto n = this->n_block_cols();
+
+      PetscErrorCode ierr = destroy_matrix(petsc_nest_matrix);
+      AssertThrow(ierr == 0, ExcPETScError(ierr));
+      std::vector<Mat> psub_objects(m * n);
+      for (unsigned int r = 0; r < m; r++)
+        for (unsigned int c = 0; c < n; c++)
+          psub_objects[r * n + c] = this->sub_objects[r][c]->petsc_matrix();
+      ierr = MatCreateNest(get_mpi_communicator(),
+                           m,
+                           nullptr,
+                           n,
+                           nullptr,
+                           psub_objects.data(),
+                           &petsc_nest_matrix);
+      AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
+
+
 
     std::vector<IndexSet>
     BlockSparseMatrix::locally_owned_domain_indices() const
@@ -124,6 +157,8 @@ namespace PETScWrappers
       return index_sets;
     }
 
+
+
     std::vector<IndexSet>
     BlockSparseMatrix::locally_owned_range_indices() const
     {
@@ -134,6 +169,8 @@ namespace PETScWrappers
 
       return index_sets;
     }
+
+
 
     std::uint64_t
     BlockSparseMatrix::n_nonzero_elements() const
@@ -146,10 +183,80 @@ namespace PETScWrappers
       return n_nonzero;
     }
 
+
+
     const MPI_Comm &
     BlockSparseMatrix::get_mpi_communicator() const
     {
-      return block(0, 0).get_mpi_communicator();
+      static MPI_Comm comm = PETSC_COMM_SELF;
+      MPI_Comm        pcomm =
+        PetscObjectComm(reinterpret_cast<PetscObject>(petsc_nest_matrix));
+      if (pcomm != MPI_COMM_NULL)
+        comm = pcomm;
+      return comm;
+    }
+
+    BlockSparseMatrix::operator const Mat &() const
+    {
+      return petsc_nest_matrix;
+    }
+
+
+
+    Mat &
+    BlockSparseMatrix::petsc_matrix()
+    {
+      return petsc_nest_matrix;
+    }
+
+    void
+    BlockSparseMatrix::reinit(Mat A)
+    {
+      clear();
+
+      PetscBool isnest;
+      PetscInt  nr = 1, nc = 1;
+
+      PetscErrorCode ierr =
+        PetscObjectTypeCompare(reinterpret_cast<PetscObject>(A),
+                               MATNEST,
+                               &isnest);
+      AssertThrow(ierr == 0, ExcPETScError(ierr));
+      std::vector<Mat> mats;
+      if (isnest)
+        {
+          ierr = MatNestGetSize(A, &nr, &nc);
+          AssertThrow(ierr == 0, ExcPETScError(ierr));
+          for (PetscInt i = 0; i < nr; ++i)
+            {
+              for (PetscInt j = 0; j < nc; ++j)
+                {
+                  Mat sA;
+                  ierr = MatNestGetSubMat(A, i, j, &sA);
+                  mats.push_back(sA);
+                }
+            }
+        }
+      else
+        {
+          mats.push_back(A);
+        }
+
+      std::vector<size_type> r_block_sizes(nr, 0);
+      std::vector<size_type> c_block_sizes(nc, 0);
+      this->row_block_indices.reinit(r_block_sizes);
+      this->column_block_indices.reinit(c_block_sizes);
+      this->sub_objects.reinit(nr, nc);
+      for (PetscInt i = 0; i < nr; ++i)
+        {
+          for (PetscInt j = 0; j < nc; ++j)
+            {
+              // TODO: MATNEST supports NULL blocks
+              this->sub_objects[i][j] = new BlockType(mats[i * nc + j]);
+            }
+        }
+
+      collect_sizes();
     }
 
   } // namespace MPI

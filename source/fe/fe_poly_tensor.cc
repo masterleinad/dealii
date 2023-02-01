@@ -206,10 +206,7 @@ FE_PolyTensor<dim, spacedim>::FE_PolyTensor(
         {
           adjust_quad_dof_sign_for_face_orientation_table[f] =
             Table<2, bool>(this->n_dofs_per_quad(f),
-                           this->reference_cell().face_reference_cell(f) ==
-                               ReferenceCells::Quadrilateral ?
-                             8 :
-                             6);
+                           this->reference_cell().n_face_orientations(f));
           adjust_quad_dof_sign_for_face_orientation_table[f].fill(false);
         }
     }
@@ -259,11 +256,9 @@ FE_PolyTensor<dim, spacedim>::adjust_quad_dof_sign_for_face_orientation(
   AssertIndexRange(index, this->n_dofs_per_quad(face));
   Assert(adjust_quad_dof_sign_for_face_orientation_table
              [this->n_unique_quads() == 1 ? 0 : face]
-               .n_elements() == (this->reference_cell().face_reference_cell(
-                                   face) == ReferenceCells::Quadrilateral ?
-                                   8 :
-                                   6) *
-                                  this->n_dofs_per_quad(face),
+               .n_elements() ==
+           this->reference_cell().n_face_orientations(face) *
+             this->n_dofs_per_quad(face),
          ExcInternalError());
 
   return adjust_quad_dof_sign_for_face_orientation_table
@@ -436,8 +431,7 @@ FE_PolyTensor<dim, spacedim>::fill_fe_values(
   const Quadrature<dim> &                                     quadrature,
   const Mapping<dim, spacedim> &                              mapping,
   const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     &                                                            mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
@@ -1059,8 +1053,7 @@ FE_PolyTensor<dim, spacedim>::fill_fe_face_values(
   const hp::QCollection<dim - 1> &                            quadrature,
   const Mapping<dim, spacedim> &                              mapping,
   const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     &                                                            mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,
@@ -1745,8 +1738,7 @@ FE_PolyTensor<dim, spacedim>::fill_fe_subface_values(
   const Quadrature<dim - 1> &                                 quadrature,
   const Mapping<dim, spacedim> &                              mapping,
   const typename Mapping<dim, spacedim>::InternalDataBase &   mapping_internal,
-  const dealii::internal::FEValuesImplementation::MappingRelatedData<dim,
-                                                                     spacedim>
+  const internal::FEValuesImplementation::MappingRelatedData<dim, spacedim>
     &                                                            mapping_data,
   const typename FiniteElement<dim, spacedim>::InternalDataBase &fe_internal,
   dealii::internal::FEValuesImplementation::FiniteElementRelatedData<dim,

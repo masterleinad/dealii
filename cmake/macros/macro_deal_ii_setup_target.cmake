@@ -102,13 +102,4 @@ macro(deal_ii_setup_target _target)
     )
   target_link_options(${_target} PRIVATE ${_link_options})
 
-  #
-  # If DEAL_II_STATIC_EXECUTABLE is set, switch the final link type to
-  # static:
-  #
-
-  if(DEAL_II_STATIC_EXECUTABLE)
-    set_property(TARGET ${_target} PROPERTY LINK_SEARCH_END_STATIC TRUE)
-  endif()
-
 endmacro()

@@ -64,7 +64,6 @@ if(DEAL_II_WITH_CUDA)
   set(_separate_src
     ${_separate_src}
     vector_memory_cuda.cc
-    affine_constraints_cuda.cc
     )
 endif()
 
@@ -167,7 +166,6 @@ if(DEAL_II_WITH_CUDA)
     cuda_solver_direct.cc
     cuda_sparse_matrix.cc
     cuda_vector.cc
-    la_parallel_vector_cuda.cc
     read_write_vector_cuda.cc
   )
 endif()

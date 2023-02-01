@@ -607,11 +607,11 @@ namespace GridTools
    * stated there hold for this function as well; in particular,
    * this is true about the discussion about manifolds.
    *
-   * @note This function is only supported for dim=2.
+   * @note This function is only supported for spacedim=2.
    */
-  template <int dim>
+  template <int dim, int spacedim>
   void
-  rotate(const double angle, Triangulation<dim> &triangulation);
+  rotate(const double angle, Triangulation<dim, spacedim> &triangulation);
 
   /**
    * Rotate all vertices of the given @p triangulation in counter-clockwise
@@ -2778,6 +2778,12 @@ namespace GridTools
      * @ref GlossPeriodicConstraints "glossary entry on periodic conditions".
      */
     FullMatrix<double> matrix;
+
+    /**
+     * Return an estimate, in bytes, for the memory consumption of the object.
+     */
+    std::size_t
+    memory_consumption() const;
   };
 
 
@@ -3431,6 +3437,9 @@ namespace GridTools
    * @note The resulting mesh will not be of high quality, since it might
    *   contain cells with very small diameters if the mesh is cut close to a
    *   vertex.
+   *
+   * @note Iso lines/contours as a saddle point within a subcell is not
+   *       detected by the implemented algorithm.
    */
   template <int dim, typename VectorType>
   class MarchingCubeAlgorithm
@@ -3841,6 +3850,15 @@ namespace GridTools
                 }
             }
         }
+  }
+
+
+
+  template <typename CellIterator>
+  std::size_t
+  PeriodicFacePair<CellIterator>::memory_consumption() const
+  {
+    return sizeof(*this) + matrix.memory_consumption();
   }
 
 

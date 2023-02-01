@@ -19,7 +19,7 @@
 
 #include <deal.II/base/config.h>
 
-#ifdef DEAL_II_COMPILER_CUDA_AWARE
+#ifdef DEAL_II_WITH_CUDA
 
 #  include <deal.II/base/cuda_size.h>
 #  include <deal.II/base/mpi_stub.h>
@@ -128,7 +128,7 @@ namespace CUDAWrappers
         , use_coloring(use_coloring)
         , overlap_communication_computation(overlap_communication_computation)
       {
-#  ifndef DEAL_II_MPI_WITH_CUDA_SUPPORT
+#  ifndef DEAL_II_MPI_WITH_DEVICE_SUPPORT
         AssertThrow(
           overlap_communication_computation == false,
           ExcMessage(

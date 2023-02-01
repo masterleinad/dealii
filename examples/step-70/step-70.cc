@@ -835,8 +835,12 @@ namespace Step70
         const auto &manifold_id   = pair.first;
         const auto &cad_file_name = pair.second;
 
-        const auto extension = boost::algorithm::to_lower_copy(
-          cad_file_name.substr(cad_file_name.find_last_of('.') + 1));
+        std::string extension =
+          cad_file_name.substr(cad_file_name.find_last_of('.') + 1);
+        std::transform(extension.begin(),
+                       extension.end(),
+                       extension.begin(),
+                       [](const char c) -> char { return std::tolower(c); });
 
         TopoDS_Shape shape;
         if (extension == "iges" || extension == "igs")
@@ -1429,9 +1433,9 @@ namespace Step70
     std::vector<types::global_dof_index> fluid_dof_indices(
       fluid_fe->n_dofs_per_cell());
 
-    FullMatrix<double>     local_matrix(fluid_fe->n_dofs_per_cell(),
+    FullMatrix<double> local_matrix(fluid_fe->n_dofs_per_cell(),
                                     fluid_fe->n_dofs_per_cell());
-    dealii::Vector<double> local_rhs(fluid_fe->n_dofs_per_cell());
+    Vector<double>     local_rhs(fluid_fe->n_dofs_per_cell());
 
     const auto penalty_parameter =
       1.0 / GridTools::minimal_cell_diameter(fluid_tria);
@@ -1566,9 +1570,8 @@ namespace Step70
     const auto invS = inverse_operator(S, cg, amgS);
 
     const auto P = block_diagonal_operator<2, LA::MPI::BlockVector>(
-      std::array<
-        dealii::LinearOperator<typename LA::MPI::BlockVector::BlockType>,
-        2>{{amgA, amgS}});
+      std::array<LinearOperator<typename LA::MPI::BlockVector::BlockType>, 2>{
+        {amgA, amgS}});
 
     SolverControl solver_control(system_matrix.m(),
                                  1e-10 * system_rhs.l2_norm());
@@ -1718,7 +1721,7 @@ namespace Step70
                                    mpi_communicator);
 
     static std::vector<std::pair<double, std::string>> times_and_names;
-    times_and_names.push_back(std::make_pair(time, filename));
+    times_and_names.emplace_back(time, filename);
     std::ofstream ofile(par.output_directory + "/" + "solution.pvd");
     DataOutBase::write_pvd_record(ofile, times_and_names);
   }
@@ -1936,7 +1939,7 @@ int main(int argc, char *argv[])
           StokesImmersedProblem<2, 3> problem(par);
           problem.run();
         }
-      else if (prm_file.find("3") != std::string::npos)
+      else if (prm_file.find('3') != std::string::npos)
         {
           StokesImmersedProblemParameters<3> par;
           ParameterAcceptor::initialize(prm_file);

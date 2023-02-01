@@ -35,7 +35,9 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
   }
 
-
+  SparseMatrix::SparseMatrix(const Mat &A)
+    : MatrixBase(A)
+  {}
 
   SparseMatrix::SparseMatrix(const size_type m,
                              const size_type n,
@@ -118,18 +120,6 @@ namespace PETScWrappers
     AssertThrow(ierr == 0, ExcPETScError(ierr));
 
     do_reinit(sparsity_pattern, preset_nonzero_locations);
-  }
-
-
-
-  const MPI_Comm &
-  SparseMatrix::get_mpi_communicator() const
-  {
-    static MPI_Comm      comm;
-    const PetscErrorCode ierr =
-      PetscObjectGetComm(reinterpret_cast<PetscObject>(matrix), &comm);
-    AssertThrow(ierr == 0, ExcPETScError(ierr));
-    return comm;
   }
 
 

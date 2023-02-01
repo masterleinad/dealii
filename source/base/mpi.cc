@@ -778,11 +778,13 @@ namespace Utilities
 #ifdef DEAL_II_WITH_PETSC
 #  ifdef DEAL_II_WITH_SLEPC
       // Initialize SLEPc (with PETSc):
-      ierr = SlepcInitialize(&argc, &argv, nullptr, nullptr);
+      finalize_petscslepc = SlepcInitializeCalled ? false : true;
+      ierr                = SlepcInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, SLEPcWrappers::SolverBase::ExcSLEPcError(ierr));
 #  else
       // or just initialize PETSc alone:
-      ierr = PetscInitialize(&argc, &argv, nullptr, nullptr);
+      finalize_petscslepc = PetscInitializeCalled ? false : true;
+      ierr                = PetscInitialize(&argc, &argv, nullptr, nullptr);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 #  endif
 
@@ -960,34 +962,22 @@ namespace Utilities
       // Now deal with PETSc (with or without MPI). Only delete the vectors if
       // finalize hasn't been called yet, otherwise this will lead to errors.
 #ifdef DEAL_II_WITH_PETSC
-      if ((PetscInitializeCalled == PETSC_TRUE) &&
-          (PetscFinalizeCalled == PETSC_FALSE))
+      if (!PetscFinalizeCalled)
         {
           GrowingVectorMemory<
             PETScWrappers::MPI::Vector>::release_unused_memory();
           GrowingVectorMemory<
             PETScWrappers::MPI::BlockVector>::release_unused_memory();
-
-#  ifdef DEAL_II_WITH_SLEPC
-          // and now end SLEPc (with PETSc)
-          SlepcFinalize();
-#  else
-          // or just end PETSc.
-          PetscFinalize();
-#  endif
         }
-#endif
-
-// There is a similar issue with CUDA: The destructor of static objects might
-// run after the CUDA driver is unloaded. Hence, also release all memory
-// related to CUDA vectors.
-#ifdef DEAL_II_WITH_CUDA
-      GrowingVectorMemory<
-        LinearAlgebra::distributed::Vector<double, MemorySpace::CUDA>>::
-        release_unused_memory();
-      GrowingVectorMemory<
-        LinearAlgebra::distributed::Vector<float, MemorySpace::CUDA>>::
-        release_unused_memory();
+#  ifdef DEAL_II_WITH_SLEPC
+      // and now end SLEPc with PETSc if we did so
+      if (finalize_petscslepc)
+        SlepcFinalize();
+#  else
+      // or just end PETSc if we did so
+      if (finalize_petscslepc)
+        PetscFinalize();
+#  endif
 #endif
 
 #ifdef DEAL_II_WITH_P4EST
@@ -1070,8 +1060,8 @@ namespace Utilities
         std::vector<
           std::pair<types::global_dof_index, types::global_dof_index>>,
         std::vector<unsigned int>>
-        consensus_algorithm(process, comm);
-      consensus_algorithm.run();
+        consensus_algorithm;
+      consensus_algorithm.run(process, comm);
 
       return owning_ranks;
     }

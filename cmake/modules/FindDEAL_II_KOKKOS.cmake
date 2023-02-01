@@ -26,12 +26,15 @@ set(KOKKOS_DIR "" CACHE PATH "An optional hint to a Kokkos installation")
 set_if_empty(KOKKOS_DIR "$ENV{KOKKOS_DIR}")
 
 
-if(DEAL_II_TRILINOS_WITH_KOKKOS)
+if(DEAL_II_TRILINOS_WITH_KOKKOS OR DEAL_II_PETSC_WITH_KOKKOS)
   # Let ArborX know that we have found Kokkos
   set(Kokkos_FOUND ON)
   # Let deal.II know that we have found Kokkos
   set(KOKKOS_FOUND ON)
 else()
+
+  # silence a warning when including FindKOKKOS.cmake
+  set(CMAKE_CXX_EXTENSIONS OFF)
   find_package(Kokkos 3.7.0 QUIET
     HINTS ${KOKKOS_DIR} ${Kokkos_DIR} $ENV{Kokkos_DIR}
     )
@@ -46,6 +49,12 @@ else()
       get_property(KOKKOS_COMPILE_FLAGS_FULL TARGET Kokkos::kokkoscore PROPERTY INTERFACE_COMPILE_OPTIONS)
       string(REGEX REPLACE "\\$<\\$<COMPILE_LANGUAGE:CXX>:([^>]*)>" "\\1" KOKKOS_COMPILE_FLAGS "${KOKKOS_COMPILE_FLAGS_FULL}")
       string(REPLACE ";" " " KOKKOS_COMPILE_FLAGS "${KOKKOS_COMPILE_FLAGS}")
+
+      # Kokkos links transitively with OpenMP so that we need to find OpenMP again.
+      # Since we are not using target_link_libraries, we have to extract the compile flag manually.
+      if(Kokkos_VERSION VERSION_GREATER_EQUAL 4.0.00 AND Kokkos_ENABLE_OPENMP)
+        string(APPEND KOKKOS_COMPILE_FLAGS " ${OpenMP_CXX_FLAGS}")
+      endif()
 
       # We need to disable SIMD vectorization for CUDA device code.
       # Otherwise, nvcc compilers from version 9 on will emit an error message like:

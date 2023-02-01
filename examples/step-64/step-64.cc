@@ -78,11 +78,9 @@ namespace Step64
     // Since CUDAWrappers::MatrixFree::Data doesn't know about the size of its
     // arrays, we need to store the number of quadrature points and the numbers
     // of degrees of freedom in this class to do necessary index conversions.
-    static const unsigned int n_dofs_1d = fe_degree + 1;
-    static const unsigned int n_local_dofs =
-      dealii::Utilities::pow(n_dofs_1d, dim);
-    static const unsigned int n_q_points =
-      dealii::Utilities::pow(n_dofs_1d, dim);
+    static const unsigned int n_dofs_1d    = fe_degree + 1;
+    static const unsigned int n_local_dofs = Utilities::pow(n_dofs_1d, dim);
+    static const unsigned int n_q_points   = Utilities::pow(n_dofs_1d, dim);
 
   private:
     double *coef;
@@ -360,8 +358,8 @@ namespace Step64
     // memory space to use. There is also LinearAlgebra::CUDAWrappers::Vector
     // that always uses GPU memory storage but doesn't work with MPI. It might
     // be worth noticing that the communication between different MPI processes
-    // can be improved if the MPI implementation is CUDA-aware and the configure
-    // flag `DEAL_II_MPI_WITH_CUDA_SUPPORT` is enabled. (The value of this
+    // can be improved if the MPI implementation is GPU-aware and the configure
+    // flag `DEAL_II_MPI_WITH_DEVICE_SUPPORT` is enabled. (The value of this
     // flag needs to be set at the time you call `cmake` when installing
     // deal.II.)
     //

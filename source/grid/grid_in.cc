@@ -3517,7 +3517,11 @@ namespace
                                          numbers.end()),
                       type_name_2.end());
 
-    if (type_name_2 == "TRI" || type_name_2 == "TRIANGLE")
+    // The manual specifies BAR, BEAM, and TRUSS: in practice people use EDGE
+    if (type_name_2 == "BAR" || type_name_2 == "BEAM" ||
+        type_name_2 == "EDGE" || type_name_2 == "TRUSS")
+      return ReferenceCells::Line;
+    else if (type_name_2 == "TRI" || type_name_2 == "TRIANGLE")
       return ReferenceCells::Triangle;
     else if (type_name_2 == "QUAD" || type_name_2 == "QUADRILATERAL")
       return ReferenceCells::Quadrilateral;
@@ -3616,6 +3620,7 @@ namespace
         // Collect into a sortable data structure:
         std::vector<std::pair<std::size_t, std::vector<int>>>
           face_id_to_side_sets;
+        face_id_to_side_sets.reserve(face_side_sets.size());
         for (auto &pair : face_side_sets)
           {
             Assert(pair.second.size() > 0, ExcInternalError());
@@ -3632,6 +3637,10 @@ namespace
                                                         b.second.end());
                   });
 
+        if (dim == 2)
+          subcelldata.boundary_lines.reserve(face_id_to_side_sets.size());
+        else if (dim == 3)
+          subcelldata.boundary_quads.reserve(face_id_to_side_sets.size());
         types::boundary_id current_b_or_m_id = 0;
         for (const auto &pair : face_id_to_side_sets)
           {
@@ -3741,13 +3750,7 @@ GridIn<dim, spacedim>::read_exodusii(
   AssertDimension(mesh_dimension, spacedim);
 
   // Read nodes:
-  std::vector<double> xs(n_nodes);
-  std::vector<double> ys(n_nodes);
-  std::vector<double> zs(n_nodes);
-
-  ierr = ex_get_coord(ex_id, xs.data(), ys.data(), zs.data());
-  AssertThrowExodusII(ierr);
-
+  //
   // Even if there is a node numbering array the values stored inside the
   // ExodusII file must use the contiguous, internal ordering (see Section 4.5
   // of the manual - "Internal (contiguously numbered) node and element IDs
@@ -3756,29 +3759,39 @@ GridIn<dim, spacedim>::read_exodusii(
   // connectivity.")
   std::vector<Point<spacedim>> vertices;
   vertices.reserve(n_nodes);
-  for (int vertex_n = 0; vertex_n < n_nodes; ++vertex_n)
-    {
-      switch (spacedim)
-        {
-          case 1:
-            vertices.emplace_back(xs[vertex_n]);
-            break;
-          case 2:
-            vertices.emplace_back(xs[vertex_n], ys[vertex_n]);
-            break;
-          case 3:
-            vertices.emplace_back(xs[vertex_n], ys[vertex_n], zs[vertex_n]);
-            break;
-          default:
-            Assert(spacedim <= 3, ExcNotImplemented());
-        }
-    }
+  {
+    std::vector<double> xs(n_nodes);
+    std::vector<double> ys(n_nodes);
+    std::vector<double> zs(n_nodes);
+
+    ierr = ex_get_coord(ex_id, xs.data(), ys.data(), zs.data());
+    AssertThrowExodusII(ierr);
+
+    for (int vertex_n = 0; vertex_n < n_nodes; ++vertex_n)
+      {
+        switch (spacedim)
+          {
+            case 1:
+              vertices.emplace_back(xs[vertex_n]);
+              break;
+            case 2:
+              vertices.emplace_back(xs[vertex_n], ys[vertex_n]);
+              break;
+            case 3:
+              vertices.emplace_back(xs[vertex_n], ys[vertex_n], zs[vertex_n]);
+              break;
+            default:
+              Assert(spacedim <= 3, ExcNotImplemented());
+          }
+      }
+  }
 
   std::vector<int> element_block_ids(n_element_blocks);
   ierr = ex_get_ids(ex_id, EX_ELEM_BLOCK, element_block_ids.data());
   AssertThrowExodusII(ierr);
 
   std::vector<CellData<dim>> cells;
+  cells.reserve(n_elements);
   // Elements are grouped together by same reference cell type in element
   // blocks. There may be multiple blocks for a single reference cell type,
   // but "each element block may contain only one element type".
@@ -3804,6 +3817,13 @@ GridIn<dim, spacedim>::read_exodusii(
       AssertThrowExodusII(ierr);
       const ReferenceCell type =
         exodusii_name_to_type(string_temp.data(), n_nodes_per_element);
+      AssertThrow(type.get_dimension() == dim,
+                  ExcMessage(
+                    "The ExodusII block " + std::to_string(element_block_id) +
+                    " with element type " + std::string(string_temp.data()) +
+                    " has dimension " + std::to_string(type.get_dimension()) +
+                    ", which does not match the topological mesh dimension " +
+                    std::to_string(dim) + "."));
 
       // The number of nodes per element may be larger than what we want to
       // read - for example, if the Exodus file contains a QUAD9 element, we
@@ -3829,7 +3849,7 @@ GridIn<dim, spacedim>::read_exodusii(
                 connection[elem_n + i] - 1;
             }
           cell.material_id = element_block_id;
-          cells.push_back(cell);
+          cells.push_back(std::move(cell));
         }
     }
 

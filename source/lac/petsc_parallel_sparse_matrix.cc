@@ -32,7 +32,6 @@ namespace PETScWrappers
   namespace MPI
   {
     SparseMatrix::SparseMatrix()
-      : communicator(MPI_COMM_SELF)
     {
       // just like for vectors: since we
       // create an empty matrix, we can as
@@ -43,6 +42,9 @@ namespace PETScWrappers
       AssertThrow(ierr == 0, ExcPETScError(ierr));
     }
 
+    SparseMatrix::SparseMatrix(const Mat &A)
+      : MatrixBase(A)
+    {}
 
     SparseMatrix::~SparseMatrix()
     {
@@ -59,9 +61,9 @@ namespace PETScWrappers
       const std::vector<size_type> &local_columns_per_process,
       const unsigned int            this_process,
       const bool                    preset_nonzero_locations)
-      : communicator(communicator)
     {
-      do_reinit(sparsity_pattern,
+      do_reinit(communicator,
+                sparsity_pattern,
                 local_rows_per_process,
                 local_columns_per_process,
                 this_process,
@@ -75,8 +77,6 @@ namespace PETScWrappers
     {
       if (&other == this)
         return;
-
-      this->communicator = other.communicator;
 
       PetscErrorCode ierr = destroy_matrix(matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -94,13 +94,12 @@ namespace PETScWrappers
                          const SparsityPatternType &sparsity_pattern,
                          const MPI_Comm &           communicator)
     {
-      this->communicator = communicator;
-
       // get rid of old matrix and generate a new one
       const PetscErrorCode ierr = destroy_matrix(matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      do_reinit(local_rows,
+      do_reinit(communicator,
+                local_rows,
                 local_active_rows,
                 local_columns,
                 local_active_columns,
@@ -121,8 +120,6 @@ namespace PETScWrappers
       if (&other == this)
         return;
 
-      this->communicator = other.communicator;
-
       const PetscErrorCode ierr =
         MatCopy(other.matrix, matrix, SAME_NONZERO_PATTERN);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
@@ -140,14 +137,13 @@ namespace PETScWrappers
       const unsigned int            this_process,
       const bool                    preset_nonzero_locations)
     {
-      this->communicator = communicator;
-
       // get rid of old matrix and generate a new one
       const PetscErrorCode ierr = destroy_matrix(matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 
-      do_reinit(sparsity_pattern,
+      do_reinit(communicator,
+                sparsity_pattern,
                 local_rows_per_process,
                 local_columns_per_process,
                 this_process,
@@ -159,24 +155,32 @@ namespace PETScWrappers
     template <typename SparsityPatternType>
     void
     SparseMatrix::reinit(const IndexSet &           local_rows,
+                         const SparsityPatternType &sparsity_pattern,
+                         const MPI_Comm &           communicator)
+    {
+      do_reinit(communicator, local_rows, local_rows, sparsity_pattern);
+    }
+
+    template <typename SparsityPatternType>
+    void
+    SparseMatrix::reinit(const IndexSet &           local_rows,
                          const IndexSet &           local_columns,
                          const SparsityPatternType &sparsity_pattern,
                          const MPI_Comm &           communicator)
     {
-      this->communicator = communicator;
-
       // get rid of old matrix and generate a new one
       const PetscErrorCode ierr = destroy_matrix(matrix);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      do_reinit(local_rows, local_columns, sparsity_pattern);
+      do_reinit(communicator, local_rows, local_columns, sparsity_pattern);
     }
 
 
 
     template <typename SparsityPatternType>
     void
-    SparseMatrix::do_reinit(const IndexSet &           local_rows,
+    SparseMatrix::do_reinit(const MPI_Comm &           communicator,
+                            const IndexSet &           local_rows,
                             const IndexSet &           local_columns,
                             const SparsityPatternType &sparsity_pattern)
     {
@@ -230,7 +234,10 @@ namespace PETScWrappers
                          sparsity_pattern.n_cols());
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      ierr = MatSetType(matrix, MATMPIAIJ);
+      // Use MATAIJ which dispatches to SEQAIJ
+      // if the size of the communicator is 1,
+      // and to MPIAIJ otherwise.
+      ierr = MatSetType(matrix, MATAIJ);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
 
@@ -249,7 +256,7 @@ namespace PETScWrappers
       // if (preset_nonzero_locations == true)
       if (local_rows.n_elements() > 0)
         {
-          // MatMPIAIJSetPreallocationCSR
+          // MatXXXAIJSetPreallocationCSR
           // can be used to allocate the sparsity
           // pattern of a matrix
 
@@ -293,10 +300,18 @@ namespace PETScWrappers
           }
 
 
-          // then call the petsc function
+          // then call the petsc functions
           // that summarily allocates these
-          // entries:
+          // entries.
+          // Here we both call the specific API since this is how
+          // PETSc polymorphism works. If the matrix is of type MPIAIJ,
+          // the second call is dummy. If the matrix is of type SEQAIJ,
+          // the first call is dummy.
           ierr = MatMPIAIJSetPreallocationCSR(matrix,
+                                              rowstart_in_window.data(),
+                                              colnums_in_window.data(),
+                                              nullptr);
+          ierr = MatSeqAIJSetPreallocationCSR(matrix,
                                               rowstart_in_window.data(),
                                               colnums_in_window.data(),
                                               nullptr);
@@ -305,7 +320,10 @@ namespace PETScWrappers
       else
         {
           PetscInt i = 0;
-          ierr       = MatMPIAIJSetPreallocationCSR(matrix, &i, &i, nullptr);
+
+          ierr = MatSeqAIJSetPreallocationCSR(matrix, &i, &i, nullptr);
+          AssertThrow(ierr == 0, ExcPETScError(ierr));
+          ierr = MatMPIAIJSetPreallocationCSR(matrix, &i, &i, nullptr);
           AssertThrow(ierr == 0, ExcPETScError(ierr));
         }
       compress(dealii::VectorOperation::insert);
@@ -320,6 +338,7 @@ namespace PETScWrappers
     template <typename SparsityPatternType>
     void
     SparseMatrix::do_reinit(
+      const MPI_Comm &              communicator,
       const SparsityPatternType &   sparsity_pattern,
       const std::vector<size_type> &local_rows_per_process,
       const std::vector<size_type> &local_columns_per_process,
@@ -358,7 +377,10 @@ namespace PETScWrappers
                          sparsity_pattern.n_cols());
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
-      ierr = MatSetType(matrix, MATMPIAIJ);
+      // Use MATAIJ which dispatches to SEQAIJ
+      // if the size of the communicator is 1,
+      // and to MPIAIJ otherwise.
+      ierr = MatSetType(matrix, MATAIJ);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // next preset the exact given matrix
@@ -376,7 +398,7 @@ namespace PETScWrappers
       // class.
       if (preset_nonzero_locations == true)
         {
-          // MatMPIAIJSetPreallocationCSR
+          // MatXXXAIJSetPreallocationCSR
           // can be used to allocate the sparsity
           // pattern of a matrix if it is already
           // available:
@@ -418,7 +440,15 @@ namespace PETScWrappers
 
           // then call the petsc function
           // that summarily allocates these
-          // entries:
+          // entries.
+          // Here we both call the specific API since this is how
+          // PETSc polymorphism works. If the matrix is of type MPIAIJ,
+          // the second call is dummy. If the matrix is of type SEQAIJ,
+          // the first call is dummy.
+          ierr = MatSeqAIJSetPreallocationCSR(matrix,
+                                              rowstart_in_window.data(),
+                                              colnums_in_window.data(),
+                                              nullptr);
           ierr = MatMPIAIJSetPreallocationCSR(matrix,
                                               rowstart_in_window.data(),
                                               colnums_in_window.data(),
@@ -433,7 +463,8 @@ namespace PETScWrappers
     // BDDC
     template <typename SparsityPatternType>
     void
-    SparseMatrix::do_reinit(const IndexSet &           local_rows,
+    SparseMatrix::do_reinit(const MPI_Comm &           communicator,
+                            const IndexSet &           local_rows,
                             const IndexSet &           local_active_rows,
                             const IndexSet &           local_columns,
                             const IndexSet &           local_active_columns,
@@ -508,7 +539,7 @@ namespace PETScWrappers
       ierr = ISDestroy(&is_glob_row);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
       ierr =
-        ISLocalToGlobalMappingViewFromOptions(l2gmap_row, NULL, "-view_map");
+        ISLocalToGlobalMappingViewFromOptions(l2gmap_row, nullptr, "-view_map");
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // Create column index set
@@ -524,7 +555,7 @@ namespace PETScWrappers
       ierr = ISDestroy(&is_glob_col);
       AssertThrow(ierr == 0, ExcPETScError(ierr));
       ierr =
-        ISLocalToGlobalMappingViewFromOptions(l2gmap_col, NULL, "-view_map");
+        ISLocalToGlobalMappingViewFromOptions(l2gmap_col, nullptr, "-view_map");
       AssertThrow(ierr == 0, ExcPETScError(ierr));
 
       // create the matrix with the IS constructor.
@@ -688,8 +719,18 @@ namespace PETScWrappers
 
     template void
     SparseMatrix::reinit(const IndexSet &,
+                         const SparsityPattern &,
+                         const MPI_Comm &);
+
+    template void
+    SparseMatrix::reinit(const IndexSet &,
                          const IndexSet &,
                          const SparsityPattern &,
+                         const MPI_Comm &);
+
+    template void
+    SparseMatrix::reinit(const IndexSet &,
+                         const DynamicSparsityPattern &,
                          const MPI_Comm &);
 
     template void
@@ -699,25 +740,29 @@ namespace PETScWrappers
                          const MPI_Comm &);
 
     template void
-    SparseMatrix::do_reinit(const SparsityPattern &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const SparsityPattern &,
                             const std::vector<size_type> &,
                             const std::vector<size_type> &,
                             const unsigned int,
                             const bool);
     template void
-    SparseMatrix::do_reinit(const DynamicSparsityPattern &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const DynamicSparsityPattern &,
                             const std::vector<size_type> &,
                             const std::vector<size_type> &,
                             const unsigned int,
                             const bool);
 
     template void
-    SparseMatrix::do_reinit(const IndexSet &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const IndexSet &,
                             const IndexSet &,
                             const SparsityPattern &);
 
     template void
-    SparseMatrix::do_reinit(const IndexSet &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const IndexSet &,
                             const IndexSet &,
                             const DynamicSparsityPattern &);
 
@@ -737,13 +782,15 @@ namespace PETScWrappers
                          const MPI_Comm &);
 
     template void
-    SparseMatrix::do_reinit(const IndexSet &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const IndexSet &,
                             const IndexSet &,
                             const IndexSet &,
                             const IndexSet &,
                             const SparsityPattern &);
     template void
-    SparseMatrix::do_reinit(const IndexSet &,
+    SparseMatrix::do_reinit(const MPI_Comm &,
+                            const IndexSet &,
                             const IndexSet &,
                             const IndexSet &,
                             const IndexSet &,

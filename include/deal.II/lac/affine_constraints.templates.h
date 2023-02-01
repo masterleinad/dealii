@@ -137,6 +137,7 @@ AffineConstraints<number>::is_consistent_in_parallel(
   // We will send all locally active dofs that are not locally owned for
   // checking. Note that we allow constraints to differ on locally_relevant (and
   // not active) DoFs.
+  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
   IndexSet non_owned = locally_active_dofs;
   non_owned.subtract_set(locally_owned_dofs[myid]);
   for (unsigned int owner = 0; owner < nproc; ++owner)
@@ -262,8 +263,9 @@ namespace internal
 
     Utilities::MPI::ConsensusAlgorithms::Selector<
       std::vector<std::pair<types::global_dof_index, types::global_dof_index>>,
-      std::vector<unsigned int>>(constrained_indices_process, mpi_communicator)
-      .run();
+      std::vector<unsigned int>>
+      consensus_algorithm;
+    consensus_algorithm.run(constrained_indices_process, mpi_communicator);
 
     // step 2: collect all locally owned constraints
     const auto constrained_indices_by_ranks =
@@ -390,9 +392,9 @@ namespace internal
       Utilities::MPI::ConsensusAlgorithms::Selector<
         std::vector<
           std::pair<types::global_dof_index, types::global_dof_index>>,
-        std::vector<unsigned int>>(locally_relevant_dofs_process,
-                                   mpi_communicator)
-        .run();
+        std::vector<unsigned int>>
+        consensus_algorithm;
+      consensus_algorithm.run(locally_relevant_dofs_process, mpi_communicator);
 
       const auto locally_relevant_dofs_by_ranks =
         locally_relevant_dofs_process.get_requesters();
@@ -2255,24 +2257,12 @@ namespace internal
       vec.zero_out_ghost_values();
     }
 
-#ifdef DEAL_II_COMPILER_CUDA_AWARE
-    template <typename Number>
-    __global__ void
-    set_zero_kernel(const size_type *  constrained_dofs,
-                    const unsigned int n_constrained_dofs,
-                    Number *           dst)
-    {
-      const unsigned int index = threadIdx.x + blockDim.x * blockIdx.x;
-      if (index < n_constrained_dofs)
-        dst[constrained_dofs[index]] = 0;
-    }
-
     template <typename number>
     void
     set_zero_parallel(
-      const std::vector<size_type> &                                 cm,
-      LinearAlgebra::distributed::Vector<number, MemorySpace::CUDA> &vec,
-      size_type                                                      shift = 0)
+      const std::vector<size_type> &                                    cm,
+      LinearAlgebra::distributed::Vector<number, MemorySpace::Default> &vec,
+      size_type shift = 0)
     {
       Assert(shift == 0, ExcNotImplemented());
       (void)shift;
@@ -2284,22 +2274,30 @@ namespace internal
           constrained_local_dofs_host.push_back(
             vec.get_partitioner()->global_to_local(global_index));
 
-      const int  n_constraints = constrained_local_dofs_host.size();
-      size_type *constrained_local_dofs_device;
-      Utilities::CUDA::malloc(constrained_local_dofs_device, n_constraints);
-      Utilities::CUDA::copy_to_dev(constrained_local_dofs_host,
-                                   constrained_local_dofs_device);
+      const int n_constraints = constrained_local_dofs_host.size();
+      Kokkos::View<size_type *, MemorySpace::Default::kokkos_space>
+        constrained_local_dofs_device(
+          Kokkos::view_alloc(Kokkos::WithoutInitializing,
+                             "constrained_local_dofs_device"),
+          n_constraints);
+      Kokkos::deep_copy(constrained_local_dofs_device,
+                        Kokkos::View<size_type *, Kokkos::HostSpace>(
+                          constrained_local_dofs_host.data(),
+                          constrained_local_dofs_host.size()));
 
-      const int n_blocks = 1 + (n_constraints - 1) / CUDAWrappers::block_size;
-      set_zero_kernel<<<n_blocks, CUDAWrappers::block_size>>>(
-        constrained_local_dofs_device, n_constraints, vec.get_values());
-      AssertCudaKernel();
-
-      Utilities::CUDA::free(constrained_local_dofs_device);
+      using ExecutionSpace =
+        MemorySpace::Default::kokkos_space::execution_space;
+      ExecutionSpace exec;
+      auto           local_values = vec.get_values();
+      Kokkos::parallel_for(
+        "set_zero_parallel",
+        Kokkos::RangePolicy<ExecutionSpace>(exec, 0, n_constraints),
+        KOKKOS_LAMBDA(int i) {
+          local_values[constrained_local_dofs_device[i]] = 0;
+        });
 
       vec.zero_out_ghost_values();
     }
-#endif
 
     template <class VectorType>
     void

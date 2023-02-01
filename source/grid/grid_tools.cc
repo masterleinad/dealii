@@ -2053,6 +2053,25 @@ namespace GridTools
     };
 
 
+    // Transformation to rotate around one of the cartesian z-axis in 2D.
+    class Rotate2d
+    {
+    public:
+      explicit Rotate2d(const double angle)
+        : rotation_matrix(
+            Physics::Transformations::Rotations::rotation_matrix_2d(angle))
+      {}
+      Point<2>
+      operator()(const Point<2> &p) const
+      {
+        return static_cast<Point<2>>(rotation_matrix * p);
+      }
+
+    private:
+      const Tensor<2, 2, double> rotation_matrix;
+    };
+
+
     // Transformation to rotate around one of the cartesian axes.
     class Rotate3d
     {
@@ -2099,6 +2118,38 @@ namespace GridTools
         Triangulation<dim, spacedim> &triangulation)
   {
     transform(internal::Shift<spacedim>(shift_vector), triangulation);
+  }
+
+
+
+  template <int dim, int spacedim>
+  void
+  rotate(const double angle, Triangulation<dim, spacedim> &triangulation)
+  {
+    (void)angle;
+    (void)triangulation;
+
+    AssertThrow(false,
+                ExcMessage(
+                  "GridTools::rotate() is only available for spacedim = 2."));
+  }
+
+
+
+  template <>
+  void
+  rotate(const double angle, Triangulation<1, 2> &triangulation)
+  {
+    transform(internal::Rotate2d(angle), triangulation);
+  }
+
+
+
+  template <>
+  void
+  rotate(const double angle, Triangulation<2, 2> &triangulation)
+  {
+    transform(internal::Rotate2d(angle), triangulation);
   }
 
 
@@ -2961,6 +3012,14 @@ namespace GridTools
           }
         else
           {
+            // For some clang-based compilers and boost versions the call to
+            // RTree::query doesn't compile. Since using an rtree here is just a
+            // performance improvement disabling this branch is OK.
+            // This is fixed in boost in
+            // https://github.com/boostorg/numeric_conversion/commit/50a1eae942effb0a9b90724323ef8f2a67e7984a
+#if defined(DEAL_II_WITH_BOOST_BUNDLED) ||                \
+  !(defined(__clang_major__) && __clang_major__ >= 16) || \
+  BOOST_VERSION >= 108100
             if (!used_vertices_rtree.empty())
               {
                 // If we have an rtree at our disposal, use it.
@@ -2989,6 +3048,7 @@ namespace GridTools
                     closest_vertex_index = res[0].second;
               }
             else
+#endif
               {
                 closest_vertex_index = GridTools::find_closest_vertex(
                   mapping, mesh, p, marked_vertices);
@@ -4992,7 +5052,7 @@ namespace GridTools
          cell_ptr != distorted_cells.distorted_cells.end();
          ++cell_ptr)
       {
-        const typename Triangulation<dim, spacedim>::cell_iterator cell =
+        const typename Triangulation<dim, spacedim>::cell_iterator &cell =
           *cell_ptr;
 
         Assert(!cell->is_active(),
@@ -6942,12 +7002,6 @@ namespace GridTools
                 if (i + 1 == n_subdivisions)
                   vertices.emplace_back(points[mask[1]]);
               }
-            // check for a saddle point, if iso_level values of the two
-            // corner nodes are identical
-            else if ((std::abs(ls_values[mask[0]] - ls_values[mask[1]]) <
-                      tolerance) &&
-                     (ls_values[mask[0]] >= iso_level))
-              vertices.emplace_back(0.5 * (points[mask[0]] + points[mask[1]]));
             // check if the edge is cut
             else if (((ls_values[mask[0]] > iso_level) &&
                       (ls_values[mask[1]] < iso_level)) ||

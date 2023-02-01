@@ -302,6 +302,7 @@ namespace parallel
     // Utilities::MPI::compute_set_union)
     std::vector<unsigned int> reference_cells_ui;
 
+    reference_cells_ui.reserve(this->reference_cells.size());
     for (const auto &i : this->reference_cells)
       reference_cells_ui.push_back(static_cast<unsigned int>(i));
 
@@ -314,7 +315,7 @@ namespace parallel
     this->reference_cells.clear();
     for (const auto &i : reference_cells_ui)
       this->reference_cells.emplace_back(
-        dealii::internal::ReferenceCell::make_reference_cell_from_int(i));
+        dealii::internal::make_reference_cell_from_int(i));
   }
 
 

@@ -40,7 +40,7 @@ namespace internal
      * are defined on each face.
      */
     template <int dim>
-    inline std::pair<dealii::ReferenceCell, dealii::hp::QCollection<dim - 1>>
+    inline std::pair<ReferenceCell, dealii::hp::QCollection<dim - 1>>
     get_face_quadrature_collection(const Quadrature<dim> &quad,
                                    const bool             do_assert = true)
     {
@@ -161,6 +161,17 @@ namespace internal
 
       return {Quadrature<dim - 1>(), Quadrature<dim - 1>()};
     }
+
+    inline DEAL_II_ALWAYS_INLINE unsigned int
+    indicate_power_of_two(const unsigned int vectorization_length)
+    {
+      unsigned int vectorization_length_bits = 0;
+      unsigned int my_length                 = vectorization_length;
+      while (my_length >>= 1)
+        ++vectorization_length_bits;
+      return 1 << vectorization_length_bits;
+    }
+
   } // end of namespace MatrixFreeFunctions
 } // end of namespace internal
 

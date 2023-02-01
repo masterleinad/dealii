@@ -109,12 +109,6 @@ if(CMAKE_CROSSCOMPILING)
     )
 endif()
 
-if(DEAL_II_STATIC_EXECUTABLE)
-  _both(
-    "#\n#        STATIC LINKAGE!\n"
-    )
-endif()
-
 _both("#\n")
 
 _detailed("#  Exported compiler and linker flags:\n")
@@ -143,9 +137,6 @@ foreach(_build ${DEAL_II_BUILD_TYPES})
 endforeach()
 _detailed("#\n")
 
-if(NOT DEAL_II_SETUP_DEFAULT_COMPILER_FLAGS)
-  _both("#  WARNING: DEAL_II_SETUP_DEFAULT_COMPILER_FLAGS is set to OFF\n")
-endif()
 _both("#  Configured Features (")
 if(DEFINED DEAL_II_ALLOW_BUNDLED)
   _both("DEAL_II_ALLOW_BUNDLED = ${DEAL_II_ALLOW_BUNDLED}, ")
@@ -166,7 +157,7 @@ foreach(_feature ${_deal_ii_features_sorted})
     #
     if(FEATURE_${_feature}_EXTERNAL_CONFIGURED)
       _both("#        ${_var} set up with external dependencies\n")
-    elseif(FEATURE_${_feature}_BUNDLED_CONFIGURED)
+    elseif(DEAL_II_FEATURE_${_feature}_BUNDLED_CONFIGURED)
       if(DEAL_II_FORCE_BUNDLED_${_feature})
         _both("#        ${_var} set up with bundled packages (forced)\n")
       else()
