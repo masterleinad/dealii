@@ -231,7 +231,7 @@ namespace Physics
        * @dealiiHolzapfelA{229,6.83}
        */
       template <typename Number>
-      static DEAL_II_CONSTEXPR SymmetricTensor<4, dim, Number>
+      static DEAL_II_CONSTEXPR_FUNCTION SymmetricTensor<4, dim, Number>
                                Dev_P(const Tensor<2, dim, Number> &F);
 
       /**
@@ -246,7 +246,7 @@ namespace Physics
        * @f]
        */
       template <typename Number>
-      static DEAL_II_CONSTEXPR SymmetricTensor<4, dim, Number>
+      static DEAL_II_CONSTEXPR_FUNCTION SymmetricTensor<4, dim, Number>
                                Dev_P_T(const Tensor<2, dim, Number> &F);
 
       /** @} */
@@ -273,7 +273,7 @@ namespace Physics
        * @dealiiHolzapfelA{228,6.82}
        */
       template <typename Number>
-      static DEAL_II_CONSTEXPR SymmetricTensor<2, dim, Number>
+      static DEAL_II_CONSTEXPR_FUNCTION SymmetricTensor<2, dim, Number>
                                ddet_F_dC(const Tensor<2, dim, Number> &F);
 
       /** @} */
@@ -298,7 +298,7 @@ namespace Physics
        * @dealiiWriggersA{76,3.255}
        */
       template <typename Number>
-      static DEAL_II_CONSTEXPR SymmetricTensor<4, dim, Number>
+      static DEAL_II_CONSTEXPR_FUNCTION SymmetricTensor<4, dim, Number>
                                dC_inv_dC(const Tensor<2, dim, Number> &F);
 
       /** @} */
@@ -316,7 +316,7 @@ namespace Physics
 
 template <int dim>
 template <typename Number>
-DEAL_II_CONSTEXPR inline SymmetricTensor<4, dim, Number>
+DEAL_II_CONSTEXPR_FUNCTION inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::Dev_P(
   const Tensor<2, dim, Number> &F)
 {
@@ -343,7 +343,7 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P(
 
 template <int dim>
 template <typename Number>
-DEAL_II_CONSTEXPR inline SymmetricTensor<4, dim, Number>
+DEAL_II_CONSTEXPR_FUNCTION inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::Dev_P_T(
   const Tensor<2, dim, Number> &F)
 {
@@ -371,7 +371,7 @@ Physics::Elasticity::StandardTensors<dim>::Dev_P_T(
 
 template <int dim>
 template <typename Number>
-DEAL_II_CONSTEXPR SymmetricTensor<2, dim, Number>
+DEAL_II_CONSTEXPR_FUNCTION SymmetricTensor<2, dim, Number>
                   Physics::Elasticity::StandardTensors<dim>::ddet_F_dC(
   const Tensor<2, dim, Number> &F)
 {
@@ -383,7 +383,7 @@ DEAL_II_CONSTEXPR SymmetricTensor<2, dim, Number>
 
 template <int dim>
 template <typename Number>
-DEAL_II_CONSTEXPR inline SymmetricTensor<4, dim, Number>
+DEAL_II_CONSTEXPR_FUNCTION inline SymmetricTensor<4, dim, Number>
 Physics::Elasticity::StandardTensors<dim>::dC_inv_dC(
   const Tensor<2, dim, Number> &F)
 {

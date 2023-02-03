@@ -173,6 +173,7 @@
 #endif
 #cmakedefine DEAL_II_FALLTHROUGH @DEAL_II_FALLTHROUGH@
 #cmakedefine DEAL_II_CONSTEXPR @DEAL_II_CONSTEXPR@
+#cmakedefine DEAL_II_CONSTEXPR_FUNCTION @DEAL_II_CONSTEXPR_FUNCTION@
 
 // defined for backwards compatibility with older deal.II versions
 #define DEAL_II_WITH_CXX11
