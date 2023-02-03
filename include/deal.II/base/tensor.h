@@ -1167,7 +1167,8 @@ namespace internal
     constexpr DEAL_II_HOST_DEVICE_ALWAYS_INLINE void
     multiply_assign_scalar(std::complex<Number> &, const OtherNumber &)
     {
-      Kokkos::abort("This function is not implemented for std::complex<Number>!\n");
+      Kokkos::abort(
+        "This function is not implemented for std::complex<Number>!\n");
     }
 #  endif
   } // namespace ComplexWorkaround
