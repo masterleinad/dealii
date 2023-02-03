@@ -234,7 +234,6 @@ foreach(_flag ${DEAL_II_USED_FLAGS})
   set(${_flag} "${${_flag}}" CACHE STRING
     "The user supplied cache variable will be appended _at the end_ of the configuration step to the auto generated ${_flag} variable"
     )
-  mark_as_advanced(${_flag})
 endforeach()
 
 foreach(_variable
