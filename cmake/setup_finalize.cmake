@@ -68,6 +68,9 @@ foreach(_feature ${DEAL_II_FEATURES})
   endif()
 endforeach()
 
+# FIXME remove once we handle feature CMake targets better.
+add_compile_options("${DEAL_II_COMPILE_OPTIONS}")
+
 #
 # Deduplicate entries one more time :-]
 #
