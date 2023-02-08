@@ -1524,7 +1524,7 @@ namespace deal_II_exceptions
           }))                                                                \
           KOKKOS_IF_ON_DEVICE(({                                             \
             if (!(cond))                                                     \
-              Kokkos::abort(#cond);                         \
+              Kokkos::abort(#cond);                                          \
           }))                                                                \
         }
 #    else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
@@ -1544,7 +1544,7 @@ namespace deal_II_exceptions
           }))                                                                \
           KOKKOS_IF_ON_DEVICE(({                                             \
             if (!(cond))                                                     \
-              Kokkos::abort(#cond);                         \
+              Kokkos::abort(#cond);                                          \
           }))                                                                \
         }
 #    endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
@@ -1580,9 +1580,9 @@ namespace deal_II_exceptions
           }
 #      endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
 #    else    /*#ifdef KOKKOS_ACTIVE_EXECUTION_MEMORY_SPACE_HOST*/
-#      define Assert(cond, exc)                    \
-        {                                          \
-          if (!(cond))                             \
+#      define Assert(cond, exc)   \
+        {                         \
+          if (!(cond))            \
             Kokkos::abort(#cond); \
         }
 #    endif /*ifdef KOKKOS_ACTIVE_EXECUTION_MEMORY_SPACE_HOST*/
