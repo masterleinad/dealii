@@ -49,11 +49,12 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
     )
   set(CACHED_${_var}_ARGN "${ARGN}" CACHE INTERNAL "" FORCE)
 
-  set(CMAKE_REQUIRED_FLAGS "${_compiler_flags} ${_linker_flags}")
-  set(CMAKE_REQUIRED_LIBRARIES ${ARGN})
+  MESSAGE(STATUS "compiler_flags: ${_compiler_flags}\n\nlinker_flags: ${_linker_flags}")
 
-  CHECK_CXX_SOURCE_COMPILES("int main(){ return 0; }" ${_var})
-  reset_cmake_required()
+  try_compile(
+    ${_var} PROJECT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
+    CMAKE_FLAGS "-DTEST_COMPILE_FLAGS=${_compiler_flags}" "-DTEST_LINKER_FLAGS=${_linker_flags}" "-DTEST_LINK_LIBRARIES=${ARGN}")
 
   if(${_var})
     set(${_var} TRUE CACHE INTERNAL "")

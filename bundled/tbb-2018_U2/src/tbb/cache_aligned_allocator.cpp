@@ -250,7 +250,7 @@ bool __TBB_EXPORTED_FUNC is_malloc_used_v3() {
     // Cast to void avoids type mismatch errors on some compilers (e.g. __IBMCPP__)
     __TBB_ASSERT( !(((void*)MallocHandler==(void*)&malloc) ^ ((void*)FreeHandler==(void*)&free)),
                   "Both shim pointers must refer to routines from the same package (either TBB or CRT)" );
-    return (void*)MallocHandler == (void*)&malloc;
+    return (void*)MallocHandler == &malloc;
 }
 
 } // namespace internal

@@ -399,7 +399,7 @@ namespace CUDAWrappers
       }
     else if (integrate_grad == true)
       {
-        evaluator_tensor_product.integrate_gradient<false>(values, gradients);
+        evaluator_tensor_product.template integrate_gradient<false>(values, gradients);
         __syncthreads();
       }
   }
