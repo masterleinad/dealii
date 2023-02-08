@@ -18,7 +18,7 @@
 
 #include <deal.II/base/config.h>
 
-#include <deal.II/base/kokkos.h>
+#include <Kokkos_Core.hpp>
 
 #include <exception>
 #include <ostream>
@@ -1524,7 +1524,7 @@ namespace deal_II_exceptions
           }))                                                                \
           KOKKOS_IF_ON_DEVICE(({                                             \
             if (!(cond))                                                     \
-              dealii::internal::kokkos_abort(#cond);                         \
+              Kokkos::abort(#cond);                         \
           }))                                                                \
         }
 #    else /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
@@ -1544,7 +1544,7 @@ namespace deal_II_exceptions
           }))                                                                \
           KOKKOS_IF_ON_DEVICE(({                                             \
             if (!(cond))                                                     \
-              dealii::internal::kokkos_abort(#cond);                         \
+              Kokkos::abort(#cond);                         \
           }))                                                                \
         }
 #    endif /*ifdef DEAL_II_HAVE_BUILTIN_EXPECT*/
@@ -1583,7 +1583,7 @@ namespace deal_II_exceptions
 #      define Assert(cond, exc)                    \
         {                                          \
           if (!(cond))                             \
-            dealii::internal::kokkos_abort(#cond); \
+            Kokkos::abort(#cond); \
         }
 #    endif /*ifdef KOKKOS_ACTIVE_EXECUTION_MEMORY_SPACE_HOST*/
 #  endif   /*KOKKOS_ACTIVE_EXECUTION_MEMORY_SPACE_HOST*/
