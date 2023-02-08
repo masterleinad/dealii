@@ -49,8 +49,6 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
     )
   set(CACHED_${_var}_ARGN "${ARGN}" CACHE INTERNAL "" FORCE)
 
-  MESSAGE(STATUS "compiler_flags: ${_compiler_flags}\n\nlinker_flags: ${_linker_flags}")
-
   try_compile(
     ${_var} PROJECT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
