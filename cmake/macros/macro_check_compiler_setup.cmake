@@ -32,6 +32,8 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
   string(STRIP "${_compiler_flags_unstr}" _compiler_flags)
   string(STRIP "${_linker_flags_unstr}" _linker_flags)
 
+  separate_arguments(_compiler_flags)
+
   #
   # Rerun this test if flags have changed:
   #
@@ -50,11 +52,17 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
   set(CACHED_${_var}_ARGN "${ARGN}" CACHE INTERNAL "" FORCE)
 
   try_compile(
-    ${_var} PROJECT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
-    CMAKE_FLAGS "-DTEST_COMPILE_FLAGS=${_compiler_flags}" "-DTEST_LINKER_FLAGS=${_linker_flags}" "-DTEST_LINK_LIBRARIES=${ARGN}")
+    ${_var}
+    ${CMAKE_CURRENT_BINARY_DIR}/check_compiler_setup/CheckCompilerSetup${_var}
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
+    CheckCompilerSetup${_var}
+    CMAKE_FLAGS "-DTEST_COMPILE_FLAGS=${_compiler_flags}" "-DTEST_LINKER_FLAGS=${_linker_flags}" "-DTEST_LINK_LIBRARIES=${ARGN}"
+    OUTPUT_VARIABLE _output)
 
   if(${_var})
     set(${_var} TRUE CACHE INTERNAL "")
+    file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/check_compiler_setup/CheckCompilerSetup${var})
+  else()
+    message(STATUS "Compiler setup check for ${_var} failed with:\n${_output}")
   endif()
 endmacro()
