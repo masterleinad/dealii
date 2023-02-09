@@ -176,7 +176,7 @@
 // clang++ assumes that all constexpr functions are __host__ __device__ when
 // compiling CUDA code, i.e, when Kokkos was configured with CUDA support.
 // This is problematic when calling non-constexpr functions in constexpr
-// functions. Also, we intent constexpr functions to only be device-callable if
+// functions. Also, we intend constexpr functions to only be device-callable if
 // not marked with DEAL_II_HOST_DEVICE. Hence, just annotate constexpr
 // functions additionally with "__host__".
 #if defined(DEAL_II_CONSTEXPR)
