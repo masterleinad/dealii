@@ -131,7 +131,7 @@ namespace
     if (conformity == FiniteElementData<dim>::Conformity::L2)
       return {};
 
-    // this concept doesn't exist in 1D so just return an empty vector
+    // this concept doesn't exist in 1d so just return an empty vector
     if (dim == 1)
       return {};
 
@@ -819,7 +819,7 @@ FE_SimplexDGP<dim, spacedim>::FE_SimplexDGP(const unsigned int degree)
                              degree,
                              FiniteElementData<dim>::L2),
       unit_support_points_fe_p<dim>(degree),
-      unit_face_support_points_fe_p<dim>(degree, FiniteElementData<dim>::H1),
+      unit_face_support_points_fe_p<dim>(degree, FiniteElementData<dim>::L2),
       constraints_fe_p<dim>(degree))
 {}
 

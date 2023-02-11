@@ -337,14 +337,14 @@ namespace GridGenerator
         // in block 4. end_b0_x_u = end_b0_x_l for symmetric airfoils
         const double end_b0_x_l;
 
-        // x-coordinate of first airfoil point in airfoil_1D[0] and
-        // airfoil_1D[1]
+        // x-coordinate of first airfoil point in airfoil_1d[0] and
+        // airfoil_1d[1]
         const double nose_x;
 
-        // x-coordinate of last airfoil point in airfoil_1D[0] and airfoil_1D[1]
+        // x-coordinate of last airfoil point in airfoil_1d[0] and airfoil_1d[1]
         const double tail_x;
 
-        // y-coordinate of last airfoil point in airfoil_1D[0] and airfoil_1D[1]
+        // y-coordinate of last airfoil point in airfoil_1d[0] and airfoil_1d[1]
         const double tail_y;
 
         // x-coordinate of C,D,E,F indicating ending of blocks 1 and 4 or
@@ -667,8 +667,10 @@ namespace GridGenerator
                 const double y_t =
                   5 * t *
                   (0.2969 * std::pow(x, 0.5) - 0.126 * x -
-                   0.3516 * std::pow(x, 2) + 0.2843 * std::pow(x, 3) -
-                   0.1036 * std::pow(x, 4)); // half thickness at a position x
+                   0.3516 * Utilities::fixed_power<2>(x) +
+                   0.2843 * Utilities::fixed_power<3>(x) -
+                   0.1036 * Utilities::fixed_power<4>(
+                              x)); // half thickness at a position x
 
                 if (is_upper)
                   naca_points.emplace_back(x, +y_t);
@@ -683,19 +685,23 @@ namespace GridGenerator
                 const double x = i * 1 / (1.0 * number_points - 1);
 
                 const double y_c =
-                  (x <= p) ? m / std::pow(p, 2) * (2 * p * x - std::pow(x, 2)) :
-                             m / std::pow(1 - p, 2) *
-                               ((1 - 2 * p) + 2 * p * x - std::pow(x, 2));
+                  (x <= p) ?
+                    m / Utilities::fixed_power<2>(p) *
+                      (2 * p * x - Utilities::fixed_power<2>(x)) :
+                    m / Utilities::fixed_power<2>(1 - p) *
+                      ((1 - 2 * p) + 2 * p * x - Utilities::fixed_power<2>(x));
 
-                const double dy_c = (x <= p) ?
-                                      2 * m / std::pow(p, 2) * (p - x) :
-                                      2 * m / std::pow(1 - p, 2) * (p - x);
+                const double dy_c =
+                  (x <= p) ? 2 * m / Utilities::fixed_power<2>(p) * (p - x) :
+                             2 * m / Utilities::fixed_power<2>(1 - p) * (p - x);
 
                 const double y_t =
                   5 * t *
                   (0.2969 * std::pow(x, 0.5) - 0.126 * x -
-                   0.3516 * std::pow(x, 2) + 0.2843 * std::pow(x, 3) -
-                   0.1036 * std::pow(x, 4)); // half thickness at a position x
+                   0.3516 * Utilities::fixed_power<2>(x) +
+                   0.2843 * Utilities::fixed_power<3>(x) -
+                   0.1036 * Utilities::fixed_power<4>(
+                              x)); // half thickness at a position x
 
                 const double theta = std::atan(dy_c);
 
@@ -1179,7 +1185,7 @@ namespace GridGenerator
     void
     create_triangulation(Triangulation<1, 1> &, const AdditionalData &)
     {
-      Assert(false, ExcMessage("Airfoils only exist for 2D and 3D!"));
+      Assert(false, ExcMessage("Airfoils only exist for 2D and 3d!"));
     }
 
 
@@ -1191,7 +1197,7 @@ namespace GridGenerator
                            typename Triangulation<1, 1>::cell_iterator>> &,
                          const AdditionalData &)
     {
-      Assert(false, ExcMessage("Airfoils only exist for 2D and 3D!"));
+      Assert(false, ExcMessage("Airfoils only exist for 2D and 3d!"));
     }
 
 
@@ -1227,7 +1233,7 @@ namespace GridGenerator
         typename Triangulation<3, 3>::cell_iterator>> &periodic_faces,
       const AdditionalData &                           additional_data)
     {
-      Assert(false, ExcMessage("3D airfoils are not implemented yet!"));
+      Assert(false, ExcMessage("3d airfoils are not implemented yet!"));
       (void)tria;
       (void)additional_data;
       (void)periodic_faces;
@@ -1644,7 +1650,7 @@ namespace GridGenerator
       }
     if (dim > 2)
       {
-        // In 3D, we have some more edges to deal with
+        // In 3d, we have some more edges to deal with
         for (unsigned int i = 1; i < dim; ++i)
           points.push_back(0.5 * (points[i - 1] + points[i + 1]));
         // And we need face midpoints
@@ -2165,7 +2171,7 @@ namespace GridGenerator
     Assert(false, ExcNotImplemented());
   }
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   parallelogram(Triangulation<2> &tria,
@@ -2329,11 +2335,11 @@ namespace GridGenerator
         "The triangulation you are trying to create will consist of cells"
         " with negative measures. This is usually the result of input data"
         " that does not define a right-handed coordinate system. The usual"
-        " fix for this is to ensure that in 1D the given point is to the"
-        " right of the origin (or the given edge tensor is positive), in 2D"
+        " fix for this is to ensure that in 1d the given point is to the"
+        " right of the origin (or the given edge tensor is positive), in 2d"
         " that the two edges (and their cross product) obey the right-hand"
         " rule (which may usually be done by switching the order of the"
-        " points or edge tensors), or in 3D that the edges form a"
+        " points or edge tensors), or in 3d that the edges form a"
         " right-handed coordinate system (which may also be accomplished by"
         " switching the order of the first two points or edge tensors)."));
 
@@ -2648,7 +2654,7 @@ namespace GridGenerator
                  "The distance between corner points must be positive."))
 
           // actual code is external since
-          // 1-D is different from 2/3D.
+          // 1-D is different from 2/3d.
           colorize_subdivided_hyper_rectangle(tria, p1, p2, epsilon);
       }
   }
@@ -2870,7 +2876,7 @@ namespace GridGenerator
         const double epsilon = 0.01 * min_size;
 
         // actual code is external since
-        // 1-D is different from 2/3D.
+        // 1-D is different from 2/3d.
         colorize_subdivided_hyper_rectangle(tria, p1, p2, epsilon);
       }
   }
@@ -3291,7 +3297,7 @@ namespace GridGenerator
 
   namespace internal
   {
-    // helper function to check if point is in 2D box
+    // helper function to check if point is in 2d box
     bool inline point_in_2d_box(const Point<2> &p,
                                 const Point<2> &c,
                                 const double    radius)
@@ -3534,7 +3540,7 @@ namespace GridGenerator
                       n_slices,
                       colorize);
 
-    // extrude to 3D
+    // extrude to 3d
     extrude_triangulation(tria_2, n_slices, L, tria, true);
 
     // shift in Z direction to match specified center
@@ -3796,7 +3802,7 @@ namespace GridGenerator
       tria_2, shell_region_width, n_shells, skewness, colorize);
     extrude_triangulation(tria_2, 5, 0.41, tria, true);
 
-    // set up the new 3D manifolds
+    // set up the new 3d manifolds
     const types::manifold_id      cylindrical_manifold_id = 0;
     const types::manifold_id      tfi_manifold_id         = 1;
     const PolarManifold<2> *const m_ptr =
@@ -4085,7 +4091,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   hyper_cube_slit(Triangulation<2> &tria,
@@ -4171,7 +4177,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   hyper_L(Triangulation<2> &tria,
@@ -4291,7 +4297,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   hyper_ball(Triangulation<2> &tria,
@@ -4460,7 +4466,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   cylinder(Triangulation<2> &tria,
@@ -4504,7 +4510,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   cylinder_shell(Triangulation<2> &,
@@ -4648,7 +4654,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 2D only
+  // Implementation for 2d only
   template <>
   void
   half_hyper_shell(Triangulation<2> & tria,
@@ -4817,7 +4823,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   hyper_cube_slit(Triangulation<3> &tria,
@@ -4866,7 +4872,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   enclosed_hyper_cube(Triangulation<3> &tria,
@@ -4973,7 +4979,7 @@ namespace GridGenerator
   }
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   hyper_L(Triangulation<3> &tria,
@@ -5044,7 +5050,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   hyper_ball(Triangulation<3> &tria,
@@ -5486,7 +5492,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   subdivided_cylinder(Triangulation<3> & tria,
@@ -5617,7 +5623,7 @@ namespace GridGenerator
     tria.set_manifold(0, CylindricalManifold<3>());
   }
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   cylinder(Triangulation<3> &tria,
@@ -5725,7 +5731,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   half_hyper_ball(Triangulation<3> &tria,
@@ -6205,7 +6211,7 @@ namespace GridGenerator
 
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   half_hyper_shell(Triangulation<3> &tria,
@@ -6306,7 +6312,7 @@ namespace GridGenerator
   }
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   quarter_hyper_shell(Triangulation<3> & tria,
@@ -6375,7 +6381,7 @@ namespace GridGenerator
   }
 
 
-  // Implementation for 3D only
+  // Implementation for 3d only
   template <>
   void
   cylinder_shell(Triangulation<3> & tria,
@@ -8188,13 +8194,13 @@ namespace GridGenerator
             const auto mid = cell.face(f)->manifold_id();
 
             // process boundary-faces: set boundary and manifold ids
-            if (dim == 2) // 2D boundary-faces
+            if (dim == 2) // 2d boundary-faces
               {
                 for (const auto &face_vertices :
                      vertex_ids_for_boundary_faces_2d[f])
                   add_cell(1, face_vertices, bid, mid);
               }
-            else if (dim == 3) // 3D boundary-faces
+            else if (dim == 3) // 3d boundary-faces
               {
                 // set manifold ids of tet-boundary-faces according to
                 // hex-boundary-faces

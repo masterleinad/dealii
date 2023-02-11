@@ -102,7 +102,7 @@ namespace internal
       static constexpr unsigned int max_n_points_1D = 40;
 
       static_assert(structdim == 1 || structdim == 2,
-                    "Only 1D and 2D interpolation implemented");
+                    "Only 1D and 2d interpolation implemented");
       Number temp[fe_degree != -1 ? fe_degree + 1 : max_n_points_1D];
 
       const unsigned int points =
@@ -1560,7 +1560,7 @@ namespace internal
                                                          constraint_mask_sorted,
                                                          v);
 
-              if (dim == 2) // 2D: only faces
+              if (dim == 2) // 2d: only faces
                 {
                   const bool subcell_x = (mask >> 0) & 1;
                   const bool subcell_y = (mask >> 1) & 1;
@@ -1603,7 +1603,7 @@ namespace internal
                                                      values); // face 1
                     }
                 }
-              else if (dim == 3) // 3D faces and edges
+              else if (dim == 3) // 3d faces and edges
                 {
                   const bool type_x = (mask >> 0) & 1;
                   const bool type_y = (mask >> 1) & 1;
