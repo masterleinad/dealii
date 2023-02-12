@@ -198,6 +198,7 @@ jobs:
               -D DEAL_II_WITH_P4EST="ON" \
               -D DEAL_II_COMPONENT_EXAMPLES="ON" \
               ..
+        cat detailed.log
     - name: archive detailed.log
       uses: actions/upload-artifact@v3
       with:
@@ -206,7 +207,7 @@ jobs:
     - name: build deal.II
       run: |
         cd build
-        make -j 2
+        make VERBOSE=1 -j 2
     - name: build CUDA tests
       run: |
         cd build
