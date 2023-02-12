@@ -50,6 +50,8 @@ if(DEFINED ENV{MPIEXEC})
   find_program(MPIEXEC $ENV{MPIEXEC})
 endif()
 
+set(MPI_CXX_SKIP_MPPICXX ON)
+
 find_package(MPI)
 
 #
