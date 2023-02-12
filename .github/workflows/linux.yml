@@ -187,7 +187,7 @@ jobs:
         cd build
         cmake -D CMAKE_BUILD_TYPE=Debug \
               -D CMAKE_CXX_COMPILER=clang++ \
-              -D DEAL_II_CXX_FLAGS="" \
+              -D DEAL_II_CXX_FLAGS="-std=c++17" \
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_CUDA="ON" \
               -D DEAL_II_WITH_KOKKOS="ON" \
