@@ -7,6 +7,10 @@ message(STATUS "TEST_LINK_OPTIONS: ${TEST_LINK_OPTIONS}")
 message(STATUS "TEST_LINK_LIBRARIES: ${TEST_LINK_LIBRARIES}")
 
 target_compile_options(CheckCompilerSetupExec PRIVATE ${TEST_COMPILE_FLAGS})
-target_link_options(CheckCompilerSetupExec PRIVATE ${TEST_LINK_OPTIONS})
+# Should we rather use
+#   target_link_options(CheckCompilerSetupExec PRIVATE ${TEST_LINK_OPTIONS})
+# and convert whitespace-separated list to comma-separated list?
+set_property(TARGET CheckCompilerSetupExec PROPERTY LINK_FLAGS "${TEST_LINK_OPTIONS}")
+
 target_link_libraries(CheckCompilerSetupExec ${TEST_LINK_LIBRARIES})
 
