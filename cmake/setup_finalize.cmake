@@ -145,8 +145,6 @@ foreach(build ${DEAL_II_BUILD_TYPES})
   endif()
 endforeach()
 
-message(FATAL_ERROR "BLA")
-
 #
 # Clean up deal.IITargets.cmake in the build directory:
 #

@@ -59,7 +59,7 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/macros/check_compiler_setup
     CheckCompilerSetup${_var}
     CMAKE_FLAGS "-DTEST_COMPILE_FLAGS=${_compiler_flags}" 
-                "-DTEST_LINKER_FLAGS=${_linker_flags}"
+                "-DTEST_LINK_OPTIONS=${_linker_flags}"
                 "-DTEST_LINK_LIBRARIES=${ARGN}"
                 "-DCMAKE_VERBOSE_MAKEFILE=ON"
     OUTPUT_VARIABLE _output)
