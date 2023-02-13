@@ -59,6 +59,8 @@ macro(check_compiler_setup _compiler_flags_unstr _linker_flags_unstr _var)
     CMAKE_FLAGS "-DTEST_COMPILE_FLAGS=${_compiler_flags}" "-DTEST_LINKER_FLAGS=${_linker_flags}" "-DTEST_LINK_LIBRARIES=${ARGN}"
     OUTPUT_VARIABLE _output)
 
+  message(STATUS "Compiler setup check for ${_var} failed with:\n${_output}")
+
   if(${_var})
     set(${_var} TRUE CACHE INTERNAL "")
     file(REMOVE_RECURSE ${CMAKE_CURRENT_BINARY_DIR}/check_compiler_setup/CheckCompilerSetup${var})
