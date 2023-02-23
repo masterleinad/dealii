@@ -273,8 +273,7 @@ namespace VectorTools
 
 
 #  ifdef DEAL_II_TRILINOS_WITH_TPETRA
-  template <int dim, int spacedim>
-  template <typename ValueType>
+  template <int dim, int spacedim, typename ValueType>
   void
   add_constant(LinearAlgebra::TpetraWrappers::Vector<ValueType> &,
                const DoFHandler<dim, spacedim> &,
