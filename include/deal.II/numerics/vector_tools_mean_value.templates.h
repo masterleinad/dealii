@@ -278,7 +278,7 @@ namespace VectorTools
   add_constant(LinearAlgebra::TpetraWrappers::Vector<ValueType> &,
                const DoFHandler<dim, spacedim> &,
                const unsigned int,
-               const double)
+               const ValueType)
   {
     // TODO: no vector access using operator()
     AssertThrow(false, ExcNotImplemented());
