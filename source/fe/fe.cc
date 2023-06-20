@@ -402,7 +402,7 @@ FiniteElement<dim, spacedim>::component_mask(
 
   std::vector<bool> mask(this->n_components(), false);
   mask[scalar.component] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -424,7 +424,7 @@ FiniteElement<dim, spacedim>::component_mask(
        c < vector.first_vector_component + dim;
        ++c)
     mask[c] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -448,7 +448,7 @@ FiniteElement<dim, spacedim>::component_mask(
              SymmetricTensor<2, dim>::n_independent_components;
        ++c)
     mask[c] = true;
-  return mask;
+  return ComponentMask(mask);
 }
 
 
@@ -469,7 +469,7 @@ FiniteElement<dim, spacedim>::component_mask(const BlockMask &block_mask) const
     if (block_mask[component_to_block_index(c)] == true)
       component_mask[c] = true;
 
-  return component_mask;
+  return ComponentMask(component_mask);
 }
 
 
@@ -555,7 +555,7 @@ FiniteElement<dim, spacedim>::block_mask(
     }
 
 
-  return block_mask;
+  return BlockMask(block_mask);
 }
 
 
