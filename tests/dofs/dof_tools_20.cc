@@ -27,7 +27,7 @@ template <int dim>
 void
 check_this(const DoFHandler<dim> &dof_handler)
 {
-  ComponentMask component_select(dof_handler.get_fe().n_components(), true);
+  ComponentMask     component_select(dof_handler.get_fe().n_components(), true);
   std::vector<bool> boundary_dofs(dof_handler.n_dofs());
 
   // first with all components

@@ -134,7 +134,7 @@ void
 FindBug<dim>::dirichlet_conditions()
 {
   std::map<types::global_dof_index, double> dirichlet_dofs;
-  ComponentMask                         component_mask(dim + 1, false);
+  ComponentMask                             component_mask(dim + 1, false);
   component_mask.set(dim, true);
 
   // This is just for the final
