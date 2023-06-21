@@ -28,6 +28,7 @@ jobs:
         mkdir build
         cd build
         export PATH=/usr/lib/llvm-12/share/clang/:$PATH
+        export PATH=/usr/lib/llvm-12/bin/:$PATH
         ls /usr/lib/llvm-12/share/clang/*
         ls /usr/lib/llvm-12/bin/*
         ../contrib/utilities/run_clang_tidy.sh ..
