@@ -10,27 +10,16 @@ jobs:
   tidy:
     name: tidy
     runs-on: [ubuntu-22.04]
+    container:
+      image: dealii/dependencies:jammy
+      options: --user root --env OMPI_ALLOW_RUN_AS_ROOT=1 --env OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
     steps:
     - uses: actions/checkout@v3
-    - name: modules
-      run: |
-        sudo apt-get install -y software-properties-common
-        sudo add-apt-repository -y ppa:ginggs/deal.ii-9.4.0-backports
-        sudo apt-get update
-        sudo apt-get install -yq --no-install-recommends \
-            clang-12 \
-            clang-tidy-12 \
-            numdiff \
-            libboost-all-dev \
-            libcgal-dev \
-            libp4est-dev \
-            trilinos-all-dev \
-            petsc-dev \
-            libmetis-dev \
-            libhdf5-mpi-dev
     - name: tidy
       run: |
+        which clang++
+        clang++ --version
         mkdir build
         cd build
         export PATH=/usr/lib/llvm-12/share/clang/:$PATH
