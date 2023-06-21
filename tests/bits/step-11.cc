@@ -106,7 +106,7 @@ LaplaceProblem<dim>::setup_system()
 
   std::vector<bool> boundary_dofs(dof_handler.n_dofs(), false);
   DoFTools::extract_boundary_dofs(dof_handler,
-                                  std::vector<bool>(1, true),
+                                  ComponentMask(1, true),
                                   boundary_dofs);
 
   const unsigned int first_boundary_dof =

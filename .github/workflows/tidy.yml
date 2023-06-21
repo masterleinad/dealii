@@ -16,6 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: modules
+      run: |
+        sudo apt-get install -y software-properties-common
+        sudo apt-get update
+        sudo apt-get install -yq --no-install-recommends \
+            clang-12 \
+            clang-tidy-12 \
     - name: tidy
       run: |
         which clang++
