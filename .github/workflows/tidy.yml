@@ -25,8 +25,6 @@ jobs:
             clang-tidy-12 \
     - name: tidy
       run: |
-        which clang++
-        clang++ --version
         mkdir build
         cd build
         export PATH=/usr/lib/llvm-12/share/clang/:$PATH

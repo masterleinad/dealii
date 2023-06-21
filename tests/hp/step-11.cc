@@ -107,7 +107,7 @@ LaplaceProblem<dim>::setup_system()
   solution.reinit(dof_handler.n_dofs());
   system_rhs.reinit(dof_handler.n_dofs());
 
-  std::vector<bool> boundary_dofs(dof_handler.n_dofs(), false);
+  ComponentMask boundary_dofs(dof_handler.n_dofs(), false);
   DoFTools::extract_boundary_dofs(dof_handler,
                                   std::vector<bool>(1, true),
                                   boundary_dofs);
