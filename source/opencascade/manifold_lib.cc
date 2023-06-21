@@ -239,7 +239,7 @@ namespace OpenCASCADE
       for (const auto &point : surrounding_points)
         {
           Assert(closest_point(sh, point, tolerance).distance(point) <
-                   std::max(tolerance * points.norm(), tolerance),
+                   std::max(tolerance * point.norm(), tolerance),
                  ExcPointNotOnManifold<spacedim>(point));
         }
 #  endif

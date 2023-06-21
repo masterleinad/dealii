@@ -211,7 +211,7 @@ namespace Step36
     IndexSet eigenfunction_index_set = dof_handler.locally_owned_dofs();
     eigenfunctions.resize(
       parameters.get_integer("Number of eigenvalues/eigenfunctions"));
-    for (auto &eigenfunction : eigenfunction)
+    for (auto &eigenfunction : eigenfunctions)
       eigenfunction.reinit(eigenfunction_index_set, MPI_COMM_WORLD);
 
     eigenvalues.resize(eigenfunctions.size());
