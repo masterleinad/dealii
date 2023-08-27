@@ -189,14 +189,16 @@ namespace CUDAWrappers
         MemorySpace::Default::kokkos_space::execution_space>::member_type;
       constexpr unsigned int n_q_points = Utilities::pow(n_q_points_1d, 3);
 
-      Number t[n_q_points];
+      Number t[in_place ? n_q_points : 1];
       auto thread_policy = Kokkos::TeamThreadMDRange<Kokkos::Rank<3>, TeamType>(
         team_member, n_q_points_1d, n_q_points_1d, n_q_points_1d);
+
       Kokkos::parallel_for(
         thread_policy, [&](const int i, const int j, const int q) {
           const int q_point =
             i + j * n_q_points_1d + q * n_q_points_1d * n_q_points_1d;
-          t[q_point] = 0;
+          const int t_index = in_place ? q_point : 0;
+          t[t_index]        = 0;
 
           // This loop simply multiplies the shape function at the quadrature
           // point by the value finite element coefficient.
@@ -211,11 +213,11 @@ namespace CUDAWrappers
                 (direction == 1) ?
                   (i + n_q_points_1d * (k + n_q_points_1d * j)) :
                   (i + n_q_points_1d * (j + n_q_points_1d * k));
-              t[q_point] += shape_data[shape_idx] * in(source_idx);
+              t[t_index] += shape_data[shape_idx] * in(source_idx);
             }
         });
 
-      if (in_place)
+      if constexpr (in_place)
         team_member.team_barrier();
 
       Kokkos::parallel_for(
@@ -226,11 +228,13 @@ namespace CUDAWrappers
             (direction == 0) ? (q + n_q_points_1d * (i + n_q_points_1d * j)) :
             (direction == 1) ? (i + n_q_points_1d * (q + n_q_points_1d * j)) :
                                (i + n_q_points_1d * (j + n_q_points_1d * q));
+          const int t_index = in_place ? q_point : 0;
+          t[t_index]        = 0;
 
           if (add)
-            Kokkos::atomic_add(&out(destination_idx), t[q_point]);
+            Kokkos::atomic_add(&out(destination_idx), t[t_index]);
           else
-            out(destination_idx) = t[q_point];
+            out(destination_idx) = t[t_index];
         });
     }
 #endif
