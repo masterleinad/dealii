@@ -340,7 +340,7 @@ namespace LinearAlgebra
           "local_entries_per_row",
           row_map->getMaxGlobalIndex() - row_map->getMinGlobalIndex());
 
-        /*auto local_entries_per_row_host =
+        auto local_entries_per_row_host =
           local_entries_per_row.template view<Kokkos::DefaultHostExecutionSpace>();
 
         std::uint64_t total_size = 0;
@@ -351,7 +351,7 @@ namespace LinearAlgebra
             total_size += local_entries_per_row_host[i];
           }
         local_entries_per_row.template modify<Kokkos::DefaultHostExecutionSpace>();
-        local_entries_per_row.template sync<Kokkos::DefaultExecutionSpace>();
+        local_entries_per_row.template sync<typename MemorySpace::kokkos_space>();
 
         AssertThrow(
           total_size < static_cast<std::uint64_t>(
@@ -361,7 +361,7 @@ namespace LinearAlgebra
             "You are requesting to store more elements than global ordinal type allows."));
 
         graph = Utilities::Trilinos::internal::make_rcp<GraphType<MemorySpace>>(
-          row_map, col_map, local_entries_per_row);*/
+          row_map, col_map, local_entries_per_row);
       }
 
 
