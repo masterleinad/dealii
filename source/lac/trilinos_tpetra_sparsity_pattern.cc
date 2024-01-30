@@ -280,7 +280,7 @@ namespace LinearAlgebra
       void
       reinit_sp(const Teuchos::RCP<MapType<MemorySpace>> &row_map,
                 const Teuchos::RCP<MapType<MemorySpace>> &col_map,
-                const size_type<MemorySpace>              n_entries_per_row,
+                const size_type<MemorySpace>             n_entries_per_row,
                 Teuchos::RCP<MapType<MemorySpace>>       &column_space_map,
                 Teuchos::RCP<GraphType<MemorySpace>>     &graph,
                 Teuchos::RCP<GraphType<MemorySpace>>     &nonlocal_graph)
@@ -336,12 +336,12 @@ namespace LinearAlgebra
 
         // Translate the vector of row lengths into one that only stores
         // those entries that related to the locally stored rows of the matrix:
-        Kokkos::DualView<size_t *> local_entries_per_row(
+        Kokkos::DualView<size_t *, typename MemorySpace::kokkos_space> local_entries_per_row(
           "local_entries_per_row",
           row_map->getMaxGlobalIndex() - row_map->getMinGlobalIndex());
 
-        auto local_entries_per_row_host =
-          local_entries_per_row.view<Kokkos::DefaultHostExecutionSpace>();
+        /*auto local_entries_per_row_host =
+          local_entries_per_row.template view<Kokkos::DefaultHostExecutionSpace>();
 
         std::uint64_t total_size = 0;
         for (unsigned int i = 0; i < local_entries_per_row.extent(0); ++i)
@@ -350,8 +350,8 @@ namespace LinearAlgebra
               n_entries_per_row[row_map->getMinGlobalIndex() + i];
             total_size += local_entries_per_row_host[i];
           }
-        local_entries_per_row.modify<Kokkos::DefaultHostExecutionSpace>();
-        local_entries_per_row.sync<Kokkos::DefaultExecutionSpace>();
+        local_entries_per_row.template modify<Kokkos::DefaultHostExecutionSpace>();
+        local_entries_per_row.template sync<Kokkos::DefaultExecutionSpace>();
 
         AssertThrow(
           total_size < static_cast<std::uint64_t>(
@@ -361,7 +361,7 @@ namespace LinearAlgebra
             "You are requesting to store more elements than global ordinal type allows."));
 
         graph = Utilities::Trilinos::internal::make_rcp<GraphType<MemorySpace>>(
-          row_map, col_map, local_entries_per_row);
+          row_map, col_map, local_entries_per_row);*/
       }
 
 
