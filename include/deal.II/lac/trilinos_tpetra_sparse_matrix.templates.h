@@ -585,8 +585,8 @@ namespace LinearAlgebra
 
     template <typename Number, typename MemorySpace>
     void
-    SparseMatrix<Number, MemorySpace>::vmult(Vector<Number>       &dst,
-                                             const Vector<Number> &src) const
+    SparseMatrix<Number, MemorySpace>::vmult(Vector<Number, MemorySpace>       &dst,
+                                             const Vector<Number, MemorySpace> &src) const
     {
       Assert(&src != &dst, ExcSourceEqualsDestination());
       Assert(matrix->isFillComplete(), ExcMatrixNotCompressed());
@@ -601,8 +601,8 @@ namespace LinearAlgebra
 
     template <typename Number, typename MemorySpace>
     void
-    SparseMatrix<Number, MemorySpace>::Tvmult(Vector<Number>       &dst,
-                                              const Vector<Number> &src) const
+    SparseMatrix<Number, MemorySpace>::Tvmult(Vector<Number, MemorySpace>       &dst,
+                                              const Vector<Number, MemorySpace> &src) const
     {
       Assert(&src != &dst, ExcSourceEqualsDestination());
       Assert(matrix->isFillComplete(), ExcMatrixNotCompressed());
@@ -618,8 +618,8 @@ namespace LinearAlgebra
     template <typename Number, typename MemorySpace>
     void
     SparseMatrix<Number, MemorySpace>::vmult_add(
-      Vector<Number>       &dst,
-      const Vector<Number> &src) const
+      Vector<Number, MemorySpace>       &dst,
+      const Vector<Number, MemorySpace> &src) const
     {
       Assert(&src != &dst, ExcSourceEqualsDestination());
       Assert(matrix->isFillComplete(), ExcMatrixNotCompressed());
@@ -639,8 +639,8 @@ namespace LinearAlgebra
     template <typename Number, typename MemorySpace>
     void
     SparseMatrix<Number, MemorySpace>::Tvmult_add(
-      Vector<Number>       &dst,
-      const Vector<Number> &src) const
+      Vector<Number, MemorySpace>       &dst,
+      const Vector<Number, MemorySpace> &src) const
     {
       Assert(&src != &dst, ExcSourceEqualsDestination());
       Assert(matrix->isFillComplete(), ExcMatrixNotCompressed());
