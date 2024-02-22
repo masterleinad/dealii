@@ -1067,6 +1067,11 @@ namespace Portable
             for (unsigned int i = 0; i < n_colors; ++i)
               if (n_cells[i] > 0)
                 {
+	          unsigned int max_team_size = 1024;
+		  unsigned int warp_size = 32;
+                  int team_size = 64;//std::min((dofs_per_cell + warp_size-1)/warp_size*warp_size, max_team_size);
+                  std::cout << "team_size: " << team_size << std::endl;
+
                   Kokkos::TeamPolicy<
                     MemorySpace::Default::kokkos_space::execution_space>
                     team_policy(
@@ -1074,10 +1079,12 @@ namespace Portable
                       exec,
 #endif
                       n_cells[i],
-                      Kokkos::AUTO);
+                      team_size);
 
                   internal::ApplyKernel<dim, Number, Functor> apply_kernel(
                     func, get_data(i), src.get_values(), dst.get_values());
+
+                  std::cout << "color " << i << std::endl;
 
                   Kokkos::parallel_for(
                     "dealii::MatrixFree::distributed_cell_loop_" +

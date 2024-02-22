@@ -214,6 +214,7 @@ namespace Step64
     const double                                           *src,
     double                                                 *dst) const
   {
+    //Kokkos::printf("cell: %d\n", cell);
     Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> fe_eval(
       gpu_data, shared_data);
     fe_eval.read_dof_values(src);
@@ -517,7 +518,10 @@ namespace Step64
                                  1e-12 * system_rhs_dev.l2_norm());
     SolverCG<LinearAlgebra::distributed::Vector<double, MemorySpace::Default>>
       cg(solver_control);
-    cg.solve(*system_matrix_dev, solution_dev, system_rhs_dev, preconditioner);
+    //cg.solve(*system_matrix_dev, solution_dev, system_rhs_dev, preconditioner);
+
+    for (unsigned int i=0; i<100; ++i)
+      system_matrix_dev->vmult(solution_dev, system_rhs_dev);
 
     pcout << "  Solved in " << solver_control.last_step() << " iterations."
           << std::endl;
@@ -631,7 +635,7 @@ int main(int argc, char *argv[])
 
       Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv, 1);
 
-      HelmholtzProblem<3, 3> helmholtz_problem;
+      HelmholtzProblem<3, 4> helmholtz_problem;
       helmholtz_problem.run();
     }
   catch (std::exception &exc)

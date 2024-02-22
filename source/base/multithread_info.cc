@@ -187,7 +187,7 @@ namespace
   // got automatically initialized (which happens the first time we use it).
   struct DoOnce
   {
-    DoOnce()
+    [[maybe_unused]] DoOnce()
     {
       MultithreadInfo::initialize_multithreading();
     }
