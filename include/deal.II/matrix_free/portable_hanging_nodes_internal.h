@@ -154,7 +154,9 @@ namespace Portable
                unconstrained))) !=
         dealii::internal::MatrixFreeFunctions::ConstraintKinds::unconstrained;
 
-      Number tmp[n_q_points];
+      Number tmp[(n_q_points+1023)/1024];
+      int my_index = 0;
+
       Kokkos::parallel_for(
         Kokkos::TeamThreadRange(team_member, n_q_points),
         [&](const int &q_point) {
@@ -168,7 +170,7 @@ namespace Portable
               dealii::internal::MatrixFreeFunctions::ConstraintKinds::subcell_y;
 
           const unsigned int interp_idx = (direction == 0) ? x_idx : y_idx;
-          tmp[q_point]                  = 0;
+          auto& tmp_ref = tmp[my_index++]                  = 0;
 
           // Flag is true if for the given direction, the dof is constrained
           // with the right type and is on the correct side (left (= 0) or right
@@ -196,7 +198,7 @@ namespace Portable
                         transpose ?
                           constraint_weights[i * n_q_points_1d + interp_idx] :
                           constraint_weights[interp_idx * n_q_points_1d + i];
-                      tmp[q_point] += w * values[real_idx];
+                      tmp_ref += w * values[real_idx];
                     }
                 }
               else
@@ -214,12 +216,13 @@ namespace Portable
                           constraint_weights[(fe_degree - interp_idx) *
                                                n_q_points_1d +
                                              fe_degree - i];
-                      tmp[q_point] += w * values[real_idx];
+                      tmp_ref += w * values[real_idx];
                     }
                 }
             }
         });
 
+      my_index = 0;
       // The synchronization is done for all the threads in one team with
       // each team being assigned to one element.
       team_member.team_barrier();

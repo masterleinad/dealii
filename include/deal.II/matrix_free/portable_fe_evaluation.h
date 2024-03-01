@@ -530,11 +530,14 @@ namespace Portable
                   components");
 
     gradient_type grad;
+    auto* inv_jacobian_data_in_q = &data->inv_jacobian(cell_id, q_point, 0, 0);
+    int stride_d2 = data->inv_jacobian.stride(2);
+    int stride_d1 = data->inv_jacobian.stride(1);
     for (unsigned int d_1 = 0; d_1 < dim; ++d_1)
       {
         Number tmp = 0.;
         for (unsigned int d_2 = 0; d_2 < dim; ++d_2)
-          tmp += data->inv_jacobian(cell_id, q_point, d_2, d_1) *
+          tmp += inv_jacobian_data_in_q[d_2*stride_d2+ d_1*stride_d2] *
                  shared_data->gradients(q_point, d_2);
         grad[d_1] = tmp;
       }

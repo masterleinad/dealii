@@ -190,14 +190,16 @@ namespace Portable
         MemorySpace::Default::kokkos_space::execution_space>::member_type;
       constexpr unsigned int n_q_points = Utilities::pow(n_q_points_1d, 3);
 
-      Number t[n_q_points];
+      Number t[(n_q_points+1023)/1024];
+      int my_index=0;
       auto thread_policy = Kokkos::TeamThreadMDRange<Kokkos::Rank<3>, TeamType>(
         team_member, n_q_points_1d, n_q_points_1d, n_q_points_1d);
       Kokkos::parallel_for(
         thread_policy, [&](const int i, const int j, const int q) {
           const int q_point =
             i + j * n_q_points_1d + q * n_q_points_1d * n_q_points_1d;
-          t[q_point] = 0;
+	  auto& t_ref = t[my_index++];
+          t_ref = 0;
 
           // This loop simply multiplies the shape function at the quadrature
           // point by the value finite element coefficient.
@@ -212,10 +214,11 @@ namespace Portable
                 (direction == 1) ?
                   (i + n_q_points_1d * (k + n_q_points_1d * j)) :
                   (i + n_q_points_1d * (j + n_q_points_1d * k));
-              t[q_point] += shape_data[shape_idx] * in(source_idx);
+              t_ref += shape_data[shape_idx] * in(source_idx);
             }
         });
 
+      my_index = 0;
       if (in_place)
         team_member.team_barrier();
 
@@ -228,10 +231,11 @@ namespace Portable
             (direction == 1) ? (i + n_q_points_1d * (q + n_q_points_1d * j)) :
                                (i + n_q_points_1d * (j + n_q_points_1d * q));
 
+          auto& t_ref = t[my_index++];			       
           if (add)
-            Kokkos::atomic_add(&out(destination_idx), t[q_point]);
+            Kokkos::atomic_add(&out(destination_idx), t_ref);
           else
-            out(destination_idx) = t[q_point];
+            out(destination_idx) = t_ref;
         });
     }
 #endif
@@ -272,7 +276,8 @@ namespace Portable
 #else
       constexpr unsigned int n_q_points = Utilities::pow(n_q_points_1d, dim);
 
-      Number t[n_q_points];
+      Number t[(n_q_points+1023)/1024];
+      int my_point = 0;
       Kokkos::parallel_for(
         Kokkos::TeamThreadRange(team_member, n_q_points),
         [&](const int &q_point) {
@@ -286,7 +291,8 @@ namespace Portable
 
           // This loop simply multiplies the shape function at the quadrature
           // point by the value finite element coefficient.
-          t[q_point] = 0;
+          auto& t_ref = t[my_point++];
+	  t_ref = 0;
           for (int k = 0; k < n_q_points_1d; ++k)
             {
               const unsigned int shape_idx =
@@ -297,7 +303,7 @@ namespace Portable
                 (direction == 1) ?
                   (i + n_q_points_1d * (k + n_q_points_1d * j)) :
                   (i + n_q_points_1d * (j + n_q_points_1d * k));
-              t[q_point] += shape_data[shape_idx] *
+              t_ref += shape_data[shape_idx] *
                             (in_place ? out(source_idx) : in(source_idx));
             }
         });
@@ -305,6 +311,7 @@ namespace Portable
       if (in_place)
         team_member.team_barrier();
 
+      my_point = 0;
       Kokkos::parallel_for(
         Kokkos::TeamThreadRange(team_member, n_q_points),
         [&](const int &q_point) {
@@ -321,10 +328,11 @@ namespace Portable
             (direction == 1) ? (i + n_q_points_1d * (q + n_q_points_1d * j)) :
                                (i + n_q_points_1d * (j + n_q_points_1d * q));
 
+          auto& t_ref = t[my_point++];
           if (add)
-            Kokkos::atomic_add(&out(destination_idx), t[q_point]);
+            Kokkos::atomic_add(&out(destination_idx), t_ref);
           else
-            out(destination_idx) = t[q_point];
+            out(destination_idx) = t_ref;
         });
 #endif
     }

@@ -1069,8 +1069,7 @@ namespace Portable
                 {
 	          unsigned int max_team_size = 1024;
 		  unsigned int warp_size = 32;
-                  int team_size = 64;//std::min((dofs_per_cell + warp_size-1)/warp_size*warp_size, max_team_size);
-                  std::cout << "team_size: " << team_size << std::endl;
+                  int team_size = std::min((dofs_per_cell + warp_size-1)/warp_size*warp_size, max_team_size);
 
                   Kokkos::TeamPolicy<
                     MemorySpace::Default::kokkos_space::execution_space>
@@ -1083,8 +1082,6 @@ namespace Portable
 
                   internal::ApplyKernel<dim, Number, Functor> apply_kernel(
                     func, get_data(i), src.get_values(), dst.get_values());
-
-                  std::cout << "color " << i << std::endl;
 
                   Kokkos::parallel_for(
                     "dealii::MatrixFree::distributed_cell_loop_" +
