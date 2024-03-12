@@ -28,6 +28,9 @@
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
+#include <Bnd_Box.hxx>
+#include <BRepBndLib.hxx>
+
 // These are the headers of the opencascade support classes and
 // functions. Notice that these will contain sensible data only if you
 // compiled your deal.II library with support for OpenCASCADE, i.e.,
@@ -89,7 +92,7 @@ namespace Step54
 
     void output_results(const unsigned int cycle);
 
-    Triangulation<2, 3> tria;
+    Triangulation<3, 3> tria;
 
     const std::string initial_mesh_filename;
     const std::string cad_file_name;
@@ -170,7 +173,16 @@ namespace Step54
   // namely a @p TopoDS_Shape.
   void TriangulationOnCAD::read_domain()
   {
-    TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
+    //TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
+    TopoDS_Shape bow_surface = OpenCASCADE::read_STL(cad_file_name);
+
+    double Xmin, Ymin, Zmin, Xmax, Ymax, Zmax;
+    Bnd_Box B;
+    BRepBndLib::Add(bow_surface, B);
+    B.Get(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax);
+
+    std::cout << Xmin << ' '<< Ymin << ' ' <<  Zmin << ' ' << Xmax << ' ' << Ymax << ' ' << Zmax << std::endl;
+
 
     // Each CAD geometrical object is defined along with a tolerance,
     // which indicates possible inaccuracy of its placement. For
@@ -183,7 +195,7 @@ namespace Step54
 
     // The following method extracts the tolerance of the given shape and
     // makes it a bit bigger to stay our of trouble:
-    const double tolerance = OpenCASCADE::get_shape_tolerance(bow_surface) * 5;
+    const double tolerance = 0.1;//OpenCASCADE::get_shape_tolerance(bow_surface) * 1000;
 
     // We now want to extract a set of composite sub-shapes from the
     // generic shape. In particular, each face of the CAD file
@@ -206,15 +218,22 @@ namespace Step54
     OpenCASCADE::extract_compound_shapes(
       bow_surface, compounds, compsolids, solids, shells, wires);
 
+    std::cout << "compounds:  " << compounds.size()   << std::endl;
+    std::cout << "compsolids: " << compsolids.size()  << std::endl;
+    std::cout << "solids:     " << solids.size()      << std::endl;
+    std::cout << "shells:     " << shells.size()      << std::endl;
+    std::cout << "wires:      " << wires.size()       << std::endl;
+
+
     // The next few steps are more familiar, and allow us to import an existing
     // mesh from an external VTK file, and convert it to a deal triangulation.
     std::ifstream in;
 
     in.open(initial_mesh_filename);
 
-    GridIn<2, 3> gi;
+    GridIn<3, 3> gi;
     gi.attach_triangulation(tria);
-    gi.read_vtk(in);
+    gi.read_ucd(in);
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
@@ -226,11 +245,22 @@ namespace Step54
     // @ref GlossManifoldIndicator "this glossary entry").
     // We also get an iterator to its four faces, and assign each of them
     // the manifold_id 2:
-    Triangulation<2, 3>::active_cell_iterator cell = tria.begin_active();
-    cell->set_manifold_id(1);
-
-    for (const auto &face : cell->face_iterators())
-      face->set_manifold_id(2);
+    for (const auto& cell: tria.active_cell_iterators())
+    {
+      for (int i =0; i<6; ++i) {
+        if(cell->at_boundary(i)) {
+          cell->face(i)->set_manifold_id(1);
+          std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
+       
+          for (int i=0; i<4; ++i) {
+            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(i), 1);
+            auto distance  = cell->face(i)->vertex(i).distance(proj);
+            if (distance > 0)
+              std::cout << "point: " << cell->face(i)->vertex(i) << " closest: " << proj << " distance: " << distance << std::endl;
+          }
+        }
+      }
+    }
 
     // Once both the CAD geometry and the initial mesh have been
     // imported and digested, we use the CAD surfaces and curves to
@@ -252,10 +282,10 @@ namespace Step54
       ExcMessage(
         "I could not find any wire in the CAD file you gave me. Bailing out."));
 
-    OpenCASCADE::ArclengthProjectionLineManifold<2, 3> line_projector(
+    OpenCASCADE::ArclengthProjectionLineManifold<3, 3> line_projector(
       wires[0], tolerance);
 
-    tria.set_manifold(2, line_projector);
+    //tria.set_manifold(2, line_projector);
 
     // The surface projector is created according to what is specified
     // with the @p surface_projection_kind option of the constructor. In particular,
@@ -270,7 +300,7 @@ namespace Step54
       {
         case NormalProjection:
           {
-            OpenCASCADE::NormalProjectionManifold<2, 3> normal_projector(
+            OpenCASCADE::NormalProjectionManifold<3, 3> normal_projector(
               bow_surface, tolerance);
             tria.set_manifold(1, normal_projector);
 
@@ -286,7 +316,7 @@ namespace Step54
         // the projection is done along the y-axis.
         case DirectionalProjection:
           {
-            OpenCASCADE::DirectionalProjectionManifold<2, 3>
+            OpenCASCADE::DirectionalProjectionManifold<3, 3>
               directional_projector(bow_surface,
                                     Point<3>(0.0, 1.0, 0.0),
                                     tolerance);
@@ -306,7 +336,7 @@ namespace Step54
         // tolerance.
         case NormalToMeshProjection:
           {
-            OpenCASCADE::NormalToMeshProjectionManifold<2, 3>
+            OpenCASCADE::NormalToMeshProjectionManifold<3, 3>
               normal_to_mesh_projector(bow_surface, tolerance);
             tria.set_manifold(1, normal_to_mesh_projector);
 
@@ -386,8 +416,8 @@ int main()
     {
       using namespace Step54;
 
-      const std::string in_mesh_filename = "input/initial_mesh_3d.vtk";
-      const std::string cad_file_name    = "input/DTMB-5415_bulbous_bow.iges";
+      const std::string in_mesh_filename = "../input/hourglass2.inp";
+      const std::string cad_file_name    = "../input/HourGlass.STL";
 
       std::cout << "----------------------------------------------------------"
                 << std::endl;
