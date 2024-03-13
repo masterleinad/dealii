@@ -745,6 +745,15 @@ namespace OpenCASCADE
         ++face_counter;
       }
 
+    std::cout << "n_faces: " << face_counter << std::endl;
+
+int line_counter = 0;
+ for (exp.Init(in_shape, TopAbs_EDGE); exp.More(); exp.Next())
+        {
+++line_counter;
+}
+    std::cout << "n_lines: " << line_counter << std::endl;
+
     // face counter tells us if the shape contained faces: if it does, there is
     // no need to loop on edges. Even if the closest point lies on the boundary
     // of a parametric surface, we need in fact to retain the face and both u

@@ -240,6 +240,7 @@ namespace Step54
     gi.attach_triangulation(tria);
     gi.read_ucd(in);
     GridTools::scale(.001, tria);
+    tria.refine_global(1);
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
@@ -255,16 +256,18 @@ namespace Step54
     {
       for (int i =0; i<6; ++i) {
         if(cell->at_boundary(i)) {
-          if(std::abs(cell->center()(1)) < 0.036) {
+          //if(std::abs(cell->center()(1)) < 0.036) {
             cell->face(i)->set_all_manifold_ids(1);
-          }
-          std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
+          //}
+          //std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
        
           for (int i=0; i<4; ++i) {
             auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(i), 1);
             auto distance  = cell->face(i)->vertex(i).distance(proj);
-            if (distance > 0)
-              std::cout << "point: " << cell->face(i)->vertex(i) << " closest: " << proj << " distance: " << distance << std::endl;
+            if (distance > 0 && std::abs(cell->face(i)->vertex(i)(1)-.05) > 0.01) {
+              //std::cout << "point: " << cell->face(i)->vertex(i) << " closest: " << proj << " distance: " << distance << std::endl;
+              cell->face(i)->vertex(i) = proj;
+            }
           }
         }
       }
@@ -376,14 +379,6 @@ namespace Step54
   void TriangulationOnCAD::refine_mesh()
   {
     tria.refine_global(1);
-    for (const auto& cell: tria.active_cell_iterators())
-    {
-      for (int i =0; i<6; ++i) {
-        if(cell->at_boundary(i)) {
-          cell->face(i)->set_all_manifold_ids(1); 
-        }      
-      } 
-    } 
   }
 
   // @sect4{TriangulationOnCAD::output_results}
@@ -409,7 +404,7 @@ namespace Step54
   {
     read_domain();
 
-    const unsigned int n_cycles = 1;
+    const unsigned int n_cycles = 5;
     for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
@@ -444,7 +439,7 @@ int main()
                                           cad_file_name,
                                           out_mesh_filename,
                                           TriangulationOnCAD::NormalProjection);
-      tria_on_cad_norm.run();
+      tria_on_cad_norm.run();/*
       std::cout << "----------------------------------------------------------"
                 << std::endl;
       std::cout << std::endl;
@@ -483,7 +478,7 @@ int main()
       std::cout << "----------------------------------------------------------"
                 << std::endl;
       std::cout << std::endl;
-      std::cout << std::endl;
+      std::cout << std::endl;*/
     }
   catch (std::exception &exc)
     {
