@@ -138,6 +138,11 @@ namespace OpenCASCADE
                std::max(tolerance * surrounding_points[i].norm(), tolerance),
              ExcPointNotOnManifold<spacedim>(surrounding_points[i]));
 #  endif
+    std::cout << "closest point for " << candidate << " surrounded by " << std::endl; 
+    for (const auto point: surrounding_points)
+      std::cout << point << std::endl;
+    auto closest = closest_point(sh, candidate, tolerance);
+    std::cout << "is " << closest << std::endl;
     return closest_point(sh, candidate, tolerance);
   }
 

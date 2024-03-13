@@ -25,6 +25,7 @@
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
 #include <deal.II/grid/grid_out.h>
+#include <deal.II/grid/grid_tools.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
 
@@ -173,8 +174,12 @@ namespace Step54
   // namely a @p TopoDS_Shape.
   void TriangulationOnCAD::read_domain()
   {
-    //TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
-    TopoDS_Shape bow_surface = OpenCASCADE::read_STL(cad_file_name);
+    TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
+    //OpenCASCADE::write_STL(bow_surface, "new_shape.STL", .1);
+ 
+    //TopoDS_Shape bow_surface = OpenCASCADE::read_STL(cad_file_name);
+    //OpenCASCADE::write_IGES(bow_surface, "new_shape.iges");
+    //std::abort();
 
     double Xmin, Ymin, Zmin, Xmax, Ymax, Zmax;
     Bnd_Box B;
@@ -234,6 +239,7 @@ namespace Step54
     GridIn<3, 3> gi;
     gi.attach_triangulation(tria);
     gi.read_ucd(in);
+    GridTools::scale(.001, tria);
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
@@ -249,7 +255,9 @@ namespace Step54
     {
       for (int i =0; i<6; ++i) {
         if(cell->at_boundary(i)) {
-          cell->face(i)->set_manifold_id(1);
+          if(std::abs(cell->center()(1)) < 0.036) {
+            cell->face(i)->set_all_manifold_ids(1);
+          }
           std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
        
           for (int i=0; i<4; ++i) {
@@ -368,9 +376,15 @@ namespace Step54
   void TriangulationOnCAD::refine_mesh()
   {
     tria.refine_global(1);
+    for (const auto& cell: tria.active_cell_iterators())
+    {
+      for (int i =0; i<6; ++i) {
+        if(cell->at_boundary(i)) {
+          cell->face(i)->set_all_manifold_ids(1); 
+        }      
+      } 
+    } 
   }
-
-
 
   // @sect4{TriangulationOnCAD::output_results}
 
@@ -395,7 +409,7 @@ namespace Step54
   {
     read_domain();
 
-    const unsigned int n_cycles = 5;
+    const unsigned int n_cycles = 1;
     for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
@@ -417,7 +431,7 @@ int main()
       using namespace Step54;
 
       const std::string in_mesh_filename = "../input/hourglass2.inp";
-      const std::string cad_file_name    = "../input/HourGlass.STL";
+      const std::string cad_file_name    = "../input/HourGlass.IGS";
 
       std::cout << "----------------------------------------------------------"
                 << std::endl;
