@@ -238,18 +238,9 @@ namespace Step54
 
     GridIn<3, 3> gi;
     gi.attach_triangulation(tria);
-    gi.read_vtk(in);
-    GridTools::transform ([](const Point<3> &p) -> Point<3>
-                      {
-                        Point<3> q = p;
-                        std::swap(q[1], q[2]);
-                        q[0] -= 0.07;
-                        q[2] -= 0.07;
-                        return q;
-                      },
-                      tria);
-    //GridTools::scale(.001, tria);
-    //tria.refine_global(1);
+    gi.read_ucd(in);
+    GridTools::scale(.001, tria);
+    tria.refine_global(1);
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
@@ -261,32 +252,26 @@ namespace Step54
     // @ref GlossManifoldIndicator "this glossary entry").
     // We also get an iterator to its four faces, and assign each of them
     // the manifold_id 2:
-    int n_boundary_faces = 0;
     for (const auto& cell: tria.active_cell_iterators())
     {
       for (int i =0; i<6; ++i) {
         if(cell->at_boundary(i)) {
-          ++n_boundary_faces;
-          auto face = cell->face(i);
           //if(std::abs(cell->center()(1)) < 0.036) {
-            face->set_all_manifold_ids(1);
+            cell->face(i)->set_all_manifold_ids(1);
           //}
-          //std::cout << "first vertex: " << face->vertex(0) << std::endl;
-          for (int j=0; j<4; ++j) {
-            auto proj = OpenCASCADE::closest_point(bow_surface, face->vertex(j), 1);
-            auto distance  = face->vertex(j).distance(proj);
-            if (distance > 0) {
-              //std::cout << "point: " << face->vertex(j) << " closest: " << proj << " distance: " << distance << std::endl;
-              face->vertex(j) = proj;
+          //std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
+       
+          for (int i=0; i<4; ++i) {
+            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(i), 1);
+            auto distance  = cell->face(i)->vertex(i).distance(proj);
+            if (distance > 0 && std::abs(cell->face(i)->vertex(i)(1)-.05) > 0.01) {
+              //std::cout << "point: " << cell->face(i)->vertex(i) << " closest: " << proj << " distance: " << distance << std::endl;
+              cell->face(i)->vertex(i) = proj;
             }
           }
         }
       }
     }
-    std::cout << "n_boundary_faces: " << n_boundary_faces << std::endl;
-
-    output_results(1);
-    abort();
 
     // Once both the CAD geometry and the initial mesh have been
     // imported and digested, we use the CAD surfaces and curves to
@@ -419,7 +404,7 @@ namespace Step54
   {
     read_domain();
 
-    const unsigned int n_cycles = 1;
+    const unsigned int n_cycles = 5;
     for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
@@ -440,7 +425,7 @@ int main()
     {
       using namespace Step54;
 
-      const std::string in_mesh_filename = "../input/HourglassMesh.vtk";
+      const std::string in_mesh_filename = "../input/hourglass2.inp";
       const std::string cad_file_name    = "../input/HourGlass.IGS";
 
       std::cout << "----------------------------------------------------------"
