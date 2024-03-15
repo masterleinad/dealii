@@ -28,6 +28,7 @@
 #include <deal.II/grid/grid_tools.h>
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/vector_tools.h>
+#include <deal.II/grid/manifold_lib.h>
 
 #include <Bnd_Box.hxx>
 #include <BRepBndLib.hxx>
@@ -200,7 +201,7 @@ namespace Step54
 
     // The following method extracts the tolerance of the given shape and
     // makes it a bit bigger to stay our of trouble:
-    const double tolerance = 0.1;//OpenCASCADE::get_shape_tolerance(bow_surface) * 1000;
+    const double tolerance = 0.01;//OpenCASCADE::get_shape_tolerance(bow_surface) * 1000;
 
     // We now want to extract a set of composite sub-shapes from the
     // generic shape. In particular, each face of the CAD file
@@ -240,7 +241,7 @@ namespace Step54
     gi.attach_triangulation(tria);
     gi.read_ucd(in);
     GridTools::scale(.001, tria);
-    tria.refine_global(1);
+    //tria.refine_global(1);
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
@@ -261,13 +262,66 @@ namespace Step54
           //}
           //std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
        
-          for (int i=0; i<4; ++i) {
-            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(i), 1);
-            auto distance  = cell->face(i)->vertex(i).distance(proj);
-            if (distance > 0 && std::abs(cell->face(i)->vertex(i)(1)-.05) > 0.01) {
-              //std::cout << "point: " << cell->face(i)->vertex(i) << " closest: " << proj << " distance: " << distance << std::endl;
-              cell->face(i)->vertex(i) = proj;
+          for (int j=0; j<4; ++j) {
+            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(j), 1);
+            //auto distance  = cell->face(i)->vertex(j).distance(proj);
+            //if (distance > 0 && std::abs(cell->face(i)->vertex(j)(1)-.05) > 0.01) {
+              //std::cout << "point: " << cell->face(i)->vertex(j) << " closest: " << proj << " distance: " << distance << std::endl;
+              cell->face(i)->vertex(j) = proj;
+            //}
+          }
+        }
+      }
+    }
+    for (const auto& cell: tria.active_cell_iterators())
+    {
+      for (int i =0; i<6; ++i) {
+        if(cell->at_boundary(i)) {
+          auto face = cell->face(i);
+          if((std::abs(face->center()(1)-.05) > 0.03)){
+            for (int j=0; j<3; ++j) {
+              auto line = face->line(j);
+              if (std::abs(line->center()(0)) > 0.035 || std::abs(line->center()(2)) > 0.035) {
+                line->set_all_manifold_ids(2);
+              }
             }
+          }
+          if((std::abs(face->center()(1)-.05) < 0.03)){
+            //std::cout << "face: " << face->center() << std::endl;
+            for (int j=0; j<3; ++j) {
+              auto line = face->line(j);
+              if ((std::abs(line->center()(1)-.05) < 0.01) && (std::abs(line->center()(0)) > 0.015 || std::abs(line->center()(2)) > 0.015)) {
+                line->set_all_manifold_ids(2);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    CylindricalManifold<3,3> cylinder_manifold(1);
+    tria.set_manifold(2, cylinder_manifold);
+
+    tria.refine_global();
+
+    output_results(1);
+
+ for (const auto& cell: tria.active_cell_iterators())
+    {
+      for (int i =0; i<6; ++i) {
+        if(cell->at_boundary(i)) {
+          //if(std::abs(cell->center()(1)) < 0.036) {
+            cell->face(i)->set_all_manifold_ids(1);
+          //}
+          //std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
+
+          for (int j=0; j<4; ++j) {
+            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(j), 1);
+            //auto distance  = cell->face(i)->vertex(j).distance(proj);
+            //if (distance > 0 && std::abs(cell->face(i)->vertex(j)(1)-.05) > 0.01) {
+              //std::cout << "point: " << cell->face(i)->vertex(j) << " closest: " << proj << " distance: " << distance << std::endl;
+              cell->face(i)->vertex(j) = proj;
+            //}
           }
         }
       }
@@ -408,7 +462,7 @@ namespace Step54
     for (unsigned int cycle = 0; cycle < n_cycles; ++cycle)
       {
         refine_mesh();
-        output_results(cycle + 1);
+        output_results(cycle + 2);
       }
   }
 } // namespace Step54
