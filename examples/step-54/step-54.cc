@@ -123,56 +123,101 @@ namespace Step54
     , surface_projection_kind(surface_projection_kind)
   {}
 
+  void snap_to_iges(Triangulation<3>& tria, TopoDS_Shape& shape, OpenCASCADE::NormalProjectionManifold<3, 3>& projector)
+  {
+ std::map<unsigned int, std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>>> vertex_map;
+    std::array<Tensor< 1, 3>, GeometryInfo<3>::vertices_per_face> normal_at_vertex;
+    for (const auto& cell: tria.active_cell_iterators())
+      {
+        for (const unsigned int i : cell->face_indices())
+          {
+            const auto& face = cell->face(i);
+            if (face->at_boundary())
+              {
+                projector.get_normals_at_vertices(face, normal_at_vertex);
+                for (unsigned j = 0; j < face->n_vertices(); ++j)
+                  {
+                    const unsigned int     vertex_index = face->vertex_index(j);
+                    const auto& vertex_map_iterator = vertex_map.find(vertex_index);
+                    auto normal = normal_at_vertex[j]/normal_at_vertex[j].norm();
 
-  // @sect4{TriangulationOnCAD::read_domain}
+                    int closest_index = (j==0)?1:0;
+                    Point<3> closest_y_neighbor = face->vertex(closest_index);
+                    closest_y_neighbor(1) = face->vertex(j)(1);
+                    double distance = (closest_y_neighbor - face->vertex(j)).norm();
+                    for (unsigned int k=0; k<face->n_vertices(); ++k)
+                    {
+                      if (k!=j) {
+                        closest_y_neighbor = face->vertex(k);
+                        closest_y_neighbor(1) = face->vertex(j)(1);
+                        double candidate_distance = (closest_y_neighbor - face->vertex(j)).norm();
+                        if (candidate_distance < distance) {
+                          distance = candidate_distance;
+                          closest_index = k;
+                        }
+                      }
+                    }
 
+                    if(vertex_map_iterator == vertex_map.end()) {
+                      std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>> pair(face->vertex(j), {normal}, face->vertex(closest_index));
+                      vertex_map.emplace(vertex_index, pair);
+                    } else {
+                      closest_y_neighbor = std::get<2>(vertex_map_iterator->second);
+                      closest_y_neighbor(1) = face->vertex(j)(1);
+                      if (distance < (closest_y_neighbor - face->vertex(j)).norm())
+                        std::get<2>(vertex_map_iterator->second) = face->vertex(closest_index);
+                      std::get<1>(vertex_map_iterator->second).push_back(normal);
+                    }
+                  }
+              }
+          }
+      }
 
-  // The following function represents the core of this program.  In
-  // this function we import the CAD shape upon which we want to
-  // generate and refine our triangulation. We assume that the CAD
-  // surface is contained in the @p cad_file_name file (we provide an
-  // example IGES file in the input directory called
-  // "input/DTMB-5415_bulbous_bow.iges" that represents the bulbous bow of a
-  // ship). The presence of several convex and concave high curvature
-  // regions makes the geometry we provided a particularly meaningful
-  // example.
-  //
-  // After importing the hull bow surface, we extract some of the
-  // curves and surfaces composing it, and use them to generate a set
-  // of projectors. Such projectors define the rules the Triangulation
-  // has to follow to position each new node during cell refinement.
-  //
-  // To initialize the Triangulation, as done in previous tutorial
-  // programs, we import a pre-existing grid saved in VTK format. We
-  // assume here that the user has generated a coarse mesh
-  // externally, which matches the IGES geometry. At the moment of
-  // writing this tutorial, the
-  // deal.II library does not automatically support generation of such
-  // meshes, but there are several tools which can provide you with
-  // reasonable initial meshes starting from CAD files.
-  // In our example, the imported mesh is composed of a single
-  // quadrilateral cell whose vertices have been placed on the CAD
-  // shape.
-  //
-  // After importing both the IGES geometry and the initial mesh, we
-  // assign the projectors previously discussed to each of the edges
-  // and cells which will have to be refined on the CAD surface.
-  //
-  // In this tutorial, we will test the three different CAD surface
-  // projectors described in the introduction, and will analyze the
-  // results obtained with each of them.  As mentioned, each of these
-  // projection strategies has been implemented in a different class,
-  // and objects of these types can be assigned to a triangulation
-  // using the Triangulation::set_manifold method.
-  //
-  // The following function then first imports the given CAD file.
-  // The function arguments are a string containing the desired file
-  // name, and a scale factor. In this example, the scale factor is
-  // set to 1e-3, as the original geometry is written in millimeters
-  // (which is the typical unit of measure for most IGES files),
-  // while we prefer to work in meters.  The output of the function
-  // is an object of OpenCASCADE generic topological shape class,
-  // namely a @p TopoDS_Shape.
+    std::cout << vertex_map.size() << std::endl;
+
+   for (const auto& boundary_vertex_iterator: vertex_map)
+    {
+      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
+      double minimum_product = 1;
+//      std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
+      for (unsigned int i = 0; i < normals.size(); ++i) {
+  //      std::cout << normals[i] << std::endl;
+        for(unsigned int j=i+1; j < normals.size(); ++j) {
+          auto product = normals[i] * normals[j];
+          minimum_product = std::min(product, minimum_product);
+        }
+      }
+      //std::cout << minimum_product << std::endl;
+      if (minimum_product > .5) {
+        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
+        auto proj = OpenCASCADE::closest_point(shape, vertex, 1);
+        vertex(0) = proj(0);
+        vertex(2) = proj(2);
+      }
+    }
+
+  for (const auto& boundary_vertex_iterator: vertex_map)
+    {
+      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
+      double minimum_product = 1;
+    //  std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
+      for (unsigned int i = 0; i < normals.size(); ++i) {
+      //  std::cout << normals[i] << std::endl;
+        for(unsigned int j=i+1; j < normals.size(); ++j) {
+          auto product = normals[i] * normals[j];
+          minimum_product = std::min(product, minimum_product);
+        }
+      }
+      //std::cout << minimum_product << std::endl;
+      if (minimum_product <= .5) {
+        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
+        auto& proj = std::get<2>(boundary_vertex_iterator.second).get();
+        vertex(0) = proj(0);
+        vertex(2) = proj(2);
+      }
+    }
+  }
+
   void TriangulationOnCAD::read_domain()
   {
     TopoDS_Shape bow_surface = OpenCASCADE::read_IGES(cad_file_name, 1e-3);
@@ -258,114 +303,15 @@ namespace Step54
     OpenCASCADE::NormalProjectionManifold<3, 3> normal_projector(
               bow_surface, 0.001);
 
-    std::map<unsigned int, std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>>> vertex_map;
-    std::array<Tensor< 1, 3>, GeometryInfo<3>::vertices_per_face> normal_at_vertex;
-    for (const auto& cell: tria.active_cell_iterators())
-      {
-        for (const unsigned int i : cell->face_indices())
-          {
-            const auto& face = cell->face(i);
-            if (face->at_boundary())
-              {
-                normal_projector.get_normals_at_vertices(face, normal_at_vertex);
-                for (unsigned j = 0; j < face->n_vertices(); ++j)
-                  {
-                    const unsigned int     vertex_index = face->vertex_index(j);
-                    const auto& vertex_map_iterator = vertex_map.find(vertex_index);
-                    auto normal = normal_at_vertex[j]/normal_at_vertex[j].norm();
-
-                    int closest_index = (j==0)?1:0;
-                    Point<3> closest_y_neighbor = face->vertex(closest_index);
-                    closest_y_neighbor(1) = face->vertex(j)(1);
-                    double distance = (closest_y_neighbor - face->vertex(j)).norm();
-                    for (unsigned int k=0; k<face->n_vertices(); ++k)
-                    {
-                      if (k!=j) {
-                        closest_y_neighbor = face->vertex(k);
-                        closest_y_neighbor(1) = face->vertex(j)(1);
-                        double candidate_distance = (closest_y_neighbor - face->vertex(j)).norm();
-                        if (candidate_distance < distance) {
-                          distance = candidate_distance;
-                          closest_index = k; 
-                        }
-                      }
-                    }
-
-                    if(vertex_map_iterator == vertex_map.end()) {
-                      std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>> pair(face->vertex(j), {normal}, face->vertex(closest_index));
-                      vertex_map.emplace(vertex_index, pair);
-                    } else {
-                      closest_y_neighbor = std::get<2>(vertex_map_iterator->second);
-                      closest_y_neighbor(1) = face->vertex(j)(1);
-                      if (distance < (closest_y_neighbor - face->vertex(j)).norm())
-                        std::get<2>(vertex_map_iterator->second) = face->vertex(closest_index);
-                      std::get<1>(vertex_map_iterator->second).push_back(normal);
-                    }
-                  }
-              }
-          }
-      }
-
-    std::cout << vertex_map.size() << std::endl;
-
-    // The mesh imported has a single, two-dimensional cell located in
-    // three-dimensional space. We now want to ensure that it is refined
-    // according to the CAD geometry imported above. This this end, we get an
-    // iterator to that cell and assign to it the manifold_id 1 (see
-    // @ref GlossManifoldIndicator "this glossary entry").
-    // We also get an iterator to its four faces, and assign each of them
-    // the manifold_id 2:
-    for (const auto& boundary_vertex_iterator: vertex_map)
-    {
-      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
-      double minimum_product = 1;
-//      std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
-      for (unsigned int i = 0; i < normals.size(); ++i) {
-  //      std::cout << normals[i] << std::endl;
-        for(unsigned int j=i+1; j < normals.size(); ++j) {
-          auto product = normals[i] * normals[j];
-          minimum_product = std::min(product, minimum_product);
-        }
-      }
-      //std::cout << minimum_product << std::endl;
-      if (minimum_product > .5) {
-        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
-        auto proj = OpenCASCADE::closest_point(bow_surface, vertex, 1);
-        vertex(0) = proj(0);
-        vertex(2) = proj(2);
-      }
-    }
-
-  for (const auto& boundary_vertex_iterator: vertex_map)
-    { 
-      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
-      double minimum_product = 1;
-    //  std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
-      for (unsigned int i = 0; i < normals.size(); ++i) {
-      //  std::cout << normals[i] << std::endl;
-        for(unsigned int j=i+1; j < normals.size(); ++j) {
-          auto product = normals[i] * normals[j];
-          minimum_product = std::min(product, minimum_product);
-        }
-      }
-      //std::cout << minimum_product << std::endl;
-      if (minimum_product <= .5) {
-        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
-        auto& proj = std::get<2>(boundary_vertex_iterator.second).get();
-        vertex(0) = proj(0);
-        vertex(2) = proj(2);
-      }
-    }
-
+   snap_to_iges(tria, bow_surface, normal_projector);
     output_results(1);
 
    for (const auto& cell: tria.active_cell_iterators())
       { if (cell->at_boundary())
      cell->set_refine_flag();
    }
-
    tria.execute_coarsening_and_refinement();
-
+   snap_to_iges(tria, bow_surface, normal_projector);
     output_results(2);
 
    abort();
