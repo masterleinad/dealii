@@ -239,12 +239,74 @@ namespace Step54
 
     GridIn<3, 3> gi;
     gi.attach_triangulation(tria);
-    gi.read_ucd(in);
-    GridTools::scale(.001, tria);
-    //tria.refine_global(1);
+    gi.read_vtk(in);
+    GridTools::transform ([](const Point<3> &p) -> Point<3>
+                      {
+                        Point<3> q = p;
+                        std::swap(q[1], q[2]);
+                        q[0] -= 0.07;
+                        q[2] -= 0.07;
+                        return q;
+                      },
+                      tria);
+    //GridTools::scale(.001, tria);
+    //tria.refine_global(1);    
 
     // We output this initial mesh saving it as the refinement step 0.
     output_results(0);
+
+    OpenCASCADE::NormalProjectionManifold<3, 3> normal_projector(
+              bow_surface, 0.001);
+
+    std::map<unsigned int, std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>>> vertex_map;
+    std::array<Tensor< 1, 3>, GeometryInfo<3>::vertices_per_face> normal_at_vertex;
+    for (const auto& cell: tria.active_cell_iterators())
+      {
+        for (const unsigned int i : cell->face_indices())
+          {
+            const auto& face = cell->face(i);
+            if (face->at_boundary())
+              {
+                normal_projector.get_normals_at_vertices(face, normal_at_vertex);
+                for (unsigned j = 0; j < face->n_vertices(); ++j)
+                  {
+                    const unsigned int     vertex_index = face->vertex_index(j);
+                    const auto& vertex_map_iterator = vertex_map.find(vertex_index);
+                    auto normal = normal_at_vertex[j]/normal_at_vertex[j].norm();
+
+                    int closest_index = (j==0)?1:0;
+                    Point<3> closest_y_neighbor = face->vertex(closest_index);
+                    closest_y_neighbor(1) = face->vertex(j)(1);
+                    double distance = (closest_y_neighbor - face->vertex(j)).norm();
+                    for (unsigned int k=0; k<face->n_vertices(); ++k)
+                    {
+                      if (k!=j) {
+                        closest_y_neighbor = face->vertex(k);
+                        closest_y_neighbor(1) = face->vertex(j)(1);
+                        double candidate_distance = (closest_y_neighbor - face->vertex(j)).norm();
+                        if (candidate_distance < distance) {
+                          distance = candidate_distance;
+                          closest_index = k; 
+                        }
+                      }
+                    }
+
+                    if(vertex_map_iterator == vertex_map.end()) {
+                      std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>> pair(face->vertex(j), {normal}, face->vertex(closest_index));
+                      vertex_map.emplace(vertex_index, pair);
+                    } else {
+                      closest_y_neighbor = std::get<2>(vertex_map_iterator->second);
+                      closest_y_neighbor(1) = face->vertex(j)(1);
+                      if (distance < (closest_y_neighbor - face->vertex(j)).norm())
+                        std::get<2>(vertex_map_iterator->second) = face->vertex(closest_index);
+                      std::get<1>(vertex_map_iterator->second).push_back(normal);
+                    }
+                  }
+              }
+          }
+      }
+
+    std::cout << vertex_map.size() << std::endl;
 
     // The mesh imported has a single, two-dimensional cell located in
     // three-dimensional space. We now want to ensure that it is refined
@@ -253,60 +315,62 @@ namespace Step54
     // @ref GlossManifoldIndicator "this glossary entry").
     // We also get an iterator to its four faces, and assign each of them
     // the manifold_id 2:
-    for (const auto& cell: tria.active_cell_iterators())
+    for (const auto& boundary_vertex_iterator: vertex_map)
     {
-      for (int i =0; i<6; ++i) {
-        if(cell->at_boundary(i)) {
-          //if(std::abs(cell->center()(1)) < 0.036) {
-            cell->face(i)->set_all_manifold_ids(1);
-          //}
-          //std::cout << "first vertex: " << cell->face(i)->vertex(0) << std::endl;
-       
-          for (int j=0; j<4; ++j) {
-            auto proj = OpenCASCADE::closest_point(bow_surface, cell->face(i)->vertex(j), 1);
-            //auto distance  = cell->face(i)->vertex(j).distance(proj);
-            //if (distance > 0 && std::abs(cell->face(i)->vertex(j)(1)-.05) > 0.01) {
-              //std::cout << "point: " << cell->face(i)->vertex(j) << " closest: " << proj << " distance: " << distance << std::endl;
-              cell->face(i)->vertex(j) = proj;
-            //}
-          }
+      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
+      double minimum_product = 1;
+//      std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
+      for (unsigned int i = 0; i < normals.size(); ++i) {
+  //      std::cout << normals[i] << std::endl;
+        for(unsigned int j=i+1; j < normals.size(); ++j) {
+          auto product = normals[i] * normals[j];
+          minimum_product = std::min(product, minimum_product);
         }
       }
-    }
-    for (const auto& cell: tria.active_cell_iterators())
-    {
-      for (int i =0; i<6; ++i) {
-        if(cell->at_boundary(i)) {
-          auto face = cell->face(i);
-          if((std::abs(face->center()(1)-.05) > 0.03)){
-            for (int j=0; j<3; ++j) {
-              auto line = face->line(j);
-              if (std::abs(line->center()(0)) > 0.035 || std::abs(line->center()(2)) > 0.035) {
-                line->set_all_manifold_ids(2);
-              }
-            }
-          }
-          if((std::abs(face->center()(1)-.05) < 0.03)){
-            //std::cout << "face: " << face->center() << std::endl;
-            for (int j=0; j<3; ++j) {
-              auto line = face->line(j);
-              if ((std::abs(line->center()(1)-.05) < 0.01) && (std::abs(line->center()(0)) > 0.015 || std::abs(line->center()(2)) > 0.015)) {
-                line->set_all_manifold_ids(2);
-              }
-            }
-          }
-        }
+      //std::cout << minimum_product << std::endl;
+      if (minimum_product > .5) {
+        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
+        auto proj = OpenCASCADE::closest_point(bow_surface, vertex, 1);
+        vertex(0) = proj(0);
+        vertex(2) = proj(2);
       }
     }
 
-    CylindricalManifold<3,3> cylinder_manifold(1);
-    tria.set_manifold(2, cylinder_manifold);
-
-    tria.refine_global();
+  for (const auto& boundary_vertex_iterator: vertex_map)
+    { 
+      const auto& normals = std::get<1>(boundary_vertex_iterator.second);
+      double minimum_product = 1;
+    //  std::cout << "vertex: " << boundary_vertex_iterator.first << std::endl;
+      for (unsigned int i = 0; i < normals.size(); ++i) {
+      //  std::cout << normals[i] << std::endl;
+        for(unsigned int j=i+1; j < normals.size(); ++j) {
+          auto product = normals[i] * normals[j];
+          minimum_product = std::min(product, minimum_product);
+        }
+      }
+      //std::cout << minimum_product << std::endl;
+      if (minimum_product <= .5) {
+        auto& vertex = std::get<0>(boundary_vertex_iterator.second).get();
+        auto& proj = std::get<2>(boundary_vertex_iterator.second).get();
+        vertex(0) = proj(0);
+        vertex(2) = proj(2);
+      }
+    }
 
     output_results(1);
 
- for (const auto& cell: tria.active_cell_iterators())
+   for (const auto& cell: tria.active_cell_iterators())
+      { if (cell->at_boundary())
+     cell->set_refine_flag();
+   }
+
+   tria.execute_coarsening_and_refinement();
+
+    output_results(2);
+
+   abort();
+
+ for (auto& cell: tria.active_cell_iterators())
     {
       for (int i =0; i<6; ++i) {
         if(cell->at_boundary(i)) {
@@ -479,7 +543,7 @@ int main()
     {
       using namespace Step54;
 
-      const std::string in_mesh_filename = "../input/hourglass2.inp";
+      const std::string in_mesh_filename = "../input/HourglassMesh.vtk";
       const std::string cad_file_name    = "../input/HourGlass.IGS";
 
       std::cout << "----------------------------------------------------------"
