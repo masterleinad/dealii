@@ -21,6 +21,7 @@
 // We start with including a bunch of files that we will use in the
 // various parts of the program. Most of them have been discussed in
 // previous tutorials already:
+#include <deal.II/fe/fe_q.h>
 #include <deal.II/grid/tria.h>
 #include <deal.II/grid/grid_generator.h>
 #include <deal.II/grid/grid_in.h>
@@ -32,6 +33,12 @@
 
 #include <Bnd_Box.hxx>
 #include <BRepBndLib.hxx>
+#include <TopExp_Explorer.hxx> 
+#include <TopoDS.hxx>
+#  include <TopoDS_Face.hxx>  
+#  include <BRep_Tool.hxx>
+#include <GeomLProp_SLProps.hxx>
+#include <ShapeAnalysis_Surface.hxx>
 
 // These are the headers of the opencascade support classes and
 // functions. Notice that these will contain sensible data only if you
@@ -242,6 +249,88 @@ namespace Step54
 
     std::cout << Xmin << ' '<< Ymin << ' ' <<  Zmin << ' ' << Xmax << ' ' << Ymax << ' ' << Zmax << std::endl;
 
+    Triangulation<3> tesselated_mesh;
+    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{20,20,20}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
+
+    GridOut grid_out;
+    std::ofstream mesh_stream("tesselated_mesh.vtk");
+    grid_out.write_vtk(tesselated_mesh, mesh_stream);
+
+    FE_Q<3> fe(1); 
+    DoFHandler<3> dof_handler(tesselated_mesh);
+    dof_handler.distribute_dofs(fe);    
+
+    Vector<double> solution(dof_handler.n_dofs());
+
+{
+    TopExp_Explorer exp;
+    std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
+    Point<3> candidate;
+    gp_Pnt          Pproj; 
+
+    //unsigned int cell_no = 0;
+
+    std::cout << tesselated_mesh.n_cells() << std::endl;
+
+    for (const auto& cell: dof_handler.active_cell_iterators())
+    {
+      //std::cout << cell_no++ << std::endl;
+      cell->get_dof_indices(local_dof_indices);
+      for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+        candidate = cell->vertex(i);
+        gp_Pnt          Pproj = OpenCASCADE::point(cell->vertex(i));
+
+        double minDistance = 1e7;
+        gp_Pnt tmp_proj(0.0, 0.0, 0.0);
+        gp_Dir tmp_normal;                    
+                   
+        TopoDS_Shape out_shape;
+        double       u = 0;
+        double       v = 0;
+    
+        for (exp.Init(bow_surface, TopAbs_FACE); exp.More(); exp.Next())
+        {
+          TopoDS_Face face = TopoDS::Face(exp.Current());
+          // the projection function needs a surface, so we obtain the
+          // surface upon which the face is defined
+          Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
+    
+          ShapeAnalysis_Surface projector(SurfToProj);
+          gp_Pnt2d proj_params = projector.ValueOfUV(OpenCASCADE::point(candidate), 1.e-6);
+      
+          SurfToProj->D0(proj_params.X(), proj_params.Y(), tmp_proj);
+        
+          double distance = OpenCASCADE::point<3>(tmp_proj).distance(candidate);
+          if (distance < minDistance)
+          {
+            minDistance = distance;
+            Pproj       = tmp_proj;
+            out_shape   = face;
+            u           = proj_params.X();
+            v           = proj_params.Y();
+            GeomLProp_SLProps props(SurfToProj, u, v, 1, 1.e-6);
+            if(props.IsNormalDefined())
+              tmp_normal = props.Normal();
+          }
+        }
+        Tensor<1, 3> dealii_normal({tmp_normal.X(), tmp_normal.Y(), tmp_normal.Z()});
+        Point<3> dealii_projection(Pproj.X(), Pproj.Y(), Pproj.Z());
+        double product = dealii_normal * (candidate - dealii_projection);
+        solution(local_dof_indices[i]) = product;
+      }
+    }
+}
+
+  DataOut<3> data_out;
+  data_out.attach_dof_handler(dof_handler);
+  data_out.add_data_vector(solution, "solution");
+  data_out.build_patches();
+
+  const std::string filename = "solution.vtk";
+  std::ofstream     output(filename);
+  data_out.write_vtk(output);
+
+    abort();
 
     // Each CAD geometrical object is defined along with a tolerance,
     // which indicates possible inaccuracy of its placement. For
@@ -569,18 +658,6 @@ int main()
                 << "----------------------------------------------------"
                 << std::endl;
 
-      return 1;
-    }
-  catch (...)
-    {
-      std::cerr << std::endl
-                << std::endl
-                << "----------------------------------------------------"
-                << std::endl;
-      std::cerr << "Unknown exception!" << std::endl
-                << "Aborting!" << std::endl
-                << "----------------------------------------------------"
-                << std::endl;
       return 1;
     }
 
