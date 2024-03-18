@@ -250,7 +250,7 @@ namespace Step54
     std::cout << Xmin << ' '<< Ymin << ' ' <<  Zmin << ' ' << Xmax << ' ' << Ymax << ' ' << Zmax << std::endl;
 
     Triangulation<3> tesselated_mesh;
-    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{20,20,20}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
+    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{10,10,10}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
 
     GridOut grid_out;
     std::ofstream mesh_stream("tesselated_mesh.vtk");
@@ -265,57 +265,56 @@ namespace Step54
 {
     TopExp_Explorer exp;
     std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
-    Point<3> candidate;
-    gp_Pnt          Pproj; 
-
-    //unsigned int cell_no = 0;
+    std::vector<gp_Pnt> Pproj(fe.dofs_per_cell);
+    std::vector<gp_Pnt> tmp_proj(fe.dofs_per_cell);
+    std::vector<gp_Dir> tmp_normal(fe.dofs_per_cell);
+    std::vector<double> minDistance(fe.dofs_per_cell, 1e7);
+    std::vector<double>       u(fe.dofs_per_cell);
+    std::vector<double>       v(fe.dofs_per_cell);
 
     std::cout << tesselated_mesh.n_cells() << std::endl;
+    GeomLProp_SLProps props(1, 1.e-6);
 
     for (const auto& cell: dof_handler.active_cell_iterators())
     {
       //std::cout << cell_no++ << std::endl;
       cell->get_dof_indices(local_dof_indices);
       for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
-        candidate = cell->vertex(i);
-        gp_Pnt          Pproj = OpenCASCADE::point(cell->vertex(i));
-
-        double minDistance = 1e7;
-        gp_Pnt tmp_proj(0.0, 0.0, 0.0);
-        gp_Dir tmp_normal;                    
+        Pproj[i] = OpenCASCADE::point(cell->vertex(i));
+        minDistance[i] = 1.e7;
+      }
                    
-        TopoDS_Shape out_shape;
-        double       u = 0;
-        double       v = 0;
+      for (exp.Init(bow_surface, TopAbs_FACE); exp.More(); exp.Next())
+      {
+        TopoDS_Face face = TopoDS::Face(exp.Current());
+        Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
     
-        for (exp.Init(bow_surface, TopAbs_FACE); exp.More(); exp.Next())
-        {
-          TopoDS_Face face = TopoDS::Face(exp.Current());
-          // the projection function needs a surface, so we obtain the
-          // surface upon which the face is defined
-          Handle(Geom_Surface) SurfToProj = BRep_Tool::Surface(face);
-    
-          ShapeAnalysis_Surface projector(SurfToProj);
-          gp_Pnt2d proj_params = projector.ValueOfUV(OpenCASCADE::point(candidate), 1.e-6);
+        ShapeAnalysis_Surface projector(SurfToProj);
+        props.SetSurface(SurfToProj);
+        for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+          gp_Pnt2d proj_params = projector.ValueOfUV(OpenCASCADE::point(cell->vertex(i)), 1.e-6);
       
-          SurfToProj->D0(proj_params.X(), proj_params.Y(), tmp_proj);
-        
-          double distance = OpenCASCADE::point<3>(tmp_proj).distance(candidate);
-          if (distance < minDistance)
+          SurfToProj->D0(proj_params.X(), proj_params.Y(), tmp_proj[i]);
+          props.SetParameters(proj_params.X(), proj_params.Y());
+
+          double distance = OpenCASCADE::point<3>(tmp_proj[i]).distance(cell->vertex(i));
+       
+          if (distance < minDistance[i] && props.IsNormalDefined())
           {
-            minDistance = distance;
-            Pproj       = tmp_proj;
-            out_shape   = face;
-            u           = proj_params.X();
-            v           = proj_params.Y();
-            GeomLProp_SLProps props(SurfToProj, u, v, 1, 1.e-6);
-            if(props.IsNormalDefined())
-              tmp_normal = props.Normal();
+            minDistance[i] = distance;
+            Pproj[i]       = tmp_proj[i];
+            u[i]           = proj_params.X();
+            v[i]           = proj_params.Y();
+            //props.SetParameters(u[i], v[i]);
+            //if(props.IsNormalDefined())
+              tmp_normal[i] = props.Normal();
           }
         }
-        Tensor<1, 3> dealii_normal({tmp_normal.X(), tmp_normal.Y(), tmp_normal.Z()});
-        Point<3> dealii_projection(Pproj.X(), Pproj.Y(), Pproj.Z());
-        double product = dealii_normal * (candidate - dealii_projection);
+      }
+      for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+        Tensor<1, 3> dealii_normal({tmp_normal[i].X(), tmp_normal[i].Y(), tmp_normal[i].Z()});
+        Point<3> dealii_projection(Pproj[i].X(), Pproj[i].Y(), Pproj[i].Z());
+        double product = dealii_normal * (cell->vertex(i) - dealii_projection);
         solution(local_dof_indices[i]) = product;
       }
     }
