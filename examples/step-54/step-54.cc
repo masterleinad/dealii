@@ -125,6 +125,8 @@ namespace Step54
 
   void snap_to_iges(Triangulation<3>& tria, TopoDS_Shape& shape, OpenCASCADE::NormalProjectionManifold<3, 3>& projector)
   {
+    Kokkos::Timer timer;
+
  std::map<unsigned int, std::tuple<std::reference_wrapper<Point<3>>, std::vector<Tensor<1,3>>, std::reference_wrapper<Point<3>>>> vertex_map;
     std::array<Tensor< 1, 3>, GeometryInfo<3>::vertices_per_face> normal_at_vertex;
     for (const auto& cell: tria.active_cell_iterators())
@@ -173,6 +175,8 @@ namespace Step54
           }
       }
 
+    std::cout << "create_map: " << timer.seconds() << std::endl;
+    timer.reset();
     std::cout << vertex_map.size() << std::endl;
 
    for (const auto& boundary_vertex_iterator: vertex_map)
@@ -196,6 +200,9 @@ namespace Step54
       }
     }
 
+      std::cout << "project points: " << timer.seconds() << std::endl;
+    timer.reset();
+
   for (const auto& boundary_vertex_iterator: vertex_map)
     {
       const auto& normals = std::get<1>(boundary_vertex_iterator.second);
@@ -216,6 +223,7 @@ namespace Step54
         vertex(2) = proj(2);
       }
     }
+         std::cout << "move points: " << timer.seconds() << std::endl;
   }
 
   void TriangulationOnCAD::read_domain()
@@ -310,7 +318,12 @@ namespace Step54
       { if (cell->at_boundary())
      cell->set_refine_flag();
    }
+
+   Kokkos::Timer timer;
+
    tria.execute_coarsening_and_refinement();
+   std::cout << "Adaptive mesh refinement: " << timer.seconds() << std::endl;
+
    snap_to_iges(tria, bow_surface, normal_projector);
     output_results(2);
 
