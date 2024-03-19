@@ -250,7 +250,7 @@ namespace Step54
     std::cout << Xmin << ' '<< Ymin << ' ' <<  Zmin << ' ' << Xmax << ' ' << Ymax << ' ' << Zmax << std::endl;
 
     Triangulation<3> tesselated_mesh;
-    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{10,10,10}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
+    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{40,40,40}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
 
     GridOut grid_out;
     std::ofstream mesh_stream("tesselated_mesh.vtk");
@@ -271,6 +271,7 @@ namespace Step54
     std::vector<double> minDistance(fe.dofs_per_cell, 1e7);
     std::vector<double>       u(fe.dofs_per_cell);
     std::vector<double>       v(fe.dofs_per_cell);
+    std::vector<int> dof_index_accesses(dof_handler.n_dofs(), 0);
 
     std::cout << tesselated_mesh.n_cells() << std::endl;
     GeomLProp_SLProps props(1, 1.e-6);
@@ -291,8 +292,10 @@ namespace Step54
     
         ShapeAnalysis_Surface projector(SurfToProj);
         props.SetSurface(SurfToProj);
+        gp_Pnt2d proj_params;
         for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
-          gp_Pnt2d proj_params = projector.ValueOfUV(OpenCASCADE::point(cell->vertex(i)), 1.e-6);
+          if(dof_index_accesses[local_dof_indices[i]] !=0) continue;
+          proj_params = projector.NextValueOfUV(proj_params, OpenCASCADE::point(cell->vertex(i)), 1.e-5);
       
           SurfToProj->D0(proj_params.X(), proj_params.Y(), tmp_proj[i]);
           props.SetParameters(proj_params.X(), proj_params.Y());
@@ -312,10 +315,12 @@ namespace Step54
         }
       }
       for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+        if(dof_index_accesses[local_dof_indices[i]] !=0) continue;
         Tensor<1, 3> dealii_normal({tmp_normal[i].X(), tmp_normal[i].Y(), tmp_normal[i].Z()});
         Point<3> dealii_projection(Pproj[i].X(), Pproj[i].Y(), Pproj[i].Z());
         double product = dealii_normal * (cell->vertex(i) - dealii_projection);
         solution(local_dof_indices[i]) = product;
+        ++dof_index_accesses[local_dof_indices[i]];
       }
     }
 }
