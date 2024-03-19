@@ -268,9 +268,7 @@ namespace Step54
     std::vector<gp_Pnt> Pproj(fe.dofs_per_cell);
     std::vector<gp_Pnt> tmp_proj(fe.dofs_per_cell);
     std::vector<gp_Dir> tmp_normal(fe.dofs_per_cell);
-    std::vector<double> minDistance(fe.dofs_per_cell, 1e7);
-    std::vector<double>       u(fe.dofs_per_cell);
-    std::vector<double>       v(fe.dofs_per_cell);
+    std::vector<double> minDistance(fe.dofs_per_cell, std::numeric_limits<double>::max());
     std::vector<int> dof_index_accesses(dof_handler.n_dofs(), 0);
 
     std::cout << tesselated_mesh.n_cells() << std::endl;
@@ -282,7 +280,7 @@ namespace Step54
       cell->get_dof_indices(local_dof_indices);
       for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
         Pproj[i] = OpenCASCADE::point(cell->vertex(i));
-        minDistance[i] = 1.e7;
+        minDistance[i] = std::numeric_limits<double>::max();
       }
                    
       for (exp.Init(bow_surface, TopAbs_FACE); exp.More(); exp.Next())
@@ -306,11 +304,7 @@ namespace Step54
           {
             minDistance[i] = distance;
             Pproj[i]       = tmp_proj[i];
-            u[i]           = proj_params.X();
-            v[i]           = proj_params.Y();
-            //props.SetParameters(u[i], v[i]);
-            //if(props.IsNormalDefined())
-              tmp_normal[i] = props.Normal();
+            tmp_normal[i] = props.Normal();
           }
         }
       }
