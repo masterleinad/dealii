@@ -250,7 +250,9 @@ namespace Step54
     std::cout << Xmin << ' '<< Ymin << ' ' <<  Zmin << ' ' << Xmax << ' ' << Ymax << ' ' << Zmax << std::endl;
 
     Triangulation<3> tesselated_mesh;
-    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{40,40,40}, Point<3>{Xmin, Ymin, Zmin}, Point<3>{Xmax, Ymax, Zmax});
+    Point<3> middle{(Xmin+Xmax)/2, (Ymin+Ymax)/2, (Zmin+Zmax)/2};
+    Tensor<1, 3> extent ({Xmax-Xmin, Ymax-Ymin, Zmax-Zmin});
+    GridGenerator::subdivided_hyper_rectangle(tesselated_mesh, std::vector<unsigned>{40,40,40}, middle-.6*extent, middle+.6*extent);
 
     GridOut grid_out;
     std::ofstream mesh_stream("tesselated_mesh.vtk");
@@ -310,6 +312,11 @@ namespace Step54
       }
       for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
         if(dof_index_accesses[local_dof_indices[i]] !=0) continue;
+        if(minDistance[i] == std::numeric_limits<double>::max())
+        {
+          solution(local_dof_indices[i]) = std::numeric_limits<double>::max();
+          continue;
+        }
         Tensor<1, 3> dealii_normal({tmp_normal[i].X(), tmp_normal[i].Y(), tmp_normal[i].Z()});
         Point<3> dealii_projection(Pproj[i].X(), Pproj[i].Y(), Pproj[i].Z());
         double product = dealii_normal * (cell->vertex(i) - dealii_projection);
@@ -319,6 +326,7 @@ namespace Step54
     }
 }
 
+{
   DataOut<3> data_out;
   data_out.attach_dof_handler(dof_handler);
   data_out.add_data_vector(solution, "solution");
@@ -327,8 +335,44 @@ namespace Step54
   const std::string filename = "solution.vtk";
   std::ofstream     output(filename);
   data_out.write_vtk(output);
+}
+{
+    Vector<double> solution_2(dof_handler.n_dofs());
+    std::vector<types::global_dof_index> local_dof_indices(fe.dofs_per_cell);
 
-    abort();
+for (const auto& cell: dof_handler.active_cell_iterators())
+    {
+      cell->get_dof_indices(local_dof_indices);
+      double min = std::numeric_limits<double>::max();
+      double max = std::numeric_limits<double>::lowest();
+
+      for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+        double dof_value = solution(local_dof_indices[i]);
+        min = std::min(min, dof_value);
+        max = std::max(max, dof_value);
+      }
+      if (min<0 && max >0)
+        for (unsigned int i=0; i<local_dof_indices.size(); ++i) {
+          solution_2(local_dof_indices[i]) = std::max(solution_2(local_dof_indices[i]), 1.);
+        }
+}
+  DataOut<3> data_out_2;
+  data_out_2.attach_dof_handler(dof_handler);
+  data_out_2.add_data_vector(solution_2, "solution2");
+  data_out_2.build_patches();
+
+  const std::string filename_2 = "solution_2.vtk";
+  std::ofstream     output_2(filename_2);
+  data_out_2.write_vtk(output_2);
+}
+
+
+
+//  auto cell = GridTools::find_active_cell_around_point(dof_handler, Point<3>{});
+//  std::cout << "cell: " << cell->center() << std::endl;
+//Triangulation::n_globally_active_cells() 
+ 
+abort();
 
     // Each CAD geometrical object is defined along with a tolerance,
     // which indicates possible inaccuracy of its placement. For
