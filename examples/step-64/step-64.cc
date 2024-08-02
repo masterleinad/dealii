@@ -200,6 +200,37 @@ namespace Step64
   };
 
 
+
+  template <int dim, int fe_degree>
+  class LocalDiagonalHelmholtzOperator
+  {
+  public:
+    // Again, the Portable::MatrixFree object doesn't know about the number
+    // of degrees of freedom and the number of quadrature points so we need
+    // to store these for index calculations in the call operator.
+    static constexpr unsigned int n_dofs_1d = fe_degree + 1;
+    static constexpr unsigned int n_local_dofs =
+      Utilities::pow(fe_degree + 1, dim);
+    static constexpr unsigned int n_q_points =
+      Utilities::pow(fe_degree + 1, dim);
+
+    LocalHelmholtzOperator(double *coefficient)
+      : coef(coefficient)
+    {}
+
+    DEAL_II_HOST_DEVICE void
+    operator()(const unsigned int                                      cell,
+               const typename Portable::MatrixFree<dim, double>::Data *gpu_data,
+               Portable::SharedData<dim, double> *shared_data,
+               const double                      *src,
+               double                            *dst) const;
+
+  private:
+    double *coef;
+  };
+
+
+
   // This is the call operator that performs the Helmholtz operator evaluation
   // on a given cell similar to the MatrixFree framework on the CPU.
   // In particular, we need access to both values and gradients of the source
@@ -218,10 +249,35 @@ namespace Step64
     fe_eval.read_dof_values(src);
     fe_eval.evaluate(EvaluationFlags::values | EvaluationFlags::gradients);
     fe_eval.apply_for_each_quad_point(
-      HelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
+      DiagonalHelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
     fe_eval.integrate(EvaluationFlags::values | EvaluationFlags::gradients);
     fe_eval.distribute_local_to_global(dst);
   }
+
+
+ // This is the call operator that performs the Helmholtz operator evaluation
+  // on a given cell similar to the MatrixFree framework on the CPU.
+  // In particular, we need access to both values and gradients of the source
+  // vector and we write value and gradient information to the destination
+  // vector.
+  template <int dim, int fe_degree>
+  DEAL_II_HOST_DEVICE void LocalDiagonalHelmholtzOperator<dim, fe_degree>::operator()(
+    const unsigned int                                      cell,
+    const typename Portable::MatrixFree<dim, double>::Data *gpu_data,
+    Portable::SharedData<dim, double>                      *shared_data,
+    const double                                           *src,
+    double                                                 *dst) const
+  {
+    Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> fe_eval(
+      gpu_data, shared_data);
+    fe_eval.read_dof_values(src);
+    fe_eval.evaluate(EvaluationFlags::values | EvaluationFlags::gradients);
+    fe_eval.apply_for_each_quad_point(
+      DiagonalHelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
+    fe_eval.integrate(EvaluationFlags::values | EvaluationFlags::gradients);
+    fe_eval.distribute_local_to_global(dst);
+  }
+
 
 
   // @sect3{Class <code>HelmholtzOperator</code>}
@@ -234,6 +290,28 @@ namespace Step64
   // the linear operator on a source vector.
   template <int dim, int fe_degree>
   class HelmholtzOperator
+  {
+  public:
+    HelmholtzOperator(const DoFHandler<dim>           &dof_handler,
+                      const AffineConstraints<double> &constraints);
+
+    void
+    vmult(LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &dst,
+          const LinearAlgebra::distributed::Vector<double, MemorySpace::Default>
+            &src) const;
+
+    void initialize_dof_vector(
+      LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &vec)
+      const;
+
+  private:
+    Portable::MatrixFree<dim, double>                                mf_data;
+    LinearAlgebra::distributed::Vector<double, MemorySpace::Default> coef;
+  };
+
+
+  template <int dim, int fe_degree>
+  class DiagonalHelmholtzOperator
   {
   public:
     HelmholtzOperator(const DoFHandler<dim>           &dof_handler,
@@ -322,6 +400,8 @@ namespace Step64
   {
     mf_data.initialize_dof_vector(vec);
   }
+
+
 
 
   // @sect3{Class <code>HelmholtzProblem</code>}
