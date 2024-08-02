@@ -515,19 +515,21 @@ namespace LinearAlgebra
 
 #ifdef DEAL_II_TRILINOS_WITH_TPETRA
   template <typename Number>
-  template <typename Dummy>
+  template <typename NodeType, typename Dummy>
   std::enable_if_t<std::is_same_v<Dummy, Number> &&
                    dealii::is_tpetra_type<Number>::value>
   ReadWriteVector<Number>::import_elements(
-    const Tpetra::Vector<Number, int, types::signed_global_dof_index> &vector,
+    const Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType> &vector,
     const IndexSet         &source_elements,
     VectorOperation::values operation,
     const MPI_Comm          mpi_comm,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase>
       &communication_pattern)
   {
-    std::shared_ptr<const TpetraWrappers::CommunicationPattern>
+    std::shared_ptr<const TpetraWrappers::CommunicationPattern<NodeType>>
       tpetra_comm_pattern;
+
+    using MemorySpace = std::conditional_t<std::is_same_v<typename NodeType::memory_space, Kokkos::HostSpace>, dealii::MemorySpace::Host, dealii::MemorySpace::Default>;
 
     // If no communication pattern is given, create one. Otherwise, use the one
     // given.
@@ -540,21 +542,21 @@ namespace LinearAlgebra
             (source_elements == source_stored_elements))
           {
             tpetra_comm_pattern = std::dynamic_pointer_cast<
-              const TpetraWrappers::CommunicationPattern>(comm_pattern);
+              const TpetraWrappers::CommunicationPattern<MemorySpace>>(comm_pattern);
             if (tpetra_comm_pattern == nullptr)
               tpetra_comm_pattern =
-                std::make_shared<const TpetraWrappers::CommunicationPattern>(
+                std::make_shared<const TpetraWrappers::CommunicationPattern<MemorySpace>>(
                   create_tpetra_comm_pattern(source_elements, mpi_comm));
           }
         else
           tpetra_comm_pattern =
-            std::make_shared<const TpetraWrappers::CommunicationPattern>(
+            std::make_shared<const TpetraWrappers::CommunicationPattern<MemorySpace>>(
               create_tpetra_comm_pattern(source_elements, mpi_comm));
       }
     else
       {
         tpetra_comm_pattern =
-          std::dynamic_pointer_cast<const TpetraWrappers::CommunicationPattern>(
+          std::dynamic_pointer_cast<const TpetraWrappers::CommunicationPattern<MemorySpace>>(
             communication_pattern);
         AssertThrow(tpetra_comm_pattern != nullptr,
                     ExcMessage(
@@ -562,10 +564,10 @@ namespace LinearAlgebra
                       "LinearAlgebra::TpetraWrappers::CommunicationPattern."));
       }
 
-    Tpetra::Export<int, types::signed_global_dof_index> tpetra_export(
+    Tpetra::Export<int, types::signed_global_dof_index, NodeType> tpetra_export(
       tpetra_comm_pattern->get_tpetra_export());
 
-    Tpetra::Vector<Number, int, types::signed_global_dof_index> target_vector(
+    Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType> target_vector(
       tpetra_export.getSourceMap());
 
     // Communicate the vector to the correct map.
@@ -813,11 +815,11 @@ namespace LinearAlgebra
 
 #  ifdef DEAL_II_TRILINOS_WITH_TPETRA
   template <typename Number>
-  template <typename Dummy>
+  template <typename MemorySpace, typename Dummy>
   std::enable_if_t<std::is_same_v<Dummy, Number> &&
                    dealii::is_tpetra_type<Number>::value>
   ReadWriteVector<Number>::import_elements(
-    const LinearAlgebra::TpetraWrappers::Vector<Number> &trilinos_vec,
+    const LinearAlgebra::TpetraWrappers::Vector<Number, MemorySpace> &trilinos_vec,
     VectorOperation::values                              operation,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase>
       &communication_pattern)
@@ -996,15 +998,16 @@ namespace LinearAlgebra
 #ifdef DEAL_II_WITH_TRILINOS
 #  ifdef DEAL_II_TRILINOS_WITH_TPETRA
   template <typename Number>
-  TpetraWrappers::CommunicationPattern
+  template <typename MemorySpace>
+  TpetraWrappers::CommunicationPattern<MemorySpace>
   ReadWriteVector<Number>::create_tpetra_comm_pattern(
     const IndexSet &source_index_set,
     const MPI_Comm  mpi_comm)
   {
     source_stored_elements = source_index_set;
-    TpetraWrappers::CommunicationPattern tpetra_comm_pattern(
+    TpetraWrappers::CommunicationPattern<MemorySpace> tpetra_comm_pattern(
       source_stored_elements, stored_elements, mpi_comm);
-    comm_pattern = std::make_shared<TpetraWrappers::CommunicationPattern>(
+    comm_pattern = std::make_shared<TpetraWrappers::CommunicationPattern<MemorySpace>>(
       source_stored_elements, stored_elements, mpi_comm);
 
     return tpetra_comm_pattern;

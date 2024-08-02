@@ -485,7 +485,7 @@ namespace LinearAlgebra
       else
         {
           tpetra_comm_pattern = Teuchos::rcp_dynamic_cast<
-            const TpetraWrappers::CommunicationPattern>(communication_pattern);
+            const TpetraWrappers::CommunicationPattern<MemorySpace>>(communication_pattern);
 
           AssertThrow(
             !tpetra_comm_pattern.is_null(),
@@ -516,9 +516,7 @@ namespace LinearAlgebra
         for (size_t k = 0; k < localLength; ++k)
           x_1d(k) = *values_it++;
 #  if !DEAL_II_TRILINOS_VERSION_GTE(13, 2, 0)
-        source_vector.template sync<
-          typename Tpetra::Vector<Number, int, types::signed_global_dof_index>::
-            device_type::memory_space>();
+        source_vector.template sync<typename MemorySpace::kokkos_space>();
 #  endif
       }
       Tpetra::CombineMode tpetra_operation = Tpetra::ZERO;
@@ -603,7 +601,7 @@ namespace LinearAlgebra
 
           // TODO: Tpetra doesn't have a combine mode that also updates local
           // elements, maybe there is a better workaround.
-          Tpetra::Vector<Number, int, types::signed_global_dof_index> dummy(
+          Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType> dummy(
             vector->getMap(), false);
           ImportType data_exchange(V.trilinos_vector().getMap(),
                                    dummy.getMap());
@@ -711,9 +709,7 @@ namespace LinearAlgebra
           vector_1d(k) += a;
         }
 #  if !DEAL_II_TRILINOS_VERSION_GTE(13, 2, 0)
-      vector->template sync<
-        typename Tpetra::Vector<Number, int, types::signed_global_dof_index>::
-          device_type::memory_space>();
+      vector->template sync<typename MemorySpace::kokkos_space>();
 #  endif
     }
 
@@ -1116,7 +1112,7 @@ namespace LinearAlgebra
 
 
     template <typename Number, typename MemorySpace>
-    const Tpetra::Vector<Number, int, types::signed_global_dof_index> &
+    const Tpetra::Vector<Number, int, types::signed_global_dof_index, typename Vector<Number, MemorySpace>::NodeType> &
     Vector<Number, MemorySpace>::trilinos_vector() const
     {
       return *vector;
@@ -1125,7 +1121,7 @@ namespace LinearAlgebra
 
 
     template <typename Number, typename MemorySpace>
-    Tpetra::Vector<Number, int, types::signed_global_dof_index> &
+    Tpetra::Vector<Number, int, types::signed_global_dof_index, typename Vector<Number, MemorySpace>::NodeType> &
     Vector<Number, MemorySpace>::trilinos_vector()
     {
       return *vector;
@@ -1134,7 +1130,7 @@ namespace LinearAlgebra
 
 
     template <typename Number, typename MemorySpace>
-    Teuchos::RCP<Tpetra::Vector<Number, int, types::signed_global_dof_index>>
+    Teuchos::RCP<Tpetra::Vector<Number, int, types::signed_global_dof_index, typename Vector<Number, MemorySpace>::NodeType>>
     Vector<Number, MemorySpace>::trilinos_rcp()
     {
       return vector;
@@ -1144,7 +1140,7 @@ namespace LinearAlgebra
 
     template <typename Number, typename MemorySpace>
     Teuchos::RCP<
-      const Tpetra::Vector<Number, int, types::signed_global_dof_index>>
+      const Tpetra::Vector<Number, int, types::signed_global_dof_index, typename Vector<Number, MemorySpace>::NodeType>>
     Vector<Number, MemorySpace>::trilinos_rcp() const
     {
       return vector.getConst();

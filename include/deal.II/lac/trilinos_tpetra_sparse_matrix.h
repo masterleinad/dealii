@@ -106,7 +106,7 @@ namespace LinearAlgebra
      * SparseMatrix::resume_fill() first. Once you finish modifying
      * the matrix, you must call SparseMatrix::compress() again.
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace = dealii::MemorySpace::Default>
     class SparseMatrix : public Subscriptor
     {
     public:

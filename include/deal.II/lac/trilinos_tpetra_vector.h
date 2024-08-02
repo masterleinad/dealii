@@ -137,7 +137,7 @@ namespace LinearAlgebra
        * @ingroup TpetraWrappers
        */
       template <typename Number,
-                typename MemorySpace = dealii::MemorySpace::Host>
+                typename MemorySpace = dealii::MemorySpace::Default>
       class VectorReference
       {
       private:
@@ -279,7 +279,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Vectors
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace = dealii::MemorySpace::Default>
     class Vector : public ReadVector<Number>, public Subscriptor
     {
     public:
@@ -912,14 +912,14 @@ namespace LinearAlgebra
        * Return a const reference to the underlying Trilinos
        * Tpetra::Vector class.
        */
-      const Tpetra::Vector<Number, int, types::signed_global_dof_index> &
+      const Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType> &
       trilinos_vector() const;
 
       /**
        * Return a (modifiable) reference to the underlying Trilinos
        * Tpetra::Vector class.
        */
-      Tpetra::Vector<Number, int, types::signed_global_dof_index> &
+      Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType> &
       trilinos_vector();
 
       /**
@@ -927,14 +927,14 @@ namespace LinearAlgebra
        * Tpetra::Vector class.
        */
       Teuchos::RCP<
-        const Tpetra::Vector<Number, int, types::signed_global_dof_index>>
+        const Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType>>
       trilinos_rcp() const;
 
       /**
        * Return a (modifiable) Teuchos::RCP to the underlying Trilinos
        * Tpetra::Vector class.
        */
-      Teuchos::RCP<Tpetra::Vector<Number, int, types::signed_global_dof_index>>
+      Teuchos::RCP<Tpetra::Vector<Number, int, types::signed_global_dof_index, NodeType>>
       trilinos_rcp();
 
       /**
@@ -1074,7 +1074,7 @@ namespace LinearAlgebra
        * CommunicationPattern for the communication between the
        * source_stored_elements IndexSet and the current vector.
        */
-      Teuchos::RCP<const TpetraWrappers::CommunicationPattern>
+      Teuchos::RCP<const TpetraWrappers::CommunicationPattern<MemorySpace>>
         tpetra_comm_pattern;
 
       // Make the reference class a friend.
