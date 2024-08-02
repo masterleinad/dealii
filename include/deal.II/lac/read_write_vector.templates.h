@@ -526,10 +526,10 @@ namespace LinearAlgebra
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase>
       &communication_pattern)
   {
-    std::shared_ptr<const TpetraWrappers::CommunicationPattern<NodeType>>
-      tpetra_comm_pattern;
-
     using MemorySpace = std::conditional_t<std::is_same_v<typename NodeType::memory_space, Kokkos::HostSpace>, dealii::MemorySpace::Host, dealii::MemorySpace::Default>;
+
+    std::shared_ptr<const TpetraWrappers::CommunicationPattern<MemorySpace>>
+      tpetra_comm_pattern;
 
     // If no communication pattern is given, create one. Otherwise, use the one
     // given.
@@ -546,12 +546,12 @@ namespace LinearAlgebra
             if (tpetra_comm_pattern == nullptr)
               tpetra_comm_pattern =
                 std::make_shared<const TpetraWrappers::CommunicationPattern<MemorySpace>>(
-                  create_tpetra_comm_pattern(source_elements, mpi_comm));
+                  create_tpetra_comm_pattern<MemorySpace>(source_elements, mpi_comm));
           }
         else
           tpetra_comm_pattern =
             std::make_shared<const TpetraWrappers::CommunicationPattern<MemorySpace>>(
-              create_tpetra_comm_pattern(source_elements, mpi_comm));
+              create_tpetra_comm_pattern<MemorySpace>(source_elements, mpi_comm));
       }
     else
       {

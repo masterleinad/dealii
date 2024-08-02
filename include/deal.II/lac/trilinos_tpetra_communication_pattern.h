@@ -40,6 +40,7 @@ namespace LinearAlgebra
     template <typename MemorySpace = dealii::MemorySpace::Default>
     class CommunicationPattern : public Utilities::MPI::CommunicationPatternBase
     {
+      static_assert(std::is_same_v<MemorySpace, dealii::MemorySpace::Default> || std::is_same_v<MemorySpace, dealii::MemorySpace::Host>);
     public:
     #  if DEAL_II_TRILINOS_VERSION_GTE(14, 2, 0)
       using NodeType = Tpetra::KokkosCompat::KokkosDeviceWrapperNode<
