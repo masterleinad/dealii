@@ -53,9 +53,9 @@ namespace LinearAlgebra
       comm = Teuchos::rcpFromUndefRef(communicator);
 
       auto vector_space_vector_map =
-        locally_owned_indices.make_tpetra_map_rcp(*comm, false);
+        locally_owned_indices.template make_tpetra_map_rcp<NodeType>(*comm, false);
       auto read_write_vector_map =
-        ghost_indices.make_tpetra_map_rcp(*comm, true);
+        ghost_indices.template make_tpetra_map_rcp<NodeType>(*comm, true);
 
       // Target map is read_write_vector_map
       // Source map is vector_space_vector_map. This map must have uniquely
@@ -114,6 +114,10 @@ namespace LinearAlgebra
     }
   } // namespace TpetraWrappers
 } // namespace LinearAlgebra
+
+
+template class LinearAlgebra::TpetraWrappers::CommunicationPattern<MemorySpace::Default>;
+template class LinearAlgebra::TpetraWrappers::CommunicationPattern<MemorySpace::Host>;
 
 DEAL_II_NAMESPACE_CLOSE
 

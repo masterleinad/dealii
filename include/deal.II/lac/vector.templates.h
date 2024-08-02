@@ -200,7 +200,7 @@ Vector<Number>::Vector(
       // that know about the original vector.
       typename LinearAlgebra::TpetraWrappers::Vector<OtherNumber,
                                                      MemorySpace>::VectorType
-        localized_vector(complete_index_set(size()).make_tpetra_map_rcp(),
+        localized_vector(complete_index_set(size()).template make_tpetra_map_rcp<typename LinearAlgebra::TpetraWrappers::Vector<OtherNumber, MemorySpace>::NodeType>(),
                          v.get_mpi_communicator());
 
       Teuchos::RCP<const typename LinearAlgebra::TpetraWrappers::
@@ -890,7 +890,8 @@ Vector<Number>::operator=(
       // that know about the original vector.
       typename LinearAlgebra::TpetraWrappers::Vector<OtherNumber,
                                                      MemorySpace>::VectorType
-        localized_vector(complete_index_set(size()).make_tpetra_map_rcp(),
+        localized_vector(complete_index_set(size()).template make_tpetra_map_rcp<typename LinearAlgebra::TpetraWrappers::Vector<OtherNumber,
+                                                     MemorySpace>::NodeType>(),
                          v.get_mpi_communicator());
 
       Teuchos::RCP<const typename LinearAlgebra::TpetraWrappers::

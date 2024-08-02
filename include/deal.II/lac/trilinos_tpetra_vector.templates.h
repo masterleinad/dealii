@@ -123,7 +123,7 @@ namespace LinearAlgebra
       , compressed(true)
       , has_ghost(false)
       , vector(Utilities::Trilinos::internal::make_rcp<VectorType>(
-          parallel_partitioner.make_tpetra_map_rcp(communicator, true)))
+          parallel_partitioner.make_tpetra_map_rcp<NodeType>(communicator, true)))
     {}
 
 
@@ -141,20 +141,20 @@ namespace LinearAlgebra
           parallel_partitioner.add_indices(ghost_entries);
 
           vector = Utilities::Trilinos::internal::make_rcp<VectorType>(
-            parallel_partitioner.make_tpetra_map_rcp(communicator, true));
+            parallel_partitioner.template make_tpetra_map_rcp<NodeType>(communicator, true));
 
           compressed = true;
         }
       else
         {
           Teuchos::RCP<MapType> map =
-            locally_owned_entries.make_tpetra_map_rcp(communicator, false);
+            locally_owned_entries.template make_tpetra_map_rcp<NodeType>(communicator, false);
           vector = Utilities::Trilinos::internal::make_rcp<VectorType>(map);
 
           IndexSet nonlocal_entries(ghost_entries);
           nonlocal_entries.subtract_set(locally_owned_entries);
           nonlocal_vector = Utilities::Trilinos::internal::make_rcp<VectorType>(
-            nonlocal_entries.make_tpetra_map_rcp(communicator, true));
+            nonlocal_entries.template make_tpetra_map_rcp<NodeType>(communicator, true));
 
           compressed = false;
         }
@@ -198,7 +198,7 @@ namespace LinearAlgebra
       compressed = true;
       has_ghost  = false;
       vector     = Utilities::Trilinos::internal::make_rcp<VectorType>(
-        parallel_partitioner.make_tpetra_map_rcp(communicator, true));
+        parallel_partitioner.template make_tpetra_map_rcp<NodeType>(communicator, true));
     }
 
 
@@ -221,14 +221,14 @@ namespace LinearAlgebra
           parallel_partitioner.add_indices(ghost_entries);
 
           vector = Utilities::Trilinos::internal::make_rcp<VectorType>(
-            parallel_partitioner.make_tpetra_map_rcp(communicator, true));
+            parallel_partitioner.template make_tpetra_map_rcp<NodeType>(communicator, true));
 
           compressed = true;
         }
       else
         {
           Teuchos::RCP<MapType> map =
-            locally_owned_entries.make_tpetra_map_rcp(communicator, false);
+            locally_owned_entries.template make_tpetra_map_rcp<NodeType>(communicator, false);
 
           if (!vector->getMap()->isSameAs(*map))
             {
@@ -242,7 +242,7 @@ namespace LinearAlgebra
           nonlocal_entries.subtract_set(locally_owned_entries);
 
           nonlocal_vector = Utilities::Trilinos::internal::make_rcp<VectorType>(
-            nonlocal_entries.make_tpetra_map_rcp(communicator, true));
+            nonlocal_entries.template make_tpetra_map_rcp<NodeType>(communicator, true));
 
           compressed = false;
         }
@@ -425,7 +425,7 @@ namespace LinearAlgebra
 
       Teuchos::Array<OtherNumber> vector_data(V.begin(), V.end());
       vector = Utilities::Trilinos::internal::make_rcp<VectorType>(
-        V.locally_owned_elements().make_tpetra_map_rcp(), vector_data);
+        V.locally_owned_elements().template make_tpetra_map_rcp<NodeType>(), vector_data);
 
       has_ghost  = false;
       compressed = true;
