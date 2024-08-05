@@ -1516,10 +1516,10 @@ namespace FETools
 
 #  ifdef DEAL_II_WITH_MPI
 #    ifdef DEAL_II_TRILINOS_WITH_TPETRA
-    template <int dim, int spacedim, typename Number>
+    template <int dim, int spacedim, typename Number, typename MemorySpace>
     void
     reinit_distributed(const DoFHandler<dim, spacedim>               &dh,
-                       LinearAlgebra::TpetraWrappers::Vector<Number> &vector)
+                       LinearAlgebra::TpetraWrappers::Vector<Number, MemorySpace> &vector)
     {
       const parallel::distributed::Triangulation<dim, spacedim> *parallel_tria =
         dynamic_cast<

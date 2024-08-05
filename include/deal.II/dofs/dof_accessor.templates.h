@@ -810,10 +810,10 @@ namespace internal
 
 
 #  ifdef DEAL_II_TRILINOS_WITH_TPETRA
-      template <typename ForwardIterator, typename Number>
+      template <typename ForwardIterator, typename Number, typename MemorySpace>
       static void
       extract_subvector_to(
-        const LinearAlgebra::TpetraWrappers::Vector<Number> &values,
+        const LinearAlgebra::TpetraWrappers::Vector<Number, MemorySpace> &values,
         const types::global_dof_index                       *cache_begin,
         const types::global_dof_index                       *cache_end,
         ForwardIterator                                      local_values_begin)

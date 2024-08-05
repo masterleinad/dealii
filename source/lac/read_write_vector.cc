@@ -82,14 +82,14 @@ namespace LinearAlgebra
 #  ifdef HAVE_TPETRA_INST_FLOAT
   template void
   ReadWriteVector<float>::import_elements(
-    const LinearAlgebra::TpetraWrappers::Vector<float> &,
+    const LinearAlgebra::TpetraWrappers::Vector<float, MemorySpace::Host> &,
     VectorOperation::values,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase> &);
 #  endif
 #  ifdef HAVE_TPETRA_INST_DOUBLE
   template void
   ReadWriteVector<double>::import_elements(
-    const LinearAlgebra::TpetraWrappers::Vector<double> &,
+    const LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Host> &,
     VectorOperation::values,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase> &);
 #  endif
@@ -97,14 +97,14 @@ namespace LinearAlgebra
 #    ifdef HAVE_TPETRA_INST_COMPLEX_FLOAT
   template void
   ReadWriteVector<std::complex<float>>::import_elements(
-    const LinearAlgebra::TpetraWrappers::Vector<std::complex<float>> &,
+    const LinearAlgebra::TpetraWrappers::Vector<std::complex<float>, MemorySpace::Host> &,
     VectorOperation::values,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase> &);
 #    endif
 #    ifdef HAVE_TPETRA_INST_COMPLEX_DOUBLE
   template void
   ReadWriteVector<std::complex<double>>::import_elements(
-    const LinearAlgebra::TpetraWrappers::Vector<std::complex<double>> &,
+    const LinearAlgebra::TpetraWrappers::Vector<std::complex<double>, MemorySpace::Host> &,
     VectorOperation::values,
     const std::shared_ptr<const Utilities::MPI::CommunicationPatternBase> &);
 #    endif
