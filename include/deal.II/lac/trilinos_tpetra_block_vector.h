@@ -71,7 +71,7 @@ namespace LinearAlgebra
      * @ingroup TrilinosWrappers
      * @see @ref GlossBlockLA "Block (linear algebra)"
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class BlockVector : public dealii::BlockVectorBase<
                           TpetraWrappers::Vector<Number, MemorySpace>>
     {

@@ -612,16 +612,12 @@ public:
                     const bool     overlapping  = false) const;
 
 #  ifdef DEAL_II_TRILINOS_WITH_TPETRA
-  template <
-    typename NodeType =
-      LinearAlgebra::TpetraWrappers::TpetraTypes::NodeType<MemorySpace::Host>>
+  template <typename NodeType>
   Tpetra::Map<int, types::signed_global_dof_index, NodeType>
   make_tpetra_map(const MPI_Comm communicator = MPI_COMM_WORLD,
                   const bool     overlapping  = false) const;
 
-  template <
-    typename NodeType =
-      LinearAlgebra::TpetraWrappers::TpetraTypes::NodeType<MemorySpace::Host>>
+  template <typename NodeType>
   Teuchos::RCP<Tpetra::Map<int, types::signed_global_dof_index, NodeType>>
   make_tpetra_map_rcp(const MPI_Comm communicator = MPI_COMM_WORLD,
                       const bool     overlapping  = false) const;

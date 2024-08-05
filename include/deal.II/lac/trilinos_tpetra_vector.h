@@ -142,7 +142,7 @@ namespace LinearAlgebra
        * @ingroup TpetraWrappers
        */
       template <typename Number,
-                typename MemorySpace = dealii::MemorySpace::Host>
+                typename MemorySpace>
       class VectorReference
       {
       private:
@@ -284,7 +284,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Vectors
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class Vector : public ReadVector<Number>, public Subscriptor
     {
     public:

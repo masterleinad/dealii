@@ -68,7 +68,7 @@ namespace LinearAlgebra
      *
      * @ingroup TpetraWrappers
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class SolverDirectBase
     {
     public:
@@ -178,7 +178,7 @@ namespace LinearAlgebra
      *
      * @ingroup TpetraWrappers
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class SolverDirect : public SolverDirectBase<Number, MemorySpace>
     {
     public:
@@ -245,7 +245,7 @@ namespace LinearAlgebra
      *
      * @ingroup TpetraWrappers
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class SolverDirectKLU2 : public SolverDirectBase<Number, MemorySpace>
     {
     public:

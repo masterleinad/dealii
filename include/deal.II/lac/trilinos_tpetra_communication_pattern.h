@@ -41,7 +41,7 @@ namespace LinearAlgebra
     /**
      * This class implements a wrapper to Tpetra::Import and Tpetra::Export.
      */
-    template <typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename MemorySpace>
     class CommunicationPattern : public Utilities::MPI::CommunicationPatternBase
     {
       static_assert(std::is_same_v<MemorySpace, dealii::MemorySpace::Default> ||

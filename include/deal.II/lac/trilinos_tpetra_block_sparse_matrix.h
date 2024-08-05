@@ -71,7 +71,7 @@ namespace LinearAlgebra
      * @ingroup Matrix1
      * @see @ref GlossBlockLA "Block (linear algebra)"
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class BlockSparseMatrix
       : public BlockMatrixBase<SparseMatrix<Number, MemorySpace>>
     {

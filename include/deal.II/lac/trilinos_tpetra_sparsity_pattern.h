@@ -80,7 +80,7 @@ namespace LinearAlgebra
        *
        * @ingroup TrilinosWrappers
        */
-      template <typename MemorySpace = dealii::MemorySpace::Host>
+      template <typename MemorySpace>
       class Accessor
       {
       public:
@@ -179,7 +179,7 @@ namespace LinearAlgebra
        * TrilinosWrappers::SparsityPattern. Access to individual elements of the
        * sparsity pattern is handled by the Accessor class in this namespace.
        */
-      template <typename MemorySpace = dealii::MemorySpace::Host>
+      template <typename MemorySpace>
       class Iterator
       {
       public:
@@ -284,7 +284,7 @@ namespace LinearAlgebra
      * @ingroup TrilinosWrappers
      * @ingroup Sparsity
      */
-    template <typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename MemorySpace>
     class SparsityPattern : public SparsityPatternBase
     {
     public:

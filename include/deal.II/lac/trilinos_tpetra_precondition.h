@@ -52,7 +52,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionBase : public Subscriptor
     {
     public:
@@ -216,7 +216,7 @@ namespace LinearAlgebra
      * @tparam Number scalar type of the preconditioner
      * @tparam MemorySpace
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionIdentity : public PreconditionBase<Number, MemorySpace>
     {
     public:
@@ -247,7 +247,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionIfpackBase : public PreconditionBase<Number, MemorySpace>
     {
     public:
@@ -307,7 +307,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionIfpack
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -352,7 +352,7 @@ namespace LinearAlgebra
      * @ingroup Preconditioners
      *
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionJacobi
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -436,7 +436,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionL1Jacobi
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -523,7 +523,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionL1GaussSeidel
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -619,7 +619,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionSOR : public PreconditionIfpackBase<Number, MemorySpace>
     {
     public:
@@ -711,7 +711,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionSSOR : public PreconditionIfpackBase<Number, MemorySpace>
     {
     public:
@@ -804,7 +804,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionChebyshev
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -916,7 +916,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionILU : public PreconditionIfpackBase<Number, MemorySpace>
     {
     public:
@@ -1000,7 +1000,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionILUT : public PreconditionIfpackBase<Number, MemorySpace>
     {
     public:
@@ -1103,7 +1103,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionBlockJacobi
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -1183,7 +1183,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionBlockSOR
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
@@ -1256,7 +1256,7 @@ namespace LinearAlgebra
      * @ingroup TpetraWrappers
      * @ingroup Preconditioners
      */
-    template <typename Number, typename MemorySpace = dealii::MemorySpace::Host>
+    template <typename Number, typename MemorySpace>
     class PreconditionBlockSSOR
       : public PreconditionIfpackBase<Number, MemorySpace>
     {
