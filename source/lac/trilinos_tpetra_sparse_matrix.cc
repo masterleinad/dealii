@@ -77,6 +77,58 @@ namespace LinearAlgebra
     template void
     SparseMatrix<double, MemorySpace::Host>::Tvmult_add(::dealii::Vector<double>       &dst,
                                      const ::dealii::Vector<double> &src) const;
+
+    template class SparseMatrix<double, MemorySpace::Default>;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::reinit(
+      const IndexSet                       &parallel_partitioning,
+      const dealii::DynamicSparsityPattern &sparsity_pattern,
+      const MPI_Comm                        communicator,
+      const bool                            exchange_data);
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::reinit(
+      const IndexSet                       &row_parallel_partitioning,
+      const IndexSet                       &col_parallel_partitioning,
+      const dealii::DynamicSparsityPattern &sparsity_pattern,
+      const MPI_Comm                        communicator,
+      const bool                            exchange_data);
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::reinit(const dealii::DynamicSparsityPattern &);
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::vmult(Vector<double, MemorySpace::Default>       &dst,
+                                const Vector<double, MemorySpace::Default> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::Tvmult(Vector<double, MemorySpace::Default>       &dst,
+                                 const Vector<double, MemorySpace::Default> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::vmult_add(Vector<double, MemorySpace::Default>       &dst,
+                                    const Vector<double, MemorySpace::Default> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::Tvmult_add(Vector<double, MemorySpace::Default>       &dst,
+                                     const Vector<double, MemorySpace::Default> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::vmult(::dealii::Vector<double>       &dst,
+                                const ::dealii::Vector<double> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::Tvmult(::dealii::Vector<double>       &dst,
+                                 const ::dealii::Vector<double> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::vmult_add(::dealii::Vector<double>       &dst,
+                                    const ::dealii::Vector<double> &src) const;
+
+    template void
+    SparseMatrix<double, MemorySpace::Default>::Tvmult_add(::dealii::Vector<double>       &dst,
+                                     const ::dealii::Vector<double> &src) const;
   } // namespace TpetraWrappers
 } // namespace LinearAlgebra
 #  endif // DOXYGEN
