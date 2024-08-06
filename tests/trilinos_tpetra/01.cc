@@ -15,7 +15,7 @@
 
 
 // check setting elements in a trilinos matrix using
-// LinearAlgebra::TpetraWrappers::SparseMatrix<double>::set()
+// LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default>::set()
 
 #include <deal.II/base/utilities.h>
 
@@ -27,7 +27,7 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::SparseMatrix<double> &m)
+test(LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> &m)
 {
   // first set a few entries
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -66,7 +66,7 @@ main(int argc, char **argv)
   try
     {
       {
-        LinearAlgebra::TpetraWrappers::SparseMatrix<double> m(5U, 5U, 3U);
+        LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m(5U, 5U, 3U);
         test(m);
       }
     }

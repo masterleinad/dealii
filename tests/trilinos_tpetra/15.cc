@@ -14,7 +14,7 @@
 
 
 
-// check LinearAlgebra::TpetraWrappers::Vector<double>::operator() in
+// check LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default>::operator() in
 // set/add-mode alternatingly, but writing to the same elements
 //
 // this test doesn't really make sense any more -- at least one a
@@ -44,7 +44,7 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::Vector<double> &v)
+test(LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> &v)
 {
   // set only certain elements of the
   // vector. have a bit pattern of where we
@@ -83,7 +83,7 @@ main(int argc, char **argv)
   try
     {
       {
-        LinearAlgebra::TpetraWrappers::Vector<double> v;
+        LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> v;
         v.reinit(complete_index_set(100), MPI_COMM_WORLD);
         test(v);
       }

@@ -14,7 +14,7 @@
 
 
 
-// check LinearAlgebra::TpetraWrappers::SparsityPattern::row_length
+// check LinearAlgebra::TpetraWrappers::SparsityPattern<MemorySpace::Default>::row_length
 
 #include <deal.II/base/utilities.h>
 

@@ -14,7 +14,7 @@
 
 
 
-// test LinearAlgebra::TpetraWrappers::SparseMatrix<double>::reinit with a
+// test LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default>::reinit with a
 // dealii::SparseMatrix and where we copy all values
 
 #include <deal.II/base/utilities.h>
@@ -54,7 +54,7 @@ main(int argc, char **argv)
 
   // now copy everything into a Trilinos matrix
   const auto local_rows = complete_index_set(5);
-  LinearAlgebra::TpetraWrappers::SparseMatrix<double> tmatrix;
+  LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> tmatrix;
   tmatrix.reinit(local_rows, local_rows, matrix, MPI_COMM_SELF);
 
   deallog << "Copy with all values:" << std::endl;

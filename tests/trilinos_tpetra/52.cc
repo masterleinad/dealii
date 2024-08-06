@@ -15,7 +15,7 @@
 
 
 // check setting elements in a petsc matrix using
-// LinearAlgebra::TpetraWrappers::SparseMatrix<double>::set(). like trilinos_01,
+// LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default>::set(). like trilinos_01,
 // but use a different constructor for the sparse matrix
 
 #include <deal.II/base/utilities.h>
@@ -28,7 +28,7 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::SparseMatrix<double> &m)
+test(LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> &m)
 {
   // first set a few entries
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -70,7 +70,7 @@ main(int argc, char **argv)
       {
         std::vector<unsigned int> row_lengths(5, 3U);
         row_lengths.back() = 2;
-        LinearAlgebra::TpetraWrappers::SparseMatrix<double> m(
+        LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m(
           static_cast<types::global_dof_index>(5U),
           static_cast<types::global_dof_index>(5U),
           row_lengths);

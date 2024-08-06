@@ -71,11 +71,11 @@ private:
   AffineConstraints<double> constraints;
   SparsityPattern           sparsity_pattern;
 
-  LinearAlgebra::TpetraWrappers::SparseMatrix<double> system_matrix;
+  LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> system_matrix;
 
-  LinearAlgebra::TpetraWrappers::Vector<double> solution;
-  LinearAlgebra::TpetraWrappers::Vector<double> system_rhs;
-  LinearAlgebra::TpetraWrappers::Vector<double> system_rhs_two;
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> solution;
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> system_rhs;
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> system_rhs_two;
 };
 
 
@@ -302,10 +302,10 @@ Step4<dim>::solve()
   // Compute 'reference' solution with CG solver and SSOR preconditioner
   LinearAlgebra::TpetraWrappers::PreconditionSSOR<double> preconditioner;
   preconditioner.initialize(system_matrix);
-  LinearAlgebra::TpetraWrappers::Vector<double> temp_solution(system_rhs);
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> temp_solution(system_rhs);
   temp_solution = 0;
   SolverControl solver_control(1000, 1e-12);
-  SolverCG<LinearAlgebra::TpetraWrappers::Vector<double>> solver(
+  SolverCG<LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default>> solver(
     solver_control);
 
   solver.solve(system_matrix, temp_solution, system_rhs, preconditioner);
@@ -313,7 +313,7 @@ Step4<dim>::solve()
   constraints.distribute(temp_solution);
   solution = temp_solution;
 
-  LinearAlgebra::TpetraWrappers::Vector<double> output(temp_solution);
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> output(temp_solution);
 
   // do CG solve for new rhs
   temp_solution = 0;
@@ -323,7 +323,7 @@ Step4<dim>::solve()
   constraints.distribute(temp_solution);
   solution = temp_solution;
 
-  LinearAlgebra::TpetraWrappers::Vector<double> output_two(temp_solution);
+  LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> output_two(temp_solution);
 
   // factorize matrix for direct solver
   temp_solution = 0;

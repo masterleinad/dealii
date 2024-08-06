@@ -15,7 +15,7 @@
 
 
 // check SparseMatrix::vmult, vmult_add with
-// LinearAlgebra::TpetraWrappers::Vector<double>
+// LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default>
 
 #include <deal.II/base/utilities.h>
 
@@ -30,13 +30,13 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::Vector<double> &v,
-     LinearAlgebra::TpetraWrappers::Vector<double> &w)
+test(LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> &v,
+     LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> &w)
 {
   LinearAlgebra::ReadWriteVector<double> read_write_v(v.size());
   LinearAlgebra::ReadWriteVector<double> read_write_w(w.size());
 
-  LinearAlgebra::TpetraWrappers::SparseMatrix<double> m(w.size(),
+  LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m(w.size(),
                                                         v.size(),
                                                         v.size());
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -91,9 +91,9 @@ main(int argc, char **argv)
   try
     {
       {
-        LinearAlgebra::TpetraWrappers::Vector<double> v(complete_index_set(100),
+        LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> v(complete_index_set(100),
                                                         MPI_COMM_SELF);
-        LinearAlgebra::TpetraWrappers::Vector<double> w(complete_index_set(95),
+        LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> w(complete_index_set(95),
                                                         MPI_COMM_SELF);
         test(v, w);
       }

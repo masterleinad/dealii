@@ -14,7 +14,7 @@
 
 
 
-// check LinearAlgebra::TpetraWrappers::SparsityPattern::print_gnuplot
+// check LinearAlgebra::TpetraWrappers::SparsityPattern<MemorySpace::Default>::print_gnuplot
 
 #include <deal.II/base/utilities.h>
 

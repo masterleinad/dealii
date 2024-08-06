@@ -30,7 +30,7 @@
 void
 test(Vector<double> &v, Vector<double> &w)
 {
-  LinearAlgebra::TpetraWrappers::SparseMatrix<double> m(w.size(),
+  LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m(w.size(),
                                                         v.size(),
                                                         v.size());
   for (unsigned int i = 0; i < m.m(); ++i)

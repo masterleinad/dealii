@@ -15,7 +15,7 @@
 
 
 // Test
-// LinearAlgebra::TpetraWrappers::SparseMatrix<double>::copy_from(other_matrix)
+// LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default>::copy_from(other_matrix)
 // for the case of a non-contiguous set of rows.
 
 #include <deal.II/base/index_set.h>
@@ -54,7 +54,7 @@ test()
   // with reordered dofs by its components, such that the rows in the
   // final matrix are locally not in a contiguous set.
 
-  dealii::LinearAlgebra::TpetraWrappers::SparsityPattern sp_M(
+  dealii::LinearAlgebra::TpetraWrappers::SparsityPattern<MemorySpace::Default> sp_M(
     parallel_partitioning, MPI_COMM_WORLD, 2);
 
   sp_M.add(MyPID, MyPID);
@@ -65,7 +65,7 @@ test()
   sp_M.compress();
 
   // create matrix with dummy entries on the diagonal
-  dealii::LinearAlgebra::TpetraWrappers::SparseMatrix<double> M0;
+  dealii::LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> M0;
   M0.reinit(sp_M);
   M0 = 0;
 
@@ -78,7 +78,7 @@ test()
   // test ::add(TrilinosScalar, SparseMatrix)
   //
 
-  dealii::LinearAlgebra::TpetraWrappers::SparseMatrix<double> M1;
+  dealii::LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> M1;
   M1.reinit(sp_M); // avoid deep copy
   M1 = 0;
   M1.copy_from(M0);

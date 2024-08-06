@@ -14,7 +14,7 @@
 
 
 
-// when calling LinearAlgebra::TpetraWrappers::Vector<double>::operator() (),
+// when calling LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default>::operator() (),
 // the return type is a reference object, not a reference to the actual element.
 // this leads to the funny situation that an assignment like v2(i)=v1(i) isn't
 // really what it looks like: it tries to copy the reference objects, not the
@@ -33,8 +33,8 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::Vector<double> &v,
-     LinearAlgebra::TpetraWrappers::Vector<double> &w)
+test(LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> &v,
+     LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> &w)
 {
   // set the first vector
   for (unsigned int i = 0; i < v.size(); ++i)
@@ -64,9 +64,9 @@ main(int argc, char **argv)
   try
     {
       {
-        LinearAlgebra::TpetraWrappers::Vector<double> v;
+        LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> v;
         v.reinit(complete_index_set(100), MPI_COMM_WORLD);
-        LinearAlgebra::TpetraWrappers::Vector<double> w;
+        LinearAlgebra::TpetraWrappers::Vector<double, MemorySpace::Default> w;
         w.reinit(complete_index_set(100), MPI_COMM_WORLD);
         test(v, w);
       }

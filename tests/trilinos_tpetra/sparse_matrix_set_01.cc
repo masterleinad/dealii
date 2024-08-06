@@ -16,7 +16,7 @@
 
 
 // compare collective setting of elements in a trilinos matrix using
-// LinearAlgebra::TpetraWrappers::SparseMatrix<double>::set() with element-wise
+// LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default>::set() with element-wise
 // setting
 
 #include <deal.II/base/utilities.h>
@@ -29,7 +29,7 @@
 
 
 void
-test(LinearAlgebra::TpetraWrappers::SparseMatrix<double> &m)
+test(LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> &m)
 {
   // first set a few entries one-by-one
   for (unsigned int i = 0; i < m.m(); ++i)
@@ -39,7 +39,7 @@ test(LinearAlgebra::TpetraWrappers::SparseMatrix<double> &m)
 
   m.compress(VectorOperation::insert);
 
-  LinearAlgebra::TpetraWrappers::SparseMatrix<double> m2(m.m(),
+  LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m2(m.m(),
                                                          m.n(),
                                                          m.n() / 3 + 1);
 
@@ -100,7 +100,7 @@ main(int argc, char **argv)
   try
     {
       {
-        LinearAlgebra::TpetraWrappers::SparseMatrix<double> m(5U, 5U, 3U);
+        LinearAlgebra::TpetraWrappers::SparseMatrix<double, MemorySpace::Default> m(5U, 5U, 3U);
         test(m);
       }
     }
