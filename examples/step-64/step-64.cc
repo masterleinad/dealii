@@ -145,6 +145,33 @@ namespace Step64
     int                                                     cell;
   };
 
+ template <int dim, int fe_degree>
+  class DiagonalHelmholtzOperatorQuad
+  {
+  public:
+    DEAL_II_HOST_DEVICE DiagonalHelmholtzOperatorQuad(
+      const typename Portable::MatrixFree<dim, double>::Data *gpu_data,
+      double                                                 *coef,
+      int                                                     cell)
+      : gpu_data(gpu_data)                                  
+      , coef(coef) 
+      , cell(cell)
+    {}
+    
+    DEAL_II_HOST_DEVICE void operator()(
+      Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> *fe_eval,
+      const int q_point) const;
+    
+    static const unsigned int n_q_points =
+      dealii::Utilities::pow(fe_degree + 1, dim);
+      
+  private:
+    const typename Portable::MatrixFree<dim, double>::Data *gpu_data;
+    double                                                 *coef;
+    int                                                     cell;
+  };
+
+
 
   // The Helmholtz problem we want to solve here reads in weak form as follows:
   // @f{eqnarray*}{
@@ -165,6 +192,17 @@ namespace Step64
     fe_eval->submit_gradient(fe_eval->get_gradient(q_point), q_point);
   }
 
+  template <int dim, int fe_degree>
+  DEAL_II_HOST_DEVICE void DiagonalHelmholtzOperatorQuad<dim, fe_degree>::operator()(
+    Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> *fe_eval,
+    const int q_point) const
+  {
+    const unsigned int pos =
+      gpu_data->local_q_point_id(cell, n_q_points, q_point);
+
+    fe_eval->submit_value(coef[pos] * fe_eval->get_value(q_point), q_point);
+    fe_eval->submit_gradient(fe_eval->get_gradient(q_point), q_point);
+  }
 
   // @sect3{Class <code>LocalHelmholtzOperator</code>}
 
@@ -214,7 +252,7 @@ namespace Step64
     static constexpr unsigned int n_q_points =
       Utilities::pow(fe_degree + 1, dim);
 
-    LocalHelmholtzOperator(double *coefficient)
+    LocalDiagonalHelmholtzOperator(double *coefficient)
       : coef(coefficient)
     {}
 
@@ -304,33 +342,13 @@ namespace Step64
       LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &vec)
       const;
 
-  private:
-    Portable::MatrixFree<dim, double>                                mf_data;
-    LinearAlgebra::distributed::Vector<double, MemorySpace::Default> coef;
-  };
-
-
-  template <int dim, int fe_degree>
-  class DiagonalHelmholtzOperator
-  {
-  public:
-    HelmholtzOperator(const DoFHandler<dim>           &dof_handler,
-                      const AffineConstraints<double> &constraints);
-
-    void
-    vmult(LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &dst,
-          const LinearAlgebra::distributed::Vector<double, MemorySpace::Default>
-            &src) const;
-
-    void initialize_dof_vector(
-      LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &vec)
-      const;
+    void compute_diagonal();
 
   private:
     Portable::MatrixFree<dim, double>                                mf_data;
     LinearAlgebra::distributed::Vector<double, MemorySpace::Default> coef;
-  };
-
+    DiagonalMatrix<LinearAlgebra::distributed::Vector<double, MemorySpace::Default>> inverse_diagonal_entries;
+};
 
 
   // The following is the implementation of the constructor of this
@@ -386,9 +404,9 @@ namespace Step64
     const
   {
     dst = 0.;
-    LocalHelmholtzOperator<dim, fe_degree> helmholtz_operator(
+    LocalHelmholtzOperator<dim, fe_degree> local_helmholtz_operator(
       coef.get_values());
-    mf_data.cell_loop(helmholtz_operator, src, dst);
+    mf_data.cell_loop(local_helmholtz_operator, src, dst);
     mf_data.copy_constrained_values(src, dst);
   }
 
@@ -402,6 +420,30 @@ namespace Step64
   }
 
 
+
+ template <int dim, int fe_degree>
+    void HelmholtzOperator<dim, fe_degree>::compute_diagonal()
+    {
+      LinearAlgebra::distributed::Vector<double, MemorySpace::Default> &inverse_diagonal =
+        inverse_diagonal_entries.get_vector();
+      initialize_dof_vector(inverse_diagonal);
+      LocalDiagonalHelmholtzOperator<dim, fe_degree> local_diagonal_helmholtz_operator(coef.get_values());
+
+      mf_data.cell_loop(local_diagonal_helmholtz_operator,
+                            inverse_diagonal,
+                            inverse_diagonal);
+  
+      //this->set_constrained_entries_to_one(inverse_diagonal);
+  
+      for (unsigned int i = 0; i < inverse_diagonal.locally_owned_size(); ++i)
+        {
+          Assert(inverse_diagonal.local_element(i) > 0.,
+                 ExcMessage("No diagonal entry in a positive definite operator "
+                            "should be zero"));
+          inverse_diagonal.local_element(i) =
+            1. / inverse_diagonal.local_element(i);
+        }
+    }
 
 
   // @sect3{Class <code>HelmholtzProblem</code>}
