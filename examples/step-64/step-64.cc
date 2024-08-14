@@ -192,18 +192,6 @@ namespace Step64
     fe_eval->submit_gradient(fe_eval->get_gradient(q_point), q_point);
   }
 
-  template <int dim, int fe_degree>
-  DEAL_II_HOST_DEVICE void DiagonalHelmholtzOperatorQuad<dim, fe_degree>::operator()(
-    Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> *fe_eval,
-    const int q_point) const
-  {
-    const unsigned int pos =
-      gpu_data->local_q_point_id(cell, n_q_points, q_point);
-
-    fe_eval->submit_value(coef[pos] * fe_eval->get_value(q_point), q_point);
-    fe_eval->submit_gradient(fe_eval->get_gradient(q_point), q_point);
-  }
-
   // @sect3{Class <code>LocalHelmholtzOperator</code>}
 
   // Finally, we need to define a class that implements the whole operator
@@ -287,9 +275,9 @@ namespace Step64
     fe_eval.read_dof_values(src);
     fe_eval.evaluate(EvaluationFlags::values | EvaluationFlags::gradients);
     fe_eval.apply_for_each_quad_point(
-      DiagonalHelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
+      HelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
     fe_eval.integrate(EvaluationFlags::values | EvaluationFlags::gradients);
-    fe_eval.distribute_local_to_global(dst);
+    fe_eval.distribute_local_to_global(dst);  
   }
 
 
@@ -303,16 +291,25 @@ namespace Step64
     const unsigned int                                      cell,
     const typename Portable::MatrixFree<dim, double>::Data *gpu_data,
     Portable::SharedData<dim, double>                      *shared_data,
-    const double                                           *src,
+    const double                                           *,
     double                                                 *dst) const
   {
     Portable::FEEvaluation<dim, fe_degree, fe_degree + 1, 1, double> fe_eval(
       gpu_data, shared_data);
-    fe_eval.read_dof_values(src);
-    fe_eval.evaluate(EvaluationFlags::values | EvaluationFlags::gradients);
-    fe_eval.apply_for_each_quad_point(
-      DiagonalHelmholtzOperatorQuad<dim, fe_degree>(gpu_data, coef, cell));
-    fe_eval.integrate(EvaluationFlags::values | EvaluationFlags::gradients);
+    constexpr int dofs_per_cell = decltype(fe_eval)::tensor_dofs_per_cell;
+    double diagonal[dofs_per_cell] = {};
+    for (unsigned int i = 0; i < dofs_per_cell; ++i) {
+      for (unsigned int j = 0; j < dofs_per_cell; ++j)
+         fe_eval.submit_dof_value(0., j);
+      fe_eval.submit_dof_value(1., i);
+      fe_eval.evaluate(EvaluationFlags::values | EvaluationFlags::gradients);
+      fe_eval.apply_for_each_quad_point(
+        DiagonalHelmholtzOperator<dim, fe_degree>(gpu_data, coef, cell));
+      fe_eval.integrate(EvaluationFlags::values | EvaluationFlags::gradients);
+      diagonal[i] = fe_eval.get_dof_value(i);
+    }
+    for (unsigned int i = 0; i < dofs_per_cell; ++i)
+      fe_eval.submit_dof_value(diagonal[i], i);
     fe_eval.distribute_local_to_global(dst);
   }
 
