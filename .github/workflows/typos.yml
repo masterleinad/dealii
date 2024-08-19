@@ -1,8 +1,6 @@
 name: Spell Check with Typos
 on:
   push:
-    branches:
-      - 'master'
   pull_request:
 
 concurrency:
