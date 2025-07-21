@@ -326,7 +326,6 @@ export
     using std::bitset;
     using std::complex;
     using std::deque;
-    using std::forward_list;
     using std::initializer_list;
     using std::list;
     using std::make_optional;
@@ -390,16 +389,10 @@ export
 
     using std::atoi;
     using std::char_traits;
-    using std::chars_format;
     using std::errc;
-    using std::from_chars;
-    using std::from_chars_result;
     using std::getline;
     using std::isalnum;
     using std::isdigit;
-    using std::regex;
-    using std::regex_match;
-    using std::regex_search;
     using std::sscanf;
     using std::stod;
     using std::stoi;
