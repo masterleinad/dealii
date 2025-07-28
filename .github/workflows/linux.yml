@@ -530,7 +530,7 @@ jobs:
         echo "deb http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-20 main" | tee /etc/apt/sources.list.d/llvm.list
         echo "deb-src http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-20 main" | tee -a /etc/apt/sources.list.d/llvm.list
         apt-get update && apt-get install -yq --no-install-recommends \
-             libc++-20-dev clang-tools-20 clang-20
+             libboost-all-dev libc++-20-dev clang-tools-20 clang-20
     - uses: lukka/get-cmake@v3.28.3
     - uses: actions/checkout@v4
       with:
