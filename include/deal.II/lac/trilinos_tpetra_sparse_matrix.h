@@ -1670,7 +1670,7 @@ namespace LinearAlgebra
 } // namespace LinearAlgebra
 
 
-DEAL_II_NAMESPACE_CLOSE
+DEAL_II_NAMESPACE_CLOSE // Do not convert for module purposes
 
 namespace std
 {
@@ -1692,7 +1692,7 @@ namespace std
 /* ------------------------- Inline functions ---------------------- */
 
 
-DEAL_II_NAMESPACE_OPEN
+DEAL_II_NAMESPACE_OPEN // Do not convert for module purposes
 
 namespace LinearAlgebra
 {

@@ -179,6 +179,14 @@ export
   // objects:
   using ::operator<<;
 
+#ifdef DEAL_II_TRILINOS_WITH_AMESOS2                                                                                                                                                                              
+  namespace Amesos2 {                                                                                                                                                                                             
+   using ::Amesos2::create;                                                                                                                                                                                      
+    using ::Amesos2::Solver;  
+    using ::Amesos2::query;
+  };                                                                                                                                                                                                              
+#endif 
+
   namespace Belos
   {
     using ::Belos::BlockCGSolMgr;
@@ -198,7 +206,9 @@ export
   }
 #ifdef DEAL_II_TRILINOS_WITH_IFPACK2
   namespace Ifpack2 {               
-     using ::Ifpack2::Preconditioner;
+    using ::Ifpack2::Factory;
+    using ::Ifpack2::IdentitySolver;
+    using ::Ifpack2::Preconditioner;
   };
 #endif
 
@@ -217,6 +227,8 @@ export
     {
       using ::Tpetra::KokkosCompat::KokkosDeviceWrapperNode;
     }
+    using ::Tpetra::createImport;
+    using ::Tpetra::createExport;
     using ::Tpetra::CombineMode;
     using ::Tpetra::MultiVector;
     using ::Tpetra::Operator;
@@ -343,6 +355,7 @@ export
     using ::Teuchos::Comm;
     using ::Teuchos::Copy;
     using ::Teuchos::ETransp;
+    using ::Teuchos::getFancyOStream;
 #  if DEAL_II_TRILINOS_VERSION_GTE(14, 0, 0)
     using ::Teuchos::make_rcp;
 #  endif // !DEAL_II_TRILINOS_VERSION_GTE(14, 0, 0)
@@ -465,6 +478,13 @@ EXPORT_PREPROCESSOR_SYMBOL(AZ_noscaled)
 CREATE_EXPORTABLE_PREPROCESSOR_SYMBOL(AZ_precond)
 #  undef AZ_precond
 EXPORT_PREPROCESSOR_SYMBOL(AZ_precond)
+
+#ifdef (HAVE_TPETRA_INST_DOUBLE "TpetraCore_config.h" _tpetra_inst_double)
+../cmake/configure/configure_20_trilinos.cmake:254:        check_cxx_symbol_exists(HAVE_TPETRA_INST_FLOAT "TpetraCore_config.h" _tpetra_inst_float)
+../cmake/configure/configure_20_trilinos.cmake:255:        check_cxx_symbol_exists(HAVE_TPETRA_INST_COMPLEX_DOUBLE "TpetraCore_config.h" _tpetra_inst_complex_double)
+../cmake/configure/configure_20_trilinos.cmake:256:        check_cxx_symbol_exists(HAVE_TPETRA_INST_COMPLEX_FLOAT "TpetraCore_config.h" _tpetra_inst_complex_float)
+../cmake/configure/configure_20_trilinos.cmake:261:        check_cxx_symbol_exists(HAVE_TPETRA_INT_INT "TpetraCore_config.h" _tpetra_int_int)
+../cmake/configure/configure_20_trilinos.cmake:262:        check_cxx_symbol_exists(HAVE_TPETRA_INT_LONG_LONG "TpetraCore_config.h" _tpetra_int_long_long)
 
 
 
