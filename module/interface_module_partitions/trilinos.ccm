@@ -196,6 +196,39 @@ export
   {
     using ::EpetraExt::MatrixMatrix;
   }
+#ifdef DEAL_II_TRILINOS_WITH_IFPACK2
+  namespace Ifpack2 {               
+     using ::Ifpack2::Preconditioner;
+  };
+#endif
+
+#ifdef DEAL_II_TRILINOS_WITH_TPETRA
+  namespace Tpetra
+  {
+    // FIXME still has internal linkage
+    namespace Access {
+      // FIXME still has internal linkage
+      // using ::Tpetra::Access::ReadOnly;
+      // using ::Tpetra::Access::ReadWrite; 
+      using ::Tpetra::Access::ReadOnlyStruct;
+      using ::Tpetra::Access::ReadWriteStruct;
+    }
+    namespace KokkosCompat
+    {
+      using ::Tpetra::KokkosCompat::KokkosDeviceWrapperNode;
+    }
+    using ::Tpetra::CombineMode;
+    using ::Tpetra::MultiVector;
+    using ::Tpetra::Operator;
+    using ::Tpetra::RowMatrix;
+    using ::Tpetra::Export;
+    using ::Tpetra::Import;
+    using ::Tpetra::Map;
+    using ::Tpetra::CrsGraph;
+    using ::Tpetra::Vector;
+    using ::Tpetra::CrsMatrix;
+  }
+#endif
 
   namespace NOX
   {

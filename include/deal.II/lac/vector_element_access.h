@@ -167,7 +167,7 @@ namespace internal
 
 #    if DEAL_II_TRILINOS_VERSION_GTE(13, 2, 0)
     auto vector_2d = vector.template getLocalView<Kokkos::HostSpace>(
-      Tpetra::Access::ReadWrite);
+      Tpetra::Access::ReadWriteStruct{});
 #    else
     vector.template sync<Kokkos::HostSpace>();
     auto vector_2d = vector.template getLocalView<Kokkos::HostSpace>();
@@ -203,7 +203,7 @@ namespace internal
 
 #    if DEAL_II_TRILINOS_VERSION_GTE(13, 2, 0)
     auto vector_2d = vector.template getLocalView<Kokkos::HostSpace>(
-      Tpetra::Access::ReadWrite);
+      Tpetra::Access::ReadWriteStruct{});
 #    else
     vector.template sync<Kokkos::HostSpace>();
     auto vector_2d = vector.template getLocalView<Kokkos::HostSpace>();
@@ -235,7 +235,7 @@ namespace internal
 #    if DEAL_II_TRILINOS_VERSION_GTE(13, 2, 0)
     const auto &vector = V.trilinos_vector();
     auto        vector_2d =
-      vector.template getLocalView<Kokkos::HostSpace>(Tpetra::Access::ReadOnly);
+      vector.template getLocalView<Kokkos::HostSpace>(Tpetra::Access::ReadOnlyStruct{});
 #    else
     auto vector    = V.trilinos_vector();
     vector.template sync<Kokkos::HostSpace>();

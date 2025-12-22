@@ -16,7 +16,7 @@
 #define dealii_trilinos_utilities_h
 
 #include <deal.II/base/config.h>
-
+#  include <deal.II/base/mpi_stub.h>
 #include <deal.II/base/exceptions.h>
 
 #ifdef DEAL_II_WITH_TRILINOS
