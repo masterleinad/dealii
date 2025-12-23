@@ -24,6 +24,8 @@
 #  include <deal.II/lac/trilinos_index_access.h>
 #  include <deal.II/lac/trilinos_tpetra_sparsity_pattern.h>
 
+#include <Teuchos_FancyOStream.hpp>
+
 #  include <limits>
 
 DEAL_II_NAMESPACE_OPEN
@@ -998,9 +1000,10 @@ namespace LinearAlgebra
       std::ostream &out,
       const bool    write_extended_trilinos_info) const
     {
-      if (write_extended_trilinos_info)
-        out << *graph;
-      else
+      if (write_extended_trilinos_info) {
+    auto fancy_stream = Teuchos::getFancyOStream(Teuchos::RCP(&out, false));  
+        graph->describe(*fancy_stream);
+      } else
         {
 #  if DEAL_II_TRILINOS_VERSION_GTE(14, 0, 0)
           for (unsigned int i = 0; i < graph->getLocalNumRows(); ++i)

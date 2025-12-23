@@ -479,15 +479,6 @@ CREATE_EXPORTABLE_PREPROCESSOR_SYMBOL(AZ_precond)
 #  undef AZ_precond
 EXPORT_PREPROCESSOR_SYMBOL(AZ_precond)
 
-#ifdef (HAVE_TPETRA_INST_DOUBLE "TpetraCore_config.h" _tpetra_inst_double)
-../cmake/configure/configure_20_trilinos.cmake:254:        check_cxx_symbol_exists(HAVE_TPETRA_INST_FLOAT "TpetraCore_config.h" _tpetra_inst_float)
-../cmake/configure/configure_20_trilinos.cmake:255:        check_cxx_symbol_exists(HAVE_TPETRA_INST_COMPLEX_DOUBLE "TpetraCore_config.h" _tpetra_inst_complex_double)
-../cmake/configure/configure_20_trilinos.cmake:256:        check_cxx_symbol_exists(HAVE_TPETRA_INST_COMPLEX_FLOAT "TpetraCore_config.h" _tpetra_inst_complex_float)
-../cmake/configure/configure_20_trilinos.cmake:261:        check_cxx_symbol_exists(HAVE_TPETRA_INT_INT "TpetraCore_config.h" _tpetra_int_int)
-../cmake/configure/configure_20_trilinos.cmake:262:        check_cxx_symbol_exists(HAVE_TPETRA_INT_LONG_LONG "TpetraCore_config.h" _tpetra_int_long_long)
-
-
-
 #  ifdef DEAL_II_TRILINOS_WITH_ZOLTAN
 CREATE_EXPORTABLE_PREPROCESSOR_SYMBOL(ZOLTAN_OK)
 #    undef ZOLTAN_OK
