@@ -187,7 +187,7 @@ jobs:
         ubuntu_version: [jammy, noble]
 
     container:
-      image: dealii/dependencies:${{ matrix.ubuntu_version }}-v9.7.1
+      image: ecpe4s/e4s-cpu-rocky9.6
       options: --user root --env OMPI_ALLOW_RUN_AS_ROOT=1 --env OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
     steps:
@@ -196,6 +196,8 @@ jobs:
       run: |
         mpicc -v
         cmake --version
+    - name: Enable Trilinos
+      run: spack load trilinos
     - name: configure deal.II
       run: |
         mkdir build
