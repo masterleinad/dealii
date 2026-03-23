@@ -53,12 +53,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    - name: info
-      run: |
-        mpicc -v
-        cmake --version
     - name: Enable Trilinos
-      run: spack load trilinos
+      run: spack load trilinos mpi cmake
     - name: configure deal.II
       run: |
         mkdir build
