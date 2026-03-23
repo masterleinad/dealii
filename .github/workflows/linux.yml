@@ -2,9 +2,6 @@ name: linux
 
 on:
   push:
-    branches:
-      - 'master'
-      - 'dealii-*'
   pull_request:
     types:
     - opened
