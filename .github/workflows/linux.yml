@@ -48,7 +48,7 @@ jobs:
         ubuntu_version: [jammy, noble]
 
     container:
-      image: ecpe4s/e4s-cpu-rocky9.6
+      image: ecpe4s/rocky9.7-runner-x86_64-gcc-13.3:1772470666
       options: --user root --env OMPI_ALLOW_RUN_AS_ROOT=1 --env OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
     steps:
