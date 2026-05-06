@@ -44,7 +44,6 @@ jobs:
         sudo apt-get install -yq --no-install-recommends \
             ninja-build wget lsb-release software-properties-common gnupg
         sudo wget https://apt.llvm.org/llvm.sh && sudo chmod +x llvm.sh && sudo ./llvm.sh 23
-    - uses: lukka/get-cmake@v3.28.3
     - uses: actions/checkout@v6
       with:
         repository: kokkos/kokkos
@@ -73,6 +72,7 @@ jobs:
               -D CMAKE_CXX_COMPILER=clang++-23 \
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_CXX20_MODULE=ON \
+              -D DEAL_II_FORCE_BUNDLED_TASKFLOW=ON \
               -D DEAL_II_WITH_CGAL=OFF \
               -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
               -G Ninja \
