@@ -72,7 +72,7 @@ jobs:
               -D CMAKE_CXX_COMPILER=clang++-23 \
               -D DEAL_II_EARLY_DEPRECATIONS=ON \
               -D DEAL_II_WITH_CXX20_MODULE=ON \
-              -D DEAL_II_FORCE_BUNDLED_TASKFLOW=ON \
+              -D DEAL_II_WITH_TASKFLOW=OFF \
               -D DEAL_II_WITH_CGAL=OFF \
               -D KOKKOS_DIR=${GITHUB_WORKSPACE}/../kokkos-install \
               -G Ninja \
