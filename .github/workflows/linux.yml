@@ -42,7 +42,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -yq --no-install-recommends \
-            ninja-build wget lsb-release software-properties-common gnupg
+            ninja-build wget lsb-release software-properties-common gnupg g++-14
         sudo wget https://apt.llvm.org/llvm.sh && sudo chmod +x llvm.sh && sudo ./llvm.sh 23
     - uses: actions/checkout@v6
       with:
