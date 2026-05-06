@@ -315,11 +315,6 @@ export
     using std::random_access_iterator_tag;
     using std::reverse_iterator;
 
-#ifdef DEAL_II_HAVE_CXX23
-    using std::from_range;
-    using std::from_range_t;
-#endif
-
     namespace ranges
     {
       using std::ranges::data;
