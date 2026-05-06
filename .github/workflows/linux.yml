@@ -517,11 +517,7 @@ jobs:
         apt-get update
         apt-get install -yq --no-install-recommends \
             ninja-build wget lsb-release software-properties-common gnupg
-        wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
-        echo "deb http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-23 main" | tee /etc/apt/sources.list.d/llvm.list
-        echo "deb-src http://apt.llvm.org/bookworm/ llvm-toolchain-bookworm-23 main" | tee -a /etc/apt/sources.list.d/llvm.list
-        apt-get update && apt-get install -yq --no-install-recommends \
-             libc++-23-dev clang-tools-23 clang-23
+        wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && ./llvm.sh 23
     - uses: lukka/get-cmake@v3.28.3
     - uses: actions/checkout@v6
       with:
