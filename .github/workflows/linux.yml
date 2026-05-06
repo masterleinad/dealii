@@ -554,8 +554,6 @@ jobs:
       run: |
         mkdir build
         cd build
-        export CXXFLAGS="-stdlib=libc++"
-        export LDFLAGS="-stdlib=libc++"
         cmake -D CMAKE_BUILD_TYPE=Debug \
               -D CMAKE_CXX_STANDARD=23 \
               -D CMAKE_C_COMPILER=clang-21 \
