@@ -51,6 +51,10 @@ jobs:
       # needed to use GNU patch instead of Strawberry Perl patch
       run: |
         echo "c:\program files\git\usr\bin" >> $env:GITHUB_PATH
+    - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '4.4.2'
     - name: info
       run: |
         patch --version
