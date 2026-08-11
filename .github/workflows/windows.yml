@@ -63,6 +63,7 @@ jobs:
           -DCMAKE_C_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" `
           -DCMAKE_CXX_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" `
           -DCMAKE_MSVC_RUNTIME_CHECKS="" `
+          -DCMAKE_BUILD_TYPE=Debug `
           -DCMAKE_INSTALL_PREFIX="C:/project" `
           -DDEAL_II_CXX_FLAGS="/WX /std:c++20 /D FE_EVAL_FACTORY_DEGREE_MAX=2" `
           -T host=x64 `
