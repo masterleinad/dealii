@@ -57,24 +57,32 @@ jobs:
         patch --version
         cmake --version
     - name: configure
+      shell: pwsh
       run: |
-        cmake -B build \
-              -DCMAKE_C_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" \
-              -DCMAKE_CXX_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" \
-              -DCMAKE_MSVC_RUNTIME_CHECKS="" \
-              -DCMAKE_INSTALL_PREFIX=c:/project \
-              -DDEAL_II_CXX_FLAGS="/WX /std:c++20 /D FE_EVAL_FACTORY_DEGREE_MAX=2" \
-              -T host=x64 \
-              -A x64
+        cmake -B build `
+          -DCMAKE_C_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" `
+          -DCMAKE_CXX_FLAGS_DEBUG="/Zi /Ob0 /Od /MDd" `
+          -DCMAKE_MSVC_RUNTIME_CHECKS="" `
+          -DCMAKE_INSTALL_PREFIX="C:/project" `
+          -DDEAL_II_CXX_FLAGS="/WX /std:c++20 /D FE_EVAL_FACTORY_DEGREE_MAX=2" `
+          -T host=x64 `
+          -A x64
     - name: print detailed.log
-      run: type build/detailed.log
+      shell: pwsh
+      run: |
+          Get-Content build/detailed.log
     - name: build
+      shell: pwsh
       run: |
-        cmake --build build --build-config Debug --target install
+        cmake --build build --config Debug --target install
     - name: test
+      shell: pwsh
       run: |
-        cmake --build build --target setup_tests_a-framework setup_tests_examples setup_tests_quick_tests
-        ctest --test-dir build --build-config Debug --extra-verbose -E "step-100.debug|step-100.release"
+        cmake --build build --config Debug --target `
+          setup_tests_a-framework `
+          setup_tests_examples `
+          setup_tests_quick_tests
+        ctest --test-dir build -C Debug --extra-verbose -E "step-100.debug|step-100.release"
     - name: show largest files
       # we are nearly at the limit (4 GB) for what a .lib can contain on Windows. Monitor the size by printing out the largest
       # files in the build directory
